@@ -12,4 +12,4 @@ force = true
 
 [build]
 publish = "./apps/landing/dist/client"
-command = "just build --filter=@bitcart/landing"
+command = "just build --outputStyle=stream -p @bitcart/landing"
