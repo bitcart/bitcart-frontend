@@ -60,7 +60,12 @@ export const getLayoutConfig = (): LayoutConfig => ({
             { label: t`Docs`, href: "https://docs.bitcart.ai", globalPosition: 3 },
             { label: t`Blog`, href: "https://blog.bitcart.ai", globalPosition: 4 },
             { label: t`Easy Launch`, href: "https://configurator.bitcart.ai", globalPosition: 6 },
-            { label: t`Roadmap`, href: "https://feature.bitcart.ai", globalPosition: 7 },
+            {
+              label: t`Merchant Directory`,
+              href: "https://directory.bitcart.ai",
+              globalPosition: 7,
+            },
+            { label: t`Roadmap`, href: "https://feature.bitcart.ai", globalPosition: 8 },
           ],
         },
       ],
