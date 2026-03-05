@@ -1,0 +1,4 @@
+
+[build]
+publish = "./apps/directory/dist/client"
+command = "just build --filter=@bitcart/directory"

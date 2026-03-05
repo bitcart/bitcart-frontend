@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[o:bitcart:p:bitcart-website:r:en-po]
+file_filter   = src/common/i18n/_generated/locales/<lang>.po
+source_file   = src/common/i18n/_generated/locales/en.po
+type          = PO
+minimum_perc  = 5
+resource_name = en-po

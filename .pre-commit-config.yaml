@@ -1,0 +1,38 @@
+repos:
+  - repo: builtin
+    hooks:
+      - id: check-merge-conflict
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: check-case-conflict
+      - id: check-json
+        exclude: 'tsconfig(\..+)*\.json$'
+      - id: check-toml
+      - id: check-yaml
+        exclude: 'pnpm-lock\.yaml$'
+      - id: check-symlinks
+      - id: fix-byte-order-marker
+      - id: detect-private-key
+  - repo: local
+    hooks:
+      - id: lint
+        name: lint
+        language: system
+        entry: just lint
+        files: '\.(ts|js|tsx)$'
+        require_serial: true
+        pass_filenames: false
+      - id: typecheck
+        name: typecheck
+        language: system
+        entry: just lint-types
+        pass_filenames: false
+        require_serial: true
+      - id: prettier
+        name: prettier
+        language: system
+        entry: just prettier
+        types: [text]
+        exclude: '(\.(ts|js|tsx)$|pnpm-lock\.yaml$)'
+        require_serial: true

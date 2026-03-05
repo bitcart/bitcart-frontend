@@ -1,0 +1,98 @@
+{
+  "name": "@bitcart/ui-kit",
+  "version": "1.1.0",
+  "description": "UI development kit for applications and websites under the Bitcart umbrella",
+  "type": "module",
+  "exports": {
+    "./components": {
+      "import": "./dist/components/index.js",
+      "types": "./dist/components/index.d.ts"
+    },
+    "./hooks": {
+      "import": "./dist/hooks/index.js",
+      "types": "./dist/hooks/index.d.ts"
+    },
+    "./providers": {
+      "import": "./dist/providers/index.js",
+      "types": "./dist/providers/index.d.ts"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "eslint . --fix",
+    "shadcn": "pnpx shadcn@latest",
+    "shadcn-add": "pnpm shadcn add -p ./src/components/tmp",
+    "generate:graphviz": "madge --image graphviz.svg src",
+    "build:styles": "unocss",
+    "build:main": "vite build"
+  },
+  "dependencies": {
+    "@bitcart/core": "workspace:*",
+    "@lingui/core": "catalog:dependencies",
+    "@phosphor-icons/react": "catalog:dependencies",
+    "@radix-ui/react-checkbox": "catalog:dependencies",
+    "@radix-ui/react-collapsible": "catalog:dependencies",
+    "@radix-ui/react-dialog": "catalog:dependencies",
+    "@radix-ui/react-dropdown-menu": "catalog:dependencies",
+    "@radix-ui/react-label": "catalog:dependencies",
+    "@radix-ui/react-navigation-menu": "catalog:dependencies",
+    "@radix-ui/react-popover": "catalog:dependencies",
+    "@radix-ui/react-select": "catalog:dependencies",
+    "@radix-ui/react-separator": "catalog:dependencies",
+    "@radix-ui/react-slot": "catalog:dependencies",
+    "@tanstack/react-form": "catalog:dependencies",
+    "class-variance-authority": "catalog:dependencies",
+    "cmdk": "catalog:dependencies",
+    "date-fns": "catalog:dependencies",
+    "lucide-react": "catalog:dependencies",
+    "next-themes": "catalog:dependencies",
+    "radix-ui": "catalog:dependencies",
+    "react": "catalog:dependencies",
+    "react-day-picker": "catalog:dependencies",
+    "react-inlinesvg": "catalog:dependencies",
+    "remeda": "catalog:dependencies",
+    "sonner": "catalog:dependencies",
+    "tailwind-merge": "catalog:dependencies",
+    "usehooks-ts": "catalog:dependencies",
+    "vaul": "catalog:dependencies"
+  },
+  "devDependencies": {
+    "@bitcart/typescript-config": "workspace:*",
+    "@bitcart/unocss-preset": "workspace:*",
+    "@types/react": "catalog:devDependencies",
+    "@unocss/cli": "catalog:devDependencies",
+    "@vitejs/plugin-react": "catalog:devDependencies",
+    "madge": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies",
+    "unocss": "catalog:devDependencies",
+    "unplugin-dts": "catalog:devDependencies",
+    "vite": "catalog:devDependencies",
+    "vite-plugin-externalize-deps": "catalog:devDependencies",
+    "vite-plugin-static-copy": "catalog:devDependencies",
+    "vite-tsconfig-paths": "catalog:devDependencies"
+  },
+  "madge": {
+    "fileExtensions": [
+      "js",
+      "ts",
+      "tsx"
+    ],
+    "tsConfig": "tsconfig.json",
+    "layout": "dot",
+    "fontSize": "16px",
+    "graphVizOptions": {
+      "compound": true
+    }
+  }
+}

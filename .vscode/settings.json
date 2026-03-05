@@ -1,0 +1,171 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "eslint.useFlatConfig": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "mdx",
+    "markdown"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit",
+    "source.fixAll.unusedImports": "never",
+    "source.fixAll.convertImportFormat": "never"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never"
+    }
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never"
+    }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never"
+    }
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[just]": {
+    "editor.defaultFormatter": "nefrob.vscode-just-syntax"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.hg/store/**": true,
+    "**/.git/**": true,
+    "**/node_modules/**": true,
+    "**/.vscode/**": true,
+    "**/.nx/**": true
+  },
+  "git.autofetch": true,
+  "gitlens.remotes": [
+    {
+      "domain": "git.bitcart.ai",
+      "type": "Custom",
+      "name": "Bitcart Forge",
+      "protocol": "https",
+      "urls": {
+        "repository": "https://git.bitcart.ai/${repo}",
+        "branches": "https://git.bitcart.ai/${repo}/branches",
+        "branch": "https://git.bitcart.ai/${repo}/src/branch/${branch}",
+        "commit": "https://git.bitcart.ai/${repo}/commit/${id}",
+        "file": "https://git.bitcart.ai/${repo}/src/branch/master/${file}${line}",
+        "fileInBranch": "https://git.bitcart.ai/${repo}/src/branch/${branch}/${file}${line}",
+        "fileInCommit": "https://git.bitcart.ai/${repo}/src/commit/${id}/${file}${line}",
+        "fileLine": "#L${line}",
+        "fileRange": "#L${start}-L${end}"
+      }
+    }
+  ],
+  "cSpell.words": [
+    "aleksejdix",
+    "bitcart",
+    "Bokmål",
+    "cmdk",
+    "custodially",
+    "Deutsch",
+    "dotenv",
+    "elif",
+    "Emptyish",
+    "endonym",
+    "Ergon",
+    "esbuild",
+    "Español",
+    "Français",
+    "Graphviz",
+    "Groestlcoin",
+    "hellordp",
+    "inlinesvg",
+    "interruptible",
+    "justfile",
+    "linecap",
+    "linejoin",
+    "lingui",
+    "Litecoin",
+    "lucide",
+    "Luxembourgish",
+    "Marino",
+    "MATOMO",
+    "messageformat",
+    "Monero",
+    "Navlink",
+    "njsproj",
+    "nodenext",
+    "noreferrer",
+    "ntvs",
+    "Occitan",
+    "oklch",
+    "overscroll",
+    "pkill",
+    "Polski",
+    "preflights",
+    "prek",
+    "Prerendered",
+    "qalisa",
+    "Rackoona",
+    "recatalogize",
+    "remeda",
+    "RLENGTH",
+    "rollup",
+    "RSTART",
+    "Sami",
+    "SELFCONTAINED",
+    "serversguru",
+    "setaf",
+    "shadcn",
+    "Skhron",
+    "sonner",
+    "stablecoins",
+    "subtag",
+    "subtags",
+    "supercategory",
+    "svgs",
+    "tanstack",
+    "Tipbot",
+    "Turborepo",
+    "Türkçe",
+    "unocss",
+    "unplugin",
+    "unrs",
+    "usehooks",
+    "vaul",
+    "vike",
+    "vite",
+    "vitejs",
+    "webapps",
+    "Беларуская",
+    "Русский",
+    "Українська"
+  ]
+}

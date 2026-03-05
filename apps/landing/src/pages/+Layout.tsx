@@ -1,0 +1,53 @@
+import { WebsiteLayout } from "@bitcart/ui-kit/components"
+import { useHandleLocaleChange, useI18nSetup } from "@bitcart/vike-kit/i18n"
+import { HashAutoscrollProvider, Link } from "@bitcart/vike-kit/navigation"
+import { createUseMatomoTracking } from "@bitcart/vike-kit/tracking"
+import { i18n } from "@lingui/core"
+import { I18nProvider } from "@lingui/react"
+import { usePageContext } from "vike-react/usePageContext"
+
+import { SUPPORTED_LOCALE_IDS } from "@/app.config"
+import { IS_MATOMO_ENABLED } from "@/common/constants"
+import { env } from "@/env"
+
+import { getLayoutConfig } from "./layout.config"
+
+import "inter-ui/inter.css"
+import "./uno.generated.css"
+
+const useMatomoTracking = createUseMatomoTracking({
+  enabled: IS_MATOMO_ENABLED,
+  url: env.BITCART_MATOMO_URL,
+  scriptUrl: env.BITCART_MATOMO_SCRIPT_URL,
+  siteId: env.BITCART_MATOMO_ID,
+  actions: env.BITCART_MATOMO_ACTIONS,
+})
+
+const PageShell = ({ children }: { children: React.ReactNode }) => {
+  const { urlLogical } = usePageContext()
+  const handleLocaleChange = useHandleLocaleChange({ supportedLocaleIds: SUPPORTED_LOCALE_IDS })
+
+  return (
+    <WebsiteLayout
+      LinkComponent={Link}
+      currentRoutePath={urlLogical}
+      config={getLayoutConfig()}
+      localeChangeHandler={handleLocaleChange}
+    >
+      {children}
+    </WebsiteLayout>
+  )
+}
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  useI18nSetup({ supportedLocaleIds: SUPPORTED_LOCALE_IDS })
+  useMatomoTracking()
+
+  return (
+    <I18nProvider i18n={i18n}>
+      <HashAutoscrollProvider>
+        <PageShell>{children}</PageShell>
+      </HashAutoscrollProvider>
+    </I18nProvider>
+  )
+}

@@ -1,0 +1,61 @@
+{
+  "name": "@bitcart/core",
+  "version": "1.0.0",
+  "description": "Foundational abstractions for packages, applications, and websites under the Bitcart umbrella.",
+  "type": "module",
+  "exports": {
+    "./constants": {
+      "import": "./dist/constants.js",
+      "types": "./dist/constants.d.ts"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./zod": {
+      "import": "./dist/zod/index.js",
+      "types": "./dist/zod/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "eslint . --fix",
+    "generate:graphviz": "madge --image graphviz.svg src",
+    "generate:dist-graphviz": "madge --image dist-graphviz.svg dist",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "remeda": "catalog:dependencies",
+    "usehooks-ts": "catalog:dependencies",
+    "zod": "catalog:dependencies"
+  },
+  "devDependencies": {
+    "@bitcart/typescript-config": "workspace:*",
+    "@vitejs/plugin-react": "catalog:devDependencies",
+    "madge": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies",
+    "unplugin-dts": "catalog:devDependencies",
+    "vite": "catalog:devDependencies",
+    "vite-plugin-externalize-deps": "catalog:devDependencies",
+    "vite-tsconfig-paths": "catalog:devDependencies"
+  },
+  "madge": {
+    "fileExtensions": [
+      "js",
+      "ts"
+    ],
+    "tsConfig": "tsconfig.json",
+    "layout": "dot",
+    "fontSize": "16px",
+    "graphVizOptions": {
+      "compound": true
+    }
+  }
+}

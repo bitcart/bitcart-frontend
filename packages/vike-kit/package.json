@@ -1,0 +1,84 @@
+{
+  "name": "@bitcart/vike-kit",
+  "version": "1.0.0",
+  "description": "Shared Vike configuration and i18n setup for Bitcart applications",
+  "type": "module",
+  "exports": {
+    "./config": {
+      "types": "./dist/config/index.d.ts",
+      "import": "./dist/config/index.js"
+    },
+    "./i18n": {
+      "types": "./dist/i18n/index.d.ts",
+      "import": "./dist/i18n/index.js"
+    },
+    "./lifecycle": {
+      "types": "./dist/lifecycle/index.d.ts",
+      "import": "./dist/lifecycle/index.js"
+    },
+    "./metadata": {
+      "types": "./dist/metadata/index.d.ts",
+      "import": "./dist/metadata/index.js"
+    },
+    "./navigation": {
+      "types": "./dist/navigation/index.d.ts",
+      "import": "./dist/navigation/index.js"
+    },
+    "./tracking": {
+      "types": "./dist/tracking/index.d.ts",
+      "import": "./dist/tracking/index.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "eslint . --fix",
+    "generate:graphviz": "madge --image graphviz.svg src",
+    "generate:dist-graphviz": "madge --image dist-graphviz.svg dist",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@bitcart/core": "workspace:*",
+    "@lingui/core": "catalog:dependencies",
+    "@lingui/react": "catalog:dependencies",
+    "@t3-oss/env-core": "catalog:dependencies",
+    "lucide-react": "catalog:dependencies",
+    "react": "catalog:dependencies",
+    "remeda": "catalog:dependencies",
+    "usehooks-ts": "catalog:dependencies",
+    "vike": "catalog:dependencies",
+    "vike-react": "catalog:dependencies",
+    "vike-react-query": "catalog:dependencies",
+    "zod": "catalog:dependencies"
+  },
+  "devDependencies": {
+    "@bitcart/typescript-config": "workspace:*",
+    "@types/react": "catalog:devDependencies",
+    "@vitejs/plugin-react": "catalog:devDependencies",
+    "madge": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies",
+    "unplugin-dts": "catalog:devDependencies",
+    "vite": "catalog:devDependencies",
+    "vite-plugin-externalize-deps": "catalog:devDependencies",
+    "vite-tsconfig-paths": "catalog:devDependencies"
+  },
+  "madge": {
+    "fileExtensions": [
+      "js",
+      "ts",
+      "tsx"
+    ],
+    "tsConfig": "tsconfig.json",
+    "layout": "dot",
+    "fontSize": "16px",
+    "graphVizOptions": {
+      "compound": true
+    }
+  }
+}

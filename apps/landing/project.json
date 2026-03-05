@@ -1,0 +1,51 @@
+{
+  "name": "@bitcart/landing",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build:styles": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/src/pages/uno.generated.css"],
+      "cache": true
+    },
+
+    "build:main": {
+      "dependsOn": ["build:styles", "^build"],
+      "inputs": ["default", { "runtime": "grep '^BITCART_' .env 2>/dev/null | sort" }],
+      "outputs": ["{projectRoot}/dist"],
+      "cache": true
+    },
+
+    "build": {
+      "dependsOn": ["build:main"]
+    },
+
+    "build-deps": {
+      "dependsOn": ["^build"]
+    },
+
+    "watch-deps": {
+      "continuous": true,
+      "dependsOn": ["build-deps"],
+      "command": "pnpm nx watch --projects @bitcart/landing --includeDependentProjects -- pnpm nx build-deps @bitcart/landing"
+    },
+
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["pnpm dev:styles", "pnpm dev:main"],
+        "parallel": true,
+        "cwd": "apps/landing"
+      },
+      "dependsOn": ["watch-deps"],
+      "continuous": true
+    },
+
+    "lint": {
+      "dependsOn": ["build:styles", "^build", "^lint"]
+    },
+
+    "format": {
+      "dependsOn": ["build:styles", "^build", "^format"]
+    }
+  }
+}

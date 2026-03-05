@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Servers Guru",
+    "logo": "/supporters/serversguru.svg",
+    "description": "Helps with hosting our infrastructure",
+    "website": "https://servers.guru",
+    "contribution": "Hosting Infrastructure"
+  },
+  {
+    "name": "Skhron",
+    "logo": "/supporters/skhron.svg",
+    "description": "Helps with hosting our staging/testnet infrastructure and community support",
+    "website": "https://skhron.eu",
+    "contribution": "Staging Infrastructure"
+  },
+  {
+    "name": "Strike",
+    "logo": "/supporters/strike.svg",
+    "description": "Helps with backup infrastructure",
+    "website": "https://strike.bz",
+    "contribution": "Backup Infrastructure"
+  },
+  {
+    "name": "Rackoona",
+    "logo": "/supporters/rackoona.svg",
+    "logoClass": "dark:brightness-0 dark:invert",
+    "description": "Helps with hosting our failover infrastructure",
+    "website": "https://rackoona.com",
+    "contribution": "Failover Infrastructure"
+  }
+]

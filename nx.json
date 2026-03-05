@@ -1,0 +1,47 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "tui": {
+    "autoExit": true
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": ["{workspaceRoot}/.env"],
+    "eslintInputs": ["default", "{workspaceRoot}/eslint.config.js"]
+  },
+  "targetDefaults": {
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "cache": true
+    },
+
+    "lint": {
+      "dependsOn": ["^build", "^lint"],
+      "inputs": ["eslintInputs"],
+      "cache": true
+    },
+
+    "format": {
+      "dependsOn": ["^build", "^format"],
+      "inputs": ["eslintInputs"],
+      "cache": true
+    },
+
+    "dev": {
+      "cache": false,
+      "continuous": true
+    },
+
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist"],
+      "cache": true
+    },
+
+    "preview": {
+      "dependsOn": ["build"],
+      "cache": false,
+      "continuous": true
+    }
+  },
+  "defaultBase": "master"
+}

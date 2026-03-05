@@ -1,0 +1,4 @@
+{
+  "extends": ["@bitcart/typescript-config/by-supported-runtime/nodejs.json"],
+  "include": ["*.config.ts"]
+}

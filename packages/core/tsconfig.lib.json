@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "@bitcart/typescript-config/by-package-type/library.json",
+    "@bitcart/typescript-config/by-supported-runtime/browser.json"
+  ],
+
+  "compilerOptions": {
+    "outDir": "./dist",
+    "paths": { "@/*": ["./src/*"] }
+  },
+
+  "exclude": ["dist", "node_modules"],
+  "include": ["src"]
+}

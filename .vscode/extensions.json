@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "streetsidesoftware.code-spell-checker",
+    "aaron-bond.better-comments",
+    "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries",
+    "gruntfuggly.todo-tree",
+    "maciejdems.add-to-gitignore",
+    "redhat.vscode-yaml",
+    "editorconfig.editorconfig",
+    "pflannery.vscode-versionlens",
+    "antfu.unocss",
+    "dexxiez.shadcn-color-preview",
+    "swiftlydaniel.oklch-color-visualiser",
+    "effectful-tech.effect-vscode",
+    "eamodio.gitlens",
+    "nefrob.vscode-just-syntax",
+    "davidanson.vscode-markdownlint",
+    "bierner.markdown-mermaid"
+  ]
+}

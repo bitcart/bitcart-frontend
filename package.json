@@ -1,0 +1,57 @@
+{
+  "name": "bitcart",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10.28.2"
+  },
+  "scripts": {
+    "prettier": "prettier",
+    "nx": "nx",
+    "workspace": "pnpm -w",
+    "core": "pnpm -C packages/core",
+    "form-kit": "pnpm -C packages/form-kit",
+    "ui-kit": "pnpm -C packages/ui-kit",
+    "unocss-preset": "pnpm -C packages/unocss-preset",
+    "vike-kit": "pnpm -C packages/vike-kit",
+    "landing": "pnpm -C apps/landing",
+    "directory": "pnpm -C apps/directory"
+  },
+  "devDependencies": {
+    "@bitcart/typescript-config": "workspace:*",
+    "@effect/language-service": "catalog:devDependencies",
+    "@eslint/js": "catalog:devDependencies",
+    "@eslint/json": "catalog:devDependencies",
+    "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@typescript-eslint/eslint-plugin": "catalog:devDependencies",
+    "@typescript-eslint/parser": "catalog:devDependencies",
+    "baseline-browser-mapping": "catalog:devDependencies",
+    "eslint": "catalog:devDependencies",
+    "eslint-config-prettier": "catalog:devDependencies",
+    "eslint-import-resolver-typescript": "catalog:devDependencies",
+    "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
+    "eslint-plugin-import": "catalog:devDependencies",
+    "eslint-plugin-prettier": "catalog:devDependencies",
+    "eslint-plugin-react": "catalog:devDependencies",
+    "eslint-plugin-react-hooks": "catalog:devDependencies",
+    "eslint-plugin-react-refresh": "catalog:devDependencies",
+    "globals": "catalog:devDependencies",
+    "madge": "catalog:devDependencies",
+    "nx": "catalog:devDependencies",
+    "prettier": "catalog:devDependencies",
+    "tailwindcss": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies",
+    "typescript-eslint": "catalog:devDependencies"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": false
+  },
+  "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a"
+}

@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "@bitcart/typescript-config/by-package-type/app.json",
+    "@bitcart/typescript-config/by-view-layer/react.json",
+    "@bitcart/typescript-config/by-supported-runtime/browser.json"
+  ],
+
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+
+  "exclude": ["dist", "node_modules"],
+  "include": ["src"]
+}
