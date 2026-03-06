@@ -31,3 +31,6 @@ node_modules
 
 .nx/cache
 .nx/workspace-data
+
+# Generated i18n locales
+apps/*/src/common/i18n/_generated/
