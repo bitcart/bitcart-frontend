@@ -1,5 +1,13 @@
 # Bitcart Frontend
 
+This monorepo hosts all bitcart frontend applications in one place for convenience.
+You can find them in apps/\* folders.
+
+Current list:
+
+- apps/landing - Bitcart Website https://bitcart.ai
+- apps/directory - Bitcart Merchants Directory https://directory.bitcart.ai
+
 ## Development
 
 ### Prerequisites
