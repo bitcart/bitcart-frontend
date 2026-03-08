@@ -26,7 +26,6 @@
     "@bitcart/typescript-config": "workspace:*",
     "@effect/language-service": "catalog:devDependencies",
     "@eslint/js": "catalog:devDependencies",
-    "@eslint/json": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@typescript-eslint/eslint-plugin": "catalog:devDependencies",
     "@typescript-eslint/parser": "catalog:devDependencies",
