@@ -24,7 +24,7 @@
     "dist"
   ],
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "lint": "eslint .",
     "format": "eslint . --fix",
     "generate:graphviz": "madge --image graphviz.svg src",

@@ -1,6 +1,6 @@
 import { env } from "@/env"
 
-const { MODE: VITE_MODE } = import.meta.env
+const VITE_MODE = import.meta.env.MODE
 
 export const { BRAND_UMBRELLA_NAME, PRODUCTION_BASE_URL, PROJECT_CANONICAL_NAME } = env
 

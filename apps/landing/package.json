@@ -11,7 +11,7 @@
     "generate:graphviz": "madge --image graphviz.svg src",
     "generate:dist-graphviz": "madge --image dist-graphviz.svg dist",
     "web3icons:recatalogize": "node ./scripts/web3icons.js",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "lint": "eslint .",
     "format": "eslint . --fix",
     "build:styles": "unocss",

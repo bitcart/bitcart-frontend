@@ -10,7 +10,7 @@
     "generate:locales": "pnpm locales:extract && pnpm locales:translate",
     "generate:graphviz": "madge --image graphviz.svg src",
     "generate:dist-graphviz": "madge --image dist-graphviz.svg dist",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "lint": "eslint .",
     "format": "eslint . --fix",
     "build:styles": "unocss",

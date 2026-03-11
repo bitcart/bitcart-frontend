@@ -1,32 +1,21 @@
 import { createEnv } from "@t3-oss/env-core"
-import { z } from "zod"
+
+import { envConfig } from "../env.config"
 
 export const env = createEnv({
-  client: {
-    BITCART_STORE: z.string().default("1"),
-    BITCART_MATOMO_URL: z.string().default(""),
-    BITCART_MATOMO_SCRIPT_URL: z.string().default(""),
-
-    BITCART_MATOMO_ACTIONS: z
-      .string()
-      .default("")
-      .transform((actions) =>
-        actions
-          .split(";")
-          .filter((x) => x.trim() !== "")
-          .map((x) => [x]),
-      ),
-
-    BITCART_MATOMO_ID: z.coerce.number().int().default(1),
-  },
-
-  shared: {
-    BRAND_UMBRELLA_NAME: z.string().default("Bitcart"),
-    PRODUCTION_BASE_URL: z.string().default("https://directory.bitcart.ai"),
-    PROJECT_CANONICAL_NAME: z.string().default("Bitcart Directory"),
-  },
-
   clientPrefix: "BITCART_",
-  runtimeEnv: import.meta.env,
   emptyStringAsUndefined: true,
+  client: envConfig.clientEnvSchemas,
+  shared: envConfig.sharedEnvSchemas,
+
+  runtimeEnv: {
+    BITCART_STORE: import.meta.env.BITCART_STORE,
+    BITCART_MATOMO_URL: import.meta.env.BITCART_MATOMO_URL,
+    BITCART_MATOMO_SCRIPT_URL: import.meta.env.BITCART_MATOMO_SCRIPT_URL,
+    BITCART_MATOMO_ACTIONS: import.meta.env.BITCART_MATOMO_ACTIONS,
+    BITCART_MATOMO_ID: import.meta.env.BITCART_MATOMO_ID,
+    BRAND_UMBRELLA_NAME: import.meta.env.BRAND_UMBRELLA_NAME,
+    PRODUCTION_BASE_URL: import.meta.env.PRODUCTION_BASE_URL,
+    PROJECT_CANONICAL_NAME: import.meta.env.PROJECT_CANONICAL_NAME,
+  },
 })

@@ -2,6 +2,7 @@ import process from "process"
 
 import { lingui } from "@lingui/vite-plugin"
 import vikeSitemap from "@qalisa/vike-plugin-sitemap"
+import { createEnv } from "@t3-oss/env-core"
 import react from "@vitejs/plugin-react"
 import dotenv from "dotenv"
 import vike from "vike/plugin"
@@ -9,10 +10,18 @@ import { defineConfig } from "vite"
 import { viteStaticCopy } from "vite-plugin-static-copy"
 import tsconfigPaths from "vite-tsconfig-paths"
 
+import { envConfig } from "./env.config"
 import linguiConfig from "./lingui.config"
-import { env } from "./src/env"
 
 dotenv.config({ path: "../../.env", quiet: true })
+
+const env = createEnv({
+  clientPrefix: "BITCART_",
+  emptyStringAsUndefined: true,
+  client: envConfig.clientEnvSchemas,
+  shared: envConfig.sharedEnvSchemas,
+  runtimeEnv: process.env,
+})
 
 const { PRODUCTION_BASE_URL } = env
 
