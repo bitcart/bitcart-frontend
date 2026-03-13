@@ -1,4 +1,5 @@
 import { type VariantProps } from "class-variance-authority"
+import React, { useCallback } from "react"
 
 import { cn } from "@/utils"
 
@@ -47,17 +48,34 @@ export const InputGroupAddon: React.FC<InputGroupAddonProps> = ({
   align = "inline-start",
   ...props
 }) => {
+  const handleInputFocus = useCallback(
+    (e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>) => {
+      if (!(e.target as HTMLElement).closest("button")) {
+        e.currentTarget.parentElement?.querySelector("input")?.focus()
+      }
+    },
+
+    [],
+  )
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Enter") {
+        handleInputFocus(e)
+      }
+    },
+
+    [handleInputFocus],
+  )
+
   return (
     <div
       role="group"
       data-slot="input-group-addon"
       data-align={align}
       className={cn(inputGroupAddonVariants({ align }), className)}
-      onClick={(e) => {
-        if (!(e.target as HTMLElement).closest("button")) {
-          e.currentTarget.parentElement?.querySelector("input")?.focus()
-        }
-      }}
+      onClick={handleInputFocus}
+      onKeyDown={handleKeyDown}
       {...props}
     />
   )

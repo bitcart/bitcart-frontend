@@ -26,7 +26,8 @@ export const coinCatalogEntrySearch = (
 
       map(
         evolve({
-          fungibleTokens: (entries) => fungibleTokenCatalogEntrySearch(entries, searchTerm),
+          fungibleTokens: (catalogEntries) =>
+            fungibleTokenCatalogEntrySearch(catalogEntries, searchTerm),
         }),
       ),
     )

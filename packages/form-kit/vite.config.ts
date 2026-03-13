@@ -14,7 +14,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [
     tsconfigPaths(),
-    react(),
+    react({
+      babel: {
+        plugins: ["babel-plugin-react-compiler"],
+      },
+    }),
     dts({ bundleTypes: false, tsconfigPath: "./tsconfig.lib.json" }),
     externalizeDeps(),
   ],

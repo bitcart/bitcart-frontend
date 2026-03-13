@@ -2,8 +2,8 @@ import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
 import type { LocaleId } from "@bitcart/core/utils"
 import { useLingui } from "@lingui/react"
 import { useCallback } from "react"
-import { navigate } from "vike/client/router"
 import { usePageContext } from "vike-react/usePageContext"
+import { navigate } from "vike/client/router"
 
 import { useClientLocaleId, type UseClientLocaleIdParams } from "./client-locale"
 
@@ -31,9 +31,9 @@ export const useHandleLocaleChange = <TSupportedLocaleId extends LocaleId>({
         }
 
         if (localeId === SOURCE_LOCALE_ID) {
-          navigate(urlLogical, navigationParams)
+          void navigate(urlLogical, navigationParams)
         } else {
-          navigate(`/${localeId}` + (urlLogical === "/" ? "" : urlLogical), navigationParams)
+          void navigate(`/${localeId}` + (urlLogical === "/" ? "" : urlLogical), navigationParams)
         }
       }
     },

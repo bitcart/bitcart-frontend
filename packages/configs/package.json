@@ -1,0 +1,22 @@
+{
+  "name": "@bitcart/configs",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./base/ts": "./src/base/ts.json",
+    "./base/oxlint": "./src/base/oxlint.ts",
+    "./by-package-type/app-ts": "./src/by-package-type/app-ts.json",
+    "./by-package-type/lib-ts": "./src/by-package-type/lib-ts.json",
+    "./by-supported-runtime/nodejs-ts": {
+      "default": "./src/by-supported-runtime/nodejs-ts.json"
+    },
+    "./by-supported-runtime/browser-ts": "./src/by-supported-runtime/browser-ts.json",
+    "./by-view-layer/react-oxlint": "./src/by-view-layer/react-oxlint.ts",
+    "./by-view-layer/react-ts": "./src/by-view-layer/react-ts.json",
+    "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts"
+  },
+  "devDependencies": {
+    "oxlint": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies"
+  }
+}

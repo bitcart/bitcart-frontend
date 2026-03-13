@@ -1,7 +1,7 @@
 {
   "extends": [
-    "@bitcart/typescript-config/by-package-type/library.json",
-    "@bitcart/typescript-config/by-supported-runtime/browser.json"
+    "@bitcart/configs/by-package-type/lib-ts",
+    "@bitcart/configs/by-supported-runtime/browser-ts"
   ],
 
   "compilerOptions": {

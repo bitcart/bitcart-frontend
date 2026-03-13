@@ -3,8 +3,8 @@ import type { ErrorDisplayAttributes } from "@bitcart/ui-kit/types"
 import { Link } from "@bitcart/vike-kit/navigation"
 import { useLingui } from "@lingui/react/macro"
 import { useMemo } from "react"
-import { reload } from "vike/client/router"
 import { usePageContext } from "vike-react/usePageContext"
+import { reload } from "vike/client/router"
 
 export function Page() {
   const { t } = useLingui()
@@ -29,7 +29,7 @@ export function Page() {
   return (
     <ErrorPageTemplate
       LinkComponent={Link}
-      handleRetry={() => reload()}
+      handleRetry={reload}
       statusCode={errorStatusCode}
       message={errorMeta.message}
     >

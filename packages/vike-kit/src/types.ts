@@ -16,7 +16,6 @@ export type PageContextOriginal = Omit<
 >
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Vike {
     interface PageContext extends PageContextPayload {
       abortReason?: string | { notAdmin: true }

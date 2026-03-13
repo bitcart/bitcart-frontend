@@ -148,15 +148,16 @@ export type LayoutNavigationConfig = {
   directory: NavigationDirectory
 }
 
-/**
- * Generalized navigation link group definition
- */
-export type NavigationGroup = NavigationLinkGroup<
+export type NavigationLink =
   | LabeledNavigationLink
   | (LabeledNavigationLink & WithGlobalPosition)
   | IconNavigationLink
   | (IconNavigationLink & WithGlobalPosition)
->
+
+/**
+ * Generalized navigation link group definition
+ */
+export type NavigationGroup = NavigationLinkGroup<NavigationLink>
 
 /**
  * Global layout configuration to be applied at the root level

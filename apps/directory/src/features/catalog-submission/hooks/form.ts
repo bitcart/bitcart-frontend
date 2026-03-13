@@ -55,9 +55,9 @@ export const useCatalogSubmissionForm = () => {
     },
   })
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.SubmitEvent) => {
     event.preventDefault()
-    self.handleSubmit()
+    void self.handleSubmit()
   }
 
   return {

@@ -26,13 +26,13 @@ repos:
       - id: typecheck
         name: typecheck
         language: system
-        entry: just lint-types
+        entry: just typecheck
+        files: '\.(ts|tsx)$'
+        require_serial: true
         pass_filenames: false
-        require_serial: true
-      - id: prettier
-        name: prettier
+      - id: format
+        name: format
         language: system
-        entry: just prettier
-        types: [text]
-        exclude: '(\.(ts|js|tsx)$|pnpm-lock\.yaml$)'
+        entry: just format
         require_serial: true
+        pass_filenames: false

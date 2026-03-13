@@ -7,11 +7,7 @@ import { Toaster } from "../molecules/toaster"
 export type WebappLayoutProps = {
   LinkComponent: BasicLinkComponent
   config: () => LayoutConfig
-
-  classNames?: {
-    root?: string
-  }
-
+  classNames?: { root?: string }
   children: React.ReactNode
 }
 

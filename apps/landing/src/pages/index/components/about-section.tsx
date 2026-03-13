@@ -3,7 +3,7 @@ import { cn } from "@bitcart/ui-kit/utils"
 import { Link } from "@bitcart/vike-kit/navigation"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { Heart, Loader } from "lucide-react"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 import { env } from "@/env"
 
@@ -15,7 +15,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
   const { t } = useLingui()
   const [donationLoading, setDonationLoading] = useState(false)
 
-  const showDonation = async () => {
+  const showDonation = useCallback(async () => {
     const price = 5 // $5
     setDonationLoading(true)
 
@@ -38,7 +38,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
     setDonationLoading(false)
 
     window?.bitcart?.showInvoice(data.id)
-  }
+  }, [])
 
   return (
     <section id="about" className={cn("gap-6 flex flex-col", className)}>

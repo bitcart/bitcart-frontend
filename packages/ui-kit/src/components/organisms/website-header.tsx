@@ -11,8 +11,9 @@ import type {
   BasicNavigationLink,
   LayoutBrandAttributes,
   LayoutNavigationConfig,
+  NavigationLink,
 } from "@/types"
-import { cn } from "@/utils"
+import { cn, getNavigationLinkFlexOrder } from "@/utils"
 
 import { Button } from "../atoms/button"
 import {
@@ -52,6 +53,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
   const { isScrolled } = useWindowScrollThreshold({ axis: "vertical", value: 20 })
   const currentBreakpoint = useCurrentBreakpoint()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const toggleMobileMenu = useCallback(() => setIsMobileMenuOpen((isOpen) => !isOpen), [])
   const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), [])
 
   const isCssScrollStateTrackable = useCssRuntimeFeatureSupport({
@@ -84,6 +86,11 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
       )
     }
   }, [currentBreakpoint, labeledLinks.length, maxVisibleNavBarLinks])
+
+  const getNavigationLinkStyle = useCallback(
+    (navLink: Partial<NavigationLink>) => ({ order: getNavigationLinkFlexOrder(navLink) }),
+    [],
+  )
 
   const getNavBarLinkClass = useCallback(
     (n: number) =>
@@ -154,7 +161,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
                 className={getNavBarLinkClass(
                   "globalPosition" in link ? link.globalPosition : idx + 1,
                 )}
-                style={{ order: "globalPosition" in link ? link.globalPosition : undefined }}
+                style={getNavigationLinkStyle(link)}
                 aria-label={link.hint ?? link.label}
               >
                 <NavigationMenuLink asChild>
@@ -177,7 +184,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
             variant="ghost"
             title={link.hint}
             className="md:flex hidden"
-            style={{ order: "globalPosition" in link ? link.globalPosition : undefined }}
+            style={getNavigationLinkStyle(link)}
             aria-label={link.hint.replace(/`/g, "")}
           >
             <Link href={link.href}>
@@ -188,7 +195,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
       </>
     ),
 
-    [Link, currentBreakpoint, getNavBarLinkClass, iconLinks, labeledLinks],
+    [Link, currentBreakpoint, getNavBarLinkClass, getNavigationLinkStyle, iconLinks, labeledLinks],
   )
 
   const dropdownNavMenu = useMemo(
@@ -216,7 +223,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
                 className={getDropdownNavMenuLinkClass(
                   "globalPosition" in link ? link.globalPosition : idx + 1,
                 )}
-                style={{ order: "globalPosition" in link ? link.globalPosition : undefined }}
+                style={getNavigationLinkStyle(link)}
                 aria-label={link.hint ?? link.label}
               >
                 <Link href={link.href}>{link.label}</Link>
@@ -227,7 +234,13 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
       </DropdownMenu>
     ),
 
-    [Link, getDropdownNavMenuLinkClass, labeledLinks, shouldDisplayDropdownNavMenu],
+    [
+      Link,
+      getDropdownNavMenuLinkClass,
+      getNavigationLinkStyle,
+      labeledLinks,
+      shouldDisplayDropdownNavMenu,
+    ],
   )
 
   const mobileMenuContent = useMemo(
@@ -250,7 +263,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
                   onClick={closeMobileMenu}
                   variant="ghost"
                   className={`w-full justify-start text-left`}
-                  style={{ order: "globalPosition" in link ? link.globalPosition : undefined }}
+                  style={getNavigationLinkStyle(link)}
                   aria-label={link.hint ?? link.label}
                 >
                   <Link href={link.href}>{link.label}</Link>
@@ -279,7 +292,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
                       variant="ghost"
                       title={link.hint}
                       className="hover:text-accent-foreground bg-muted/25 dark:hover:bg-accent/30"
-                      style={{ order: "globalPosition" in link ? link.globalPosition : undefined }}
+                      style={getNavigationLinkStyle(link)}
                       aria-label={link.hint.replace(/`/g, "")}
                     >
                       <Link href={link.href}>
@@ -303,7 +316,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
         </div>
       ),
 
-    [Link, closeMobileMenu, iconLinks, isMobileMenuOpen, labeledLinks],
+    [Link, closeMobileMenu, iconLinks, isMobileMenuOpen, getNavigationLinkStyle, labeledLinks],
   )
 
   return (
@@ -347,7 +360,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
 
             <Button
               disabled={!isClient}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={toggleMobileMenu}
               size="icon-lg"
               variant="ghost"
               className="md:hidden"

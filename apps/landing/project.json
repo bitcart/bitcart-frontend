@@ -40,12 +40,12 @@
       "continuous": true
     },
 
-    "lint": {
-      "dependsOn": ["build:styles", "^build", "^lint"]
+    "lint:check": {
+      "dependsOn": ["build:styles", "^build", "^lint:check"]
     },
 
-    "format": {
-      "dependsOn": ["build:styles", "^build", "^format"]
+    "lint": {
+      "dependsOn": ["build:styles", "^build", "^lint"]
     }
   }
 }

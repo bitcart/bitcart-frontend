@@ -2,6 +2,9 @@
   "name": "@bitcart/unocss-preset",
   "version": "1.0.0",
   "description": "UnoCSS preset for applications and websites under the Bitcart umbrella",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -9,23 +12,22 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "lint": "eslint .",
-    "format": "eslint . --fix",
+    "lint:check": "oxlint . --type-aware",
+    "lint": "oxlint . --fix --type-aware",
     "generate:graphviz": "madge --image graphviz.svg src",
     "generate:dist-graphviz": "madge --image dist-graphviz.svg dist",
     "build": "vite build"
   },
   "dependencies": {},
   "devDependencies": {
-    "@bitcart/typescript-config": "workspace:*",
+    "@bitcart/configs": "workspace:*",
+    "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@unocss/cli": "catalog:devDependencies",
     "@unocss/preset-wind4": "catalog:devDependencies",
     "madge": "catalog:devDependencies",
+    "oxlint": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
     "unocss-preset-animations": "catalog:devDependencies",

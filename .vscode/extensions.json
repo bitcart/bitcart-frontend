@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint",
     "streetsidesoftware.code-spell-checker",
     "aaron-bond.better-comments",
     "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries",
@@ -16,6 +15,7 @@
     "eamodio.gitlens",
     "nefrob.vscode-just-syntax",
     "davidanson.vscode-markdownlint",
-    "bierner.markdown-mermaid"
+    "bierner.markdown-mermaid",
+    "oxc.oxc-vscode"
   ]
 }

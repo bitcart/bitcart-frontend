@@ -1,57 +1,32 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
-  "eslint.format.enable": true,
-  "eslint.useFlatConfig": true,
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "html",
-    "mdx",
-    "markdown"
-  ],
+  "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "explicit",
-    "source.fixAll.unusedImports": "never",
-    "source.fixAll.convertImportFormat": "never"
+    "source.fixAll.oxc": "always"
   },
+  "oxc.typeAware": true,
   "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "never"
-    }
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "never"
-    }
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "never"
-    }
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "never"
-    }
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[just]": {
     "editor.defaultFormatter": "nefrob.vscode-just-syntax"
@@ -66,7 +41,8 @@
     "**/.git/**": true,
     "**/node_modules/**": true,
     "**/.vscode/**": true,
-    "**/.nx/**": true
+    "**/.nx/**": true,
+    "**/dist/**": true
   },
   "git.autofetch": true,
   "gitlens.remotes": [
@@ -108,6 +84,7 @@
     "hellordp",
     "inlinesvg",
     "interruptible",
+    "isnan",
     "justfile",
     "linecap",
     "linejoin",
@@ -122,11 +99,16 @@
     "Navlink",
     "njsproj",
     "nodenext",
+    "nonconstructor",
+    "nonoctal",
     "noreferrer",
     "ntvs",
     "Occitan",
     "oklch",
     "overscroll",
+    "oxfmt",
+    "oxlint",
+    "oxlintrc",
     "pkill",
     "Polski",
     "preflights",
@@ -153,6 +135,7 @@
     "svgs",
     "tanstack",
     "Tipbot",
+    "tsgolint",
     "Turborepo",
     "Türkçe",
     "unocss",
@@ -164,6 +147,7 @@
     "vite",
     "vitejs",
     "webapps",
+    "zizmor",
     "Беларуская",
     "Русский",
     "Українська"

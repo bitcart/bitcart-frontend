@@ -15,12 +15,11 @@ export const Hero = () => {
   return (
     <section
       className={`
-        from-purple-50 via-white to-purple-100 pt-16 pb-8
+        from-purple-50 via-white to-purple-100 pt-20 pb-8
         md:pb-16
         dark:from-gray-900 dark:via-gray-900 dark:to-gray-800
         relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br
       `}
-      style={{ paddingTop: "80px" }}
     >
       {/* Background decoration */}
       <div className="inset-0 absolute overflow-hidden">

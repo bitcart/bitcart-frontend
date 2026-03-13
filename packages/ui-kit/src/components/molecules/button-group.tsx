@@ -3,8 +3,8 @@ import { type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/utils"
 
-import { buttonGroupVariants } from "./button-group-variants"
 import { Separator } from "../atoms/separator"
+import { buttonGroupVariants } from "./button-group-variants"
 
 export type ButtonGroupProps = React.ComponentProps<"div"> &
   VariantProps<typeof buttonGroupVariants> & {}

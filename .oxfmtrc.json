@@ -1,0 +1,31 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "jsxSingleQuote": false,
+  "printWidth": 100,
+  "semi": false,
+  "singleQuote": false,
+
+  "sortImports": {
+    "newlinesBetween": true,
+    "order": "asc",
+    "ignoreCase": true,
+
+    "groups": [
+      "builtin",
+      "external",
+      "internal",
+      ["parent", "sibling"],
+      "index",
+      "style",
+      "unknown"
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.json", "**/*.jsonc"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
+}

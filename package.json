@@ -3,15 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
-  "author": "",
   "license": "ISC",
+  "author": "",
   "type": "module",
-  "engines": {
-    "node": ">=22",
-    "pnpm": ">=10.28.2"
-  },
   "scripts": {
-    "prettier": "prettier",
+    "oxlint": "oxlint",
+    "oxfmt": "oxfmt",
     "nx": "nx",
     "workspace": "pnpm -w",
     "core": "pnpm -C packages/core",
@@ -23,34 +20,22 @@
     "directory": "pnpm -C apps/directory"
   },
   "devDependencies": {
-    "@bitcart/typescript-config": "workspace:*",
+    "@bitcart/configs": "workspace:*",
     "@effect/language-service": "catalog:devDependencies",
-    "@eslint/js": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
-    "@typescript-eslint/eslint-plugin": "catalog:devDependencies",
-    "@typescript-eslint/parser": "catalog:devDependencies",
     "baseline-browser-mapping": "catalog:devDependencies",
-    "eslint": "catalog:devDependencies",
-    "eslint-config-prettier": "catalog:devDependencies",
-    "eslint-import-resolver-typescript": "catalog:devDependencies",
-    "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
-    "eslint-plugin-import": "catalog:devDependencies",
-    "eslint-plugin-prettier": "catalog:devDependencies",
-    "eslint-plugin-react": "catalog:devDependencies",
-    "eslint-plugin-react-hooks": "catalog:devDependencies",
-    "eslint-plugin-react-refresh": "catalog:devDependencies",
     "globals": "catalog:devDependencies",
     "madge": "catalog:devDependencies",
     "nx": "catalog:devDependencies",
-    "prettier": "catalog:devDependencies",
+    "oxfmt": "catalog:devDependencies",
+    "oxlint": "catalog:devDependencies",
+    "oxlint-tsgolint": "catalog:devDependencies",
     "tailwindcss": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
-    "typescript-eslint": "catalog:devDependencies"
+    "typescript": "catalog:devDependencies"
   },
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": false
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10.28.2"
   },
   "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017"
 }

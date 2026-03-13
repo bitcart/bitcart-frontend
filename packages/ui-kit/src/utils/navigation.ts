@@ -1,6 +1,11 @@
 import { evolve, filter } from "remeda"
 
-import type { NavigationDirectory, NavigationGroup, RootLayoutRegionDesignation } from "@/types"
+import type {
+  NavigationDirectory,
+  NavigationGroup,
+  NavigationLink,
+  RootLayoutRegionDesignation,
+} from "@/types"
 
 const createNavigationGroupFilter =
   (targetLayoutRegion: RootLayoutRegionDesignation) => (group: NavigationGroup) => {
@@ -30,3 +35,6 @@ export const getLayoutRegionNavigationDirectory = (
     iconLinks: (linkGroup) => filter(linkGroup, groupFilter),
   })
 }
+
+export const getNavigationLinkFlexOrder = (navLink: Partial<NavigationLink>): number | undefined =>
+  "globalPosition" in navLink ? navLink.globalPosition : undefined

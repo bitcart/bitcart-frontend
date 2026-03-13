@@ -5,12 +5,14 @@ You can find them in apps/\* folders.
 
 Current list:
 
-- apps/landing - Bitcart Website https://bitcart.ai
-- apps/directory - Bitcart Merchants Directory https://directory.bitcart.ai
+- apps/landing - Bitcart Website <https://bitcart.ai>
+- apps/directory - Bitcart Merchants Directory <https://directory.bitcart.ai>
 
 ## Development
 
 ### Prerequisites
+
+Assuming you have already cloned this repository and are in its root directory, follow these steps to get started:
 
 1. First, [install uv](https://github.com/astral-sh/uv?tab=readme-ov-file#installation) unless it's already present in your system.
 
@@ -31,7 +33,8 @@ Current list:
    ```
 
 4. Finally, [install fnm](https://github.com/Schniz/fnm?tab=readme-ov-file#installation) Node.js version manager or make sure it's already present in your system.
-   Once it's done, run the following command to install the [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io) versions required by this project along with npm dependencies:
+
+   Once it's done, install the [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io) versions required by this project along with npm dependencies:
 
    ```bash
    fnm install && fnm use && corepack enable pnpm && pnpm i

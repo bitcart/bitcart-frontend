@@ -16,7 +16,15 @@ export const createVikeConfig = ({
   ({
     extends: extendsConfig,
     keepScrollPosition: true,
-    passToClient: ["localeId", "posixLocaleId", "messages", "metadata", ...passToClient],
+
+    passToClient: [
+      "localeId",
+      "posixLocaleId",
+      "messages",
+      "metadata",
+      ...(typeof passToClient === "string" ? [passToClient] : passToClient),
+    ],
+
     prerender: { enable: true, parallel: false },
     ssr,
     trailingSlash: false,

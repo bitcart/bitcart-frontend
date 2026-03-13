@@ -93,7 +93,8 @@ export const getPreflightCSS: Preflight<Theme>["getCSS"] = ({ theme }) => /* CSS
  * Defines radius CSS variables based on a base value.
  */
 export const createGetRadiusCSSVariables: (baseValue: number) => Preflight<Theme>["getCSS"] =
-  (baseValue) => () => /* CSS */ `
+  (baseValue) => () =>
+    /* CSS */ `
 :root, :host {
   --radius-DEFAULT: ${baseValue}rem;
   --radius-xs: calc(var(--radius-DEFAULT) / 2);

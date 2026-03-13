@@ -1,0 +1,3 @@
+{
+  "extends": "./src/by-supported-runtime/nodejs-ts.json"
+}

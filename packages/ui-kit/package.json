@@ -2,6 +2,9 @@
   "name": "@bitcart/ui-kit",
   "version": "1.1.0",
   "description": "UI development kit for applications and websites under the Bitcart umbrella",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
     "./components": {
@@ -24,13 +27,10 @@
       "types": "./dist/utils/index.d.ts"
     }
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "lint": "eslint .",
-    "format": "eslint . --fix",
+    "lint:check": "oxlint . --type-aware",
+    "lint": "oxlint . --fix --type-aware",
     "shadcn": "pnpx shadcn@latest",
     "shadcn-add": "pnpm shadcn add -p ./src/components/tmp",
     "generate:graphviz": "madge --image graphviz.svg src",
@@ -52,6 +52,7 @@
     "@radix-ui/react-separator": "catalog:dependencies",
     "@radix-ui/react-slot": "catalog:dependencies",
     "@tanstack/react-form": "catalog:dependencies",
+    "babel-plugin-react-compiler": "catalog:devDependencies",
     "class-variance-authority": "catalog:dependencies",
     "cmdk": "catalog:dependencies",
     "date-fns": "catalog:dependencies",
@@ -68,12 +69,16 @@
     "vaul": "catalog:dependencies"
   },
   "devDependencies": {
-    "@bitcart/typescript-config": "workspace:*",
+    "@bitcart/configs": "workspace:*",
     "@bitcart/unocss-preset": "workspace:*",
+    "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "@unocss/cli": "catalog:devDependencies",
     "@vitejs/plugin-react": "catalog:devDependencies",
+    "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
+    "eslint-plugin-react-hooks": "catalog:devDependencies",
     "madge": "catalog:devDependencies",
+    "oxlint": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
     "unplugin-dts": "catalog:devDependencies",

@@ -3,8 +3,8 @@ import { ChevronDownIcon } from "lucide-react"
 
 import { cn } from "@/utils"
 
-import { navigationMenuTriggerStyle } from "./navigation-menu-styles"
 import { NavigationMenuViewport } from "../atoms/navigation-menu"
+import { navigationMenuTriggerStyle } from "./navigation-menu-styles"
 
 export const NavigationMenu = ({
   className,

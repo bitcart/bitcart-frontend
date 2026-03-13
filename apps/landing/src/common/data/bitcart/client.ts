@@ -85,18 +85,20 @@ export const getAssetCatalog = (): Promise<AssetCatalog> =>
       ),
     )
     .then((results) => {
-      const entries = (results as PromiseFulfilledResult<AssetCatalogEntry>[]).map(prop("value"))
+      const catalogEntries = (results as PromiseFulfilledResult<AssetCatalogEntry>[]).map(
+        prop("value"),
+      )
 
       const totalCounts = {
-        blockchains: entries.length,
+        blockchains: catalogEntries.length,
 
-        fungibleTokens: entries.reduce(
+        fungibleTokens: catalogEntries.reduce(
           (total, { fungibleTokens }) => total + fungibleTokens.totalCount,
           0,
         ),
       }
 
-      return { entries, totalCounts }
+      return { entries: catalogEntries, totalCounts }
     })
     .catch((err) => {
       console.error("Failed to fetch supported blockchains:", err)

@@ -1,4 +1,5 @@
 import { Button, type ButtonProps } from "@bitcart/ui-kit/components"
+import { useMemo } from "react"
 
 import { useFormContext } from "@/contexts/form"
 
@@ -10,8 +11,15 @@ export type SubmitButtonProps = Omit<ButtonProps, "type" | "disabled"> & {
 export const SubmitButton: React.FC<SubmitButtonProps> = ({ icon, label, size = "lg" }) => {
   const form = useFormContext()
 
+  const subscriptionSelector = useMemo(
+    () =>
+      ({ canSubmit, isPristine }: (typeof form)["state"]) => [canSubmit, isPristine],
+
+    [],
+  )
+
   return (
-    <form.Subscribe selector={({ canSubmit, isPristine }) => [canSubmit, isPristine]}>
+    <form.Subscribe selector={subscriptionSelector}>
       {([_canSubmit, isPristine]) => {
         //* Allows triggering validation manually to highlight untouched required fields
         const isDisabled = isPristine

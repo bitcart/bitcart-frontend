@@ -39,7 +39,7 @@ drop-artifacts:
 [doc("
 Add external dependency to the workspace root.
 
-Example: `just root-add @namespace/package-name`
+Example: `just root-add @t3-oss/env-core`
 ")]
 [group("Dependency management")]
 root-add package-specifier:
@@ -48,7 +48,7 @@ root-add package-specifier:
 [doc("
 Add external dev dependency to the workspace root.
 
-Example: `just root-add-dev @eslint/json`
+Example: `just root-add-dev @effect/language-service`
 ")]
 [group("Dependency management")]
 root-add-dev package-specifier:
@@ -57,7 +57,7 @@ root-add-dev package-specifier:
 [doc("
 Add external dependency to a specific workspace member package.
 
-Example: `just add ui-kit @namespace/package-name`
+Example: `just add ui-kit @phosphor-icons/react`
 ")]
 [group("Dependency management")]
 add ws-member-name package-specifier:
@@ -66,7 +66,7 @@ add ws-member-name package-specifier:
 [doc("
 Add external dev dependency to a specific workspace member package.
 
-Example: `just add-dev ui-kit @eslint/json`
+Example: `just add-dev ui-kit @unocss/cli`
 ")]
 [group("Dependency management")]
 add-dev ws-member-name package-specifier:
@@ -81,37 +81,60 @@ Example: `just ui-kit-shadcn-add accordion`
 ui-kit-shadcn-add component-name:
     pnpm ui-kit shadcn-add '{{ component-name }}'
 
-### FORMATTING AND LINTING
+### CODE QUALITY
 
 [doc("
-Lint and format all workspace packages, fixing any issues when possible.
+Auto-format code with oxfmt.
 ")]
-[group("Formatting and linting")]
+[group("Code quality")]
+format:
+    @pnpm oxfmt
+
+[doc("
+Lint with autofix using oxlint.
+")]
+[group("Code quality")]
 lint *nx-args:
-    @pnpm nx run-many --outputStyle=stream --target=format $(just _nx-args {{ nx-args }})
+    @pnpm nx run-many --outputStyle=stream --target=lint $(just _nx-args {{ nx-args }})
 
 [doc("
-Check all workspace packages for linting issues.
+Format and lint, fixing all issues.
 ")]
-[group("Formatting and linting")]
+[group("Code quality")]
+fix: format lint
+
+[doc("
+Verify formatting with oxfmt.
+")]
+[group("Code quality")]
+format-check:
+    @pnpm oxfmt --check
+
+[doc("
+Verify linting with oxlint.
+")]
+[group("Code quality")]
 lint-check *nx-args:
-    @pnpm nx run-many --outputStyle=stream --target=lint $(just _nx-args {{ nx-args }})
+    @pnpm nx run-many --outputStyle=stream --target=lint:check $(just _nx-args {{ nx-args }})
 
 [doc("
 Run typecheck for all workspace packages.
 ")]
-[group("Formatting and linting")]
-lint-types *nx-args:
+[group("Code quality")]
+typecheck *nx-args:
     @pnpm nx run-many --outputStyle=stream --target=typecheck $(just _nx-args {{ nx-args }})
 
 [doc("
-Run prettier on specified files or directories.
-
-Example: `just prettier .` or `just prettier src/`
+Run all checks (format, lint, typecheck) without fixing.
 ")]
-[group("Formatting and linting")]
-prettier *args:
-    @pnpm prettier --write --list-different --ignore-unknown {{ args }}
+[group("Code quality")]
+check: format-check lint-check typecheck
+
+[doc("
+Full CI pipeline: all checks + tests.
+")]
+[group("Code quality")]
+ci: check
 
 ## DEVELOPMENT and CI/CD
 

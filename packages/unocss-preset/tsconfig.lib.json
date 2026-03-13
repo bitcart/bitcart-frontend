@@ -1,5 +1,5 @@
 {
-  "extends": ["@bitcart/typescript-config/by-package-type/library.json"],
+  "extends": ["@bitcart/configs/by-package-type/lib-ts"],
 
   "compilerOptions": {
     "outDir": "./dist",

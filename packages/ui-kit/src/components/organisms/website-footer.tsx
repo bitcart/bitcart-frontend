@@ -1,7 +1,13 @@
 import { t } from "@lingui/core/macro"
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 
-import type { BasicLinkComponent, LayoutBrandAttributes, LayoutNavigationConfig } from "@/types"
+import type {
+  BasicLinkComponent,
+  LayoutBrandAttributes,
+  LayoutNavigationConfig,
+  NavigationLink,
+} from "@/types"
+import { getNavigationLinkFlexOrder } from "@/utils"
 
 export type WebsiteFooterProps = {
   brandAttributes: LayoutBrandAttributes
@@ -25,6 +31,11 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({
       }`,
 
     [brand.copyrightAppendix, brand.copyrightSinceYear, brand.name],
+  )
+
+  const getNavigationLinkStyle = useCallback(
+    (navLink: Partial<NavigationLink>) => ({ order: getNavigationLinkFlexOrder(navLink) }),
+    [],
   )
 
   return (
@@ -54,7 +65,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({
                     href={item.href}
                     title={item.hint}
                     className="text-muted-foreground hover:text-accent-foreground transition-colors"
-                    style={{ order: "globalPosition" in item ? item.globalPosition : undefined }}
+                    style={getNavigationLinkStyle(item)}
                     aria-label={item.hint}
                   >
                     <Icon className="w-5 h-5" />
@@ -73,10 +84,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({
 
                 <ul className="gap-3 flex flex-col">
                   {group.items.map((item) => (
-                    <li
-                      key={item.label + item.href}
-                      style={{ order: "globalPosition" in item ? item.globalPosition : undefined }}
-                    >
+                    <li key={item.label + item.href} style={getNavigationLinkStyle(item)}>
                       <Link
                         href={item.href}
                         className={`

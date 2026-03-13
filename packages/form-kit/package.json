@@ -2,6 +2,9 @@
   "name": "@bitcart/form-kit",
   "version": "1.0.0",
   "description": "Form development kit for applications and websites under the Bitcart umbrella",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
     "./hooks": {
@@ -9,13 +12,10 @@
       "types": "./dist/hooks/index.d.ts"
     }
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "lint": "eslint .",
-    "format": "eslint . --fix",
+    "lint:check": "oxlint . --type-aware",
+    "lint": "oxlint . --fix --type-aware",
     "generate:graphviz": "madge --image graphviz.svg src",
     "build": "vite build"
   },
@@ -23,6 +23,7 @@
     "@bitcart/core": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",
     "@tanstack/react-form": "catalog:dependencies",
+    "babel-plugin-react-compiler": "catalog:devDependencies",
     "class-variance-authority": "catalog:dependencies",
     "lucide-react": "catalog:dependencies",
     "react": "catalog:dependencies",
@@ -30,10 +31,13 @@
     "usehooks-ts": "catalog:dependencies"
   },
   "devDependencies": {
-    "@bitcart/typescript-config": "workspace:*",
+    "@bitcart/configs": "workspace:*",
+    "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "@vitejs/plugin-react": "catalog:devDependencies",
+    "eslint-plugin-react-hooks": "catalog:devDependencies",
     "madge": "catalog:devDependencies",
+    "oxlint": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unplugin-dts": "catalog:devDependencies",
     "vite": "catalog:devDependencies",

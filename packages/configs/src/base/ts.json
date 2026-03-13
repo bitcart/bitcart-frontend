@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowUnreachableCode": false,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,

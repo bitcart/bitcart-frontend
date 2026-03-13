@@ -6,7 +6,7 @@
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": ["{workspaceRoot}/.env"],
-    "eslintInputs": ["default", "{workspaceRoot}/eslint.config.js"]
+    "oxlintInputs": ["default", "{workspaceRoot}/oxlint.config.ts"]
   },
   "targetDefaults": {
     "typecheck": {
@@ -14,15 +14,15 @@
       "cache": true
     },
 
-    "lint": {
-      "dependsOn": ["^build", "^lint"],
-      "inputs": ["eslintInputs"],
+    "lint:check": {
+      "dependsOn": ["^build", "^lint:check"],
+      "inputs": ["oxlintInputs"],
       "cache": true
     },
 
-    "format": {
-      "dependsOn": ["^build", "^format"],
-      "inputs": ["eslintInputs"],
+    "lint": {
+      "dependsOn": ["^build", "^lint"],
+      "inputs": ["oxlintInputs"],
       "cache": true
     },
 

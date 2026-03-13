@@ -1,5 +1,6 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
 import { type BCP47LanguageSubtag, type PosixLocaleIdLike } from "@bitcart/core/utils"
+import { useMemo } from "react"
 import { Fragment } from "react/jsx-runtime"
 import { usePageContext } from "vike-react/usePageContext"
 
@@ -14,8 +15,27 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
 }: HeadProps<TSupportedLocaleId>) =>
   function Head() {
     const { metadata, urlLogical } = usePageContext()
-
     const normalizedUrl = urlLogical === "/" ? "" : urlLogical
+
+    const metadataJsonInnerHtml = useMemo(
+      () => ({
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Bitcart",
+          url: "https://bitcart.ai",
+          sameAs: [
+            "https://twitter.com/BitcartCC",
+            "https://github.com/bitcart",
+            "https://reddit.com/r/Bitcart",
+            "https://linkedin.com/company/bitcart",
+            "https://instagram.com/bitcartcc",
+          ],
+        }),
+      }),
+
+      [],
+    )
 
     return (
       <>
@@ -71,25 +91,7 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
           ))}
 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Bitcart",
-              url: "https://bitcart.ai",
-              sameAs: [
-                "https://twitter.com/BitcartCC",
-                "https://github.com/bitcart",
-                "https://reddit.com/r/Bitcart",
-                "https://linkedin.com/company/bitcart",
-                "https://instagram.com/bitcartcc",
-              ],
-            }),
-          }}
-        ></script>
+        <script type="application/ld+json" dangerouslySetInnerHTML={metadataJsonInnerHtml} />
       </>
     )
   }
