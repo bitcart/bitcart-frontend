@@ -98,10 +98,10 @@ lint *nx-args:
     @pnpm nx run-many --outputStyle=stream --target=lint $(just _nx-args {{ nx-args }})
 
 [doc("
-Format and lint, fixing all issues.
+Lint and format, fixing all issues.
 ")]
 [group("Code quality")]
-fix: format lint
+fix: lint format
 
 [doc("
 Verify formatting with oxfmt.
