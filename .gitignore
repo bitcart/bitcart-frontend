@@ -34,3 +34,6 @@ node_modules
 
 # Generated i18n locales
 apps/*/src/common/i18n/_generated/
+
+# Generated issue diagrams
+scripts/output/
