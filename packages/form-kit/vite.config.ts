@@ -16,7 +16,9 @@ export default defineConfig({
     tsconfigPaths(),
     react({
       babel: {
-        plugins: [],
+        plugins: [
+          /*"babel-plugin-react-compiler"*/
+        ],
       },
     }),
     dts({ bundleTypes: false, tsconfigPath: "./tsconfig.lib.json" }),

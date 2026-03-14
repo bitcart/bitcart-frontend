@@ -41,7 +41,7 @@ export default defineConfig({
 
     react({
       babel: {
-        plugins: ["@lingui/babel-plugin-lingui-macro"],
+        plugins: ["@lingui/babel-plugin-lingui-macro" /*,"babel-plugin-react-compiler"*/],
       },
     }),
 
