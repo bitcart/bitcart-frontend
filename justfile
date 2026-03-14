@@ -160,6 +160,13 @@ build *nx-args:
     @pnpm nx run-many --target=build $(just _nx-args {{ nx-args }})
 
 [doc("
+Build only library packages (excludes apps).
+")]
+[group("Development and CI/CD")]
+build-packages *nx-args:
+    @pnpm nx run-many --target=build --projects='packages/*' $(just _nx-args {{ nx-args }})
+
+[doc("
 Serve production preview for every application in parallel.
 ")]
 [group("Development and CI/CD")]
