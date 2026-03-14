@@ -17,6 +17,20 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Set up Node.js
+        uses: bitcart/bitcart-actions/actions/setup-node@master
+
+      - name: Set up Python
+        uses: bitcart/bitcart-actions/actions/setup-python@master
+        with:
+          cache-dependency-glob: ""
+
+      - name: Install just
+        run: uv pip install rust-just
+
+      - name: Extract locales
+        run: pnpm landing locales:extract
+
       - name: Install Transifex CLI
         run: apps/landing/scripts/install-tx-client.sh
 
