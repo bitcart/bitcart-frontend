@@ -1,0 +1,27 @@
+name: Upload locales
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  upload-locales:
+    name: upload-locales
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Install Transifex CLI
+        run: apps/landing/scripts/install-tx-client.sh
+
+      - name: Push source locale to Transifex
+        working-directory: apps/landing
+        run: tx push -s
+        env:
+          TX_TOKEN: ${{ secrets.TX_TOKEN }}
