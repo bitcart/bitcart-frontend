@@ -14,7 +14,7 @@ export default defineConfig({
   plugins: [
     tsconfigPaths(),
     dts({ bundleTypes: false, tsconfigPath: "./tsconfig.lib.json" }),
-    externalizeDeps(),
+    externalizeDeps({ include: ["oxc-parser"] }),
   ],
 
   build: {
