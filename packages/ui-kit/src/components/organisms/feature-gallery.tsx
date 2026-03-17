@@ -40,8 +40,12 @@ export const FeatureGallery: React.FC<FeatureGalleryProps> = ({ LinkComponent: L
                     {action.label}
                   </Button>
                 ) : (
-                  <Button key={action.label} asChild>
-                    <Link href={action.href}>{action.label}</Link>
+                  <Button
+                    key={action.label}
+                    render={<Link href={action.href} />}
+                    nativeButton={false}
+                  >
+                    {action.label}
                   </Button>
                 ),
               )}

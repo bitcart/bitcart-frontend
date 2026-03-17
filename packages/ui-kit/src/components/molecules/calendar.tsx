@@ -45,23 +45,23 @@ export const Calendar: React.FC<CalendarProps> = ({
 
       button_previous: cn(
         buttonVariants({ variant: buttonVariant }),
-        "p-0 size-(--cell-size) select-none aria-disabled:opacity-50",
+        "p-0 size-[--cell-size] select-none aria-disabled:opacity-50",
         defaultClassNames.button_previous,
       ),
 
       button_next: cn(
         buttonVariants({ variant: buttonVariant }),
-        "p-0 size-(--cell-size) select-none aria-disabled:opacity-50",
+        "p-0 size-[--cell-size] select-none aria-disabled:opacity-50",
         defaultClassNames.button_next,
       ),
 
       month_caption: cn(
-        "flex h-(--cell-size) w-full items-center justify-center px-(--cell-size)",
+        "flex h-[--cell-size] w-full items-center justify-center px-[--cell-size]",
         defaultClassNames.month_caption,
       ),
 
       dropdowns: cn(
-        "text-sm font-medium gap-1.5 flex h-(--cell-size) w-full items-center justify-center",
+        "text-sm font-medium gap-1.5 flex h-[--cell-size] w-full items-center justify-center",
         defaultClassNames.dropdowns,
       ),
 
@@ -100,7 +100,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       ),
 
       week: cn("mt-2 flex w-full", defaultClassNames.week),
-      week_number_header: cn("w-(--cell-size) select-none", defaultClassNames.week_number_header),
+      week_number_header: cn("w-[--cell-size] select-none", defaultClassNames.week_number_header),
 
       week_number: cn(
         "text-muted-foreground text-[0.8rem] select-none",
@@ -164,7 +164,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       WeekNumber: ({ children, ...elementProps }) => {
         return (
           <td {...elementProps}>
-            <div className="flex size-(--cell-size) items-center justify-center text-center">
+            <div className="flex size-[--cell-size] items-center justify-center text-center">
               {children}
             </div>
           </td>

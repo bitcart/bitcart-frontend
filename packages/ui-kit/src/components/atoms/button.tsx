@@ -1,31 +1,27 @@
-import { Slot } from "@radix-ui/react-slot"
+import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/utils"
 
 import { buttonVariants } from "./button-variants"
 
-export type ButtonProps = React.ComponentProps<"button"> &
+export type ButtonProps = ButtonPrimitive.Props &
   VariantProps<typeof buttonVariants> & {
     expandOnHover?: boolean
-    asChild?: boolean
   }
 
 export const Button: React.FC<ButtonProps> = ({
-  asChild = false,
   expandOnHover = false,
   size,
   variant,
   className,
   ...props
 }) => {
-  const Comp = asChild ? Slot : "button"
-
   return (
-    <Comp
+    <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }), {
-        "hover:scale-105": expandOnHover,
+        "sm:hover:scale-105 hover:scale-102": expandOnHover,
       })}
       {...props}
     />

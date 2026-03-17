@@ -40,7 +40,7 @@ const emptyMediaVariants = cva(
 
         icon: `
           bg-muted text-foreground size-10 rounded-lg
-          [&_svg:not([class*='size-'])]:size-6
+          [&_svg:not-[class*='size-']]:size-6
           flex shrink-0 items-center justify-center
         `,
       },

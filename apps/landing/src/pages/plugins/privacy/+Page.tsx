@@ -363,8 +363,13 @@ export default function Page() {
           <p className="leading-relaxed mb-4">
             If you wish to be informed what Personal Data we hold about you and if you want it to be
             removed from our systems, please email us at{" "}
-            <Button asChild variant="link" size="inline">
-              <Link href="mailto:support@bitcart.ai">support@bitcart.ai</Link>
+            <Button
+              render={<Link href="mailto:support@bitcart.ai" />}
+              nativeButton={false}
+              variant="link"
+              size="inline"
+            >
+              support@bitcart.ai
             </Button>
             .
           </p>
@@ -430,8 +435,13 @@ export default function Page() {
             </li>
             <li>
               users are able to change their personal information by emailing us at{" "}
-              <Button asChild variant="link" size="inline">
-                <Link href="mailto:support@bitcart.ai">support@bitcart.ai</Link>
+              <Button
+                render={<Link href="mailto:support@bitcart.ai" />}
+                nativeButton={false}
+                variant="link"
+                size="inline"
+              >
+                support@bitcart.ai
               </Button>
               .
             </li>
@@ -522,8 +532,13 @@ export default function Page() {
           <p>
             To exercise your California data protection rights described above, please send your
             request(s) by email:{" "}
-            <Button asChild variant="link" size="inline">
-              <Link href="mailto:support@bitcart.ai">support@bitcart.ai</Link>
+            <Button
+              render={<Link href="mailto:support@bitcart.ai" />}
+              nativeButton={false}
+              variant="link"
+              size="inline"
+            >
+              support@bitcart.ai
             </Button>
             .
           </p>
@@ -632,8 +647,13 @@ export default function Page() {
 
           <p className="leading-relaxed mb-8">
             If you have any questions about this Privacy Policy, please contact us by email:{" "}
-            <Button asChild variant="link" size="inline">
-              <Link href="mailto:support@bitcart.ai">support@bitcart.ai</Link>
+            <Button
+              render={<Link href="mailto:support@bitcart.ai" />}
+              nativeButton={false}
+              variant="link"
+              size="inline"
+            >
+              support@bitcart.ai
             </Button>
             .
           </p>

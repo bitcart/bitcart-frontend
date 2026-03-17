@@ -47,7 +47,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({
               <img
                 alt={`${brand.projectCanonicalName} logo`}
                 src={brand.logoImageSrc}
-                className="w-8 h-8"
+                className="size-8"
               />
 
               <span className="text-xl font-bold">{brand.projectCanonicalName}</span>
@@ -68,7 +68,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({
                     style={getNavigationLinkStyle(item)}
                     aria-label={item.hint}
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className="size-5" />
                   </Link>
                 )),
               )}

@@ -19,18 +19,21 @@ export const CtaSection = () => {
         </p>
 
         <div className="sm:flex-row gap-4 flex flex-col justify-center">
-          <Button asChild expandOnHover size="xl" variant="white" className="group elevation-3">
-            <Link href="mailto:company@bitcart.ai">
-              <Mail className="w-4 md:w-5 h-4 md:h-5" />
+          <Button
+            render={<Link href="mailto:company@bitcart.ai" />}
+            nativeButton={false}
+            expandOnHover
+            size="xl"
+            variant="white"
+            className="group elevation-3"
+          >
+            <Mail />
 
-              <span>
-                <Trans>Email Us:</Trans> company@bitcart.ai
-              </span>
+            <span>
+              <Trans>Email Us:</Trans> company@bitcart.ai
+            </span>
 
-              <ArrowRight
-                className={`w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-1 transition-transform`}
-              />
-            </Link>
+            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
 

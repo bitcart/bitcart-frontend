@@ -1,9 +1,9 @@
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
+import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox"
 import { CheckIcon } from "lucide-react"
 
 import { cn } from "@/utils"
 
-export type CheckboxProps = React.ComponentProps<typeof CheckboxPrimitive.Root> & {}
+export type CheckboxProps = CheckboxPrimitive.Root.Props & {}
 
 export const Checkbox: React.FC<CheckboxProps> = ({ className, ...props }) => {
   return (
@@ -13,14 +13,13 @@ export const Checkbox: React.FC<CheckboxProps> = ({ className, ...props }) => {
         `
           peer border-input size-4 shadow-xs
           dark:bg-input/30
-          data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground
-          data-[state=checked]:border-primary
-          dark:data-[state=checked]:bg-primary
+          data-checked:bg-primary data-checked:text-primary-foreground data-checked:border-primary
+          dark:data-checked:bg-primary
           focus-visible:border-ring focus-visible:ring-ring/50
           aria-invalid:ring-destructive/20 aria-invalid:border-destructive
           dark:aria-invalid:ring-destructive/40
-          shrink-0 rounded-[4px] border transition-shadow outline-none
-          focus-visible:ring-[3px]
+          rounded-sm flex shrink-0 items-center justify-center border transition-shadow outline-none
+          focus-visible:ring-2
           disabled:cursor-not-allowed disabled:opacity-50
         `,
 

@@ -7,7 +7,7 @@ export type ThemeToggleFallbackProps = {
 }
 
 export const ThemeToggleFallback: React.FC<ThemeToggleFallbackProps> = ({ className }) => (
-  <span className={cn("w-9 h-9 flex items-center justify-center", className)}>
-    <Loader className="w-4 h-4 animate-spin text-foreground" />
+  <span className={cn("size-9 flex items-center justify-center", className)}>
+    <Loader className="size-4 animate-spin text-foreground" />
   </span>
 )

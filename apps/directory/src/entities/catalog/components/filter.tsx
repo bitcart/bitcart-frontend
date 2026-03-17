@@ -33,7 +33,7 @@ export const CatalogFilter: React.FC<CatalogFilterProps> = ({ controls, state })
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
             <Button size="lg" variant="secondary">
-              <Filter className="w-5 h-5" />
+              <Filter className="size-5" />
               <span>{t`Filters`}</span>
             </Button>
           </DrawerTrigger>
@@ -56,11 +56,9 @@ export const CatalogFilter: React.FC<CatalogFilterProps> = ({ controls, state })
     default: {
       return (
         <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button size="lg" variant="secondary">
-              <Filter className="w-5 h-5" />
-              <span>{t`Filters`}</span>
-            </Button>
+          <PopoverTrigger render={<Button size="lg" variant="secondary" />}>
+            <Filter className="size-5" />
+            <span>{t`Filters`}</span>
           </PopoverTrigger>
 
           <PopoverContent className="w-80 p-3 pt-4">

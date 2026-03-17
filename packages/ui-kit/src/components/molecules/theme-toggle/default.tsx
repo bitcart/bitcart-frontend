@@ -54,7 +54,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className, showLabel =
   )
 
   const icon = useMemo(() => {
-    const elementClassName = "w-4 h-4 text-foreground"
+    const elementClassName = "text-foreground"
 
     switch (theme) {
       case "light": {

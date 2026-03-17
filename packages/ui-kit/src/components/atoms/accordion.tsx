@@ -1,14 +1,14 @@
-import { Accordion as AccordionPrimitive } from "radix-ui"
+import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 
 import { cn } from "@/utils"
 
-export type AccordionProps = React.ComponentProps<typeof AccordionPrimitive.Root> & {}
+export type AccordionProps = AccordionPrimitive.Root.Props & {}
 
 export const Accordion: React.FC<AccordionProps> = (props) => (
   <AccordionPrimitive.Root data-slot="accordion" {...props} />
 )
 
-export type AccordionItemProps = React.ComponentProps<typeof AccordionPrimitive.Item> & {}
+export type AccordionItemProps = AccordionPrimitive.Item.Props & {}
 
 export const AccordionItem: React.FC<AccordionItemProps> = ({ className, ...props }) => (
   <AccordionPrimitive.Item
@@ -18,7 +18,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({ className, ...prop
   />
 )
 
-export type AccordionContentProps = React.ComponentProps<typeof AccordionPrimitive.Content> & {}
+export type AccordionContentProps = AccordionPrimitive.Panel.Props & {}
 
 export const AccordionContent: React.FC<AccordionContentProps> = ({
   className,
@@ -26,16 +26,17 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
   ...props
 }) => {
   return (
-    <AccordionPrimitive.Content
+    <AccordionPrimitive.Panel
       data-slot="accordion-content"
-      className="
-        data-[state=closed]:animate-accordion-up
-        data-[state=open]:animate-accordion-down
-        text-sm overflow-hidden
-      "
+      className={`
+        ease-out
+        data-[ending-style]:h-0
+        data-[starting-style]:h-0
+        text-sm transition-height h-[--accordion-panel-height] overflow-hidden
+      `}
       {...props}
     >
       <div className={cn("pt-0 pb-4", className)}>{children}</div>
-    </AccordionPrimitive.Content>
+    </AccordionPrimitive.Panel>
   )
 }

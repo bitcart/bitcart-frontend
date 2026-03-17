@@ -49,7 +49,7 @@ export const CatalogEntryCard: React.FC<CatalogEntryCardProps> = ({
 
           {entry.is_official && (
             <CatalogEntryBadge variant="official">
-              <BadgeCheck className="w-4 h-4" />
+              <BadgeCheck className="size-4" />
               {t`Official`}
             </CatalogEntryBadge>
           )}
@@ -64,37 +64,45 @@ export const CatalogEntryCard: React.FC<CatalogEntryCardProps> = ({
         {social_links && keys(social_links).length > 0 && (
           <div className={`gap-3 flex w-full flex-wrap justify-center`}>
             {social_links.github && (
-              <Button variant="outline" asChild>
-                <Link untracked href={social_links.github}>
-                  <GithubLogoIcon className="w-4 h-4" />
-                  <span>{t`GitHub`}</span>
-                </Link>
+              <Button
+                variant="outline"
+                render={<Link untracked href={social_links.github} />}
+                nativeButton={false}
+              >
+                <GithubLogoIcon />
+                <span>{t`GitHub`}</span>
               </Button>
             )}
 
             {social_links.twitter && (
-              <Button variant="outline" asChild>
-                <Link
-                  untracked
-                  href={
-                    social_links.twitter.startsWith("@")
-                      ? `https://twitter.com/${social_links.twitter.slice(1)}`
-                      : social_links.twitter
-                  }
-                >
-                  <XLogoIcon className="w-4 h-4" />
-                  <span>{t`Twitter`}</span>
-                </Link>
+              <Button
+                variant="outline"
+                render={
+                  <Link
+                    untracked
+                    href={
+                      social_links.twitter.startsWith("@")
+                        ? `https://twitter.com/${social_links.twitter.slice(1)}`
+                        : social_links.twitter
+                    }
+                  />
+                }
+                nativeButton={false}
+              >
+                <XLogoIcon />
+                <span>{t`Twitter`}</span>
               </Button>
             )}
           </div>
         )}
 
-        <Button asChild className="w-full">
-          <Link untracked href={entry.url}>
-            <ExternalLink className="w-4 h-4" />
-            <span>{t`Visit Site`}</span>
-          </Link>
+        <Button
+          render={<Link untracked href={entry.url} />}
+          nativeButton={false}
+          className="w-full"
+        >
+          <ExternalLink />
+          <span>{t`Visit Site`}</span>
         </Button>
       </CardFooter>
     </Card>

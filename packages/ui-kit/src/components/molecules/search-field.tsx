@@ -30,7 +30,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({
   return (
     <InputGroup className={className}>
       <InputGroupAddon>
-        <SearchIcon className="w-5 h-5 text-muted-foreground/80" />
+        <SearchIcon className="size-5 text-muted-foreground/80" />
       </InputGroupAddon>
 
       <InputGroupInput
@@ -43,12 +43,12 @@ export const SearchField: React.FC<SearchFieldProps> = ({
       <InputGroupAddon align="inline-end" className={cn({ hidden: value.length === 0 })}>
         <Button
           variant="ghost"
-          size="icon"
+          size="icon-sm"
           onClick={handleReset}
           title={t`Clear`}
           aria-label={t`Clear`}
         >
-          <X className="w-5 h-5" />
+          <X className="size-5" />
         </Button>
       </InputGroupAddon>
     </InputGroup>

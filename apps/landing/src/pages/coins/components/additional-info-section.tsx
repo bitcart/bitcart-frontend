@@ -17,7 +17,7 @@ export const AdditionalInfoSection: React.FC = () => {
         >
           <div className="mb-4 flex items-center justify-center">
             <div className="p-3 bg-accent rounded-full">
-              <Coins className="w-6 h-6 text-accent-foreground" />
+              <Coins className="size-6 text-accent-foreground" />
             </div>
           </div>
 

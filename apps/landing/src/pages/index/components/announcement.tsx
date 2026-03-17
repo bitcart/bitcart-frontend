@@ -54,22 +54,21 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
             {t`Available in Admin Panel → Plugins`}
           </span>
 
-          <div className="gap-2 flex">
+          <div className="gap-2.5 flex">
             {[
               { label: t`User Guide`, href: "https://docs.bitcart.ai/guides/eth-payments-plugin" },
               { label: t`Announcement`, href: "https://t.me/bitcart/63625" },
             ].map(({ label, href }) => (
               <Button
                 key={href}
-                asChild
+                render={<Link href={href} />}
+                nativeButton={false}
                 expandOnHover
                 size="sm"
                 className="font-semibold transform duration-200"
               >
-                <Link href={href}>
-                  <ExternalLink className="w-3 h-3" />
-                  <span>{label}</span>
-                </Link>
+                <ExternalLink />
+                <span>{label}</span>
               </Button>
             ))}
           </div>

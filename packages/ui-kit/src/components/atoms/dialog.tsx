@@ -1,37 +1,32 @@
-import * as DialogPrimitive from "@radix-ui/react-dialog"
+import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 
 import { cn } from "@/utils"
 
-export const Dialog = ({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) => {
+export const Dialog = ({ ...props }: DialogPrimitive.Root.Props) => {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
 }
 
-export const DialogTrigger = ({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Trigger>) => {
+export const DialogTrigger = ({ ...props }: DialogPrimitive.Trigger.Props) => {
   return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
 }
 
-export const DialogPortal = ({ ...props }: React.ComponentProps<typeof DialogPrimitive.Portal>) => {
+export const DialogPortal = ({ ...props }: DialogPrimitive.Portal.Props) => {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
 }
 
-export const DialogClose = ({ ...props }: React.ComponentProps<typeof DialogPrimitive.Close>) => {
+export const DialogClose = ({ ...props }: DialogPrimitive.Close.Props) => {
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
 }
 
-export const DialogOverlay = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Overlay>) => {
+export const DialogOverlay = ({ className, ...props }: DialogPrimitive.Backdrop.Props) => {
   return (
-    <DialogPrimitive.Overlay
+    <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
       className={cn(
         `
-          data-[state=open]:animate-in
-          data-[state=closed]:animate-out data-[state=closed]:fade-out-0
-          data-[state=open]:fade-in-0
+          data-open:animate-in
+          data-closed:animate-out data-closed:fade-out-0
+          data-open:fade-in-0
           inset-0 bg-black/50 fixed z-50
         `,
         className,
@@ -61,10 +56,7 @@ export const DialogFooter = ({ className, ...props }: React.ComponentProps<"div"
   )
 }
 
-export const DialogTitle = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Title>) => {
+export const DialogTitle = ({ className, ...props }: DialogPrimitive.Title.Props) => {
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
@@ -74,10 +66,7 @@ export const DialogTitle = ({
   )
 }
 
-export const DialogDescription = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Description>) => {
+export const DialogDescription = ({ className, ...props }: DialogPrimitive.Description.Props) => {
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"

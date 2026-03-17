@@ -166,22 +166,44 @@ export const variants: Variant<Theme>[] = [
   },
 
   /**
-   * ARIA state variants - aria-{state}:{utility}
+   * ARIA boolean state variants - aria-{state}:{utility}
    *
    * Default boolean states:
    *  checked, disabled, expanded, hidden, pressed, readonly, required, selected
    *
-   * Usage: aria-checked:bg-blue-500 → &[aria-checked="true"]
+   * aria-{state}:        → &[aria-{state}="true"]
+   * group-aria-{state}:  → .group[aria-{state}="true"] &
+   * peer-aria-{state}:   → .peer[aria-{state}="true"] ~ &
    */
   (className) => {
-    const booleanMatch = new RegExp(`^aria-(${ARIA_BOOLEAN_STATES.join("|")}):`).exec(className)
+    const match = new RegExp(
+      `^(group-aria|peer-aria|aria)-(${ARIA_BOOLEAN_STATES.join("|")}):`,
+    ).exec(className)
 
-    if (booleanMatch !== null) {
-      const [, state] = booleanMatch
+    if (match !== null) {
+      const [, prefix, state] = match
 
-      return {
-        matcher: className.slice(booleanMatch[0].length),
-        selector: (s) => `${s}[aria-${state}="true"]`,
+      switch (prefix) {
+        case "group-aria": {
+          return {
+            matcher: className.slice(match[0].length),
+            selector: (s) => `.group[aria-${state}="true"] ${s}`,
+          }
+        }
+
+        case "peer-aria": {
+          return {
+            matcher: className.slice(match[0].length),
+            selector: (s) => `.peer[aria-${state}="true"] ~ ${s}`,
+          }
+        }
+
+        default: {
+          return {
+            matcher: className.slice(match[0].length),
+            selector: (s) => `${s}[aria-${state}="true"]`,
+          }
+        }
       }
     } else return className
   },
@@ -205,37 +227,68 @@ export const variants: Variant<Theme>[] = [
   },
 
   /**
-   * Group ARIA state variants - group-aria-{state}:{utility}
-   * Applies styles to children when parent group has the ARIA state
-   * Usage: group-aria-expanded:block → .group[aria-expanded="true"] &
+   * Boolean data attribute variants - data-{attr}:{utility}
+   * Matches presence of a data attribute (no value check).
+   * Supports long hyphenated names, e.g. not just data-open:, but also data-popup-open:
+   *
+   * data-{attr}:        → &[data-{attr}]
+   * group-data-{attr}:  → .group[data-{attr}] &
+   * peer-data-{attr}:   → .peer[data-{attr}] ~ &
    */
   (className) => {
-    const groupMatch = new RegExp(`^group-aria-(${ARIA_BOOLEAN_STATES.join("|")}):`).exec(className)
+    const match = new RegExp("^(group-data|peer-data|data)-([\\w][\\w-]*):").exec(className)
 
-    if (groupMatch !== null) {
-      const [, state] = groupMatch
+    if (match !== null) {
+      const [, prefix, attr] = match
 
-      return {
-        matcher: className.slice(groupMatch[0].length),
-        selector: (s) => `.group[aria-${state}="true"] ${s}`,
+      switch (prefix) {
+        case "group-data": {
+          return {
+            matcher: className.slice(match[0].length),
+            selector: (s) => `.group[data-${attr}] ${s}`,
+          }
+        }
+
+        case "peer-data": {
+          return {
+            matcher: className.slice(match[0].length),
+            selector: (s) => `.peer[data-${attr}] ~ ${s}`,
+          }
+        }
+
+        default: {
+          return {
+            matcher: className.slice(match[0].length),
+            selector: (s) => `${s}[data-${attr}]`,
+          }
+        }
       }
     } else return className
   },
 
   /**
-   * Peer ARIA state variants - peer-aria-{state}:{utility}
-   * Applies styles when a preceding peer has the ARIA state
-   * Usage: peer-aria-invalid:text-red-500 → .peer[aria-invalid="true"] ~ &
+   * Paren-free :not() selector variant — avoids `(` and `)` so the UnoCSS
+   * VSCode extension's position-finder can locate the token in source.
+   *
+   *   [&_X:not-[Y]]:  → & X:not(Y)
+   *   [&>X:not-[Y]]:  → &>X:not(Y)
+   *
+   * Usage:
+   *   [&_svg:not-[class*='text-']]:text-muted-foreground
+   *   [&>button:not-[disabled]]:opacity-100
    */
   (className) => {
-    const peerMatch = new RegExp(`^peer-aria-(${ARIA_BOOLEAN_STATES.join("|")}):`).exec(className)
+    const match = /^\[&([_>])([\w.-]+):not-\[([^\]]+)\]\]:/.exec(className)
 
-    if (peerMatch !== null) {
-      const [, state] = peerMatch
+    if (match !== null) {
+      const [, combinator, selector, condition] = match
 
       return {
-        matcher: className.slice(peerMatch[0].length),
-        selector: (s) => `.peer[aria-${state}="true"] ~ ${s}`,
+        matcher: className.slice(match[0].length),
+        selector:
+          combinator === ">"
+            ? (s) => `${s}>${selector}:not([${condition}])`
+            : (s) => `${s} ${selector}:not([${condition}])`,
       }
     } else return className
   },

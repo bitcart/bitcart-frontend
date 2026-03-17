@@ -136,10 +136,10 @@ export {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuViewport,
+  NavigationMenuPositioner,
 } from "./atoms/navigation-menu"
 
-export { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "./atoms/popover"
+export { Popover, PopoverContent, PopoverTrigger } from "./atoms/popover"
 
 export {
   Select,

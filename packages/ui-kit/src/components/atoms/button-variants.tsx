@@ -4,7 +4,7 @@ export const buttonVariants = cva(
   [
     `
       gap-2 font-medium
-      [&_svg:not([class*='size-'])]:size-4
+      [&_svg:not-[class*='size-']]:size-4
       focus-visible:border-ring focus-visible:ring-ring/50
       aria-invalid:ring-destructive/20 aria-invalid:border-destructive
       dark:aria-invalid:ring-destructive/40
@@ -31,7 +31,7 @@ export const buttonVariants = cva(
         accent: "bg-accent text-accent-foreground hover:bg-accent/80 focus:bg-accent/80",
 
         destructive: `
-          bg-destructive color-white
+          bg-destructive text-white
           hover:bg-destructive/90
           focus:bg-destructive/90
           focus-visible:ring-destructive/20
@@ -53,7 +53,7 @@ export const buttonVariants = cva(
         ghost: `
           hover:bg-muted/25 hover:text-accent-foreground
           focus:text-accent-foreground
-          [&_svg:not([class*='hover:color-'])]:hover:text-muted-foreground
+          [&_svg:not-[class*='hover:text-']]:hover:text-accent-foreground
           focus:bg-muted/25
         `,
 
@@ -71,18 +71,44 @@ export const buttonVariants = cva(
 
       size: {
         inline: "font-size-inherit h-fit",
-        sm: "h-8 rounded-md gap-1.5 px-3 py-1.5 text-sm has-[>svg]:px-3.5",
-        default: "h-9 text-sm rounded-md px-4 py-2 has-[>svg]:px-4.5",
-        lg: "h-10 md:h-11 rounded-md px-6 py-3 font-semibold text-sm",
+
+        sm: `
+          h-7
+          sm:h-7.8
+          rounded-md gap-1.5 px-3 py-1.4 pb-1.6 text-sm
+          [&_svg:not-[class*='size-']]:size-3
+        `,
+
+        default: `
+          h-9 text-sm rounded-md px-4 py-2
+          has-[>svg]:px-4.5
+          [&_svg:not-[class*='size-']]:size-4
+        `,
+
+        lg: `
+          h-10
+          md:h-11
+          rounded-md px-6 py-3 font-semibold text-sm
+          [&_svg:not-[class*='size-']]:size-4
+        `,
 
         /**
          * A special case intended for websites but not webapps
          */
-        xl: "h-12 md:h-14 py-4 px-6 lg:px-8 rounded-lg font-semibold text-sm md:text-base",
+        xl: `
+          h-12
+          md:h-14
+          py-4 px-6
+          lg:px-8
+          rounded-lg font-semibold text-sm
+          md:text-base
+          [&_svg:not-[class*='size-']]:size-4
+          [&_svg:not-[class*='size-']]:md:size-5
+        `,
 
-        "icon-sm": "p-2 gap-2 size-8 rounded-md",
-        icon: "p-2 gap-2 size-9 rounded-md",
-        "icon-lg": "p-2 gap-2 size-10 rounded-md",
+        "icon-sm": "p-2 gap-2 size-8 rounded-md [&_svg:not-[class*='size-']]:size-3",
+        icon: "p-2 gap-2 size-9 rounded-md [&_svg:not-[class*='size-']]:size-4",
+        "icon-lg": "p-2 gap-2 size-10 rounded-md [&_svg:not-[class*='size-']]:size-5",
       },
     },
 

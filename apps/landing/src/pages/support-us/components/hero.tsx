@@ -39,19 +39,26 @@ export const Hero = () => {
         </p>
 
         <div className="sm:flex-row gap-4 flex flex-col justify-center">
-          <Button asChild expandOnHover size="xl" className="group elevation-3 sm:w-auto w-full">
-            <Link href="mailto:company@bitcart.ai">
-              <Mail className="w-4 md:w-5 h-4 md:h-5" />
-              <span>{t`Contact Us`}</span>
-
-              <ArrowRight
-                className={`w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform`}
-              />
-            </Link>
+          <Button
+            render={<Link href="mailto:company@bitcart.ai" />}
+            nativeButton={false}
+            expandOnHover
+            size="xl"
+            className="group elevation-3 sm:w-auto w-full"
+          >
+            <Mail />
+            <span>{t`Contact Us`}</span>
+            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
           </Button>
 
           <Button
-            asChild
+            render={
+              <Link
+                href="https://docs.bitcart.ai/support-and-community/support#paid-support"
+                target="_blank"
+              />
+            }
+            nativeButton={false}
             expandOnHover
             size="xl"
             variant="outline"
@@ -61,16 +68,8 @@ export const Hero = () => {
               text-accent-foreground bg-background border-accent-foreground w-full
             `}
           >
-            <Link
-              href="https://docs.bitcart.ai/support-and-community/support#paid-support"
-              target="_blank"
-            >
-              <span>{t`Learn More`}</span>
-
-              <ArrowRight
-                className={`w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform`}
-              />
-            </Link>
+            <span>{t`Learn More`}</span>
+            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>

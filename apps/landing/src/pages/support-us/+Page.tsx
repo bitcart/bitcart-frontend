@@ -14,25 +14,25 @@ export default function Page() {
 
   const supportBenefits = [
     {
-      icon: <Building className="w-8 h-8 text-accent-foreground" />,
+      icon: <Building className="size-8 text-accent-foreground" />,
       title: t`Brand Recognition`,
       description: t`Your company logo and information featured on our website and documentation`,
     },
 
     {
-      icon: <Users className="w-8 h-8 text-accent-foreground" />,
+      icon: <Users className="size-8 text-accent-foreground" />,
       title: t`Community Access`,
       description: t`Direct access to our developer community and priority support channels`,
     },
 
     {
-      icon: <Globe className="w-8 h-8 text-accent-foreground" />,
+      icon: <Globe className="size-8 text-accent-foreground" />,
       title: t`Technical Partnership`,
       description: t`Collaborate on features and integrations that benefit your business`,
     },
 
     {
-      icon: <Heart className="w-8 h-8 text-accent-foreground" />,
+      icon: <Heart className="size-8 text-accent-foreground" />,
       title: t`Open Source Impact`,
       description: t`Support the growth of decentralized payment infrastructure`,
     },

@@ -164,12 +164,10 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
                 style={getNavigationLinkStyle(link)}
                 aria-label={link.hint ?? link.label}
               >
-                <NavigationMenuLink asChild>
-                  <Link href={link.href}>
-                    <span>
-                      {currentBreakpoint === "md" ? (link.shortLabel ?? link.label) : link.label}
-                    </span>
-                  </Link>
+                <NavigationMenuLink href={link.href} render={<Link href={link.href} />}>
+                  <span>
+                    {currentBreakpoint === "md" ? (link.shortLabel ?? link.label) : link.label}
+                  </span>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
@@ -178,7 +176,8 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
 
         {iconLinks?.map(({ icon: Icon, ...link }) => (
           <Button
-            asChild
+            render={<Link href={link.href} />}
+            nativeButton={false}
             key={link.hint + link.href}
             size="icon"
             variant="ghost"
@@ -187,9 +186,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
             style={getNavigationLinkStyle(link)}
             aria-label={link.hint.replace(/`/g, "")}
           >
-            <Link href={link.href}>
-              <Icon className="w-5 h-5" />
-            </Link>
+            <Icon className="size-5" />
           </Button>
         ))}
       </>
@@ -202,13 +199,11 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
     () => (
       <DropdownMenu>
         <DropdownMenuTrigger
-          asChild
+          render={<Button size="icon" variant="ghost" />}
           className={cn("relative", { hidden: !shouldDisplayDropdownNavMenu })}
           aria-label="More"
         >
-          <Button size="icon" variant="ghost">
-            <MoreHorizontal className="w-4 h-4" />
-          </Button>
+          <MoreHorizontal />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
@@ -218,7 +213,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
           <DropdownMenuGroup>
             {labeledLinks.map((link, idx) => (
               <DropdownMenuItem
-                asChild
+                render={<Link href={link.href} />}
                 key={link.label + link.href}
                 className={getDropdownNavMenuLinkClass(
                   "globalPosition" in link ? link.globalPosition : idx + 1,
@@ -226,7 +221,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
                 style={getNavigationLinkStyle(link)}
                 aria-label={link.hint ?? link.label}
               >
-                <Link href={link.href}>{link.label}</Link>
+                {link.label}
               </DropdownMenuItem>
             ))}
           </DropdownMenuGroup>
@@ -258,7 +253,8 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
             <nav className="gap-2 flex w-full flex-col" aria-label={t`Navigation menu`}>
               {labeledLinks.map((link) => (
                 <Button
-                  asChild
+                  render={<Link href={link.href} />}
+                  nativeButton={false}
                   key={link.label + link.href}
                   onClick={closeMobileMenu}
                   variant="ghost"
@@ -266,7 +262,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
                   style={getNavigationLinkStyle(link)}
                   aria-label={link.hint ?? link.label}
                 >
-                  <Link href={link.href}>{link.label}</Link>
+                  {link.label}
                 </Button>
               ))}
             </nav>
@@ -285,7 +281,8 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
                 <nav className="gap-4 flex" aria-label={t`Other links`}>
                   {iconLinks?.map(({ icon: Icon, ...link }) => (
                     <Button
-                      asChild
+                      render={<Link href={link.href} />}
+                      nativeButton={false}
                       key={link.hint + link.href}
                       onClick={closeMobileMenu}
                       size="icon-lg"
@@ -295,9 +292,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
                       style={getNavigationLinkStyle(link)}
                       aria-label={link.hint.replace(/`/g, "")}
                     >
-                      <Link href={link.href}>
-                        <Icon className="w-5 h-5" />
-                      </Link>
+                      <Icon />
                     </Button>
                   ))}
                 </nav>
@@ -305,7 +300,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
 
               <ThemeToggle
                 className={`
-                  w-10 h-10
+                  size-10
                   hover:text-accent-foreground
                   bg-muted/25
                   dark:hover:bg-accent/30
@@ -335,11 +330,11 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
               hover:opacity-80
             `}
           >
-            <div className="w-10 h-10 flex items-center justify-center">
+            <div className="size-10 flex items-center justify-center">
               <img
                 alt={`${brand.projectCanonicalName} logo`}
                 src={brand.logoImageSrc}
-                className="w-10 h-10"
+                className="size-10"
               />
             </div>
 
@@ -369,9 +364,9 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
               aria-controls="mobile-menu"
             >
               {isClient ? (
-                <>{isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}</>
+                <>{isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}</>
               ) : (
-                <Loader className="w-6 h-6 animate-spin text-foreground" />
+                <Loader className="size-6 animate-spin text-foreground" />
               )}
             </Button>
           </div>

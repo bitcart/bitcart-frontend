@@ -1,4 +1,5 @@
-import { Slot } from "@radix-ui/react-slot"
+import { mergeProps } from "@base-ui/react/merge-props"
+import { useRender } from "@base-ui/react/use-render"
 import { type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/utils"
@@ -21,31 +22,38 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({ className, orientation
   )
 }
 
-export type ButtonGroupTextProps = React.ComponentProps<"div"> & {
-  asChild?: boolean
-}
+export type ButtonGroupTextProps = useRender.ComponentProps<"div">
 
 export const ButtonGroupText: React.FC<ButtonGroupTextProps> = ({
   className,
-  asChild = false,
+  render,
   ...props
 }) => {
-  const Comp = asChild ? Slot : "div"
+  const element = useRender({
+    defaultTagName: "div",
 
-  return (
-    <Comp
-      className={cn(
-        `
-          bg-muted gap-2 rounded-md px-4 text-sm font-medium shadow-xs
-          [&_svg:not([class*='size-'])]:size-4
-          flex items-center border
-          [&_svg]:pointer-events-none
-        `,
-        className,
-      )}
-      {...props}
-    />
-  )
+    props: mergeProps<"div">(
+      {
+        className: cn(
+          `
+            bg-muted gap-2 rounded-md px-4 text-sm font-medium shadow-xs
+            [&_svg:not-[class*='size-']]:size-4
+            flex items-center border
+            [&_svg]:pointer-events-none
+          `,
+
+          className,
+        ),
+      },
+
+      props,
+    ),
+
+    render,
+    state: { slot: "button-group-text" },
+  })
+
+  return element
 }
 
 export type ButtonGroupSeparatorProps = React.ComponentProps<typeof Separator> & {}

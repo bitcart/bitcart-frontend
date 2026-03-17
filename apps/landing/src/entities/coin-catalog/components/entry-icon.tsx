@@ -45,7 +45,7 @@ export const CoinCatalogEntryIcon: React.FC<CoinCatalogEntryIconProps> = ({
         width={size}
         height={size}
         aria-label={symbol}
-        className="color-foreground"
+        className="text-foreground"
         {...props}
       >
         <CoinCatalogEntryIconFallback name={symbol} size={size} />

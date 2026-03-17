@@ -13,7 +13,7 @@ export const CatalogEntryCategoryIcon: React.FC<CatalogEntryCategoryIconProps> =
   category,
   className,
 }) => {
-  const elementClassName = useMemo(() => cn("w-4 h-4", className), [className])
+  const elementClassName = useMemo(() => cn("size-4", className), [className])
 
   switch (category) {
     case "all":

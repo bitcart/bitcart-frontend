@@ -6,11 +6,12 @@ import { Command } from "../atoms/command"
 import { Dialog, DialogDescription, DialogHeader, DialogTitle } from "../atoms/dialog"
 import { DialogContent } from "../molecules/dialog-content"
 
-export type CommandDialogProps = React.ComponentProps<typeof Dialog> & {
+export type CommandDialogProps = Omit<React.ComponentProps<typeof Dialog>, "children"> & {
   title?: string
   description?: string
   className?: string
   showCloseButton?: boolean
+  children?: React.ReactNode
 }
 
 export const CommandDialog: React.FC<CommandDialogProps> = ({

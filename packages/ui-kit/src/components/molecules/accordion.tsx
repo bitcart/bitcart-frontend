@@ -1,5 +1,5 @@
+import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 import { ChevronDownIcon } from "lucide-react"
-import { Accordion as AccordionPrimitive } from "radix-ui"
 
 import { cn } from "@/utils"
 
@@ -13,7 +13,7 @@ const defaultChevronElement = (
   />
 )
 
-export type AccordionTriggerProps = React.ComponentProps<typeof AccordionPrimitive.Trigger> & {
+export type AccordionTriggerProps = AccordionPrimitive.Trigger.Props & {
   chevronElement?: React.ReactElement
   underlineOnHover?: boolean
 }
@@ -36,7 +36,7 @@ export const AccordionTrigger = ({
             text-left transition-all outline-none
             focus-visible:ring-[3px]
             disabled:pointer-events-none disabled:opacity-50
-            [&[data-state=open]_svg.chevron]:rotate-180
+            [&[aria-expanded=true]_svg.chevron]:rotate-180
           `,
 
           { "hover:underline": underlineOnHover },

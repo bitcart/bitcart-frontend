@@ -23,7 +23,7 @@ export const Hero: React.FC<HeroProps> = ({ searchTerm, setSearchTerm }) => {
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto text-center">
         <div className="mb-4 sm:mb-6 flex items-center justify-center">
           <div className="p-3 sm:p-4 bg-accent rounded-full">
-            <Coins className="w-8 sm:w-10 sm:h-10 md:w-12 h-8 md:h-12 text-accent-foreground" />
+            <Coins className="size-8 sm:size-10 md:size-12 text-accent-foreground" />
           </div>
         </div>
 

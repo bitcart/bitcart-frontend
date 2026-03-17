@@ -4,9 +4,11 @@ import { Link } from "@bitcart/vike-kit/navigation"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowRight, Coins, Rocket, Shield, Zap } from "lucide-react"
 
+import { PROJECT_CANONICAL_NAME } from "@/common/constants"
+
 import { Announcement } from "./announcement"
 
-const FEATURE_HIGHLIGHT_CONTAINER_CLASS = `gap-2 md:gap-3 p-3 md:p-4 backdrop-blur-xs rounded-lg
+const FEATURE_HIGHLIGHT_CONTAINER_CLASS = `gap-2 sm:gap-3 p-3 lg:p-4 max-w-74 sm:w-74 lg:w-a backdrop-blur-xs rounded-lg
 border-primary/50 bg-secondary/60 flex items-center justify-center border-2`
 
 export const Hero = () => {
@@ -41,7 +43,7 @@ export const Hero = () => {
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 relative mx-auto w-full text-center">
         <Announcement className="mb-8 md:mb-12" />
 
-        <h1 className="text-6xl md:text-7xl xl:text-8xl font-bold mb-4 md:mb-6">
+        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-7">
           <span
             className={`
               from-gray-900 via-purple-800 to-primary/80
@@ -49,7 +51,7 @@ export const Hero = () => {
               bg-linear-to-r bg-clip-text text-transparent
             `}
           >
-            Bitcart
+            {PROJECT_CANONICAL_NAME}
           </span>
         </h1>
 
@@ -107,7 +109,8 @@ export const Hero = () => {
           `}
         >
           <Button
-            asChild
+            render={<Link href="https://admin.bitcart.ai" />}
+            nativeButton={false}
             expandOnHover
             size="xl"
             className={`
@@ -117,17 +120,14 @@ export const Hero = () => {
               bg-linear-to-r
             `}
           >
-            <Link href="https://admin.bitcart.ai">
-              <span>{t`Live Demo`}</span>
+            <span>{t`Live Demo`}</span>
 
-              <ArrowRight
-                className={"w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform"}
-              />
-            </Link>
+            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
           </Button>
 
           <Button
-            asChild
+            render={<Link href="https://docs.bitcart.ai" />}
+            nativeButton={false}
             expandOnHover
             size="xl"
             variant="outline"
@@ -137,25 +137,32 @@ export const Hero = () => {
               text-accent-foreground bg-background border-accent-foreground
             `}
           >
-            <Link href="https://docs.bitcart.ai">
-              <span>{t`View User Guide`}</span>
+            <span>{t`View User Guide`}</span>
 
-              <ArrowRight
-                className={"w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform"}
-              />
-            </Link>
+            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
 
         {/* Feature highlights */}
-        <div className="lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl md:px-4 mx-auto grid grid-cols-2">
+        <div
+          className="
+            lg:grid-cols-4
+            sm:w-fit
+            lg:w-a
+            gap-4
+            md:gap-6
+            max-w-5xl
+            md:px-4
+            mx-auto grid grid-cols-2
+          "
+        >
           {[
             { id: 1, Icon: Shield, title: t`Non-custodial` },
             { id: 2, Icon: Zap, title: t`Zero Fees` },
             { id: 3, Icon: Rocket, title: t`Self-hosted` },
           ].map(({ id, Icon, title }) => (
             <div key={id} className={FEATURE_HIGHLIGHT_CONTAINER_CLASS}>
-              <Icon className="w-5 h-5 md:w-8 md:h-8 text-accent-foreground shrink-0" />
+              <Icon className="size-5 md:size-8 text-accent-foreground shrink-0" />
 
               <span
                 className={`font-medium text-secondary-foreground text-xs sm:text-sm md:text-base`}
@@ -179,8 +186,8 @@ export const Hero = () => {
           >
             <Coins
               className={`
-                w-5 h-5
-                md:w-8 md:h-8
+                size-5
+                md:size-8
                 text-accent-foreground shrink-0 transition-transform
                 group-hover:scale-110
               `}

@@ -1,9 +1,16 @@
-import { definePreset, presetTypography, presetWind4, PresetWind4Theme } from "unocss"
+import {
+  definePreset,
+  presetTypography,
+  presetWind4,
+  PresetWind4Theme,
+  transformerVariantGroup,
+} from "unocss"
 import { presetAnimations } from "unocss-preset-animations"
 import { presetShadcn } from "unocss-preset-shadcn"
 
 import { getColorScheme } from "./color-scheme"
 import { BREAKPOINTS, DEFAULT_BASE_RADIUS_REM, PRESET_NAME } from "./constants"
+import { extractorNestedArbitraryVariants } from "./extractors"
 import {
   createGetRadiusCSSVariables,
   getBreakpointCSSVariables,
@@ -20,6 +27,8 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
   return {
     name: `unocss-preset-${PRESET_NAME}`,
     variants,
+    extractors: [extractorNestedArbitraryVariants],
+    transformers: [transformerVariantGroup()],
 
     presets: [
       presetWind4({
@@ -54,7 +63,6 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
       "text-size-inherit": "font-size-inherit",
     },
 
-    // FIXME: Adjust to support boolean data attributes
     rules: [
       ["@container-inline-size", { "container-type": "inline-size" }],
       ["@container-normal", { "container-type": "normal" }],

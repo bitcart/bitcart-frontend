@@ -25,7 +25,7 @@ export const getPreflightCSS: Preflight<Theme>["getCSS"] = ({ theme }) => /* CSS
 
   body {
     overscroll-behavior: none;
-    overflow: auto !important;
+    overflow: auto;
     width: 100%;
     height: 100%;
   }

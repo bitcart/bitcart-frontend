@@ -74,26 +74,26 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
       </div>
 
       <div className="sm:flex-row gap-4 pt-4 sm:flex-wrap flex flex-col">
-        <Button size="lg" asChild>
-          <Link href="https://admin.bitcart.ai">{t`Live Demo`}</Link>
+        <Button size="lg" render={<Link href="https://admin.bitcart.ai" />} nativeButton={false}>
+          {t`Live Demo`}
         </Button>
 
         <Button size="lg" disabled={donationLoading} onClick={showDonation}>
           {donationLoading ? (
             <>
-              <Loader className="w-4 h-4 animate-spin" />
+              <Loader className="animate-spin" />
               <span>{t`Loading...`}</span>
             </>
           ) : (
             <>
               <span>{t`Donate`}</span>
-              <Heart className="w-4 h-4" />
+              <Heart />
             </>
           )}
         </Button>
 
-        <Button size="lg" asChild>
-          <Link href="/support-us">{t`Support as a Company`}</Link>
+        <Button size="lg" render={<Link href="/support-us" />} nativeButton={false}>
+          {t`Support as a Company`}
         </Button>
       </div>
     </section>

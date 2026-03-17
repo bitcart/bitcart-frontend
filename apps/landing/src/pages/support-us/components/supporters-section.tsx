@@ -27,8 +27,13 @@ export const SupportersSection: React.FC<SupportersSectionProps> = ({ data }) =>
             <Trans>
               These companies have supported Bitcart development and receive priority support. If
               you want to support Bitcart as a company, please{" "}
-              <Button asChild variant="link" size="inline">
-                <Link href="mailto:company@bitcart.ai">email us</Link>
+              <Button
+                render={<Link href="mailto:company@bitcart.ai" />}
+                nativeButton={false}
+                variant="link"
+                size="inline"
+              >
+                email us
               </Button>
               .
             </Trans>
@@ -75,10 +80,13 @@ export const SupportersSection: React.FC<SupportersSectionProps> = ({ data }) =>
                 </div>
 
                 <div className="pt-4 sm:pt-6 gap-3 mt-auto flex flex-col">
-                  <Button asChild size="lg" className="w-full text-center uppercase">
-                    <Link href={company.website}>
-                      <Trans>Details</Trans>
-                    </Link>
+                  <Button
+                    render={<Link href={company.website} />}
+                    nativeButton={false}
+                    size="lg"
+                    className="w-full text-center uppercase"
+                  >
+                    <Trans>Details</Trans>
                   </Button>
                 </div>
               </div>

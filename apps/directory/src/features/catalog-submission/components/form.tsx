@@ -61,7 +61,7 @@ export const CatalogSubmissionForm = () => {
                 label="Twitter"
                 placeholder="twitter_handle"
                 type="text"
-                inputAddons={[{ align: "inline-start", children: <AtSign className="w-4 h-4" /> }]}
+                inputAddons={[{ align: "inline-start", children: <AtSign className="size-4" /> }]}
               />
             )}
           </form.AppField>

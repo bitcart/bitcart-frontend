@@ -44,7 +44,10 @@ export const SelectField: React.FC<SelectFieldProps> = ({
       <Select
         name={name}
         value={state.value}
-        onValueChange={handleChange}
+        onValueChange={(value) => {
+          if (value !== null) handleChange(value)
+        }}
+        items={options}
         aria-required={isRequired}
       >
         <SelectTrigger id={elementId} aria-invalid={isInvalid}>

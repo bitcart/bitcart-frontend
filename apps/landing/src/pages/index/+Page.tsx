@@ -31,26 +31,26 @@ export default function Page() {
   const features = [
     {
       title: t`Receive or perform cryptocurrency and token payments as a business or an individual. No fees. No third-party.`,
-      icon: <Bitcoin className="w-12 h-12 text-accent-foreground" />,
+      icon: <Bitcoin className="size-12 text-accent-foreground" />,
       description: t`Bitcart is using electrum wallet you know and love. Your private key never leaves your PC.`,
       actions: [{ label: t`Try Out The Live Demo`, href: "https://admin.bitcart.ai" }],
     },
 
     {
       title: t`Fast, easy to use and secure`,
-      icon: <Zap className="w-12 h-12 text-accent-foreground" />,
+      icon: <Zap className="size-12 text-accent-foreground" />,
       description: t`Bitcart is written to be fast and light, working on any kind of servers, or at your home PC`,
     },
 
     {
       title: t`Your private keys are never required to use Bitcart`,
-      icon: <Key className="w-12 h-12 text-accent-foreground" />,
+      icon: <Key className="size-12 text-accent-foreground" />,
       description: t`Your keys - your bitcoin! You can use your public key, or just a set of addresses to watch for`,
     },
 
     {
       title: t`Ready to use admin panel and store for your business`,
-      icon: <Store className="w-12 h-12 text-accent-foreground" />,
+      icon: <Store className="size-12 text-accent-foreground" />,
       description: t`Bitcart provides optional, but easy to install and use admin panel for full management of your products and checkout and ready store. Just fill in your products in admin panel and start getting your first customers!`,
 
       actions: [
@@ -62,14 +62,14 @@ export default function Page() {
 
     {
       title: t`Free and fully-open source software. Self-hosted and non-custodial.`,
-      icon: <Shield className="w-12 h-12 text-accent-foreground" />,
+      icon: <Shield className="size-12 text-accent-foreground" />,
       description: t`You're free to improve and view source code of Bitcart. Your are your own bank, as you host Bitcart yourself.`,
       actions: [{ label: `GitHub`, href: "https://github.com/bitcart/bitcart" }],
     },
 
     {
       title: t`Lightning network supported out of the box`,
-      icon: <Bolt className="w-12 h-12 text-accent-foreground" />,
+      icon: <Bolt className="size-12 text-accent-foreground" />,
       description: t`Enable lightning network just by one command!`,
 
       actions: [
@@ -80,7 +80,7 @@ export default function Page() {
 
     {
       title: t`Easy to deploy on any kind of server, via GUI or a few CLI commands`,
-      icon: <Server className="w-12 h-12 text-accent-foreground" />,
+      icon: <Server className="size-12 text-accent-foreground" />,
       description: t`It is possible to install Bitcart right from your phone, without any technical skills! Or just use easy to configure and use docker installation!`,
 
       actions: [
@@ -91,14 +91,14 @@ export default function Page() {
 
     {
       title: t`Supporting multiple coins, APIs remain the same`,
-      icon: <Coins className="w-12 h-12 text-accent-foreground" />,
+      icon: <Coins className="size-12 text-accent-foreground" />,
       description: t`A variety of different coins is available, and you can use any of them in the same way. Enabling new coin in docker installation is a matter of one command.`,
       actions: [{ label: t`Supported Coins List`, href: "/coins" }],
     },
 
     {
       title: t`Powerful SDK libraries to create apps of any kind`,
-      icon: <Code className="w-12 h-12 text-accent-foreground" />,
+      icon: <Code className="size-12 text-accent-foreground" />,
       description: t`Powerful python SDK is available. Or just connect to Bitcart daemon from any programming language You can even create a blockchain explorer, atomic swaps bot, or a wallet with it!`,
 
       actions: [
@@ -118,7 +118,7 @@ export default function Page() {
 
     {
       title: t`Modular and extensible`,
-      icon: <Puzzle className="w-12 h-12 text-accent-foreground" />,
+      icon: <Puzzle className="size-12 text-accent-foreground" />,
       description: t`Bitcart is composed of different independent components, you can pick only the ones you need`,
 
       actions: [

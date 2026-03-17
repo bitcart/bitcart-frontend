@@ -57,7 +57,7 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
           })}
           aria-hidden={searchCounts.blockchains !== 0}
         >
-          <Search className="text-muted-foreground mb-4 h-12 w-12 mx-auto" />
+          <Search className="text-muted-foreground mb-4 size-12 mx-auto" />
           <h3 className="text-lg font-semibold mb-2 sm:text-xl">{t`No results found`}</h3>
 
           <p className="text-sm text-muted-foreground sm:text-base">
@@ -67,7 +67,7 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
 
         <Accordion
           dir="ltr"
-          type="multiple"
+          multiple
           value={expandedEntries}
           onValueChange={setExpandedEntries}
           className={cn("gap-4 sm:gap-6 lg:columns-2 space-y-4 sm:space-y-6 columns-1", {
@@ -185,7 +185,7 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                               },
                             )}
                           >
-                            <div className="h-8 w-8 flex items-center justify-center">
+                            <div className="size-8 flex items-center justify-center">
                               <CoinCatalogEntryIcon symbol={tokenSymbol} size={24} />
                             </div>
 

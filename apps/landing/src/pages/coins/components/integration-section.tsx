@@ -18,24 +18,27 @@ export const IntegrationSection: React.FC = () => {
         </p>
 
         <div className="sm:flex-row gap-4 flex flex-col justify-center">
-          <Button asChild expandOnHover size="xl" variant="white" className="group elevation-3">
-            <Link href="https://admin.bitcart.ai">
-              <span>{t`Try Live Demo`}</span>
-
-              <ExternalLink
-                className={`w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-1 transition-transform`}
-              />
-            </Link>
+          <Button
+            render={<Link href="https://admin.bitcart.ai" />}
+            nativeButton={false}
+            expandOnHover
+            size="xl"
+            variant="white"
+            className="group elevation-3"
+          >
+            <span>{t`Try Live Demo`}</span>
+            <ExternalLink className="group-hover:translate-x-1 transition-transform" />
           </Button>
 
-          <Button asChild expandOnHover size="xl" className="group bg-purple-700">
-            <Link href="https://docs.bitcart.ai">
-              <span>{t`View Documentation`}</span>
-
-              <ExternalLink
-                className={`w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-1 transition-transform`}
-              />
-            </Link>
+          <Button
+            render={<Link href="https://docs.bitcart.ai" />}
+            nativeButton={false}
+            expandOnHover
+            size="xl"
+            className="group bg-purple-700"
+          >
+            <span>{t`View Documentation`}</span>
+            <ExternalLink className="group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>

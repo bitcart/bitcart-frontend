@@ -1,19 +1,21 @@
-import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
+import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
 import { ChevronDownIcon } from "lucide-react"
 
 import { cn } from "@/utils"
 
-import { NavigationMenuViewport } from "../atoms/navigation-menu"
+import { NavigationMenuPositioner } from "../atoms/navigation-menu"
 import { navigationMenuTriggerStyle } from "./navigation-menu-styles"
 
 export const NavigationMenu = ({
   className,
   children,
   viewport = true,
+  align = "start",
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Root> & {
-  viewport?: boolean
-}) => {
+}: NavigationMenuPrimitive.Root.Props &
+  Pick<NavigationMenuPrimitive.Positioner.Props, "align"> & {
+    viewport?: boolean
+  }) => {
   return (
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
@@ -25,7 +27,7 @@ export const NavigationMenu = ({
       {...props}
     >
       {children}
-      {viewport && <NavigationMenuViewport />}
+      {viewport && <NavigationMenuPositioner align={align} />}
     </NavigationMenuPrimitive.Root>
   )
 }
@@ -34,7 +36,7 @@ export const NavigationMenuTrigger = ({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>) => {
+}: NavigationMenuPrimitive.Trigger.Props) => {
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="navigation-menu-trigger"
@@ -45,7 +47,8 @@ export const NavigationMenuTrigger = ({
       <ChevronDownIcon
         className={`
           ml-1 size-3 relative top-px transition duration-200
-          group-data-[state=open]:rotate-180
+          group-data-open:rotate-180
+          group-data-popup-open:rotate-180
         `}
         aria-hidden="true"
       />

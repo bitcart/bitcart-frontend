@@ -16,7 +16,7 @@ const LoadingFallback = () => {
   return (
     <div className="bg-background pt-16 flex min-h-screen items-center justify-center">
       <div className="px-4 text-center">
-        <Loader className="w-12 h-12 text-accent-foreground animate-spin mb-4 mx-auto" />
+        <Loader className="size-12 text-accent-foreground animate-spin mb-4 mx-auto" />
         <h2 className="text-xl sm:text-2xl font-semibold mb-2">{t`Loading Supported Coins`}</h2>
 
         <p className="text-muted-foreground text-sm sm:text-base">
@@ -33,7 +33,7 @@ const ErrorFallback = ({ retry, error }: { retry: () => void; error: { message: 
   return (
     <div className="bg-background pt-16 flex min-h-screen items-center justify-center">
       <div className="max-w-md px-4 text-center">
-        <AlertCircle className="w-12 h-12 text-destructive-foreground mb-4 mx-auto" />
+        <AlertCircle className="size-12 text-destructive-foreground mb-4 mx-auto" />
         <h2 className="text-xl sm:text-2xl font-semibold mb-2">{t`Error Loading Data`}</h2>
         <p className="text-muted-foreground mb-4 text-sm sm:text-base">{error.message}</p>
         <Button size="lg" onClick={retry}>{t`Try Again`}</Button>

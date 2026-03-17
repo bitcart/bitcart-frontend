@@ -44,11 +44,9 @@ export default function Page() {
           <div className="gap-3 max-md:w-full max-w-lg lg:max-w-md max-md:justify-between flex">
             <CatalogFilter state={catalogLookup.filters} controls={catalogLookup.filterControls} />
 
-            <Button asChild size="lg">
-              <Link href="/submit">
-                <Plus className="mr-2 w-5 h-5" />
-                <span>{t`Submit New Entry`}</span>
-              </Link>
+            <Button render={<Link href="/submit" />} nativeButton={false} size="lg">
+              <Plus className="mr-2 size-5" />
+              <span>{t`Submit New Entry`}</span>
             </Button>
           </div>
         </div>

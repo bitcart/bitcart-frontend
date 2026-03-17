@@ -32,31 +32,30 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId>({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild aria-label={t`Select language`}>
-        <Button variant="ghost">
-          <Globe className="w-4 h-4" />
+      <DropdownMenuTrigger render={<Button variant="ghost" />} aria-label={t`Select language`}>
+        <Globe />
 
-          <span className="text-sm font-medium capitalize">
-            {getLocaleDisplayName(activeLocaleId)}
-          </span>
-        </Button>
+        <span className="text-sm font-medium capitalize">
+          {getLocaleDisplayName(activeLocaleId)}
+        </span>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-48">
         <DropdownMenuGroup>
           {optionLocaleIds.map((localeId) => (
-            <DropdownMenuItem asChild key={localeId}>
-              <Button
-                variant={localeId === activeLocaleId ? "accent" : "ghost"}
-                onClick={createHandleSelect(localeId)}
-                className={cn("focus-visible:ring-transparent", {
-                  "text-foreground": localeId === activeLocaleId,
-                })}
-              >
-                <span className="w-full text-left capitalize">
-                  {getLocaleDisplayName(localeId)}
-                </span>
-              </Button>
+            <DropdownMenuItem
+              key={localeId}
+              render={
+                <Button
+                  variant={localeId === activeLocaleId ? "accent" : "ghost"}
+                  className={cn("focus-visible:ring-transparent", {
+                    "text-foreground": localeId === activeLocaleId,
+                  })}
+                />
+              }
+              onClick={createHandleSelect(localeId)}
+            >
+              <span className="w-full text-left capitalize">{getLocaleDisplayName(localeId)}</span>
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>

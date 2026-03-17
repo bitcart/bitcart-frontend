@@ -37,7 +37,7 @@ export const CatalogOverview: React.FC<CatalogOverviewProps> = ({
                 variant="ghost"
                 className="p-1 size-a hover:bg-primary-foreground/20 rounded-full"
               >
-                <X className="w-3 h-3" />
+                <X />
               </Button>
             </Badge>
 
@@ -51,7 +51,7 @@ export const CatalogOverview: React.FC<CatalogOverviewProps> = ({
                   variant="ghost"
                   className="p-0.25 size-a hover:bg-secondary-foreground/20 rounded-full"
                 >
-                  <X className="w-3 h-3" />
+                  <X />
                 </Button>
               </Badge>
             )}

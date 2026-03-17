@@ -25,7 +25,7 @@ export type BasicLinkComponent = React.ComponentType<{
   onClick?: VoidFunction
   className?: string
   style?: React.CSSProperties
-  children: React.ReactNode
+  children?: React.ReactNode
 }>
 
 export interface WithGlobalPosition {

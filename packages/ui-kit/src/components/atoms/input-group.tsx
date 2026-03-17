@@ -106,7 +106,7 @@ export const InputGroupText = ({ className, ...props }: React.ComponentProps<"sp
       className={cn(
         `
           text-muted-foreground gap-2 text-sm
-          [&_svg:not([class*='size-'])]:size-4
+          [&_svg:not-[class*='size-']]:size-4
           flex items-center
           [&_svg]:pointer-events-none
         `,

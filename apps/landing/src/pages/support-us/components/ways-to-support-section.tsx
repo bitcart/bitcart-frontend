@@ -55,7 +55,7 @@ export const WaysToSupportSection: React.FC<WaysToSupportSectionProps> = ({ data
                     >
                       <div
                         className={`
-                          w-2 h-2 bg-primary mr-3
+                          size-2 bg-primary mr-3
                           dark:bg-accent-foreground
                           shrink-0 rounded-full
                         `}

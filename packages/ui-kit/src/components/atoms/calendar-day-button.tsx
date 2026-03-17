@@ -47,7 +47,7 @@ export const CalendarDayButton = ({
           dark:hover:text-accent-foreground
           gap-1 font-normal
           [&>span]:text-xs
-          flex aspect-square size-auto w-full min-w-(--cell-size) flex-col leading-none
+          flex aspect-square size-auto w-full min-w-[--cell-size] flex-col leading-none
           group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10
           group-data-[focused=true]/day:ring-[3px]
           data-[range-middle=true]:rounded-none

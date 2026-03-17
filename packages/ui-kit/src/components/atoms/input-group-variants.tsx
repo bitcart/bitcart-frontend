@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority"
 export const inputGroupAddonVariants = cva(
   `
     text-muted-foreground gap-2 py-1.5 text-sm font-medium
-    [&>svg:not([class*='size-'])]:size-4
+    [&>svg:not-[class*='size-']]:size-4
     flex h-auto cursor-text items-center justify-center select-none
     group-data-[disabled=true]/input-group:opacity-50
     [&>kbd]:rounded-[calc(var(--radius)-5px)]
@@ -42,7 +42,7 @@ export const inputGroupButtonVariants = cva("text-sm gap-2 flex items-center sha
     size: {
       xs: `
         h-6 gap-1 px-2
-        [&>svg:not([class*='size-'])]:size-3.5
+        [&>svg:not-[class*='size-']]:size-3.5
         has-[>svg]:px-2
         rounded-[calc(var(--radius)-5px)]
       `,

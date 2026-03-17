@@ -1,11 +1,11 @@
-import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
+import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
 
 import { cn } from "@/utils"
 
 export const NavigationMenuList = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.List>) => {
+}: React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.List>) => {
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
@@ -21,7 +21,7 @@ export const NavigationMenuList = ({
 export const NavigationMenuItem = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Item>) => {
+}: React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>) => {
   return (
     <NavigationMenuPrimitive.Item
       data-slot="navigation-menu-item"
@@ -34,7 +34,7 @@ export const NavigationMenuItem = ({
 export const NavigationMenuContent = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Content>) => {
+}: NavigationMenuPrimitive.Content.Props) => {
   return (
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
@@ -55,15 +55,14 @@ export const NavigationMenuContent = ({
         `
           group-data-[viewport=false]/navigation-menu:bg-popover
           group-data-[viewport=false]/navigation-menu:text-popover-foreground
-          group-data-[viewport=false]/navigation-menu:mt-1.5
           group-data-[viewport=false]/navigation-menu:rounded-md
           group-data-[viewport=false]/navigation-menu:shadow-sm
-          group-data-[viewport=false]/navigation-menu:data-[state=open]:animate-in
-          group-data-[viewport=false]/navigation-menu:data-[state=closed]:animate-out
-          group-data-[viewport=false]/navigation-menu:data-[state=closed]:zoom-out-95
-          group-data-[viewport=false]/navigation-menu:data-[state=open]:zoom-in-95
-          group-data-[viewport=false]/navigation-menu:data-[state=open]:fade-in-0
-          group-data-[viewport=false]/navigation-menu:data-[state=closed]:fade-out-0
+          group-data-[viewport=false]/navigation-menu:data-open:animate-in
+          group-data-[viewport=false]/navigation-menu:data-closed:animate-out
+          group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95
+          group-data-[viewport=false]/navigation-menu:data-open:zoom-in-95
+          group-data-[viewport=false]/navigation-menu:data-open:fade-in-0
+          group-data-[viewport=false]/navigation-menu:data-closed:fade-out-0
           group-data-[viewport=false]/navigation-menu:top-full
           group-data-[viewport=false]/navigation-menu:overflow-hidden
           group-data-[viewport=false]/navigation-menu:border
@@ -78,37 +77,47 @@ export const NavigationMenuContent = ({
   )
 }
 
-export const NavigationMenuViewport = ({
+export const NavigationMenuPositioner = ({
   className,
+  side = "bottom",
+  sideOffset = 8,
+  align = "start",
+  alignOffset = 0,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Viewport>) => {
+}: NavigationMenuPrimitive.Positioner.Props) => {
   return (
-    <div className={cn("left-0 absolute top-full isolate z-50 flex justify-center")}>
-      <NavigationMenuPrimitive.Viewport
-        data-slot="navigation-menu-viewport"
+    <NavigationMenuPrimitive.Portal>
+      <NavigationMenuPrimitive.Positioner
+        side={side}
+        sideOffset={sideOffset}
+        align={align}
+        alignOffset={alignOffset}
         className={cn(
           `
-            origin-top-center bg-popover text-popover-foreground
-            data-[state=closed]:zoom-out-95
-            data-[state=open]:zoom-in-90
-            mt-1.5 rounded-md shadow-sm
-            md:w-[var(--radix-navigation-menu-viewport-width)]
-            data-[state=open]:animate-in
-            data-[state=closed]:animate-out
-            relative h-(--radix-navigation-menu-viewport-height) w-full overflow-hidden border
+            isolate z-50 transition-[top,left,right,bottom] duration-[0.35s]
+            ease-[cubic-bezier(0.22,1,0.36,1)]
           `,
           className,
         )}
         {...props}
-      />
-    </div>
+      >
+        <NavigationMenuPrimitive.Popup
+          className="
+            rounded-md bg-popover text-popover-foreground shadow-sm ring-foreground/10
+            transition-(opacity width height transform) relative origin-[--transform-origin] ring-1
+            duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none
+            data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150
+            data-starting-style:scale-90 data-starting-style:opacity-0
+          "
+        >
+          <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
+        </NavigationMenuPrimitive.Popup>
+      </NavigationMenuPrimitive.Positioner>
+    </NavigationMenuPrimitive.Portal>
   )
 }
 
-export const NavigationMenuLink = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) => {
+export const NavigationMenuLink = ({ className, ...props }: NavigationMenuPrimitive.Link.Props) => {
   return (
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
@@ -118,9 +127,9 @@ export const NavigationMenuLink = ({
           focus:text-accent-foreground
           font-medium gap-1 rounded-sm p-2
           focus-visible:ring-ring/50
-          [&_svg:not([class*='text-'])]:text-muted-foreground
-          [&_svg:not([class*='size-'])]:size-4
-          data-[active]:text-accent-foreground/90
+          [&_svg:not-[class*='text-']]:text-muted-foreground
+          [&_svg:not-[class*='size-']]:size-4
+          data-active:text-accent-foreground/90
           flex h-full flex-col transition-all duration-200 outline-none
           hover:scale-105
           focus:scale-105
@@ -136,9 +145,9 @@ export const NavigationMenuLink = ({
 export const NavigationMenuIndicator = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Indicator>) => {
+}: React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Icon>) => {
   return (
-    <NavigationMenuPrimitive.Indicator
+    <NavigationMenuPrimitive.Icon
       data-slot="navigation-menu-indicator"
       className={cn(
         `
@@ -151,7 +160,7 @@ export const NavigationMenuIndicator = ({
       )}
       {...props}
     >
-      <div className="bg-border h-2 w-2 rounded-tl-sm shadow-md relative top-[60%] rotate-45" />
-    </NavigationMenuPrimitive.Indicator>
+      <div className="bg-border size-2 rounded-tl-sm shadow-md relative top-[60%] rotate-45" />
+    </NavigationMenuPrimitive.Icon>
   )
 }

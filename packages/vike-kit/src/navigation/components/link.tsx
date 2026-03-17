@@ -21,7 +21,7 @@ export type LinkProps<TSupportedLocaleId extends LocaleId> = {
   title?: string
   className?: string
   style?: React.CSSProperties
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 export const Link = <TSupportedLocaleId extends LocaleId>({

@@ -41,17 +41,16 @@ export const CommunitySection: React.FC<CommunitySectionProps> = ({ className })
         {COMMUNITY_LINKS.map(({ Icon, href, label }, idx) => (
           <Button
             key={href}
-            asChild
+            render={<Link href={href} target="_blank" />}
+            nativeButton={false}
             variant="outline"
             size="xl"
             className={cn({
               "col-span-2": COMMUNITY_LINKS.length % 2 !== 0 && idx === COMMUNITY_LINKS.length - 1,
             })}
           >
-            <Link href={href} target="_blank">
-              <Icon className="w-5 h-5" />
-              <span className="font-medium">{label}</span>
-            </Link>
+            <Icon className="size-5" />
+            <span className="font-medium">{label}</span>
           </Button>
         ))}
       </div>

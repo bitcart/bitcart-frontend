@@ -7,7 +7,7 @@ export const Card: React.FC<CardProps> = ({ className, ...props }) => {
     <div
       data-slot="card"
       className={cn(
-        "gap-6 rounded-lg py-6 elevation-1 bg-card color-card-foreground flex flex-col border",
+        "gap-6 rounded-lg py-6 elevation-1 bg-card text-card-foreground flex flex-col border",
         className,
       )}
       {...props}

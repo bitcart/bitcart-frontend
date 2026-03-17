@@ -28,7 +28,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
       case 401: {
         return {
           title: t`Authentication Required`,
-          icon: props.icon ?? <Lock className="w-16 h-16 text-yellow-500" />,
+          icon: props.icon ?? <Lock className="size-16 text-yellow-500" />,
 
           message:
             props.message ??
@@ -39,7 +39,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
       case 403: {
         return {
           title: t`Access Denied`,
-          icon: props.icon ?? <ShieldAlert className="w-16 h-16 text-destructive-foreground" />,
+          icon: props.icon ?? <ShieldAlert className="size-16 text-destructive-foreground" />,
           message: props.message ?? t`You do not have permission to access this page.`,
         }
       }
@@ -47,7 +47,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
       case 404: {
         return {
           title: t`Page Not Found`,
-          icon: <AlertCircle className="w-16 h-16 text-orange-500" />,
+          icon: <AlertCircle className="size-16 text-orange-500" />,
           message: t`This page does not exist.`,
         }
       }
@@ -55,7 +55,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
       case 500: {
         return {
           title: t`Server Error`,
-          icon: props.icon ?? <AlertCircle className="w-16 h-16 text-destructive-foreground" />,
+          icon: props.icon ?? <AlertCircle className="size-16 text-destructive-foreground" />,
           message: props.message ?? t`Something went wrong. Try again later.`,
         }
       }
@@ -63,7 +63,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
       default: {
         return {
           title: t`Error`,
-          icon: props.icon ?? <AlertCircle className="w-16 h-16 text-destructive-foreground" />,
+          icon: props.icon ?? <AlertCircle className="size-16 text-destructive-foreground" />,
           message: props.message ?? t`Something went wrong. Try again later.`,
         }
       }
@@ -89,16 +89,14 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
         <p className="text-muted-foreground mb-8 text-base sm:text-lg leading-relaxed">{message}</p>
 
         <div className="sm:flex-row gap-4 flex flex-col justify-center">
-          <Button asChild size="lg">
-            <Link href="/">
-              <Home className="w-5 h-5" />
-              <span>{t`Go Home`}</span>
-            </Link>
+          <Button render={<Link href="/" />} nativeButton={false} size="lg">
+            <Home className="size-5" />
+            <span>{t`Go Home`}</span>
           </Button>
 
           {statusCode !== 500 && (
             <Button size="lg" variant="secondary" onClick={handleRetry}>
-              <RefreshCw className="w-5 h-5" />
+              <RefreshCw className="size-5" />
               <span>{t`Try Again`}</span>
             </Button>
           )}

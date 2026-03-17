@@ -21,11 +21,9 @@ export default function Page() {
     <div className="bg-background pt-20 min-h-screen">
       <div className="gap-8 max-w-4xl px-4 md:px-6 lg:px-8 py-8 mx-auto flex flex-col">
         <div className="flex justify-between">
-          <Button asChild variant="ghost">
-            <Link href="/">
-              <ArrowLeft className="mr-2 w-4 h-4" />
-              <span>{t`Back to Directory`}</span>
-            </Link>
+          <Button render={<Link href="/" />} nativeButton={false} variant="ghost">
+            <ArrowLeft className="mr-2" />
+            <span>{t`Back to Directory`}</span>
           </Button>
         </div>
 
@@ -38,7 +36,7 @@ export default function Page() {
         </div>
 
         <Alert variant="accent">
-          <Info className="w-5 h-5" />
+          <Info className="size-5" />
           <AlertTitle>{t`How it works:`}</AlertTitle>
 
           <AlertDescription>
