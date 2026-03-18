@@ -4,7 +4,6 @@ import { fileURLToPath } from "node:url"
 import dts from "unplugin-dts/vite"
 import { defineConfig } from "vite"
 import { externalizeDeps } from "vite-plugin-externalize-deps"
-import tsconfigPaths from "vite-tsconfig-paths"
 
 import packageManifest from "./package.json"
 
@@ -12,11 +11,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // FIXME: Improve tree-shaking
 export default defineConfig({
-  plugins: [
-    tsconfigPaths(),
-    dts({ bundleTypes: false, tsconfigPath: "./tsconfig.lib.json" }),
-    externalizeDeps(),
-  ],
+  plugins: [dts({ bundleTypes: false, tsconfigPath: "./tsconfig.lib.json" }), externalizeDeps()],
+
+  resolve: {
+    tsconfigPaths: true,
+  },
 
   build: {
     sourcemap: true,

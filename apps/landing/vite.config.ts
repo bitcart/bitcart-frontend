@@ -2,13 +2,13 @@ import process from "process"
 
 import { lingui } from "@lingui/vite-plugin"
 import vikeSitemap from "@qalisa/vike-plugin-sitemap"
+import babelPlugin, { defineRolldownBabelPreset } from "@rolldown/plugin-babel"
 import { createEnv } from "@t3-oss/env-core"
 import react from "@vitejs/plugin-react"
 import dotenv from "dotenv"
 import vike from "vike/plugin"
 import { defineConfig } from "vite"
 import { viteStaticCopy } from "vite-plugin-static-copy"
-import tsconfigPaths from "vite-tsconfig-paths"
 
 import { envConfig } from "./env.config"
 import linguiConfig from "./lingui.config"
@@ -27,6 +27,15 @@ const { PRODUCTION_BASE_URL } = env
 
 const { locales: LINGUI_LOCALES, sourceLocale: LINGUI_SOURCE_LOCALE } = linguiConfig
 
+const linguiPreset = defineRolldownBabelPreset({
+  preset: () => ({ plugins: ["@lingui/babel-plugin-lingui-macro"] }),
+  rolldown: {
+    filter: {
+      code: /from ['"]@lingui\/(?:react|core)\/macro['"]/,
+    },
+  },
+})
+
 // https://vitejs.dev/config/
 export default defineConfig({
   envPrefix: "BITCART_",
@@ -37,15 +46,14 @@ export default defineConfig({
   },
 
   plugins: [
-    tsconfigPaths(),
-
-    react({
-      babel: {
-        plugins: ["@lingui/babel-plugin-lingui-macro" /*,"babel-plugin-react-compiler"*/],
-      },
-    }),
-
+    react(),
     lingui(),
+    babelPlugin({
+      presets: [linguiPreset],
+      plugins: [
+        /*"babel-plugin-react-compiler"*/
+      ],
+    }),
     vike(),
 
     vikeSitemap({
@@ -90,6 +98,10 @@ export default defineConfig({
     }),
   ],
 
+  resolve: {
+    tsconfigPaths: true,
+  },
+
   define: {
     "import.meta.env.PRODUCTION_BASE_URL": JSON.stringify(process.env.PRODUCTION_BASE_URL),
     "import.meta.env.PROJECT_CANONICAL_NAME": JSON.stringify(process.env.PROJECT_CANONICAL_NAME),
@@ -97,15 +109,5 @@ export default defineConfig({
 
   build: {
     sourcemap: true,
-
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          if (id.includes("runtime-client-routing")) {
-            return "vike-router"
-          } else return null
-        },
-      },
-    },
   },
 })

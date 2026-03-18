@@ -50,6 +50,7 @@
     "@lingui/conf": "catalog:devDependencies",
     "@lingui/vite-plugin": "catalog:devDependencies",
     "@qalisa/vike-plugin-sitemap": "catalog:devDependencies",
+    "@rolldown/plugin-babel": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "@types/react-dom": "catalog:devDependencies",
@@ -64,7 +65,6 @@
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
     "vite": "catalog:devDependencies",
-    "vite-plugin-static-copy": "catalog:devDependencies",
-    "vite-tsconfig-paths": "catalog:devDependencies"
+    "vite-plugin-static-copy": "catalog:devDependencies"
   }
 }
