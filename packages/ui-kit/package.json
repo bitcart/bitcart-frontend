@@ -35,7 +35,7 @@
     "shadcn-add": "pnpm shadcn add -p ./src/components/tmp",
     "generate:graphviz": "madge --image graphviz.svg src",
     "build:styles": "unocss",
-    "build:main": "vite build"
+    "build:main": "tsdown"
   },
   "dependencies": {
     "@base-ui/react": "catalog:dependencies",
@@ -61,21 +61,16 @@
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
     "@bitcart/unocss-preset": "workspace:*",
-    "@rolldown/plugin-babel": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "@unocss/cli": "catalog:devDependencies",
-    "@vitejs/plugin-react": "catalog:devDependencies",
     "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
     "madge": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
-    "unocss": "catalog:devDependencies",
-    "unplugin-dts": "catalog:devDependencies",
-    "vite": "catalog:devDependencies",
-    "vite-plugin-externalize-deps": "catalog:devDependencies",
-    "vite-plugin-static-copy": "catalog:devDependencies"
+    "unocss": "catalog:devDependencies"
   },
   "madge": {
     "fileExtensions": [

@@ -17,7 +17,7 @@
     "lint:check": "oxlint . --type-aware",
     "lint": "oxlint . --fix --type-aware",
     "generate:graphviz": "madge --image graphviz.svg src",
-    "build": "vite build"
+    "build": "tsdown"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",
@@ -32,17 +32,13 @@
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
-    "@rolldown/plugin-babel": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
-    "@vitejs/plugin-react": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
     "madge": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
-    "unplugin-dts": "catalog:devDependencies",
-    "vite": "catalog:devDependencies",
-    "vite-plugin-externalize-deps": "catalog:devDependencies"
+    "tsdown": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies"
   },
   "madge": {
     "fileExtensions": [

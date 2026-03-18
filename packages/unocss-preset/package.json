@@ -18,7 +18,7 @@
     "lint": "oxlint . --fix --type-aware",
     "generate:graphviz": "madge --image graphviz.svg src",
     "generate:dist-graphviz": "madge --image dist-graphviz.svg dist",
-    "build": "vite build"
+    "build": "tsdown"
   },
   "dependencies": {},
   "devDependencies": {
@@ -28,13 +28,11 @@
     "@unocss/preset-wind4": "catalog:devDependencies",
     "madge": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
     "unocss-preset-animations": "catalog:devDependencies",
-    "unocss-preset-shadcn": "catalog:devDependencies",
-    "unplugin-dts": "catalog:devDependencies",
-    "vite": "catalog:devDependencies",
-    "vite-plugin-externalize-deps": "catalog:devDependencies"
+    "unocss-preset-shadcn": "catalog:devDependencies"
   },
   "madge": {
     "fileExtensions": [
