@@ -10,7 +10,7 @@
 
     "build:main": {
       "dependsOn": ["build:styles", "^build"],
-      "inputs": ["default", { "runtime": "grep '^BITCART_' .env 2>/dev/null | sort" }],
+      "inputs": ["default", "^default", { "runtime": "grep '^BITCART_' .env 2>/dev/null | sort" }],
       "outputs": ["{projectRoot}/dist"],
       "cache": true
     },
