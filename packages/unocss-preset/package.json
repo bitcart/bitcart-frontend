@@ -16,8 +16,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "lint:check": "oxlint . --type-aware",
     "lint": "oxlint . --fix --type-aware",
-    "generate:graphviz": "madge --image graphviz.svg src",
-    "generate:dist-graphviz": "madge --image dist-graphviz.svg dist",
+    "generate:graphviz": "depcruise src --output-type dot | dot -T svg -o graphviz.svg",
+    "generate:dist-graphviz": "depcruise dist --output-type dot | dot -T svg -o dist-graphviz.svg",
     "build": "tsdown"
   },
   "dependencies": {},
@@ -26,24 +26,12 @@
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@unocss/cli": "catalog:devDependencies",
     "@unocss/preset-wind4": "catalog:devDependencies",
-    "madge": "catalog:devDependencies",
+    "dependency-cruiser": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
     "unocss-preset-animations": "catalog:devDependencies",
     "unocss-preset-shadcn": "catalog:devDependencies"
-  },
-  "madge": {
-    "fileExtensions": [
-      "js",
-      "ts"
-    ],
-    "tsConfig": "tsconfig.json",
-    "layout": "dot",
-    "fontSize": "16px",
-    "graphVizOptions": {
-      "compound": true
-    }
   }
 }

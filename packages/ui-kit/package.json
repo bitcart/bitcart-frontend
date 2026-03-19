@@ -33,7 +33,7 @@
     "lint": "oxlint . --fix --type-aware",
     "shadcn": "pnpx shadcn@latest",
     "shadcn-add": "pnpm shadcn add -p ./src/components/tmp",
-    "generate:graphviz": "madge --image graphviz.svg src",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
     "build:styles": "unocss",
     "build:main": "tsdown"
   },
@@ -64,25 +64,12 @@
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "@unocss/cli": "catalog:devDependencies",
+    "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
-    "madge": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies"
-  },
-  "madge": {
-    "fileExtensions": [
-      "js",
-      "ts",
-      "tsx"
-    ],
-    "tsConfig": "tsconfig.json",
-    "layout": "dot",
-    "fontSize": "16px",
-    "graphVizOptions": {
-      "compound": true
-    }
   }
 }

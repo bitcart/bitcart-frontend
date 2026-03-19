@@ -61,7 +61,7 @@ catalogs:
     eslint-plugin-react-hooks: 7.0.1
     globals: 17.4.0
     gpt-po: 1.2.4
-    madge: 8.0.0
+    dependency-cruiser: 17.3.8
     nx: 22.5.4
     oxfmt: 0.38.0
     oxlint: 1.51.0

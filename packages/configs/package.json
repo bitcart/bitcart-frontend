@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "exports": {
+    "./base/dependency-cruiser": "./src/base/dependency-cruiser.js",
     "./base/ts": "./src/base/ts.json",
     "./base/oxlint": "./src/base/oxlint.ts",
+    "./by-package-type/app-dependency-cruiser": "./src/by-package-type/app-dependency-cruiser.js",
     "./by-package-type/app-ts": "./src/by-package-type/app-ts.json",
+    "./by-package-type/lib-dependency-cruiser": "./src/by-package-type/lib-dependency-cruiser.js",
     "./by-package-type/lib-ts": "./src/by-package-type/lib-ts.json",
     "./by-supported-runtime/nodejs-ts": {
       "default": "./src/by-supported-runtime/nodejs-ts.json"
@@ -16,6 +19,7 @@
     "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts"
   },
   "devDependencies": {
+    "dependency-cruiser": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "typescript": "catalog:devDependencies"
   }

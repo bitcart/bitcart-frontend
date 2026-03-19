@@ -39,8 +39,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "lint:check": "oxlint . --type-aware",
     "lint": "oxlint . --fix --type-aware",
-    "generate:graphviz": "madge --image graphviz.svg src",
-    "generate:dist-graphviz": "madge --image dist-graphviz.svg dist",
+    "generate:graphviz": "depcruise src --output-type dot | dot -T svg -o graphviz.svg",
+    "generate:dist-graphviz": "depcruise dist --output-type dot | dot -T svg -o dist-graphviz.svg",
     "build": "tsdown"
   },
   "dependencies": {
@@ -61,23 +61,10 @@
     "@bitcart/configs": "workspace:*",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
+    "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
-    "madge": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies"
-  },
-  "madge": {
-    "fileExtensions": [
-      "js",
-      "ts",
-      "tsx"
-    ],
-    "tsConfig": "tsconfig.json",
-    "layout": "dot",
-    "fontSize": "16px",
-    "graphVizOptions": {
-      "compound": true
-    }
   }
 }
