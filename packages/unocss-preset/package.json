@@ -14,8 +14,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "lint:check": "oxlint . --type-aware",
-    "lint": "oxlint . --fix --type-aware",
+    "lint:check": "oxlint .",
+    "lint": "oxlint . --fix",
     "generate:graphviz": "depcruise src --output-type dot | dot -T svg -o graphviz.svg",
     "generate:dist-graphviz": "depcruise dist --output-type dot | dot -T svg -o dist-graphviz.svg",
     "build": "tsdown"

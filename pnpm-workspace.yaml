@@ -62,9 +62,9 @@ catalogs:
     gpt-po: 1.2.4
     dependency-cruiser: 17.3.8
     nx: 22.5.4
-    oxfmt: 0.38.0
-    oxlint: 1.51.0
-    oxlint-tsgolint: 0.16.0
+    oxfmt: 0.41.0
+    oxlint: 1.56.0
+    oxlint-tsgolint: 0.17.0
     tailwindcss: 4.2.1
     typescript: 5.9.3
     unocss: 66.6.6

@@ -29,8 +29,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "lint:check": "oxlint . --type-aware",
-    "lint": "oxlint . --fix --type-aware",
+    "lint:check": "oxlint .",
+    "lint": "oxlint . --fix",
     "shadcn": "pnpx shadcn@latest",
     "shadcn-add": "pnpm shadcn add -p ./src/components/tmp",
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",

@@ -3,6 +3,11 @@ import { defineConfig } from "oxlint"
 export const baseOxlintConfig = defineConfig({
   plugins: ["eslint", "typescript", "oxc", "import", "promise"],
 
+  options: {
+    typeAware: true,
+    denyWarnings: true,
+  },
+
   jsPlugins: [{ name: "stylistic-js", specifier: "@stylistic/eslint-plugin" }],
 
   env: {
