@@ -89,3 +89,5 @@ minimumReleaseAgeExclude:
   - "@vitejs/plugin-react"
   - rolldown
   - "@rolldown/*"
+  # Renovate security update: effect@3.20.0
+  - effect@3.20.0
