@@ -11,17 +11,17 @@ catalogMode: strict
 catalogs:
   dependencies:
     "@base-ui/react": 1.3.0
-    "@lingui/core": 5.9.2
-    "@lingui/react": 5.9.2
+    "@lingui/core": 5.9.3
+    "@lingui/react": 5.9.3
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.10
-    "@tanstack/react-form": 1.28.4
+    "@tanstack/react-form": 1.28.5
     "@tanstack/react-query": 5.90.21
     "@web3icons/react": 4.1.17
     class-variance-authority: 0.7.1
     date-fns: 4.1.0
     dotenv: 17.3.1
-    effect: 3.19.19
+    effect: 3.20.0
     inter-ui: 4.1.1
     lucide-react: 0.577.0
     next-themes: 0.4.6
@@ -38,39 +38,39 @@ catalogs:
     vike-react-query: 0.1.12
     zod: 4.3.6
   devDependencies:
-    "@effect/language-service": 0.79.0
-    "@lingui/babel-plugin-lingui-macro": 5.9.2
-    "@lingui/cli": 5.9.2
-    "@lingui/conf": 5.9.2
-    "@lingui/vite-plugin": 5.9.2
+    "@effect/language-service": 0.80.0
+    "@lingui/babel-plugin-lingui-macro": 5.9.3
+    "@lingui/cli": 5.9.3
+    "@lingui/conf": 5.9.3
+    "@lingui/vite-plugin": 5.9.3
     "@qalisa/vike-plugin-sitemap": 1.7.0
     "@rolldown/plugin-babel": 0.2.2
     "@stylistic/eslint-plugin": 5.10.0
     "@types/react": 19.2.14
     "@types/react-dom": 19.2.3
-    "@unocss/cli": 66.6.6
-    "@unocss/preset-web-fonts": 66.6.6
-    "@unocss/preset-wind4": 66.6.6
+    "@unocss/cli": 66.6.7
+    "@unocss/preset-web-fonts": 66.6.7
+    "@unocss/preset-wind4": 66.6.7
     "@vitejs/plugin-react": 6.0.1
     babel-plugin-react-compiler: 1.0.0
-    baseline-browser-mapping: 2.10.0
+    baseline-browser-mapping: 2.10.8
     eslint-plugin-better-tailwindcss: 4.3.2
     eslint-plugin-react-hooks: 7.0.1
     globals: 17.4.0
     gpt-po: 1.2.4
-    dependency-cruiser: 17.3.8
+    dependency-cruiser: 17.3.9
     nx: 22.5.4
     oxfmt: 0.41.0
     oxlint: 1.56.0
     oxlint-tsgolint: 0.17.0
     tailwindcss: 4.2.1
     typescript: 5.9.3
-    unocss: 66.6.6
+    unocss: 66.6.7
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
-    tsdown: 0.21.1
+    tsdown: 0.21.4
     vite: 8.0.0
-    vite-plugin-static-copy: 3.2.0
+    vite-plugin-static-copy: 3.3.0
 
 linkWorkspacePackages: true
 
