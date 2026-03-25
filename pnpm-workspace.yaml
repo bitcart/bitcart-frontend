@@ -88,3 +88,5 @@ minimumReleaseAgeExclude:
   - rolldown
   - "@rolldown/*"
   - "@base-ui/*"
+  # Renovate security update: effect@3.20.0
+  - effect@3.20.0
