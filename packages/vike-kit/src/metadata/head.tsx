@@ -71,11 +71,12 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
 
         <link rel="canonical" href={metadata.url} />
 
-        {Object.entries<PosixLocaleIdLike<TSupportedLocaleId>>(posixLocaleIdMap)
-          .filter(([_localeId, posixLocaleId]) => posixLocaleId !== metadata.locale)
-          .map(([localeId, posixLocaleId]) => (
+        {Object.entries<PosixLocaleIdLike<TSupportedLocaleId>>(posixLocaleIdMap).map(
+          ([localeId, posixLocaleId]) => (
             <Fragment key={localeId}>
-              <meta property="og:locale:alternate" content={posixLocaleId} />
+              {posixLocaleId !== metadata.locale && (
+                <meta property="og:locale:alternate" content={posixLocaleId} />
+              )}
 
               <link
                 rel="alternate"
@@ -88,7 +89,15 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
                 type="text/html"
               />
             </Fragment>
-          ))}
+          ),
+        )}
+
+        <link
+          rel="alternate"
+          href={`${metadata.baseUrl}${normalizedUrl}`}
+          hrefLang="x-default"
+          type="text/html"
+        />
 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script type="application/ld+json" dangerouslySetInnerHTML={metadataJsonInnerHtml} />
