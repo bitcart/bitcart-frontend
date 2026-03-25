@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { useMemo } from "react"
 import { DayPicker, getDefaultClassNames, type CustomComponents } from "react-day-picker"
@@ -181,7 +183,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       showOutsideDays={showOutsideDays}
       className={cn(
         `
-          bg-background group/calendar p-3 [--cell-size:--spacing(8)]
+          bg-background group/calendar p-3 [--cell-size:calc(var(--spacing)*8)]
           in-data-[slot=card-content]:bg-transparent
           in-data-[slot=popover-content]:bg-transparent
         `,

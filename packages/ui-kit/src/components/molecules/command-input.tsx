@@ -1,27 +1,29 @@
-import { Command as CommandPrimitive } from "cmdk"
+//* Ported from: https://coss.com/ui
+
 import { SearchIcon } from "lucide-react"
 
 import { cn } from "@/utils"
 
-export const CommandInput: React.FC<React.ComponentProps<typeof CommandPrimitive.Input>> = ({
+import { AutocompleteInput, type AutocompleteInputProps } from "./autocomplete-input"
+
+export type CommandInputProps = AutocompleteInputProps & {}
+
+export const CommandInput: React.FC<CommandInputProps> = ({
   className,
+  placeholder = undefined,
   ...props
-}) => (
-  <div data-slot="command-input-wrapper" className="h-9 gap-2 px-3 flex items-center border-b">
-    <SearchIcon className="size-4 shrink-0 opacity-50" />
-
-    <CommandPrimitive.Input
-      data-slot="command-input"
-      className={cn(
-        `
-          placeholder:text-muted-foreground
-          h-10 rounded-md py-3 text-sm flex w-full bg-transparent outline-hidden
-          disabled:cursor-not-allowed disabled:opacity-50
-        `,
-
-        className,
-      )}
-      {...props}
-    />
-  </div>
-)
+}) => {
+  return (
+    <div className="p-2.5">
+      <AutocompleteInput
+        className={cn(
+          "border-transparent! bg-transparent! shadow-none before:hidden has-focus-visible:ring-0",
+          className,
+        )}
+        placeholder={placeholder}
+        startAddon={<SearchIcon />}
+        {...props}
+      />
+    </div>
+  )
+}

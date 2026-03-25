@@ -1,3 +1,5 @@
+//! Keep exports within each category in alphabetical order by module name
+
 /**
  ** ATOMS
  */
@@ -13,11 +15,22 @@ export {
 
 export { Alert, AlertDescription, AlertTitle } from "./atoms/alert"
 
+export {
+  Autocomplete,
+  AutocompleteCollection,
+  AutocompleteEmpty,
+  AutocompleteGroup,
+  AutocompleteGroupLabel,
+  AutocompleteItem,
+  AutocompleteRow,
+  AutocompleteSeparator,
+  AutocompleteStatus,
+  AutocompleteTrigger,
+  AutocompleteValue,
+} from "./atoms/autocomplete"
+
 export { Badge, type BadgeProps } from "./atoms/badge"
-
 export { Button, type ButtonProps } from "./atoms/button"
-export { buttonVariants } from "./atoms/button-variants"
-
 export { CalendarDayButton, type CalendarDayButtonProps } from "./atoms/calendar-day-button"
 
 export {
@@ -38,16 +51,25 @@ export {
 } from "./atoms/card"
 
 export { Checkbox, type CheckboxProps } from "./atoms/checkbox"
-
 export { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./atoms/collapsible"
 
 export {
   Command,
-  CommandList,
+  CommandCollection,
+  CommandCreateHandle,
+  CommandDialog,
+  CommandDialogBackdrop,
+  CommandDialogPortal,
+  CommandDialogTrigger,
+  CommandDialogViewport,
   CommandEmpty,
+  CommandFooter,
   CommandGroup,
+  CommandGroupLabel,
   CommandItem,
+  CommandPanel,
   CommandSeparator,
+  CommandShortcut,
 } from "./atoms/command"
 
 export {
@@ -64,14 +86,48 @@ export {
 
 export {
   Drawer,
+  DrawerBackdrop,
+  DrawerBar,
   DrawerClose,
+  DrawerContent,
+  DrawerCreateHandle,
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay,
+  DrawerMenu,
+  DrawerMenuCheckboxItem,
+  DrawerMenuGroup,
+  DrawerMenuGroupLabel,
+  DrawerMenuItem,
+  DrawerMenuRadioGroup,
+  DrawerMenuRadioItem,
+  DrawerMenuSeparator,
+  DrawerMenuTrigger,
   DrawerPortal,
+  DrawerSwipeArea,
   DrawerTitle,
   DrawerTrigger,
+  DrawerViewport,
+  type DrawerBackdropProps,
+  type DrawerBarProps,
+  type DrawerCloseProps,
+  type DrawerDescriptionProps,
+  type DrawerFooterProps,
+  type DrawerHeaderProps,
+  type DrawerMenuCheckboxItemProps,
+  type DrawerMenuGroupLabelProps,
+  type DrawerMenuGroupProps,
+  type DrawerMenuItemProps,
+  type DrawerMenuProps,
+  type DrawerMenuRadioGroupProps,
+  type DrawerMenuRadioItemProps,
+  type DrawerMenuSeparatorProps,
+  type DrawerMenuTriggerProps,
+  type DrawerProps,
+  type DrawerSwipeAreaProps,
+  type DrawerTitleProps,
+  type DrawerTriggerProps,
+  type DrawerViewportProps,
 } from "./atoms/drawer"
 
 export {
@@ -90,6 +146,7 @@ export {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
+  type DropdownMenuItemProps,
 } from "./atoms/dropdown-menu"
 
 export {
@@ -128,6 +185,7 @@ export {
   type InputGroupAddonProps,
 } from "./atoms/input-group"
 
+export { Kbd, KbdGroup } from "./atoms/kbd"
 export { Label, type LabelProps } from "./atoms/label"
 
 export {
@@ -152,9 +210,8 @@ export {
 } from "./atoms/select"
 
 export { Separator, type SeparatorProps } from "./atoms/separator"
-
 export { Skeleton } from "./atoms/skeleton"
-
+export { Spinner } from "./atoms/spinner"
 export { Textarea, type TextareaProps } from "./atoms/textarea"
 
 /**
@@ -162,6 +219,9 @@ export { Textarea, type TextareaProps } from "./atoms/textarea"
  */
 
 export { AccordionTrigger } from "./molecules/accordion"
+export { AutocompleteInput, type AutocompleteInputProps } from "./molecules/autocomplete-input"
+export { AutocompleteList, type AutocompleteListProps } from "./molecules/autocomplete-list"
+export { AutocompletePopup, type AutocompletePopupProps } from "./molecules/autocomplete-popup"
 
 export {
   ButtonGroup,
@@ -171,30 +231,30 @@ export {
 } from "./molecules/button-group"
 
 export { Calendar, type CalendarProps } from "./molecules/calendar"
-
-export { CommandInput } from "./molecules/command-input"
-
+export { CommandInput, type CommandInputProps } from "./molecules/command-input"
+export { CommandList, type CommandListProps } from "./molecules/command-list"
+export { CommandDialogPopup, type CommandDialogPopupProps } from "./molecules/command-dialog-popup"
 export { DialogContent, type DialogContentProps } from "./molecules/dialog-content"
-
-export { DrawerContent, type DrawerContentProps } from "./molecules/drawer-content"
-
+export { DrawerPanel, type DrawerPanelProps } from "./molecules/drawer-panel"
+export { DrawerPopup, type DrawerPopupProps } from "./molecules/drawer-popup"
 export { LocaleSelector, type LocaleSelectorProps } from "./molecules/locale-selector"
-
 export { NavigationMenu, NavigationMenuTrigger } from "./molecules/navigation-menu"
 
+export {
+  ScrollArea,
+  ScrollBar,
+  type ScrollAreaProps,
+  type ScrollBarProps,
+} from "./molecules/scroll-area"
+
 export { SearchField, type SearchFieldProps } from "./molecules/search-field"
-
 export { SelectContent, SelectItem, SelectTrigger } from "./molecules/select"
-
 export { ThemeToggle, type ThemeToggleProps } from "./molecules/theme-toggle"
-
 export { Toaster } from "./molecules/toaster"
 
 /**
  ** ORGANISMS
  */
-
-export { CommandDialog, type CommandDialogProps } from "./organisms/command-dialog"
 
 export {
   FeatureGallery,
@@ -203,7 +263,6 @@ export {
 } from "./organisms/feature-gallery"
 
 export { WebsiteFooter, type WebsiteFooterProps } from "./organisms/website-footer"
-
 export { WebsiteHeader, type WebsiteHeaderProps } from "./organisms/website-header"
 
 /**
@@ -211,7 +270,5 @@ export { WebsiteHeader, type WebsiteHeaderProps } from "./organisms/website-head
  */
 
 export { ErrorPageTemplate, type ErrorPageTemplateProps } from "./templates/error-page"
-
 export { WebappLayout, type WebappLayoutProps } from "./templates/webapp"
-
 export { WebsiteLayout, type WebsiteLayoutProps } from "./templates/website"

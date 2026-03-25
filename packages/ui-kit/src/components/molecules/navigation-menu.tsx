@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
 import { ChevronDownIcon } from "lucide-react"
 

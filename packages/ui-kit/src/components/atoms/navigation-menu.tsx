@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
 
 import { cn } from "@/utils"
@@ -97,18 +99,19 @@ export const NavigationMenuPositioner = ({
             isolate z-50 transition-[top,left,right,bottom] duration-[0.35s]
             ease-[cubic-bezier(0.22,1,0.36,1)]
           `,
+
           className,
         )}
         {...props}
       >
         <NavigationMenuPrimitive.Popup
-          className="
-            rounded-md bg-popover text-popover-foreground shadow-sm ring-foreground/10
-            transition-(opacity width height transform) relative origin-[--transform-origin] ring-1
+          className={`
+            rounded-md bg-popover text-popover-foreground shadow-sm ring-foreground/10 relative
+            origin-[--transform-origin] ring-1 transition-[opacity,width,height,transform]
             duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none
             data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150
             data-starting-style:scale-90 data-starting-style:opacity-0
-          "
+          `}
         >
           <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
         </NavigationMenuPrimitive.Popup>
@@ -135,6 +138,7 @@ export const NavigationMenuLink = ({ className, ...props }: NavigationMenuPrimit
           focus:scale-105
           focus-visible:ring-[3px] focus-visible:outline-1
         `,
+
         className,
       )}
       {...props}
@@ -156,6 +160,7 @@ export const NavigationMenuIndicator = ({
           data-[state=visible]:fade-in
           h-1.5 top-full z-1 flex items-end justify-center overflow-hidden
         `,
+
         className,
       )}
       {...props}

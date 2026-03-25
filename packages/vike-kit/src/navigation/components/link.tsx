@@ -1,6 +1,6 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
 import type { LocaleId } from "@bitcart/core/utils"
-import React, { useCallback, useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { usePageContext } from "vike-react/usePageContext"
 
 import { getAnchorElementProps, isExternalLink, scrollToTop } from "../utils"

@@ -39,6 +39,14 @@ Clean up all workspace artifacts, such as cache, node modules, and transient cod
 drop-artifacts:
     find . -type d,f \( -name .nx -o -name dist -o -name node_modules -o -name uno.generated.css \) -prune -exec rm -rf {} +
 
+[doc("
+Clean up all workspace artifacts, reinstall dependencies, and rebuild all workspace packages.
+")]
+[group("General")]
+clean-rebuild: drop-artifacts
+    pnpm i
+    @just build
+
 ## DEPENDENCY MANAGEMENT
 
 [doc("
@@ -78,13 +86,13 @@ add-dev ws-member-name package-specifier:
     .just/add-nodejs-dependency.sh devDependencies '{{ ws-member-name }}' -DE '{{ package-specifier }}'
 
 [doc("
-Install shadcn/ui component primitives into the UI Kit.
+Install component primitives from shadcn/ui compliant registries into the UI Kit.
 
-Example: `just ui-kit-shadcn-add accordion`
+Example: `just add-ui-kit-components @coss/command accordion`
 ")]
 [group("Dependency management")]
-ui-kit-shadcn-add component-name:
-    pnpm ui-kit shadcn-add '{{ component-name }}'
+add-ui-kit-components +component-names:
+    pnpm ui-kit add:components {{ component-names }}
 
 ### CODE QUALITY
 

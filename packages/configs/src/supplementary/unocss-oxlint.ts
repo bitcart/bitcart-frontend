@@ -9,7 +9,7 @@ export const unocssOxlintConfig = defineConfig({
 
     "better-tailwindcss/enforce-consistent-line-wrapping": [
       "warn",
-      { preferSingleLine: true, printWidth: 100 },
+      { preferSingleLine: true, printWidth: 100, strictness: "loose" },
     ],
 
     "better-tailwindcss/no-conflicting-classes": "error",

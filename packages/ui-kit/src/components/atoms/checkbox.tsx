@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox"
 import { CheckIcon } from "lucide-react"
 

@@ -45,7 +45,7 @@ export default function Page() {
             <CatalogFilter state={catalogLookup.filters} controls={catalogLookup.filterControls} />
 
             <Button render={<Link href="/submit" />} nativeButton={false} size="lg">
-              <Plus className="mr-2 size-5" />
+              <Plus className="size-5" />
               <span>{t`Submit New Entry`}</span>
             </Button>
           </div>

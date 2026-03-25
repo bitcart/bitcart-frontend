@@ -45,6 +45,7 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId>({
           {optionLocaleIds.map((localeId) => (
             <DropdownMenuItem
               key={localeId}
+              onClick={createHandleSelect(localeId)}
               render={
                 <Button
                   variant={localeId === activeLocaleId ? "accent" : "ghost"}
@@ -53,7 +54,6 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId>({
                   })}
                 />
               }
-              onClick={createHandleSelect(localeId)}
             >
               <span className="w-full text-left capitalize">{getLocaleDisplayName(localeId)}</span>
             </DropdownMenuItem>

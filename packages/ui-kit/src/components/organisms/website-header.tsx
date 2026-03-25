@@ -213,8 +213,9 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
           <DropdownMenuGroup>
             {labeledLinks.map((link, idx) => (
               <DropdownMenuItem
-                render={<Link href={link.href} />}
                 key={link.label + link.href}
+                nativeButton={false}
+                render={<Link href={link.href} />}
                 className={getDropdownNavMenuLinkClass(
                   "globalPosition" in link ? link.globalPosition : idx + 1,
                 )}

@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { Select as SelectPrimitive } from "@base-ui/react/select"
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 

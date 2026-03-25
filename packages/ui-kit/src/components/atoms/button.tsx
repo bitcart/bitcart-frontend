@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { type VariantProps } from "class-variance-authority"
 
@@ -19,10 +21,10 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <ButtonPrimitive
-      data-slot="button"
       className={cn(buttonVariants({ variant, size, className }), {
         "sm:hover:scale-105 hover:scale-102": expandOnHover,
       })}
+      data-slot="button"
       {...props}
     />
   )

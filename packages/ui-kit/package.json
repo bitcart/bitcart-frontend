@@ -31,8 +31,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "lint:check": "oxlint .",
     "lint": "oxlint . --fix",
-    "shadcn": "pnpx shadcn@latest",
-    "shadcn-add": "pnpm shadcn add -p ./src/components/tmp",
+    "shadcn-ui": "pnpm dlx shadcn@latest",
+    "add:components": "pnpm shadcn-ui add -p ./src/components/tmp",
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
     "build:styles": "unocss",
     "build:main": "tsdown"
@@ -45,7 +45,6 @@
     "@tanstack/react-form": "catalog:dependencies",
     "babel-plugin-react-compiler": "catalog:devDependencies",
     "class-variance-authority": "catalog:dependencies",
-    "cmdk": "catalog:dependencies",
     "date-fns": "catalog:dependencies",
     "lucide-react": "catalog:dependencies",
     "next-themes": "catalog:dependencies",
@@ -55,8 +54,7 @@
     "remeda": "catalog:dependencies",
     "sonner": "catalog:dependencies",
     "tailwind-merge": "catalog:dependencies",
-    "usehooks-ts": "catalog:dependencies",
-    "vaul": "catalog:dependencies"
+    "usehooks-ts": "catalog:dependencies"
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",

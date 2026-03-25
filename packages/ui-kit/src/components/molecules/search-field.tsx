@@ -5,10 +5,14 @@ import { useCallback } from "react"
 import { cn } from "@/utils"
 
 import { Button } from "../atoms/button"
-import type { InputProps } from "../atoms/input"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "../atoms/input-group"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  type InputGroupInputProps,
+} from "../atoms/input-group"
 
-export type SearchFieldProps = Pick<InputProps, "placeholder"> & {
+export type SearchFieldProps = Pick<InputGroupInputProps, "placeholder"> & {
   value: string
   onChange: (value: string) => void
   className?: string
@@ -30,7 +34,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({
   return (
     <InputGroup className={className}>
       <InputGroupAddon>
-        <SearchIcon className="size-5 text-muted-foreground/80" />
+        <SearchIcon className="size-4.5 text-muted-foreground/80" />
       </InputGroupAddon>
 
       <InputGroupInput
@@ -38,6 +42,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
+        size="sm"
       />
 
       <InputGroupAddon align="inline-end" className={cn({ hidden: value.length === 0 })}>
@@ -48,7 +53,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({
           title={t`Clear`}
           aria-label={t`Clear`}
         >
-          <X className="size-5" />
+          <X className="size-4.5" />
         </Button>
       </InputGroupAddon>
     </InputGroup>

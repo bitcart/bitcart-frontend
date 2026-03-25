@@ -46,6 +46,18 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
       }),
     ],
 
+    // Additional allow-list of transition properties
+    // See https://github.com/unocss/unocss/issues/4188
+    theme: {
+      property: {
+        display: "display",
+        overlay: "overlay",
+        rotate: "rotate",
+        scale: "scale",
+        translate: "translate",
+      },
+    },
+
     preflights: [
       { getCSS: getPreflightCSS },
       { getCSS: createGetRadiusCSSVariables(baseRadiusRem) },
@@ -78,6 +90,18 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
       ],
 
       ["bg-initial", { "background-color": "initial" }],
+
+      //* Arbitrary transform values - e.g. transform-[translateY(calc(100%+var(--x)))]
+      //* Spaces are handled in two ways:
+      //*   1. Underscores are converted to spaces (standard UnoCSS convention)
+      //*   2. calc() operators (+/-) between values automatically get spaces added,
+      //*      so both `calc(100%+var(--x))` and `calc(100%_+_var(--x))` produce valid CSS
+      [
+        /^transform-\[(.+)\]$/,
+        ([, value]) => ({
+          transform: value.replace(/_/g, " ").replace(/(?<=[)\d%])([+-])(?=[a-zA-Z(])/g, " $1 "),
+        }),
+      ],
     ],
 
     // autocomplete: {

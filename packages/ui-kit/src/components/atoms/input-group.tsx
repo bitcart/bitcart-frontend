@@ -1,10 +1,12 @@
+//* Ported from: https://ui.shadcn.com
+
 import { type VariantProps } from "class-variance-authority"
-import React, { useCallback } from "react"
+import { useCallback } from "react"
 
 import { cn } from "@/utils"
 
 import { Button } from "./button"
-import { Input } from "./input"
+import { Input, type InputProps } from "./input"
 import { inputGroupAddonVariants, inputGroupButtonVariants } from "./input-group-variants"
 import { Textarea } from "./textarea"
 
@@ -118,9 +120,12 @@ export const InputGroupText = ({ className, ...props }: React.ComponentProps<"sp
   )
 }
 
-export const InputGroupInput = ({ className, ...props }: React.ComponentProps<"input">) => {
+export type InputGroupInputProps = InputProps & {}
+
+export const InputGroupInput: React.FC<InputGroupInputProps> = ({ className, ...props }) => {
   return (
     <Input
+      unstyled
       data-slot="input-group-control"
       className={cn(
         `

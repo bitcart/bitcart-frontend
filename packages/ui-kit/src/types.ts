@@ -15,9 +15,13 @@ export type ErrorDisplayAttributes = {
   icon: React.ReactNode
 }
 
-export type IconComponent =
-  | React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>
-  | Icon
+export type LucideIconComponent = React.ForwardRefExoticComponent<
+  Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+>
+
+export type LucideIconProps = React.ComponentProps<LucideIconComponent>
+
+export type IconComponent = LucideIconComponent | Icon
 
 export type BasicLinkComponent = React.ComponentType<{
   href: string
@@ -167,3 +171,5 @@ export type LayoutConfig = {
   brand: LayoutBrandAttributes
   navigation: LayoutNavigationConfig
 }
+
+export type DrawerPosition = "right" | "left" | "top" | "bottom"

@@ -1,103 +1,193 @@
-import { Command as CommandPrimitive } from "cmdk"
+//* Ported from: https://coss.com/ui
+
+import { Dialog as CommandDialogPrimitive } from "@base-ui/react/dialog"
 
 import { cn } from "@/utils"
 
-export const Command: React.FC<React.ComponentProps<typeof CommandPrimitive>> = ({
+import {
+  Autocomplete,
+  AutocompleteCollection,
+  AutocompleteEmpty,
+  AutocompleteGroup,
+  AutocompleteGroupLabel,
+  AutocompleteItem,
+  AutocompleteSeparator,
+} from "./autocomplete"
+
+export const Command: React.FC<React.ComponentProps<typeof Autocomplete>> = ({
+  autoHighlight = "always",
+  keepHighlight = true,
+  ...props
+}) => {
+  return (
+    <Autocomplete
+      autoHighlight={autoHighlight}
+      inline
+      keepHighlight={keepHighlight}
+      open
+      {...props}
+    />
+  )
+}
+
+export const CommandCollection: React.FC<React.ComponentProps<typeof AutocompleteCollection>> = ({
+  ...props
+}) => {
+  return <AutocompleteCollection data-slot="command-collection" {...props} />
+}
+
+export const CommandCreateHandle: typeof CommandDialogPrimitive.createHandle =
+  CommandDialogPrimitive.createHandle
+
+export const CommandDialog: typeof CommandDialogPrimitive.Root = CommandDialogPrimitive.Root
+
+export const CommandDialogBackdrop: React.FC<CommandDialogPrimitive.Backdrop.Props> = ({
   className,
   ...props
-}) => (
-  <CommandPrimitive
-    data-slot="command"
-    className={cn(
-      "bg-popover text-popover-foreground rounded-md flex size-full flex-col overflow-hidden",
-      className,
-    )}
-    {...props}
-  />
-)
+}) => {
+  return (
+    <CommandDialogPrimitive.Backdrop
+      className={cn(
+        `
+          inset-0 bg-black/32 backdrop-blur-sm fixed z-50 transition-all duration-200
+          data-ending-style:opacity-0
+          data-starting-style:opacity-0
+        `,
 
-export const CommandList: React.FC<React.ComponentProps<typeof CommandPrimitive.List>> = ({
+        className,
+      )}
+      data-slot="command-dialog-backdrop"
+      {...props}
+    />
+  )
+}
+
+export const CommandDialogPortal: typeof CommandDialogPrimitive.Portal =
+  CommandDialogPrimitive.Portal
+
+export const CommandDialogTrigger: React.FC<CommandDialogPrimitive.Trigger.Props> = (props) => {
+  return <CommandDialogPrimitive.Trigger data-slot="command-dialog-trigger" {...props} />
+}
+
+export const CommandDialogViewport: React.FC<CommandDialogPrimitive.Viewport.Props> = ({
   className,
   ...props
-}) => (
-  <CommandPrimitive.List
-    data-slot="command-list"
-    className={cn("scroll-py-1 max-h-[300px] overflow-x-hidden overflow-y-auto", className)}
-    {...props}
-  />
-)
+}) => {
+  return (
+    <CommandDialogPrimitive.Viewport
+      className={cn(
+        `
+          inset-0 px-4
+          sm:py-[10vh]
+          fixed z-50 flex flex-col items-center py-[max(calc(var(--spacing)*4),4vh)]
+        `,
 
-export const CommandEmpty: React.FC<React.ComponentProps<typeof CommandPrimitive.Empty>> = ({
-  ...props
-}) => (
-  <CommandPrimitive.Empty
-    data-slot="command-empty"
-    className="py-6 text-sm text-center"
-    {...props}
-  />
-)
+        className,
+      )}
+      data-slot="command-dialog-viewport"
+      {...props}
+    />
+  )
+}
 
-export const CommandGroup: React.FC<React.ComponentProps<typeof CommandPrimitive.Group>> = ({
+export const CommandEmpty: React.FC<React.ComponentProps<typeof AutocompleteEmpty>> = ({
   className,
   ...props
-}) => (
-  <CommandPrimitive.Group
-    data-slot="command-group"
-    className={cn(
-      `
-        text-foreground p-1
-        [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2
-        [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs
-        [&_[cmdk-group-heading]]:font-medium
-        overflow-hidden
-      `,
+}) => {
+  return (
+    <AutocompleteEmpty
+      className={cn("not-empty:py-6", className)}
+      data-slot="command-empty"
+      {...props}
+    />
+  )
+}
 
-      className,
-    )}
-    {...props}
-  />
-)
+export const CommandFooter: React.FC<React.ComponentProps<"div">> = ({ className, ...props }) => {
+  return (
+    <div
+      className={cn(
+        `
+          gap-2 px-5 py-3 text-muted-foreground text-xs flex items-center justify-between
+          rounded-b-[calc(var(--radius-2xl)-1px)] border-t
+        `,
 
-export const CommandSeparator: React.FC<
-  React.ComponentProps<typeof CommandPrimitive.Separator>
-> = ({ className, ...props }) => (
-  <CommandPrimitive.Separator
-    data-slot="command-separator"
-    className={cn("bg-border -mx-1 h-px", className)}
-    {...props}
-  />
-)
+        className,
+      )}
+      data-slot="command-footer"
+      {...props}
+    />
+  )
+}
 
-export const CommandItem: React.FC<React.ComponentProps<typeof CommandPrimitive.Item>> = ({
+export const CommandGroup: React.FC<React.ComponentProps<typeof AutocompleteGroup>> = ({
   className,
   ...props
-}) => (
-  <CommandPrimitive.Item
-    data-slot="command-item"
-    className={cn(
-      `
-        data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground
-        [&_svg:not-[class*='text-']]:text-muted-foreground
-        gap-2 rounded-sm px-2 py-1.5 text-sm
-        [&_svg:not-[class*='size-']]:size-4
-        relative flex cursor-default items-center outline-hidden select-none
-        data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50
-        [&_svg]:pointer-events-none [&_svg]:shrink-0
-      `,
+}) => {
+  return <AutocompleteGroup className={className} data-slot="command-group" {...props} />
+}
 
-      className,
-    )}
-    {...props}
-  />
-)
-
-export const CommandShortcut: React.FC<React.ComponentProps<"span">> = ({
+export const CommandGroupLabel: React.FC<React.ComponentProps<typeof AutocompleteGroupLabel>> = ({
   className,
   ...props
-}) => (
-  <span
-    data-slot="command-shortcut"
-    className={cn("text-muted-foreground text-xs tracking-widest ml-auto", className)}
-    {...props}
-  />
-)
+}) => {
+  return <AutocompleteGroupLabel className={className} data-slot="command-group-label" {...props} />
+}
+
+export const CommandItem: React.FC<React.ComponentProps<typeof AutocompleteItem>> = ({
+  className,
+  ...props
+}) => {
+  return (
+    <AutocompleteItem className={cn("py-1.5", className)} data-slot="command-item" {...props} />
+  )
+}
+
+export const CommandPanel: React.FC<React.ComponentProps<"div">> = ({ className, ...props }) => {
+  return (
+    <div
+      className={cn(
+        `
+          min-h-0 rounded-t-lg
+          not-has-[+[data-slot=command-footer]]:rounded-b-lg
+          bg-popover shadow-xs/5
+          before:inset-0
+          **:data-[slot=scroll-area-scrollbar]:mt-2
+          relative -mx-px border border-b-0 bg-clip-padding [clip-path:inset(0_1px)]
+          not-has-[+[data-slot=command-footer]]:-mb-px
+          not-has-[+[data-slot=command-footer]]:[clip-path:inset(0_1px_1px_1px_round_0_0_calc(var(--radius-2xl)-1px)_calc(var(--radius-2xl)-1px))]
+          before:pointer-events-none before:absolute before:rounded-t-[calc(var(--radius-xl)-1px)]
+        `,
+
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
+export const CommandSeparator: React.FC<React.ComponentProps<typeof AutocompleteSeparator>> = ({
+  className,
+  ...props
+}) => {
+  return (
+    <AutocompleteSeparator
+      className={cn("my-2", className)}
+      data-slot="command-separator"
+      {...props}
+    />
+  )
+}
+
+export const CommandShortcut: React.FC<React.ComponentProps<"kbd">> = ({ className, ...props }) => {
+  return (
+    <kbd
+      className={cn(
+        "font-medium font-sans text-muted-foreground/72 text-xs tracking-widest ms-auto",
+        className,
+      )}
+      data-slot="command-shortcut"
+      {...props}
+    />
+  )
+}

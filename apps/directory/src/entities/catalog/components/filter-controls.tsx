@@ -50,7 +50,7 @@ export const CatalogFilterControls = ({
   )
 
   return (
-    <div className={cn("gap-6 flex flex-col", className)}>
+    <div className={cn("gap-8 flex flex-col", className)}>
       <div className="gap-4 flex flex-col">
         <h3 className="text-muted-foreground text-sm font-medium tracking-wide px-3 uppercase">
           {t`Categories`}

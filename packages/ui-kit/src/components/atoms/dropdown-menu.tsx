@@ -1,6 +1,7 @@
+//* Ported from: https://ui.shadcn.com
+
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { CheckIcon, ChevronRightIcon } from "lucide-react"
-import * as React from "react"
 
 import { cn } from "@/utils"
 
@@ -67,20 +68,21 @@ export const DropdownMenuGroup = ({ ...props }: MenuPrimitive.Group.Props) => {
   return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />
 }
 
-export const DropdownMenuItem = ({
-  className,
-  inset,
-  variant = "default",
-  ...props
-}: MenuPrimitive.Item.Props & {
+export type DropdownMenuItemProps = MenuPrimitive.Item.Props & {
   inset?: boolean
   variant?: "default" | "destructive"
+}
+
+export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({
+  nativeButton: isNativeButton = true,
+  inset,
+  variant = "default",
+  className,
+  ...props
 }) => {
   return (
     <MenuPrimitive.Item
-      data-slot="dropdown-menu-item"
-      data-inset={inset}
-      data-variant={variant}
+      nativeButton={isNativeButton}
       className={cn(
         `
           focus:bg-muted/25 focus:text-accent-foreground
@@ -101,6 +103,9 @@ export const DropdownMenuItem = ({
 
         className,
       )}
+      data-slot="dropdown-menu-item"
+      data-inset={inset}
+      data-variant={variant}
       {...props}
     />
   )

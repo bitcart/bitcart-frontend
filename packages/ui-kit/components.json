@@ -3,16 +3,19 @@
   "style": "base-nova",
   "rsc": false,
   "tsx": true,
-  "iconLibrary": "lucide",
   "tailwind": {
     "config": "",
-    "css": "styles/global.css",
+    "css": "src/styles/global.css",
     "baseColor": "neutral",
     "cssVariables": true
   },
+  "iconLibrary": "lucide",
   "aliases": {
     "components": "@/components",
-    "ui": "@/components/atoms",
-    "utils": "@/utils"
+    "utils": "@/utils",
+    "ui": "@/components/atoms"
+  },
+  "registries": {
+    "@coss": "https://coss.com/ui/r/{name}.json"
   }
 }

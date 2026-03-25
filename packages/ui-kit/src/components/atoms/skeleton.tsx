@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { cn } from "@/utils"
 
 export const Skeleton = ({ className, ...props }: React.ComponentProps<"div">) => (

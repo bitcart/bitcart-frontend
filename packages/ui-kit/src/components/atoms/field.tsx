@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { type VariantProps } from "class-variance-authority"
 import { useMemo } from "react"
 

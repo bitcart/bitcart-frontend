@@ -227,41 +227,213 @@ export const variants: Variant<Theme>[] = [
   },
 
   /**
+   * has-[...] variant with arbitrary selector — :has(...)
+   *
+   * Overrides the native wind4 handler to pass comma-separated selectors
+   * through as raw CSS. The native handler incorrectly treats commas as
+   * theme-value separators, producing :has(undefined) for OR-logic patterns like:
+   *   has-[+[data-slot=trigger],+[data-slot=clear]]:pe-7
+   *
+   * Supports one level of nested brackets (for attribute selectors).
+   */
+  (className) => {
+    const match = /^has-\[((?:[^[\]]|\[[^[\]]*\])*)\]:/.exec(className)
+
+    if (match !== null) {
+      const [, selector] = match
+
+      return {
+        matcher: className.slice(match[0].length),
+        selector: (s) => `${s}:has(${selector})`,
+      }
+    } else return className
+  },
+
+  /**
+   * has-aria-{attr} shorthand variant — :has([aria-{attr}])
+   *
+   * Extends UnoCSS wind4's built-in has-{pseudo} shorthands to cover ARIA
+   * attribute presence selectors, which the built-in does not handle.
+   *
+   * has-aria-{attr}:utility → &:has([aria-{attr}])
+   *
+   * e.g.:
+   *   has-aria-invalid:border-destructive/36 → &:has([aria-invalid])
+   *   has-aria-checked:opacity-80            → &:has([aria-checked])
+   */
+  (className) => {
+    const match = /^has-aria-([\w-]+):/.exec(className)
+
+    if (match !== null) {
+      const [, attr] = match
+
+      return {
+        matcher: className.slice(match[0].length),
+        selector: (s) => `${s}:has([aria-${attr}])`,
+      }
+    } else return className
+  },
+
+  /**
    * Boolean data attribute variants - data-{attr}:{utility}
    * Matches presence of a data attribute (no value check).
    * Supports long hyphenated names, e.g. not just data-open:, but also data-popup-open:
    *
-   * data-{attr}:        → &[data-{attr}]
+   * data-{attr}:        → &[data-{attr}]          (greedy — chains allowed)
    * group-data-{attr}:  → .group[data-{attr}] &
    * peer-data-{attr}:   → .peer[data-{attr}] ~ &
    */
   (className) => {
-    const match = new RegExp("^(group-data|peer-data|data)-([\\w][\\w-]*):").exec(className)
+    /**
+     * group-data / peer-data — context selectors, single-pass
+     */
+    const contextMatch = /^(group-data|peer-data)-([\w][\w-]*):/.exec(className)
+
+    if (contextMatch !== null) {
+      const [, prefix, attr] = contextMatch
+
+      return {
+        matcher: className.slice(contextMatch[0].length),
+        selector:
+          prefix === "group-data"
+            ? (s) => `.group[data-${attr}] ${s}`
+            : (s) => `.peer[data-${attr}] ~ ${s}`,
+      }
+    }
+
+    // Bare data-{attr}: — greedily consume all consecutive segments.
+    // Handles chains like data-nested:data-ending-style:translate-y-8
+    //   → &[data-nested][data-ending-style]
+    const attrs: string[] = []
+    let remaining = className
+
+    while (true) {
+      const m = /^data-([\w][\w-]*):/.exec(remaining)
+
+      if (m === null) break
+
+      attrs.push(m[1])
+      remaining = remaining.slice(m[0].length)
+    }
+
+    if (attrs.length === 0) return className
+
+    return {
+      matcher: remaining,
+      selector: (s) => `${s}${attrs.map((a) => `[data-${a}]`).join("")}`,
+    }
+  },
+
+  /**
+   * not-data-{attr} variant — :not([data-{attr}])
+   *
+   * Greedy — consumes all consecutive not-data-* segments in one pass.
+   *
+   * not-data-{attr}:utility → &:not([data-{attr}])
+   *
+   * Chained form:
+   *   not-data-starting-style:not-data-ending-style:transition-[...]
+   *     → &:not([data-starting-style]):not([data-ending-style])
+   */
+  (className) => {
+    const attrs: string[] = []
+    let remaining = className
+
+    while (true) {
+      const m = /^not-data-([\w][\w-]*):/.exec(remaining)
+
+      if (m === null) break
+
+      attrs.push(m[1])
+      remaining = remaining.slice(m[0].length)
+    }
+
+    if (attrs.length === 0) return className
+
+    return {
+      matcher: remaining,
+      selector: (s) => `${s}${attrs.map((a) => `:not([data-${a}])`).join("")}`,
+    }
+  },
+
+  /**
+   * not-has-* variants — :not(:has(...))
+   *
+   * Greedily consumes ALL consecutive not-has-* segments in one pass so that
+   * chained forms work without depending on multiple custom-variant cycles.
+   *
+   * Bracket form (supports one level of nested brackets):
+   *   not-has-[X]:utility              → &:not(:has(X))
+   *   not-has-[+[data-slot=foo]]:ring  → &:not(:has(+[data-slot=foo]))
+   *   not-has-[>*.w-full]:w-fit        → &:not(:has(>*.w-full))
+   *
+   * Shorthand form (mirrors UnoCSS wind4 has-{state} shorthands):
+   *   not-has-{pseudo}:utility         → &:not(:has(:{pseudo}))
+   *   not-has-aria-{attr}:utility      → &:not(:has([aria-{attr}]))
+   *
+   * Chained form (both bracket and shorthand, any mix):
+   *   not-has-disabled:not-has-focus-visible:before:shadow-xs
+   *     → &:not(:has(:disabled)):not(:has(:focus-visible))
+   *   not-has-disabled:not-has-focus-visible:not-has-aria-invalid:before:shadow-xs
+   *     → &:not(:has(:disabled)):not(:has(:focus-visible)):not(:has([aria-invalid]))
+   */
+  (className) => {
+    const segments: string[] = []
+    let remaining = className
+
+    while (true) {
+      /**
+       * Bracket form — try first (more specific)
+       */
+      const bracketMatch = /^not-has-\[((?:[^[\]]|\[[^[\]]*\])*)\]:/.exec(remaining)
+
+      if (bracketMatch !== null) {
+        segments.push(bracketMatch[1])
+        remaining = remaining.slice(bracketMatch[0].length)
+        continue
+      }
+
+      /**
+       * Shorthand form — pseudo-class or aria-* attribute
+       */
+      const shorthandMatch = /^not-has-([\w-]+):/.exec(remaining)
+
+      if (shorthandMatch !== null) {
+        const state = shorthandMatch[1]
+        segments.push(state.startsWith("aria-") ? `[${state}]` : `:${state}`)
+        remaining = remaining.slice(shorthandMatch[0].length)
+        continue
+      }
+
+      break
+    }
+
+    if (segments.length === 0) return className
+
+    return {
+      matcher: remaining,
+      selector: (s) => `${s}${segments.map((sel) => `:not(:has(${sel}))`).join("")}`,
+    }
+  },
+
+  /**
+   * pointer / any-pointer media query variants
+   *
+   * pointer-{value}:utility     → @media (pointer: value) { ... }
+   * any-pointer-{value}:utility → @media (any-pointer: value) { ... }
+   *
+   * Valid values: none | coarse | fine
+   */
+  (className) => {
+    const match = /^(any-pointer|pointer)-(none|coarse|fine):/.exec(className)
 
     if (match !== null) {
-      const [, prefix, attr] = match
+      const [, feature, value] = match
 
-      switch (prefix) {
-        case "group-data": {
-          return {
-            matcher: className.slice(match[0].length),
-            selector: (s) => `.group[data-${attr}] ${s}`,
-          }
-        }
-
-        case "peer-data": {
-          return {
-            matcher: className.slice(match[0].length),
-            selector: (s) => `.peer[data-${attr}] ~ ${s}`,
-          }
-        }
-
-        default: {
-          return {
-            matcher: className.slice(match[0].length),
-            selector: (s) => `${s}[data-${attr}]`,
-          }
-        }
+      return {
+        matcher: className.slice(match[0].length),
+        selector: (s) => s,
+        parent: `@media (${feature}: ${value})`,
       }
     } else return className
   },

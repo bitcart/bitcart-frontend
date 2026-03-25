@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 
 import { cn } from "@/utils"

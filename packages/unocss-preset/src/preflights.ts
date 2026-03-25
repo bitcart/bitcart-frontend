@@ -13,6 +13,10 @@ export const getPreflightCSS: Preflight<Theme>["getCSS"] = ({ theme }) => /* CSS
     border-color: var(--colors-gray-200, currentColor);
   }
 
+  *[class*="before:"]::before, *[class*="after:"]::after {
+    content: var(--un-content);
+  }
+
   :root {
     container: document;
     container-type: scroll-state;
@@ -45,7 +49,7 @@ export const getPreflightCSS: Preflight<Theme>["getCSS"] = ({ theme }) => /* CSS
     background-color: rgb(17 24 39 / 0.5);
   }
 
-  @media (prefers-scheme: dark) {
+  @media (prefers-color-scheme: dark) {
     :root:not(:is(.dark, .light)) .glassy {
       background-color: rgb(17 24 39 / 0.5);
     }
@@ -78,7 +82,7 @@ export const getPreflightCSS: Preflight<Theme>["getCSS"] = ({ theme }) => /* CSS
     }
 
     /* System-defined dark mode */
-    @media (prefers-scheme: dark) {
+    @media (prefers-color-scheme: dark) {
       @container document scroll-state(scrollable: top) {
         :root:not(:is(.dark, .light)) .glassy-header {
           background-color: rgb(17 24 39 / 0.5);

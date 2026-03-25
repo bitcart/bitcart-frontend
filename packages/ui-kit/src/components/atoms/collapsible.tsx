@@ -1,3 +1,5 @@
+//* Ported from: https://ui.shadcn.com
+
 import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible"
 
 export const Collapsible = ({ ...props }: CollapsiblePrimitive.Root.Props) => {
