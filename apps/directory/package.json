@@ -16,7 +16,8 @@
     "build:main": "vike build",
     "dev:styles": "unocss --watch",
     "dev:main": "vike dev --host",
-    "preview": "vike preview --host --port 3001"
+    "preview": "vike preview --host --port 3001",
+    "release": "../../scripts/release-static-site.sh directory"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",

@@ -214,6 +214,15 @@ directory-generate-locales:
     pnpm directory generate:locales
     pnpm directory locales:extract
 
+[doc("
+Build and release a static site (landing or directory).
+
+Example: `just release-static-site landing`
+")]
+[group("Releases")]
+release-static-site app:
+    pnpm {{ app }} release
+
 ## INTERNAL RECIPES
 
 [private]

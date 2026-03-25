@@ -10,8 +10,11 @@ permissions:
 
 jobs:
   upload-locales:
-    name: upload-locales
+    name: upload-locales-${{ matrix.app }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [landing, directory]
     steps:
       - uses: actions/checkout@v6
         with:
@@ -32,13 +35,13 @@ jobs:
         run: just build-packages
 
       - name: Extract locales
-        run: pnpm landing locales:extract
+        run: pnpm ${{ matrix.app }} locales:extract
 
       - name: Install Transifex CLI
-        run: apps/landing/scripts/install-tx-client.sh
+        run: scripts/install-tx-client.sh
 
       - name: Push source locale to Transifex
-        working-directory: apps/landing
+        working-directory: apps/${{ matrix.app }}
         run: tx push -s
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
