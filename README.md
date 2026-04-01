@@ -16,28 +16,22 @@ Assuming you have already cloned this repository and are in its root directory, 
 
 1. First, [install uv](https://github.com/astral-sh/uv?tab=readme-ov-file#installation) unless it's already present in your system.
 
-2. Then, use it to install the essential development tools, such as [prek](https://prek.j178.dev) and [just](https://just.systems/man/en):
+2. Then, install the essential development tools, such as [prek](https://prek.j178.dev) and [just](https://just.systems/man/en) via uv:
 
    ```bash
-   uv tool install prek && uv tool install rust-just
+   uv tool install rust-just && uv tool install prek
    ```
 
    And follow the shell integration instructions:
    - [for just](https://just.systems/man/en/shell-completion-scripts.html)
    - [for prek](https://prek.j178.dev/installation/#shell-completion)
 
-3. After that, install pre-commit hooks:
+3. Once it's done, [install fnm](https://github.com/Schniz/fnm?tab=readme-ov-file#installation) Node.js version manager or make sure it's already present in your system.
+
+4. Finally, install pre-commit hooks, as well as the required version of [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io) along with all NPM dependencies:
 
    ```bash
-   prek install
-   ```
-
-4. Finally, [install fnm](https://github.com/Schniz/fnm?tab=readme-ov-file#installation) Node.js version manager or make sure it's already present in your system.
-
-   Once it's done, install the [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io) versions required by this project along with npm dependencies:
-
-   ```bash
-   fnm install && fnm use && corepack enable pnpm && pnpm i
+   just get-started
    ```
 
 #### Optional

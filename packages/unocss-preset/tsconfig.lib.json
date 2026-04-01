@@ -2,6 +2,7 @@
   "extends": ["@bitcart/configs/by-package-type/lib-ts"],
 
   "compilerOptions": {
+    "rootDir": "./src",
     "outDir": "./dist",
     "paths": { "@/*": ["./src/*"] }
   },

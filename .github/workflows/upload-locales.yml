@@ -44,4 +44,4 @@ jobs:
         working-directory: apps/${{ matrix.app }}
         run: tx push -s
         env:
-          TX_TOKEN: ${{ secrets.TX_TOKEN }}
+          TX_TOKEN: ${{ secrets.TX_TOKEN }} # zizmor: ignore[secrets-outside-env] # triggered only by push to master

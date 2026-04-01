@@ -1,4 +1,7 @@
 {
   "extends": ["@bitcart/configs/by-supported-runtime/nodejs-ts"],
+  "compilerOptions": {
+    "rootDir": "."
+  },
   "include": ["*.config.ts"]
 }

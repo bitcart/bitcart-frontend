@@ -14,6 +14,21 @@ run:
     @just --choose
 
 [doc("
+Install and setup essential tools and dependencies.
+")]
+[group("General")]
+get-started:
+    fnm install && fnm use && corepack enable pnpm && pnpm i
+    prek install
+
+[doc("
+Update all tools.
+")]
+[group("General")]
+update-tools:
+    uv tool update rust-just && uv tool upgrade prek
+
+[doc("
 List all workspace member packages.
 ")]
 [group("General")]
@@ -27,7 +42,9 @@ Manually update dependency graph visualizations for every workspace package.
 update-graphviz:
     pnpm --filter './apps/*' --filter './packages/*' generate:graphviz
 
-[doc("Generate Mermaid diagrams of open issues grouped by priority.")]
+[doc("
+Generate Mermaid diagrams of open issues grouped by priority.
+")]
 [group("General")]
 issues-diagram:
     uv run scripts/issues-diagram.py
