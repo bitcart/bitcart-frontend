@@ -1,0 +1,88 @@
+name: Issues Diagram
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update-diagram:
+    name: update-diagram
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: bitcart/bitcart-actions/actions/setup-python@master
+        with:
+          cache-dependency-glob: ""
+
+      - name: Install just
+        run: uv pip install rust-just
+
+      - name: Generate diagrams
+        env:
+          FORGEJO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: just issues-diagram
+
+      - name: Update issue comment
+        env:
+          FORGEJO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          API_BASE="${{ github.server_url }}/api/v1"
+          REPO="${{ github.repository }}"
+          LABEL_NAME="issues-diagram"
+          ISSUE_TITLE="Issues diagram"
+          AUTH_HEADER="Authorization: token ${FORGEJO_TOKEN}"
+
+          # Build the comment/issue body from generated diagrams
+          BODY=""
+          for file in scripts/output/issues-mindmap.md scripts/output/issues-flowchart.md scripts/output/issues-priority.md; do
+            if [ -f "$file" ]; then
+              BODY+="$(cat "$file")"$'\n\n'
+            fi
+          done
+          BODY+="_Last updated: $(date -u '+%Y-%m-%d %H:%M UTC')_"
+
+          # Find existing issue by label
+          ISSUE_NUMBER=$(curl -sf -H "$AUTH_HEADER" \
+            "${API_BASE}/repos/${REPO}/issues?state=open&type=issues&labels=${LABEL_NAME}&limit=1" \
+            | jq -r '.[0].number // empty')
+
+          PAYLOAD=$(jq -n --arg body "$BODY" '{body: $body}')
+
+          if [ -n "$ISSUE_NUMBER" ]; then
+            echo "Found existing issue #${ISSUE_NUMBER}, updating body..."
+            curl -sf -X PATCH \
+              -H "$AUTH_HEADER" \
+              -H "Content-Type: application/json" \
+              -d "$PAYLOAD" \
+              "${API_BASE}/repos/${REPO}/issues/${ISSUE_NUMBER}"
+          else
+            echo "No existing issue found, creating one..."
+            LABEL_ID=$(curl -sf -H "$AUTH_HEADER" \
+              "${API_BASE}/repos/${REPO}/labels?limit=50" \
+              | jq -r --arg name "$LABEL_NAME" '.[] | select(.name == $name) | .id')
+
+            curl -sf -X POST \
+              -H "$AUTH_HEADER" \
+              -H "Content-Type: application/json" \
+              -d "$(jq -n \
+                --arg title "$ISSUE_TITLE" \
+                --arg body "$BODY" \
+                --argjson labels "[$LABEL_ID]" \
+                '{title: $title, body: $body, labels: $labels}')" \
+              "${API_BASE}/repos/${REPO}/issues"
+
+            echo "Created issue."
+          fi
+
+          echo "Done."
