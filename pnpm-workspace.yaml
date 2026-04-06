@@ -11,18 +11,18 @@ catalogMode: strict
 catalogs:
   dependencies:
     "@base-ui/react": 1.3.0
-    "@lingui/core": 5.9.3
-    "@lingui/react": 5.9.3
+    "@lingui/core": 5.9.4
+    "@lingui/react": 5.9.4
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
     "@tanstack/react-form": 1.28.5
-    "@tanstack/react-query": 5.95.0
+    "@tanstack/react-query": 5.95.2
     "@web3icons/react": 4.1.17
     class-variance-authority: 0.7.1
     dotenv: 17.3.1
     effect: 3.21.0
     inter-ui: 4.1.1
-    lucide-react: 1.6.0
+    lucide-react: 1.7.0
     next-themes: 0.4.6
     react: 19.2.4
     react-day-picker: 9.14.0
@@ -36,11 +36,11 @@ catalogs:
     vike-react-query: 0.1.12
     zod: 4.3.6
   devDependencies:
-    "@effect/language-service": 0.81.0
-    "@lingui/babel-plugin-lingui-macro": 5.9.3
-    "@lingui/cli": 5.9.3
-    "@lingui/conf": 5.9.3
-    "@lingui/vite-plugin": 5.9.3
+    "@effect/language-service": 0.84.2
+    "@lingui/babel-plugin-lingui-macro": 5.9.4
+    "@lingui/cli": 5.9.4
+    "@lingui/conf": 5.9.4
+    "@lingui/vite-plugin": 5.9.4
     "@qalisa/vike-plugin-sitemap": 1.7.0
     "@rolldown/plugin-babel": 0.2.2
     "@stylistic/eslint-plugin": 5.10.0
@@ -54,8 +54,8 @@ catalogs:
     eslint-plugin-better-tailwindcss: 4.3.2
     eslint-plugin-react-hooks: 7.0.1
     gpt-po: 1.2.4
-    dependency-cruiser: 17.3.9
-    nx: 22.6.1
+    dependency-cruiser: 17.3.10
+    nx: 22.6.3
     oxfmt: 0.43.0
     oxlint: 1.58.0
     oxlint-tsgolint: 0.18.1
@@ -64,8 +64,8 @@ catalogs:
     unocss: 66.6.7
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
-    tsdown: 0.21.5
-    vite: 8.0.1
+    tsdown: 0.21.7
+    vite: 8.0.3
     vite-plugin-static-copy: 4.0.0
 
 linkWorkspacePackages: true
