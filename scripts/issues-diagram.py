@@ -39,6 +39,11 @@ DEP_PATTERNS = [
     (re.compile(r"(?:blocks|before)\s+#(\d+)", re.IGNORECASE), "blocks"),
 ]
 
+MERMAID_CLASSES = """\
+  classDef blocked fill:#f5f5f5,stroke:#999,color:#999,stroke-dasharray:5 5
+  classDef assigned fill:#e8f4fd,stroke:#0969da
+  classDef actionable fill:#d4edda,stroke:#28a745"""
+
 
 def get_token() -> str | None:
     return os.environ.get("FORGEJO_TOKEN")
@@ -64,6 +69,24 @@ def fetch_all_issues(token: str | None) -> list[dict]:
             issues.extend(batch)
             page += 1
     return issues
+
+
+def fetch_api_dependencies(
+    issues: list[dict], token: str | None
+) -> dict[int, list[int]]:
+    headers = {}
+    if token:
+        headers["Authorization"] = f"token {token}"
+    deps: dict[int, list[int]] = {}
+    with httpx.Client(timeout=30) as client:
+        for issue in issues:
+            num = issue["number"]
+            resp = client.get(f"{BASE_URL}/{num}/dependencies", headers=headers)
+            if resp.status_code == 200:
+                dep_numbers = [d["number"] for d in (resp.json() or [])]
+                if dep_numbers:
+                    deps[num] = dep_numbers
+    return deps
 
 
 def classify_priority(issue: dict) -> str:
@@ -101,154 +124,110 @@ def group_issues(issues: list[dict]) -> dict[str, list[dict]]:
     return groups
 
 
-def build_deps_map(issues: list[dict]) -> dict[int, dict[str, list[int]]]:
+def build_deps_map(
+    issues: list[dict], api_deps: dict[int, list[int]]
+) -> dict[int, dict[str, list[int]]]:
     open_numbers = {i["number"] for i in issues}
-    deps_map: dict[int, dict[str, list[int]]] = {}
+    raw: dict[int, dict[str, set[int]]] = {}
     for issue in issues:
-        deps = parse_dependencies(issue)
-        # Only keep references to other open issues
-        deps["depends_on"] = [n for n in deps["depends_on"] if n in open_numbers]
-        deps["blocks"] = [n for n in deps["blocks"] if n in open_numbers]
-        if deps["depends_on"] or deps["blocks"]:
-            deps_map[issue["number"]] = deps
-    return deps_map
+        num = issue["number"]
+        text_deps = parse_dependencies(issue)
+        depends_on = {n for n in text_deps["depends_on"] if n in open_numbers}
+        depends_on |= {n for n in api_deps.get(num, []) if n in open_numbers}
+        blocks = {n for n in text_deps["blocks"] if n in open_numbers}
+        raw[num] = {"depends_on": depends_on, "blocks": blocks}
+    for num, deps in list(raw.items()):
+        for dep_num in deps["depends_on"]:
+            raw[dep_num]["blocks"].add(num)
+        for blocked_num in deps["blocks"]:
+            raw[blocked_num]["depends_on"].add(num)
+
+    return {
+        num: {
+            "depends_on": sorted(deps["depends_on"]),
+            "blocks": sorted(deps["blocks"]),
+        }
+        for num, deps in raw.items()
+        if deps["depends_on"] or deps["blocks"]
+    }
 
 
-# ── Mindmap generators ──
+# ── Status helpers ──
 
 
-def generate_mindmap_simple(groups: dict[str, list[dict]]) -> str:
-    lines = ["mindmap", "  root((Open Issues))"]
-    for priority in PRIORITY_ORDER:
-        items = groups[priority]
-        if not items:
+def get_assignees(issue: dict) -> list[str]:
+    return [a["login"] for a in (issue.get("assignees") or []) if a.get("login")]
+
+
+def find_blocked(deps_map: dict[int, dict[str, list[int]]]) -> set[int]:
+    return {num for num, deps in deps_map.items() if deps["depends_on"]}
+
+
+def status_suffix(issue: dict, blocked: set[int]) -> str:
+    num = issue["number"]
+    assignees = get_assignees(issue)
+    parts: list[str] = []
+    if num in blocked:
+        parts.append("BLOCKED")
+    if assignees:
+        parts.append(", ".join(f"@{a}" for a in assignees))
+    if not parts:
+        return ""
+    return " [" + " | ".join(parts) + "]"
+
+
+def status_class(issue: dict, blocked: set[int]) -> str:
+    if issue["number"] in blocked:
+        return "blocked"
+    if get_assignees(issue):
+        return "assigned"
+    return "actionable"
+
+
+# ── Diagram generators ──
+
+
+def generate_dep_graph(
+    issues: list[dict],
+    deps_map: dict[int, dict[str, list[int]]],
+    blocked: set[int],
+) -> str | None:
+    """Focused graph showing only issues involved in dependencies."""
+    involved: set[int] = set()
+    for num, deps in deps_map.items():
+        involved.add(num)
+        involved.update(deps["depends_on"])
+        involved.update(deps["blocks"])
+
+    if not involved:
+        return None
+
+    issue_lookup = {i["number"]: i for i in issues}
+    lines = ["flowchart TD", MERMAID_CLASSES]
+
+    for num in sorted(involved):
+        issue = issue_lookup.get(num)
+        if not issue:
             continue
-        display = PRIORITY_DISPLAY[priority]
-        lines.append(f"    {display}")
-        for issue in items:
-            title = sanitize(issue["title"])
-            lines.append(f"      #{issue['number']} {title}")
-    return "\n".join(lines)
+        node_id = f"i{num}"
+        title = sanitize(issue["title"])
+        suffix = status_suffix(issue, blocked)
+        css_class = status_class(issue, blocked)
+        lines.append(f'  {node_id}["#{num} {title}{suffix}"]:::{css_class}')
 
-
-def generate_mindmap_with_deps(
-    groups: dict[str, list[dict]], deps_map: dict[int, dict[str, list[int]]]
-) -> str:
-    lines = ["mindmap", "  root((Open Issues))"]
-    for priority in PRIORITY_ORDER:
-        items = groups[priority]
-        if not items:
-            continue
-        display = PRIORITY_DISPLAY[priority]
-        lines.append(f"    {display}")
-        for issue in items:
-            num = issue["number"]
-            title = sanitize(issue["title"])
-            dep_info = deps_map.get(num)
-            if dep_info:
-                annotations = []
-                if dep_info["depends_on"]:
-                    refs = ", ".join(f"#{n}" for n in dep_info["depends_on"])
-                    annotations.append(f"depends on {refs}")
-                if dep_info["blocks"]:
-                    refs = ", ".join(f"#{n}" for n in dep_info["blocks"])
-                    annotations.append(f"blocks {refs}")
-                suffix = " | " + "; ".join(annotations)
-            else:
-                suffix = ""
-            lines.append(f"      #{num} {title}{suffix}")
-    return "\n".join(lines)
-
-
-# ── Flowchart generators ──
-
-
-def generate_flowchart_simple(groups: dict[str, list[dict]]) -> str:
-    lines = ["flowchart TD"]
-    for priority in PRIORITY_ORDER:
-        items = groups[priority]
-        if not items:
-            continue
-        display = PRIORITY_DISPLAY[priority]
-        group_id = to_node_id(priority)
-        lines.append(f"  subgraph {group_id}[{display}]")
-        for issue in items:
-            node_id = f"i{issue['number']}"
-            title = sanitize(issue["title"])
-            lines.append(f'    {node_id}["#{issue["number"]} {title}"]')
-        lines.append("  end")
-    return "\n".join(lines)
-
-
-def generate_flowchart_with_deps(
-    groups: dict[str, list[dict]], deps_map: dict[int, dict[str, list[int]]]
-) -> str:
-    lines = ["flowchart TD"]
-    for priority in PRIORITY_ORDER:
-        items = groups[priority]
-        if not items:
-            continue
-        display = PRIORITY_DISPLAY[priority]
-        group_id = to_node_id(priority)
-        lines.append(f"  subgraph {group_id}[{display}]")
-        for issue in items:
-            node_id = f"i{issue['number']}"
-            title = sanitize(issue["title"])
-            lines.append(f'    {node_id}["#{issue["number"]} {title}"]')
-        lines.append("  end")
-
-    # Add dependency edges
     for num, deps in deps_map.items():
         for dep_num in deps["depends_on"]:
-            lines.append(f"  i{dep_num} --> i{num}")
-        for blocked_num in deps["blocks"]:
-            lines.append(f"  i{num} --> i{blocked_num}")
-
-    return "\n".join(lines)
-
-
-# ── Priority cascade/tree generators ──
-
-
-def generate_cascade(
-    groups: dict[str, list[dict]], deps_map: dict[int, dict[str, list[int]]]
-) -> str:
-    """Flowchart with priority tiers chained top-to-bottom, dependency edges included."""
-    lines = ["flowchart TD"]
-    non_empty = [p for p in PRIORITY_ORDER if groups[p]]
-
-    for priority in non_empty:
-        items = groups[priority]
-        display = PRIORITY_DISPLAY[priority]
-        group_id = to_node_id(priority)
-        lines.append(f"  subgraph {group_id}[{display}]")
-        for issue in items:
-            node_id = f"i{issue['number']}"
-            title = sanitize(issue["title"])
-            lines.append(f'    {node_id}["#{issue["number"]} {title}"]')
-        lines.append("  end")
-
-    # Chain priority subgraphs top-to-bottom
-    for i in range(len(non_empty) - 1):
-        src = to_node_id(non_empty[i])
-        dst = to_node_id(non_empty[i + 1])
-        lines.append(f"  {src} --> {dst}")
-
-    # Add dependency edges
-    for num, deps in deps_map.items():
-        for dep_num in deps["depends_on"]:
-            lines.append(f"  i{dep_num} -.->|blocks| i{num}")
-        for blocked_num in deps["blocks"]:
-            lines.append(f"  i{num} -.->|blocks| i{blocked_num}")
+            lines.append(f"  i{dep_num} -->|blocks| i{num}")
 
     return "\n".join(lines)
 
 
 def generate_priority_tree(
-    groups: dict[str, list[dict]], deps_map: dict[int, dict[str, list[int]]]
+    groups: dict[str, list[dict]],
+    blocked: set[int],
 ) -> str:
-    """Tree where high priority is the root, each level branches into issues then into the next level."""
-    lines = ["flowchart TD"]
+    """Tree where priority nodes branch into issues, compact layout."""
+    lines = ["flowchart TD", MERMAID_CLASSES]
     non_empty = [p for p in PRIORITY_ORDER if groups[p]]
 
     for priority in non_empty:
@@ -258,27 +237,23 @@ def generate_priority_tree(
         for issue in groups[priority]:
             node_id = f"i{issue['number']}"
             title = sanitize(issue["title"])
-            lines.append(f'  {node_id}["#{issue["number"]} {title}"]')
+            suffix = status_suffix(issue, blocked)
+            css_class = status_class(issue, blocked)
+            lines.append(f'  {node_id}["#{issue["number"]} {title}{suffix}"]:::{css_class}')
             lines.append(f"  {group_id} --- {node_id}")
 
-    # Connect priority levels as a spine
     for i in range(len(non_empty) - 1):
         src = to_node_id(non_empty[i])
         dst = to_node_id(non_empty[i + 1])
         lines.append(f"  {src} ==> {dst}")
 
-    # Add dependency edges
-    for num, deps in deps_map.items():
-        for dep_num in deps["depends_on"]:
-            lines.append(f"  i{dep_num} -.->|blocks| i{num}")
-        for blocked_num in deps["blocks"]:
-            lines.append(f"  i{num} -.->|blocks| i{blocked_num}")
-
     return "\n".join(lines)
 
 
 def generate_tree(
-    groups: dict[str, list[dict]], deps_map: dict[int, dict[str, list[int]]]
+    groups: dict[str, list[dict]],
+    deps_map: dict[int, dict[str, list[int]]],
+    blocked: set[int],
 ) -> str:
     """Generate a plain-text tree view of issues grouped by priority."""
     lines = ["Open Issues"]
@@ -295,20 +270,39 @@ def generate_tree(
                 "\u2514\u2500\u2500" if is_last_issue else "\u251c\u2500\u2500"
             )
             title = issue["title"]
-            dep_info = deps_map.get(issue["number"])
-            dep_suffix = ""
+            num = issue["number"]
+
+            markers: list[str] = []
+            if num in blocked:
+                markers.append("BLOCKED")
+            assignees = get_assignees(issue)
+            if assignees:
+                markers.append(", ".join(f"@{a}" for a in assignees))
+            dep_info = deps_map.get(num)
             if dep_info:
-                parts = []
                 if dep_info["depends_on"]:
                     refs = ", ".join(f"#{n}" for n in dep_info["depends_on"])
-                    parts.append(f"depends on {refs}")
+                    markers.append(f"depends on {refs}")
                 if dep_info["blocks"]:
                     refs = ", ".join(f"#{n}" for n in dep_info["blocks"])
-                    parts.append(f"blocks {refs}")
-                dep_suffix = f"  [{'; '.join(parts)}]"
-            lines.append(
-                f"  {prefix}{item_branch} #{issue['number']} {title}{dep_suffix}"
-            )
+                    markers.append(f"blocks {refs}")
+            suffix = f"  [{'; '.join(markers)}]" if markers else ""
+            lines.append(f"  {prefix}{item_branch} #{num} {title}{suffix}")
+
+    actionable: list[tuple[str, dict]] = []
+    for priority in PRIORITY_ORDER:
+        for issue in groups[priority]:
+            num = issue["number"]
+            if num not in blocked and not get_assignees(issue):
+                actionable.append((priority, issue))
+
+    if actionable:
+        lines.append("")
+        lines.append("Actionable (not blocked, not assigned):")
+        for priority, issue in actionable:
+            display = PRIORITY_DISPLAY[priority]
+            lines.append(f"  [{display}] #{issue['number']} {issue['title']}")
+
     return "\n".join(lines)
 
 
@@ -331,71 +325,41 @@ def main() -> None:
     print(f"Found {len(issues)} open issues\n")
 
     groups = group_issues(issues)
-    deps_map = build_deps_map(issues)
+    print("Fetching issue dependencies from API...")
+    api_deps = fetch_api_dependencies(issues, token)
+    deps_map = build_deps_map(issues, api_deps)
+    blocked = find_blocked(deps_map)
 
     # Print tree to stdout
-    tree = generate_tree(groups, deps_map)
+    tree = generate_tree(groups, deps_map, blocked)
     print(tree)
 
-    # Generate all Mermaid variants
-    mindmap_simple = generate_mindmap_simple(groups)
-    mindmap_deps = generate_mindmap_with_deps(groups, deps_map)
-    flowchart_simple = generate_flowchart_simple(groups)
-    flowchart_deps = generate_flowchart_with_deps(groups, deps_map)
-    cascade = generate_cascade(groups, deps_map)
-    priority_tree = generate_priority_tree(groups, deps_map)
+    # Generate Mermaid diagrams
+    priority_tree = generate_priority_tree(groups, blocked)
+    dep_graph = generate_dep_graph(issues, deps_map, blocked)
 
     # Write to output directory
     output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 
-    mindmap_md = f"""# Open Issues — Mindmap
+    sections = [
+        f"""# Open Issues
 
-## By Priority
-
-```mermaid
-{mindmap_simple}
-```
-
-## By Priority (with dependencies)
-
-```mermaid
-{mindmap_deps}
-```
-"""
-
-    flowchart_md = f"""# Open Issues — Flowchart
-
-## By Priority
-
-```mermaid
-{flowchart_simple}
-```
-
-## By Priority (with dependencies)
-
-```mermaid
-{flowchart_deps}
-```
-"""
-
-    priority_md = f"""# Open Issues — Priority Hierarchy
-
-## Cascade (priority tiers chained top-to-bottom)
-
-```mermaid
-{cascade}
-```
-
-## Tree (priority levels as a branching tree)
+## Priority Tree
 
 ```mermaid
 {priority_tree}
-```
-"""
+```"""
+    ]
 
-    write_file(os.path.join(output_dir, "issues-mindmap.md"), mindmap_md)
-    write_file(os.path.join(output_dir, "issues-flowchart.md"), flowchart_md)
-    write_file(os.path.join(output_dir, "issues-priority.md"), priority_md)
+    if dep_graph:
+        sections.append(f"""
+## Dependencies
+
+```mermaid
+{dep_graph}
+```""")
+
+    write_file(os.path.join(output_dir, "issues.md"), "\n".join(sections) + "\n")
 
 
 if __name__ == "__main__":

@@ -45,11 +45,9 @@ jobs:
 
           # Build the comment/issue body from generated diagrams
           BODY=""
-          for file in scripts/output/issues-mindmap.md scripts/output/issues-flowchart.md scripts/output/issues-priority.md; do
-            if [ -f "$file" ]; then
-              BODY+="$(cat "$file")"$'\n\n'
-            fi
-          done
+          if [ -f "scripts/output/issues.md" ]; then
+            BODY="$(cat scripts/output/issues.md)"$'\n\n'
+          fi
           BODY+="_Last updated: $(date -u '+%Y-%m-%d %H:%M UTC')_"
 
           # Find existing issue by label
