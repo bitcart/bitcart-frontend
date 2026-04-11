@@ -41,6 +41,12 @@ DEP_PATTERNS = [
 
 BLOCKED_LABELS = {"blocked", "status/blocked"}
 
+CLOSING_KEYWORDS_RE = re.compile(
+    r"(?:fix(?:es)?|close[sd]?|resolve[sd]?)\s+#\d+(?:\s*[,&]\s*#\d+|\s+and\s+#\d+)*",
+    re.IGNORECASE,
+)
+ISSUE_REF_RE = re.compile(r"#(\d+)")
+
 MERMAID_CLASSES = """\
   classDef blocked fill:#f5f5f5,stroke:#999,color:#999,stroke-dasharray:5 5
   classDef blocked_ext fill:#fff8e1,stroke:#f9a825,color:#f57f17,stroke-dasharray:5 5
@@ -90,6 +96,47 @@ def fetch_api_dependencies(
                 if dep_numbers:
                     deps[num] = dep_numbers
     return deps
+
+
+def fetch_open_prs(token: str | None) -> list[dict]:
+    prs: list[dict] = []
+    page = 1
+    headers = {}
+    if token:
+        headers["Authorization"] = f"token {token}"
+    with httpx.Client(timeout=30) as client:
+        while True:
+            resp = client.get(
+                BASE_URL,
+                params={"state": "open", "type": "pulls", "limit": 50, "page": page},
+                headers=headers,
+            )
+            resp.raise_for_status()
+            batch = resp.json()
+            if not batch:
+                break
+            prs.extend(batch)
+            page += 1
+    return prs
+
+
+def build_pr_map(prs: list[dict]) -> dict[int, list[int]]:
+    pr_map: dict[int, list[int]] = {}
+    for pr in prs:
+        pr_num = pr["number"]
+        referenced: set[int] = set()
+        # Closing keywords in body (handles "Fixes #1, #2, #3")
+        body = pr.get("body") or ""
+        for m in CLOSING_KEYWORDS_RE.finditer(body):
+            for ref in ISSUE_REF_RE.finditer(m.group(0)):
+                referenced.add(int(ref.group(1)))
+        # Any #N in title (titles are specific enough)
+        title = pr.get("title") or ""
+        for m in ISSUE_REF_RE.finditer(title):
+            referenced.add(int(m.group(1)))
+        for issue_num in referenced:
+            pr_map.setdefault(issue_num, []).append(pr_num)
+    return pr_map
 
 
 def classify_priority(issue: dict) -> str:
@@ -181,9 +228,12 @@ def find_blocked(
     return blocked
 
 
-def status_suffix(issue: dict, blocked: dict[int, str]) -> str:
+def status_suffix(
+    issue: dict, blocked: dict[int, str], pr_map: dict[int, list[int]]
+) -> str:
     num = issue["number"]
     assignees = get_assignees(issue)
+    prs = pr_map.get(num, [])
     parts: list[str] = []
     reason = blocked.get(num)
     if reason == "ext":
@@ -192,18 +242,22 @@ def status_suffix(issue: dict, blocked: dict[int, str]) -> str:
         parts.append("BLOCKED")
     if assignees:
         parts.append(", ".join(f"@{a}" for a in assignees))
+    if prs:
+        parts.append(", ".join(f"PR #{n}" for n in prs))
     if not parts:
         return ""
     return " [" + " | ".join(parts) + "]"
 
 
-def status_class(issue: dict, blocked: dict[int, str]) -> str:
+def status_class(
+    issue: dict, blocked: dict[int, str], pr_map: dict[int, list[int]]
+) -> str:
     reason = blocked.get(issue["number"])
     if reason == "ext":
         return "blocked_ext"
     if reason:
         return "blocked"
-    if get_assignees(issue):
+    if get_assignees(issue) or issue["number"] in pr_map:
         return "assigned"
     return "actionable"
 
@@ -215,6 +269,7 @@ def generate_dep_graph(
     issues: list[dict],
     deps_map: dict[int, dict[str, list[int]]],
     blocked: dict[int, str],
+    pr_map: dict[int, list[int]],
 ) -> str | None:
     """Focused graph showing only issues involved in dependencies."""
     involved: set[int] = set()
@@ -235,8 +290,8 @@ def generate_dep_graph(
             continue
         node_id = f"i{num}"
         title = sanitize(issue["title"])
-        suffix = status_suffix(issue, blocked)
-        css_class = status_class(issue, blocked)
+        suffix = status_suffix(issue, blocked, pr_map)
+        css_class = status_class(issue, blocked, pr_map)
         lines.append(f'  {node_id}["#{num} {title}{suffix}"]:::{css_class}')
 
     for num, deps in deps_map.items():
@@ -249,6 +304,7 @@ def generate_dep_graph(
 def generate_priority_tree(
     groups: dict[str, list[dict]],
     blocked: dict[int, str],
+    pr_map: dict[int, list[int]],
 ) -> str:
     """Tree where priority nodes branch into issues, compact layout."""
     lines = ["flowchart TD", MERMAID_CLASSES]
@@ -261,8 +317,8 @@ def generate_priority_tree(
         for issue in groups[priority]:
             node_id = f"i{issue['number']}"
             title = sanitize(issue["title"])
-            suffix = status_suffix(issue, blocked)
-            css_class = status_class(issue, blocked)
+            suffix = status_suffix(issue, blocked, pr_map)
+            css_class = status_class(issue, blocked, pr_map)
             lines.append(
                 f'  {node_id}["#{issue["number"]} {title}{suffix}"]:::{css_class}'
             )
@@ -280,6 +336,7 @@ def generate_tree(
     groups: dict[str, list[dict]],
     deps_map: dict[int, dict[str, list[int]]],
     blocked: dict[int, str],
+    pr_map: dict[int, list[int]],
 ) -> str:
     """Generate a plain-text tree view of issues grouped by priority."""
     lines = ["Open Issues"]
@@ -304,6 +361,9 @@ def generate_tree(
             assignees = get_assignees(issue)
             if assignees:
                 markers.append(", ".join(f"@{a}" for a in assignees))
+            prs = pr_map.get(num, [])
+            if prs:
+                markers.append(", ".join(f"PR #{n}" for n in prs))
             dep_info = deps_map.get(num)
             if dep_info:
                 if dep_info["depends_on"]:
@@ -319,7 +379,7 @@ def generate_tree(
     for priority in PRIORITY_ORDER:
         for issue in groups[priority]:
             num = issue["number"]
-            if num not in blocked and not get_assignees(issue):
+            if num not in blocked and not get_assignees(issue) and num not in pr_map:
                 actionable.append((priority, issue))
 
     if actionable:
@@ -356,13 +416,19 @@ def main() -> None:
     deps_map = build_deps_map(issues, api_deps)
     blocked = find_blocked(issues, deps_map)
 
+    print("Fetching open pull requests...")
+    prs = fetch_open_prs(token)
+    pr_map = build_pr_map(prs)
+    if pr_map:
+        print(f"Found {len(pr_map)} issues with linked PRs\n")
+
     # Print tree to stdout
-    tree = generate_tree(groups, deps_map, blocked)
+    tree = generate_tree(groups, deps_map, blocked, pr_map)
     print(tree)
 
     # Generate Mermaid diagrams
-    priority_tree = generate_priority_tree(groups, blocked)
-    dep_graph = generate_dep_graph(issues, deps_map, blocked)
+    priority_tree = generate_priority_tree(groups, blocked, pr_map)
+    dep_graph = generate_dep_graph(issues, deps_map, blocked, pr_map)
 
     # Write to output directory
     output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
