@@ -1,4 +1,4 @@
 
 [build]
 publish = "./apps/directory/dist/client"
-command = "just build --outputStyle=stream -p @bitcart/directory"
+command = "BITCART_ENV=production just build --outputStyle=stream -p @bitcart/directory"

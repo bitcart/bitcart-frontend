@@ -9,13 +9,12 @@ fi
 
 APP_NAME="$1"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-BITCART_ENV="production"
 
 "$SCRIPT_DIR"/install-tx-client.sh
 
 cd "$SCRIPT_DIR/../apps/$APP_NAME"
 tx pull -af
 
-just build --outputStyle=stream -p "@bitcart/$APP_NAME"
+BITCART_ENV="production" just build --outputStyle=stream -p "@bitcart/$APP_NAME"
 
 set +e
