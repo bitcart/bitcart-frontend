@@ -34,6 +34,7 @@
     "@bitcart/configs": "workspace:*",
     "@bitcart/qa": "workspace:*",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",

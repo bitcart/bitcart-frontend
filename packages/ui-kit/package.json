@@ -59,6 +59,7 @@
     "@bitcart/qa": "workspace:*",
     "@bitcart/unocss-preset": "workspace:*",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "@unocss/cli": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",

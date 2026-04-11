@@ -13,7 +13,7 @@ export default defineConfig({
   format: ["esm"],
   dts: true,
   sourcemap: true,
-  clean: true,
+  clean: process.env.BITCART_ENV !== "development",
   tsconfig: "./tsconfig.lib.json",
   deps: { skipNodeModulesBundle: true },
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
