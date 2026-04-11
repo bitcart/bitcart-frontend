@@ -3,7 +3,7 @@ import { resolve } from "node:path"
 import { createInterface } from "node:readline"
 
 // Matches: optional indent + "source" -> "dest" + optional [attrs]
-const EDGE_REGEXP = /^(\s*)"([^"]+)"\s*->\s*"([^"]+)"(\s*\[([^\]]*)\])?\s*$/
+const EDGE_REGEX = /^(\s*)"([^"]+)"\s*->\s*"([^"]+)"(\s*\[([^\]]*)\])?\s*$/
 
 const configPath = resolve(process.cwd(), ".dependency-cruiser.js")
 const { default: config } = await import(configPath)
@@ -28,7 +28,7 @@ function getEdgeColor(source) {
 const lines = createInterface({ input: process.stdin })
 
 for await (const line of lines) {
-  const match = EDGE_REGEXP.exec(line)
+  const match = EDGE_REGEX.exec(line)
 
   if (!match) {
     process.stdout.write(line + "\n")

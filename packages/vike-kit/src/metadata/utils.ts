@@ -28,7 +28,7 @@ export const getLayoutMetadata = ({
   const baseUrl =
     typeof headers?.host === "string"
       ? `${
-          envTag === "development" ? (headers["x-forwarded-proto"] ?? "http") : "https"
+          envTag !== "production" ? (headers["x-forwarded-proto"] ?? "http") : "https"
         }://${headers.host}`
       : productionBaseUrl
 

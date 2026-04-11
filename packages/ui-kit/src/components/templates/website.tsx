@@ -1,4 +1,5 @@
-import type { LocaleId } from "@bitcart/core/utils"
+import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
+import { LAYOUT_CONTAINER_TESTID } from "@bitcart/qa"
 import { useMemo } from "react"
 
 import { useLayoutConfigMemo } from "@/hooks/layout-config"
@@ -11,10 +12,11 @@ import { Toaster } from "../molecules/toaster"
 import { WebsiteFooter } from "../organisms/website-footer"
 import { WebsiteHeader } from "../organisms/website-header"
 
-export type WebsiteLayoutProps<TSupportedLocaleId extends LocaleId> = {
+export type WebsiteLayoutProps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = {
   LinkComponent: BasicLinkComponent
   currentRoutePath?: BasicNavigationLink["href"]
   config: LayoutConfig
+  isHydrated: boolean
   localeChangeHandler: LocaleSelectorProps<TSupportedLocaleId>["handleSelect"]
 
   classNames?: {
@@ -24,9 +26,10 @@ export type WebsiteLayoutProps<TSupportedLocaleId extends LocaleId> = {
   children: React.ReactNode
 }
 
-export const WebsiteLayout = <TSupportedLocaleId extends LocaleId>({
+export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   LinkComponent: Link,
   currentRoutePath,
+  isHydrated,
   localeChangeHandler,
   classNames,
   children,
@@ -64,7 +67,11 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId>({
 
   return (
     <ThemeProvider>
-      <div className={cn("bg-background flex min-h-screen flex-col", classNames?.root)}>
+      <div
+        className={cn("bg-background flex min-h-screen flex-col", classNames?.root)}
+        data-is-hydrated={isHydrated}
+        data-testid={LAYOUT_CONTAINER_TESTID}
+      >
         <WebsiteHeader
           LinkComponent={Link}
           activeNavlinkHref={currentRoutePath}

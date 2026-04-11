@@ -1,19 +1,19 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId } from "@bitcart/core/utils"
+import type { LocaleOrPseudoLocaleId } from "@bitcart/core/utils"
 import { modifyUrl } from "vike/modifyUrl"
 import type { PageContext, Url } from "vike/types"
 
 import type { PageContextOriginal } from "../types"
 
 export interface OnBeforeRouteDeps {
-  supportedLocaleIds: readonly LocaleId[]
+  supportedLocaleIds: readonly LocaleOrPseudoLocaleId[]
 }
 
 export const createOnBeforeRoute = ({ supportedLocaleIds }: OnBeforeRouteDeps) => {
   const extractLocale = ({ href, pathname }: Url) => {
     const leadingPathSegment = pathname.split("/").slice(1)[0]
 
-    const routeLocaleId = supportedLocaleIds.includes(leadingPathSegment as LocaleId)
+    const routeLocaleId = supportedLocaleIds.includes(leadingPathSegment as LocaleOrPseudoLocaleId)
       ? leadingPathSegment
       : null
 

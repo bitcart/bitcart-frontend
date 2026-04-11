@@ -2,7 +2,7 @@
   "extends": [
     "@bitcart/configs/by-package-type/lib-ts",
     "@bitcart/configs/by-view-layer/react-ts",
-    "@bitcart/configs/by-supported-runtime/browser-ts"
+    "@bitcart/configs/by-target-platform/browser-ts"
   ],
 
   "compilerOptions": {

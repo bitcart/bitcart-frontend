@@ -1,4 +1,6 @@
-import type { BCP47LanguageSubtag, BCP47LanguageTagLike, LocaleId } from "./types"
+import { PSEUDO_LOCALE_ID } from "@/constants"
+
+import type { BCP47LanguageSubtag, BCP47LanguageTagLike, LocaleOrPseudoLocaleId } from "./types"
 
 /**
  * @returns {string | undefined}
@@ -20,5 +22,10 @@ export const getLanguageEndonym = (
   }
 }
 
-export const getLocaleDisplayName = (localeId: LocaleId): string =>
-  getLanguageEndonym(localeId) ?? localeId
+export const getLocaleDisplayName = (localeId: LocaleOrPseudoLocaleId): string => {
+  if (localeId === PSEUDO_LOCALE_ID) {
+    return localeId
+  } else {
+    return getLanguageEndonym(localeId) ?? localeId
+  }
+}

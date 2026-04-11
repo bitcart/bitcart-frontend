@@ -11,17 +11,22 @@
     "oxfmt": "oxfmt",
     "nx": "nx",
     "workspace": "pnpm -w",
+    "packages": "pnpm --filter './packages/*'",
     "core": "pnpm -C packages/core",
     "form-kit": "pnpm -C packages/form-kit",
+    "qa": "pnpm -C packages/qa",
     "ui-kit": "pnpm -C packages/ui-kit",
     "unocss-preset": "pnpm -C packages/unocss-preset",
     "vike-kit": "pnpm -C packages/vike-kit",
+    "apps": "pnpm --filter './apps/*'",
     "landing": "pnpm -C apps/landing",
-    "directory": "pnpm -C apps/directory"
+    "directory": "pnpm -C apps/directory",
+    "workspace-members": "pnpm --filter './apps/*' --filter './packages/*'"
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
     "@effect/language-service": "catalog:devDependencies",
+    "@playwright/test": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "nx": "catalog:devDependencies",

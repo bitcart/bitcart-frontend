@@ -1,9 +1,16 @@
+import {
+  THEME_TOGGLE_TESTID,
+  UI_THEME_ICON_DARK_TESTID,
+  UI_THEME_ICON_LIGHT_TESTID,
+  UI_THEME_ICON_SYSTEM_TESTID,
+} from "@bitcart/qa"
 import { t } from "@lingui/core/macro"
-import { Monitor, Moon, Sun } from "lucide-react"
+import { Loader, Monitor, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useCallback, useMemo } from "react"
 
 import { Button } from "@/components/atoms/button"
+import { cn } from "@/utils"
 
 export type ThemeToggleProps = {
   className?: string
@@ -58,15 +65,15 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className, showLabel =
 
     switch (theme) {
       case "light": {
-        return <Sun className={elementClassName} />
+        return <Sun className={elementClassName} data-testid={UI_THEME_ICON_LIGHT_TESTID} />
       }
 
       case "dark": {
-        return <Moon className={elementClassName} />
+        return <Moon className={elementClassName} data-testid={UI_THEME_ICON_DARK_TESTID} />
       }
 
       default: {
-        return <Monitor className={elementClassName} />
+        return <Monitor className={elementClassName} data-testid={UI_THEME_ICON_SYSTEM_TESTID} />
       }
     }
   }, [theme])
@@ -79,6 +86,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className, showLabel =
       title={buttonHint}
       className={className}
       aria-label={buttonHint}
+      data-testid={THEME_TOGGLE_TESTID}
     >
       {icon}
       {showLabel && <span className="text-sm font-medium">{getThemeLabel()}</span>}
@@ -86,5 +94,12 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className, showLabel =
   )
 }
 
-//! For lazy imports only!
-export default ThemeToggle
+export type ThemeToggleFallbackProps = {
+  className?: string
+}
+
+export const ThemeToggleFallback: React.FC<ThemeToggleFallbackProps> = ({ className }) => (
+  <span className={cn("size-9 flex items-center justify-center", className)}>
+    <Loader className="size-4 animate-spin text-foreground" />
+  </span>
+)

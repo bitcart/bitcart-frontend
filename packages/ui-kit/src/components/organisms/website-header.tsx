@@ -1,3 +1,10 @@
+import {
+  MOBILE_MENU_CONTENT_TESTID,
+  MOBILE_MENU_TOGGLE_TESTID,
+  NAVBAR_TESTID,
+  NAV_DROPDOWN_CONTENT_TESTID,
+  NAV_DROPDOWN_TOGGLE_TESTID,
+} from "@bitcart/qa"
 import { t } from "@lingui/core/macro"
 import { Loader, Menu, MoreHorizontal, X } from "lucide-react"
 import { useCallback, useMemo, useState } from "react"
@@ -153,6 +160,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
           className="md:flex hidden"
           aria-label={t`Navigation bar`}
           aria-hidden={currentBreakpoint === "sm"}
+          data-testid={NAVBAR_TESTID}
         >
           <NavigationMenuList>
             {labeledLinks.map((link, idx) => (
@@ -201,7 +209,8 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
         <DropdownMenuTrigger
           render={<Button size="icon" variant="ghost" />}
           className={cn("relative", { hidden: !shouldDisplayDropdownNavMenu })}
-          aria-label="More"
+          aria-label={t`More`}
+          data-testid={NAV_DROPDOWN_TOGGLE_TESTID}
         >
           <MoreHorizontal />
         </DropdownMenuTrigger>
@@ -209,6 +218,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
         <DropdownMenuContent
           align="start"
           className={cn("w-56", { hidden: !shouldDisplayDropdownNavMenu })}
+          data-testid={NAV_DROPDOWN_CONTENT_TESTID}
         >
           <DropdownMenuGroup>
             {labeledLinks.map((link, idx) => (
@@ -244,11 +254,13 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
       isMobileMenuOpen && (
         <div
           id="mobile-menu"
-          aria-label={t`Mobile menu`}
+          data-testid={MOBILE_MENU_CONTENT_TESTID}
           className={`
             md:hidden
             top-16 left-0 right-0 shadow-lg bg-background absolute w-full border-t
           `}
+          aria-hidden={!isMobileMenuOpen}
+          aria-label={t`Mobile menu`}
         >
           <div className="px-4 py-4 flex w-full flex-col">
             <nav className="gap-2 flex w-full flex-col" aria-label={t`Navigation menu`}>
@@ -332,11 +344,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
             `}
           >
             <div className="size-10 flex items-center justify-center">
-              <img
-                alt={`${brand.projectCanonicalName} logo`}
-                src={brand.logoImageSrc}
-                className="size-10"
-              />
+              <img alt={brand.logoImageAltText} src={brand.logoImageSrc} className="size-10" />
             </div>
 
             {logoLabel}
@@ -363,6 +371,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
               aria-label={isMobileMenuOpen ? t`Close menu` : t`Open menu`}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
+              data-testid={MOBILE_MENU_TOGGLE_TESTID}
             >
               {isClient ? (
                 <>{isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}</>

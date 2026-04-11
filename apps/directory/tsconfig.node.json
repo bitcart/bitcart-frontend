@@ -1,7 +1,7 @@
 {
-  "extends": ["@bitcart/configs/by-supported-runtime/nodejs-ts"],
+  "extends": ["@bitcart/configs/by-target-platform/nodejs-ts"],
   "compilerOptions": {
     "rootDir": "."
   },
-  "include": ["*.config.ts"]
+  "include": ["*.config.ts", "e2e"]
 }

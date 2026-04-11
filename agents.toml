@@ -1,0 +1,27 @@
+version = 1
+agents = ["claude"]
+
+[trust]
+allow_all = true
+
+[[skills]]
+name = "dotagents"
+source = "getsentry/dotagents"
+
+[[skills]]
+name = "skill-creator"
+source = "anthropics/skills"
+
+[[skills]]
+name = "tsdown"
+source = "rolldown/tsdown"
+
+[[mcp]]
+name = "playwright"
+command = "pnpx"
+args = ["@playwright/mcp@latest"]
+
+[[mcp]]
+name = "context7"
+command = "pnpx"
+args = ["@upstash/context7-mcp"]

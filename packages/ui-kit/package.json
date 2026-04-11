@@ -56,6 +56,7 @@
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
+    "@bitcart/qa": "workspace:*",
     "@bitcart/unocss-preset": "workspace:*",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",

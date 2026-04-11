@@ -1,5 +1,5 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId } from "@bitcart/core/utils"
+import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
 import { useLingui } from "@lingui/react"
 import { useCallback } from "react"
 import { usePageContext } from "vike-react/usePageContext"
@@ -7,10 +7,10 @@ import { navigate } from "vike/client/router"
 
 import { useClientLocaleId, type UseClientLocaleIdParams } from "./client-locale"
 
-export type UseHandleLocaleChangeParams<TSupportedLocaleId extends LocaleId> =
+export type UseHandleLocaleChangeParams<TSupportedLocaleId extends LocaleId | PseudoLocaleId> =
   UseClientLocaleIdParams<TSupportedLocaleId> & {}
 
-export const useHandleLocaleChange = <TSupportedLocaleId extends LocaleId>({
+export const useHandleLocaleChange = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   supportedLocaleIds,
 }: UseHandleLocaleChangeParams<TSupportedLocaleId>) => {
   const { urlLogical } = usePageContext()

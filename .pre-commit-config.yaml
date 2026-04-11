@@ -19,9 +19,17 @@ repos:
     rev: v1.23.1
     hooks:
       - id: zizmor
+        files: (\.(github|forgejo)/(workflows/.*|dependabot\.ya?ml))|(action\.ya?ml)$
         args: [--no-progress, --offline]
   - repo: local
     hooks:
+      - id: lockfile-check
+        name: lockfile-check
+        language: system
+        entry: pnpm install --frozen-lockfile --lockfile-only
+        require_serial: true
+        pass_filenames: false
+        files: '(package\.json$|^pnpm-workspace\.yaml$|^pnpm-lock\.yaml$)'
       - id: lint
         name: lint
         language: system

@@ -44,11 +44,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({
         <div className="gap-15 lg:gap-8 lg:flex-row flex flex-col">
           <div className="max-w-112 flex w-full flex-col">
             <Link href={homepageHref} className="space-x-3 mb-4 flex items-center">
-              <img
-                alt={`${brand.projectCanonicalName} logo`}
-                src={brand.logoImageSrc}
-                className="size-8"
-              />
+              <img alt={brand.logoImageAltText} src={brand.logoImageSrc} className="size-8" />
 
               <span className="text-xl font-bold">{brand.projectCanonicalName}</span>
             </Link>

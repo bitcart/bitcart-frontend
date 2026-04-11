@@ -196,3 +196,26 @@ export type BCP47RegionSubtag = ISO3166Region
 export type BCP47LanguageTagLike = `${BCP47LanguageSubtag}-${BCP47RegionSubtag}`
 
 export type LocaleId = BCP47LanguageSubtag | BCP47LanguageTagLike
+
+export interface WithLocaleId {
+  localeId: LocaleId
+}
+
+/**
+ * All inline localization strings must be written in English.
+ * Do not change this type, as it enforces the rule.
+ */
+export type SourceLocaleId = "en"
+
+export type PosixLocaleIdMap<TSupportedLocaleId extends ISO639LanguageCode> = Record<
+  TSupportedLocaleId,
+  PosixLocaleIdLike<TSupportedLocaleId>
+>
+
+export type PseudoLocaleId = "pseudo"
+
+export type PseudoPosixLocaleId = `${PseudoLocaleId}_LOCALE`
+
+export type PseudoPosixLocaleIdMap = Record<PseudoLocaleId, PseudoPosixLocaleId>
+
+export type LocaleOrPseudoLocaleId = LocaleId | PseudoLocaleId

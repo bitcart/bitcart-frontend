@@ -12,11 +12,12 @@ import { BRAND_UMBRELLA_NAME, PROJECT_CANONICAL_NAME } from "@/common/constants"
 
 export const getLayoutMetadata = (): StaticLayoutMetadata => ({
   title: t`Bitcart - Non-Custodial Crypto Payments Processor`,
+
   description: t`Your self-hosted, open-source cryptocurrency all-in-one solution. Accept crypto and stablecoins payments and develop custom apps with ease`,
 
   image: {
     src: "/logo.png",
-    alt: "Bitcart logo",
+    alt: `${BRAND_UMBRELLA_NAME} ${t`logo`}`,
     width: "600",
     height: "532",
   },
@@ -34,6 +35,7 @@ export const getLayoutConfig = (): LayoutConfig => ({
     name: BRAND_UMBRELLA_NAME,
     copyrightSinceYear: 2018,
     logoImageSrc: "/icon.svg",
+    logoImageAltText: `${BRAND_UMBRELLA_NAME} ${t`logo`}`,
     projectCanonicalName: PROJECT_CANONICAL_NAME,
     tagline: t`Open-source cryptocurrency payment processor`,
   },

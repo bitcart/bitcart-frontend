@@ -1,4 +1,4 @@
-import type { LocaleId } from "@bitcart/core/utils"
+import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
 import type { BreakpointKey } from "@bitcart/unocss-preset"
 import type { Icon } from "@phosphor-icons/react"
 import type { LucideProps } from "lucide-react"
@@ -104,7 +104,7 @@ export type LayoutI18nConfig = {
   /**
    * Valid BCP-47 language codes for all available locales
    */
-  availableLocales: readonly LocaleId[]
+  availableLocales: readonly (LocaleId | PseudoLocaleId)[]
 }
 
 export type LayoutBrandAttributes = {
@@ -112,6 +112,7 @@ export type LayoutBrandAttributes = {
   copyrightAppendix?: string
   copyrightSinceYear?: number
   logoImageSrc: string
+  logoImageAltText: string
   projectCanonicalName: string
   tagline?: string
 }

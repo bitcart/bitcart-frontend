@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "@bitcart/configs/by-package-type/lib-ts",
+    "@bitcart/configs/by-target-platform/nodejs-ts",
+    "@bitcart/configs/by-target-platform/browser-ts"
+  ],
+
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist",
+    "paths": { "@/*": ["./src/*"] }
+  },
+
+  "exclude": ["dist", "node_modules"],
+  "include": ["src"]
+}

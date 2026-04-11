@@ -1,11 +1,18 @@
-import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LinguiConfig } from "@lingui/conf"
+import { PSEUDO_LOCALE_ID, SOURCE_LOCALE_ID } from "@bitcart/core/constants"
+import { defineConfig } from "@lingui/conf"
 
-import { SUPPORTED_LOCALE_IDS } from "./src/app.config"
+import { SUPPORTED_LOCALE_IDS } from "./constants"
+import { nodeEnv } from "./node-env"
 
-const config: LinguiConfig = {
+export default defineConfig({
   sourceLocale: SOURCE_LOCALE_ID,
-  locales: SUPPORTED_LOCALE_IDS as unknown as string[],
+
+  locales:
+    nodeEnv.BITCART_ENV === "production"
+      ? SUPPORTED_LOCALE_IDS
+      : [...SUPPORTED_LOCALE_IDS, PSEUDO_LOCALE_ID],
+
+  pseudoLocale: nodeEnv.BITCART_ENV === "production" ? undefined : PSEUDO_LOCALE_ID,
   compileNamespace: "es",
 
   catalogs: [
@@ -17,6 +24,4 @@ const config: LinguiConfig = {
       exclude: ["src/**/*.d.ts"],
     },
   ],
-}
-
-export default config
+})

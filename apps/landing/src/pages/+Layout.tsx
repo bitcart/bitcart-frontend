@@ -4,16 +4,16 @@ import { HashAutoscrollProvider, Link } from "@bitcart/vike-kit/navigation"
 import { createUseMatomoTracking } from "@bitcart/vike-kit/tracking"
 import { i18n } from "@lingui/core"
 import { I18nProvider } from "@lingui/react"
+import { useHydrated } from "vike-react/useHydrated"
 import { usePageContext } from "vike-react/usePageContext"
 
 import { SUPPORTED_LOCALE_IDS } from "@/app.config"
 import { IS_MATOMO_ENABLED } from "@/common/constants"
 import { env } from "@/env"
 
-import { getLayoutConfig } from "./layout.config"
-
 import "inter-ui/inter.css"
 import "./uno.generated.css"
+import { getLayoutConfig } from "./layout.config"
 
 const useMatomoTracking = createUseMatomoTracking({
   enabled: IS_MATOMO_ENABLED,
@@ -26,12 +26,14 @@ const useMatomoTracking = createUseMatomoTracking({
 const PageShell = ({ children }: { children: React.ReactNode }) => {
   const { urlLogical } = usePageContext()
   const handleLocaleChange = useHandleLocaleChange({ supportedLocaleIds: SUPPORTED_LOCALE_IDS })
+  const hydrated = useHydrated()
 
   return (
     <WebsiteLayout
       LinkComponent={Link}
       currentRoutePath={urlLogical}
       config={getLayoutConfig()}
+      isHydrated={hydrated}
       localeChangeHandler={handleLocaleChange}
     >
       {children}

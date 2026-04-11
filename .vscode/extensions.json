@@ -16,6 +16,7 @@
     "nefrob.vscode-just-syntax",
     "davidanson.vscode-markdownlint",
     "bierner.markdown-mermaid",
-    "oxc.oxc-vscode"
+    "oxc.oxc-vscode",
+    "tamasfe.even-better-toml"
   ]
 }

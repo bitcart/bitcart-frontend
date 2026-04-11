@@ -10,10 +10,10 @@
     "./by-package-type/app-ts": "./src/by-package-type/app-ts.json",
     "./by-package-type/lib-dependency-cruiser": "./src/by-package-type/lib-dependency-cruiser.js",
     "./by-package-type/lib-ts": "./src/by-package-type/lib-ts.json",
-    "./by-supported-runtime/nodejs-ts": {
-      "default": "./src/by-supported-runtime/nodejs-ts.json"
+    "./by-target-platform/nodejs-ts": {
+      "default": "./src/by-target-platform/nodejs-ts.json"
     },
-    "./by-supported-runtime/browser-ts": "./src/by-supported-runtime/browser-ts.json",
+    "./by-target-platform/browser-ts": "./src/by-target-platform/browser-ts.json",
     "./by-view-layer/react-oxlint": "./src/by-view-layer/react-oxlint.ts",
     "./by-view-layer/react-ts": "./src/by-view-layer/react-ts.json",
     "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts"

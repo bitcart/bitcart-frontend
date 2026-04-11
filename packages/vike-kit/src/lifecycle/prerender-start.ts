@@ -1,15 +1,15 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId } from "@bitcart/core/utils"
+import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
 import type { PageContextServer } from "vike/types"
 
-export interface OnPrerenderStartDeps<TSupportedLocaleId extends LocaleId> {
+export interface OnPrerenderStartDeps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> {
   supportedLocaleIds: readonly TSupportedLocaleId[]
 }
 
 /**
  * https://vike.dev/i18n#pre-rendering
  */
-export const createOnPrerenderStart = <TSupportedLocaleId extends LocaleId>({
+export const createOnPrerenderStart = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   supportedLocaleIds,
 }: OnPrerenderStartDeps<TSupportedLocaleId>) => {
   return function onPrerenderStart(prerenderContext: { pageContexts: PageContextServer[] }) {

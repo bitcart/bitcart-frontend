@@ -24,3 +24,77 @@ jobs:
         uv pip install prek rust-just
       cache-dependency-glob: ""
       nx-cache: true
+
+  e2e:
+    name: e2e
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: bitcart/bitcart-actions/actions/setup-node@master
+
+      - name: Restore Nx cache
+        id: nx-cache-restore
+        uses: actions/cache/restore@v5
+        with:
+          path: .nx
+          key: v1-nx-${{ github.ref_name }}-${{ hashFiles('nx.json') }}
+          restore-keys: |
+            v1-nx-${{ github.ref_name }}-
+
+      - name: Set up Python
+        uses: bitcart/bitcart-actions/actions/setup-python@master
+        with:
+          cache-dependency-glob: ""
+
+      - name: Install just
+        run: uv pip install rust-just
+
+      - run: just e2e-setup
+
+      - run: just e2e
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ !cancelled() }}
+        with:
+          name: e2e-results
+          path: |
+            apps/*/e2e/playwright-report/
+            apps/*/e2e/screenshots/
+          retention-days: 1
+
+      - name: Save Nx cache
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: .nx
+          key: ${{ steps.nx-cache-restore.outputs.cache-primary-key }}
+
+  upload-e2e-artifacts:
+    name: upload-${{ matrix.app }}-e2e-artifacts
+    needs: e2e
+    if: ${{ !cancelled() && needs.e2e.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [landing, directory]
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: e2e-results
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report-${{ matrix.app }}
+          path: ${{ matrix.app }}/e2e/playwright-report/
+          retention-days: 14
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: screenshots-${{ matrix.app }}
+          path: ${{ matrix.app }}/e2e/screenshots/
+          retention-days: 14

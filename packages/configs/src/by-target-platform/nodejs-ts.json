@@ -1,0 +1,7 @@
+{
+  "extends": "../base/ts.json",
+
+  "compilerOptions": {
+    "types": ["node"]
+  }
+}

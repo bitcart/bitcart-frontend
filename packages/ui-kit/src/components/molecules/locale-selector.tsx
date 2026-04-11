@@ -1,4 +1,5 @@
-import { getLocaleDisplayName, type LocaleId } from "@bitcart/core/utils"
+import { getLocaleDisplayName, type LocaleId, type PseudoLocaleId } from "@bitcart/core/utils"
+import { LOCALE_SELECTOR_TRIGGER_TESTID } from "@bitcart/qa"
 import { t } from "@lingui/core/macro"
 import { Globe } from "lucide-react"
 import { useCallback } from "react"
@@ -14,13 +15,13 @@ import {
   DropdownMenuTrigger,
 } from "../atoms/dropdown-menu"
 
-export type LocaleSelectorProps<TSupportedLocaleId extends LocaleId> = {
+export type LocaleSelectorProps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = {
   activeLocaleId: TSupportedLocaleId
   handleSelect: (localeId: TSupportedLocaleId, callback?: VoidFunction) => void
   optionLocaleIds: readonly TSupportedLocaleId[]
 }
 
-export const LocaleSelector = <TSupportedLocaleId extends LocaleId>({
+export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   activeLocaleId,
   handleSelect,
   optionLocaleIds,
@@ -32,7 +33,11 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId>({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="ghost" />} aria-label={t`Select language`}>
+      <DropdownMenuTrigger
+        render={<Button variant="ghost" />}
+        aria-label={t`Select language`}
+        data-testid={LOCALE_SELECTOR_TRIGGER_TESTID}
+      >
         <Globe />
 
         <span className="text-sm font-medium capitalize">
@@ -52,6 +57,7 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId>({
                   className={cn("focus-visible:ring-transparent", {
                     "text-foreground": localeId === activeLocaleId,
                   })}
+                  aria-label={getLocaleDisplayName(localeId)}
                 />
               }
             >

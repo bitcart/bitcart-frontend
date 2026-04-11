@@ -28,11 +28,19 @@ Assuming you have already cloned this repository and are in its root directory, 
 
 3. Once it's done, [install fnm](https://github.com/Schniz/fnm?tab=readme-ov-file#installation) Node.js version manager or make sure it's already present in your system.
 
-4. Finally, install pre-commit hooks, as well as the required version of [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io) along with all NPM dependencies:
+4. Now, install pre-commit hooks, as well as the required version of [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io) along with all NPM dependencies:
 
    ```bash
    just get-started
    ```
+
+5. Finally, setup end-to-end testing tools:
+
+   ```bash
+   just e2e-setup
+   ```
+
+   If you see an error message about missing system dependencies, follow the resolution instructions it provides.
 
 #### Optional
 
@@ -57,3 +65,5 @@ You can also open the command menu to select a command from the list:
 ```bash
 just run
 ```
+
+### [See more](./DEVELOPMENT_GUIDELINES.md)

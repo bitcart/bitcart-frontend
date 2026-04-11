@@ -1,5 +1,5 @@
 import type { RuntimeEnvTag } from "@bitcart/core/types"
-import { type BCP47LanguageSubtag, type PosixLocaleIdLike } from "@bitcart/core/utils"
+import { type BCP47LanguageSubtag, type PosixLocaleIdMap } from "@bitcart/core/utils"
 import type { PageContext } from "vike/types"
 
 import { activateLocaleMessages, type LocaleMessages } from "@/i18n"
@@ -9,7 +9,7 @@ export type OnBeforeRenderDeps<TSupportedLocaleId extends BCP47LanguageSubtag> =
   envTag: RuntimeEnvTag
   getStaticMetadata: () => StaticLayoutMetadata
   loadCatalog: (locale: string) => Promise<LocaleMessages>
-  posixLocaleIdMap: Record<TSupportedLocaleId, PosixLocaleIdLike<TSupportedLocaleId>>
+  posixLocaleIdMap: PosixLocaleIdMap<TSupportedLocaleId>
   productionBaseUrl: string
 }
 

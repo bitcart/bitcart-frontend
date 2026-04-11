@@ -1,5 +1,5 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId } from "@bitcart/core/utils"
+import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
 import { useEffect } from "react"
 import { usePageContext } from "vike-react/usePageContext"
 import { navigate } from "vike/client/router"
@@ -7,7 +7,7 @@ import { navigate } from "vike/client/router"
 import { activateLocaleMessages } from "../effects"
 import { useClientLocaleId, type UseClientLocaleIdParams } from "./client-locale"
 
-export type I18nSetupParams<TSupportedLocaleId extends LocaleId> =
+export type I18nSetupParams<TSupportedLocaleId extends LocaleId | PseudoLocaleId> =
   UseClientLocaleIdParams<TSupportedLocaleId> & {}
 
 /**
@@ -15,7 +15,7 @@ export type I18nSetupParams<TSupportedLocaleId extends LocaleId> =
  *
  * **Must be called exactly once in the app's root component!**
  */
-export const useI18nSetup = <TSupportedLocaleId extends LocaleId>({
+export const useI18nSetup = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   supportedLocaleIds,
 }: I18nSetupParams<TSupportedLocaleId>) => {
   const { localeId: pageLocaleId, urlLogical, messages } = usePageContext()

@@ -2,28 +2,17 @@ import process from "process"
 
 import { lingui } from "@lingui/vite-plugin"
 import vikeSitemap from "@qalisa/vike-plugin-sitemap"
+import type { SitemapEntry } from "@qalisa/vike-plugin-sitemap/types"
 import babelPlugin, { defineRolldownBabelPreset } from "@rolldown/plugin-babel"
-import { createEnv } from "@t3-oss/env-core"
 import react from "@vitejs/plugin-react"
-import dotenv from "dotenv"
 import vike from "vike/plugin"
 import { defineConfig } from "vite"
 import { viteStaticCopy } from "vite-plugin-static-copy"
 
-import { envConfig } from "./env.config"
 import linguiConfig from "./lingui.config"
+import { nodeEnv } from "./node-env"
 
-dotenv.config({ path: "../../.env", quiet: true })
-
-const env = createEnv({
-  clientPrefix: "BITCART_",
-  emptyStringAsUndefined: true,
-  client: envConfig.clientEnvSchemas,
-  shared: envConfig.sharedEnvSchemas,
-  runtimeEnv: process.env,
-})
-
-const { PRODUCTION_BASE_URL } = env
+const { PRODUCTION_BASE_URL } = nodeEnv
 
 const { locales: LINGUI_LOCALES, sourceLocale: LINGUI_SOURCE_LOCALE } = linguiConfig
 
@@ -61,7 +50,7 @@ export default defineConfig({
       pagesDir: "src/pages",
 
       sitemapGenerator: (entries) => {
-        const localizedEntries = []
+        const localizedEntries: SitemapEntry[] = []
 
         for (const route of entries) {
           for (const locale of LINGUI_LOCALES) {

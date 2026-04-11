@@ -1,4 +1,4 @@
-//! Keep exports within each category in alphabetical order by module name
+//! Maintain alphabetical export order by module name within each category
 
 /**
  ** ATOMS
@@ -249,7 +249,7 @@ export {
 
 export { SearchField, type SearchFieldProps } from "./molecules/search-field"
 export { SelectContent, SelectItem, SelectTrigger } from "./molecules/select"
-export { ThemeToggle, type ThemeToggleProps } from "./molecules/theme-toggle"
+export { ThemeToggle, type ThemeToggleProps, ThemeToggleFallback } from "./molecules/theme-toggle"
 export { Toaster } from "./molecules/toaster"
 
 /**

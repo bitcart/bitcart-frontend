@@ -1,0 +1,40 @@
+{
+  "name": "@bitcart/qa",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./e2e": {
+      "import": "./dist/e2e.js",
+      "types": "./dist/e2e.d.ts"
+    },
+    "./unit": {
+      "import": "./dist/unit.js",
+      "types": "./dist/unit.d.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint:check": "oxlint .",
+    "lint": "oxlint . --fix",
+    "generate:graphviz": "depcruise src --output-type dot | dot -T svg -o graphviz.svg",
+    "generate:dist-graphviz": "depcruise dist --output-type dot | dot -T svg -o dist-graphviz.svg",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "@bitcart/core": "workspace:*",
+    "@playwright/test": "catalog:devDependencies",
+    "remeda": "catalog:dependencies"
+  },
+  "devDependencies": {
+    "@bitcart/configs": "workspace:*",
+    "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@types/node": "catalog:devDependencies",
+    "dependency-cruiser": "catalog:devDependencies",
+    "oxlint": "catalog:devDependencies",
+    "tsdown": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies"
+  }
+}

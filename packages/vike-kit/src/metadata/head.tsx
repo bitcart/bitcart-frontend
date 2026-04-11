@@ -1,11 +1,15 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import { type BCP47LanguageSubtag, type PosixLocaleIdLike } from "@bitcart/core/utils"
+import {
+  type BCP47LanguageSubtag,
+  type PosixLocaleIdLike,
+  type PosixLocaleIdMap,
+} from "@bitcart/core/utils"
 import { useMemo } from "react"
 import { Fragment } from "react/jsx-runtime"
 import { usePageContext } from "vike-react/usePageContext"
 
 export type HeadProps<TSupportedLocaleId extends BCP47LanguageSubtag> = {
-  posixLocaleIdMap: Record<TSupportedLocaleId, PosixLocaleIdLike<TSupportedLocaleId>>
+  posixLocaleIdMap: PosixLocaleIdMap<TSupportedLocaleId>
   projectCanonicalName: string
 }
 

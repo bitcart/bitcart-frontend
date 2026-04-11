@@ -1,9 +1,9 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId } from "@bitcart/core/utils"
+import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
 import { useCallback, useMemo } from "react"
 import { useLocalStorage } from "usehooks-ts"
 
-export type UseClientLocaleIdParams<TSupportedLocaleId extends LocaleId> = {
+export type UseClientLocaleIdParams<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = {
   supportedLocaleIds: readonly TSupportedLocaleId[]
 }
 
@@ -12,7 +12,7 @@ export type UseClientLocaleIdParams<TSupportedLocaleId extends LocaleId> = {
  *
  * Note that if the localStorage value is invalid, the default locale ID is used.
  */
-export const useClientLocaleId = <TSupportedLocaleId extends LocaleId>({
+export const useClientLocaleId = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   supportedLocaleIds,
 }: UseClientLocaleIdParams<TSupportedLocaleId>) => {
   const [persistedValue, setValue, _removeValue] = useLocalStorage<TSupportedLocaleId | undefined>(

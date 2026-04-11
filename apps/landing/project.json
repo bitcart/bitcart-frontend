@@ -4,13 +4,18 @@
   "targets": {
     "build:styles": {
       "dependsOn": ["^build"],
+      "inputs": ["buildInputs", "^default"],
       "outputs": ["{projectRoot}/src/pages/uno.generated.css"],
       "cache": true
     },
 
     "build:main": {
-      "dependsOn": ["build:styles", "^build"],
-      "inputs": ["default", "^default", { "runtime": "grep '^BITCART_' .env 2>/dev/null | sort" }],
+      "dependsOn": ["build:styles", "i18n:extract-locales", "^build"],
+      "inputs": [
+        "buildInputs",
+        "^default",
+        { "runtime": "grep '^BITCART_' .env 2>/dev/null | sort" }
+      ],
       "outputs": ["{projectRoot}/dist"],
       "cache": true
     },
@@ -36,7 +41,7 @@
         "parallel": true,
         "cwd": "apps/landing"
       },
-      "dependsOn": ["watch-deps"],
+      "dependsOn": ["i18n:extract-locales", "watch-deps"],
       "continuous": true
     },
 

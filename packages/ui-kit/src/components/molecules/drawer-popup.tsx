@@ -1,6 +1,7 @@
 //* Ported from: https://coss.com/ui
 
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
+import { t } from "@lingui/core/macro"
 import { XIcon } from "lucide-react"
 import { useContext } from "react"
 
@@ -216,7 +217,7 @@ export const DrawerPopup: React.FC<DrawerPopupProps> = ({
 
           {showCloseButton && (
             <DrawerPrimitive.Close
-              aria-label="Close"
+              aria-label={t`Close`}
               className="end-2 top-2 absolute"
               render={<Button size="icon" variant="ghost" />}
             >

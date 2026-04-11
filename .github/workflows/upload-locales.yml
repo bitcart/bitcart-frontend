@@ -10,11 +10,8 @@ permissions:
 
 jobs:
   upload-locales:
-    name: upload-locales-${{ matrix.app }}
+    name: upload-locales
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        app: [landing, directory]
     steps:
       - uses: actions/checkout@v6
         with:
@@ -35,13 +32,17 @@ jobs:
         run: just build-packages
 
       - name: Extract locales
-        run: pnpm ${{ matrix.app }} locales:extract
+        run: just extract-locales
 
       - name: Install Transifex CLI
         run: scripts/install-tx-client.sh
 
-      - name: Push source locale to Transifex
-        working-directory: apps/${{ matrix.app }}
-        run: tx push -s
+      - name: Push source locales to Transifex
+        run: |
+          for app in apps/*/; do
+            if [ -d "$app.tx" ]; then
+              cd "$app" && tx push -s && cd ../..
+            fi
+          done
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }} # zizmor: ignore[secrets-outside-env] # triggered only by push to master

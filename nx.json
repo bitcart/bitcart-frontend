@@ -5,7 +5,8 @@
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "sharedGlobals": ["{workspaceRoot}/.env"],
+    "buildInputs": ["default", "!{projectRoot}/e2e/**", "!{projectRoot}/playwright.config.ts"],
+    "sharedGlobals": ["{workspaceRoot}/.env", { "env": "BITCART_ENV" }],
     "oxlintInputs": ["default", "{workspaceRoot}/oxlint.config.ts"]
   },
   "targetDefaults": {
@@ -41,6 +42,18 @@
       "dependsOn": ["build"],
       "cache": false,
       "continuous": true
+    },
+
+    "i18n:extract-locales": {
+      "dependsOn": ["^build"],
+      "inputs": ["buildInputs", "^default"],
+      "outputs": ["{projectRoot}/src/common/i18n/_generated"],
+      "cache": true
+    },
+
+    "e2e": {
+      "dependsOn": ["build"],
+      "cache": false
     }
   },
   "defaultBase": "master",
