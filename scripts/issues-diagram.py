@@ -39,8 +39,11 @@ DEP_PATTERNS = [
     (re.compile(r"(?:blocks|before)\s+#(\d+)", re.IGNORECASE), "blocks"),
 ]
 
+BLOCKED_LABELS = {"blocked", "status/blocked"}
+
 MERMAID_CLASSES = """\
   classDef blocked fill:#f5f5f5,stroke:#999,color:#999,stroke-dasharray:5 5
+  classDef blocked_ext fill:#fff8e1,stroke:#f9a825,color:#f57f17,stroke-dasharray:5 5
   classDef assigned fill:#e8f4fd,stroke:#0969da
   classDef actionable fill:#d4edda,stroke:#28a745"""
 
@@ -159,15 +162,33 @@ def get_assignees(issue: dict) -> list[str]:
     return [a["login"] for a in (issue.get("assignees") or []) if a.get("login")]
 
 
-def find_blocked(deps_map: dict[int, dict[str, list[int]]]) -> set[int]:
-    return {num for num, deps in deps_map.items() if deps["depends_on"]}
+def has_blocked_label(issue: dict) -> bool:
+    label_names = {lb["name"] for lb in issue.get("labels", [])}
+    return bool(label_names & BLOCKED_LABELS)
 
 
-def status_suffix(issue: dict, blocked: set[int]) -> str:
+def find_blocked(
+    issues: list[dict], deps_map: dict[int, dict[str, list[int]]]
+) -> dict[int, str]:
+    blocked: dict[int, str] = {}
+    for num, deps in deps_map.items():
+        if deps["depends_on"]:
+            blocked[num] = "dep"
+    for issue in issues:
+        if has_blocked_label(issue):
+            num = issue["number"]
+            blocked[num] = "both" if num in blocked else "ext"
+    return blocked
+
+
+def status_suffix(issue: dict, blocked: dict[int, str]) -> str:
     num = issue["number"]
     assignees = get_assignees(issue)
     parts: list[str] = []
-    if num in blocked:
+    reason = blocked.get(num)
+    if reason == "ext":
+        parts.append("BLOCKED (ext)")
+    elif reason:
         parts.append("BLOCKED")
     if assignees:
         parts.append(", ".join(f"@{a}" for a in assignees))
@@ -176,8 +197,11 @@ def status_suffix(issue: dict, blocked: set[int]) -> str:
     return " [" + " | ".join(parts) + "]"
 
 
-def status_class(issue: dict, blocked: set[int]) -> str:
-    if issue["number"] in blocked:
+def status_class(issue: dict, blocked: dict[int, str]) -> str:
+    reason = blocked.get(issue["number"])
+    if reason == "ext":
+        return "blocked_ext"
+    if reason:
         return "blocked"
     if get_assignees(issue):
         return "assigned"
@@ -190,7 +214,7 @@ def status_class(issue: dict, blocked: set[int]) -> str:
 def generate_dep_graph(
     issues: list[dict],
     deps_map: dict[int, dict[str, list[int]]],
-    blocked: set[int],
+    blocked: dict[int, str],
 ) -> str | None:
     """Focused graph showing only issues involved in dependencies."""
     involved: set[int] = set()
@@ -224,7 +248,7 @@ def generate_dep_graph(
 
 def generate_priority_tree(
     groups: dict[str, list[dict]],
-    blocked: set[int],
+    blocked: dict[int, str],
 ) -> str:
     """Tree where priority nodes branch into issues, compact layout."""
     lines = ["flowchart TD", MERMAID_CLASSES]
@@ -239,7 +263,9 @@ def generate_priority_tree(
             title = sanitize(issue["title"])
             suffix = status_suffix(issue, blocked)
             css_class = status_class(issue, blocked)
-            lines.append(f'  {node_id}["#{issue["number"]} {title}{suffix}"]:::{css_class}')
+            lines.append(
+                f'  {node_id}["#{issue["number"]} {title}{suffix}"]:::{css_class}'
+            )
             lines.append(f"  {group_id} --- {node_id}")
 
     for i in range(len(non_empty) - 1):
@@ -253,7 +279,7 @@ def generate_priority_tree(
 def generate_tree(
     groups: dict[str, list[dict]],
     deps_map: dict[int, dict[str, list[int]]],
-    blocked: set[int],
+    blocked: dict[int, str],
 ) -> str:
     """Generate a plain-text tree view of issues grouped by priority."""
     lines = ["Open Issues"]
@@ -328,7 +354,7 @@ def main() -> None:
     print("Fetching issue dependencies from API...")
     api_deps = fetch_api_dependencies(issues, token)
     deps_map = build_deps_map(issues, api_deps)
-    blocked = find_blocked(deps_map)
+    blocked = find_blocked(issues, deps_map)
 
     # Print tree to stdout
     tree = generate_tree(groups, deps_map, blocked)
