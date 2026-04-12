@@ -15,4 +15,4 @@ jobs:
     steps:
       - uses: EndBug/label-sync@v2
         with:
-          source-repo: bitcart/.github
+          config-file: "https://raw.githubusercontent.com/bitcart/.github/master/labels.yml"
