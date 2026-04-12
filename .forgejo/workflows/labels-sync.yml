@@ -1,0 +1,18 @@
+name: Sync labels
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  sync-labels:
+    name: sync-labels
+    runs-on: ubuntu-latest
+    steps:
+      - uses: EndBug/label-sync@v2
+        with:
+          source-repo: bitcart/.github
