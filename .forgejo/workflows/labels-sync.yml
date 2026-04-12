@@ -13,6 +13,12 @@ jobs:
     name: sync-labels
     runs-on: ubuntu-latest
     steps:
-      - uses: EndBug/label-sync@v2
+      - uses: actions/checkout@v6
         with:
-          config-file: "https://raw.githubusercontent.com/bitcart/.github/master/labels.yml"
+          persist-credentials: false
+
+      - name: Sync labels from bitcart/.github
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API_URL: ${{ github.server_url }}/api/v1/repos/${{ github.repository }}/labels
+        run: .forgejo/scripts/sync-labels.sh
