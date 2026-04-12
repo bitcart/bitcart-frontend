@@ -5,7 +5,7 @@ set -euo pipefail
 : "${API_URL:?API_URL is required}"
 
 curl -sfL "https://raw.githubusercontent.com/bitcart/.github/master/labels.yml" |
-  python3 -c "import sys,json,yaml; json.dump(yaml.safe_load(sys.stdin),sys.stdout)" \
+  uv run --with pyyaml python3 -c "import sys,json,yaml; json.dump(yaml.safe_load(sys.stdin),sys.stdout)" \
     >labels.json
 
 page=1
@@ -39,6 +39,16 @@ for i in $(seq 0 $((total - 1))); do
     curl -sf -X POST -H "Authorization: token $TOKEN" \
       -H "Content-Type: application/json" \
       -d "$payload" "$API_URL" >/dev/null
+  fi
+done
+
+source_names=$(jq -r '.[].name' labels.json)
+echo "$existing" | jq -c '.[]' | while read -r label; do
+  name=$(echo "$label" | jq -r '.name')
+  id=$(echo "$label" | jq -r '.id')
+  if ! echo "$source_names" | grep -qxF "$name"; then
+    echo "Deleting: $name"
+    curl -sf -X DELETE -H "Authorization: token $TOKEN" "$API_URL/$id" >/dev/null
   fi
 done
 

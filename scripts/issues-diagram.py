@@ -14,20 +14,20 @@ REPO = "bitcart-frontend"
 BASE_URL = f"https://git.bitcart.ai/api/v1/repos/{OWNER}/{REPO}/issues"
 
 PRIORITY_ORDER = [
-    "priority:high",
-    "priority:medium",
-    "priority:medium-minus",
-    "priority:low",
-    "backlog",
+    "priority: critical",
+    "priority: high",
+    "priority: medium",
+    "priority: low",
+    "priority: backlog",
     "uncategorized",
 ]
 
 PRIORITY_DISPLAY = {
-    "priority:high": "High",
-    "priority:medium": "Medium",
-    "priority:medium-minus": "Medium-minus",
-    "priority:low": "Low",
-    "backlog": "Backlog",
+    "priority: critical": "Critical",
+    "priority: high": "High",
+    "priority: medium": "Medium",
+    "priority: low": "Low",
+    "priority: backlog": "Backlog",
     "uncategorized": "Uncategorized",
 }
 
@@ -39,7 +39,21 @@ DEP_PATTERNS = [
     (re.compile(r"(?:blocks|before)\s+#(\d+)", re.IGNORECASE), "blocks"),
 ]
 
-BLOCKED_LABELS = {"blocked", "status/blocked"}
+TYPE_PREFIX = {
+    "type: bug": "bug",
+    "type: feature": "feat",
+    "type: enhancement": "enh",
+    "type: docs": "docs",
+    "type: chore": "chore",
+    "type: security": "sec",
+    "type: plugin": "plugin",
+    "type: question": "q",
+    "epic": "epic",
+}
+
+COMPONENT_PREFIX = "component: "
+
+BLOCKED_LABELS = {"status: blocked"}
 
 CLOSING_KEYWORDS_RE = re.compile(
     r"(?:fix(?:es)?|close[sd]?|resolve[sd]?)\s+#\d+(?:\s*[,&]\s*#\d+|\s+and\s+#\d+)*",
@@ -139,6 +153,27 @@ def build_pr_map(prs: list[dict]) -> dict[int, list[int]]:
     return pr_map
 
 
+def classify_type(issue: dict) -> str:
+    for lb in issue.get("labels", []):
+        if lb["name"] in TYPE_PREFIX:
+            return TYPE_PREFIX[lb["name"]]
+    return ""
+
+
+def classify_component(issue: dict) -> str:
+    for lb in issue.get("labels", []):
+        if lb["name"].startswith(COMPONENT_PREFIX):
+            return lb["name"][len(COMPONENT_PREFIX):]
+    return ""
+
+
+def type_tag(issue: dict) -> str:
+    t = classify_type(issue)
+    if t:
+        return f"({t}) "
+    return ""
+
+
 def classify_priority(issue: dict) -> str:
     label_names = [lb["name"] for lb in issue.get("labels", [])]
     for p in PRIORITY_ORDER[:-1]:  # skip "uncategorized"
@@ -163,7 +198,7 @@ def sanitize(text: str) -> str:
 
 def to_node_id(priority: str) -> str:
     """Convert a priority key to a valid Mermaid node ID."""
-    return priority.replace(":", "_").replace("-", "_")
+    return priority.replace(":", "_").replace("-", "_").replace("/", "_").replace(" ", "")
 
 
 def group_issues(issues: list[dict]) -> dict[str, list[dict]]:
@@ -289,10 +324,11 @@ def generate_dep_graph(
         if not issue:
             continue
         node_id = f"i{num}"
+        tag = type_tag(issue)
         title = sanitize(issue["title"])
         suffix = status_suffix(issue, blocked, pr_map)
         css_class = status_class(issue, blocked, pr_map)
-        lines.append(f'  {node_id}["#{num} {title}{suffix}"]:::{css_class}')
+        lines.append(f'  {node_id}["#{num} {tag}{title}{suffix}"]:::{css_class}')
 
     for num, deps in deps_map.items():
         for dep_num in deps["depends_on"]:
@@ -316,11 +352,12 @@ def generate_priority_tree(
         lines.append(f'  {group_id}(("{display}"))')
         for issue in groups[priority]:
             node_id = f"i{issue['number']}"
+            tag = type_tag(issue)
             title = sanitize(issue["title"])
             suffix = status_suffix(issue, blocked, pr_map)
             css_class = status_class(issue, blocked, pr_map)
             lines.append(
-                f'  {node_id}["#{issue["number"]} {title}{suffix}"]:::{css_class}'
+                f'  {node_id}["#{issue["number"]} {tag}{title}{suffix}"]:::{css_class}'
             )
             lines.append(f"  {group_id} --- {node_id}")
 
@@ -328,6 +365,48 @@ def generate_priority_tree(
         src = to_node_id(non_empty[i])
         dst = to_node_id(non_empty[i + 1])
         lines.append(f"  {src} ==> {dst}")
+
+    return "\n".join(lines)
+
+
+def group_by_component(issues: list[dict]) -> dict[str, list[dict]]:
+    groups: dict[str, list[dict]] = {}
+    for issue in issues:
+        comp = classify_component(issue)
+        if not comp:
+            comp = "unlabeled"
+        groups.setdefault(comp, []).append(issue)
+    return dict(sorted(groups.items()))
+
+
+def generate_component_tree(
+    issues: list[dict],
+    blocked: dict[int, str],
+    pr_map: dict[int, list[int]],
+) -> str | None:
+    """Tree where component nodes branch into issues."""
+    comp_groups = group_by_component(issues)
+    if not comp_groups:
+        return None
+
+    lines = ["flowchart TD", MERMAID_CLASSES]
+
+    comp_ids: list[str] = []
+    for comp, items in comp_groups.items():
+        comp_id = "comp_" + to_node_id(comp)
+        comp_ids.append(comp_id)
+        display = comp.replace("/", " / ")
+        lines.append(f'  {comp_id}(("{display} ({len(items)})"))')
+        for issue in items:
+            node_id = f"i{issue['number']}"
+            tag = type_tag(issue)
+            title = sanitize(issue["title"])
+            suffix = status_suffix(issue, blocked, pr_map)
+            css_class = status_class(issue, blocked, pr_map)
+            lines.append(
+                f'  {node_id}["#{issue["number"]} {tag}{title}{suffix}"]:::{css_class}'
+            )
+            lines.append(f"  {comp_id} --- {node_id}")
 
     return "\n".join(lines)
 
@@ -352,6 +431,7 @@ def generate_tree(
             item_branch = (
                 "\u2514\u2500\u2500" if is_last_issue else "\u251c\u2500\u2500"
             )
+            tag = type_tag(issue)
             title = issue["title"]
             num = issue["number"]
 
@@ -373,7 +453,7 @@ def generate_tree(
                     refs = ", ".join(f"#{n}" for n in dep_info["blocks"])
                     markers.append(f"blocks {refs}")
             suffix = f"  [{'; '.join(markers)}]" if markers else ""
-            lines.append(f"  {prefix}{item_branch} #{num} {title}{suffix}")
+            lines.append(f"  {prefix}{item_branch} #{num} {tag}{title}{suffix}")
 
     actionable: list[tuple[str, dict]] = []
     for priority in PRIORITY_ORDER:
@@ -387,7 +467,7 @@ def generate_tree(
         lines.append("Actionable (not blocked, not assigned):")
         for priority, issue in actionable:
             display = PRIORITY_DISPLAY[priority]
-            lines.append(f"  [{display}] #{issue['number']} {issue['title']}")
+            lines.append(f"  [{display}] #{issue['number']} {type_tag(issue)}{issue['title']}")
 
     return "\n".join(lines)
 
@@ -429,6 +509,7 @@ def main() -> None:
     # Generate Mermaid diagrams
     priority_tree = generate_priority_tree(groups, blocked, pr_map)
     dep_graph = generate_dep_graph(issues, deps_map, blocked, pr_map)
+    component_tree = generate_component_tree(issues, blocked, pr_map)
 
     # Write to output directory
     output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
@@ -442,6 +523,14 @@ def main() -> None:
 {priority_tree}
 ```"""
     ]
+
+    if component_tree:
+        sections.append(f"""
+## Components
+
+```mermaid
+{component_tree}
+```""")
 
     if dep_graph:
         sections.append(f"""
