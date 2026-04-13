@@ -15,11 +15,11 @@ catalogs:
     "@lingui/react": 5.9.4
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
-    "@tanstack/react-form": 1.28.5
-    "@tanstack/react-query": 5.95.2
+    "@tanstack/react-form": 1.28.6
+    "@tanstack/react-query": 5.96.2
     "@web3icons/react": 4.1.17
     class-variance-authority: 0.7.1
-    dotenv: 17.3.1
+    dotenv: 17.4.1
     effect: 3.21.0
     inter-ui: 4.1.1
     lucide-react: 1.7.0
@@ -27,25 +27,25 @@ catalogs:
     react: 19.2.4
     react-day-picker: 9.14.0
     react-dom: 19.2.4
-    remeda: 2.33.6
+    remeda: 2.33.7
     sonner: 2.0.7
     tailwind-merge: 3.5.0
     usehooks-ts: 3.1.1
-    vike: 0.4.255
+    vike: 0.4.256
     vike-react: 0.6.21
     vike-react-query: 0.1.12
     zod: 4.3.6
   devDependencies:
-    "@effect/language-service": 0.84.2
+    "@effect/language-service": 0.84.3
     "@lingui/babel-plugin-lingui-macro": 5.9.4
     "@lingui/cli": 5.9.4
     "@lingui/conf": 5.9.4
     "@lingui/vite-plugin": 5.9.4
-    "@playwright/test": 1.58.2
+    "@playwright/test": 1.59.1
     "@qalisa/vike-plugin-sitemap": 1.7.0
     "@rolldown/plugin-babel": 0.2.2
     "@stylistic/eslint-plugin": 5.10.0
-    "@types/node": 25.5.0
+    "@types/node": 25.5.2
     "@types/react": 19.2.14
     "@types/react-dom": 19.2.3
     "@unocss/cli": 66.6.7
@@ -56,10 +56,10 @@ catalogs:
     dependency-cruiser: 17.3.10
     eslint-plugin-better-tailwindcss: 4.3.2
     eslint-plugin-react-hooks: 7.0.1
-    nx: 22.6.3
+    nx: 22.6.4
     oxfmt: 0.43.0
     oxlint: 1.58.0
-    oxlint-tsgolint: 0.18.1
+    oxlint-tsgolint: 0.19.0
     tailwindcss: 4.2.2
     tsdown: 0.21.7
     tsx: 4.21.0
@@ -68,7 +68,7 @@ catalogs:
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
     vite: 8.0.5
-    vite-plugin-static-copy: 4.0.0
+    vite-plugin-static-copy: 4.0.1
 
 linkWorkspacePackages: true
 
