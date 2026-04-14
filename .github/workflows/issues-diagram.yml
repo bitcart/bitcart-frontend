@@ -1,0 +1,64 @@
+name: Issues Diagram
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  update-diagram:
+    name: update-diagram
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: bitcart/bitcart-actions/actions/setup-python@master
+        with:
+          cache-dependency-glob: ""
+
+      - name: Install just
+        run: uv pip install rust-just
+
+      - name: Generate diagrams
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: just issues-diagram
+
+      - name: Update issue comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          REPO="${{ github.repository }}"
+          LABEL_NAME="issues-diagram"
+          ISSUE_TITLE="Issues diagram"
+
+          # Build the issue body from generated diagrams
+          BODY=""
+          if [ -f "scripts/output/issues.md" ]; then
+            BODY="$(cat scripts/output/issues.md)"$'\n\n'
+          fi
+          BODY+="_Last updated: $(date -u '+%Y-%m-%d %H:%M UTC')_"
+
+          # Find existing issue by label using gh CLI
+          ISSUE_NUMBER=$(gh issue list --repo "$REPO" --label "$LABEL_NAME" --state open --limit 1 --json number --jq '.[0].number // empty')
+
+          if [ -n "$ISSUE_NUMBER" ]; then
+            echo "Found existing issue #${ISSUE_NUMBER}, updating body..."
+            gh issue edit "$ISSUE_NUMBER" --repo "$REPO" --body "$BODY"
+          else
+            echo "No existing issue found, creating one..."
+            gh issue create --repo "$REPO" --title "$ISSUE_TITLE" --label "$LABEL_NAME" --body "$BODY"
+            echo "Created issue."
+          fi
+
+          echo "Done."

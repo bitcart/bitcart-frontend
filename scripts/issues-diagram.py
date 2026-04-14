@@ -2,16 +2,90 @@
 # requires-python = ">=3.12"
 # dependencies = ["httpx"]
 # ///
-"""Generate Mermaid diagrams of open Forgejo issues grouped by priority."""
+"""Generate Mermaid diagrams of open issues grouped by priority.
 
+Supports both Forgejo and GitHub APIs. Configuration is auto-detected from CI
+environment variables, or can be set explicitly:
+
+    ISSUES_DIAGRAM_PLATFORM  - "forgejo" or "github" (auto-detected from GITHUB_SERVER_URL)
+    ISSUES_DIAGRAM_OWNER     - repo owner (fallback: GITHUB_REPOSITORY)
+    ISSUES_DIAGRAM_REPO      - repo name (fallback: GITHUB_REPOSITORY)
+    ISSUES_DIAGRAM_SERVER    - server base URL (fallback: GITHUB_SERVER_URL)
+    ISSUES_DIAGRAM_TOKEN     - API token (fallback: FORGEJO_TOKEN, then GITHUB_TOKEN)
+"""
+
+import dataclasses
 import os
 import re
+import sys
 
 import httpx  # type: ignore
 
-OWNER = "bitcart"
-REPO = "bitcart-frontend"
-BASE_URL = f"https://git.bitcart.ai/api/v1/repos/{OWNER}/{REPO}/issues"
+
+@dataclasses.dataclass(frozen=True)
+class PlatformConfig:
+    platform: str  # "forgejo" | "github"
+    owner: str
+    repo: str
+    server: str
+    token: str | None
+
+    @property
+    def base_url(self) -> str:
+        if self.platform == "github":
+            return f"https://api.github.com/repos/{self.owner}/{self.repo}"
+        return f"{self.server}/api/v1/repos/{self.owner}/{self.repo}"
+
+    @property
+    def auth_headers(self) -> dict[str, str]:
+        headers: dict[str, str] = {}
+        if self.platform == "github":
+            headers["Accept"] = "application/vnd.github+json"
+            headers["X-GitHub-Api-Version"] = "2026-03-10"
+            if self.token:
+                headers["Authorization"] = f"Bearer {self.token}"
+        elif self.token:
+            headers["Authorization"] = f"token {self.token}"
+        return headers
+
+
+def detect_config() -> PlatformConfig:
+    platform = os.environ.get("ISSUES_DIAGRAM_PLATFORM", "").lower()
+    owner = os.environ.get("ISSUES_DIAGRAM_OWNER", "")
+    repo = os.environ.get("ISSUES_DIAGRAM_REPO", "")
+    if not owner or not repo:
+        gh_repo = os.environ.get("GITHUB_REPOSITORY", "")
+        if "/" in gh_repo:
+            owner, repo = gh_repo.split("/", 1)
+    server = os.environ.get("ISSUES_DIAGRAM_SERVER") or os.environ.get(
+        "GITHUB_SERVER_URL", ""
+    )
+    if not platform:
+        if server and "github.com" in server:
+            platform = "github"
+        else:
+            platform = "forgejo"
+    token = os.environ.get("ISSUES_DIAGRAM_TOKEN")
+    if not token:
+        if platform == "github":
+            token = os.environ.get("GITHUB_TOKEN")
+        else:
+            token = os.environ.get("FORGEJO_TOKEN")
+    if not server:
+        server = (
+            "https://github.com" if platform == "github" else "https://git.bitcart.ai"
+        )
+    if not owner or not repo:
+        print(
+            "Error: Cannot determine owner/repo. "
+            "Set ISSUES_DIAGRAM_OWNER and ISSUES_DIAGRAM_REPO, or GITHUB_REPOSITORY.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    return PlatformConfig(
+        platform=platform, owner=owner, repo=repo, server=server, token=token
+    )
+
 
 PRIORITY_ORDER = [
     "priority: critical",
@@ -68,43 +142,43 @@ MERMAID_CLASSES = """\
   classDef actionable fill:#d4edda,stroke:#28a745"""
 
 
-def get_token() -> str | None:
-    return os.environ.get("FORGEJO_TOKEN")
-
-
-def fetch_all_issues(token: str | None) -> list[dict]:
+def fetch_all_issues(cfg: PlatformConfig) -> list[dict]:
     issues: list[dict] = []
     page = 1
-    headers = {}
-    if token:
-        headers["Authorization"] = f"token {token}"
     with httpx.Client(timeout=30) as client:
         while True:
+            if cfg.platform == "github":
+                params = {"state": "open", "per_page": 100, "page": page}
+            else:
+                params = {"state": "open", "type": "issues", "limit": 50, "page": page}
             resp = client.get(
-                BASE_URL,
-                params={"state": "open", "type": "issues", "limit": 50, "page": page},
-                headers=headers,
+                f"{cfg.base_url}/issues",
+                params=params,
+                headers=cfg.auth_headers,
             )
             resp.raise_for_status()
             batch = resp.json()
             if not batch:
                 break
+            if cfg.platform == "github":
+                batch = [i for i in batch if "pull_request" not in i]
             issues.extend(batch)
             page += 1
     return issues
 
 
 def fetch_api_dependencies(
-    issues: list[dict], token: str | None
+    issues: list[dict], cfg: PlatformConfig
 ) -> dict[int, list[int]]:
-    headers = {}
-    if token:
-        headers["Authorization"] = f"token {token}"
     deps: dict[int, list[int]] = {}
     with httpx.Client(timeout=30) as client:
         for issue in issues:
             num = issue["number"]
-            resp = client.get(f"{BASE_URL}/{num}/dependencies", headers=headers)
+            if cfg.platform == "github":
+                url = f"{cfg.base_url}/issues/{num}/dependencies/blocked_by"
+            else:
+                url = f"{cfg.base_url}/issues/{num}/dependencies"
+            resp = client.get(url, headers=cfg.auth_headers)
             if resp.status_code == 200:
                 dep_numbers = [d["number"] for d in (resp.json() or [])]
                 if dep_numbers:
@@ -112,19 +186,18 @@ def fetch_api_dependencies(
     return deps
 
 
-def fetch_open_prs(token: str | None) -> list[dict]:
+def fetch_open_prs(cfg: PlatformConfig) -> list[dict]:
     prs: list[dict] = []
     page = 1
-    headers = {}
-    if token:
-        headers["Authorization"] = f"token {token}"
     with httpx.Client(timeout=30) as client:
         while True:
-            resp = client.get(
-                BASE_URL,
-                params={"state": "open", "type": "pulls", "limit": 50, "page": page},
-                headers=headers,
-            )
+            if cfg.platform == "github":
+                url = f"{cfg.base_url}/pulls"
+                params = {"state": "open", "per_page": 100, "page": page}
+            else:
+                url = f"{cfg.base_url}/issues"
+                params = {"state": "open", "type": "pulls", "limit": 50, "page": page}
+            resp = client.get(url, params=params, headers=cfg.auth_headers)
             resp.raise_for_status()
             batch = resp.json()
             if not batch:
@@ -163,7 +236,7 @@ def classify_type(issue: dict) -> str:
 def classify_component(issue: dict) -> str:
     for lb in issue.get("labels", []):
         if lb["name"].startswith(COMPONENT_PREFIX):
-            return lb["name"][len(COMPONENT_PREFIX):]
+            return lb["name"][len(COMPONENT_PREFIX) :]
     return ""
 
 
@@ -198,7 +271,9 @@ def sanitize(text: str) -> str:
 
 def to_node_id(priority: str) -> str:
     """Convert a priority key to a valid Mermaid node ID."""
-    return priority.replace(":", "_").replace("-", "_").replace("/", "_").replace(" ", "")
+    return (
+        priority.replace(":", "_").replace("-", "_").replace("/", "_").replace(" ", "")
+    )
 
 
 def group_issues(issues: list[dict]) -> dict[str, list[dict]]:
@@ -467,7 +542,9 @@ def generate_tree(
         lines.append("Actionable (not blocked, not assigned):")
         for priority, issue in actionable:
             display = PRIORITY_DISPLAY[priority]
-            lines.append(f"  [{display}] #{issue['number']} {type_tag(issue)}{issue['title']}")
+            lines.append(
+                f"  [{display}] #{issue['number']} {type_tag(issue)}{issue['title']}"
+            )
 
     return "\n".join(lines)
 
@@ -480,24 +557,27 @@ def write_file(path: str, content: str) -> None:
 
 
 def main() -> None:
-    token = get_token()
-    if not token:
+    cfg = detect_config()
+    print(
+        f"Platform: {cfg.platform} | Repo: {cfg.owner}/{cfg.repo} | Server: {cfg.server}"
+    )
+    if not cfg.token:
         print(
-            "Warning: FORGEJO_TOKEN not set, using unauthenticated requests (may be rate-limited)"
+            "Warning: no API token set, using unauthenticated requests (may be rate-limited)"
         )
 
-    print("Fetching open issues...")
-    issues = fetch_all_issues(token)
+    print("\nFetching open issues...")
+    issues = fetch_all_issues(cfg)
     print(f"Found {len(issues)} open issues\n")
 
     groups = group_issues(issues)
     print("Fetching issue dependencies from API...")
-    api_deps = fetch_api_dependencies(issues, token)
+    api_deps = fetch_api_dependencies(issues, cfg)
     deps_map = build_deps_map(issues, api_deps)
     blocked = find_blocked(issues, deps_map)
 
     print("Fetching open pull requests...")
-    prs = fetch_open_prs(token)
+    prs = fetch_open_prs(cfg)
     pr_map = build_pr_map(prs)
     if pr_map:
         print(f"Found {len(pr_map)} issues with linked PRs\n")
