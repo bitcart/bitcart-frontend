@@ -11,19 +11,4 @@ permissions:
 jobs:
   sync-labels:
     name: sync-labels
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-
-      - name: Set up Python
-        uses: bitcart/bitcart-actions/actions/setup-python@master
-        with:
-          cache-dependency-glob: ""
-
-      - name: Sync labels from bitcart/.github
-        env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          API_URL: ${{ github.server_url }}/api/v1/repos/${{ github.repository }}/labels
-        run: .forgejo/scripts/sync-labels.sh
+    uses: bitcart/bitcart-actions/.github/workflows/labels-sync.yml@master
