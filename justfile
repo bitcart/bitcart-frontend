@@ -49,7 +49,7 @@ Generate Mermaid diagrams of open issues grouped by priority.
 ")]
 [group("General")]
 issues-diagram:
-    uv run scripts/issues-diagram.py
+    uv run https://raw.githubusercontent.com/bitcart/bitcart-actions/refs/heads/master/scripts/issues-diagram.py
 
 [doc("
 Clean up all workspace artifacts, such as cache, node modules, and transient code generation outputs.
