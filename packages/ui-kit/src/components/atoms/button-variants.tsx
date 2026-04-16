@@ -8,9 +8,10 @@ export const buttonVariants = cva(
       focus-visible:border-ring focus-visible:ring-ring/50
       aria-invalid:ring-destructive/20 aria-invalid:border-destructive
       dark:aria-invalid:ring-destructive/40
+      focus-visible:outline-ring
       inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap
       transition-all duration-200 outline-none
-      focus-visible:ring-[3px]
+      focus-visible:ring-[3px] focus-visible:outline-2
       disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
       [&_svg]:pointer-events-none [&_svg]:shrink-0
     `,

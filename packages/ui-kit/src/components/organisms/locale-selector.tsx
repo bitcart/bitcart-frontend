@@ -9,11 +9,11 @@ import { cn } from "@/utils"
 import { Button } from "../atoms/button"
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../atoms/dropdown-menu"
+import { DropdownMenuContent } from "../molecules/dropdown-menu"
 
 export type LocaleSelectorProps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = {
   activeLocaleId: TSupportedLocaleId

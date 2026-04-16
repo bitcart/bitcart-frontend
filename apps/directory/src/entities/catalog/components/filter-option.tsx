@@ -19,6 +19,8 @@ export const CatalogFilterOption: React.FC<CatalogFilterOptionProps> = ({
   <Button
     variant={isActive ? "accent" : "ghost"}
     onClick={onClick}
+    aria-pressed={isActive}
+    aria-label={`${label} (${badgeLabel})`}
     className={cn(
       `important:px-3 w-full justify-between transition-none focus-visible:ring-transparent`,
 
@@ -28,11 +30,15 @@ export const CatalogFilterOption: React.FC<CatalogFilterOptionProps> = ({
     )}
   >
     {icon}
-    <span className="flex-1 text-left">{label}</span>
+
+    <span className="flex-1 text-left" aria-hidden="true">
+      {label}
+    </span>
 
     <Badge
       variant={isActive ? "default" : "secondary"}
       className={cn("ml-auto", { "bg-primary/70": isActive })}
+      aria-hidden="true"
     >
       {badgeLabel}
     </Badge>

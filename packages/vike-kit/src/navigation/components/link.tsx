@@ -1,15 +1,14 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
+import type { A11yAwareLinkProps } from "@bitcart/core/types"
 import type { LocaleId } from "@bitcart/core/utils"
 import { useCallback, useMemo } from "react"
 import { usePageContext } from "vike-react/usePageContext"
 
 import { getAnchorElementProps, isExternalLink, scrollToTop } from "../utils"
 
-export type LinkProps<TSupportedLocaleId extends LocaleId> = {
+export type LinkProps<TSupportedLocaleId extends LocaleId> = A11yAwareLinkProps & {
   disabled?: boolean
   untracked?: boolean
-  href: string
-  target?: string
 
   /**
    * Prepended to `href`, if specified,
@@ -17,7 +16,7 @@ export type LinkProps<TSupportedLocaleId extends LocaleId> = {
    */
   locale?: TSupportedLocaleId
 
-  onClick?: (event: React.MouseEvent) => void
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>
   title?: string
   className?: string
   style?: React.CSSProperties
@@ -25,9 +24,11 @@ export type LinkProps<TSupportedLocaleId extends LocaleId> = {
 }
 
 export const Link = <TSupportedLocaleId extends LocaleId>({
+  a11yHint,
   disabled: isDisabled = false,
   untracked: isUntracked = false,
   href,
+  locale,
   onClick,
   children,
   ...props
@@ -35,15 +36,17 @@ export const Link = <TSupportedLocaleId extends LocaleId>({
   const { localeId: pageLocaleId } = usePageContext()
 
   const localizedHref = useMemo(() => {
-    const localeId = props.locale ?? pageLocaleId
+    const localeId = locale ?? pageLocaleId
 
     if (href !== undefined && !isExternalLink(href) && localeId !== SOURCE_LOCALE_ID) {
       return `/${localeId}` + (href === "/" ? "" : href)
     } else return href
-  }, [href, pageLocaleId, props.locale])
+  }, [href, locale, pageLocaleId])
 
-  const handleClick = useCallback(
-    (event: React.MouseEvent) => {
+  const anchorProps = getAnchorElementProps(localizedHref, props)
+
+  const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement>>(
+    (event) => {
       if (!isDisabled) {
         onClick?.(event)
 
@@ -59,12 +62,12 @@ export const Link = <TSupportedLocaleId extends LocaleId>({
   return (
     <a
       href={localizedHref}
-      rel={isUntracked ? "noreferrer" : undefined}
       onClick={handleClick}
-      {...getAnchorElementProps(localizedHref)}
-      {...props}
+      rel={isUntracked ? "noopener noreferrer" : anchorProps.rel}
+      {...anchorProps}
     >
       {children}
+      {a11yHint && <span className="sr-only">{a11yHint}</span>}
     </a>
   )
 }

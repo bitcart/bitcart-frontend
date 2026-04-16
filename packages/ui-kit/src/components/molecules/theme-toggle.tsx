@@ -1,5 +1,5 @@
 import {
-  THEME_TOGGLE_TESTID,
+  UI_THEME_TOGGLE_TESTID,
   UI_THEME_ICON_DARK_TESTID,
   UI_THEME_ICON_LIGHT_TESTID,
   UI_THEME_ICON_SYSTEM_TESTID,
@@ -9,15 +9,25 @@ import { Loader, Monitor, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useCallback, useMemo } from "react"
 
-import { Button } from "@/components/atoms/button"
 import { cn } from "@/utils"
+
+import { Button } from "../atoms/button"
 
 export type ThemeToggleProps = {
   className?: string
   showLabel?: boolean
+
+  /**
+   * @default UI_THEME_TOGGLE_TESTID
+   */
+  testId?: string
 }
 
-export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className, showLabel = false }) => {
+export const ThemeToggle: React.FC<ThemeToggleProps> = ({
+  className,
+  showLabel = false,
+  testId = UI_THEME_TOGGLE_TESTID,
+}) => {
   const { theme, setTheme } = useTheme()
 
   const toggleTheme = useCallback(() => {
@@ -86,7 +96,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className, showLabel =
       title={buttonHint}
       className={className}
       aria-label={buttonHint}
-      data-testid={THEME_TOGGLE_TESTID}
+      data-testid={testId}
     >
       {icon}
       {showLabel && <span className="text-sm font-medium">{getThemeLabel()}</span>}

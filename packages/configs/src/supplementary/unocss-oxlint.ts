@@ -4,7 +4,8 @@ export const unocssOxlintConfig = defineConfig({
   jsPlugins: ["eslint-plugin-better-tailwindcss"],
 
   rules: {
-    "better-tailwindcss/enforce-canonical-classes": "error",
+    // This rule is not properly compatible with unocss so disabling for now
+    "better-tailwindcss/enforce-canonical-classes": "off",
     "better-tailwindcss/enforce-consistent-class-order": "error",
 
     "better-tailwindcss/enforce-consistent-line-wrapping": [

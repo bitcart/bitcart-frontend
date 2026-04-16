@@ -1,5 +1,6 @@
 //* Ported from: https://ui.shadcn.com
 
+import { t } from "@lingui/core/macro"
 import { type VariantProps } from "class-variance-authority"
 import { useMemo } from "react"
 
@@ -92,7 +93,12 @@ export type FieldLabelProps = React.ComponentProps<typeof Label> & {
   hasRedAsterisk?: boolean
 }
 
-export const FieldLabel: React.FC<FieldLabelProps> = ({ hasRedAsterisk, className, ...props }) => {
+export const FieldLabel: React.FC<FieldLabelProps> = ({
+  hasRedAsterisk,
+  className,
+  children,
+  ...props
+}) => {
   return (
     <Label
       data-slot="field-label"
@@ -124,7 +130,10 @@ export const FieldLabel: React.FC<FieldLabelProps> = ({ hasRedAsterisk, classNam
         className,
       )}
       {...props}
-    />
+    >
+      {children}
+      {hasRedAsterisk && <span className="sr-only">{` ${t`(required)`}`}</span>}
+    </Label>
   )
 }
 
@@ -231,7 +240,6 @@ export const FieldError = ({
 
   return (
     <div
-      role="alert"
       data-slot="field-error"
       className={cn("text-destructive-foreground text-sm font-normal", className)}
       {...props}

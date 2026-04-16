@@ -33,6 +33,9 @@
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
+  "[chatagent]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
@@ -121,6 +124,7 @@
     }
   ],
   "cSpell.words": [
+    "activedescendant",
     "aleksejdix",
     "anthropics",
     "arrowsize",
@@ -167,6 +171,7 @@
     "nodesep",
     "nonconstructor",
     "nonoctal",
+    "noopener",
     "noreferrer",
     "noverify",
     "ntvs",
@@ -183,6 +188,7 @@
     "preflights",
     "prek",
     "Prerendered",
+    "proptypes",
     "Pseudolocalization",
     "qalisa",
     "Rackoona",
@@ -192,6 +198,7 @@
     "RLENGTH",
     "rollup",
     "RSTART",
+    "safelisted",
     "Sami",
     "SELFCONTAINED",
     "serversguru",
@@ -211,6 +218,7 @@
     "tsgolint",
     "Turborepo",
     "Türkçe",
+    "unclipped",
     "uncompiled",
     "unocss",
     "unplugin",

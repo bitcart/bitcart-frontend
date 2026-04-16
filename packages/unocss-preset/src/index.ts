@@ -49,6 +49,8 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
     // Additional allow-list of transition properties
     // See https://github.com/unocss/unocss/issues/4188
     theme: {
+      breakpoint: BREAKPOINTS,
+
       property: {
         display: "display",
         overlay: "overlay",
@@ -64,7 +66,7 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
       { getCSS: getBreakpointCSSVariables },
     ],
 
-    safelist: ["dark:brightness-0", "dark:invert"],
+    safelist: ["sr-only", "dark:brightness-0", "dark:invert"],
 
     shortcuts: {
       "elevation-none": "shadow-none",

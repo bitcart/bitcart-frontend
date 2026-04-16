@@ -25,6 +25,7 @@ const CoinCatalogEntryIconFallback: React.FC<CoinCatalogEntryIconFallbackProps> 
       flex w-fit items-center justify-center rounded-full bg-linear-to-r
     `}
     style={{ height: size }}
+    aria-hidden="true"
   >
     <span className="text-foreground font-bold text-xs">{name.toUpperCase()}</span>
   </div>
@@ -44,7 +45,7 @@ export const CoinCatalogEntryIcon: React.FC<CoinCatalogEntryIconProps> = ({
       <Component
         width={size}
         height={size}
-        aria-label={symbol}
+        aria-hidden="true"
         className="text-foreground"
         {...props}
       >

@@ -2,13 +2,13 @@ import { t } from "@lingui/core/macro"
 import { AlertCircle, Home, Lock, RefreshCw, ShieldAlert } from "lucide-react"
 import { useMemo } from "react"
 
-import type { BasicLinkComponent, ErrorDisplayAttributes } from "@/types"
+import type { ErrorDisplayAttributes } from "@/types"
 import { cn } from "@/utils"
 
 import { Button } from "../atoms/button"
+import { LinkButton } from "../atoms/link-button"
 
 export type ErrorPageTemplateProps = Partial<ErrorDisplayAttributes> & {
-  LinkComponent: BasicLinkComponent
   statusCode: number
   handleRetry?: VoidFunction
   className?: string
@@ -16,7 +16,6 @@ export type ErrorPageTemplateProps = Partial<ErrorDisplayAttributes> & {
 }
 
 export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
-  LinkComponent: Link,
   statusCode,
   handleRetry,
   className,
@@ -89,10 +88,10 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
         <p className="text-muted-foreground mb-8 text-base sm:text-lg leading-relaxed">{message}</p>
 
         <div className="sm:flex-row gap-4 flex flex-col justify-center">
-          <Button render={<Link href="/" />} nativeButton={false} size="lg">
+          <LinkButton href="/" size="lg">
             <Home className="size-5" />
             <span>{t`Go Home`}</span>
-          </Button>
+          </LinkButton>
 
           {statusCode !== 500 && (
             <Button size="lg" variant="secondary" onClick={handleRetry}>

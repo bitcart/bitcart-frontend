@@ -1,3 +1,4 @@
+import type { InternalHref } from "@bitcart/core/types"
 import type { PageContext as VikePageContext } from "vike/types"
 
 import type { LayoutMetadata } from "@/metadata"
@@ -7,7 +8,7 @@ export type PageContextPayload = {
   posixLocaleId: string
   messages: Record<string, string>
   metadata: LayoutMetadata
-  urlLogical: string
+  urlLogical: InternalHref
 }
 
 export type PageContextOriginal = Omit<

@@ -12,6 +12,7 @@ export const Hero: React.FC<HeroProps> = ({ searchTerm, setSearchTerm }) => {
 
   return (
     <section
+      aria-labelledby="coins-hero-heading"
       className={`
         py-12
         sm:py-20
@@ -27,7 +28,10 @@ export const Hero: React.FC<HeroProps> = ({ searchTerm, setSearchTerm }) => {
           </div>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+        <h1
+          id="coins-hero-heading"
+          className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 leading-tight"
+        >
           <Trans>
             Supported <br className="sm:hidden" />
             <span className="text-accent-foreground wrap-break-word">Cryptocurrencies</span>

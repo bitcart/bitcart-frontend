@@ -1,5 +1,5 @@
-import { Button } from "@bitcart/ui-kit/components"
-import { Link } from "@bitcart/vike-kit/navigation"
+import type { HttpHref } from "@bitcart/core/types"
+import { LinkButton } from "@bitcart/ui-kit/components"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ExternalLink } from "lucide-react"
 
@@ -14,7 +14,7 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
     <div className={className}>
       <div
         className={`
-          gap-3 from-purple-500 to-primary text-white px-4
+          gap-3 from-purple-500 to-primary text-primary-foreground px-4
           md:px-6
           py-2 elevation-3 mb-4 inline-flex transform cursor-default items-center rounded-full
           bg-linear-to-r transition-transform duration-200
@@ -30,7 +30,9 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
             className={`
               px-1.5
               md:px-2
-              py-0.5 bg-white/20 text-xs font-bold animate-pulse rounded-full
+              py-0.5 bg-primary-foreground text-primary text-xs font-bold
+              motion-safe:animate-pulse
+              rounded-full
             `}
           >
             {t`NEW`}
@@ -56,20 +58,26 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
 
           <div className="gap-2.5 flex">
             {[
-              { label: t`User Guide`, href: "https://docs.bitcart.ai/guides/eth-payments-plugin" },
-              { label: t`Announcement`, href: "https://t.me/bitcart/63625" },
+              {
+                label: t`User Guide`,
+                href: "https://docs.bitcart.ai/guides/eth-payments-plugin" as HttpHref,
+              },
+              {
+                label: t`Announcement`,
+                href: "https://t.me/bitcart/63625" as HttpHref,
+              },
             ].map(({ label, href }) => (
-              <Button
+              <LinkButton
                 key={href}
-                render={<Link href={href} />}
-                nativeButton={false}
+                href={href}
+                isExternalLink
                 expandOnHover
                 size="sm"
                 className="font-semibold transform duration-200"
               >
                 <ExternalLink />
                 <span>{label}</span>
-              </Button>
+              </LinkButton>
             ))}
           </div>
         </div>

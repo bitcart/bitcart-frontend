@@ -15,7 +15,7 @@ export type AccordionItemProps = AccordionPrimitive.Item.Props & {}
 export const AccordionItem: React.FC<AccordionItemProps> = ({ className, ...props }) => (
   <AccordionPrimitive.Item
     data-slot="accordion-item"
-    className={cn("border-b last:border-b-0", className)}
+    className={cn("rounded-lg break-inside-avoid overflow-hidden border last:border-b", className)}
     {...props}
   />
 )

@@ -1,13 +1,18 @@
-import { Button } from "@bitcart/ui-kit/components"
-import { Link } from "@bitcart/vike-kit/navigation"
+import { LinkButton } from "@bitcart/ui-kit/components"
 import { Trans } from "@lingui/react/macro"
 import { ArrowRight, Mail } from "lucide-react"
 
 export const CtaSection = () => {
   return (
-    <section className="py-12 sm:py-20 from-primary to-primary/80 bg-linear-to-r">
+    <section
+      aria-labelledby="support-cta-heading"
+      className="py-12 sm:py-20 from-primary to-primary/80 bg-linear-to-r"
+    >
       <div className="max-w-4xl px-4 md:px-6 lg:px-8 mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 sm:mb-6">
+        <h2
+          id="support-cta-heading"
+          className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-4 sm:mb-6"
+        >
           <Trans>Ready to Support Bitcart?</Trans>
         </h2>
 
@@ -19,9 +24,8 @@ export const CtaSection = () => {
         </p>
 
         <div className="sm:flex-row gap-4 flex flex-col justify-center">
-          <Button
-            render={<Link href="mailto:company@bitcart.ai" />}
-            nativeButton={false}
+          <LinkButton
+            href="mailto:company@bitcart.ai"
             expandOnHover
             size="xl"
             variant="white"
@@ -34,7 +38,7 @@ export const CtaSection = () => {
             </span>
 
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </LinkButton>
         </div>
 
         <p className="text-purple-100 mt-4 sm:mt-6 text-xs sm:text-sm">

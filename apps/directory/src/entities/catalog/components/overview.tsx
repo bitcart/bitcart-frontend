@@ -93,7 +93,7 @@ export const CatalogOverview: React.FC<CatalogOverviewProps> = ({
               )}
             </h2>
 
-            <span className="text-muted-foreground">
+            <span className="text-muted-foreground" aria-live="polite" aria-atomic="true">
               <Trans>{filteredEntries.length} entries</Trans>
             </span>
           </div>

@@ -1,13 +1,12 @@
 import {
   Badge,
-  Button,
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
+  LinkButton,
 } from "@bitcart/ui-kit/components"
-import { Link } from "@bitcart/vike-kit/navigation"
 import { useLingui } from "@lingui/react/macro"
 import { GithubLogoIcon } from "@phosphor-icons/react/dist/csr/GithubLogo"
 import { XLogoIcon } from "@phosphor-icons/react/dist/csr/XLogo"
@@ -30,7 +29,9 @@ export const CatalogEntryCard: React.FC<CatalogEntryCardProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl">{entry.name}</CardTitle>
+        <CardTitle className="text-xl">
+          <h3>{entry.name}</h3>
+        </CardTitle>
 
         <div className="gap-2 mt-1 flex flex-wrap">
           <CatalogEntryBadge variant={entry.category}>
@@ -64,46 +65,44 @@ export const CatalogEntryCard: React.FC<CatalogEntryCardProps> = ({
         {social_links && keys(social_links).length > 0 && (
           <div className={`gap-3 flex w-full flex-wrap justify-center`}>
             {social_links.github && (
-              <Button
+              <LinkButton
+                href={social_links.github}
+                isExternalLink
                 variant="outline"
-                render={<Link untracked href={social_links.github} />}
-                nativeButton={false}
+                aria-label={t`${entry.name} GitHub`}
               >
-                <GithubLogoIcon />
+                <GithubLogoIcon aria-hidden="true" />
                 <span>{t`GitHub`}</span>
-              </Button>
+              </LinkButton>
             )}
 
             {social_links.twitter && (
-              <Button
-                variant="outline"
-                render={
-                  <Link
-                    untracked
-                    href={
-                      social_links.twitter.startsWith("@")
-                        ? `https://twitter.com/${social_links.twitter.slice(1)}`
-                        : social_links.twitter
-                    }
-                  />
+              <LinkButton
+                href={
+                  social_links.twitter.startsWith("@")
+                    ? `https://twitter.com/${social_links.twitter.slice(1)}`
+                    : social_links.twitter
                 }
-                nativeButton={false}
+                isExternalLink
+                variant="outline"
+                aria-label={t`${entry.name} on Twitter`}
               >
-                <XLogoIcon />
+                <XLogoIcon aria-hidden="true" />
                 <span>{t`Twitter`}</span>
-              </Button>
+              </LinkButton>
             )}
           </div>
         )}
 
-        <Button
-          render={<Link untracked href={entry.url} />}
-          nativeButton={false}
+        <LinkButton
+          isExternalLink
+          href={entry.url}
           className="w-full"
+          aria-label={t`Visit ${entry.name}`}
         >
-          <ExternalLink />
+          <ExternalLink aria-hidden="true" />
           <span>{t`Visit Site`}</span>
-        </Button>
+        </LinkButton>
       </CardFooter>
     </Card>
   )

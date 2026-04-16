@@ -12,7 +12,7 @@ export const StatsSection: React.FC<StatsSectionProps> = () => {
   } = bitcartHooks.useAssetCatalog()
 
   return (
-    <section className="py-8 sm:py-12 bg-background">
+    <section aria-label={t`Statistics`} className="py-8 sm:py-12 bg-background">
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
         <div className="sm:grid-cols-3 gap-6 sm:gap-8 grid grid-cols-1 text-center">
           <div className="space-y-2">

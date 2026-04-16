@@ -1,11 +1,12 @@
 import { expect } from "@playwright/test"
 
 import {
-  THEME_TOGGLE_TESTID,
+  UI_THEME_TOGGLE_TESTID,
   UI_THEME_ICON_DARK_TESTID,
   UI_THEME_ICON_LIGHT_TESTID,
   UI_THEME_ICON_SYSTEM_TESTID,
   type WithPageCatalog,
+  UI_THEME_MOBILE_TOGGLE_TESTID,
 } from "@/common"
 
 import type { GenericE2ETestTemplate, E2ETestTemplate } from "../types"
@@ -18,7 +19,9 @@ export const themeCycleToggleTest: E2ETestTemplate = async ({ page }) => {
   await page.goto("/")
   await waitUntilHydrated(page)
 
-  const themeToggleTrigger = page.getByTestId(THEME_TOGGLE_TESTID)
+  const themeToggleTrigger = page
+    .getByTestId(UI_THEME_TOGGLE_TESTID)
+    .or(page.getByTestId(UI_THEME_MOBILE_TOGGLE_TESTID))
 
   await expect(themeToggleTrigger).toBeVisible()
 
@@ -56,7 +59,7 @@ export const createThemePersistenceTest: GenericE2ETestTemplate<WithPageCatalog>
     await page.goto("/")
     await waitUntilHydrated(page)
 
-    const themeToggleTrigger = page.getByTestId(THEME_TOGGLE_TESTID)
+    const themeToggleTrigger = page.getByTestId(UI_THEME_TOGGLE_TESTID)
 
     //* Set to light first, then dark (system -> light -> dark)
     await themeToggleTrigger.click()

@@ -1,5 +1,4 @@
-import { Button } from "@bitcart/ui-kit/components"
-import { Link } from "@bitcart/vike-kit/navigation"
+import { LinkButton } from "@bitcart/ui-kit/components"
 import { useLingui } from "@lingui/react/macro"
 import { ExternalLink } from "lucide-react"
 
@@ -7,9 +6,15 @@ export const IntegrationSection: React.FC = () => {
   const { t } = useLingui()
 
   return (
-    <section className="py-12 sm:py-20 from-primary to-primary/80 bg-linear-to-r">
+    <section
+      aria-labelledby="integration-heading"
+      className="py-12 sm:py-20 from-primary to-primary/80 bg-linear-to-r"
+    >
       <div className="max-w-4xl px-4 md:px-6 lg:px-8 mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 sm:mb-6">
+        <h2
+          id="integration-heading"
+          className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-4 sm:mb-6"
+        >
           {t`Ready to Accept These Cryptocurrencies?`}
         </h2>
 
@@ -18,9 +23,9 @@ export const IntegrationSection: React.FC = () => {
         </p>
 
         <div className="sm:flex-row gap-4 flex flex-col justify-center">
-          <Button
-            render={<Link href="https://admin.bitcart.ai" />}
-            nativeButton={false}
+          <LinkButton
+            href="https://admin.bitcart.ai"
+            isExternalLink
             expandOnHover
             size="xl"
             variant="white"
@@ -28,18 +33,18 @@ export const IntegrationSection: React.FC = () => {
           >
             <span>{t`Try Live Demo`}</span>
             <ExternalLink className="group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </LinkButton>
 
-          <Button
-            render={<Link href="https://docs.bitcart.ai" />}
-            nativeButton={false}
+          <LinkButton
+            href="https://docs.bitcart.ai"
+            isExternalLink
             expandOnHover
             size="xl"
             className="group bg-purple-700"
           >
             <span>{t`View Documentation`}</span>
             <ExternalLink className="group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </LinkButton>
         </div>
       </div>
     </section>

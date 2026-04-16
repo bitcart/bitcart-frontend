@@ -61,7 +61,9 @@ export const CatalogFilter: React.FC<CatalogFilterProps> = ({ controls, state })
             <span>{t`Filters`}</span>
           </PopoverTrigger>
 
-          <PopoverContent className="w-80 pt-5">{controlPanel}</PopoverContent>
+          <PopoverContent className="w-80 pt-5" aria-label={t`Filters`}>
+            {controlPanel}
+          </PopoverContent>
         </Popover>
       )
     }

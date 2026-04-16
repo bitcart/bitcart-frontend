@@ -51,7 +51,12 @@ export const getLayoutConfig = (): LayoutConfig => ({
           items: [
             { label: t`Directory`, href: "/" },
             { label: t`Submit Entry`, href: "/submit" },
-            { label: `${t`About`} ${BRAND_UMBRELLA_NAME}`, href: "https://bitcart.ai" },
+
+            {
+              label: `${t`About`} ${BRAND_UMBRELLA_NAME}`,
+              href: "https://bitcart.ai",
+              isExternal: true,
+            },
           ],
         },
 
@@ -60,8 +65,13 @@ export const getLayoutConfig = (): LayoutConfig => ({
           footerOnly: true,
 
           items: [
-            { label: `${t`About`} ${BRAND_UMBRELLA_NAME}`, href: "https://bitcart.ai" },
-            { label: t`Documentation`, href: "https://docs.bitcart.ai" },
+            {
+              label: `${t`About`} ${BRAND_UMBRELLA_NAME}`,
+              href: "https://bitcart.ai",
+              isExternal: true,
+            },
+
+            { label: t`Documentation`, href: "https://docs.bitcart.ai", isExternal: true },
           ],
         },
       ],
@@ -76,6 +86,7 @@ export const getLayoutConfig = (): LayoutConfig => ({
               icon: GithubLogoIcon,
               hint: t`Visit our GitHub repository`,
               href: "https://github.com/bitcart/bitcart-directory",
+              isExternal: true,
             },
           ],
         },
@@ -89,24 +100,25 @@ export const getLayoutConfig = (): LayoutConfig => ({
               icon: GithubLogoIcon,
               hint: "GitHub",
               href: "https://github.com/bitcart/bitcart",
+              isExternal: true,
             },
-
             {
               icon: LinkedinLogoIcon,
               hint: "LinkedIn",
               href: "https://linkedin.com/company/bitcart",
+              isExternal: true,
             },
-
             {
               icon: InstagramLogoIcon,
               hint: "Instagram",
               href: "https://instagram.com/bitcartcc",
+              isExternal: true,
             },
-
             {
               icon: RedditLogoIcon,
               hint: t`Join our Reddit community`,
               href: "https://www.reddit.com/r/Bitcart",
+              isExternal: true,
             },
           ],
         },

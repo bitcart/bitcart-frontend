@@ -1,7 +1,10 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
+import type { InternalHref } from "@bitcart/core/types"
 import type { LocaleOrPseudoLocaleId } from "@bitcart/core/utils"
 import { modifyUrl } from "vike/modifyUrl"
-import type { PageContext, Url } from "vike/types"
+import type { PageContext } from "vike/types"
+
+import type { RouteUrl } from "@/navigation"
 
 import type { PageContextOriginal } from "../types"
 
@@ -10,7 +13,7 @@ export interface OnBeforeRouteDeps {
 }
 
 export const createOnBeforeRoute = ({ supportedLocaleIds }: OnBeforeRouteDeps) => {
-  const extractLocale = ({ href, pathname }: Url) => {
+  const extractLocale = ({ href, pathname }: RouteUrl) => {
     const leadingPathSegment = pathname.split("/").slice(1)[0]
 
     const routeLocaleId = supportedLocaleIds.includes(leadingPathSegment as LocaleOrPseudoLocaleId)
@@ -20,9 +23,9 @@ export const createOnBeforeRoute = ({ supportedLocaleIds }: OnBeforeRouteDeps) =
     const urlWithoutLocale =
       routeLocaleId === null
         ? href
-        : modifyUrl(href, {
+        : (modifyUrl(href, {
             pathname: `/${pathname.split("/").slice(2).join("/")}`,
-          })
+          }) as InternalHref)
 
     return { localeId: routeLocaleId ?? SOURCE_LOCALE_ID, urlWithoutLocale }
   }
@@ -30,7 +33,7 @@ export const createOnBeforeRoute = ({ supportedLocaleIds }: OnBeforeRouteDeps) =
   return function onBeforeRoute(pageContext: PageContextOriginal): {
     pageContext: Partial<PageContext>
   } {
-    const { localeId, urlWithoutLocale } = extractLocale(pageContext.urlParsed)
+    const { localeId, urlWithoutLocale } = extractLocale(pageContext.urlParsed as RouteUrl)
 
     return {
       pageContext: {

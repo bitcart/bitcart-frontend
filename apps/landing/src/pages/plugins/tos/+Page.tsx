@@ -1,5 +1,4 @@
-import { Button } from "@bitcart/ui-kit/components"
-import { Link } from "@bitcart/vike-kit/navigation"
+import { LinkButton } from "@bitcart/ui-kit/components"
 
 export default function Page() {
   return (
@@ -49,14 +48,9 @@ export default function Page() {
             materials and other information we may send. However, you may opt out of receiving any,
             or all, of these communications from us by following the unsubscribe link or by emailing
             at{" "}
-            <Button
-              render={<Link href="mailto:support@bitcart.ai" />}
-              nativeButton={false}
-              variant="link"
-              size="inline"
-            >
+            <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
               support@bitcart.ai
-            </Button>
+            </LinkButton>
             .
           </p>
 
@@ -109,14 +103,9 @@ export default function Page() {
           <p className="leading-relaxed mb-12">
             We issue refunds for Paid Plugin purchases within <strong>30 days</strong> of the
             original purchase date. Refund requests must be submitted to{" "}
-            <Button
-              render={<Link href="mailto:support@bitcart.ai" />}
-              nativeButton={false}
-              variant="link"
-              size="inline"
-            >
+            <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
               support@bitcart.ai
-            </Button>{" "}
+            </LinkButton>{" "}
             with your purchase details and reason for the refund request.
           </p>
 
@@ -287,14 +276,9 @@ export default function Page() {
             If you are a copyright owner, or authorized on behalf of one, and you believe that the
             copyrighted work has been copied in a way that constitutes copyright infringement,
             please submit your claim via email to{" "}
-            <Button
-              render={<Link href="mailto:support@bitcart.ai" />}
-              nativeButton={false}
-              variant="link"
-              size="inline"
-            >
+            <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
               support@bitcart.ai
-            </Button>
+            </LinkButton>
             , with the subject line: &quot;Copyright Infringement&quot; and include in your claim a
             detailed description of the alleged Infringement as detailed below, under &quot;DMCA
             Notice and Procedure for Copyright Infringement Claims&quot;
@@ -349,14 +333,9 @@ export default function Page() {
 
           <p className="leading-relaxed mb-12">
             You can contact our Copyright Agent via email at{" "}
-            <Button
-              render={<Link href="mailto:support@bitcart.ai" />}
-              nativeButton={false}
-              variant="link"
-              size="inline"
-            >
+            <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
               support@bitcart.ai
-            </Button>
+            </LinkButton>
             .
           </p>
 
@@ -364,14 +343,9 @@ export default function Page() {
 
           <p className="leading-relaxed mb-6">
             You may provide us either directly at{" "}
-            <Button
-              render={<Link href="mailto:support@bitcart.ai" />}
-              nativeButton={false}
-              variant="link"
-              size="inline"
-            >
+            <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
               support@bitcart.ai
-            </Button>{" "}
+            </LinkButton>{" "}
             or via third party sites and tools with information and feedback concerning errors,
             suggestions for improvements, ideas, problems, complaints, and other matters related to
             our Service (&quot;Feedback&quot;). You acknowledge and agree that: (i) you shall not
@@ -531,14 +505,9 @@ export default function Page() {
           <h2 className="text-2xl font-semibold mt-12 mb-6">23. Contact Us</h2>
           <p className="leading-relaxed mb-6">
             Please send your feedback, comments, requests for technical support by email:{" "}
-            <Button
-              render={<Link href="mailto:support@bitcart.ai" />}
-              nativeButton={false}
-              variant="link"
-              size="inline"
-            >
+            <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
               support@bitcart.ai
-            </Button>
+            </LinkButton>
             .
           </p>
         </div>

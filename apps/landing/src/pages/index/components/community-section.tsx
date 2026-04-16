@@ -1,6 +1,6 @@
-import { Button } from "@bitcart/ui-kit/components"
+import type { HttpHref } from "@bitcart/core/types"
+import { LinkButton } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
-import { Link } from "@bitcart/vike-kit/navigation"
 import { Trans } from "@lingui/react/macro"
 import { DiscordLogoIcon } from "@phosphor-icons/react/dist/csr/DiscordLogo"
 import { GithubLogoIcon } from "@phosphor-icons/react/dist/csr/GithubLogo"
@@ -13,17 +13,41 @@ export type CommunitySectionProps = {
 }
 
 const COMMUNITY_LINKS = [
-  { Icon: TelegramLogoIcon, href: "https://t.me/bitcart", label: "Telegram" },
-  { Icon: GithubLogoIcon, href: "https://github.com/bitcart/bitcart", label: "GitHub" },
-  { Icon: DiscordLogoIcon, href: "https://discord.gg/8H2Sfdh", label: "Discord" },
-  { Icon: MatrixLogoIcon, href: "https://matrix.to/#/#bitcart:matrix.org", label: "Matrix" },
-  { Icon: RedditLogoIcon, href: "https://www.reddit.com/r/Bitcart", label: "Reddit" },
+  {
+    Icon: TelegramLogoIcon,
+    href: "https://t.me/bitcart" as HttpHref,
+    label: "Telegram",
+  },
+  {
+    Icon: GithubLogoIcon,
+    href: "https://github.com/bitcart/bitcart" as HttpHref,
+    label: "GitHub",
+  },
+  {
+    Icon: DiscordLogoIcon,
+    href: "https://discord.gg/8H2Sfdh" as HttpHref,
+    label: "Discord",
+  },
+  {
+    Icon: MatrixLogoIcon,
+    href: "https://matrix.to/#/#bitcart:matrix.org" as HttpHref,
+    label: "Matrix",
+  },
+  {
+    Icon: RedditLogoIcon,
+    href: "https://www.reddit.com/r/Bitcart" as HttpHref,
+    label: "Reddit",
+  },
 ]
 
 export const CommunitySection: React.FC<CommunitySectionProps> = ({ className }) => {
   return (
-    <section id="community" className={cn("gap-6 flex flex-col", className)}>
-      <h2 className="text-4xl font-bold">
+    <section
+      id="community"
+      aria-labelledby="community-heading"
+      className={cn("gap-6 flex flex-col", className)}
+    >
+      <h2 id="community-heading" className="text-4xl font-bold">
         <Trans>
           Join the <span className="text-accent-foreground">Community</span>
         </Trans>
@@ -39,19 +63,19 @@ export const CommunitySection: React.FC<CommunitySectionProps> = ({ className })
 
       <div className="gap-4 md:gap-4 grid grid-cols-2">
         {COMMUNITY_LINKS.map(({ Icon, href, label }, idx) => (
-          <Button
+          <LinkButton
             key={href}
-            render={<Link href={href} target="_blank" />}
-            nativeButton={false}
+            href={href}
+            isExternalLink
             variant="outline"
             size="xl"
             className={cn({
               "col-span-2": COMMUNITY_LINKS.length % 2 !== 0 && idx === COMMUNITY_LINKS.length - 1,
             })}
           >
-            <Icon className="size-5" />
+            <Icon className="size-5" aria-hidden="true" />
             <span className="font-medium">{label}</span>
-          </Button>
+          </LinkButton>
         ))}
       </div>
     </section>

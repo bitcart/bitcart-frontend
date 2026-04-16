@@ -1,6 +1,5 @@
-import { Button } from "@bitcart/ui-kit/components"
+import { Button, LinkButton } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
-import { Link } from "@bitcart/vike-kit/navigation"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { Heart, Loader } from "lucide-react"
 import { useCallback, useState } from "react"
@@ -41,8 +40,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
   }, [])
 
   return (
-    <section id="about" className={cn("gap-6 flex flex-col", className)}>
-      <h2 className="text-4xl font-bold">
+    <section
+      id="about"
+      aria-labelledby="about-heading"
+      className={cn("gap-6 flex flex-col", className)}
+    >
+      <h2 id="about-heading" className="text-4xl font-bold">
         <Trans>
           What is <span className="text-accent-foreground">Bitcart</span>
         </Trans>
@@ -74,9 +77,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
       </div>
 
       <div className="sm:flex-row gap-4 pt-4 sm:flex-wrap flex flex-col">
-        <Button size="lg" render={<Link href="https://admin.bitcart.ai" />} nativeButton={false}>
+        <LinkButton isExternalLink href="https://admin.bitcart.ai" size="lg">
           {t`Live Demo`}
-        </Button>
+        </LinkButton>
 
         <Button size="lg" disabled={donationLoading} onClick={showDonation}>
           {donationLoading ? (
@@ -92,9 +95,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
           )}
         </Button>
 
-        <Button size="lg" render={<Link href="/support-us" />} nativeButton={false}>
+        <LinkButton href="/support-us" size="lg">
           {t`Support as a Company`}
-        </Button>
+        </LinkButton>
       </div>
     </section>
   )

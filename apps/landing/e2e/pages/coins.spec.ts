@@ -9,13 +9,13 @@ test.describe("Landing: Coins page", () => {
   test("coins list is rendered with blockchain entries", async ({ page }) => {
     await page.goto("/coins", { waitUntil: "networkidle" })
 
-    await expect(page.getByText("Supported Blockchains")).toBeVisible()
+    await expect(page.getByLabel("Statistics").getByText("Supported Blockchains")).toBeVisible()
     await expect(page.getByText("Supported Tokens")).toBeVisible()
     await expect(page.getByText("Transaction Fees")).toBeVisible()
 
     // Bitcoin and Ethereum should always be present as accordion entries
-    await expect(page.getByRole("button", { name: /BTC Bitcoin BTC/ })).toBeVisible()
-    await expect(page.getByRole("button", { name: /ETH Ethereum ETH/ })).toBeVisible()
+    await expect(page.getByRole("button", { name: /Bitcoin BTC/ })).toBeVisible()
+    await expect(page.getByRole("button", { name: /Ethereum ETH/ })).toBeVisible()
   })
 
   test("search input is present and functional", async ({ page }) => {
@@ -26,7 +26,7 @@ test.describe("Landing: Coins page", () => {
 
     // Search for a specific coin
     await searchInput.fill("Bitcoin")
-    await expect(page.getByRole("button", { name: /BTC Bitcoin BTC/ })).toBeVisible()
+    await expect(page.getByRole("button", { name: /Bitcoin BTC/ })).toBeVisible()
 
     // Search for a non-existent coin shows no results
     await searchInput.fill(/* cSpell:ignore */ "xyznonexistent123")
@@ -34,8 +34,8 @@ test.describe("Landing: Coins page", () => {
 
     // Clearing the search shows all coins again
     await page.getByRole("button", { name: "Clear" }).click()
-    await expect(page.getByRole("button", { name: /BTC Bitcoin BTC/ })).toBeVisible()
-    await expect(page.getByRole("button", { name: /ETH Ethereum ETH/ })).toBeVisible()
+    await expect(page.getByRole("button", { name: /Bitcoin BTC/ })).toBeVisible()
+    await expect(page.getByRole("button", { name: /Ethereum ETH/ })).toBeVisible()
   })
 
   test("search filters coins correctly", async ({ page }) => {
@@ -45,7 +45,7 @@ test.describe("Landing: Coins page", () => {
 
     // Search by token symbol
     await searchInput.fill("USDT")
-    await expect(page.getByRole("button", { name: /ETH Ethereum ETH/ })).toBeVisible()
+    await expect(page.getByRole("button", { name: /Ethereum ETH/ })).toBeVisible()
 
     // Accordion should auto-expand showing matching tokens
     await expect(page.getByText("USDT").first()).toBeVisible()

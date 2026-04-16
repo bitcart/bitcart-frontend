@@ -35,7 +35,13 @@ export const TextareaField: React.FC<TextareaFieldProps> = ({
 }) => {
   const { name, state, handleChange } = useFieldContext<string>()
   const elementId = useMemo(() => `field-${name}`, [name])
+  const descriptionId = `${elementId}-description`
+  const errorId = `${elementId}-error`
   const isInvalid = state.meta.isTouched && !state.meta.isValid
+
+  const ariaDescribedBy =
+    [description ? descriptionId : null, isInvalid ? errorId : null].filter(Boolean).join(" ") ||
+    undefined
 
   const onInputChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => handleChange(target.value),
@@ -57,6 +63,7 @@ export const TextareaField: React.FC<TextareaFieldProps> = ({
           autoComplete="off"
           aria-invalid={isInvalid}
           aria-required={isRequired}
+          aria-describedby={ariaDescribedBy}
           {...props}
         />
 
@@ -65,8 +72,8 @@ export const TextareaField: React.FC<TextareaFieldProps> = ({
         ))}
       </InputGroup>
 
-      {description && <FieldDescription>{description}</FieldDescription>}
-      {isInvalid && <FieldError errors={state.meta.errors} />}
+      {description && <FieldDescription id={descriptionId}>{description}</FieldDescription>}
+      {isInvalid && <FieldError id={errorId} errors={state.meta.errors} />}
     </Field>
   )
 }

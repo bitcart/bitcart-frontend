@@ -1,14 +1,8 @@
-import {
-  MOBILE_MENU_CONTENT_TESTID,
-  MOBILE_MENU_TOGGLE_TESTID,
-  NAVBAR_TESTID,
-  NAV_DROPDOWN_CONTENT_TESTID,
-  NAV_DROPDOWN_TOGGLE_TESTID,
-} from "@bitcart/qa"
+import type { InternalHref } from "@bitcart/core/types"
+import { NAVBAR_TESTID, NAV_DROPDOWN_CONTENT_TESTID, NAV_DROPDOWN_TOGGLE_TESTID } from "@bitcart/qa"
 import { t } from "@lingui/core/macro"
-import { Loader, Menu, MoreHorizontal, X } from "lucide-react"
-import { useCallback, useMemo, useState } from "react"
-import { isEmptyish, prop } from "remeda"
+import { MoreHorizontal } from "lucide-react"
+import { useCallback, useMemo } from "react"
 import { useIsClient } from "usehooks-ts"
 
 import { useCssRuntimeFeatureSupport, useCurrentBreakpoint } from "@/hooks"
@@ -18,23 +12,24 @@ import type {
   BasicNavigationLink,
   LayoutBrandAttributes,
   LayoutNavigationConfig,
-  NavigationLink,
+  NavigationCatalog,
 } from "@/types"
-import { cn, getNavigationLinkFlexOrder } from "@/utils"
+import { cn, getTargetBlankA11yHint } from "@/utils"
 
 import { Button } from "../atoms/button"
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../atoms/dropdown-menu"
+import { LinkButton } from "../atoms/link-button"
 import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
 } from "../atoms/navigation-menu"
+import { DropdownMenuContent } from "../molecules/dropdown-menu"
 import { NavigationMenu } from "../molecules/navigation-menu"
 import { ThemeToggle, ThemeToggleFallback } from "../molecules/theme-toggle"
 
@@ -42,26 +37,24 @@ export type WebsiteHeaderProps = {
   LinkComponent: BasicLinkComponent
   activeNavlinkHref?: BasicNavigationLink["href"]
   brandAttributes: LayoutBrandAttributes
-  homepageHref?: string
+  homepageHref?: InternalHref
   layoutControls?: React.ReactNode
   maxVisibleNavBarLinks: LayoutNavigationConfig["navBarDisplayCapacity"]
-  navigationDirectory: LayoutNavigationConfig["directory"]
+  navigationCatalog: NavigationCatalog
 }
 
 export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
   LinkComponent: Link,
+  activeNavlinkHref,
   brandAttributes: brand,
   homepageHref = "/",
   layoutControls,
   maxVisibleNavBarLinks,
-  navigationDirectory,
+  navigationCatalog,
 }) => {
   const isClient = useIsClient()
   const { isScrolled } = useWindowScrollThreshold({ axis: "vertical", value: 20 })
   const currentBreakpoint = useCurrentBreakpoint()
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const toggleMobileMenu = useCallback(() => setIsMobileMenuOpen((isOpen) => !isOpen), [])
-  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), [])
 
   const isCssScrollStateTrackable = useCssRuntimeFeatureSupport({
     property: "container-type",
@@ -73,31 +66,16 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
     [brand.name, brand.projectCanonicalName],
   )
 
-  const labeledLinks = useMemo(
-    () => navigationDirectory.labeledLinks.flatMap(prop("items")),
-    [navigationDirectory.labeledLinks],
-  )
-
-  const iconLinks = useMemo(
-    () => navigationDirectory.iconLinks?.flatMap(prop("items")),
-    [navigationDirectory.iconLinks],
-  )
-
   const shouldDisplayDropdownNavMenu = useMemo(() => {
     if (currentBreakpoint === "sm") {
       return false
     } else {
       return (
-        labeledLinks.length >
+        navigationCatalog.labeledLinks.length >
         maxVisibleNavBarLinks[currentBreakpoint in maxVisibleNavBarLinks ? currentBreakpoint : "md"]
       )
     }
-  }, [currentBreakpoint, labeledLinks.length, maxVisibleNavBarLinks])
-
-  const getNavigationLinkStyle = useCallback(
-    (navLink: Partial<NavigationLink>) => ({ order: getNavigationLinkFlexOrder(navLink) }),
-    [],
-  )
+  }, [currentBreakpoint, maxVisibleNavBarLinks, navigationCatalog.labeledLinks])
 
   const getNavBarLinkClass = useCallback(
     (n: number) =>
@@ -153,6 +131,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
     [brand.projectCanonicalName, currentBreakpoint, hasCompositeLogo],
   )
 
+  // FIXME: Extract into a single organism along with `dropdownNavMenu` and consume it as a prop
   const navBar = useMemo(
     () => (
       <>
@@ -163,44 +142,63 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
           data-testid={NAVBAR_TESTID}
         >
           <NavigationMenuList>
-            {labeledLinks.map((link, idx) => (
-              <NavigationMenuItem
-                key={link.label + link.href}
-                className={getNavBarLinkClass(
-                  "globalPosition" in link ? link.globalPosition : idx + 1,
-                )}
-                style={getNavigationLinkStyle(link)}
-                aria-label={link.hint ?? link.label}
-              >
-                <NavigationMenuLink href={link.href} render={<Link href={link.href} />}>
-                  <span>
-                    {currentBreakpoint === "md" ? (link.shortLabel ?? link.label) : link.label}
-                  </span>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
+            {navigationCatalog.labeledLinks.map((link, idx) => {
+              const a11yAwareLinkProps = link.isExternal
+                ? { href: link.href, a11yHint: getTargetBlankA11yHint() }
+                : { href: link.href }
+
+              return (
+                <NavigationMenuItem
+                  key={link.label + link.href}
+                  className={getNavBarLinkClass(
+                    "globalPriority" in link ? link.globalPriority : idx + 1,
+                  )}
+                  aria-label={link.hint ?? link.label}
+                >
+                  <NavigationMenuLink
+                    active={!link.isExternal && link.href === activeNavlinkHref}
+                    render={<Link {...a11yAwareLinkProps} />}
+                  >
+                    <span>
+                      {currentBreakpoint === "md" ? (link.shortLabel ?? link.label) : link.label}
+                    </span>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              )
+            })}
           </NavigationMenuList>
         </NavigationMenu>
 
-        {iconLinks?.map(({ icon: Icon, ...link }) => (
-          <Button
-            render={<Link href={link.href} />}
-            nativeButton={false}
-            key={link.hint + link.href}
-            size="icon"
-            variant="ghost"
-            title={link.hint}
-            className="md:flex hidden"
-            style={getNavigationLinkStyle(link)}
-            aria-label={link.hint.replace(/`/g, "")}
-          >
-            <Icon className="size-5" />
-          </Button>
-        ))}
+        {navigationCatalog.iconLinks?.map(({ icon: Icon, ...link }) => {
+          const a11yAwareLinkProps = link.isExternal
+            ? { href: link.href, isExternalLink: true as const }
+            : { href: link.href, isExternalLink: false as const }
+
+          return (
+            <LinkButton
+              key={link.hint + link.href}
+              title={link.hint}
+              size="icon"
+              variant="ghost"
+              className="md:flex hidden"
+              aria-label={link.hint.replace(/`/g, "")}
+              {...a11yAwareLinkProps}
+            >
+              <Icon className="size-5" aria-hidden="true" />
+            </LinkButton>
+          )
+        })}
       </>
     ),
 
-    [Link, currentBreakpoint, getNavBarLinkClass, getNavigationLinkStyle, iconLinks, labeledLinks],
+    [
+      Link,
+      activeNavlinkHref,
+      currentBreakpoint,
+      getNavBarLinkClass,
+      navigationCatalog.iconLinks,
+      navigationCatalog.labeledLinks,
+    ],
   )
 
   const dropdownNavMenu = useMemo(
@@ -217,24 +215,30 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
 
         <DropdownMenuContent
           align="start"
+          aria-label={t`Additional navigation`}
           className={cn("w-56", { hidden: !shouldDisplayDropdownNavMenu })}
           data-testid={NAV_DROPDOWN_CONTENT_TESTID}
         >
           <DropdownMenuGroup>
-            {labeledLinks.map((link, idx) => (
-              <DropdownMenuItem
-                key={link.label + link.href}
-                nativeButton={false}
-                render={<Link href={link.href} />}
-                className={getDropdownNavMenuLinkClass(
-                  "globalPosition" in link ? link.globalPosition : idx + 1,
-                )}
-                style={getNavigationLinkStyle(link)}
-                aria-label={link.hint ?? link.label}
-              >
-                {link.label}
-              </DropdownMenuItem>
-            ))}
+            {navigationCatalog.labeledLinks.map((link, idx) => {
+              const a11yAwareLinkProps = link.isExternal
+                ? { href: link.href, a11yHint: getTargetBlankA11yHint() }
+                : { href: link.href }
+
+              return (
+                <DropdownMenuItem
+                  key={link.label + link.href}
+                  nativeButton={false}
+                  render={<Link {...a11yAwareLinkProps} />}
+                  className={getDropdownNavMenuLinkClass(
+                    "globalPriority" in link ? link.globalPriority : idx + 1,
+                  )}
+                  aria-label={link.hint ?? link.label}
+                >
+                  {link.label}
+                </DropdownMenuItem>
+              )
+            })}
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -243,88 +247,9 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
     [
       Link,
       getDropdownNavMenuLinkClass,
-      getNavigationLinkStyle,
-      labeledLinks,
+      navigationCatalog.labeledLinks,
       shouldDisplayDropdownNavMenu,
     ],
-  )
-
-  const mobileMenuContent = useMemo(
-    () =>
-      isMobileMenuOpen && (
-        <div
-          id="mobile-menu"
-          data-testid={MOBILE_MENU_CONTENT_TESTID}
-          className={`
-            md:hidden
-            top-16 left-0 right-0 shadow-lg bg-background absolute w-full border-t
-          `}
-          aria-hidden={!isMobileMenuOpen}
-          aria-label={t`Mobile menu`}
-        >
-          <div className="px-4 py-4 flex w-full flex-col">
-            <nav className="gap-2 flex w-full flex-col" aria-label={t`Navigation menu`}>
-              {labeledLinks.map((link) => (
-                <Button
-                  render={<Link href={link.href} />}
-                  nativeButton={false}
-                  key={link.label + link.href}
-                  onClick={closeMobileMenu}
-                  variant="ghost"
-                  className={`w-full justify-start text-left`}
-                  style={getNavigationLinkStyle(link)}
-                  aria-label={link.hint ?? link.label}
-                >
-                  {link.label}
-                </Button>
-              ))}
-            </nav>
-
-            <div
-              className={cn(
-                "gap-4 pt-2 mt-4 flex w-full items-center border-t",
-
-                {
-                  "justify-end": isEmptyish(iconLinks),
-                  "justify-between": !isEmptyish(iconLinks),
-                },
-              )}
-            >
-              {!isEmptyish(iconLinks) && (
-                <nav className="gap-4 flex" aria-label={t`Other links`}>
-                  {iconLinks?.map(({ icon: Icon, ...link }) => (
-                    <Button
-                      render={<Link href={link.href} />}
-                      nativeButton={false}
-                      key={link.hint + link.href}
-                      onClick={closeMobileMenu}
-                      size="icon-lg"
-                      variant="ghost"
-                      title={link.hint}
-                      className="hover:text-accent-foreground bg-muted/25 dark:hover:bg-accent/30"
-                      style={getNavigationLinkStyle(link)}
-                      aria-label={link.hint.replace(/`/g, "")}
-                    >
-                      <Icon />
-                    </Button>
-                  ))}
-                </nav>
-              )}
-
-              <ThemeToggle
-                className={`
-                  size-10
-                  hover:text-accent-foreground
-                  bg-muted/25
-                  dark:hover:bg-accent/30
-                `}
-              />
-            </div>
-          </div>
-        </div>
-      ),
-
-    [Link, closeMobileMenu, iconLinks, isMobileMenuOpen, getNavigationLinkStyle, labeledLinks],
   )
 
   return (
@@ -334,13 +259,36 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
         "glassy shadow-lg": !isCssScrollStateTrackable && isClient && isScrolled,
       })}
     >
+      <LinkButton
+        id="main-content-link"
+        href="#main-content"
+        size="lg"
+        className={`
+          focus:top-3 focus:left-4
+          focus-visible:ring-foreground
+          hover:bg-primary
+          focus:bg-primary
+          md:focus:left-6 md:focus:h-10
+          lg:focus:left-8
+          important:px-6 important:py-3
+          focus:important:absolute
+          sr-only
+          focus:not-sr-only focus:z-50
+        `}
+      >
+        {t`Skip to main content`}
+      </LinkButton>
+
       <div className="max-w-8xl px-4 md:px-6 lg:px-8 mx-auto">
         <div className="h-16 flex items-center justify-between">
           <Link
             href={homepageHref}
             className={`
-              space-x-3 flex items-center transition-opacity duration-200
+              focus-visible:outline-ring focus-visible:outline-ring/50
+              space-x-3 rounded-sm pr-1 flex items-center transition-opacity duration-200
               hover:opacity-80
+              focus-visible:outline-offset-4
+              [header:has(>#main-content-link:focus)_&]:opacity-0
             `}
           >
             <div className="size-10 flex items-center justify-center">
@@ -361,28 +309,8 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({
             )}
 
             {layoutControls}
-
-            <Button
-              disabled={!isClient}
-              onClick={toggleMobileMenu}
-              size="icon-lg"
-              variant="ghost"
-              className="md:hidden"
-              aria-label={isMobileMenuOpen ? t`Close menu` : t`Open menu`}
-              aria-expanded={isMobileMenuOpen}
-              aria-controls="mobile-menu"
-              data-testid={MOBILE_MENU_TOGGLE_TESTID}
-            >
-              {isClient ? (
-                <>{isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}</>
-              ) : (
-                <Loader className="size-6 animate-spin text-foreground" />
-              )}
-            </Button>
           </div>
         </div>
-
-        {mobileMenuContent}
       </div>
     </header>
   )

@@ -1,4 +1,4 @@
-import { Button } from "@bitcart/ui-kit/components"
+import { LinkButton } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
 import { Link } from "@bitcart/vike-kit/navigation"
 import { Trans, useLingui } from "@lingui/react/macro"
@@ -16,6 +16,7 @@ export const Hero = () => {
 
   return (
     <section
+      aria-labelledby="hero-heading"
       className={`
         from-purple-50 via-white to-purple-100 pt-20 pb-8
         md:pb-16
@@ -43,7 +44,7 @@ export const Hero = () => {
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 relative mx-auto w-full text-center">
         <Announcement className="mb-8 md:mb-12" />
 
-        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-7">
+        <h1 id="hero-heading" className="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-7">
           <span
             className={`
               from-gray-900 via-purple-800 to-primary/80
@@ -108,9 +109,9 @@ export const Hero = () => {
             flex flex-row items-center justify-center
           `}
         >
-          <Button
-            render={<Link href="https://admin.bitcart.ai" />}
-            nativeButton={false}
+          <LinkButton
+            href="https://admin.bitcart.ai"
+            isExternalLink
             expandOnHover
             size="xl"
             className={`
@@ -123,11 +124,11 @@ export const Hero = () => {
             <span>{t`Live Demo`}</span>
 
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </LinkButton>
 
-          <Button
-            render={<Link href="https://docs.bitcart.ai" />}
-            nativeButton={false}
+          <LinkButton
+            href="https://docs.bitcart.ai"
+            isExternalLink
             expandOnHover
             size="xl"
             variant="outline"
@@ -140,7 +141,7 @@ export const Hero = () => {
             <span>{t`View User Guide`}</span>
 
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </LinkButton>
         </div>
 
         {/* Feature highlights */}

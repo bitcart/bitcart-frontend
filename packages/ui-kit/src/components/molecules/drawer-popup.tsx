@@ -13,26 +13,28 @@ import { Button } from "../atoms/button"
 import { DrawerBackdrop, DrawerBar, DrawerPortal, DrawerViewport } from "../atoms/drawer"
 
 export type DrawerPopupProps = DrawerPrimitive.Popup.Props & {
-  showCloseButton?: boolean
+  keepMounted?: boolean
   position?: DrawerPosition
-  variant?: "default" | "straight" | "inset"
   showBar?: boolean
+  showCloseButton?: boolean
+  variant?: "default" | "straight" | "inset"
 }
 
 export const DrawerPopup: React.FC<DrawerPopupProps> = ({
-  className,
   children,
-  showCloseButton = false,
+  className,
+  keepMounted = true,
   position: positionProp,
-  variant = "default",
   showBar = true,
+  showCloseButton = false,
+  variant = "default",
   ...props
 }) => {
   const { position: contextPosition } = useContext(DrawerContext)
   const position = positionProp ?? contextPosition
 
   return (
-    <DrawerPortal keepMounted>
+    <DrawerPortal keepMounted={keepMounted}>
       <DrawerBackdrop />
 
       <DrawerViewport position={position} variant={variant}>

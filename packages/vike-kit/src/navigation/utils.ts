@@ -16,10 +16,15 @@ export const isExternalLink = (href: string): boolean => {
   return !href.startsWith("/") && !href.startsWith("#")
 }
 
-export const getAnchorElementProps = (href: string): React.HTMLProps<HTMLAnchorElement> => {
+export const getAnchorElementProps = (
+  href: string,
+  additionalProps?: object,
+): React.HTMLProps<HTMLAnchorElement> => {
   if (isExternalLink(href) && !href.startsWith("mailto:")) {
     return {
       target: "_blank",
+      rel: "noopener",
+      ...additionalProps,
     }
-  } else return {}
+  } else return additionalProps ?? {}
 }

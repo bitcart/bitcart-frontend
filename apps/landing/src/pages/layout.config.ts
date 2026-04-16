@@ -49,9 +49,9 @@ export const getLayoutConfig = (): LayoutConfig => ({
           groupTitle: t`Navigation`,
 
           items: [
-            { label: t`Features`, href: "/#features", globalPosition: 1 },
-            { label: t`Supported Coins`, shortLabel: t`Coins`, href: "/coins", globalPosition: 2 },
-            { label: t`Community`, href: "/#community", globalPosition: 5 },
+            { label: t`Features`, href: "/#features", globalPriority: 1 },
+            { label: t`Supported Coins`, shortLabel: t`Coins`, href: "/coins", globalPriority: 2 },
+            { label: t`Community`, href: "/#community", globalPriority: 5 },
           ],
         },
 
@@ -59,15 +59,36 @@ export const getLayoutConfig = (): LayoutConfig => ({
           groupTitle: t`Resources`,
 
           items: [
-            { label: t`Docs`, href: "https://docs.bitcart.ai", globalPosition: 3 },
-            { label: t`Blog`, href: "https://blog.bitcart.ai", globalPosition: 4 },
-            { label: t`Easy Launch`, href: "https://configurator.bitcart.ai", globalPosition: 6 },
+            {
+              label: t`Docs`,
+              href: "https://docs.bitcart.ai",
+              isExternal: true,
+              globalPriority: 3,
+            },
+            {
+              label: t`Blog`,
+              href: "https://blog.bitcart.ai",
+              isExternal: true,
+              globalPriority: 4,
+            },
+            {
+              label: t`Easy Launch`,
+              href: "https://configurator.bitcart.ai",
+              isExternal: true,
+              globalPriority: 6,
+            },
             {
               label: t`Merchant Directory`,
               href: "https://directory.bitcart.ai",
-              globalPosition: 7,
+              isExternal: true,
+              globalPriority: 7,
             },
-            { label: t`Roadmap`, href: "https://feature.bitcart.ai", globalPosition: 8 },
+            {
+              label: t`Roadmap`,
+              href: "https://feature.bitcart.ai",
+              isExternal: true,
+              globalPriority: 8,
+            },
           ],
         },
       ],
@@ -81,6 +102,7 @@ export const getLayoutConfig = (): LayoutConfig => ({
               icon: GithubLogoIcon,
               hint: t`Visit our GitHub repository`,
               href: "https://github.com/bitcart/bitcart",
+              isExternal: true,
             },
           ],
         },
@@ -94,18 +116,19 @@ export const getLayoutConfig = (): LayoutConfig => ({
               icon: LinkedinLogoIcon,
               hint: t`Follow us on LinkedIn`,
               href: "https://linkedin.com/company/bitcart",
+              isExternal: true,
             },
-
             {
               icon: InstagramLogoIcon,
               hint: t`Follow us on Instagram`,
               href: "https://instagram.com/bitcartcc",
+              isExternal: true,
             },
-
             {
               icon: RedditLogoIcon,
               hint: t`Join our Reddit community`,
               href: "https://www.reddit.com/r/Bitcart",
+              isExternal: true,
             },
           ],
         },

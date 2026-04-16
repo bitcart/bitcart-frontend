@@ -1,6 +1,8 @@
-import { evolve, filter } from "remeda"
+import { evolve, filter, flatMap, piped, prop, sortBy } from "remeda"
 
 import type {
+  AnyLabeledNavigationLink,
+  NavigationCatalog,
   NavigationDirectory,
   NavigationGroup,
   NavigationLink,
@@ -36,5 +38,24 @@ export const getLayoutRegionNavigationDirectory = (
   })
 }
 
-export const getNavigationLinkFlexOrder = (navLink: Partial<NavigationLink>): number | undefined =>
-  "globalPosition" in navLink ? navLink.globalPosition : undefined
+export const orderLinksByGlobalPriority = <T extends NavigationLink>(links: readonly T[]): T[] =>
+  sortBy(links, (link) =>
+    "globalPriority" in link ? link.globalPriority : Number.POSITIVE_INFINITY,
+  )
+
+/**
+ * Extracts links from navigation groups into flat arrays ordered by global priority,
+ * while preserving segregation by link type
+ */
+export const extractNavigationCatalog = (
+  navigationDirectory: NavigationDirectory,
+): NavigationCatalog =>
+  evolve(navigationDirectory, {
+    labeledLinks: piped<
+      NavigationDirectory["labeledLinks"],
+      AnyLabeledNavigationLink[],
+      AnyLabeledNavigationLink[]
+    >(flatMap(prop("items")), orderLinksByGlobalPriority),
+
+    iconLinks: (navGroups?) => navGroups?.flatMap(piped(prop("items"), orderLinksByGlobalPriority)),
+  })

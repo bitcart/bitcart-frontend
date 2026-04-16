@@ -17,14 +17,14 @@ export const CatalogEntryCategoryIcon: React.FC<CatalogEntryCategoryIconProps> =
 
   switch (category) {
     case "all":
-      return <Grid3X3 className={elementClassName} />
+      return <Grid3X3 className={elementClassName} aria-hidden="true" />
     case "app":
-      return <Smartphone className={elementClassName} />
+      return <Smartphone className={elementClassName} aria-hidden="true" />
     case "host":
-      return <Server className={elementClassName} />
+      return <Server className={elementClassName} aria-hidden="true" />
     case "merchant":
-      return <Store className={elementClassName} />
+      return <Store className={elementClassName} aria-hidden="true" />
     default:
-      return <Grid3X3 className={elementClassName} />
+      return <Grid3X3 className={elementClassName} aria-hidden="true" />
   }
 }

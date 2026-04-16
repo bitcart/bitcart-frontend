@@ -63,7 +63,7 @@ just add-dev <ws-member> <package>   # Add dev dependency to a workspace package
 
 ### Styling
 
-UnoCSS with a custom `@bitcart/unocss-preset`. Styles are generated to `src/pages/uno.generated.css` (auto-generated, do not edit). The UI Kit uses shadcn/ui patterns with Radix UI primitives and Class Variance Authority (CVA) for variants.
+UnoCSS with a custom `@bitcart/unocss-preset`. Styles are generated to `src/pages/uno.generated.css` (auto-generated, do not edit). The UI Kit uses shadcn/ui patterns with Base UI primitives and Class Variance Authority (CVA) for variants.
 
 ### Data Fetching
 

@@ -9,5 +9,8 @@ export default defineConfig({
     },
   },
 
+  //! Do not define any color scheme values in this config,
+  //! as they are defined in the preset
+  //! and redefined at the app level if needed.
   presets: [presetBitcart()],
 })

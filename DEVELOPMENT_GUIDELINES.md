@@ -47,6 +47,60 @@ The `webServer` config builds and starts preview servers via `just preview`. `re
 
 ## Code conventions
 
+### Theme-aware colors
+
+Don't hardcode color values (e.g. `bg-white`, `text-purple-700`, `border-gray-200`, raw hex/rgb/oklch) in application and shared UI components. Use semantic tokens from the active theme instead — either from the app's UnoCSS config at `apps/<app>/uno.config.ts` (which can extend/override `colorScheme`) or from the preset's built-in default scheme declared in [packages/unocss-preset/src/color-scheme.ts](packages/unocss-preset/src/color-scheme.ts).
+
+Typical semantic classes:
+
+- Surface: `bg-background` / `text-foreground`, `bg-card` / `text-card-foreground`, `bg-popover` / `text-popover-foreground`
+- Primary/secondary/accent: `bg-primary` / `text-primary-foreground`, `bg-secondary` / `text-secondary-foreground`, `bg-accent` / `text-accent-foreground`
+- Muted: `bg-muted` / `text-muted-foreground`
+- Destructive: `bg-destructive` / `text-destructive-foreground`
+- Borders / focus rings: `border-border`, `border-input`, `ring-ring`
+
+```tsx
+// ❌ avoid — these break when the app theme or dark mode changes
+<span className="bg-white text-purple-700">{t`NEW`}</span>
+
+// ✅ correct — tracks the active theme in both light and dark modes
+<span className="bg-primary-foreground text-primary">{t`NEW`}</span>
+```
+
+The only time hardcoded colors are justified is when a one-off component is _designed_ to look the same regardless of the current app theme (e.g. a branded badge reproduced from an external asset, a print-only section, a marketing ribbon that must match a specific partner palette). In those cases, add a short comment explaining why the color is pinned.
+
+### Utility classes in non-UnoCSS packages
+
+Library packages that don't have their own UnoCSS config (e.g. `packages/vike-kit`, `packages/core`, `packages/form-kit`) are **not scanned** by any app's UnoCSS pipeline. Apps only scan their own `src/**` and `packages/ui-kit/src/**` (see `apps/<app>/uno.config.ts`).
+
+Do **not** use Tailwind / UnoCSS utility classes inside such packages unless every class used is present in `presetBitcart`'s `safelist` (see [packages/unocss-preset/src/index.ts](packages/unocss-preset/src/index.ts)). Otherwise those classes won't be generated and the markup will render unstyled — which, for utilities like `sr-only` or visibility clips, can silently break accessibility or layout (e.g. unclipped screen-reader text causing horizontal overflow).
+
+If you need a utility that isn't safelisted, either add it to the safelist or move the component into `packages/ui-kit` (which is scanned).
+
+```tsx
+// ❌ avoid — in packages/vike-kit, these classes won't be generated
+<span className="absolute w-px h-px p-0 -m-px overflow-hidden [clip:rect(0,0,0,0)]">
+  {" (opens in new tab)"}
+</span>
+
+// ✅ correct — `sr-only` is safelisted in presetBitcart
+<span className="sr-only">{" (opens in new tab)"}</span>
+```
+
+### UI Kit imports
+
+When working on UI kit components (`packages/ui-kit/src/components`), always import locally defined primitives rather than the ones provided by libraries like Base UI. The UI Kit wraps headless primitives with project-specific styling, props, and behavior — importing them directly bypasses all of that. The exception is when implementing a new low-level wrapper, where importing from external packages is expected.
+
+IDE auto-import often suggests the primitive package first because it appears earlier in the dependency tree. Always double-check the import source before accepting.
+
+```tsx
+// ❌ avoid — imports the raw primitive, bypasses custom wrapper
+import { DrawerTrigger } from "@base-ui/react"
+
+// ✅ correct — uses the project's wrapped component
+import { DrawerTrigger } from "../atoms/drawer"
+```
+
 ### Props type aliases
 
 When a component's props type is a pure alias (no additional properties), intersect with `& {}` for flexibility and extensibility:
@@ -58,8 +112,6 @@ export type DrawerTriggerProps = DrawerPrimitive.Trigger.Props & {}
 // ❌ avoid — plain alias blocks future extension and is less explicit
 export type DrawerTriggerProps = DrawerPrimitive.Trigger.Props
 ```
-
-Only add properties inside `{}` when the component actually introduces them.
 
 ### Early returns
 
@@ -79,4 +131,52 @@ if (condition) {
 return <Bar />
 ```
 
-Only use a bare early return when it is a true guard clause (e.g. `if (!value) return null`) with no meaningful else branch.
+Only use a bare early return when it is a true guard clause at the very top of a function (e.g. `if (!value) return null`) with no meaningful else branch and with an explicit return type:
+
+```ts
+// ✅ correct
+const handleMobileMenuKeyDown = useCallback((e: React.KeyboardEvent) => {
+  if (e.key !== "Tab") return void null
+
+  const focusable = Array.from(
+    mobileMenuRef.current?.querySelectorAll<HTMLElement>("a, button") ?? [],
+  )
+
+  if (focusable.length) {
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault()
+      last.focus()
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault()
+      first.focus()
+    }
+  }
+}, [])
+
+// ❌ avoid
+const handleMobileMenuKeyDown = useCallback((e: React.KeyboardEvent) => {
+  if (e.key !== "Tab") return
+
+  const focusable = Array.from(
+    mobileMenuRef.current?.querySelectorAll<HTMLElement>("a, button") ?? [],
+  )
+
+  if (!focusable.length) return
+
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault()
+    last.focus()
+  }
+
+  if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault()
+    first.focus()
+  }
+}, [])
+```

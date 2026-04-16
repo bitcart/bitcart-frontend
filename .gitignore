@@ -59,5 +59,7 @@ agents.lock
 # Skill eval workspaces (large, local-only)
 **/*-workspace/
 .playwright-mcp
+.claude/agent-memory
 .claude/worktrees
+.claude/reviews
 .claude/settings.local.json

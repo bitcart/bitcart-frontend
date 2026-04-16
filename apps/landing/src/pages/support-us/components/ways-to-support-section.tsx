@@ -10,10 +10,10 @@ export type WaysToSupportSectionProps = {
 
 export const WaysToSupportSection: React.FC<WaysToSupportSectionProps> = ({ data }) => {
   return (
-    <section className="py-12 sm:py-20 bg-background">
+    <section aria-labelledby="ways-to-support-heading" className="py-12 sm:py-20 bg-background">
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
         <div className="mb-12 sm:mb-16 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          <h2 id="ways-to-support-heading" className="text-3xl sm:text-4xl font-bold mb-4">
             <Trans>Ways to Support</Trans>
           </h2>
 

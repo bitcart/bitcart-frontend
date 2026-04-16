@@ -1,6 +1,5 @@
 import { ErrorPageTemplate } from "@bitcart/ui-kit/components"
 import type { ErrorDisplayAttributes } from "@bitcart/ui-kit/types"
-import { Link } from "@bitcart/vike-kit/navigation"
 import { useLingui } from "@lingui/react/macro"
 import { useMemo } from "react"
 import { usePageContext } from "vike-react/usePageContext"
@@ -28,7 +27,6 @@ export function Page() {
 
   return (
     <ErrorPageTemplate
-      LinkComponent={Link}
       handleRetry={reload}
       statusCode={errorStatusCode}
       message={errorMeta.message}

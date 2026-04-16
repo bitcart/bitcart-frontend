@@ -10,10 +10,10 @@ export type BenefitsSectionProps = {
 
 export const BenefitsSection: React.FC<BenefitsSectionProps> = ({ data }) => {
   return (
-    <section className="py-12 sm:py-20 bg-secondary">
+    <section aria-labelledby="benefits-heading" className="py-12 sm:py-20 bg-secondary">
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
         <div className="mb-12 sm:mb-16 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          <h2 id="benefits-heading" className="text-3xl sm:text-4xl font-bold mb-4">
             <Trans>Why Support Bitcart?</Trans>
           </h2>
 

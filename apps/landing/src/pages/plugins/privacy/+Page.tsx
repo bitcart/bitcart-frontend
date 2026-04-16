@@ -1,5 +1,4 @@
-import { Button } from "@bitcart/ui-kit/components"
-import { Link } from "@bitcart/vike-kit/navigation"
+import { LinkButton } from "@bitcart/ui-kit/components"
 
 export default function Page() {
   return (
@@ -363,14 +362,9 @@ export default function Page() {
           <p className="leading-relaxed mb-4">
             If you wish to be informed what Personal Data we hold about you and if you want it to be
             removed from our systems, please email us at{" "}
-            <Button
-              render={<Link href="mailto:support@bitcart.ai" />}
-              nativeButton={false}
-              variant="link"
-              size="inline"
-            >
+            <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
               support@bitcart.ai
-            </Button>
+            </LinkButton>
             .
           </p>
           <p className="leading-relaxed mb-4">
@@ -435,14 +429,9 @@ export default function Page() {
             </li>
             <li>
               users are able to change their personal information by emailing us at{" "}
-              <Button
-                render={<Link href="mailto:support@bitcart.ai" />}
-                nativeButton={false}
-                variant="link"
-                size="inline"
-              >
+              <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
                 support@bitcart.ai
-              </Button>
+              </LinkButton>
               .
             </li>
           </ul>
@@ -532,14 +521,9 @@ export default function Page() {
           <p>
             To exercise your California data protection rights described above, please send your
             request(s) by email:{" "}
-            <Button
-              render={<Link href="mailto:support@bitcart.ai" />}
-              nativeButton={false}
-              variant="link"
-              size="inline"
-            >
+            <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
               support@bitcart.ai
-            </Button>
+            </LinkButton>
             .
           </p>
           <p>
@@ -647,14 +631,9 @@ export default function Page() {
 
           <p className="leading-relaxed mb-8">
             If you have any questions about this Privacy Policy, please contact us by email:{" "}
-            <Button
-              render={<Link href="mailto:support@bitcart.ai" />}
-              nativeButton={false}
-              variant="link"
-              size="inline"
-            >
+            <LinkButton href="mailto:support@bitcart.ai" variant="link" size="inline">
               support@bitcart.ai
-            </Button>
+            </LinkButton>
             .
           </p>
         </div>

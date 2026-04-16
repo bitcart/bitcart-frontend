@@ -1,6 +1,6 @@
-import { Badge, Button } from "@bitcart/ui-kit/components"
+import type { HttpHref } from "@bitcart/core/types"
+import { Badge, LinkButton } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
-import { Link } from "@bitcart/vike-kit/navigation"
 import { Trans } from "@lingui/react/macro"
 
 export type SupportersSectionProps = {
@@ -16,10 +16,10 @@ export type SupportersSectionProps = {
 
 export const SupportersSection: React.FC<SupportersSectionProps> = ({ data }) => {
   return (
-    <section className="py-12 sm:py-20 bg-background">
+    <section aria-labelledby="supporters-heading" className="py-12 sm:py-20 bg-background">
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
         <div className="mb-12 sm:mb-16 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          <h2 id="supporters-heading" className="text-3xl sm:text-4xl font-bold mb-4">
             <Trans>Companies Supporting Bitcart</Trans>
           </h2>
 
@@ -27,14 +27,9 @@ export const SupportersSection: React.FC<SupportersSectionProps> = ({ data }) =>
             <Trans>
               These companies have supported Bitcart development and receive priority support. If
               you want to support Bitcart as a company, please{" "}
-              <Button
-                render={<Link href="mailto:company@bitcart.ai" />}
-                nativeButton={false}
-                variant="link"
-                size="inline"
-              >
+              <LinkButton href="mailto:company@bitcart.ai" variant="link" size="inline">
                 email us
-              </Button>
+              </LinkButton>
               .
             </Trans>
           </p>
@@ -80,14 +75,14 @@ export const SupportersSection: React.FC<SupportersSectionProps> = ({ data }) =>
                 </div>
 
                 <div className="pt-4 sm:pt-6 gap-3 mt-auto flex flex-col">
-                  <Button
-                    render={<Link href={company.website} />}
-                    nativeButton={false}
+                  <LinkButton
+                    isExternalLink
+                    href={company.website as HttpHref}
                     size="lg"
                     className="w-full text-center uppercase"
                   >
                     <Trans>Details</Trans>
-                  </Button>
+                  </LinkButton>
                 </div>
               </div>
             </div>

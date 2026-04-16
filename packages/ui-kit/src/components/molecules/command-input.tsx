@@ -8,11 +8,7 @@ import { AutocompleteInput, type AutocompleteInputProps } from "./autocomplete-i
 
 export type CommandInputProps = AutocompleteInputProps & {}
 
-export const CommandInput: React.FC<CommandInputProps> = ({
-  className,
-  placeholder = undefined,
-  ...props
-}) => {
+export const CommandInput: React.FC<CommandInputProps> = ({ className, placeholder, ...props }) => {
   return (
     <div className="p-2.5">
       <AutocompleteInput

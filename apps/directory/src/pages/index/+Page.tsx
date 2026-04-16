@@ -1,5 +1,4 @@
-import { Button, SearchField } from "@bitcart/ui-kit/components"
-import { Link } from "@bitcart/vike-kit/navigation"
+import { LinkButton, SearchField } from "@bitcart/ui-kit/components"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { Plus } from "lucide-react"
 
@@ -44,10 +43,10 @@ export default function Page() {
           <div className="gap-3 max-md:w-full max-w-lg lg:max-w-md max-md:justify-between flex">
             <CatalogFilter state={catalogLookup.filters} controls={catalogLookup.filterControls} />
 
-            <Button render={<Link href="/submit" />} nativeButton={false} size="lg">
-              <Plus className="size-5" />
+            <LinkButton href="/submit" size="lg">
+              <Plus className="size-5" aria-hidden="true" />
               <span>{t`Submit New Entry`}</span>
-            </Button>
+            </LinkButton>
           </div>
         </div>
       </div>

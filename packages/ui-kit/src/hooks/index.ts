@@ -1,4 +1,5 @@
 export * from "./autocomplete"
 export * from "./breakpoints"
 export * from "./css-runtime"
+export * from "./link"
 export * from "./scroll"

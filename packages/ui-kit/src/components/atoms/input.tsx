@@ -18,8 +18,11 @@ export const Input: React.FC<InputProps> = ({
   size = "default",
   unstyled = false,
   nativeInput = false,
+  style,
   ...props
 }) => {
+  const nativeStyle = typeof style === "function" ? undefined : style
+
   const inputClassName = cn(
     `
       h-8.5 min-w-0 leading-8.5
@@ -85,6 +88,7 @@ export const Input: React.FC<InputProps> = ({
           data-slot="input"
           size={typeof size === "number" ? size : undefined}
           {...props}
+          style={nativeStyle}
         />
       ) : (
         <InputPrimitive
@@ -92,6 +96,7 @@ export const Input: React.FC<InputProps> = ({
           data-slot="input"
           size={typeof size === "number" ? size : undefined}
           {...props}
+          style={style}
         />
       )}
     </span>

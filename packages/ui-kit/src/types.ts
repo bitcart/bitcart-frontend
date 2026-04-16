@@ -1,7 +1,9 @@
+import type { A11yAwareLinkProps, HttpHref, InternalHref } from "@bitcart/core/types"
 import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
 import type { BreakpointKey } from "@bitcart/unocss-preset"
 import type { Icon } from "@phosphor-icons/react"
 import type { LucideProps } from "lucide-react"
+import type { MouseEventHandler } from "react"
 
 export type BasicThemeMode = "dark" | "light"
 
@@ -23,14 +25,15 @@ export type LucideIconProps = React.ComponentProps<LucideIconComponent>
 
 export type IconComponent = LucideIconComponent | Icon
 
-export type BasicLinkComponent = React.ComponentType<{
-  href: string
-  title?: string
-  onClick?: VoidFunction
-  className?: string
-  style?: React.CSSProperties
-  children?: React.ReactNode
-}>
+export type BasicLinkComponent = React.ComponentType<
+  A11yAwareLinkProps & {
+    title?: string
+    onClick?: MouseEventHandler<HTMLAnchorElement>
+    className?: string
+    style?: React.CSSProperties
+    children?: React.ReactNode
+  }
+>
 
 export interface WithGlobalPosition {
   /**
@@ -38,18 +41,17 @@ export interface WithGlobalPosition {
    * Useful when all subdirectory group items are rendered side-by-side inside the same container
    * in an order different from the one in which they are declared.
    */
-  globalPosition: number
+  globalPriority: number
 }
 
-export type BasicNavigationLink = {
-  href: string
-
+export type BasicNavigationLink = (
+  | { href: InternalHref; isExternal?: false }
+  | { href: HttpHref; isExternal: true }
+) & {
   /**
    * Optional meta information
    */
   description?: string
-
-  external?: boolean
 
   /**
    * Used as ARIA label and optionally as a tooltip text
@@ -75,6 +77,10 @@ export type LabeledNavigationLink = BasicNavigationLink & {
   icon?: IconComponent
 }
 
+export type AnyLabeledNavigationLink =
+  | LabeledNavigationLink
+  | (LabeledNavigationLink & WithGlobalPosition)
+
 export type IconNavigationLink = BasicNavigationLink & {
   icon: IconComponent
 
@@ -83,6 +89,8 @@ export type IconNavigationLink = BasicNavigationLink & {
    */
   hint: string
 }
+
+export type AnyIconNavigationLink = IconNavigationLink | (IconNavigationLink & WithGlobalPosition)
 
 export type NavigationLinkGroup<TNavigationLink = LabeledNavigationLink> = (
   | {}
@@ -128,13 +136,21 @@ export type NavigationDirectory = {
   iconLinks?: NavigationLinkGroup<IconNavigationLink | (IconNavigationLink & WithGlobalPosition)>[]
 }
 
+/**
+ * Links segregated by link type
+ */
+export type NavigationCatalog = {
+  labeledLinks: AnyLabeledNavigationLink[]
+  iconLinks?: AnyIconNavigationLink[]
+}
+
 export type LayoutNavigationConfig = {
   /**
    * Useful when the root route is not "/"
    *
    * @default "/"
    */
-  rootRoutePath?: string
+  rootRoutePath?: InternalHref
 
   /**
    * How much links should fit in the navigation bar depending on the screen size.
@@ -153,11 +169,7 @@ export type LayoutNavigationConfig = {
   directory: NavigationDirectory
 }
 
-export type NavigationLink =
-  | LabeledNavigationLink
-  | (LabeledNavigationLink & WithGlobalPosition)
-  | IconNavigationLink
-  | (IconNavigationLink & WithGlobalPosition)
+export type NavigationLink = AnyLabeledNavigationLink | AnyIconNavigationLink
 
 /**
  * Generalized navigation link group definition

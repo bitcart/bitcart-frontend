@@ -19,6 +19,7 @@
     "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts"
   },
   "devDependencies": {
+    "@types/node": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "typescript": "catalog:devDependencies"

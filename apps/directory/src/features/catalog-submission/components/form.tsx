@@ -126,7 +126,7 @@ export const CatalogSubmissionForm = () => {
                   align: "block-end",
 
                   children: (
-                    <InputGroupText className="text-xs">
+                    <InputGroupText className="text-xs" aria-live="polite">
                       {t`${field.state.value?.length ?? 0} / ${
                         FORM_CONFIG.fields.description.maxLength
                       } characters`}

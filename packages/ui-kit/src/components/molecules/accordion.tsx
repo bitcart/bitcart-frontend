@@ -34,9 +34,9 @@ export const AccordionTrigger = ({
         className={cn(
           `
             focus-visible:border-ring focus-visible:ring-ring/50
-            gap-4 rounded-md py-4 text-sm font-medium flex flex-1 items-start justify-between
+            gap-4 rounded-lg py-4 text-sm font-medium flex flex-1 items-start justify-between
             text-left transition-all outline-none
-            focus-visible:ring-[3px]
+            focus-visible:ring-[3px] focus-visible:ring-inset
             disabled:pointer-events-none disabled:opacity-50
             [&[aria-expanded=true]_svg.chevron]:rotate-180
           `,

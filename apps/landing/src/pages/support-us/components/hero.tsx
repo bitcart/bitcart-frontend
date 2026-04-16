@@ -1,5 +1,4 @@
-import { Button } from "@bitcart/ui-kit/components"
-import { Link } from "@bitcart/vike-kit/navigation"
+import { LinkButton } from "@bitcart/ui-kit/components"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowRight, Mail } from "lucide-react"
 
@@ -8,6 +7,7 @@ export const Hero = () => {
 
   return (
     <section
+      aria-labelledby="support-hero-heading"
       className={`
         py-12
         sm:py-20
@@ -17,7 +17,10 @@ export const Hero = () => {
       `}
     >
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto text-center">
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6">
+        <h1
+          id="support-hero-heading"
+          className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6"
+        >
           <Trans>
             Support <span className="text-accent-foreground">Bitcart</span> as a Company
           </Trans>
@@ -39,9 +42,8 @@ export const Hero = () => {
         </p>
 
         <div className="sm:flex-row gap-4 flex flex-col justify-center">
-          <Button
-            render={<Link href="mailto:company@bitcart.ai" />}
-            nativeButton={false}
+          <LinkButton
+            href="mailto:company@bitcart.ai"
             expandOnHover
             size="xl"
             className="group elevation-3 sm:w-auto w-full"
@@ -49,16 +51,11 @@ export const Hero = () => {
             <Mail />
             <span>{t`Contact Us`}</span>
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </LinkButton>
 
-          <Button
-            render={
-              <Link
-                href="https://docs.bitcart.ai/support-and-community/support#paid-support"
-                target="_blank"
-              />
-            }
-            nativeButton={false}
+          <LinkButton
+            href="https://docs.bitcart.ai/support-and-community/support#paid-support"
+            isExternalLink
             expandOnHover
             size="xl"
             variant="outline"
@@ -70,7 +67,7 @@ export const Hero = () => {
           >
             <span>{t`Learn More`}</span>
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </LinkButton>
         </div>
       </div>
     </section>

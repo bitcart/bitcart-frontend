@@ -1,3 +1,5 @@
+import type { HttpHref } from "@bitcart/core/types"
+
 export type DirectoryEntryCategoryId = "app" | "host" | "merchant"
 
 export type DirectoryEntry = {
@@ -5,7 +7,7 @@ export type DirectoryEntry = {
   category: DirectoryEntryCategoryId
   name: string
   description: string
-  url: string
+  url: HttpHref
 
   /**
    * For merchants: 'retail', 'services', 'food', 'digital', etc.
@@ -16,8 +18,8 @@ export type DirectoryEntry = {
   is_official?: boolean
 
   social_links?: {
-    github?: string
-    twitter?: string
+    github?: HttpHref
+    twitter?: HttpHref
   }
 }
 
