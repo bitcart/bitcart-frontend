@@ -47,6 +47,32 @@ The `webServer` config builds and starts preview servers via `just preview`. `re
 
 ## Code conventions
 
+### Comments
+
+Single-line prose comments should always carry a semantic tag supported by the [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) VSCode extension. The tag makes the intent of the comment visible at a glance and lets the editor color-code it. The workspace configures the tag set under `better-comments.tags` in [.vscode/settings.json](.vscode/settings.json):
+
+- `//!` — alerts, caveats, non-obvious constraints
+- `//?` — open questions or things that need review
+- `//*` / `//#` — regular notes
+- `// todo` — work to be done (case-insensitive)
+
+Untagged single-line comments are reserved for **commented-out code fragments** — temporarily disabled to be re-enabled or deleted soon.
+
+```ts
+// ✅ correct — semantic tag signals the role
+//! Must be called before tokenization; otherwise the index is stale.
+hydrateCache()
+
+// ✅ correct — untagged comment for disabled code
+// import { experimentalFlag } from "./flags"
+
+// ❌ avoid — ambiguous prose note with no tag
+// must be called before tokenization
+hydrateCache()
+```
+
+The `stylistic-js/lines-around-comment` rule in [packages/configs/src/base/oxlint.ts](packages/configs/src/base/oxlint.ts) enforces a blank line before tagged comments so they stand out, but ignores untagged ones so commented-out code doesn't force awkward spacing. Keep the oxlint `ignorePattern` in sync with `better-comments.tags` when either list changes.
+
 ### Theme-aware colors
 
 Don't hardcode color values (e.g. `bg-white`, `text-purple-700`, `border-gray-200`, raw hex/rgb/oklch) in application and shared UI components. Use semantic tokens from the active theme instead — either from the app's UnoCSS config at `apps/<app>/uno.config.ts` (which can extend/override `colorScheme`) or from the preset's built-in default scheme declared in [packages/unocss-preset/src/color-scheme.ts](packages/unocss-preset/src/color-scheme.ts).

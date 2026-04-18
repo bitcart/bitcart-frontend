@@ -11,6 +11,10 @@
       "import": "./dist/components/index.js",
       "types": "./dist/components/index.d.ts"
     },
+    "./fonts": {
+      "import": "./dist/fonts.js",
+      "types": "./dist/fonts.d.ts"
+    },
     "./hooks": {
       "import": "./dist/hooks/index.js",
       "types": "./dist/hooks/index.d.ts"

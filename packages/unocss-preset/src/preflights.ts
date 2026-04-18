@@ -1,9 +1,8 @@
-import { Theme } from "@unocss/preset-wind4"
-import type { Preflight } from "unocss"
+import type { Preflight, PresetWind4Theme } from "unocss"
 
 import { BREAKPOINTS } from "./constants"
 
-export const getPreflightCSS: Preflight<Theme>["getCSS"] = ({ theme }) => /* CSS */ `
+export const getPreflightCSS: Preflight<PresetWind4Theme>["getCSS"] = ({ theme }) => /* CSS */ `
 @layer base {
   *,
   ::after,
@@ -96,9 +95,10 @@ export const getPreflightCSS: Preflight<Theme>["getCSS"] = ({ theme }) => /* CSS
 /**
  * Defines radius CSS variables based on a base value.
  */
-export const createGetRadiusCSSVariables: (baseValue: number) => Preflight<Theme>["getCSS"] =
-  (baseValue) => () =>
-    /* CSS */ `
+export const createGetRadiusCSSVariables: (
+  baseValue: number,
+) => Preflight<PresetWind4Theme>["getCSS"] = (baseValue) => () =>
+  /* CSS */ `
 :root, :host {
   --radius-DEFAULT: ${baseValue}rem;
   --radius-xs: calc(var(--radius-DEFAULT) / 2);
@@ -115,7 +115,7 @@ export const createGetRadiusCSSVariables: (baseValue: number) => Preflight<Theme
 /**
  * Makes breakpoints available globally as CSS variables.
  */
-export const getBreakpointCSSVariables: Preflight<Theme>["getCSS"] = () =>
+export const getBreakpointCSSVariables: Preflight<PresetWind4Theme>["getCSS"] = () =>
   Object.entries(BREAKPOINTS)
     .map(
       ([key, value]) =>

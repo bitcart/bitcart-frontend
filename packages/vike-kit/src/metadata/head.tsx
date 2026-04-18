@@ -28,6 +28,7 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
           "@type": "Organization",
           name: "Bitcart",
           url: "https://bitcart.ai",
+
           sameAs: [
             "https://twitter.com/BitcartCC",
             "https://github.com/bitcart",
@@ -103,7 +104,6 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
           type="text/html"
         />
 
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script type="application/ld+json" dangerouslySetInnerHTML={metadataJsonInnerHtml} />
       </>
     )

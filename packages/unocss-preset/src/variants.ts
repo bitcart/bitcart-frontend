@@ -1,10 +1,9 @@
-import type { Theme } from "@unocss/preset-wind4"
-import type { Variant } from "unocss"
+import type { PresetWind4Theme, Variant } from "unocss"
 
 import { ARIA_BOOLEAN_STATES, BREAKPOINT_SIZES, BREAKPOINTS } from "./constants"
 import type { BreakpointKey } from "./types"
 
-export const variants: Variant<Theme>[] = [
+export const variants: Variant<PresetWind4Theme>[] = [
   /**
    * Container query variants - @{size}:{utility}
    * Matches @sm:, @md:, @lg:, @xl:, @2xl:, etc.

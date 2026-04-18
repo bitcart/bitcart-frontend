@@ -1,4 +1,4 @@
-import type { PresetFactory, PresetWind4Theme } from "unocss"
+import type { Preflight, PresetFactory, PresetWind4Theme } from "unocss"
 import type { PresetMiniOptions } from "unocss/preset-mini"
 
 export type BreakpointKey = "sm" | "md" | "lg" | "xl" | "2xl" | "3xl"
@@ -81,6 +81,8 @@ export type ThemeColorScheme = {
   dark: ColorSchemeCSSVars
 }
 
+export type PresetBitcartPreflight = Preflight<PresetWind4Theme>
+
 export type PresetBitcartOptions = {
   /**
    * @default 0.375
@@ -88,8 +90,12 @@ export type PresetBitcartOptions = {
   baseRadius?: number
 
   colorScheme?: ThemeColorSchemeParams
-
   prefix?: PresetMiniOptions["prefix"]
+
+  /**
+   * Additional preflights to be appended alongside the preset's built-in ones.
+   */
+  preflights?: PresetBitcartPreflight[]
 }
 
 export type PresetBitcart = PresetFactory<PresetWind4Theme, PresetBitcartOptions>

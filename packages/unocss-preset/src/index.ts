@@ -22,7 +22,12 @@ import { variants } from "./variants"
 export * from "./types"
 
 export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcartOptions) => {
-  const baseRadiusRem = options?.baseRadius ?? DEFAULT_BASE_RADIUS_REM
+  const {
+    baseRadius: baseRadiusRem = DEFAULT_BASE_RADIUS_REM,
+    colorScheme: colorSchemeCustomizations,
+    prefix,
+    preflights: additionalPreflights = [],
+  } = options ?? {}
 
   return {
     name: `unocss-preset-${PRESET_NAME}`,
@@ -31,18 +36,13 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
     transformers: [transformerVariantGroup()],
 
     presets: [
-      presetWind4({
-        preflights: { reset: true, theme: true },
-        breakpoint: BREAKPOINTS,
-        prefix: options?.prefix,
-      }),
-
+      presetWind4({ preflights: { reset: true, theme: true }, breakpoint: BREAKPOINTS, prefix }),
       presetTypography<PresetWind4Theme>(),
       presetAnimations(),
 
       // @ts-expect-error https://github.com/unocss-community/unocss-preset-shadcn/issues/35
       presetShadcn({
-        color: getColorScheme(options?.colorScheme),
+        color: getColorScheme(colorSchemeCustomizations),
       }),
     ],
 
@@ -64,6 +64,8 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
       { getCSS: getPreflightCSS },
       { getCSS: createGetRadiusCSSVariables(baseRadiusRem) },
       { getCSS: getBreakpointCSSVariables },
+
+      ...additionalPreflights,
     ],
 
     safelist: ["sr-only", "dark:brightness-0", "dark:invert"],

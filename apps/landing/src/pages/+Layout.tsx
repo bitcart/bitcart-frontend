@@ -11,9 +11,9 @@ import { SUPPORTED_LOCALE_IDS } from "@/app.config"
 import { IS_MATOMO_ENABLED } from "@/common/constants"
 import { env } from "@/env"
 
-import "inter-ui/inter.css"
-import "./uno.generated.css"
 import { getLayoutConfig } from "./layout.config"
+
+import "./uno.generated.css"
 
 const useMatomoTracking = createUseMatomoTracking({
   enabled: IS_MATOMO_ENABLED,

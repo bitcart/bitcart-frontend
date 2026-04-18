@@ -1,3 +1,4 @@
+import { FONTS_PREFLIGHT, FONTS_PRESET_CONFIG } from "@bitcart/ui-kit/fonts"
 import { presetBitcart } from "@bitcart/unocss-preset"
 import { defineConfig, presetWebFonts } from "unocss"
 
@@ -42,17 +43,10 @@ export default defineConfig({
           "card-foreground": "1 0 0", //                      oklch(1 0 0), White
         },
       },
+
+      preflights: [FONTS_PREFLIGHT],
     }),
 
-    presetWebFonts({
-      provider: "none",
-
-      fonts: {
-        sans: {
-          name: "Inter",
-          weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-        },
-      },
-    }),
+    presetWebFonts(FONTS_PRESET_CONFIG),
   ],
 })
