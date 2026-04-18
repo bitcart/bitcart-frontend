@@ -13,3 +13,8 @@ force = true
 [build]
 publish = "./apps/landing/dist/client"
 command = "BITCART_ENV=production just build --outputStyle=stream -p @bitcart/landing"
+
+[[headers]]
+for = "/assets/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
