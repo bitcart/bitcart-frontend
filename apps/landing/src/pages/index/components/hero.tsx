@@ -8,7 +8,7 @@ import { PROJECT_CANONICAL_NAME } from "@/common/constants"
 
 import { Announcement } from "./announcement"
 
-const FEATURE_HIGHLIGHT_CONTAINER_CLASS = `gap-2 sm:gap-3 p-3 lg:p-4 max-w-74 sm:w-74 lg:w-a backdrop-blur-xs rounded-lg
+const FEATURE_HIGHLIGHT_CONTAINER_CLASS = `gap-2 sm:gap-3 p-3 lg:p-4 max-w-74 sm:w-74 lg:w-a rounded-lg
 border-primary/50 bg-secondary/60 flex items-center justify-center border-2`
 
 export const Hero = () => {
@@ -24,22 +24,16 @@ export const Hero = () => {
         relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br
       `}
     >
-      {/* Background decoration */}
-      <div className="inset-0 absolute overflow-hidden">
-        <div
-          className={`
-            -top-40 -right-40 w-80 h-80 from-purple-400/20 to-purple-500/20 blur-3xl absolute
-            rounded-full bg-linear-to-r
-          `}
-        ></div>
-
-        <div
-          className={`
-            -bottom-40 -left-40 w-80 h-80 from-purple-500/20 to-purple-400/20 blur-3xl absolute
-            rounded-full bg-linear-to-r
-          `}
-        ></div>
-      </div>
+      <div
+        aria-hidden="true"
+        className="inset-0 absolute overflow-hidden"
+        style={{
+          background: `
+            radial-gradient(circle 280px at calc(100% + 40px) -40px, color-mix(in srgb, var(--colors-purple-400) 20%, transparent), transparent 70%),
+            radial-gradient(circle 280px at -40px calc(100% + 40px), color-mix(in srgb, var(--colors-purple-500) 20%, transparent), transparent 70%)
+          `,
+        }}
+      />
 
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 relative mx-auto w-full text-center">
         <Announcement className="mb-8 md:mb-12" />
