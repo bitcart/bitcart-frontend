@@ -30,6 +30,13 @@ repos:
         require_serial: true
         pass_filenames: false
         files: '(package\.json$|^pnpm-workspace\.yaml$|^pnpm-lock\.yaml$)'
+      - id: pnpm-audit
+        name: pnpm-audit
+        language: system
+        entry: pnpm audit
+        require_serial: true
+        pass_filenames: false
+        files: '(package\.json$|^pnpm-workspace\.yaml$|^pnpm-lock\.yaml$)'
       - id: lint
         name: lint
         language: system
