@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+concurrency:
+  group: ${{ github.workflow_ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
@@ -12,6 +16,7 @@ jobs:
   upload-locales:
     name: upload-locales
     runs-on: ubuntu-latest
+    environment: transifex
     steps:
       - uses: actions/checkout@v6
         with:
@@ -45,4 +50,4 @@ jobs:
             fi
           done
         env:
-          TX_TOKEN: ${{ secrets.TX_TOKEN }} # zizmor: ignore[secrets-outside-env] # triggered only by push to master
+          TX_TOKEN: ${{ secrets.TX_TOKEN }}
