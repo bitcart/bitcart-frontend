@@ -7,6 +7,7 @@ import {
   CardTitle,
   LinkButton,
 } from "@bitcart/ui-kit/components"
+import { cn } from "@bitcart/ui-kit/utils"
 import { useLingui } from "@lingui/react/macro"
 import { GithubLogoIcon } from "@phosphor-icons/react/dist/csr/GithubLogo"
 import { XLogoIcon } from "@phosphor-icons/react/dist/csr/XLogo"
@@ -63,7 +64,7 @@ export const CatalogEntryCard: React.FC<CatalogEntryCardProps> = ({
 
       <CardFooter className="gap-6 mt-a flex-col">
         {social_links && keys(social_links).length > 0 && (
-          <div className={`gap-3 flex w-full flex-wrap justify-center`}>
+          <div className={cn(`gap-3 flex w-full flex-wrap justify-center`)}>
             {social_links.github && (
               <LinkButton
                 href={social_links.github}

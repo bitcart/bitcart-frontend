@@ -4,6 +4,7 @@ import { t } from "@lingui/core/macro"
 import { Globe } from "lucide-react"
 import { useCallback } from "react"
 
+import { useLayoutContext } from "@/hooks"
 import { cn } from "@/utils"
 
 import { Button } from "../atoms/button"
@@ -16,16 +17,20 @@ import {
 import { DropdownMenuContent } from "../molecules/dropdown-menu"
 
 export type LocaleSelectorProps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = {
-  activeLocaleId: TSupportedLocaleId
   handleSelect: (localeId: TSupportedLocaleId, callback?: VoidFunction) => void
-  optionLocaleIds: readonly TSupportedLocaleId[]
 }
 
 export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
-  activeLocaleId,
   handleSelect,
-  optionLocaleIds,
 }: LocaleSelectorProps<TSupportedLocaleId>) => {
+  const {
+    layoutConfig: {
+      i18n: { activeLocale, availableLocales: optionLocaleIds },
+    },
+  } = useLayoutContext()
+
+  const activeLocaleId = activeLocale as TSupportedLocaleId
+
   const createHandleSelect = useCallback(
     (localeId: TSupportedLocaleId) => () => handleSelect(localeId),
     [handleSelect],
@@ -50,7 +55,7 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocal
           {optionLocaleIds.map((localeId) => (
             <DropdownMenuItem
               key={localeId}
-              onClick={createHandleSelect(localeId)}
+              onClick={createHandleSelect(localeId as TSupportedLocaleId)}
               render={
                 <Button
                   variant={localeId === activeLocaleId ? "accent" : "ghost"}

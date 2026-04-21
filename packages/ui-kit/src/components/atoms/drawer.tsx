@@ -487,7 +487,7 @@ export const DrawerMenuCheckboxItem: React.FC<DrawerMenuCheckboxItemProps> = ({
           <span className="col-start-1">{children}</span>
 
           <CheckboxPrimitive.Indicator
-            className={`
+            className={cn(`
               focus-visible:ring-ring focus-visible:ring-offset-background
               data-checked:bg-primary
               data-unchecked:bg-input
@@ -498,11 +498,11 @@ export const DrawerMenuCheckboxItem: React.FC<DrawerMenuCheckboxItemProps> = ({
               duration-200 outline-none [--thumb-size:calc(var(--spacing)*4)]
               focus-visible:ring-2 focus-visible:ring-offset-1
               data-disabled:opacity-64
-            `}
+            `)}
             keepMounted
           >
             <span
-              className={`
+              className={cn(`
                 bg-background shadow-sm/5 pointer-events-none block aspect-square h-full origin-left
                 rounded-[--thumb-size] will-change-transform
                 [transition:translate_.15s,border-radius_.15s,scale_.1s_.1s,transform-origin_.15s]
@@ -510,7 +510,7 @@ export const DrawerMenuCheckboxItem: React.FC<DrawerMenuCheckboxItemProps> = ({
                 in-[[data-slot=drawer-menu-checkbox-item]:active]:not-data-disabled:scale-x-110
                 in-[[data-slot=drawer-menu-checkbox-item][data-checked]]:origin-[var(--thumb-size)_50%]
                 in-[[data-slot=drawer-menu-checkbox-item][data-checked]]:translate-x-[calc(var(--thumb-size)-4px)]
-              `}
+              `)}
             />
           </CheckboxPrimitive.Indicator>
         </>

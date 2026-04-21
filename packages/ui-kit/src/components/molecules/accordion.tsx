@@ -7,11 +7,11 @@ import { cn } from "@/utils"
 
 const defaultChevronElement = (
   <ChevronDownIcon
-    className={`
+    className={cn(`
       chevron text-muted-foreground size-4
       sm:size-5
       pointer-events-none shrink-0 transition-transform duration-200
-    `}
+    `)}
   />
 )
 

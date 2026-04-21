@@ -1,3 +1,4 @@
+import { cn } from "@bitcart/ui-kit/utils"
 import { Trans } from "@lingui/react/macro"
 
 export type BenefitsSectionProps = {
@@ -29,11 +30,11 @@ export const BenefitsSection: React.FC<BenefitsSectionProps> = ({ data }) => {
           {data.map((benefit, index) => (
             <div
               key={index}
-              className={`
+              className={cn(`
                 bg-card rounded-lg p-4
                 sm:p-6
                 elevation-3 text-center transition-shadow duration-200
-              `}
+              `)}
             >
               <div className="p-3 sm:p-4 bg-accent mb-3 sm:mb-4 mx-auto w-fit rounded-full">
                 {benefit.icon}

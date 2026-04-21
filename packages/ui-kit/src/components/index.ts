@@ -31,7 +31,6 @@ export {
 
 export { Badge, type BadgeProps } from "./atoms/badge"
 export { Button, type ButtonProps } from "./atoms/button"
-export { buttonVariants } from "./atoms/button-variants"
 export { CalendarDayButton, type CalendarDayButtonProps } from "./atoms/calendar-day-button"
 
 export {
@@ -271,6 +270,11 @@ export { LocaleSelector, type LocaleSelectorProps } from "./organisms/locale-sel
 export { WebsiteFooter, type WebsiteFooterProps } from "./organisms/website-footer"
 export { WebsiteHeader, type WebsiteHeaderProps } from "./organisms/website-header"
 export { WebsiteMobileMenu, type WebsiteMobileMenuProps } from "./organisms/website-mobile-menu"
+
+export {
+  WebsiteNavigationMenu,
+  type WebsiteNavigationMenuProps,
+} from "./organisms/website-navigation-menu"
 
 /**
  ** TEMPLATES

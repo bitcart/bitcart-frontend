@@ -27,9 +27,9 @@
       "types": "./dist/navigation/index.d.ts",
       "import": "./dist/navigation/index.js"
     },
-    "./tracking": {
-      "types": "./dist/tracking/index.d.ts",
-      "import": "./dist/tracking/index.js"
+    "./telemetry": {
+      "types": "./dist/telemetry/index.d.ts",
+      "import": "./dist/telemetry/index.js"
     },
     "./types": {
       "types": "./dist/types.d.ts"

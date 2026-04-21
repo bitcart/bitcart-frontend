@@ -50,9 +50,9 @@ export const AutocompletePopup: React.FC<AutocompletePopupProps> = ({
           )}
         >
           <AutocompletePrimitive.Popup
-            className={`
+            className={cn(`
               text-foreground flex max-h-[min(var(--available-height),23rem)] flex-1 flex-col
-            `}
+            `)}
             data-slot="autocomplete-popup"
             {...props}
           >

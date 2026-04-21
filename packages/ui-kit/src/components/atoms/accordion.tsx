@@ -30,12 +30,12 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
   return (
     <AccordionPrimitive.Panel
       data-slot="accordion-content"
-      className={`
+      className={cn(`
         ease-out
         data-[ending-style]:h-0
         data-[starting-style]:h-0
         text-sm transition-height h-[--accordion-panel-height] overflow-hidden
-      `}
+      `)}
       {...props}
     >
       <div className={cn("pt-0 pb-4", className)}>{children}</div>

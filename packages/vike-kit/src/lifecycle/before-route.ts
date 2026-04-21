@@ -4,9 +4,7 @@ import type { LocaleOrPseudoLocaleId } from "@bitcart/core/utils"
 import { modifyUrl } from "vike/modifyUrl"
 import type { PageContext } from "vike/types"
 
-import type { RouteUrl } from "@/navigation"
-
-import type { PageContextOriginal } from "../types"
+import type { PageContextOriginal, RouteUrl } from "../types"
 
 export interface OnBeforeRouteDeps {
   supportedLocaleIds: readonly LocaleOrPseudoLocaleId[]

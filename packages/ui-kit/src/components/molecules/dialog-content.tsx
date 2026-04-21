@@ -46,7 +46,7 @@ export const DialogContent: React.FC<DialogContentProps> = ({
         {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"
-            className={`
+            className={cn(`
               ring-offset-background top-4 right-4 rounded-xs
               focus:ring-ring
               data-open:bg-accent data-open:text-muted-foreground
@@ -56,7 +56,7 @@ export const DialogContent: React.FC<DialogContentProps> = ({
               focus:ring-2 focus:ring-offset-2 focus:outline-hidden
               disabled:pointer-events-none
               [&_svg]:pointer-events-none [&_svg]:shrink-0
-            `}
+            `)}
           >
             <XIcon />
             <span className="sr-only">Close</span>

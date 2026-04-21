@@ -9,6 +9,7 @@ export default defineConfig({
     types: "src/types.ts",
     "utils/index": "src/utils/index.ts",
   },
+
   format: ["esm"],
   dts: true,
   sourcemap: true,
@@ -16,4 +17,5 @@ export default defineConfig({
   tsconfig: "./tsconfig.lib.json",
   deps: { skipNodeModulesBundle: true },
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
+  unbundle: true,
 })

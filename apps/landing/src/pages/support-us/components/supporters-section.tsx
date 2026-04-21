@@ -39,19 +39,19 @@ export const SupportersSection: React.FC<SupportersSectionProps> = ({ data }) =>
           {data.map((company, index) => (
             <div
               key={index}
-              className={`
+              className={cn(`
                 bg-card rounded-lg p-6
                 sm:p-8
                 elevation-3
                 dark:bg-secondary
                 flex h-full flex-col border transition-shadow duration-200
-              `}
+              `)}
             >
               <div className="space-y-4 sm:space-y-6 flex grow flex-col text-center">
                 <div
-                  className={`
+                  className={cn(`
                     w-32 h-16 rounded-md p-2 bg-border mx-auto flex items-center justify-center
-                  `}
+                  `)}
                 >
                   <img
                     src={company.logo}

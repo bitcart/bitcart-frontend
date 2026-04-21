@@ -26,34 +26,34 @@ repos:
       - id: lockfile-check
         name: lockfile-check
         language: system
-        entry: pnpm install --frozen-lockfile --lockfile-only
+        entry: ./scripts/fnm-shim.sh pnpm install --frozen-lockfile --lockfile-only
         require_serial: true
         pass_filenames: false
         files: '(package\.json$|^pnpm-workspace\.yaml$|^pnpm-lock\.yaml$)'
       - id: pnpm-audit
         name: pnpm-audit
         language: system
-        entry: pnpm audit
+        entry: ./scripts/fnm-shim.sh pnpm audit
         require_serial: true
         pass_filenames: false
         files: '(package\.json$|^pnpm-workspace\.yaml$|^pnpm-lock\.yaml$)'
+      - id: format
+        name: format
+        language: system
+        entry: ./scripts/fnm-shim.sh just format
+        require_serial: true
+        pass_filenames: false
       - id: lint
         name: lint
         language: system
-        entry: just lint
+        entry: ./scripts/fnm-shim.sh just lint
         files: '\.(ts|js|tsx)$'
         require_serial: true
         pass_filenames: false
       - id: typecheck
         name: typecheck
         language: system
-        entry: just typecheck
+        entry: ./scripts/fnm-shim.sh just typecheck
         files: '\.(ts|tsx)$'
-        require_serial: true
-        pass_filenames: false
-      - id: format
-        name: format
-        language: system
-        entry: just format
         require_serial: true
         pass_filenames: false

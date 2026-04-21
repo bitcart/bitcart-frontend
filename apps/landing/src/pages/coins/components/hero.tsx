@@ -1,4 +1,5 @@
 import { SearchField } from "@bitcart/ui-kit/components"
+import { cn } from "@bitcart/ui-kit/utils"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { Coins } from "lucide-react"
 
@@ -13,13 +14,13 @@ export const Hero: React.FC<HeroProps> = ({ searchTerm, setSearchTerm }) => {
   return (
     <section
       aria-labelledby="coins-hero-heading"
-      className={`
+      className={cn(`
         py-12
         sm:py-20
         from-purple-50 via-white to-purple-100
         dark:from-gray-900 dark:via-gray-900 dark:to-gray-800
         bg-linear-to-br
-      `}
+      `)}
     >
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto text-center">
         <div className="mb-4 sm:mb-6 flex items-center justify-center">
@@ -39,13 +40,13 @@ export const Hero: React.FC<HeroProps> = ({ searchTerm, setSearchTerm }) => {
         </h1>
 
         <p
-          className={`
+          className={cn(`
             text-base
             sm:text-xl
             text-muted-foreground mb-6
             sm:mb-8
             max-w-3xl leading-relaxed mx-auto
-          `}
+          `)}
         >
           {t`Accept payments in any of these cryptocurrencies and tokens with zero fees and complete control over your funds. Plus any ERC-20, BEP-20, TRC-20 or CashToken compatible token by contract address.`}
         </p>

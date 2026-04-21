@@ -69,7 +69,7 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
       {startAddon && (
         <div
           aria-hidden="true"
-          className={`
+          className={cn(`
             inset-y-0
             [&_svg:not-[class*='size-']]:size-4.5
             sm:[&_svg:not-[class*='size-']]:size-4
@@ -77,7 +77,7 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
             pointer-events-none absolute start-px z-10 flex items-center
             ps-[calc(var(--spacing)*3-1px)] opacity-80
             has-[+[data-size=sm]]:ps-[calc(var(--spacing)*2.5-1px)]
-          `}
+          `)}
           data-slot="autocomplete-start-addon"
         >
           {startAddon}

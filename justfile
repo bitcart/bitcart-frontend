@@ -1,4 +1,4 @@
-set dotenv-load := true
+set dotenv-load
 
 ## GENERAL RECIPES
 
@@ -61,6 +61,7 @@ drop-artifacts:
 [doc("
 Clean up all workspace artifacts, reinstall dependencies, and rebuild all workspace members.
 ")]
+[env("BITCART_ENV", "development")]
 [group("General")]
 clean-rebuild: drop-artifacts
     pnpm i
@@ -123,17 +124,17 @@ format *files:
     @pnpm oxfmt {{ files }}
 
 [doc("
-Lint with autofix using oxlint.
+Run linters with autofix.
 ")]
 [group("Code quality")]
 lint *nx-args:
     @pnpm nx run-many --outputStyle=stream --target=lint $(just _nx-args {{ nx-args }})
 
 [doc("
-Lint and format, fixing all issues.
+Format and lint, fixing all issues.
 ")]
 [group("Code quality")]
-fix: lint format
+fix: format lint
 
 [doc("
 Verify formatting with oxfmt.
@@ -143,33 +144,33 @@ format-check *files:
     @pnpm oxfmt --check {{ files }}
 
 [doc("
-Verify linting with oxlint.
+Verify linting.
 ")]
 [group("Code quality")]
 lint-check *nx-args:
     @pnpm nx run-many --outputStyle=stream --target=lint:check $(just _nx-args {{ nx-args }})
 
 [doc("
-Run typecheck for all workspace members.
+Run type checking.
 ")]
 [group("Code quality")]
 typecheck *nx-args:
     @pnpm nx run-many --outputStyle=stream --target=typecheck $(just _nx-args {{ nx-args }})
 
 [doc("
-Run all checks (format, lint, typecheck) without fixing.
+Run all checks without fixing.
 ")]
 [group("Code quality")]
 check: format-check lint-check typecheck
 
 [doc("
-Run all tests.
+Run tests.
 ")]
 [group("Code quality")]
 test: e2e
 
 [doc("
-Full CI pipeline: all checks + tests.
+Run CI checks.
 ")]
 [group("Code quality")]
 ci: check test

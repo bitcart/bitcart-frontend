@@ -13,7 +13,7 @@ Bitcart frontend monorepo containing two web applications and shared packages. B
 - **packages/core** — Foundational utilities, types, Zod schemas, i18n utilities
 - **packages/ui-kit** — Reusable React component library (atomic design: atoms/molecules/organisms/templates) with shadcn/ui + UnoCSS
 - **packages/form-kit** — Form utilities using TanStack React Form
-- **packages/vike-kit** — Shared Vike configuration, i18n, navigation, tracking, metadata
+- **packages/vike-kit** — Shared Vike configuration, i18n, navigation, telemetry, metadata
 - **packages/unocss-preset** — Custom UnoCSS styling preset
 - **packages/qa** — Shared Playwright test utilities, templates, and testid constants
 - **packages/configs** — Shared configurations (TypeScript, oxlint, dependency-cruiser, etc.)

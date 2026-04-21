@@ -1,3 +1,4 @@
+import { cn } from "@bitcart/ui-kit/utils"
 import type { IconComponentProps } from "@web3icons/react"
 import { Suspense } from "react"
 
@@ -19,11 +20,11 @@ const CoinCatalogEntryIconFallback: React.FC<CoinCatalogEntryIconFallbackProps> 
   size,
 }) => (
   <div
-    className={`
+    className={cn(`
       from-gray-200 to-gray-300 px-2
       dark:from-gray-500 dark:to-gray-600
       flex w-fit items-center justify-center rounded-full bg-linear-to-r
-    `}
+    `)}
     style={{ height: size }}
     aria-hidden="true"
   >

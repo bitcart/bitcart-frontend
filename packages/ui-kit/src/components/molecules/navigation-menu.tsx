@@ -47,11 +47,11 @@ export const NavigationMenuTrigger = ({
     >
       {children}{" "}
       <ChevronDownIcon
-        className={`
+        className={cn(`
           ml-1 size-3 relative top-px transition duration-200
           group-data-open:rotate-180
           group-data-popup-open:rotate-180
-        `}
+        `)}
         aria-hidden="true"
       />
     </NavigationMenuPrimitive.Trigger>

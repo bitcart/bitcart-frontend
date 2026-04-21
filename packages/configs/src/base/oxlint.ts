@@ -6,6 +6,7 @@ export const baseOxlintConfig = defineConfig({
   options: {
     typeAware: true,
     denyWarnings: true,
+    reportUnusedDisableDirectives: "error",
   },
 
   jsPlugins: [{ name: "stylistic-js", specifier: "@stylistic/eslint-plugin" }],

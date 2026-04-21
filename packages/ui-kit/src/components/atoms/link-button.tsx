@@ -2,7 +2,7 @@ import type { HttpHref, InternalHref, MailtoHref } from "@bitcart/core/types"
 import { type VariantProps } from "class-variance-authority"
 import { createElement } from "react"
 
-import { useLinkComponent } from "@/hooks"
+import { useLayoutContext } from "@/hooks"
 import { cn, getTargetBlankA11yHint } from "@/utils"
 
 import { buttonVariants } from "./button-variants"
@@ -27,7 +27,7 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
   children,
   ...props
 }) => {
-  const Link = useLinkComponent()
+  const { Link } = useLayoutContext()
 
   const a11yAwareLinkProps = isExternalLink
     ? { href: href as HttpHref, a11yHint: getTargetBlankA11yHint() }

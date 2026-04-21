@@ -1,4 +1,5 @@
 import { LinkButton, SearchField } from "@bitcart/ui-kit/components"
+import { cn } from "@bitcart/ui-kit/utils"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { Plus } from "lucide-react"
 
@@ -10,14 +11,14 @@ export default function Page() {
 
   return (
     <div
-      className={`
+      className={cn(`
         pt-20 gap-8
         lg:gap-10
         max-w-7xl px-4
         md:px-6
         lg:px-8
         pb-10 relative mx-auto flex w-full flex-col
-      `}
+      `)}
     >
       {/* Header Section */}
       <div className="pt-6 text-center">

@@ -1,4 +1,4 @@
-import { configureMatomo } from "@bitcart/vike-kit/tracking"
+import { configureMatomo } from "@bitcart/vike-kit/telemetry"
 
 import { IS_MATOMO_ENABLED } from "@/common/constants"
 import { env } from "@/env"

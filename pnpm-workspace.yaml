@@ -10,7 +10,7 @@ catalogMode: strict
 
 catalogs:
   dependencies:
-    "@base-ui/react": 1.4.0
+    "@base-ui/react": 1.4.1
     "@lingui/core": 5.9.5
     "@lingui/react": 5.9.5
     "@phosphor-icons/react": 2.1.10

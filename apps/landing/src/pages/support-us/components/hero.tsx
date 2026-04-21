@@ -1,4 +1,5 @@
 import { LinkButton } from "@bitcart/ui-kit/components"
+import { cn } from "@bitcart/ui-kit/utils"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowRight, Mail } from "lucide-react"
 
@@ -8,13 +9,13 @@ export const Hero = () => {
   return (
     <section
       aria-labelledby="support-hero-heading"
-      className={`
+      className={cn(`
         py-12
         sm:py-20
         from-purple-50 via-white to-purple-100
         dark:from-gray-900 dark:via-gray-900 dark:to-gray-800
         bg-linear-to-br
-      `}
+      `)}
     >
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto text-center">
         <h1
@@ -27,13 +28,13 @@ export const Hero = () => {
         </h1>
 
         <p
-          className={`
+          className={cn(`
             text-lg
             sm:text-xl
             text-muted-foreground mb-6
             sm:mb-8
             max-w-3xl leading-relaxed mx-auto
-          `}
+          `)}
         >
           <Trans>
             Join leading companies in supporting the future of decentralized cryptocurrency
@@ -59,11 +60,11 @@ export const Hero = () => {
             expandOnHover
             size="xl"
             variant="outline"
-            className={`
+            className={cn(`
               group
               sm:w-auto
               text-accent-foreground bg-background border-accent-foreground w-full
-            `}
+            `)}
           >
             <span>{t`Learn More`}</span>
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />

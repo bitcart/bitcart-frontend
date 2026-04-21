@@ -1,133 +1,76 @@
 import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
 import { LAYOUT_CONTAINER_TESTID } from "@bitcart/qa"
-import { useMemo } from "react"
+import { useIsClient } from "usehooks-ts"
 
-import { useLayoutConfigMemo } from "@/hooks/layout-config"
-import { LinkComponentProvider, ThemeProvider } from "@/providers"
-import {
-  type BasicLinkComponent,
-  type BasicNavigationLink,
-  type LayoutConfig,
-  type NavigationCatalog,
-} from "@/types"
-import { cn, extractNavigationCatalog, getLayoutRegionNavigationDirectory } from "@/utils"
+import { useCurrentBreakpoint } from "@/hooks"
+import { LayoutContextProvider, ThemeProvider, type LayoutContextProviderProps } from "@/providers"
+import { type LayoutConfig } from "@/types"
+import { cn } from "@/utils"
 
+import { ThemeToggle, ThemeToggleFallback } from "../molecules/theme-toggle"
 import { Toaster } from "../molecules/toaster"
 import { LocaleSelector, type LocaleSelectorProps } from "../organisms/locale-selector"
 import { WebsiteFooter } from "../organisms/website-footer"
 import { WebsiteHeader } from "../organisms/website-header"
 import { WebsiteMobileMenu } from "../organisms/website-mobile-menu"
+import { WebsiteNavigationMenu } from "../organisms/website-navigation-menu"
 
-export type WebsiteLayoutProps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = {
-  LinkComponent: BasicLinkComponent
-  currentRoutePath?: BasicNavigationLink["href"]
+export type WebsiteLayoutProps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = Omit<
+  LayoutContextProviderProps,
+  "layoutConfig"
+> & {
   config: LayoutConfig
-  isHydrated: boolean
   localeChangeHandler: LocaleSelectorProps<TSupportedLocaleId>["handleSelect"]
 
   classNames?: {
     root?: string
   }
-
-  children: React.ReactNode
 }
 
 export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
-  LinkComponent: Link,
-  currentRoutePath,
+  config,
   isHydrated,
   localeChangeHandler,
   classNames,
   children,
   ...props
 }: WebsiteLayoutProps<TSupportedLocaleId>) => {
-  const {
-    i18n,
-    brand,
-    navigation: { rootRoutePath, navBarDisplayCapacity, directory: navigationDirectory },
-  } = useLayoutConfigMemo(props.config)
-
-  /**
-   * Links from all navigation groups merged into a single array
-   * and ordered by global priority.
-   */
-  const mainNavCatalog: NavigationCatalog = useMemo(
-    () =>
-      extractNavigationCatalog(getLayoutRegionNavigationDirectory("header", navigationDirectory)),
-
-    [navigationDirectory],
-  )
-
-  /**
-   * All navigation groups containing only the links relevant for the footer.
-   */
-  const footerNavDirectory = useMemo(
-    () => getLayoutRegionNavigationDirectory("footer", navigationDirectory),
-    [navigationDirectory],
-  )
-
-  const headerLayoutControls = useMemo(
-    () => (
-      <>
-        <LocaleSelector
-          activeLocaleId={i18n.activeLocale as TSupportedLocaleId}
-          handleSelect={localeChangeHandler}
-          optionLocaleIds={i18n.availableLocales as TSupportedLocaleId[]}
-        />
-
-        <WebsiteMobileMenu
-          LinkComponent={Link}
-          activeHref={currentRoutePath}
-          brandAttributes={brand}
-          homepageHref={rootRoutePath}
-          navigationCatalog={mainNavCatalog}
-        />
-      </>
-    ),
-
-    [
-      Link,
-      brand,
-      currentRoutePath,
-      i18n.activeLocale,
-      i18n.availableLocales,
-      localeChangeHandler,
-      mainNavCatalog,
-      rootRoutePath,
-    ],
-  )
+  const isClient = useIsClient()
+  const currentBreakpoint = useCurrentBreakpoint()
 
   return (
-    <LinkComponentProvider LinkComponent={Link}>
+    <LayoutContextProvider isHydrated={isHydrated} layoutConfig={config} {...props}>
       <ThemeProvider>
         <div
           className={cn("bg-background flex min-h-screen flex-col", classNames?.root)}
           data-is-hydrated={isHydrated}
           data-testid={LAYOUT_CONTAINER_TESTID}
         >
-          <WebsiteHeader
-            LinkComponent={Link}
-            activeNavlinkHref={currentRoutePath}
-            brandAttributes={brand}
-            layoutControls={headerLayoutControls}
-            maxVisibleNavBarLinks={navBarDisplayCapacity}
-            navigationCatalog={mainNavCatalog}
-          />
+          <WebsiteHeader>
+            <WebsiteNavigationMenu
+              className="md:flex hidden"
+              inert={isClient && currentBreakpoint === "sm"}
+            />
+
+            {isClient ? (
+              <ThemeToggle className="max-md:hidden" />
+            ) : (
+              <ThemeToggleFallback className="max-md:hidden" />
+            )}
+
+            <LocaleSelector handleSelect={localeChangeHandler} />
+            <WebsiteMobileMenu />
+          </WebsiteHeader>
 
           <main id="main-content" className="flex-1 focus:outline-none" tabIndex={-1}>
             {children}
           </main>
 
-          <WebsiteFooter
-            LinkComponent={Link}
-            brandAttributes={brand}
-            homepageHref={rootRoutePath}
-            navigationDirectory={footerNavDirectory}
-          />
+          <WebsiteFooter />
         </div>
 
         <Toaster position="top-center" />
       </ThemeProvider>
-    </LinkComponentProvider>
+    </LayoutContextProvider>
   )
 }

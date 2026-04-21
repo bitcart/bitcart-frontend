@@ -1,4 +1,3 @@
-import type { InternalHref } from "@bitcart/core/types"
 import {
   MOBILE_MENU_CONTENT_TESTID,
   MOBILE_MENU_TOGGLE_TESTID,
@@ -10,13 +9,7 @@ import { useCallback, useRef, useState } from "react"
 import { isEmptyish } from "remeda"
 import { useIsClient } from "usehooks-ts"
 
-import { useCurrentBreakpoint } from "@/hooks"
-import type {
-  BasicLinkComponent,
-  BasicNavigationLink,
-  LayoutBrandAttributes,
-  NavigationCatalog,
-} from "@/types"
+import { useCurrentBreakpoint, useLayoutContext } from "@/hooks"
 import { cn } from "@/utils"
 
 import { Button } from "../atoms/button"
@@ -27,26 +20,22 @@ import { DrawerPopup } from "../molecules/drawer-popup"
 import { ThemeToggle } from "../molecules/theme-toggle"
 
 export type WebsiteMobileMenuProps = {
-  LinkComponent: BasicLinkComponent
-  activeHref?: BasicNavigationLink["href"]
-  brandAttributes: LayoutBrandAttributes
-  homepageHref?: InternalHref
-  navigationCatalog: NavigationCatalog
-
-  classNames?: {
-    trigger?: string
-    popup?: string
-  }
+  classNames?: { trigger?: string; popup?: string }
 }
 
-export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
-  LinkComponent: Link,
-  activeHref,
-  brandAttributes: brand,
-  homepageHref = "/",
-  navigationCatalog: { iconLinks, labeledLinks },
-  classNames,
-}) => {
+export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({ classNames }) => {
+  const {
+    Link,
+    currentRoute,
+
+    layoutConfig: {
+      brand,
+      navigation: { rootRoutePathname },
+    },
+
+    primaryNavCatalog: { iconLinks, labeledLinks },
+  } = useLayoutContext()
+
   const isClient = useIsClient()
   const currentBreakpoint = useCurrentBreakpoint()
   const popupRef = useRef<HTMLDivElement>(null)
@@ -59,6 +48,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
       popupRef.current?.querySelector<HTMLElement>("[aria-current='page']") ??
       popupRef.current?.querySelectorAll<HTMLElement>("a, button").item(1) ??
       null,
+
     [],
   )
 
@@ -88,13 +78,13 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
       >
         <DrawerHeader className="flex-row items-center justify-center">
           <Link
-            href={homepageHref}
-            className={`
+            href={rootRoutePathname}
+            className={cn(`
               focus-visible:outline-ring focus-visible:outline-ring/50
               space-x-3 rounded-sm pr-1 flex w-fit items-center transition-opacity duration-200
               hover:opacity-80
               focus-visible:outline-offset-4
-            `}
+            `)}
           >
             <div className="size-10 flex items-center justify-center">
               <img alt={brand.logoImageAltText} src={brand.logoImageSrc} className="size-10" />
@@ -111,7 +101,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
                 ? { href: link.href, isExternalLink: true as const }
                 : { href: link.href, isExternalLink: false as const }
 
-              const isActive = !link.isExternal && link.href === activeHref
+              const isActive = !link.isExternal && link.href === currentRoute.pathnameWithHash
 
               return (
                 <LinkButton
@@ -158,7 +148,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
                       size="icon-lg"
                       variant="ghost"
                       className="hover:text-accent-foreground bg-muted/25 dark:hover:bg-accent/30"
-                      aria-label={link.hint.replace(/`/g, "")}
+                      aria-label={link.hint}
                       {...a11yAwareLinkProps}
                     >
                       <Icon aria-hidden="true" />
@@ -170,7 +160,9 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
 
             <ThemeToggle
               testId={UI_THEME_MOBILE_TOGGLE_TESTID}
-              className={`size-10 hover:text-accent-foreground bg-muted/25 dark:hover:bg-accent/30`}
+              className={cn(
+                `size-10 hover:text-accent-foreground bg-muted/25 dark:hover:bg-accent/30`,
+              )}
             />
           </div>
         </DrawerFooter>

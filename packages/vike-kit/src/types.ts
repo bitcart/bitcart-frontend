@@ -1,7 +1,12 @@
 import type { InternalHref } from "@bitcart/core/types"
-import type { PageContext as VikePageContext } from "vike/types"
+import type { Url, PageContext as VikePageContext } from "vike/types"
 
 import type { LayoutMetadata } from "@/metadata"
+
+export type RouteUrl = Url & {
+  href: InternalHref
+  pathname: InternalHref
+}
 
 export type PageContextPayload = {
   localeId: string
@@ -9,6 +14,8 @@ export type PageContextPayload = {
   messages: Record<string, string>
   metadata: LayoutMetadata
   urlLogical: InternalHref
+  urlParsed: RouteUrl
+  urlPathname: `/${string}`
 }
 
 export type PageContextOriginal = Omit<
@@ -21,6 +28,8 @@ declare global {
     interface PageContext extends PageContextPayload {
       abortReason?: string | { notAdmin: true }
     }
+
+    interface PageContextClient extends PageContextPayload {}
 
     interface PageContextServer extends PageContextPayload {}
   }

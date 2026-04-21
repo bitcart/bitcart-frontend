@@ -150,7 +150,7 @@ export type LayoutNavigationConfig = {
    *
    * @default "/"
    */
-  rootRoutePath?: InternalHref
+  rootRoutePathname?: InternalHref
 
   /**
    * How much links should fit in the navigation bar depending on the screen size.

@@ -1,3 +1,4 @@
+import { cn } from "@bitcart/ui-kit/utils"
 import { Trans } from "@lingui/react/macro"
 
 export type WaysToSupportSectionProps = {
@@ -28,13 +29,13 @@ export const WaysToSupportSection: React.FC<WaysToSupportSectionProps> = ({ data
           {data.map((type, index) => (
             <div
               key={index}
-              className={`
+              className={cn(`
                 bg-card rounded-lg p-6
                 sm:p-8
                 elevation-3
                 dark:bg-secondary
                 border transition-shadow duration-200
-              `}
+              `)}
             >
               <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">{type.title}</h3>
 
@@ -54,11 +55,11 @@ export const WaysToSupportSection: React.FC<WaysToSupportSectionProps> = ({ data
                       className="text-muted-foreground text-sm sm:text-base flex items-center"
                     >
                       <div
-                        className={`
+                        className={cn(`
                           size-2 bg-primary mr-3
                           dark:bg-accent-foreground
                           shrink-0 rounded-full
-                        `}
+                        `)}
                       />
 
                       {example}

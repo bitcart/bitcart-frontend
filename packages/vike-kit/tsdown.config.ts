@@ -7,9 +7,10 @@ export default defineConfig({
     "lifecycle/index": "src/lifecycle/index.ts",
     "metadata/index": "src/metadata/index.ts",
     "navigation/index": "src/navigation/index.ts",
-    "tracking/index": "src/tracking/index.ts",
+    "telemetry/index": "src/telemetry/index.ts",
     types: "src/types.ts",
   },
+
   format: ["esm"],
   dts: true,
   sourcemap: true,
@@ -17,4 +18,5 @@ export default defineConfig({
   tsconfig: "./tsconfig.lib.json",
   deps: { skipNodeModulesBundle: true },
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
+  unbundle: true,
 })

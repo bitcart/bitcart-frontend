@@ -4,6 +4,7 @@ export default defineConfig({
   entry: {
     "hooks/index": "src/hooks/index.ts",
   },
+
   format: ["esm"],
   dts: true,
   sourcemap: true,
@@ -11,4 +12,5 @@ export default defineConfig({
   tsconfig: "./tsconfig.lib.json",
   deps: { skipNodeModulesBundle: true },
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
+  unbundle: true,
 })

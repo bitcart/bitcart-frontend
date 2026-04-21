@@ -24,3 +24,23 @@ export type A11yAwareLinkProps =
       target?: string
       a11yHint: string
     }
+
+/**
+ * Framework-agnostic route bindings.
+ */
+export type RouteBindings = {
+  /**
+   * Only available on the client, will be `null` on the server.
+   */
+  hash: string | null
+
+  /**
+   * The current route path without parameters and the hash fragment.
+   */
+  pathname: InternalHref
+
+  /**
+   * {@link RouteBindings.pathname} appended with the hash fragment.
+   */
+  pathnameWithHash: InternalHref
+}

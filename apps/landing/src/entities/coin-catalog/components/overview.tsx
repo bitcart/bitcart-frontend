@@ -95,11 +95,11 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                       >
                         <span className="p-1 sm:p-2">
                           <ChevronDownIcon
-                            className={`
+                            className={cn(`
                               chevron text-muted-foreground size-4
                               sm:size-5
                               pointer-events-none shrink-0 transition-transform duration-200
-                            `}
+                            `)}
                           />
                         </span>
                       </span>
@@ -111,11 +111,11 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                     <div className="flex w-full items-center justify-between">
                       <div className="min-w-0 space-x-3 sm:space-x-4 flex flex-1 items-center">
                         <div
-                          className={`
+                          className={cn(`
                             bg-secondary h-12 w-12
                             sm:h-14 sm:w-14
                             flex shrink-0 items-center justify-center rounded-full
-                          `}
+                          `)}
                         >
                           <CoinCatalogEntryIcon
                             size={32}

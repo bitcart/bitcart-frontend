@@ -1,5 +1,6 @@
 import type { HttpHref } from "@bitcart/core/types"
 import { LinkButton } from "@bitcart/ui-kit/components"
+import { cn } from "@bitcart/ui-kit/utils"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ExternalLink } from "lucide-react"
 
@@ -13,13 +14,13 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
   return (
     <div className={className}>
       <div
-        className={`
+        className={cn(`
           gap-3 from-purple-500 to-primary text-primary-foreground px-4
           md:px-6
           py-2 elevation-3 mb-4 inline-flex transform cursor-default items-center rounded-full
           bg-linear-to-r transition-transform duration-200
           hover:scale-105
-        `}
+        `)}
       >
         <div className="gap-2 flex items-center">
           <span className="text-base md:text-xl">🎉</span>
@@ -27,13 +28,13 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
           <span className="font-bold text-sm md:text-base">{t`ETH Payments Plugin Released!`}</span>
 
           <span
-            className={`
+            className={cn(`
               px-1.5
               md:px-2
               py-0.5 bg-primary-foreground text-primary text-xs font-bold
               motion-safe:animate-pulse
               rounded-full
-            `}
+            `)}
           >
             {t`NEW`}
           </span>

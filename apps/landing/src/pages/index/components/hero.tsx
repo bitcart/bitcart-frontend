@@ -17,12 +17,12 @@ export const Hero = () => {
   return (
     <section
       aria-labelledby="hero-heading"
-      className={`
+      className={cn(`
         from-purple-50 via-white to-purple-100 pt-20 pb-8
         md:pb-16
         dark:from-gray-900 dark:via-gray-900 dark:to-gray-800
         relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br
-      `}
+      `)}
     >
       <div
         aria-hidden="true"
@@ -40,25 +40,25 @@ export const Hero = () => {
 
         <h1 id="hero-heading" className="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-7">
           <span
-            className={`
+            className={cn(`
               from-gray-900 via-purple-800 to-primary/80
               dark:from-white dark:via-purple-400 dark:to-purple-300
               bg-linear-to-r bg-clip-text text-transparent
-            `}
+            `)}
           >
             {PROJECT_CANONICAL_NAME}
           </span>
         </h1>
 
         <p
-          className={`
+          className={cn(`
             text-lg
             md:text-xl
             lg:text-2xl
             text-muted-foreground mb-3
             md:mb-4
             max-w-4xl leading-relaxed px-2 px-4 mx-auto
-          `}
+          `)}
         >
           <Trans>
             Start Accepting Crypto Payments With{" "}
@@ -77,14 +77,14 @@ export const Hero = () => {
               💰 Accept payments in{" "}
               <Link
                 href="/coins"
-                className={`
+                className={cn(`
                   font-bold decoration-primary/50 px-1 py-0.5 rounded-xs -mx-1 -my-0.5
                   text-accent-foreground
                   hover:text-accent-foreground hover:decoration-primary hover:shadow-lg
                   hover:bg-accent
                   dark:hover:text-foreground
                   underline transition-all duration-200
-                `}
+                `)}
               >
                 50+ cryptocurrencies including Bitcoin, Ethereum, Tron, Monero & any other popular
                 coin
@@ -95,25 +95,25 @@ export const Hero = () => {
         </div>
 
         <div
-          className={`
+          className={cn(`
             gap-4 mb-6
             sm:mb-10
             md:mb-12
             max-sm:flex-col
             flex flex-row items-center justify-center
-          `}
+          `)}
         >
           <LinkButton
             href="https://admin.bitcart.ai"
             isExternalLink
             expandOnHover
             size="xl"
-            className={`
+            className={cn(`
               group elevation-3 bg-initial from-primary to-primary/80
               hover:bg-initial hover:from-primary/80 hover:to-purple-800
               max-sm:w-full
               bg-linear-to-r
-            `}
+            `)}
           >
             <span>{t`Live Demo`}</span>
 
@@ -126,11 +126,11 @@ export const Hero = () => {
             expandOnHover
             size="xl"
             variant="outline"
-            className={`
+            className={cn(`
               group
               max-sm:w-full
               text-accent-foreground bg-background border-accent-foreground
-            `}
+            `)}
           >
             <span>{t`View User Guide`}</span>
 
@@ -160,7 +160,9 @@ export const Hero = () => {
               <Icon className="size-5 md:size-8 text-accent-foreground shrink-0" />
 
               <span
-                className={`font-medium text-secondary-foreground text-xs sm:text-sm md:text-base`}
+                className={cn(
+                  `font-medium text-secondary-foreground text-xs sm:text-sm md:text-base`,
+                )}
               >
                 {title}
               </span>
@@ -180,22 +182,22 @@ export const Hero = () => {
             )}
           >
             <Coins
-              className={`
+              className={cn(`
                 size-5
                 md:size-8
                 text-accent-foreground shrink-0 transition-transform
                 group-hover:scale-110
-              `}
+              `)}
             />
 
             <span
-              className={`
+              className={cn(`
                 font-medium text-secondary-foreground text-xs
                 sm:text-sm
                 md:text-base
                 group-hover:text-accent-foreground
                 transition-colors
-              `}
+              `)}
             >
               {`50+ ${t`Coins`}`}
             </span>

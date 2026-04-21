@@ -65,7 +65,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     }
   }, [theme])
 
-  const buttonHint = useMemo(
+  const getButtonHint = useCallback(
     () => t`Current theme: ${getThemeLabel()}. Click to cycle through themes.`,
     [getThemeLabel],
   )
@@ -93,9 +93,9 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       onClick={toggleTheme}
       size="icon"
       variant="ghost"
-      title={buttonHint}
+      title={getButtonHint()}
       className={className}
-      aria-label={buttonHint}
+      aria-label={getButtonHint()}
       data-testid={testId}
     >
       {icon}
