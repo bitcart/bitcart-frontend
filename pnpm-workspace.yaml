@@ -84,15 +84,8 @@ minimumReleaseAgeExclude:
   - "@oxfmt/binding-*"
   - "@oxlint/binding-*"
   - "@oxlint-tsgolint/*"
+  - "@oxc-project/*"
   - oxfmt
   - oxlint
   - oxlint-tsgolint
-  - vite
-  - "@vitejs/plugin-react"
-  - rolldown
-  - "@rolldown/*"
   - "@base-ui/*"
-  - tsdown
-  - unrun
-  # TODO: remove once 7 days has passed since 1.16.0
-  - follow-redirects
