@@ -33,8 +33,8 @@ The list of supported locales is available as `SUPPORTED_LOCALE_IDS` in `apps/<a
 Uses `useLingui()` hook with tagged template literals: `` t`text` ``.
 Catalogs live in `src/common/i18n/_generated/locales/`.
 
-Make sure to run `just extract-locales-dev` after adding/changing translatable strings.
-For production builds, use `just extract-locales`.
+Make sure to run `just locales-extract-dev` after adding/changing translatable strings.
+For production builds, use `just locales-extract`.
 
 ### E2E Testing (Playwright)
 

@@ -37,7 +37,7 @@ jobs:
         run: just build-packages
 
       - name: Extract locales
-        run: just extract-locales
+        run: just locales-extract
 
       - name: Install Transifex CLI
         run: scripts/install-tx-client.sh

@@ -125,7 +125,7 @@ Only perform this phase if the changes warrant visual/interactive verification. 
 If translatable strings were added or changed:
 
 - Verify `t` tagged template literals are used correctly
-- Check if `just extract-locales-dev` needs to be run
+- Check if `just locales-extract-dev` needs to be run
 - Verify no hardcoded user-facing strings
 
 ### Phase 10: Save Review Report (REQUIRED — DO NOT SKIP)

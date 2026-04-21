@@ -34,8 +34,8 @@ just typecheck              # Type checking
 just check                  # All checks: format-check + lint-check + typecheck (no tests)
 just test                   # Run all tests
 just ci                     # Full CI pipeline: check + test
-just extract-locales        # Extract i18n catalogs for all apps
-just extract-locales-dev    # Extract i18n catalogs with pseudo locale (for dev)
+just locales-extract        # Extract i18n catalogs for all apps
+just locales-extract-dev    # Extract i18n catalogs with pseudo locale (for dev)
 just e2e                    # Run all Playwright E2E tests
 just e2e-app landing        # Run E2E tests for a specific app
 just e2e-ui landing         # Open Playwright interactive UI for a specific app
@@ -78,7 +78,7 @@ TanStack React Query via `vike-react-query` for server/client data synchronizati
 - **Imports:** Ordered by: builtin → external → internal (`@bitcart/*`) → siblings/parent
 - **Unused params:** Prefix with `_` (e.g., `_event`)
 - **Components:** Add new shadcn primitives via `just add-ui-kit-components <component>`
-- **Pre-commit hooks:** Run via `just precommit`. Checks: lint, typecheck, format, merge conflicts, private keys
+- **Pre-commit hooks:** Run via `just pre-commit`. Checks: lint, typecheck, format, merge conflicts, private keys
 - **Node version:** Managed via `.nvmrc` (use `fnm`)
 
 <!-- nx configuration start-->

@@ -60,6 +60,6 @@ export const expectNoUncompiledLocaleMessageIds = async (page: Page) => {
     uncompiledMessageIds.length,
     `Uncompiled locale catalog message ID were detected: "${uncompiledMessageIds.join(
       '", "',
-    )}". Run \`just extract-locales-dev\` to refresh i18n catalogs.`,
+    )}". Run \`just locales-extract-dev\` to refresh i18n catalogs.`,
   ).toBe(0)
 }

@@ -1,6 +1,6 @@
 set dotenv-load
 
-## GENERAL RECIPES
+## GENERAL
 
 [private]
 default:
@@ -67,6 +67,20 @@ clean-rebuild: drop-artifacts
     pnpm i
     @just build
 
+[doc("
+Build all workspace members.
+")]
+[group("General")]
+build *nx-args:
+    @pnpm nx run-many --target=build $(just _nx-args {{ nx-args }})
+
+[doc("
+Build only library packages (excludes apps).
+")]
+[group("General")]
+build-packages *nx-args:
+    @pnpm nx run-many --target=build --projects='packages/*' $(just _nx-args {{ nx-args }})
+
 ## DEPENDENCY MANAGEMENT
 
 [doc("
@@ -114,7 +128,7 @@ Example: `just add-ui-kit-components @coss/command accordion`
 add-ui-kit-components +component-names:
     pnpm ui-kit add:components {{ component-names }}
 
-### CODE QUALITY
+## CODE QUALITY
 
 [doc("
 Auto-format code with oxfmt.
@@ -167,54 +181,40 @@ check: format-check lint-check typecheck
 Run tests.
 ")]
 [group("Code quality")]
-test: e2e
+test *args: (e2e args)
 
 [doc("
 Run CI checks.
 ")]
 [group("Code quality")]
-ci: check test
+ci *args: check (test args)
 
-## DEVELOPMENT and CI/CD
+[doc("
+Manually trigger pre-commit hooks.
+")]
+[group("Code quality")]
+pre-commit:
+    prek run --all-files
+
+## SERVICES
 
 [doc("
 Start all development server instances in parallel
 ")]
 [env("BITCART_ENV", "development")]
-[group("Development and CI/CD")]
+[group("Services")]
 [no-exit-message]
 dev *nx-args:
     pnpm i
     @pnpm nx run-many --target=dev $(just _nx-args {{ nx-args }})
 
 [doc("
-Build all workspace members.
-")]
-[group("Development and CI/CD")]
-build *nx-args:
-    @pnpm nx run-many --target=build $(just _nx-args {{ nx-args }})
-
-[doc("
-Build only library packages (excludes apps).
-")]
-[group("Development and CI/CD")]
-build-packages *nx-args:
-    @pnpm nx run-many --target=build --projects='packages/*' $(just _nx-args {{ nx-args }})
-
-[doc("
 Serve production preview for every application in parallel.
 ")]
-[group("Development and CI/CD")]
+[group("Services")]
 [no-exit-message]
 preview *nx-args:
     @pnpm nx run-many --target=preview $(just _nx-args {{ nx-args }})
-
-[doc("
-Manually trigger pre-commit hooks.
-")]
-[group("Development and CI/CD")]
-precommit:
-    prek run --all-files
 
 ## INTERNATIONALIZATION AND LOCALIZATION
 
@@ -225,7 +225,7 @@ Translation is not performed.
 ")]
 [env("BITCART_ENV", "production")]
 [group("Internationalization and localization")]
-extract-locales +scope="apps":
+locales-extract +scope="apps":
     pnpm {{ scope }} i18n:extract-locales
     echo "🌐 Locales extracted without pseudo locale ✅"
 
@@ -236,16 +236,16 @@ Translation is not performed.
 ")]
 [env("BITCART_ENV", "development")]
 [group("Internationalization and localization")]
-extract-locales-dev +scope="apps":
+locales-extract-dev +scope="apps":
     pnpm {{ scope }} i18n:extract-locales
     echo "🌐 Locales extracted with pseudo locale included ✅"
 
-## END-TO-END TESTING
+## TESTING
 
 [doc("
 Install Chromium for Playwright along with system dependencies.
 ")]
-[group("End-to-end testing")]
+[group("Testing")]
 e2e-setup *args:
     pnpm exec playwright install {{ args }} chromium --with-deps
 
@@ -253,7 +253,7 @@ e2e-setup *args:
 Run Playwright E2E tests for all apps.
 ")]
 [env("BITCART_ENV", "testing")]
-[group("End-to-end testing")]
+[group("Testing")]
 e2e *nx-args:
     @pnpm nx run-many {{ _ci_parallel }} --target=e2e --projects='apps/*' $(just _nx-args {{ nx-args }})
 
@@ -262,7 +262,7 @@ Run E2E tests for a specific app.
 Example: `just e2e-app landing`
 ")]
 [env("BITCART_ENV", "testing")]
-[group("End-to-end testing")]
+[group("Testing")]
 e2e-app app *args:
     pnpm {{ app }} e2e {{ args }}
 
@@ -270,7 +270,7 @@ e2e-app app *args:
 Open Playwright interactive UI for a specific app.
 Example: `just e2e-ui landing`
 ")]
-[group("End-to-end testing")]
+[group("Testing")]
 e2e-ui app:
     pnpm {{ app }} e2e:ui
 
@@ -278,7 +278,7 @@ e2e-ui app:
 Open the Playwright HTML test report for a specific app.
 Example: `just e2e-report landing`
 ")]
-[group("End-to-end testing")]
+[group("Testing")]
 e2e-report app:
     pnpm {{ app }} e2e:report
 
