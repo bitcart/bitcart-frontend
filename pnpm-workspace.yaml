@@ -11,63 +11,63 @@ catalogMode: strict
 catalogs:
   dependencies:
     "@base-ui/react": 1.4.0
-    "@lingui/core": 5.9.4
-    "@lingui/react": 5.9.4
+    "@lingui/core": 5.9.5
+    "@lingui/react": 5.9.5
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
-    "@tanstack/react-form": 1.28.6
-    "@tanstack/react-query": 5.96.2
+    "@tanstack/react-form": 1.29.0
+    "@tanstack/react-query": 5.99.0
     "@web3icons/react": 4.1.17
     class-variance-authority: 0.7.1
-    dotenv: 17.4.1
+    dotenv: 17.4.2
     effect: 3.21.0
     inter-ui: 4.1.1
-    lucide-react: 1.7.0
+    lucide-react: 1.8.0
     next-themes: 0.4.6
-    react: 19.2.4
+    react: 19.2.5
     react-day-picker: 9.14.0
-    react-dom: 19.2.4
+    react-dom: 19.2.5
     remeda: 2.33.7
     sonner: 2.0.7
     tailwind-merge: 3.5.0
     usehooks-ts: 3.1.1
-    vike: 0.4.256
+    vike: 0.4.257
     vike-react: 0.6.21
     vike-react-query: 0.1.12
     zod: 4.3.6
   devDependencies:
-    "@effect/language-service": 0.84.3
-    "@lingui/babel-plugin-lingui-macro": 5.9.4
-    "@lingui/cli": 5.9.4
-    "@lingui/conf": 5.9.4
-    "@lingui/vite-plugin": 5.9.4
+    "@effect/language-service": 0.85.1
+    "@lingui/babel-plugin-lingui-macro": 5.9.5
+    "@lingui/cli": 5.9.5
+    "@lingui/conf": 5.9.5
+    "@lingui/vite-plugin": 5.9.5
     "@playwright/test": 1.59.1
     "@qalisa/vike-plugin-sitemap": 1.7.0
-    "@rolldown/plugin-babel": 0.2.2
+    "@rolldown/plugin-babel": 0.2.3
     "@stylistic/eslint-plugin": 5.10.0
-    "@types/node": 25.5.2
+    "@types/node": 25.6.0
     "@types/react": 19.2.14
     "@types/react-dom": 19.2.3
-    "@unocss/cli": 66.6.7
-    "@unocss/preset-web-fonts": 66.6.7
-    "@unocss/preset-wind4": 66.6.7
+    "@unocss/cli": 66.6.8
+    "@unocss/preset-web-fonts": 66.6.8
+    "@unocss/preset-wind4": 66.6.8
     "@vitejs/plugin-react": 6.0.1
     babel-plugin-react-compiler: 1.0.0
     dependency-cruiser: 17.3.10
-    eslint-plugin-better-tailwindcss: 4.3.2
+    eslint-plugin-better-tailwindcss: 4.4.1
     eslint-plugin-react-hooks: 7.0.1
     nx: 22.6.5
-    oxfmt: 0.45.0
-    oxlint: 1.60.0
-    oxlint-tsgolint: 0.21.0
+    oxfmt: 0.46.0
+    oxlint: 1.61.0
+    oxlint-tsgolint: 0.21.1
     tailwindcss: 4.2.2
-    tsdown: 0.21.7
+    tsdown: 0.21.8
     tsx: 4.21.0
     typescript: 6.0.2
-    unocss: 66.6.7
+    unocss: 66.6.8
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
-    vite: 8.0.5
+    vite: 8.0.8
     vite-plugin-static-copy: 4.0.1
 
 linkWorkspacePackages: true
