@@ -58,7 +58,7 @@ jobs:
 
       - run: just e2e
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3.2.1
         if: ${{ !cancelled() }}
         with:
           name: e2e-results
@@ -83,17 +83,17 @@ jobs:
       matrix:
         app: [landing, directory]
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: e2e-results
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3.2.1
         with:
           name: playwright-report-${{ matrix.app }}
           path: ${{ matrix.app }}/e2e/playwright-report/
           retention-days: 14
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3.2.1
         with:
           name: screenshots-${{ matrix.app }}
           path: ${{ matrix.app }}/e2e/screenshots/
