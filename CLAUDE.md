@@ -31,7 +31,8 @@ just fix                    # Format + lint (auto-fix)
 just format-check           # Verify formatting without fixing
 just lint-check             # Verify linting without fixing
 just typecheck              # Type checking
-just check                  # All checks: format-check + lint-check + typecheck (no tests)
+just depcheck             # Detect unused dependencies, files, and exports (knip)
+just check                  # All checks: format-check + lint-check + typecheck + depcheck (no tests)
 just test                   # Run all tests
 just ci                     # Full CI pipeline: check + test
 just locales-extract        # Extract i18n catalogs for all apps

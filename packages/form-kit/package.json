@@ -23,16 +23,11 @@
     "@bitcart/core": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",
     "@tanstack/react-form": "catalog:dependencies",
-    "babel-plugin-react-compiler": "catalog:devDependencies",
-    "class-variance-authority": "catalog:dependencies",
-    "lucide-react": "catalog:dependencies",
     "react": "catalog:dependencies",
-    "remeda": "catalog:dependencies",
-    "usehooks-ts": "catalog:dependencies"
+    "remeda": "catalog:dependencies"
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
-    "@bitcart/qa": "workspace:*",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",

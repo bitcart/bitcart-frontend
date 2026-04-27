@@ -47,15 +47,11 @@
     "@bitcart/core": "workspace:*",
     "@lingui/core": "catalog:dependencies",
     "@lingui/react": "catalog:dependencies",
-    "@t3-oss/env-core": "catalog:dependencies",
-    "lucide-react": "catalog:dependencies",
     "react": "catalog:dependencies",
     "remeda": "catalog:dependencies",
     "usehooks-ts": "catalog:dependencies",
     "vike": "catalog:dependencies",
-    "vike-react": "catalog:dependencies",
-    "vike-react-query": "catalog:dependencies",
-    "zod": "catalog:dependencies"
+    "vike-react": "catalog:dependencies"
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",

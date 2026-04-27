@@ -1,4 +1,4 @@
-set dotenv-load
+set dotenv-load := true
 
 ## GENERAL
 
@@ -172,10 +172,17 @@ typecheck *nx-args:
     @pnpm nx run-many --outputStyle=stream --target=typecheck $(just _nx-args {{ nx-args }})
 
 [doc("
+Run dependency checks.
+")]
+[group("Code quality")]
+depcheck *args:
+    @pnpm knip --no-progress {{ args }}
+
+[doc("
 Run all checks without fixing.
 ")]
 [group("Code quality")]
-check: format-check lint-check typecheck
+check: format-check lint-check typecheck depcheck
 
 [doc("
 Run tests.

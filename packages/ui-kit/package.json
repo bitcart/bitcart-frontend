@@ -46,8 +46,6 @@
     "@bitcart/core": "workspace:*",
     "@lingui/core": "catalog:dependencies",
     "@phosphor-icons/react": "catalog:dependencies",
-    "@tanstack/react-form": "catalog:dependencies",
-    "babel-plugin-react-compiler": "catalog:devDependencies",
     "class-variance-authority": "catalog:dependencies",
     "lucide-react": "catalog:dependencies",
     "next-themes": "catalog:dependencies",

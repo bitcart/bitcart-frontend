@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "remeda": "catalog:dependencies",
-    "usehooks-ts": "catalog:dependencies",
     "zod": "catalog:dependencies"
   },
   "devDependencies": {

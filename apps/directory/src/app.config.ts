@@ -7,8 +7,6 @@ import { env } from "./env"
 export const SUPPORTED_LOCALE_IDS =
   env.BITCART_ENV === "production" ? LOCALE_IDS : [...LOCALE_IDS, PSEUDO_LOCALE_ID]
 
-export type SupportedLocaleId = (typeof SUPPORTED_LOCALE_IDS)[number]
-
 export const POSIX_LOCALE_ID_MAP: PosixLocaleIdMap<(typeof LOCALE_IDS)[number]> &
   (PseudoPosixLocaleIdMap | {}) = {
   be: "be_BY",

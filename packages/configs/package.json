@@ -7,6 +7,7 @@
     "./base/ts": "./src/base/ts.json",
     "./base/oxlint": "./src/base/oxlint.ts",
     "./by-package-type/app-dependency-cruiser": "./src/by-package-type/app-dependency-cruiser.js",
+    "./by-package-type/app-knip": "./src/by-package-type/app-knip.ts",
     "./by-package-type/app-ts": "./src/by-package-type/app-ts.json",
     "./by-package-type/lib-dependency-cruiser": "./src/by-package-type/lib-dependency-cruiser.js",
     "./by-package-type/lib-ts": "./src/by-package-type/lib-ts.json",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@types/node": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
+    "knip": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "typescript": "catalog:devDependencies"
   }

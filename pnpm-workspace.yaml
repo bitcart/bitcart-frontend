@@ -49,13 +49,12 @@ catalogs:
     "@types/react": 19.2.14
     "@types/react-dom": 19.2.3
     "@unocss/cli": 66.6.8
-    "@unocss/preset-web-fonts": 66.6.8
-    "@unocss/preset-wind4": 66.6.8
     "@vitejs/plugin-react": 6.0.1
     babel-plugin-react-compiler: 1.0.0
     dependency-cruiser: 17.3.10
     eslint-plugin-better-tailwindcss: 4.4.1
     eslint-plugin-react-hooks: 7.0.1
+    knip: 6.4.1
     nx: 22.6.5
     oxfmt: 0.46.0
     oxlint: 1.61.0
@@ -72,12 +71,6 @@ catalogs:
 
 linkWorkspacePackages: true
 
-overrides:
-  #! vike-react-query pins devalue to 4.x, but 4.x has vulnerabilities
-  #! 5.x is backwards-compatible in practice.
-  # TODO: Remove this override once vike-react-query updates its devalue dependency.
-  devalue: ^5.0.0
-
 minimumReleaseAge: 10080
 
 minimumReleaseAgeExclude:
@@ -89,3 +82,9 @@ minimumReleaseAgeExclude:
   - oxlint
   - oxlint-tsgolint
   - "@base-ui/*"
+
+overrides:
+  #! vike-react-query pins devalue to 4.x, but 4.x has vulnerabilities
+  #! 5.x is backwards-compatible in practice.
+  # TODO: Remove this override once vike-react-query updates its devalue dependency.
+  devalue: ^5.0.0

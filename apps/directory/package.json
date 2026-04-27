@@ -29,7 +29,6 @@
     "@lingui/react": "catalog:dependencies",
     "@phosphor-icons/react": "catalog:dependencies",
     "@t3-oss/env-core": "catalog:dependencies",
-    "@tanstack/react-form": "catalog:dependencies",
     "@tanstack/react-query": "catalog:dependencies",
     "class-variance-authority": "catalog:dependencies",
     "dotenv": "catalog:dependencies",
@@ -39,7 +38,6 @@
     "react": "catalog:dependencies",
     "react-dom": "catalog:dependencies",
     "remeda": "catalog:dependencies",
-    "usehooks-ts": "catalog:dependencies",
     "vike": "catalog:dependencies",
     "vike-react": "catalog:dependencies",
     "vike-react-query": "catalog:dependencies",
@@ -69,7 +67,6 @@
     "oxlint": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
-    "vite": "catalog:devDependencies",
-    "vite-plugin-static-copy": "catalog:devDependencies"
+    "vite": "catalog:devDependencies"
   }
 }

@@ -25,8 +25,6 @@
     "@bitcart/configs": "workspace:*",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/node": "catalog:devDependencies",
-    "@unocss/cli": "catalog:devDependencies",
-    "@unocss/preset-wind4": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",

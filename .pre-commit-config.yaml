@@ -57,3 +57,10 @@ repos:
         files: '\.(ts|tsx)$'
         require_serial: true
         pass_filenames: false
+      - id: depcheck
+        name: depcheck
+        language: system
+        entry: ./scripts/fnm-shim.sh just depcheck
+        files: '(\.(ts|tsx)$|package\.json$|^pnpm-workspace\.yaml$|^knip\.json$)'
+        require_serial: true
+        pass_filenames: false
