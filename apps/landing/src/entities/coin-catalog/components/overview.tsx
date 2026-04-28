@@ -7,7 +7,7 @@ import {
 import { cn } from "@bitcart/ui-kit/utils"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ChevronDownIcon, Search } from "lucide-react"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { prop } from "remeda"
 
 import { type BlockchainId } from "@/common/data/bitcart"
@@ -33,20 +33,13 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
     [filteredEntries],
   )
 
-  useEffect(() => {
-    if (searchCounts.fungibleTokens !== coinSearchResultCount) {
-      setCoinSearchResultCount(searchCounts.fungibleTokens)
+  if (searchCounts.fungibleTokens !== coinSearchResultCount) {
+    setCoinSearchResultCount(searchCounts.fungibleTokens)
 
-      setExpandedEntries(
-        searchCounts.fungibleTokens === totalCounts.fungibleTokens ? [] : searchResultBlockchainIds,
-      )
-    }
-  }, [
-    coinSearchResultCount,
-    searchCounts.fungibleTokens,
-    searchResultBlockchainIds,
-    totalCounts.fungibleTokens,
-  ])
+    setExpandedEntries(
+      searchCounts.fungibleTokens === totalCounts.fungibleTokens ? [] : searchResultBlockchainIds,
+    )
+  }
 
   return (
     <section aria-labelledby="coin-catalog-heading" className="py-12 bg-secondary sm:py-20">
