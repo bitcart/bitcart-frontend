@@ -15,6 +15,7 @@ export const POSIX_LOCALE_ID_MAP: PosixLocaleIdMap<(typeof LOCALE_IDS)[number]> 
   es: "es_ES",
   fr: "fr_FR",
   hi: "hi_IN",
+  ko: "ko_KR",
   pl: "pl_PL",
   ru: "ru_RU",
   tr: "tr_TR",
