@@ -1,9 +1,9 @@
 import process from "process"
 
-import { lingui } from "@lingui/vite-plugin"
+import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin"
 import vikeSitemap from "@qalisa/vike-plugin-sitemap"
 import type { SitemapEntry } from "@qalisa/vike-plugin-sitemap/types"
-import babelPlugin, { defineRolldownBabelPreset } from "@rolldown/plugin-babel"
+import babel from "@rolldown/plugin-babel"
 import react from "@vitejs/plugin-react"
 import vike from "vike/plugin"
 import { defineConfig } from "vite"
@@ -14,15 +14,6 @@ import { nodeEnv } from "./node-env"
 const { PRODUCTION_BASE_URL } = nodeEnv
 
 const { locales: LINGUI_LOCALES, sourceLocale: LINGUI_SOURCE_LOCALE } = linguiConfig
-
-const linguiPreset = defineRolldownBabelPreset({
-  preset: () => ({ plugins: ["@lingui/babel-plugin-lingui-macro"] }),
-  rolldown: {
-    filter: {
-      code: /from ['"]@lingui\/(?:react|core)\/macro['"]/,
-    },
-  },
-})
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -36,8 +27,8 @@ export default defineConfig({
   plugins: [
     react(),
     lingui(),
-    babelPlugin({
-      presets: [linguiPreset],
+    babel({
+      presets: [linguiTransformerBabelPreset()],
       plugins: [
         /*"babel-plugin-react-compiler"*/
       ],
