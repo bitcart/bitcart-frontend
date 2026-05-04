@@ -15,14 +15,14 @@ catalogs:
     "@lingui/react": 6.0.0
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
-    "@tanstack/react-form": 1.29.0
-    "@tanstack/react-query": 5.99.2
+    "@tanstack/react-form": 1.29.1
+    "@tanstack/react-query": 5.100.5
     "@web3icons/react": 4.1.17
     class-variance-authority: 0.7.1
     dotenv: 17.4.2
-    effect: 3.21.1
+    effect: 3.21.2
     inter-ui: 4.1.1
-    lucide-react: 1.8.0
+    lucide-react: 1.11.0
     next-themes: 0.4.6
     react: 19.2.5
     react-day-picker: 9.14.0
@@ -54,19 +54,19 @@ catalogs:
     dependency-cruiser: 17.3.10
     eslint-plugin-better-tailwindcss: 4.4.1
     eslint-plugin-react-hooks: 7.1.1
-    knip: 6.4.1
-    nx: 22.6.5
-    oxfmt: 0.46.0
-    oxlint: 1.61.0
-    oxlint-tsgolint: 0.22.0
-    tailwindcss: 4.2.2
-    tsdown: 0.21.9
+    knip: 6.7.0
+    nx: 22.7.0
+    oxfmt: 0.47.0
+    oxlint: 1.62.0
+    oxlint-tsgolint: 0.22.1
+    tailwindcss: 4.2.4
+    tsdown: 0.21.10
     tsx: 4.21.0
     typescript: 6.0.3
     unocss: 66.6.8
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
-    vite: 8.0.8
+    vite: 8.0.10
     vite-plugin-static-copy: 4.1.0
 
 linkWorkspacePackages: true
@@ -88,3 +88,9 @@ overrides:
   #! 5.x is backwards-compatible in practice.
   # TODO: Remove this override once vike-react-query updates its devalue dependency.
   devalue: ^5.0.0
+  #! nx@22.7.x bundles vulnerable versions of these transitive deps.
+  #! Override to force patched versions (GHSA-f886-m6hf-6m8v, GHSA-48c2-rrv3-qjmp, GHSA-r4q5-vmmm-2653).
+  # TODO: Remove these overrides once nx upgrades its bundled dependencies.
+  brace-expansion: ^5.0.5
+  yaml: ^2.8.3
+  follow-redirects: ^1.16.0
