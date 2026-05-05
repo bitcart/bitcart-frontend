@@ -5,6 +5,7 @@ export const SUPPORTED_LOCALE_IDS = [
   "es" as const,
   "fr" as const,
   "hi" as const,
+  "ko" as const,
   "pl" as const,
   "ru" as const,
   "tr" as const,
