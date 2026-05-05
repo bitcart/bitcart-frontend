@@ -89,8 +89,9 @@ overrides:
   # TODO: Remove this override once vike-react-query updates its devalue dependency.
   devalue: ^5.0.0
   #! nx@22.7.x bundles vulnerable versions of these transitive deps.
-  #! Override to force patched versions (GHSA-f886-m6hf-6m8v, GHSA-48c2-rrv3-qjmp, GHSA-r4q5-vmmm-2653).
+  #! Override to force patched versions.
   # TODO: Remove these overrides once nx upgrades its bundled dependencies.
   brace-expansion: ^5.0.5
   yaml: ^2.8.3
   follow-redirects: ^1.16.0
+  axios: ^1.15.2
