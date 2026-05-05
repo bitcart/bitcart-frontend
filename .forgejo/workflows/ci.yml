@@ -54,6 +54,9 @@ jobs:
       - name: Install just
         run: uv pip install rust-just
 
+      - name: Configure Fast APT Mirror
+        uses: vegardit/fast-apt-mirror.sh@c02f624f2c4108687b16f980a2c9e10d82bdace6 # 1.4.4
+
       - run: just e2e-setup
 
       - run: just e2e
