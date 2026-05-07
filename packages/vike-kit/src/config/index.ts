@@ -29,6 +29,11 @@ export const createVikeConfig = ({
     ssr,
     trailingSlash: false,
 
+    //* Disables vike-react's default viewport tag; the canonical one (with
+    //* `viewport-fit=cover` so `env(safe-area-inset-*)` resolves to real
+    //* values on iOS) is emitted by @bitcart/vike-kit's `createHead`.
+    viewport: null,
+
     htmlAttributes: {
       prefix: "og: http://ogp.me/ns#",
       suppressHydrationWarning: true,

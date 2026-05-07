@@ -15,9 +15,9 @@
       "types": "./dist/i18n/index.d.ts",
       "import": "./dist/i18n/index.js"
     },
-    "./lifecycle": {
-      "types": "./dist/lifecycle/index.d.ts",
-      "import": "./dist/lifecycle/index.js"
+    "./lifecycle/*": {
+      "types": "./dist/lifecycle/*.d.ts",
+      "import": "./dist/lifecycle/*.js"
     },
     "./metadata": {
       "types": "./dist/metadata/index.d.ts",
@@ -61,6 +61,7 @@
     "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies"
   }

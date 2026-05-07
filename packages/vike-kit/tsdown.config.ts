@@ -4,7 +4,10 @@ export default defineConfig({
   entry: {
     "config/index": "src/config/index.ts",
     "i18n/index": "src/i18n/index.ts",
-    "lifecycle/index": "src/lifecycle/index.ts",
+    "lifecycle/before-render": "src/lifecycle/before-render.ts",
+    "lifecycle/before-route": "src/lifecycle/before-route.ts",
+    "lifecycle/page-transition-end": "src/lifecycle/page-transition-end.ts",
+    "lifecycle/prerender-start": "src/lifecycle/prerender-start.ts",
     "metadata/index": "src/metadata/index.ts",
     "navigation/index": "src/navigation/index.ts",
     "telemetry/index": "src/telemetry/index.ts",

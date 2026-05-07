@@ -27,6 +27,7 @@
     "@types/node": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",

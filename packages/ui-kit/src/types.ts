@@ -1,7 +1,7 @@
 import type { A11yAwareLinkProps, HttpHref, InternalHref } from "@bitcart/core/types"
 import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
 import type { BreakpointKey } from "@bitcart/unocss-preset"
-import type { Icon } from "@phosphor-icons/react"
+import type { Icon as PhosphorIconComponent } from "@phosphor-icons/react"
 import type { LucideProps } from "lucide-react"
 import type { MouseEventHandler } from "react"
 
@@ -21,9 +21,13 @@ export type LucideIconComponent = React.ForwardRefExoticComponent<
   Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
 >
 
+export type CustomIconProps = React.SVGProps<SVGSVGElement>
+
+export type CustomIconComponent = React.FC<CustomIconProps>
+
 export type LucideIconProps = React.ComponentProps<LucideIconComponent>
 
-export type IconComponent = LucideIconComponent | Icon
+export type IconComponent = LucideIconComponent | PhosphorIconComponent | CustomIconComponent
 
 export type BasicLinkComponent = React.ComponentType<
   A11yAwareLinkProps & {
@@ -119,6 +123,7 @@ export type LayoutBrandAttributes = {
   name: string
   copyrightAppendix?: string
   copyrightSinceYear?: number
+  logoIcon?: IconComponent
   logoImageSrc: string
   logoImageAltText: string
   projectCanonicalName: string

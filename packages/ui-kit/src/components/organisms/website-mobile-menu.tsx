@@ -4,15 +4,15 @@ import {
   UI_THEME_MOBILE_TOGGLE_TESTID,
 } from "@bitcart/qa"
 import { t } from "@lingui/core/macro"
-import { Loader, Menu, X } from "lucide-react"
-import { useCallback, useRef, useState } from "react"
+import { Loader, Menu } from "lucide-react"
+import React, { useCallback, useMemo, useRef, useState } from "react"
 import { isEmptyish } from "remeda"
 import { useIsClient } from "usehooks-ts"
 
 import { useCurrentBreakpoint, useLayoutContext } from "@/hooks"
 import { cn } from "@/utils"
 
-import { Button } from "../atoms/button"
+import { Button, type ButtonProps } from "../atoms/button"
 import { Drawer, DrawerFooter, DrawerHeader, DrawerTrigger } from "../atoms/drawer"
 import { LinkButton } from "../atoms/link-button"
 import { DrawerPanel } from "../molecules/drawer-panel"
@@ -20,10 +20,20 @@ import { DrawerPopup } from "../molecules/drawer-popup"
 import { ThemeToggle } from "../molecules/theme-toggle"
 
 export type WebsiteMobileMenuProps = {
+  layoutControls?: React.ReactNode
+  triggerIcon?: React.ReactNode
+  triggerSize?: ButtonProps["size"]
+  triggerVariant?: ButtonProps["variant"]
   classNames?: { trigger?: string; popup?: string }
 }
 
-export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({ classNames }) => {
+export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
+  layoutControls,
+  triggerIcon: customTriggerIcon,
+  triggerSize = "icon-lg",
+  triggerVariant = "ghost",
+  classNames,
+}) => {
   const {
     Link,
     currentRoute,
@@ -52,21 +62,25 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({ classNames
     [],
   )
 
+  const triggerIcon = useMemo(() => {
+    if (isClient) {
+      return customTriggerIcon ?? <Menu className="size-6" />
+    } else {
+      return <Loader className="size-6 animate-spin text-foreground" />
+    }
+  }, [customTriggerIcon, isClient])
+
   return (
     <Drawer open={isOpen && currentBreakpoint === "sm"} onOpenChange={setIsOpen}>
       <DrawerTrigger
         disabled={!isClient}
         onClick={toggle}
-        render={<Button size="icon-lg" variant="ghost" />}
-        className={cn("md:hidden", classNames?.trigger)}
+        render={<Button size={triggerSize} variant={triggerVariant} />}
+        className={classNames?.trigger}
         aria-label={isOpen ? t`Close menu` : t`Open menu`}
         data-testid={MOBILE_MENU_TOGGLE_TESTID}
       >
-        {isClient ? (
-          <>{isOpen ? <X className="size-6" /> : <Menu className="size-6" />}</>
-        ) : (
-          <Loader className="size-6 animate-spin text-foreground" />
-        )}
+        {triggerIcon}
       </DrawerTrigger>
 
       <DrawerPopup
@@ -79,6 +93,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({ classNames
         <DrawerHeader className="flex-row items-center justify-center">
           <Link
             href={rootRoutePathname}
+            onClick={close}
             className={cn(`
               focus-visible:outline-ring focus-visible:outline-ring/50
               space-x-3 rounded-sm pr-1 flex w-fit items-center transition-opacity duration-200
@@ -157,6 +172,8 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({ classNames
                 })}
               </nav>
             )}
+
+            {layoutControls}
 
             <ThemeToggle
               testId={UI_THEME_MOBILE_TOGGLE_TESTID}

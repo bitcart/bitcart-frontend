@@ -17,7 +17,7 @@ export default function Page() {
   const { t } = useLingui()
 
   return (
-    <div className="bg-background pt-20 min-h-screen">
+    <div className="bg-background pt-4 min-h-screen">
       <div className="gap-8 max-w-4xl px-4 md:px-6 lg:px-8 py-8 mx-auto flex flex-col">
         <div className="flex justify-between">
           <LinkButton href="/" variant="ghost">

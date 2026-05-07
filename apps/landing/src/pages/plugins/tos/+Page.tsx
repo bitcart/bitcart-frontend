@@ -3,7 +3,7 @@ import { LinkButton } from "@bitcart/ui-kit/components"
 export default function Page() {
   return (
     <div className="bg-background min-h-screen">
-      <div className="max-w-4xl px-6 py-16 sm:px-8 lg:px-12 mx-auto">
+      <div className="max-w-4xl px-6 pb-16 md:pt-4 sm:px-8 lg:px-12 mx-auto">
         <div className="prose prose-gray dark:prose-invert text-muted-foreground max-w-none">
           <h1 className="text-3xl font-bold mb-8 pt-8 text-center">
             BITCART PAID PLUGINS TERMS OF SERVICE

@@ -1,4 +1,4 @@
-import { createOnPrerenderStart } from "@bitcart/vike-kit/lifecycle"
+import { createOnPrerenderStart } from "@bitcart/vike-kit/lifecycle/prerender-start"
 
 import { SUPPORTED_LOCALE_IDS } from "@/app.config"
 

@@ -1,12 +1,14 @@
 import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
 import { LAYOUT_CONTAINER_TESTID } from "@bitcart/qa"
+import { t } from "@lingui/core/macro"
 import { useIsClient } from "usehooks-ts"
 
-import { useCurrentBreakpoint } from "@/hooks"
+import { useCurrentBreakpoint, useSoftKeyboardTracker } from "@/hooks"
 import { LayoutContextProvider, ThemeProvider, type LayoutContextProviderProps } from "@/providers"
 import { type LayoutConfig } from "@/types"
 import { cn } from "@/utils"
 
+import { LinkButton } from "../atoms/link-button"
 import { ThemeToggle, ThemeToggleFallback } from "../molecules/theme-toggle"
 import { Toaster } from "../molecules/toaster"
 import { LocaleSelector, type LocaleSelectorProps } from "../organisms/locale-selector"
@@ -38,6 +40,8 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocale
   const isClient = useIsClient()
   const currentBreakpoint = useCurrentBreakpoint()
 
+  useSoftKeyboardTracker()
+
   return (
     <LayoutContextProvider isHydrated={isHydrated} layoutConfig={config} {...props}>
       <ThemeProvider>
@@ -46,7 +50,40 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocale
           data-is-hydrated={isHydrated}
           data-testid={LAYOUT_CONTAINER_TESTID}
         >
-          <WebsiteHeader>
+          <LinkButton
+            id="main-content-link"
+            href="#main-content"
+            size="lg"
+            className={cn(`
+              focus:bottom-3 focus:left-4
+              focus-visible:ring-foreground
+              hover:bg-primary
+              focus:bg-primary
+              md:focus:left-6 md:focus:h-10
+              lg:focus:left-8
+              important:px-6 important:py-3
+              focus:important:fixed
+              sr-only
+              focus:not-sr-only focus:z-50
+            `)}
+          >
+            {t`Skip to main content`}
+          </LinkButton>
+
+          <WebsiteMobileMenu
+            layoutControls={<LocaleSelector handleSelect={localeChangeHandler} />}
+            triggerSize="fab"
+            triggerVariant="fab"
+            classNames={{
+              trigger: `
+                md:hidden fixed z-40 bottom-[calc(env(safe-area-inset-bottom,0px)+var(--spacing)*4)]
+                right-4
+                [:root[data-soft-keyboard]_&]:hidden
+              `,
+            }}
+          />
+
+          <WebsiteHeader className="max-md:hidden">
             <WebsiteNavigationMenu
               className="md:flex hidden"
               inert={isClient && currentBreakpoint === "sm"}
@@ -58,15 +95,17 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocale
               <ThemeToggleFallback className="max-md:hidden" />
             )}
 
-            <LocaleSelector handleSelect={localeChangeHandler} />
-            <WebsiteMobileMenu />
+            <LocaleSelector
+              handleSelect={localeChangeHandler}
+              classNames={{ trigger: "max-md:hidden" }}
+            />
           </WebsiteHeader>
 
-          <main id="main-content" className="flex-1 focus:outline-none" tabIndex={-1}>
+          <main id="main-content" className="md:pt-16 flex-1 focus:outline-none" tabIndex={-1}>
             {children}
           </main>
 
-          <WebsiteFooter />
+          <WebsiteFooter classNames={{ root: "max-md:pb-16" }} />
         </div>
 
         <Toaster position="top-center" />

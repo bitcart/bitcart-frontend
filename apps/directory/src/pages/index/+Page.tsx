@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <div
       className={cn(`
-        pt-20 gap-8
+        pt-4 gap-8
         lg:gap-10
         max-w-7xl px-4
         md:px-6

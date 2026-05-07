@@ -63,6 +63,11 @@ export const createThemePersistenceTest: GenericE2ETestTemplate<WithPageCatalog>
 
     //* Set to light first, then dark (system -> light -> dark)
     await themeToggleTrigger.click()
+
+    await expect(
+      themeToggleTrigger.locator(getTestIdSelector(UI_THEME_ICON_LIGHT_TESTID)),
+    ).toBeVisible()
+
     await themeToggleTrigger.click()
     await expect(page.locator("html")).toHaveClass(/dark/)
 

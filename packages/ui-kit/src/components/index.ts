@@ -132,6 +132,7 @@ export {
 
 export {
   DropdownMenu,
+  DropdownMenuBackdrop,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -141,6 +142,7 @@ export {
   DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuTrigger,
+  type DropdownMenuBackdropProps,
   type DropdownMenuItemProps,
 } from "./atoms/dropdown-menu"
 
@@ -193,7 +195,12 @@ export {
   NavigationMenuPositioner,
 } from "./atoms/navigation-menu"
 
-export { Popover, PopoverContent, PopoverTrigger } from "./atoms/popover"
+export {
+  Popover,
+  PopoverTrigger,
+  PopoverBackdrop,
+  type PopoverBackdropProps,
+} from "./atoms/popover"
 
 export {
   Select,
@@ -240,9 +247,11 @@ export {
   DropdownMenuRadioItem,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
+  type DropdownMenuContentProps,
 } from "./molecules/dropdown-menu"
 
 export { NavigationMenu, NavigationMenuTrigger } from "./molecules/navigation-menu"
+export { PopoverContent, type PopoverContentProps } from "./molecules/popover"
 
 export {
   ScrollArea,

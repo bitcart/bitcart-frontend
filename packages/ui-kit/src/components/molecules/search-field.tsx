@@ -38,6 +38,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({
       </InputGroupAddon>
 
       <InputGroupInput
+        autoComplete="off"
         type="text"
         placeholder={placeholder}
         aria-label={placeholder}

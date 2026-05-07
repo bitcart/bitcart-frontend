@@ -5,6 +5,7 @@ export default defineConfig({
     "components/index": "src/components/index.ts",
     fonts: "src/fonts.ts",
     "hooks/index": "src/hooks/index.ts",
+    icons: "src/icons/index.ts",
     "providers/index": "src/providers/index.ts",
     types: "src/types.ts",
     "utils/index": "src/utils/index.ts",

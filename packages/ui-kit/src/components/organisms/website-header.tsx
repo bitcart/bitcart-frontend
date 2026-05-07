@@ -1,18 +1,15 @@
-import { t } from "@lingui/core/macro"
 import { useMemo } from "react"
 import { useIsClient } from "usehooks-ts"
 
-import { useCssRuntimeFeatureSupport, useLayoutContext } from "@/hooks"
-import { useWindowScrollThreshold } from "@/hooks/scroll"
+import { useCssRuntimeFeatureSupport, useLayoutContext, useWindowScrollThreshold } from "@/hooks"
 import { cn } from "@/utils"
 
-import { LinkButton } from "../atoms/link-button"
-
 export type WebsiteHeaderProps = {
+  className?: string
   children: React.ReactNode
 }
 
-export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ children }) => {
+export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, children }) => {
   const {
     Link,
 
@@ -59,31 +56,18 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ children }) => {
 
   return (
     <header
-      className={cn("glassy-header left-0 right-0 fixed z-40", {
-        "bg-transparent": !isCssScrollStateTrackable && isClient && !isScrolled,
-        "glassy shadow-lg": !isCssScrollStateTrackable && isClient && isScrolled,
-      })}
-    >
-      <LinkButton
-        id="main-content-link"
-        href="#main-content"
-        size="lg"
-        className={cn(`
-          focus:top-3 focus:left-4
-          focus-visible:ring-foreground
-          hover:bg-primary
-          focus:bg-primary
-          md:focus:left-6 md:focus:h-10
-          lg:focus:left-8
-          important:px-6 important:py-3
-          focus:important:absolute
-          sr-only
-          focus:not-sr-only focus:z-50
-        `)}
-      >
-        {t`Skip to main content`}
-      </LinkButton>
+      className={cn(
+        `inset-x-0 h-16 top-0 @document/scroll-top:glassy @document/scroll-top:shadow-lg fixed z-40`,
 
+        //* JS fallback for the browsers that don't ship `scroll-state` container queries yet.
+        {
+          "bg-transparent": isClient && !isCssScrollStateTrackable && !isScrolled,
+          glassy: isClient && !isCssScrollStateTrackable && isScrolled,
+        },
+
+        className,
+      )}
+    >
       <div className="max-w-8xl px-4 md:px-6 lg:px-8 mx-auto">
         <div className="h-16 flex items-center justify-between">
           <Link

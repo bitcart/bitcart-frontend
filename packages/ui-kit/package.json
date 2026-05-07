@@ -19,6 +19,10 @@
       "import": "./dist/hooks/index.js",
       "types": "./dist/hooks/index.d.ts"
     },
+    "./icons": {
+      "import": "./dist/icons.js",
+      "types": "./dist/icons.d.ts"
+    },
     "./providers": {
       "import": "./dist/providers/index.js",
       "types": "./dist/providers/index.d.ts"
@@ -68,6 +72,7 @@
     "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies"

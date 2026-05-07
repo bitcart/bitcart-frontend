@@ -70,9 +70,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
   }, [props.icon, props.message, statusCode])
 
   return (
-    <div
-      className={cn("pt-16 bg-background flex min-h-screen items-center justify-center", className)}
-    >
+    <div className={cn("bg-background flex min-h-screen items-center justify-center", className)}>
       <div className="max-w-lg px-4 md:px-6 text-center">
         <div className="mb-6 flex justify-center">
           <div className="p-4 bg-secondary rounded-full">{icon}</div>

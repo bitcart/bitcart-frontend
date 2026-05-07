@@ -1,3 +1,4 @@
+import { BitcartLogoIcon } from "@bitcart/ui-kit/icons"
 import type { LayoutConfig } from "@bitcart/ui-kit/types"
 import { type StaticLayoutMetadata } from "@bitcart/vike-kit/metadata"
 import { i18n } from "@lingui/core"
@@ -34,7 +35,8 @@ export const getLayoutConfig = (): LayoutConfig => ({
   brand: {
     name: BRAND_UMBRELLA_NAME,
     copyrightSinceYear: 2018,
-    logoImageSrc: "/icon.svg",
+    logoIcon: BitcartLogoIcon,
+    logoImageSrc: "/logo.svg",
     logoImageAltText: `${BRAND_UMBRELLA_NAME} ${t`logo`}`,
     projectCanonicalName: PROJECT_CANONICAL_NAME,
     tagline: t`Discover businesses that accept cryptocurrency payments through Bitcart. Find merchants, restaurants, and services that support crypto transactions.`,

@@ -18,10 +18,12 @@ import { DropdownMenuContent } from "../molecules/dropdown-menu"
 
 export type LocaleSelectorProps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = {
   handleSelect: (localeId: TSupportedLocaleId, callback?: VoidFunction) => void
+  classNames?: { trigger?: string }
 }
 
 export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   handleSelect,
+  classNames,
 }: LocaleSelectorProps<TSupportedLocaleId>) => {
   const {
     layoutConfig: {
@@ -40,6 +42,7 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocal
     <DropdownMenu>
       <DropdownMenuTrigger
         render={<Button variant="ghost" />}
+        className={classNames?.trigger}
         aria-label={t`Select language`}
         data-testid={LOCALE_SELECTOR_TRIGGER_TESTID}
       >

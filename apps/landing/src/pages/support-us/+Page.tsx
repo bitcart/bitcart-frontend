@@ -83,7 +83,7 @@ export default function Page() {
   ]
 
   return (
-    <div className="bg-background pt-16 min-h-screen">
+    <div className="bg-background min-h-screen">
       <Hero />
       <SupportersSection data={supporters} />
       <BenefitsSection data={supportBenefits} />

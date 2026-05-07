@@ -4,55 +4,33 @@ import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
 
 import { cn } from "@/utils"
 
-export const Popover = ({ ...props }: PopoverPrimitive.Root.Props) => {
-  return <PopoverPrimitive.Root data-slot="popover" {...props} />
+export type PopoverProps = PopoverPrimitive.Root.Props & {}
+
+export const Popover: React.FC<PopoverProps> = ({ modal: isModal = true, ...props }) => {
+  return <PopoverPrimitive.Root modal={isModal} data-slot="popover" {...props} />
 }
 
 export const PopoverTrigger = ({ ...props }: PopoverPrimitive.Trigger.Props) => {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
 }
 
-export const PopoverContent = ({
-  className,
-  align = "center",
-  alignOffset = 0,
-  side = "bottom",
-  sideOffset = 4,
-  ...props
-}: PopoverPrimitive.Popup.Props &
-  Pick<PopoverPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) => {
+export type PopoverBackdropProps = PopoverPrimitive.Backdrop.Props & {}
+
+export const PopoverBackdrop: React.FC<PopoverBackdropProps> = ({ className, ...props }) => {
   return (
-    <PopoverPrimitive.Portal>
-      <PopoverPrimitive.Positioner
-        align={align}
-        alignOffset={alignOffset}
-        side={side}
-        sideOffset={sideOffset}
-        className="isolate z-50"
-      >
-        <PopoverPrimitive.Popup
-          data-slot="popover-content"
-          className={cn(
-            `
-              bg-popover text-popover-foreground
-              data-closed:fade-out-0
-              data-open:fade-in-0
-              data-closed:zoom-out-95
-              data-open:zoom-in-95
-              data-[side=bottom]:slide-in-from-top-2
-              data-[side=left]:slide-in-from-right-2
-              data-[side=right]:slide-in-from-left-2
-              data-[side=top]:slide-in-from-bottom-2
-              w-72 rounded-md p-4 shadow-md
-              data-open:animate-in
-              data-closed:animate-out
-              z-50 origin-[--transform-origin] border outline-hidden
-            `,
-            className,
-          )}
-          {...props}
-        />
-      </PopoverPrimitive.Positioner>
-    </PopoverPrimitive.Portal>
+    <PopoverPrimitive.Backdrop
+      className={cn(
+        `
+          inset-0 bg-black/32 absolute z-50 transition-opacity duration-450
+          ease-[cubic-bezier(0.32,0.72,0,1)]
+          data-[ending-style]:opacity-0
+          data-[starting-style]:opacity-0
+        `,
+
+        className,
+      )}
+      data-slot="popover-backdrop"
+      {...props}
+    />
   )
 }

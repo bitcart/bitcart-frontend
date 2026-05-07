@@ -26,9 +26,9 @@ export type A11yAwareLinkProps =
     }
 
 /**
- * Framework-agnostic route bindings.
+ * Framework-agnostic client route bindings.
  */
-export type RouteBindings = {
+export type ClientRoute = {
   /**
    * Only available on the client, will be `null` on the server.
    */
@@ -40,7 +40,7 @@ export type RouteBindings = {
   pathname: InternalHref
 
   /**
-   * {@link RouteBindings.pathname} appended with the hash fragment.
+   * {@link ClientRoute.pathname} appended with the hash fragment.
    */
   pathnameWithHash: InternalHref
 }

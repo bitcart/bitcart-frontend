@@ -12,6 +12,30 @@ export const DropdownMenuPortal = ({ ...props }: MenuPrimitive.Portal.Props) => 
   return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />
 }
 
+export type DropdownMenuBackdropProps = MenuPrimitive.Backdrop.Props & {}
+
+export const DropdownMenuBackdrop: React.FC<DropdownMenuBackdropProps> = ({
+  className,
+  ...props
+}) => {
+  return (
+    <MenuPrimitive.Backdrop
+      className={cn(
+        `
+          inset-0 bg-black/32 absolute z-50 transition-opacity duration-450
+          ease-[cubic-bezier(0.32,0.72,0,1)]
+          data-[ending-style]:opacity-0
+          data-[starting-style]:opacity-0
+        `,
+
+        className,
+      )}
+      data-slot="dropdown-menu-backdrop"
+      {...props}
+    />
+  )
+}
+
 export const DropdownMenuTrigger = ({ ...props }: MenuPrimitive.Trigger.Props) => {
   return <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />
 }

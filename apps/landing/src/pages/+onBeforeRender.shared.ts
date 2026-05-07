@@ -1,5 +1,5 @@
 import { createLoadCatalog } from "@bitcart/vike-kit/i18n"
-import { createOnBeforeRender } from "@bitcart/vike-kit/lifecycle"
+import { createOnBeforeRender } from "@bitcart/vike-kit/lifecycle/before-render"
 
 import { POSIX_LOCALE_ID_MAP } from "@/app.config"
 import { ENV_TAG, PRODUCTION_BASE_URL } from "@/common/constants"

@@ -44,7 +44,7 @@ export const DrawerPopup: React.FC<DrawerPopupProps> = ({
               min-h-0 min-w-0 bg-popover text-popover-foreground shadow-lg/5
               before:inset-0
               after:bg-popover
-              relative flex max-h-full w-full flex-col
+              relative flex max-h-full w-full touch-none flex-col
               transition-[transform,box-shadow,height,background-color] duration-450
               ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform outline-none
               [--peek:calc(var(--spacing)*6-1px)]
@@ -65,8 +65,6 @@ export const DrawerPopup: React.FC<DrawerPopupProps> = ({
               dark:before:shadow-[0_-1px_white/6%]
               dark:data-nested-drawer-open:bg-[color-mix(in_srgb,var(--popover),var(--color-black)_calc(6%*(var(--nested-drawers)-var(--stack-progress))))]
             `,
-
-            "touch-none",
 
             {
               [`
@@ -229,6 +227,20 @@ export const DrawerPopup: React.FC<DrawerPopupProps> = ({
 
           {showBar && <DrawerBar />}
         </DrawerPrimitive.Popup>
+
+        {/*
+          Mobile browser toolbar shield.
+          Extends 100px below the viewport edge, giving any "levitating" browser
+          toolbar (iOS 26 Liquid Glass, etc.) an opaque `--background` surface.
+        */}
+        <div
+          aria-hidden
+          className={cn(`
+            md:hidden
+            bg-background h-25 mb--25 pointer-events-none fixed
+            bottom-[env(safe-area-inset-bottom,0px)] z-51 w-full
+          `)}
+        />
       </DrawerViewport>
     </DrawerPortal>
   )

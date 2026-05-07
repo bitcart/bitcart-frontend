@@ -5,17 +5,26 @@ import { CheckIcon, ChevronRightIcon } from "lucide-react"
 
 import { cn } from "@/utils"
 
-export const DropdownMenuContent = ({
+import { DropdownMenuBackdrop } from "../atoms/dropdown-menu"
+
+export type DropdownMenuContentProps = MenuPrimitive.Popup.Props &
+  Pick<MenuPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset"> & {
+    keepPortalMounted?: boolean
+  }
+
+export const DropdownMenuContent: React.FC<DropdownMenuContentProps> = ({
   className,
   align = "start",
   alignOffset = 0,
+  keepPortalMounted = true,
   side = "bottom",
   sideOffset = 4,
   ...props
-}: MenuPrimitive.Popup.Props &
-  Pick<MenuPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) => {
+}) => {
   return (
-    <MenuPrimitive.Portal>
+    <MenuPrimitive.Portal keepMounted={keepPortalMounted}>
+      <DropdownMenuBackdrop />
+
       <MenuPrimitive.Positioner
         className="isolate z-50 outline-none"
         align={align}

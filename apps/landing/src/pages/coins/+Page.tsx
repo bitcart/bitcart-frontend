@@ -14,7 +14,7 @@ const LoadingFallback = () => {
   const { t } = useLingui()
 
   return (
-    <div className="bg-background pt-16 flex min-h-screen items-center justify-center">
+    <div className="bg-background flex min-h-screen items-center justify-center">
       <div className="px-4 text-center">
         <Loader className="size-12 text-accent-foreground animate-spin mb-4 mx-auto" />
         <h2 className="text-xl sm:text-2xl font-semibold mb-2">{t`Loading Supported Coins`}</h2>
@@ -31,7 +31,7 @@ const ErrorFallback = ({ retry, error }: { retry: () => void; error: { message: 
   const { t } = useLingui()
 
   return (
-    <div className="bg-background pt-16 flex min-h-screen items-center justify-center">
+    <div className="bg-background flex min-h-screen items-center justify-center">
       <div className="max-w-md px-4 text-center">
         <AlertCircle className="size-12 text-destructive-foreground mb-4 mx-auto" />
         <h2 className="text-xl sm:text-2xl font-semibold mb-2">{t`Error Loading Data`}</h2>
@@ -46,7 +46,7 @@ function Page() {
   const coinCatalogLookup = useCoinCatalogLookup()
 
   return (
-    <div className="bg-background pt-16 min-h-screen">
+    <div className="bg-background min-h-screen">
       <Hero
         searchTerm={coinCatalogLookup.searchTerm}
         setSearchTerm={coinCatalogLookup.setSearchTerm}

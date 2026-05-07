@@ -12,9 +12,10 @@ import { getColorScheme } from "./color-scheme"
 import { BREAKPOINTS, DEFAULT_BASE_RADIUS_REM, PRESET_NAME } from "./constants"
 import { extractorNestedArbitraryVariants } from "./extractors"
 import {
+  BREAKPOINT_PREFLIGHT,
+  GENERAL_PREFLIGHT,
+  MODAL_BLUR_SUPPRESSION_PREFLIGHT,
   createGetRadiusCSSVariables,
-  getBreakpointCSSVariables,
-  getPreflightCSS,
 } from "./preflights"
 import type { PresetBitcart, PresetBitcartOptions } from "./types"
 import { variants } from "./variants"
@@ -61,10 +62,10 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
     },
 
     preflights: [
-      { getCSS: getPreflightCSS },
+      GENERAL_PREFLIGHT,
       { getCSS: createGetRadiusCSSVariables(baseRadiusRem) },
-      { getCSS: getBreakpointCSSVariables },
-
+      BREAKPOINT_PREFLIGHT,
+      MODAL_BLUR_SUPPRESSION_PREFLIGHT,
       ...additionalPreflights,
     ],
 
@@ -72,11 +73,15 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
 
     shortcuts: {
       "elevation-none": "shadow-none",
-      "elevation-1": "shadow-sm hover:shadow-md transition-shadow duration-200",
-      "elevation-2": "shadow-md hover:shadow-lg transition-shadow duration-200",
-      "elevation-3": "shadow-lg hover:shadow-xl transition-shadow duration-200",
-      "elevation-4": "shadow-xl hover:shadow-2xl transition-shadow duration-200",
+      "elevation-1": "shadow-sm hover:shadow-md active:shadow-sm transition-shadow duration-200",
+      "elevation-2": "shadow-md hover:shadow-lg active:shadow-md transition-shadow duration-200",
+      "elevation-3": "shadow-lg hover:shadow-xl active:shadow-lg transition-shadow duration-200",
+      "elevation-4": "shadow-xl hover:shadow-2xl active:shadow-xl transition-shadow duration-200",
       "text-size-inherit": "font-size-inherit",
+      glassy: "bg-background/50 backdrop-blur-12",
+
+      "shadow-t-lg":
+        "shadow-[0_-10px_15px_-3px_var(--un-shadow-color,rgb(0_0_0/0.1)),0_-4px_6px_-4px_var(--un-shadow-color,rgb(0_0_0/0.1))]",
     },
 
     rules: [

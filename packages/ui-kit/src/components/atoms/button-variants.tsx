@@ -11,7 +11,7 @@ export const buttonVariants = cva(
       focus-visible:outline-ring
       inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap
       transition-all duration-200 outline-none
-      focus-visible:ring-[3px] focus-visible:outline-2
+      focus-visible:ring-3 focus-visible:outline-2
       disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
       [&_svg]:pointer-events-none [&_svg]:shrink-0
     `,
@@ -68,6 +68,20 @@ export const buttonVariants = cva(
           hover:underline
           focus:underline
         `,
+
+        //* Floating Action Button
+        fab: `
+          not-active:glassy
+          text-foreground
+          focus-visible:ring-foreground
+          active:ring-foreground
+          border-input/80 elevation-2 shadow-foreground/25 border-b-none
+          active:bg-background
+          border-1
+          focus-visible:border-none
+          active:border-none
+          disabled:border-none disabled:opacity-100
+        `,
       },
 
       size: {
@@ -107,9 +121,14 @@ export const buttonVariants = cva(
           [&_svg:not-[class*='size-']]:md:size-5
         `,
 
-        "icon-sm": "p-2 gap-2 size-8 rounded-md [&_svg:not-[class*='size-']]:size-3",
-        icon: "p-2 gap-2 size-9 rounded-md [&_svg:not-[class*='size-']]:size-4",
-        "icon-lg": "p-2 gap-2 size-10 rounded-md [&_svg:not-[class*='size-']]:size-5",
+        "icon-sm": "p-2 size-8 rounded-md [&_svg:not-[class*='size-']]:size-3",
+        icon: "p-2 size-9 rounded-md [&_svg:not-[class*='size-']]:size-4",
+        "icon-lg": "p-2 size-10 rounded-md [&_svg:not-[class*='size-']]:size-5",
+
+        //* Floating Action Button
+        //* See https://m3.material.io/components/floating-action-button/specs
+        "fab-sm": "size-14 [&_svg]:size-6 rounded-4",
+        fab: "size-20 [&_svg]:size-7 rounded-5",
       },
     },
 

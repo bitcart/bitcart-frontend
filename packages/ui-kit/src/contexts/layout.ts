@@ -1,4 +1,4 @@
-import type { InternalHref, RouteBindings } from "@bitcart/core/types"
+import type { InternalHref, ClientRoute } from "@bitcart/core/types"
 import { createContext } from "react"
 
 import type {
@@ -10,7 +10,7 @@ import type {
 
 export type LayoutContextValue = {
   Link: BasicLinkComponent
-  currentRoute: RouteBindings
+  currentRoute: ClientRoute
   isHydrated: boolean
 
   layoutConfig: LayoutConfig & {

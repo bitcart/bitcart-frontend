@@ -18,22 +18,28 @@ export const Hero = () => {
     <section
       aria-labelledby="hero-heading"
       className={cn(`
-        from-purple-50 via-white to-purple-100 pt-20 pb-8
-        md:pb-16
+        from-purple-50 via-white to-purple-100 pb-8
+        md:py-16 md:mt--16
+        max-md:pt-4
         dark:from-gray-900 dark:via-gray-900 dark:to-gray-800
         relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br
       `)}
     >
-      <div
-        aria-hidden="true"
-        className="inset-0 absolute overflow-hidden"
-        style={{
-          background: `
-            radial-gradient(circle 280px at calc(100% + 40px) -40px, color-mix(in srgb, var(--colors-purple-400) 20%, transparent), transparent 70%),
-            radial-gradient(circle 280px at -40px calc(100% + 40px), color-mix(in srgb, var(--colors-purple-500) 20%, transparent), transparent 70%)
-          `,
-        }}
-      />
+      <div aria-hidden="true" className="inset-0 absolute overflow-hidden">
+        <div
+          className={cn(`
+            -top-40 -right-40 w-80 h-80 from-purple-400/20 to-purple-500/20 blur-3xl absolute
+            rounded-full bg-linear-to-r
+          `)}
+        ></div>
+
+        <div
+          className={cn(`
+            -bottom-40 -left-40 w-80 h-80 from-purple-500/20 to-purple-400/20 blur-3xl absolute
+            rounded-full bg-linear-to-r
+          `)}
+        ></div>
+      </div>
 
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 relative mx-auto w-full text-center">
         <Announcement className="mb-8 md:mb-12" />

@@ -44,7 +44,54 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
 
     return (
       <>
+        {/*
+          On a hard reload of a hashed URL, browsers compete the
+          session-history scroll restore with the fragment scroll, producing
+          a visible jump-to-anchor-then-back blink. We opt out of session
+          restoration when a hash is present and scroll to the anchor
+          ourselves on DOMContentLoaded, which makes the browser skip its native
+          fragment scroll once `scrollRestoration` is `'manual'`. Non-hashed URLs
+          keep the default `'auto'` behavior, so refresh-on-scrolled-page
+          still restores the prior position.
+
+          We also hide `<html>` until our scroll has run, which masks the
+          flash on engines (e.g. Orion iOS) that still session-restore
+          briefly before honoring `scrollRestoration = 'manual'`.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: /* js */ `
+              if (location.hash && "scrollRestoration" in history) {
+                history.scrollRestoration = "manual";
+                document.documentElement.style.visibility = "hidden";
+
+                const show = function () {
+                  document.documentElement.style.visibility = "";
+                };
+
+                addEventListener("DOMContentLoaded", function () {
+                  try {
+                    document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();
+                  } finally {
+                    show();
+                  }
+                });
+
+                setTimeout(show, 1000);
+              }
+            `
+              .replace(/\s+/g, " ")
+              .trim(),
+          }}
+        />
+
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
+        />
+
         <meta name="description" content={metadata.description} />
         <meta name="og:description" content={metadata.description} />
         <meta name="twitter:title" content={metadata.title} />

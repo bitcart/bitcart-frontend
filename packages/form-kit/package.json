@@ -34,6 +34,7 @@
     "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies"
   }

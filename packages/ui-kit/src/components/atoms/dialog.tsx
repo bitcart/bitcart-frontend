@@ -29,7 +29,7 @@ export const DialogOverlay = ({ className, ...props }: DialogPrimitive.Backdrop.
           data-open:animate-in
           data-closed:animate-out data-closed:fade-out-0
           data-open:fade-in-0
-          inset-0 bg-black/50 fixed z-50
+          inset-0 bg-black/50 absolute z-50
         `,
         className,
       )}

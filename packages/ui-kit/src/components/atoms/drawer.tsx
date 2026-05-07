@@ -93,14 +93,13 @@ export const DrawerBackdrop: React.FC<DrawerBackdropProps> = ({ className, ...pr
     <DrawerPrimitive.Backdrop
       className={cn(
         `
-          inset-0 bg-black/32 backdrop-blur-sm fixed z-50
+          inset-0 bg-black/32 backdrop-blur-sm absolute z-50
           opacity-[calc(1-var(--drawer-swipe-progress))] transition-opacity duration-450
           ease-[cubic-bezier(0.32,0.72,0,1)]
           data-ending-style:opacity-0
           data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)]
           data-starting-style:opacity-0
           data-swiping:duration-0
-          supports-[-webkit-touch-callout:none]:absolute
         `,
 
         className,
