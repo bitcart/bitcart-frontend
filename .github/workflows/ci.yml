@@ -61,6 +61,9 @@ jobs:
       - name: Install just
         run: uv pip install rust-just
 
+      - name: Configure Fast APT Mirror
+        uses: bitcart/bitcart-actions/actions/fast-apt-mirror@master
+
       - run: just e2e-setup
 
       - run: just e2e
