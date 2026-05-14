@@ -1,9 +1,14 @@
 import { isEmptyish } from "remeda"
-import { preprocess, type ZodOptional, type ZodString, type ZodURL } from "zod"
+import { pipe, string, type ZodOptional, type ZodString, type ZodURL } from "zod"
 
-export const emptyAsUndefined = (schema: ZodOptional<ZodString | ZodURL>) =>
-  preprocess((value: string | undefined) => {
-    if (isEmptyish(value)) {
-      return undefined
-    } else return value
-  }, schema)
+export const emptyAsUndefined = <T extends ZodOptional<ZodString | ZodURL>>(schema: T) =>
+  pipe(
+    string()
+      .optional()
+      .transform((value) => {
+        if (isEmptyish(value)) {
+          return undefined
+        } else return value
+      }),
+    schema,
+  )

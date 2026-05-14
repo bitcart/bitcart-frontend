@@ -32,7 +32,10 @@ export const reactOxlintConfig = defineConfig({
     "jsx-a11y/no-noninteractive-tabindex": "warn",
     "jsx-a11y/no-redundant-roles": "warn",
     "jsx-a11y/no-static-element-interactions": "warn",
-    "jsx-a11y/prefer-tag-over-role": "warn",
+
+    //* Gives too many false positives
+    "jsx-a11y/prefer-tag-over-role": "off",
+
     "jsx-a11y/role-has-required-aria-props": "error",
     "jsx-a11y/role-supports-aria-props": "error",
     "jsx-a11y/scope": "error",
