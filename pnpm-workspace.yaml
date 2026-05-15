@@ -60,7 +60,7 @@ catalogs:
     oxlint: 1.64.0
     oxlint-tsgolint: 0.22.1
     tailwindcss: 4.2.4
-    tsdown: 0.21.10
+    tsdown: 0.22.0
     tsx: 4.21.0
     typescript: 6.0.3
     unocss: 66.6.8
@@ -82,12 +82,14 @@ minimumReleaseAgeExclude:
   - oxlint
   - oxlint-tsgolint
   - "@base-ui/*"
+  # Remove when 7 days passed since 5.8.1
+  - "devalue"
 
 overrides:
   #! vike-react-query pins devalue to 4.x, but 4.x has vulnerabilities
   #! 5.x is backwards-compatible in practice.
   # TODO: Remove this override once vike-react-query updates its devalue dependency.
-  devalue: ^5.0.0
+  devalue: ^5.8.1
   #! nx@22.7.x bundles vulnerable versions of these transitive deps.
   #! Override to force patched versions.
   # TODO: Remove these overrides once nx upgrades its bundled dependencies.
