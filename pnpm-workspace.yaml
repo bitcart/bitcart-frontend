@@ -97,3 +97,14 @@ overrides:
   yaml: ^2.8.3
   follow-redirects: ^1.16.0
   axios: ^1.15.2
+
+peerDependencyRules:
+  allowedVersions:
+    #! @qalisa/vike-plugin-sitemap@1.7.0 still declares `vite: ^6`, but its
+    #! source only uses stable Vite plugin APIs and works fine on vite 8.
+    # TODO: Remove once upstream widens the peer range (https://github.com/Qalisa/vike-plugin-sitemap)
+    "@qalisa/vike-plugin-sitemap>vite": "8"
+    #! @web3icons/common ships pre-compiled .d.ts files; the `typescript: ^5`
+    #! peer is purely a declared range and TS 6 consumes the types fine.
+    # TODO: Remove once upstream widens the peer range (https://github.com/0xa3k5/web3icons)
+    "@web3icons/common>typescript": "6"
