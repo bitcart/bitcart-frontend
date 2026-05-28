@@ -1,8 +1,8 @@
 //* Ported from: https://ui.shadcn.com
 
+import { DayPicker, getDefaultClassNames, type CustomComponents } from "@daypicker/react"
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { useMemo } from "react"
-import { DayPicker, getDefaultClassNames, type CustomComponents } from "react-day-picker"
 
 import { cn } from "@/utils"
 
