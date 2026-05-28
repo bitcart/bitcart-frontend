@@ -10,63 +10,63 @@ catalogMode: strict
 
 catalogs:
   dependencies:
-    "@base-ui/react": 1.4.1
+    "@base-ui/react": 1.5.0
     "@lingui/core": 6.0.1
     "@lingui/react": 6.0.1
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
-    "@tanstack/react-form": 1.29.1
-    "@tanstack/react-query": 5.100.9
+    "@tanstack/react-form": 1.32.0
+    "@tanstack/react-query": 5.100.11
     "@web3icons/react": 4.1.17
     class-variance-authority: 0.7.1
     dotenv: 17.4.2
     effect: 3.21.2
     inter-ui: 4.1.1
-    lucide-react: 1.14.0
+    lucide-react: 1.16.0
     next-themes: 0.4.6
     react: 19.2.6
     react-day-picker: 9.14.0
     react-dom: 19.2.6
-    remeda: 2.34.0
+    remeda: 2.34.1
     sonner: 2.0.7
-    tailwind-merge: 3.5.0
+    tailwind-merge: 3.6.0
     usehooks-ts: 3.1.1
     vike: 0.4.259
-    vike-react: 0.6.21
+    vike-react: 0.6.23
     vike-react-query: 0.1.12
     zod: 4.4.3
   devDependencies:
-    "@effect/language-service": 0.85.1
+    "@effect/language-service": 0.86.2
     "@lingui/babel-plugin-lingui-macro": 6.0.1
     "@lingui/cli": 6.0.1
     "@lingui/conf": 6.0.1
     "@lingui/vite-plugin": 6.0.1
-    "@playwright/test": 1.59.1
+    "@playwright/test": 1.60.0
     "@qalisa/vike-plugin-sitemap": 1.7.0
     "@rolldown/plugin-babel": 0.2.3
     "@stylistic/eslint-plugin": 5.10.0
-    "@types/node": 25.6.0
-    "@types/react": 19.2.14
+    "@types/node": 25.9.1
+    "@types/react": 19.2.15
     "@types/react-dom": 19.2.3
     "@unocss/cli": 66.6.8
-    "@vitejs/plugin-react": 6.0.1
+    "@vitejs/plugin-react": 6.0.2
     babel-plugin-react-compiler: 1.0.0
     dependency-cruiser: 17.4.0
     eslint-plugin-better-tailwindcss: 4.5.0
     eslint-plugin-react-hooks: 7.1.1
-    knip: 6.12.0
-    nx: 22.7.1
-    oxfmt: 0.49.0
-    oxlint: 1.64.0
-    oxlint-tsgolint: 0.22.1
-    tailwindcss: 4.2.4
+    knip: 6.14.1
+    nx: 22.7.2
+    oxfmt: 0.52.0
+    oxlint: 1.67.0
+    oxlint-tsgolint: 0.23.0
+    tailwindcss: 4.3.0
     tsdown: 0.22.0
-    tsx: 4.21.0
+    tsx: 4.22.3
     typescript: 6.0.3
     unocss: 66.6.8
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
-    vite: 8.0.11
+    vite: 8.0.13
     vite-plugin-static-copy: 4.1.0
 
 linkWorkspacePackages: true
@@ -82,8 +82,8 @@ minimumReleaseAgeExclude:
   - oxlint
   - oxlint-tsgolint
   - "@base-ui/*"
-  # Remove when 7 days passed since 5.8.1
-  - "devalue"
+  # Remove when 7 days passed since 0.2.7
+  - "tmp"
 
 overrides:
   #! vike-react-query pins devalue to 4.x, but 4.x has vulnerabilities
@@ -97,6 +97,7 @@ overrides:
   yaml: ^2.8.3
   follow-redirects: ^1.16.0
   axios: ^1.15.2
+  tmp: ^0.2.6
 
 peerDependencyRules:
   allowedVersions:
