@@ -9,7 +9,7 @@ import React, { useCallback, useMemo, useRef, useState } from "react"
 import { isEmptyish } from "remeda"
 import { useIsClient } from "usehooks-ts"
 
-import { useCurrentBreakpoint, useLayoutContext } from "@/hooks"
+import { useArrowKeyNavigation, useCurrentBreakpoint, useLayoutContext } from "@/hooks"
 import { cn } from "@/utils"
 
 import { Button, type ButtonProps } from "../atoms/button"
@@ -49,6 +49,8 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
   const isClient = useIsClient()
   const currentBreakpoint = useCurrentBreakpoint()
   const popupRef = useRef<HTMLDivElement>(null)
+  const labeledNavRef = useArrowKeyNavigation({ prevKey: "ArrowUp", nextKey: "ArrowDown" })
+  const iconNavRef = useArrowKeyNavigation({ prevKey: "ArrowLeft", nextKey: "ArrowRight" })
   const [isOpen, setIsOpen] = useState(false)
   const toggle = useCallback(() => setIsOpen((state) => !state), [])
   const close = useCallback(() => setIsOpen(false), [])
@@ -95,10 +97,12 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
             href={rootRoutePathname}
             onClick={close}
             className={cn(`
-              focus-visible:outline-ring focus-visible:outline-ring/50
-              space-x-3 rounded-sm pr-1 flex w-fit items-center transition-opacity duration-200
-              hover:opacity-80
-              focus-visible:outline-offset-4
+              focus-visible:outline-ring/90
+              gap-3 rounded-lg p-1 px-2
+              focus-visible:text-accent-foreground
+              hover:text-accent-foreground
+              flex w-fit items-center
+              focus-visible:outline-3
             `)}
           >
             <div className="size-10 flex items-center justify-center">
@@ -110,7 +114,11 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
         </DrawerHeader>
 
         <DrawerPanel scrollFade={false} data-testid={MOBILE_MENU_CONTENT_TESTID}>
-          <nav className="gap-2 flex w-full flex-col" aria-label={t`Navigation`}>
+          <nav
+            ref={labeledNavRef}
+            className="gap-2 flex w-full flex-col"
+            aria-label={t`Navigation`}
+          >
             {labeledLinks.map((link) => {
               const a11yAwareLinkProps = link.isExternal
                 ? { href: link.href, isExternalLink: true as const }
@@ -140,7 +148,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
         <DrawerFooter className="bg-transparent">
           <div
             className={cn(
-              "gap-4 pt-2 flex w-full items-center",
+              "gap-4 flex w-full items-center",
 
               {
                 "justify-end": isEmptyish(iconLinks),
@@ -149,7 +157,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
             )}
           >
             {!isEmptyish(iconLinks) && (
-              <nav className="gap-4 flex" aria-label={t`Other links`}>
+              <nav ref={iconNavRef} className="gap-4 flex" aria-label={t`Other links`}>
                 {iconLinks?.map(({ icon: Icon, ...link }) => {
                   const a11yAwareLinkProps = link.isExternal
                     ? { href: link.href, isExternalLink: true as const }

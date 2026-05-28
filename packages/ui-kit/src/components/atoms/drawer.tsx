@@ -74,10 +74,14 @@ export const DrawerSwipeArea: React.FC<DrawerSwipeAreaProps> = ({
     <DrawerPrimitive.SwipeArea
       className={cn(
         "fixed z-50 touch-none",
-        { "inset-x-0 bottom-0 h-8": position === "bottom" },
-        { "inset-x-0 top-0 h-8": position === "top" },
-        { "inset-y-0 left-0 w-8": position === "left" },
-        { "inset-y-0 right-0 w-8": position === "right" },
+
+        {
+          "inset-x-0 bottom-0 h-8": position === "bottom",
+          "inset-x-0 top-0 h-8": position === "top",
+          "inset-y-0 left-0 w-8": position === "left",
+          "inset-y-0 right-0 w-8": position === "right",
+        },
+
         className,
       )}
       data-slot="drawer-swipe-area"
@@ -124,15 +128,21 @@ export const DrawerViewport: React.FC<DrawerViewportProps> = ({
   return (
     <DrawerPrimitive.Viewport
       className={cn(
-        "inset-0 fixed z-50 [--bleed:calc(var(--spacing)*12)] [--inset:calc(var(--spacing)*0)]",
-        "touch-none",
-        { "pt-12 grid grid-rows-[1fr_auto]": position === "bottom" },
-        { "pb-12 grid grid-rows-[auto_1fr]": position === "top" },
-        { "flex justify-start": position === "left" },
-        { "flex justify-end": position === "right" },
-        { "sm:[--inset:calc(var(--spacing)*4)] px-[--inset]": variant === "inset" },
-        { "pt-[--inset]": variant === "inset" && position !== "bottom" },
-        { "pb-[--inset]": variant === "inset" && position !== "top" },
+        `
+          inset-0 fixed z-50 touch-none [--bleed:calc(var(--spacing)*12)]
+          [--inset:calc(var(--spacing)*0)]
+        `,
+
+        {
+          "pt-12 grid grid-rows-[1fr_auto]": position === "bottom",
+          "pb-12 grid grid-rows-[auto_1fr]": position === "top",
+          "flex justify-start": position === "left",
+          "flex justify-end": position === "right",
+          "sm:[--inset:calc(var(--spacing)*4)] px-[--inset]": variant === "inset",
+          "pt-[--inset]": variant === "inset" && position !== "bottom",
+          "pb-[--inset]": variant === "inset" && position !== "top",
+        },
+
         className,
       )}
       data-slot="drawer-viewport"
@@ -193,14 +203,10 @@ export const DrawerFooter: React.FC<DrawerFooterProps> = ({
         flex flex-col-reverse pb-[env(safe-area-inset-bottom,0px)]
       `,
 
-      { "cursor-default": !allowSelection },
-
       {
-        "bg-muted/72 pt-4 border-t pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing)*4)]":
-          variant === "default",
-      },
+        "cursor-default": !allowSelection,
+        "bg-muted/72 py-6 border-t": variant === "default",
 
-      {
         [`
           in-[[data-slot=drawer-popup]:has([data-slot=drawer-panel])]:pt-3
           pt-4 pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing)*6)]
@@ -267,12 +273,12 @@ export const DrawerBar: React.FC<DrawerBarProps> = ({
       {
         "inset-y-0 before:h-12 before:w-1": horizontal,
         "inset-x-0 before:h-1 before:w-12": !horizontal,
+        "bottom-0": position === "top",
+        "top-0": position === "bottom",
+        "right-0": position === "left",
+        "left-0": position === "right",
       },
 
-      { "bottom-0": position === "top" },
-      { "top-0": position === "bottom" },
-      { "right-0": position === "left" },
-      { "left-0": position === "right" },
       className,
     ),
 
@@ -486,6 +492,7 @@ export const DrawerMenuCheckboxItem: React.FC<DrawerMenuCheckboxItemProps> = ({
           <span className="col-start-1">{children}</span>
 
           <CheckboxPrimitive.Indicator
+            keepMounted
             className={cn(`
               focus-visible:ring-ring focus-visible:ring-offset-background
               data-checked:bg-primary
@@ -498,7 +505,6 @@ export const DrawerMenuCheckboxItem: React.FC<DrawerMenuCheckboxItemProps> = ({
               focus-visible:ring-2 focus-visible:ring-offset-1
               data-disabled:opacity-64
             `)}
-            keepMounted
           >
             <span
               className={cn(`

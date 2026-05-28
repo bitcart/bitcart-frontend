@@ -73,11 +73,15 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, childre
           <Link
             href={rootRoutePathname}
             className={cn(`
-              focus-visible:outline-ring focus-visible:outline-ring/50
-              space-x-3 rounded-sm pr-1 flex items-center transition-opacity duration-200
-              hover:opacity-80
-              focus-visible:outline-offset-4
-              [header:has(>#main-content-link:focus)_&]:opacity-0
+              rounded-lg p-1 px-2 text-foreground
+              hover:text-accent-foreground
+              focus-visible:text-accent-foreground
+              transition-scale gap-3
+              focus-visible:outline-ring/90
+              flex items-center duration-200
+              hover:scale-105
+              focus-visible:outline-3
+              [#root:has(#main-content-link:focus)_&]:opacity-0
             `)}
           >
             <div className="size-10 flex items-center justify-center">

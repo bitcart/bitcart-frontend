@@ -40,8 +40,14 @@ export const DropdownMenuTrigger = ({ ...props }: MenuPrimitive.Trigger.Props) =
   return <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />
 }
 
-export const DropdownMenuGroup = ({ ...props }: MenuPrimitive.Group.Props) => {
-  return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />
+export const DropdownMenuGroup = ({ className, ...props }: MenuPrimitive.Group.Props) => {
+  return (
+    <MenuPrimitive.Group
+      data-slot="dropdown-menu-group"
+      className={cn("gap-1 flex flex-col", className)}
+      {...props}
+    />
+  )
 }
 
 export type DropdownMenuItemProps = MenuPrimitive.Item.Props & {

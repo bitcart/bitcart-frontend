@@ -21,7 +21,12 @@ export type LucideIconComponent = React.ForwardRefExoticComponent<
   Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
 >
 
-export type CustomIconProps = React.SVGProps<SVGSVGElement>
+export type CustomIconProps = React.SVGProps<SVGSVGElement> & {
+  title?: string
+  titleId?: string
+  desc?: string
+  descId?: string
+}
 
 export type CustomIconComponent = React.FC<CustomIconProps>
 
@@ -39,7 +44,12 @@ export type BasicLinkComponent = React.ComponentType<
   }
 >
 
-export interface WithGlobalPosition {
+export type ArrowKeyNavigationParams = {
+  prevKey: "ArrowUp" | "ArrowLeft"
+  nextKey: "ArrowDown" | "ArrowRight"
+}
+
+export interface WithGlobalPriority {
   /**
    * Rendering priority within the subdirectory.
    * Useful when all subdirectory group items are rendered side-by-side inside the same container
@@ -83,7 +93,7 @@ export type LabeledNavigationLink = BasicNavigationLink & {
 
 export type AnyLabeledNavigationLink =
   | LabeledNavigationLink
-  | (LabeledNavigationLink & WithGlobalPosition)
+  | (LabeledNavigationLink & WithGlobalPriority)
 
 export type IconNavigationLink = BasicNavigationLink & {
   icon: IconComponent
@@ -94,7 +104,7 @@ export type IconNavigationLink = BasicNavigationLink & {
   hint: string
 }
 
-export type AnyIconNavigationLink = IconNavigationLink | (IconNavigationLink & WithGlobalPosition)
+export type AnyIconNavigationLink = IconNavigationLink | (IconNavigationLink & WithGlobalPriority)
 
 export type NavigationLinkGroup<TNavigationLink = LabeledNavigationLink> = (
   | {}
@@ -135,10 +145,10 @@ export type LayoutBrandAttributes = {
  */
 export type NavigationDirectory = {
   labeledLinks: NavigationLinkGroup<
-    LabeledNavigationLink | (LabeledNavigationLink & WithGlobalPosition)
+    LabeledNavigationLink | (LabeledNavigationLink & WithGlobalPriority)
   >[]
 
-  iconLinks?: NavigationLinkGroup<IconNavigationLink | (IconNavigationLink & WithGlobalPosition)>[]
+  iconLinks?: NavigationLinkGroup<IconNavigationLink | (IconNavigationLink & WithGlobalPriority)>[]
 }
 
 /**

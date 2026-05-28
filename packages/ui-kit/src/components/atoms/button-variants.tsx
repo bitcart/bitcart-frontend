@@ -5,7 +5,7 @@ export const buttonVariants = cva(
     `
       gap-2 font-medium
       [&_svg:not-[class*='size-']]:size-4
-      focus-visible:border-ring focus-visible:ring-ring/50
+      focus-visible:border-ring focus-visible:ring-ring/90
       aria-invalid:ring-destructive/20 aria-invalid:border-destructive
       dark:aria-invalid:ring-destructive/40
       focus-visible:outline-ring
@@ -54,6 +54,7 @@ export const buttonVariants = cva(
         ghost: `
           hover:bg-muted/25 hover:text-accent-foreground
           focus:text-accent-foreground
+          focus-visible:text-accent-foreground
           [&_svg:not-[class*='hover:text-']]:hover:text-accent-foreground
           focus:bg-muted/25
         `,
@@ -73,8 +74,7 @@ export const buttonVariants = cva(
         fab: `
           not-active:glassy
           text-foreground
-          focus-visible:ring-foreground
-          active:ring-foreground
+          focus-visible:ring-ring
           border-input/80 elevation-2 shadow-foreground/25 border-b-none
           active:bg-background
           border-1
@@ -107,9 +107,6 @@ export const buttonVariants = cva(
           [&_svg:not-[class*='size-']]:size-4
         `,
 
-        /**
-         * A special case intended for websites but not webapps
-         */
         xl: `
           h-12
           md:h-14

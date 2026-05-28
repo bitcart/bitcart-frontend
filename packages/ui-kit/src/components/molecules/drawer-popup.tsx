@@ -239,6 +239,7 @@ export const DrawerPopup: React.FC<DrawerPopupProps> = ({
             md:hidden
             bg-background h-25 mb--25 pointer-events-none fixed
             bottom-[env(safe-area-inset-bottom,0px)] z-51 w-full
+            supports-[not_(-webkit-touch-callout:_none)]:hidden
           `)}
         />
       </DrawerViewport>

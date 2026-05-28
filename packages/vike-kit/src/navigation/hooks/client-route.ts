@@ -1,6 +1,5 @@
 import type { ClientRoute } from "@bitcart/core/types"
 import { useMemo, useSyncExternalStore } from "react"
-import { useHydrated } from "vike-react/useHydrated"
 import { usePageContext } from "vike-react/usePageContext"
 
 const subscribe = (callback: () => void): (() => void) => {
@@ -18,8 +17,6 @@ const getClientHash = (): string => window.location.hash
 const getServerHash = (): string => ""
 
 export const useClientRoute = (): ClientRoute => {
-  const isHydrated = useHydrated()
-
   const {
     urlParsed: { pathname },
   } = usePageContext()
@@ -28,11 +25,11 @@ export const useClientRoute = (): ClientRoute => {
   //* native back/forward (popstate), browser hash anchors, and the synthetic
   //* `hashchange` that `Link` dispatches after a same-page `pushState`.
   //* Cross-page Vike transitions re-render via `usePageContext()` instead.
-  useSyncExternalStore(subscribe, getClientHash, getServerHash)
+  //* `getServerHash` returns `""` on SSR and the initial client render,
+  //* so `hash` is `null` until hydration completes — no mismatch.
+  const hashSnapshot = useSyncExternalStore(subscribe, getClientHash, getServerHash)
 
-  //* Hash must come from `window.location` because same-page hash
-  //* navigation doesn't refresh Vike's `urlParsed`.
-  const hash: string | null = isHydrated ? window.location.hash.substring(1) || null : null
+  const hash: string | null = hashSnapshot.substring(1) || null
 
   return useMemo(
     () => ({

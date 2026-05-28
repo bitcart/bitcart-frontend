@@ -53,18 +53,18 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocale
           <LinkButton
             id="main-content-link"
             href="#main-content"
-            size="lg"
+            size="xl"
             className={cn(`
-              focus:bottom-3 focus:left-4
-              focus-visible:ring-foreground
-              hover:bg-primary
-              focus:bg-primary
+              focus:bottom-3
+              md:focus:top-3
+              focus:left-4
               md:focus:left-6 md:focus:h-10
               lg:focus:left-8
               important:px-6 important:py-3
               focus:important:fixed
-              sr-only
-              focus:not-sr-only focus:z-50
+              transition-scale sr-only
+              focus:z-50
+              focus-visible:not-sr-only focus-visible:ring-3
             `)}
           >
             {t`Skip to main content`}

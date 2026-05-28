@@ -128,15 +128,15 @@ export const NavigationMenuLink = ({ className, ...props }: NavigationMenuPrimit
         `
           hover:text-accent-foreground
           focus-visible:text-accent-foreground
-          font-medium gap-1 rounded-sm p-2
-          focus-visible:ring-ring/50
+          font-medium gap-1 rounded-md p-2
+          focus-visible:ring-ring/90
           [&_svg:not-[class*='text-']]:text-muted-foreground
           [&_svg:not-[class*='size-']]:size-4
           data-active:text-accent-foreground/90
           focus-visible:outline-ring
           flex h-full flex-col transition-all duration-200 outline-none
           hover:scale-105
-          focus-visible:scale-105 focus-visible:ring-[3px] focus-visible:outline-2
+          focus-visible:scale-105 focus-visible:ring-3 focus-visible:outline-2
         `,
 
         className,

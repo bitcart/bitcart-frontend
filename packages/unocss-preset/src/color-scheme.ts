@@ -61,7 +61,7 @@ export const getColorScheme = ({
 
     border: ".373 0.034 259.733", //                      oklch(.373 0.034 259.733), Gray 700
     input: ".446 0.03 256.802", //                        oklch(.446 0.03 256.802), Gray 600
-    ring: ".627 0.265 303.9", //                          oklch(.627 0.265 303.9), Purple 500
+    ring: ".714 0.203 305.504", //                        oklch(.714 0.203 305.504), Purple 400
 
     card: ".21 .034 264.665", //                          oklch(.21 .034 264.665), Gray 900
     "card-foreground": "1 0 0", //                        oklch(1 0 0), White

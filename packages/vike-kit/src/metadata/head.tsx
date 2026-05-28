@@ -77,7 +77,7 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
                   }
                 });
 
-                setTimeout(show, 1000);
+                setTimeout(show, 2000);
               }
             `
               .replace(/\s+/g, " ")

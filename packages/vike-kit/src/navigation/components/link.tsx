@@ -61,6 +61,14 @@ export const Link = <TSupportedLocaleId extends LocaleId>({
             //* and the lifecycle hook scrolls after the transition.
             event.preventDefault()
 
+            //* Stop the bubble so Vike's document-level click listener
+            //* doesn't also process this link. After our `pushState`
+            //* below, the URL matches the link's `href`, which makes
+            //* Vike's Firefox-bug workaround (see `initOnLinkClick.ts`
+            //* in `vike`) fire a synchronous *instant* `scrollIntoView`
+            //* that overrides the smooth scroll scheduled here.
+            event.stopPropagation()
+
             if (target.href !== window.location.href) {
               window.history.pushState({}, "", localizedHref)
               window.dispatchEvent(new HashChangeEvent("hashchange"))

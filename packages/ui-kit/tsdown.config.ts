@@ -1,4 +1,5 @@
 import { defineConfig } from "tsdown"
+import svgr from "vite-plugin-svgr"
 
 export default defineConfig({
   entry: {
@@ -11,12 +12,13 @@ export default defineConfig({
     "utils/index": "src/utils/index.ts",
   },
 
-  format: ["esm"],
-  dts: true,
-  sourcemap: true,
   clean: !!process.env.BITCART_ENV && process.env.BITCART_ENV !== "development",
-  tsconfig: "./tsconfig.lib.json",
   deps: { skipNodeModulesBundle: true },
+  dts: true,
+  format: ["esm"],
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
+  plugins: [svgr()],
+  sourcemap: true,
+  tsconfig: "./tsconfig.lib.json",
   unbundle: true,
 })

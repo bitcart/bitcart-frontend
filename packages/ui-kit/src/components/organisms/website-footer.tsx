@@ -23,16 +23,9 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
     [navigation.directory],
   )
 
-  const copyrightText = useMemo(
-    () =>
-      `© ${
-        brand.copyrightSinceYear ? `${brand.copyrightSinceYear} — ` : ""
-      }${new Date().getFullYear()} ${brand.name}. ${
-        brand.copyrightAppendix ?? t`All rights reserved.`
-      }`,
-
-    [brand.copyrightAppendix, brand.copyrightSinceYear, brand.name],
-  )
+  const copyrightText = `© ${
+    brand.copyrightSinceYear ? `${brand.copyrightSinceYear} — ` : ""
+  }${new Date().getFullYear()} ${brand.name}. ${brand.copyrightAppendix ?? t`All rights reserved.`}`
 
   const iconLinks = useMemo(
     () =>

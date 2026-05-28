@@ -75,6 +75,7 @@
     "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
-    "unocss": "catalog:devDependencies"
+    "unocss": "catalog:devDependencies",
+    "vite-plugin-svgr": "catalog:devDependencies"
   }
 }

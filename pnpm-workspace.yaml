@@ -68,6 +68,7 @@ catalogs:
     unocss-preset-shadcn: 1.0.1
     vite: 8.0.13
     vite-plugin-static-copy: 4.1.0
+    vite-plugin-svgr: 5.2.0
 
 linkWorkspacePackages: true
 

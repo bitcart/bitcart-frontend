@@ -153,8 +153,12 @@ export const WebsiteNavigationMenu: React.FC<WebsiteNavigationMenuProps> = ({
           <DropdownMenuGroup render={<nav />}>
             {labeledLinks.map((link, idx) => {
               const a11yAwareLinkProps = link.isExternal
-                ? { href: link.href, a11yHint: getTargetBlankA11yHint() }
-                : { href: link.href }
+                ? {
+                    href: link.href,
+                    a11yHint: getTargetBlankA11yHint(),
+                    isExternalLink: true as const,
+                  }
+                : { href: link.href, isExternalLink: false as const }
 
               const isActive = !link.isExternal && link.href === currentRoute.pathnameWithHash
 
@@ -162,7 +166,9 @@ export const WebsiteNavigationMenu: React.FC<WebsiteNavigationMenuProps> = ({
                 <DropdownMenuItem
                   key={link.label + link.href}
                   nativeButton={false}
-                  render={<Link {...a11yAwareLinkProps} />}
+                  render={
+                    <LinkButton variant={isActive ? "accent" : "ghost"} {...a11yAwareLinkProps} />
+                  }
                   className={cn("w-full justify-start text-left", getDropdownLinkClass(idx + 1), {
                     "bg-accent text-accent-foreground": isActive,
                   })}
