@@ -1,5 +1,6 @@
 import process from "process"
 
+import { reactViteCodeSplittingGroups } from "@bitcart/configs/by-view-layer/react-vite"
 import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin"
 import vikeSitemap from "@qalisa/vike-plugin-sitemap"
 import type { SitemapEntry } from "@qalisa/vike-plugin-sitemap/types"
@@ -89,5 +90,12 @@ export default defineConfig({
 
   build: {
     sourcemap: true,
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [...reactViteCodeSplittingGroups],
+        },
+      },
+    },
   },
 })
