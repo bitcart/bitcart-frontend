@@ -1,7 +1,7 @@
 import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
+import { useIsClient } from "@bitcart/hooks"
 import { LAYOUT_CONTAINER_TESTID } from "@bitcart/qa"
 import { t } from "@lingui/core/macro"
-import { useIsClient } from "usehooks-ts"
 
 import { useCurrentBreakpoint, useSoftKeyboardTracker } from "@/hooks"
 import { LayoutContextProvider, ThemeProvider, type LayoutContextProviderProps } from "@/providers"

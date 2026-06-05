@@ -15,13 +15,14 @@
     "packages": "pnpm --filter './packages/*'",
     "core": "pnpm -C packages/core",
     "form-kit": "pnpm -C packages/form-kit",
+    "hooks": "pnpm -C packages/hooks",
     "qa": "pnpm -C packages/qa",
     "ui-kit": "pnpm -C packages/ui-kit",
     "unocss-preset": "pnpm -C packages/unocss-preset",
     "vike-kit": "pnpm -C packages/vike-kit",
     "apps": "pnpm --filter './apps/*'",
-    "landing": "pnpm -C apps/landing",
     "directory": "pnpm -C apps/directory",
+    "landing": "pnpm -C apps/landing",
     "workspace-members": "pnpm --filter './apps/*' --filter './packages/*'"
   },
   "devDependencies": {

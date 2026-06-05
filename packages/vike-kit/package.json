@@ -45,11 +45,12 @@
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",
+    "@bitcart/hooks": "workspace:*",
     "@lingui/core": "catalog:dependencies",
     "@lingui/react": "catalog:dependencies",
+    "@mantine/hooks": "catalog:dependencies",
     "react": "catalog:dependencies",
     "remeda": "catalog:dependencies",
-    "usehooks-ts": "catalog:dependencies",
     "vike": "catalog:dependencies",
     "vike-react": "catalog:dependencies"
   },

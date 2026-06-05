@@ -37,6 +37,10 @@ const config: KnipConfig = {
       ignoreDependencies: ["@stylistic/eslint-plugin", "eslint-plugin-react-hooks"],
     },
 
+    "packages/hooks": {
+      ignoreDependencies: ["@stylistic/eslint-plugin", "eslint-plugin-react-hooks"],
+    },
+
     "packages/qa": {
       ignoreDependencies: ["@stylistic/eslint-plugin"],
     },

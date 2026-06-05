@@ -1,5 +1,5 @@
+import { useIsClient } from "@bitcart/hooks"
 import { useCallback, useEffect } from "react"
-import { useIsClient } from "usehooks-ts"
 
 import type { ArrowKeyNavigationParams } from "@/types"
 

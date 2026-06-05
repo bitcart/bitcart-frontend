@@ -10,10 +10,11 @@ lerna-debug.log*
 ## Dependencies
 node_modules
 
-## Build output
+## Build output and temporary files
 **/dist
 **/dist-ssr
 **/tmp
+**/.tmp
 
 ## Generated files
 **/dist-graphviz.svg

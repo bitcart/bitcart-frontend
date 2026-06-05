@@ -1,7 +1,7 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
 import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
+import { useLocalStorage } from "@mantine/hooks"
 import { useCallback, useMemo } from "react"
-import { useLocalStorage } from "usehooks-ts"
 
 export type UseClientLocaleIdParams<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = {
   supportedLocaleIds: readonly TSupportedLocaleId[]
@@ -15,10 +15,17 @@ export type UseClientLocaleIdParams<TSupportedLocaleId extends LocaleId | Pseudo
 export const useClientLocaleId = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   supportedLocaleIds,
 }: UseClientLocaleIdParams<TSupportedLocaleId>) => {
-  const [persistedValue, setValue, _removeValue] = useLocalStorage<TSupportedLocaleId | undefined>(
-    "localeId",
-    SOURCE_LOCALE_ID as TSupportedLocaleId,
-  )
+  // TODO: port useLocalStorage to @bitcart/hooks
+  const [persistedValue, setValue, _removeValue] = useLocalStorage<TSupportedLocaleId | undefined>({
+    key: "localeId",
+    defaultValue: SOURCE_LOCALE_ID as TSupportedLocaleId,
+
+    //* Read localStorage synchronously during useState init instead of in a post-mount effect.
+    //* The persisted locale is only consumed inside effects/callbacks (never rendered), so there's
+    //* no hydration DOM mismatch, and this avoids an extra render tick before useI18nSetup's
+    //* redirect fires for returning users with a non-default locale.
+    getInitialValueInEffect: false,
+  })
 
   const validValue = useMemo(() => {
     if (persistedValue !== undefined && supportedLocaleIds.includes(persistedValue)) {

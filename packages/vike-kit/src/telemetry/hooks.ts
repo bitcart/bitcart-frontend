@@ -1,5 +1,5 @@
+import { useIsClient } from "@bitcart/hooks"
 import { useEffect } from "react"
-import { useIsClient } from "usehooks-ts"
 import { usePageContext } from "vike-react/usePageContext"
 
 import type { MatomoConfig } from "./types"

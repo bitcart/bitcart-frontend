@@ -1,5 +1,5 @@
+import { useIsClient } from "@bitcart/hooks"
 import { useEffect, useState } from "react"
-import { useIsClient } from "usehooks-ts"
 
 export type WindowScrollThresholdParams = {
   axis: "horizontal" | "vertical"

@@ -51,13 +51,13 @@
 </g>
 <g id="clust9" class="cluster">
 <title>cluster_src/icons</title>
-<path fill="#ffffff" stroke="black" stroke-width="2" d="M60,-160C60,-160 424,-160 424,-160 430,-160 436,-166 436,-172 436,-172 436,-244 436,-244 436,-250 430,-256 424,-256 424,-256 60,-256 60,-256 54,-256 48,-250 48,-244 48,-244 48,-172 48,-172 48,-166 54,-160 60,-160"/>
-<text text-anchor="middle" x="242" y="-239.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="16.00">icons</text>
+<path fill="#ffffff" stroke="black" stroke-width="2" d="M60,-236C60,-236 426,-236 426,-236 432,-236 438,-242 438,-248 438,-248 438,-320 438,-320 438,-326 432,-332 426,-332 426,-332 60,-332 60,-332 54,-332 48,-326 48,-320 48,-320 48,-248 48,-248 48,-242 54,-236 60,-236"/>
+<text text-anchor="middle" x="243" y="-315.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="16.00">icons</text>
 </g>
 <g id="clust10" class="cluster">
 <title>cluster_src/providers</title>
-<path fill="#ffffff" stroke="black" stroke-width="2" d="M322,-264C322,-264 752.73,-264 752.73,-264 758.73,-264 764.73,-270 764.73,-276 764.73,-276 764.73,-424 764.73,-424 764.73,-430 758.73,-436 752.73,-436 752.73,-436 322,-436 322,-436 316,-436 310,-430 310,-424 310,-424 310,-276 310,-276 310,-270 316,-264 322,-264"/>
-<text text-anchor="middle" x="537.37" y="-419.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="16.00">providers</text>
+<path fill="#ffffff" stroke="black" stroke-width="2" d="M322,-340C322,-340 752.73,-340 752.73,-340 758.73,-340 764.73,-346 764.73,-352 764.73,-352 764.73,-500 764.73,-500 764.73,-506 758.73,-512 752.73,-512 752.73,-512 322,-512 322,-512 316,-512 310,-506 310,-500 310,-500 310,-352 310,-352 310,-346 316,-340 322,-340"/>
+<text text-anchor="middle" x="537.37" y="-495.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="16.00">providers</text>
 </g>
 <g id="clust11" class="cluster">
 <title>cluster_src/utils</title>
@@ -844,7 +844,7 @@
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx -->
 <g id="edge54" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.04,-2956.5C243.58,-2956.5 523.31,-2956.5 523.31,-2956.5 523.31,-2956.5 523.31,-3839 523.31,-3839 523.31,-3839 567.74,-3839 567.74,-3839"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.32,-2956.5C244.61,-2956.5 526.31,-2956.5 526.31,-2956.5 526.31,-2956.5 526.31,-3839 526.31,-3839 526.31,-3839 567.74,-3839 567.74,-3839"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="587.74,-3846 567.74,-3839 587.74,-3832 587.74,-3846"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/empty.tsx -->
@@ -898,7 +898,7 @@
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/link&#45;button.tsx -->
 <g id="edge61" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/link&#45;button.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.18,-2954.58C246.31,-2954.58 537.31,-2954.58 537.31,-2954.58 537.31,-2954.58 537.31,-3666 537.31,-3666 537.31,-3666 917.31,-3666 917.31,-3666 917.31,-3666 917.31,-3822.14 917.31,-3822.14"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.27,-2954.58C246.65,-2954.58 538.31,-2954.58 538.31,-2954.58 538.31,-2954.58 538.31,-3666 538.31,-3666 538.31,-3666 917.31,-3666 917.31,-3666 917.31,-3666 917.31,-3822.14 917.31,-3822.14"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="910.31,-3842.14 917.31,-3822.14 924.31,-3842.14 910.31,-3842.14"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/navigation&#45;menu.tsx -->
@@ -1258,8 +1258,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/organisms/locale&#45;selector.tsx -->
 <g id="edge90" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/organisms/locale&#45;selector.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.21,-2988C165.19,-2988 197.31,-2988 197.31,-2988 197.31,-2988 197.31,-3664 197.31,-3664 197.31,-3664 257.9,-3664 257.9,-3664"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="277.9,-3671 257.9,-3664 277.9,-3657 277.9,-3671"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.23,-2988C169.54,-2988 209.31,-2988 209.31,-2988 209.31,-2988 209.31,-3664 209.31,-3664 209.31,-3664 257.79,-3664 257.79,-3664"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="277.79,-3671 257.79,-3664 277.79,-3657 277.79,-3671"/>
 </g>
 <!-- src/components/organisms/website&#45;footer.tsx -->
 <g id="node59" class="node">
@@ -1333,8 +1333,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/templates/error&#45;page.tsx -->
 <g id="edge95" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/templates/error&#45;page.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.06,-2995.4C148.21,-2995.4 157.31,-2995.4 157.31,-2995.4 157.31,-2995.4 157.31,-3380.94 157.31,-3380.94"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="150.31,-3400.94 157.31,-3380.94 164.31,-3400.94 150.31,-3400.94"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.02,-2995.4C166.51,-2995.4 201.31,-2995.4 201.31,-2995.4 201.31,-2995.4 201.31,-3413.75 201.31,-3413.75 201.31,-3413.75 181.09,-3413.75 181.09,-3413.75"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="161.09,-3406.75 181.09,-3413.75 161.09,-3420.75 161.09,-3406.75"/>
 </g>
 <!-- src/components/templates/webapp.tsx -->
 <g id="node64" class="node">
@@ -1363,8 +1363,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/templates/website.tsx -->
 <g id="edge97" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/templates/website.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.28,-2997.2C146.84,-2997.2 154.31,-2997.2 154.31,-2997.2 154.31,-2997.2 154.31,-3332.67 154.31,-3332.67 154.31,-3332.67 153.89,-3332.67 153.89,-3332.67"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="150.15,-3325.67 170.15,-3332.67 150.15,-3339.67 150.15,-3325.67"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.38,-2997.2C157.42,-2997.2 177.31,-2997.2 177.31,-2997.2 177.31,-2997.2 177.31,-3332.67 177.31,-3332.67 177.31,-3332.67 170.4,-3332.67 170.4,-3332.67"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="150.4,-3325.67 170.4,-3332.67 150.4,-3339.67 150.4,-3325.67"/>
 </g>
 <!-- src/components/molecules/accordion.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge98" class="edge">
@@ -1405,14 +1405,14 @@
 <!-- src/components/molecules/autocomplete&#45;popup.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge104" class="edge">
 <title>src/components/molecules/autocomplete&#45;popup.tsx&#45;&gt;src/utils/index.ts</title>
-<path fill="none" stroke="#e8952e" stroke-width="2" d="M447.31,-1137.89C447.31,-1033.16 447.31,-660.8 447.31,-660.8 447.31,-660.8 1216.73,-660.8 1216.73,-660.8"/>
-<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="1236.73,-660.8 1216.73,-669.8 1226.73,-661.3 1216.73,-661.3 1216.73,-660.8 1216.73,-660.3 1226.73,-660.3 1216.73,-651.8 1236.73,-660.8 1236.73,-660.8"/>
+<path fill="none" stroke="#e8952e" stroke-width="2" d="M448.31,-1137.75C448.31,-1032.46 448.31,-658.1 448.31,-658.1 448.31,-658.1 1216.78,-658.1 1216.78,-658.1"/>
+<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="1236.78,-658.1 1216.78,-667.1 1226.78,-658.6 1216.78,-658.6 1216.78,-658.1 1216.78,-657.6 1226.78,-657.6 1216.78,-649.1 1236.78,-658.1 1236.78,-658.1"/>
 </g>
 <!-- src/components/molecules/button&#45;group.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge107" class="edge">
 <title>src/components/molecules/button&#45;group.tsx&#45;&gt;src/utils/index.ts</title>
-<path fill="none" stroke="#e8952e" stroke-width="2" d="M434.6,-1683.5C464.27,-1683.5 491.31,-1683.5 491.31,-1683.5 491.31,-1683.5 491.31,-666.2 491.31,-666.2 491.31,-666.2 1216.72,-666.2 1216.72,-666.2"/>
-<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="1236.72,-666.2 1216.72,-675.2 1226.72,-666.7 1216.72,-666.7 1216.72,-666.2 1216.72,-665.7 1226.72,-665.7 1216.72,-657.2 1236.72,-666.2 1236.72,-666.2"/>
+<path fill="none" stroke="#e8952e" stroke-width="2" d="M434.79,-1683.5C463.94,-1683.5 490.31,-1683.5 490.31,-1683.5 490.31,-1683.5 490.31,-663.5 490.31,-663.5 490.31,-663.5 1216.67,-663.5 1216.67,-663.5"/>
+<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="1236.67,-663.5 1216.67,-672.5 1226.67,-664 1216.67,-664 1216.67,-663.5 1216.67,-663 1226.67,-663 1216.67,-654.5 1236.67,-663.5 1236.67,-663.5"/>
 </g>
 <!-- src/components/molecules/button&#45;group.tsx&#45;&gt;src/components/atoms/separator.tsx -->
 <g id="edge105" class="edge">
@@ -1456,8 +1456,8 @@
 <!-- src/components/molecules/command&#45;dialog&#45;popup.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge112" class="edge">
 <title>src/components/molecules/command&#45;dialog&#45;popup.tsx&#45;&gt;src/utils/index.ts</title>
-<path fill="none" stroke="#e8952e" stroke-width="2" d="M472.31,-1441.74C472.31,-1301.03 472.31,-663.5 472.31,-663.5 472.31,-663.5 1216.58,-663.5 1216.58,-663.5"/>
-<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="1236.58,-663.5 1216.58,-672.5 1226.58,-664 1216.58,-664 1216.58,-663.5 1216.58,-663 1226.58,-663 1216.58,-654.5 1236.58,-663.5 1236.58,-663.5"/>
+<path fill="none" stroke="#e8952e" stroke-width="2" d="M472.31,-1441.65C472.31,-1300.47 472.31,-660.8 472.31,-660.8 472.31,-660.8 1216.58,-660.8 1216.58,-660.8"/>
+<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="1236.58,-660.8 1216.58,-669.8 1226.58,-661.3 1216.58,-661.3 1216.58,-660.8 1216.58,-660.3 1226.58,-660.3 1216.58,-651.8 1236.58,-660.8 1236.58,-660.8"/>
 </g>
 <!-- src/components/molecules/command&#45;dialog&#45;popup.tsx&#45;&gt;src/components/atoms/command.tsx -->
 <g id="edge111" class="edge">
@@ -1552,8 +1552,8 @@
 <!-- src/components/molecules/dropdown&#45;menu.tsx&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx -->
 <g id="edge126" class="edge">
 <title>src/components/molecules/dropdown&#45;menu.tsx&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx</title>
-<path fill="none" stroke="#e8952e" stroke-width="2" d="M448.18,-2077C489.83,-2077 530.31,-2077 530.31,-2077 530.31,-2077 530.31,-3832.5 530.31,-3832.5 530.31,-3832.5 588.71,-3832.5 588.71,-3832.5"/>
-<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="608.71,-3832.5 588.71,-3841.5 598.71,-3833 588.71,-3833 588.71,-3832.5 588.71,-3832 598.71,-3832 588.71,-3823.5 608.71,-3832.5 608.71,-3832.5"/>
+<path fill="none" stroke="#e8952e" stroke-width="2" d="M448.2,-2077C490.7,-2077 532.31,-2077 532.31,-2077 532.31,-2077 532.31,-3832.5 532.31,-3832.5 532.31,-3832.5 588.37,-3832.5 588.37,-3832.5"/>
+<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="608.37,-3832.5 588.37,-3841.5 598.37,-3833 588.37,-3833 588.37,-3832.5 588.37,-3832 598.37,-3832 588.37,-3823.5 608.37,-3832.5 608.37,-3832.5"/>
 </g>
 <!-- src/components/molecules/navigation&#45;menu.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge130" class="edge">
@@ -1564,8 +1564,8 @@
 <!-- src/components/molecules/navigation&#45;menu.tsx&#45;&gt;src/components/atoms/navigation&#45;menu.tsx -->
 <g id="edge128" class="edge">
 <title>src/components/molecules/navigation&#45;menu.tsx&#45;&gt;src/components/atoms/navigation&#45;menu.tsx</title>
-<path fill="none" stroke="#e8952e" stroke-width="2" d="M450.63,-1630C496.92,-1630 543.31,-1630 543.31,-1630 543.31,-1630 543.31,-3298.5 543.31,-3298.5 543.31,-3298.5 596.98,-3298.5 596.98,-3298.5"/>
-<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="616.98,-3298.5 596.98,-3307.5 606.98,-3299 596.98,-3299 596.98,-3298.5 596.98,-3298 606.98,-3298 596.98,-3289.5 616.98,-3298.5 616.98,-3298.5"/>
+<path fill="none" stroke="#e8952e" stroke-width="2" d="M450.59,-1630C497.31,-1630 544.31,-1630 544.31,-1630 544.31,-1630 544.31,-3298.5 544.31,-3298.5 544.31,-3298.5 597.04,-3298.5 597.04,-3298.5"/>
+<polygon fill="#e8952e" stroke="#e8952e" stroke-width="2" points="617.04,-3298.5 597.04,-3307.5 607.04,-3299 597.04,-3299 597.04,-3298.5 597.04,-3298 607.04,-3298 597.04,-3289.5 617.04,-3298.5 617.04,-3298.5"/>
 </g>
 <!-- src/components/molecules/navigation&#45;menu&#45;styles.tsx -->
 <g id="node67" class="node">
@@ -1681,8 +1681,8 @@
 <!-- src/components/organisms/locale&#45;selector.tsx&#45;&gt;src/hooks/index.ts -->
 <g id="edge147" class="edge">
 <title>src/components/organisms/locale&#45;selector.tsx&#45;&gt;src/hooks/index.ts</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M439.08,-3693.5C472.8,-3693.5 504.31,-3693.5 504.31,-3693.5 504.31,-3693.5 504.31,-4457.2 504.31,-4457.2 504.31,-4457.2 1216.58,-4457.2 1216.58,-4457.2"/>
-<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1236.58,-4457.2 1216.58,-4466.2 1226.58,-4457.7 1216.58,-4457.7 1216.58,-4457.2 1216.58,-4456.7 1226.58,-4456.7 1216.58,-4448.2 1236.58,-4457.2 1236.58,-4457.2"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M439.1,-3693.5C474.56,-3693.5 508.31,-3693.5 508.31,-3693.5 508.31,-3693.5 508.31,-4457.2 508.31,-4457.2 508.31,-4457.2 1216.79,-4457.2 1216.79,-4457.2"/>
+<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1236.79,-4457.2 1216.79,-4466.2 1226.79,-4457.7 1216.79,-4457.7 1216.79,-4457.2 1216.79,-4456.7 1226.79,-4456.7 1216.79,-4448.2 1236.79,-4457.2 1236.79,-4457.2"/>
 </g>
 <!-- src/components/organisms/locale&#45;selector.tsx&#45;&gt;src/components/molecules/dropdown&#45;menu.tsx -->
 <g id="edge146" class="edge">
@@ -1699,8 +1699,8 @@
 <!-- src/components/organisms/website&#45;footer.tsx&#45;&gt;src/hooks/index.ts -->
 <g id="edge149" class="edge">
 <title>src/components/organisms/website&#45;footer.tsx&#45;&gt;src/hooks/index.ts</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M438.85,-3617.5C475.26,-3617.5 510.31,-3617.5 510.31,-3617.5 510.31,-3617.5 510.31,-4446.4 510.31,-4446.4 510.31,-4446.4 1216.63,-4446.4 1216.63,-4446.4"/>
-<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1236.63,-4446.4 1216.63,-4455.4 1226.63,-4446.9 1216.63,-4446.9 1216.63,-4446.4 1216.63,-4445.9 1226.63,-4445.9 1216.63,-4437.4 1236.63,-4446.4 1236.63,-4446.4"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M438.69,-3617.5C476.86,-3617.5 514.31,-3617.5 514.31,-3617.5 514.31,-3617.5 514.31,-4446.4 514.31,-4446.4 514.31,-4446.4 1216.57,-4446.4 1216.57,-4446.4"/>
+<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1236.57,-4446.4 1216.57,-4455.4 1226.57,-4446.9 1216.57,-4446.9 1216.57,-4446.4 1216.57,-4445.9 1226.57,-4445.9 1216.57,-4437.4 1236.57,-4446.4 1236.57,-4446.4"/>
 </g>
 <!-- src/components/organisms/website&#45;header.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge152" class="edge">
@@ -1711,8 +1711,8 @@
 <!-- src/components/organisms/website&#45;header.tsx&#45;&gt;src/hooks/index.ts -->
 <g id="edge151" class="edge">
 <title>src/components/organisms/website&#45;header.tsx&#45;&gt;src/hooks/index.ts</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M443.02,-3539.33C480.94,-3539.33 517.31,-3539.33 517.31,-3539.33 517.31,-3539.33 517.31,-4435.6 517.31,-4435.6 517.31,-4435.6 1216.73,-4435.6 1216.73,-4435.6"/>
-<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1236.73,-4435.6 1216.73,-4444.6 1226.73,-4436.1 1216.73,-4436.1 1216.73,-4435.6 1216.73,-4435.1 1226.73,-4435.1 1216.73,-4426.6 1236.73,-4435.6 1236.73,-4435.6"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M443.19,-3539.33C482.34,-3539.33 520.31,-3539.33 520.31,-3539.33 520.31,-3539.33 520.31,-4435.6 520.31,-4435.6 520.31,-4435.6 1216.62,-4435.6 1216.62,-4435.6"/>
+<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1236.62,-4435.6 1216.62,-4444.6 1226.62,-4436.1 1216.62,-4436.1 1216.62,-4435.6 1216.62,-4435.1 1226.62,-4435.1 1216.62,-4426.6 1236.62,-4435.6 1236.62,-4435.6"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge160" class="edge">
@@ -1747,8 +1747,8 @@
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/molecules/drawer&#45;panel.tsx -->
 <g id="edge156" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/molecules/drawer&#45;panel.tsx</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M469.22,-3731.67C485.71,-3731.67 497.31,-3731.67 497.31,-3731.67 497.31,-3731.67 497.31,-1250 497.31,-1250 497.31,-1250 579,-1250 579,-1250"/>
-<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="599,-1250 579,-1259 589,-1250.5 579,-1250.5 579,-1250 579,-1249.5 589,-1249.5 579,-1241 599,-1250 599,-1250"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M469.31,-3731.67C488.44,-3731.67 502.31,-3731.67 502.31,-3731.67 502.31,-3731.67 502.31,-1250 502.31,-1250 502.31,-1250 579.13,-1250 579.13,-1250"/>
+<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="599.13,-1250 579.13,-1259 589.13,-1250.5 579.13,-1250.5 579.13,-1250 579.13,-1249.5 589.13,-1249.5 579.13,-1241 599.13,-1250 599.13,-1250"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/molecules/drawer&#45;popup.tsx -->
 <g id="edge157" class="edge">
@@ -1813,8 +1813,8 @@
 <!-- src/components/templates/error&#45;page.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge171" class="edge">
 <title>src/components/templates/error&#45;page.tsx&#45;&gt;src/utils/index.ts</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M159.31,-3400.59C159.31,-3112.91 159.31,-658.1 159.31,-658.1 159.31,-658.1 1216.54,-658.1 1216.54,-658.1"/>
-<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="1236.54,-658.1 1216.54,-667.1 1226.54,-658.6 1216.54,-658.6 1216.54,-658.1 1216.54,-657.6 1226.54,-657.6 1216.54,-649.1 1236.54,-658.1 1236.54,-658.1"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M161.18,-3405.25C274.33,-3405.25 496.31,-3405.25 496.31,-3405.25 496.31,-3405.25 496.31,-666.2 496.31,-666.2 496.31,-666.2 1216.71,-666.2 1216.71,-666.2"/>
+<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="1236.71,-666.2 1216.71,-675.2 1226.71,-666.7 1216.71,-666.7 1216.71,-666.2 1216.71,-665.7 1226.71,-665.7 1216.71,-657.2 1236.71,-666.2 1236.71,-666.2"/>
 </g>
 <!-- src/components/templates/error&#45;page.tsx&#45;&gt;src/components/atoms/button.tsx -->
 <g id="edge169" class="edge">
@@ -1844,16 +1844,16 @@
 <g id="node68" class="node">
 <title>src/providers/index.ts</title>
 <g id="a_node68"><a xlink:href="src/providers/index.ts" xlink:title="index.ts">
-<path fill="#c96cb5" stroke="black" d="M387,-402C387,-402 330,-402 330,-402 324,-402 318,-396 318,-390 318,-390 318,-360 318,-360 318,-354 324,-348 330,-348 330,-348 387,-348 387,-348 393,-348 399,-354 399,-360 399,-360 399,-390 399,-390 399,-396 393,-402 387,-402"/>
-<text text-anchor="start" x="326" y="-371.2" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">index.ts</text>
+<path fill="#c96cb5" stroke="black" d="M387,-478C387,-478 330,-478 330,-478 324,-478 318,-472 318,-466 318,-466 318,-436 318,-436 318,-430 324,-424 330,-424 330,-424 387,-424 387,-424 393,-424 399,-430 399,-436 399,-436 399,-466 399,-466 399,-472 393,-478 387,-478"/>
+<text text-anchor="start" x="326" y="-447.2" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">index.ts</text>
 </a>
 </g>
 </g>
 <!-- src/components/templates/webapp.tsx&#45;&gt;src/providers/index.ts -->
 <g id="edge173" class="edge">
 <title>src/components/templates/webapp.tsx&#45;&gt;src/providers/index.ts</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M141.31,-3248.59C141.31,-2953.01 141.31,-366 141.31,-366 141.31,-366 297.9,-366 297.9,-366"/>
-<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="317.9,-366 297.9,-375 307.9,-366.5 297.9,-366.5 297.9,-366 297.9,-365.5 307.9,-365.5 297.9,-357 317.9,-366 317.9,-366"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M141.31,-3248.86C141.31,-2958.83 141.31,-442 141.31,-442 141.31,-442 297.9,-442 297.9,-442"/>
+<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="317.9,-442 297.9,-451 307.9,-442.5 297.9,-442.5 297.9,-442 297.9,-441.5 307.9,-441.5 297.9,-433 317.9,-442 317.9,-442"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge185" class="edge">
@@ -1876,8 +1876,8 @@
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/molecules/theme&#45;toggle.tsx -->
 <g id="edge176" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/molecules/theme&#45;toggle.tsx</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.29,-3336.5C153.41,-3336.5 155.31,-3336.5 155.31,-3336.5 155.31,-3336.5 155.31,-2162 155.31,-2162 155.31,-2162 260.81,-2162 260.81,-2162"/>
-<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="280.81,-2162 260.81,-2171 270.81,-2162.5 260.81,-2162.5 260.81,-2162 260.81,-2161.5 270.81,-2161.5 260.81,-2153 280.81,-2162 280.81,-2162"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.28,-3340.33C172.56,-3340.33 193.31,-3340.33 193.31,-3340.33 193.31,-3340.33 193.31,-2162 193.31,-2162 193.31,-2162 260.74,-2162 260.74,-2162"/>
+<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="280.74,-2162 260.74,-2171 270.74,-2162.5 260.74,-2162.5 260.74,-2162 260.74,-2161.5 270.74,-2161.5 260.74,-2153 280.74,-2162 280.74,-2162"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/molecules/toaster.tsx -->
 <g id="edge177" class="edge">
@@ -1888,20 +1888,20 @@
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/organisms/locale&#45;selector.tsx -->
 <g id="edge178" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/organisms/locale&#45;selector.tsx</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.21,-3377.5C168.91,-3377.5 185.31,-3377.5 185.31,-3377.5 185.31,-3377.5 185.31,-3682 185.31,-3682 185.31,-3682 257.99,-3682 257.99,-3682"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.18,-3377.5C161.09,-3377.5 169.31,-3377.5 169.31,-3377.5 169.31,-3377.5 169.31,-3682 169.31,-3682 169.31,-3682 257.99,-3682 257.99,-3682"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="277.99,-3682 257.99,-3691 267.99,-3682.5 257.99,-3682.5 257.99,-3682 257.99,-3681.5 267.99,-3681.5 257.99,-3673 277.99,-3682 277.99,-3682"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;footer.tsx -->
 <g id="edge179" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;footer.tsx</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.26,-3376C179.31,-3376 209.31,-3376 209.31,-3376 209.31,-3376 209.31,-3606 209.31,-3606 209.31,-3606 258.23,-3606 258.23,-3606"/>
-<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="278.23,-3606 258.23,-3615 268.23,-3606.5 258.23,-3606.5 258.23,-3606 258.23,-3605.5 268.23,-3605.5 258.23,-3597 278.23,-3606 278.23,-3606"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.19,-3376C182.46,-3376 217.31,-3376 217.31,-3376 217.31,-3376 217.31,-3606 217.31,-3606 217.31,-3606 258.41,-3606 258.41,-3606"/>
+<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="278.41,-3606 258.41,-3615 268.41,-3606.5 258.41,-3606.5 258.41,-3606 258.41,-3605.5 268.41,-3605.5 258.41,-3597 278.41,-3606 278.41,-3606"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;header.tsx -->
 <g id="edge180" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;header.tsx</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.15,-3374.5C183.98,-3374.5 221.31,-3374.5 221.31,-3374.5 221.31,-3374.5 221.31,-3530 221.31,-3530 221.31,-3530 253.96,-3530 253.96,-3530"/>
-<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="273.96,-3530 253.96,-3539 263.96,-3530.5 253.96,-3530.5 253.96,-3530 253.96,-3529.5 263.96,-3529.5 253.96,-3521 273.96,-3530 273.96,-3530"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.01,-3374.5C185.4,-3374.5 225.31,-3374.5 225.31,-3374.5 225.31,-3374.5 225.31,-3530 225.31,-3530 225.31,-3530 253.77,-3530 253.77,-3530"/>
+<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="273.77,-3530 253.77,-3539 263.77,-3530.5 253.77,-3530.5 253.77,-3530 253.77,-3529.5 263.77,-3529.5 253.77,-3521 273.77,-3530 273.77,-3530"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;mobile&#45;menu.tsx -->
 <g id="edge181" class="edge">
@@ -1918,38 +1918,38 @@
 <!-- src/components/templates/website.tsx&#45;&gt;src/providers/index.ts -->
 <g id="edge184" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/providers/index.ts</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.26,-3340.33C163.17,-3340.33 173.31,-3340.33 173.31,-3340.33 173.31,-3340.33 173.31,-384 173.31,-384 173.31,-384 297.86,-384 297.86,-384"/>
-<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="317.86,-384 297.86,-393 307.86,-384.5 297.86,-384.5 297.86,-384 297.86,-383.5 307.86,-383.5 297.86,-375 317.86,-384 317.86,-384"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M150.21,-3336.5C168.91,-3336.5 185.31,-3336.5 185.31,-3336.5 185.31,-3336.5 185.31,-460 185.31,-460 185.31,-460 297.89,-460 297.89,-460"/>
+<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="317.89,-460 297.89,-469 307.89,-460.5 297.89,-460.5 297.89,-460 297.89,-459.5 307.89,-459.5 297.89,-451 317.89,-460 317.89,-460"/>
 </g>
 <!-- src/providers/layout&#45;context.tsx -->
 <g id="node79" class="node">
 <title>src/providers/layout&#45;context.tsx</title>
 <g id="a_node79"><a xlink:href="src/providers/layout-context.tsx" xlink:title="layout&#45;context.tsx">
-<path fill="#c96cb5" stroke="black" d="M744.73,-326C744.73,-326 605.73,-326 605.73,-326 599.73,-326 593.73,-320 593.73,-314 593.73,-314 593.73,-284 593.73,-284 593.73,-278 599.73,-272 605.73,-272 605.73,-272 744.73,-272 744.73,-272 750.73,-272 756.73,-278 756.73,-284 756.73,-284 756.73,-314 756.73,-314 756.73,-320 750.73,-326 744.73,-326"/>
-<text text-anchor="start" x="601.73" y="-295.2" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">layout&#45;context.tsx</text>
+<path fill="#c96cb5" stroke="black" d="M744.73,-402C744.73,-402 605.73,-402 605.73,-402 599.73,-402 593.73,-396 593.73,-390 593.73,-390 593.73,-360 593.73,-360 593.73,-354 599.73,-348 605.73,-348 605.73,-348 744.73,-348 744.73,-348 750.73,-348 756.73,-354 756.73,-360 756.73,-360 756.73,-390 756.73,-390 756.73,-396 750.73,-402 744.73,-402"/>
+<text text-anchor="start" x="601.73" y="-371.2" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">layout&#45;context.tsx</text>
 </a>
 </g>
 </g>
 <!-- src/providers/index.ts&#45;&gt;src/providers/layout&#45;context.tsx -->
 <g id="edge195" class="edge">
 <title>src/providers/index.ts&#45;&gt;src/providers/layout&#45;context.tsx</title>
-<path fill="none" stroke="#c96cb5" stroke-width="2" d="M399.24,-366C470.5,-366 610.31,-366 610.31,-366 610.31,-366 610.31,-346.25 610.31,-346.25"/>
-<polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="617.31,-326.25 610.31,-346.25 603.31,-326.25 617.31,-326.25"/>
+<path fill="none" stroke="#c96cb5" stroke-width="2" d="M399.24,-442C470.5,-442 610.31,-442 610.31,-442 610.31,-442 610.31,-422.25 610.31,-422.25"/>
+<polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="617.31,-402.25 610.31,-422.25 603.31,-402.25 617.31,-402.25"/>
 </g>
 <!-- src/providers/theme.tsx -->
 <g id="node80" class="node">
 <title>src/providers/theme.tsx</title>
 <g id="a_node80"><a xlink:href="src/providers/theme.tsx" xlink:title="theme.tsx">
-<path fill="#c96cb5" stroke="black" d="M712.23,-402C712.23,-402 638.23,-402 638.23,-402 632.23,-402 626.23,-396 626.23,-390 626.23,-390 626.23,-360 626.23,-360 626.23,-354 632.23,-348 638.23,-348 638.23,-348 712.23,-348 712.23,-348 718.23,-348 724.23,-354 724.23,-360 724.23,-360 724.23,-390 724.23,-390 724.23,-396 718.23,-402 712.23,-402"/>
-<text text-anchor="start" x="634.23" y="-371.2" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">theme.tsx</text>
+<path fill="#c96cb5" stroke="black" d="M712.23,-478C712.23,-478 638.23,-478 638.23,-478 632.23,-478 626.23,-472 626.23,-466 626.23,-466 626.23,-436 626.23,-436 626.23,-430 632.23,-424 638.23,-424 638.23,-424 712.23,-424 712.23,-424 718.23,-424 724.23,-430 724.23,-436 724.23,-436 724.23,-466 724.23,-466 724.23,-472 718.23,-478 712.23,-478"/>
+<text text-anchor="start" x="634.23" y="-447.2" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">theme.tsx</text>
 </a>
 </g>
 </g>
 <!-- src/providers/index.ts&#45;&gt;src/providers/theme.tsx -->
 <g id="edge196" class="edge">
 <title>src/providers/index.ts&#45;&gt;src/providers/theme.tsx</title>
-<path fill="none" stroke="#c96cb5" stroke-width="2" d="M399.26,-384C399.26,-384 606.05,-384 606.05,-384"/>
-<polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="626.05,-391 606.05,-384 626.05,-377 626.05,-391"/>
+<path fill="none" stroke="#c96cb5" stroke-width="2" d="M399.26,-460C399.26,-460 606.05,-460 606.05,-460"/>
+<polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="626.05,-467 606.05,-460 626.05,-453 626.05,-467"/>
 </g>
 <!-- src/contexts/layout.ts -->
 <g id="node69" class="node">
@@ -1964,8 +1964,8 @@
 <g id="node70" class="node">
 <title>src/fonts.ts</title>
 <g id="a_node70"><a xlink:href="src/fonts.ts" xlink:title="fonts.ts">
-<path fill="#ccffcc" stroke="black" d="M123,-146C123,-146 70,-146 70,-146 64,-146 58,-140 58,-134 58,-134 58,-104 58,-104 58,-98 64,-92 70,-92 70,-92 123,-92 123,-92 129,-92 135,-98 135,-104 135,-104 135,-134 135,-134 135,-140 129,-146 123,-146"/>
-<text text-anchor="start" x="66" y="-115.2" font-family="Helvetica,sans-Serif" font-size="16.00">fonts.ts</text>
+<path fill="#ccffcc" stroke="black" d="M123,-222C123,-222 70,-222 70,-222 64,-222 58,-216 58,-210 58,-210 58,-180 58,-180 58,-174 64,-168 70,-168 70,-168 123,-168 123,-168 129,-168 135,-174 135,-180 135,-180 135,-210 135,-210 135,-216 129,-222 123,-222"/>
+<text text-anchor="start" x="66" y="-191.2" font-family="Helvetica,sans-Serif" font-size="16.00">fonts.ts</text>
 </a>
 </g>
 </g>
@@ -1981,12 +1981,12 @@
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1599.34,-4441C1660.94,-4441 1737.31,-4441 1737.31,-4441 1737.31,-4441 1737.31,-4237.34 1737.31,-4237.34"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1737.31,-4217.34 1746.31,-4237.34 1737.81,-4227.34 1737.81,-4237.34 1737.31,-4237.34 1736.81,-4237.34 1736.81,-4227.34 1728.31,-4237.34 1737.31,-4217.34 1737.31,-4217.34"/>
 </g>
-<!-- src/icons/bitcart&#45;logo.tsx -->
+<!-- src/icons/bitcart&#45;logo.svg -->
 <g id="node77" class="node">
-<title>src/icons/bitcart&#45;logo.tsx</title>
-<g id="a_node77"><a xlink:href="src/icons/bitcart-logo.tsx" xlink:title="bitcart&#45;logo.tsx">
-<path fill="#bbfeff" stroke="black" d="M416,-222C416,-222 301,-222 301,-222 295,-222 289,-216 289,-210 289,-210 289,-180 289,-180 289,-174 295,-168 301,-168 301,-168 416,-168 416,-168 422,-168 428,-174 428,-180 428,-180 428,-210 428,-210 428,-216 422,-222 416,-222"/>
-<text text-anchor="start" x="297" y="-191.2" font-family="Helvetica,sans-Serif" font-size="16.00">bitcart&#45;logo.tsx</text>
+<title>src/icons/bitcart&#45;logo.svg</title>
+<g id="a_node77"><a xlink:href="src/icons/bitcart-logo.svg" xlink:title="bitcart&#45;logo.svg">
+<path fill="#ffffcc" stroke="black" d="M418,-298C418,-298 299,-298 299,-298 293,-298 287,-292 287,-286 287,-286 287,-256 287,-256 287,-250 293,-244 299,-244 299,-244 418,-244 418,-244 424,-244 430,-250 430,-256 430,-256 430,-286 430,-286 430,-292 424,-298 418,-298"/>
+<text text-anchor="start" x="295" y="-267.2" font-family="Helvetica,sans-Serif" font-size="16.00">bitcart&#45;logo.svg</text>
 </a>
 </g>
 </g>
@@ -1994,35 +1994,44 @@
 <g id="node78" class="node">
 <title>src/icons/index.ts</title>
 <g id="a_node78"><a xlink:href="src/icons/index.ts" xlink:title="index.ts">
-<path fill="#ddfeff" stroke="black" d="M125,-222C125,-222 68,-222 68,-222 62,-222 56,-216 56,-210 56,-210 56,-180 56,-180 56,-174 62,-168 68,-168 68,-168 125,-168 125,-168 131,-168 137,-174 137,-180 137,-180 137,-210 137,-210 137,-216 131,-222 125,-222"/>
-<text text-anchor="start" x="64" y="-191.2" font-family="Helvetica,sans-Serif" font-size="16.00">index.ts</text>
+<path fill="#ddfeff" stroke="black" d="M125,-298C125,-298 68,-298 68,-298 62,-298 56,-292 56,-286 56,-286 56,-256 56,-256 56,-250 62,-244 68,-244 68,-244 125,-244 125,-244 131,-244 137,-250 137,-256 137,-256 137,-286 137,-286 137,-292 131,-298 125,-298"/>
+<text text-anchor="start" x="64" y="-267.2" font-family="Helvetica,sans-Serif" font-size="16.00">index.ts</text>
 </a>
 </g>
 </g>
-<!-- src/icons/index.ts&#45;&gt;src/icons/bitcart&#45;logo.tsx -->
+<!-- src/icons/index.ts&#45;&gt;src/icons/bitcart&#45;logo.svg -->
 <g id="edge194" class="edge">
-<title>src/icons/index.ts&#45;&gt;src/icons/bitcart&#45;logo.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.15,-195C137.15,-195 268.91,-195 268.91,-195"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="288.91,-202 268.91,-195 288.91,-188 288.91,-202"/>
+<title>src/icons/index.ts&#45;&gt;src/icons/bitcart&#45;logo.svg</title>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M137.15,-271C137.15,-271 266.84,-271 266.84,-271"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="286.84,-271 266.84,-280 276.84,-271.5 266.84,-271.5 266.84,-271 266.84,-270.5 276.84,-270.5 266.84,-262 286.84,-271 286.84,-271"/>
 </g>
 <!-- src/providers/layout&#45;context.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge198" class="edge">
 <title>src/providers/layout&#45;context.tsx&#45;&gt;src/utils/index.ts</title>
-<path fill="none" stroke="#c96cb5" stroke-width="2" d="M741.31,-326.17C741.31,-408.99 741.31,-652.7 741.31,-652.7 741.31,-652.7 1216.6,-652.7 1216.6,-652.7"/>
+<path fill="none" stroke="#c96cb5" stroke-width="2" d="M741.31,-402.13C741.31,-472.01 741.31,-652.7 741.31,-652.7 741.31,-652.7 1216.6,-652.7 1216.6,-652.7"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1236.6,-652.7 1216.6,-661.7 1226.6,-653.2 1216.6,-653.2 1216.6,-652.7 1216.6,-652.2 1226.6,-652.2 1216.6,-643.7 1236.6,-652.7 1236.6,-652.7"/>
 </g>
 <!-- src/providers/layout&#45;context.tsx&#45;&gt;src/contexts/layout.ts -->
 <g id="edge197" class="edge">
 <title>src/providers/layout&#45;context.tsx&#45;&gt;src/contexts/layout.ts</title>
-<path fill="none" stroke="#c96cb5" stroke-width="2" d="M757,-299C784.02,-299 807.31,-299 807.31,-299 807.31,-299 807.31,-4190 807.31,-4190 807.31,-4190 1673.53,-4190 1673.53,-4190"/>
+<path fill="none" stroke="#c96cb5" stroke-width="2" d="M757,-375C784.02,-375 807.31,-375 807.31,-375 807.31,-375 807.31,-4190 807.31,-4190 807.31,-4190 1673.53,-4190 1673.53,-4190"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1693.53,-4190 1673.53,-4199 1683.53,-4190.5 1673.53,-4190.5 1673.53,-4190 1673.53,-4189.5 1683.53,-4189.5 1673.53,-4181 1693.53,-4190 1693.53,-4190"/>
 </g>
 <!-- src/types.ts -->
 <g id="node81" class="node">
 <title>src/types.ts</title>
 <g id="a_node81"><a xlink:href="src/types.ts" xlink:title="types.ts">
-<path fill="#ccffcc" stroke="black" d="M124.5,-70C124.5,-70 68.5,-70 68.5,-70 62.5,-70 56.5,-64 56.5,-58 56.5,-58 56.5,-28 56.5,-28 56.5,-22 62.5,-16 68.5,-16 68.5,-16 124.5,-16 124.5,-16 130.5,-16 136.5,-22 136.5,-28 136.5,-28 136.5,-58 136.5,-58 136.5,-64 130.5,-70 124.5,-70"/>
-<text text-anchor="start" x="64.5" y="-39.2" font-family="Helvetica,sans-Serif" font-size="16.00">types.ts</text>
+<path fill="#ccffcc" stroke="black" d="M124.5,-146C124.5,-146 68.5,-146 68.5,-146 62.5,-146 56.5,-140 56.5,-134 56.5,-134 56.5,-104 56.5,-104 56.5,-98 62.5,-92 68.5,-92 68.5,-92 124.5,-92 124.5,-92 130.5,-92 136.5,-98 136.5,-104 136.5,-104 136.5,-134 136.5,-134 136.5,-140 130.5,-146 124.5,-146"/>
+<text text-anchor="start" x="64.5" y="-115.2" font-family="Helvetica,sans-Serif" font-size="16.00">types.ts</text>
+</a>
+</g>
+</g>
+<!-- src/vite&#45;env.d.ts -->
+<g id="node85" class="node">
+<title>src/vite&#45;env.d.ts</title>
+<g id="a_node85"><a xlink:href="src/vite-env.d.ts" xlink:title="vite&#45;env.d.ts">
+<path fill="#ccffcc" stroke="black" d="M142.5,-70C142.5,-70 50.5,-70 50.5,-70 44.5,-70 38.5,-64 38.5,-58 38.5,-58 38.5,-28 38.5,-28 38.5,-22 44.5,-16 50.5,-16 50.5,-16 142.5,-16 142.5,-16 148.5,-16 154.5,-22 154.5,-28 154.5,-28 154.5,-58 154.5,-58 154.5,-64 148.5,-70 142.5,-70"/>
+<text text-anchor="start" x="46.5" y="-39.2" font-family="Helvetica,sans-Serif" font-size="16.00">vite&#45;env.d.ts</text>
 </a>
 </g>
 </g>

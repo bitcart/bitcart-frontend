@@ -18,6 +18,9 @@ catalogs:
     '@lingui/react':
       specifier: 6.0.1
       version: 6.0.1
+    '@mantine/hooks':
+      specifier: 9.2.1
+      version: 9.2.1
     '@phosphor-icons/react':
       specifier: 2.1.10
       version: 2.1.10
@@ -66,9 +69,6 @@ catalogs:
     tailwind-merge:
       specifier: 3.6.0
       version: 3.6.0
-    usehooks-ts:
-      specifier: 3.1.1
-      version: 3.1.1
     vike:
       specifier: 0.4.259
       version: 0.4.259
@@ -607,6 +607,46 @@ importers:
         specifier: catalog:devDependencies
         version: 6.0.3
 
+  packages/hooks:
+    dependencies:
+      react:
+        specifier: catalog:dependencies
+        version: 19.2.6
+      remeda:
+        specifier: catalog:dependencies
+        version: 2.34.1
+    devDependencies:
+      '@bitcart/configs':
+        specifier: workspace:*
+        version: link:../configs
+      '@stylistic/eslint-plugin':
+        specifier: catalog:devDependencies
+        version: 5.10.0(eslint@10.3.0(jiti@2.7.0))
+      '@types/node':
+        specifier: catalog:devDependencies
+        version: 25.9.1
+      '@types/react':
+        specifier: catalog:devDependencies
+        version: 19.2.15
+      dependency-cruiser:
+        specifier: catalog:devDependencies
+        version: 17.4.0
+      eslint-plugin-react-hooks:
+        specifier: catalog:devDependencies
+        version: 7.1.1(eslint@10.3.0(jiti@2.7.0))
+      oxlint:
+        specifier: catalog:devDependencies
+        version: 1.67.0(oxlint-tsgolint@0.23.0)
+      oxlint-tsgolint:
+        specifier: catalog:devDependencies
+        version: 0.23.0
+      tsdown:
+        specifier: catalog:devDependencies
+        version: 0.22.0(oxc-resolver@11.19.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0))(tsx@4.22.3)(typescript@6.0.3)
+      typescript:
+        specifier: catalog:devDependencies
+        version: 6.0.3
+
   packages/qa:
     dependencies:
       '@bitcart/core':
@@ -652,6 +692,9 @@ importers:
       '@bitcart/core':
         specifier: workspace:*
         version: link:../core
+      '@bitcart/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@daypicker/react':
         specifier: catalog:dependencies
         version: 10.0.1(@types/react@19.2.15)(react@19.2.6)
@@ -682,9 +725,6 @@ importers:
       tailwind-merge:
         specifier: catalog:dependencies
         version: 3.6.0
-      usehooks-ts:
-        specifier: catalog:dependencies
-        version: 3.1.1(react@19.2.6)
     devDependencies:
       '@bitcart/configs':
         specifier: workspace:*
@@ -776,21 +816,24 @@ importers:
       '@bitcart/core':
         specifier: workspace:*
         version: link:../core
+      '@bitcart/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@lingui/core':
         specifier: catalog:dependencies
         version: 6.0.1
       '@lingui/react':
         specifier: catalog:dependencies
         version: 6.0.1(react@19.2.6)
+      '@mantine/hooks':
+        specifier: catalog:dependencies
+        version: 9.2.1(react@19.2.6)
       react:
         specifier: catalog:dependencies
         version: 19.2.6
       remeda:
         specifier: catalog:dependencies
         version: 2.34.1
-      usehooks-ts:
-        specifier: catalog:dependencies
-        version: 3.1.1(react@19.2.6)
       vike:
         specifier: catalog:dependencies
         version: 0.4.259(react-streaming@0.4.17(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(srvx@0.11.15)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3)(yaml@2.8.4))
@@ -1481,6 +1524,11 @@ packages:
         optional: true
       rolldown:
         optional: true
+
+  '@mantine/hooks@9.2.1':
+    resolution: {integrity: sha512-IX/ztVG9eWmQTRsN7G8odyW4JckNvN8qv5A2ULzXyazjtAKLuaUpuMz0c6XhRp10J0g4bVfV3rhrTgWeImqxqg==}
+    peerDependencies:
+      react: ^19.2.0
 
   '@messageformat/date-skeleton@1.1.0':
     resolution: {integrity: sha512-rmGAfB1tIPER+gh3p/RgA+PVeRE/gxuQ2w4snFWPF5xtb5mbWR7Cbw7wCOftcUypbD6HVoxrVdyyghPm3WzP5A==}
@@ -3596,9 +3644,6 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
-  lodash.debounce@4.0.8:
-    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
-
   log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
     engines: {node: '>=10'}
@@ -4331,12 +4376,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  usehooks-ts@3.1.1:
-    resolution: {integrity: sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==}
-    engines: {node: '>=16.15.0'}
-    peerDependencies:
-      react: ^16.8.0  || ^17 || ^18 || ^19 || ^19.0.0-rc
-
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -5063,6 +5102,10 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
+
+  '@mantine/hooks@9.2.1(react@19.2.6)':
+    dependencies:
+      react: 19.2.6
 
   '@messageformat/date-skeleton@1.1.0': {}
 
@@ -6797,8 +6840,6 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
-  lodash.debounce@4.0.8: {}
-
   log-symbols@4.1.0:
     dependencies:
       chalk: 4.1.2
@@ -7703,11 +7744,6 @@ snapshots:
 
   use-sync-external-store@1.6.0(react@19.2.6):
     dependencies:
-      react: 19.2.6
-
-  usehooks-ts@3.1.1(react@19.2.6):
-    dependencies:
-      lodash.debounce: 4.0.8
       react: 19.2.6
 
   util-deprecate@1.0.2: {}

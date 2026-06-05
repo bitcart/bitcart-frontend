@@ -1,5 +1,5 @@
+import { useIsClient } from "@bitcart/hooks"
 import { useMemo } from "react"
-import { useIsClient } from "usehooks-ts"
 
 export type CssRuntimeFeatureSupportParams = {
   property: string

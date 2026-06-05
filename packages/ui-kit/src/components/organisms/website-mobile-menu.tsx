@@ -1,3 +1,4 @@
+import { useIsClient } from "@bitcart/hooks"
 import {
   MOBILE_MENU_CONTENT_TESTID,
   MOBILE_MENU_TOGGLE_TESTID,
@@ -7,7 +8,6 @@ import { t } from "@lingui/core/macro"
 import { Loader, Menu } from "lucide-react"
 import React, { useCallback, useMemo, useRef, useState } from "react"
 import { isEmptyish } from "remeda"
-import { useIsClient } from "usehooks-ts"
 
 import { useArrowKeyNavigation, useCurrentBreakpoint, useLayoutContext } from "@/hooks"
 import { cn } from "@/utils"

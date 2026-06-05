@@ -1,5 +1,5 @@
+import { useIsClient } from "@bitcart/hooks"
 import { useMemo } from "react"
-import { useIsClient } from "usehooks-ts"
 
 import { useCssRuntimeFeatureSupport, useLayoutContext, useWindowScrollThreshold } from "@/hooks"
 import { cn } from "@/utils"

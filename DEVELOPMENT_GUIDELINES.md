@@ -1,5 +1,36 @@
 # Development guidelines
 
+## MCPs
+
+### Playwright
+
+The Playwright MCP server lets agents drive the running apps in a real browser.
+
+#### Optional configuration
+
+In headless/containerized environments without a GPU, Chromium's GPU/zygote subprocess might crash on launch with `GPU process isn't usable. Goodbye.` (`error_code=1002`), even though `--no-sandbox` is already applied. The fix is the `--no-zygote` launch flag, the same workaround the apps' `playwright.config.ts` exposes for E2E via the `PLAYWRIGHT_CHROMIUM_NO_ZYGOTE` environment variable.
+
+`@playwright/mcp` does **not** accept browser flags directly (`--no-zygote` → `error: unknown option '--no-zygote'`). Launch args can only be supplied through a JSON config file passed with `--config`. This repo ships [.agents/playwright-nogpu.config.json](.agents/playwright-nogpu.config.json) for exactly that:
+
+```json
+{ "browser": { "launchOptions": { "args": ["--no-zygote"] } } }
+```
+
+To enable it, the Playwright MCP server needs `--config` pointing at that file in its `args`. This is a **per-machine** concern (only headless/no-GPU setups need it).
+
+Instead, add a **local-scope** override with `claude mcp add` (default scope is `local`):
+
+```bash
+claude mcp add playwright pnpx -- @playwright/mcp@latest \
+  --browser chromium --config /absolute/path/to/bitcart-frontend/.agents/playwright-nogpu.config.json
+```
+
+- `local` is the default scope, so no `--scope` flag is needed.
+- Use an **absolute** path for `--config` (it resolves against the MCP server's cwd).
+
+> [!NOTE]
+> Because `playwright` is now defined in both the local scope (your override) and the project scope (the committed `.mcp.json`), Claude Code prints a **conflicting-scopes warning** at startup. It's advisory only — the local endpoint is the one that runs, and the warning's caveat ("OAuth tokens are stored per endpoint") doesn't apply to Playwright, which uses no OAuth.
+
 ## Environments
 
 Currently, three types of environments are supported:
