@@ -16,6 +16,10 @@ source = "anthropics/skills"
 name = "tsdown"
 source = "rolldown/tsdown"
 
+[[skills]]
+name = "*"
+source = "mattpocock/skills"
+
 [[mcp]]
 name = "playwright"
 command = "pnpx"
