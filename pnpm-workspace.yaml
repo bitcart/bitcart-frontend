@@ -12,23 +12,23 @@ catalogs:
   dependencies:
     "@base-ui/react": 1.5.0
     "@daypicker/react": 10.0.1
-    "@lingui/core": 6.0.1
-    "@lingui/react": 6.0.1
-    "@mantine/hooks": 9.2.1
+    "@lingui/core": 6.1.0
+    "@lingui/react": 6.1.0
+    "@mantine/hooks": 9.2.2
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
-    "@tanstack/react-form": 1.32.0
-    "@tanstack/react-query": 5.100.11
+    "@tanstack/react-form": 1.33.0
+    "@tanstack/react-query": 5.100.14
     "@web3icons/react": 4.1.17
     class-variance-authority: 0.7.1
     dotenv: 17.4.2
     effect: 3.21.2
     inter-ui: 4.1.1
-    lucide-react: 1.16.0
+    lucide-react: 1.17.0
     next-themes: 0.4.6
     react: 19.2.6
     react-dom: 19.2.6
-    remeda: 2.34.1
+    remeda: 2.37.0
     sonner: 2.0.7
     tailwind-merge: 3.6.0
     vike: 0.4.259
@@ -37,10 +37,10 @@ catalogs:
     zod: 4.4.3
   devDependencies:
     "@effect/language-service": 0.86.2
-    "@lingui/babel-plugin-lingui-macro": 6.0.1
-    "@lingui/cli": 6.0.1
-    "@lingui/conf": 6.0.1
-    "@lingui/vite-plugin": 6.0.1
+    "@lingui/babel-plugin-lingui-macro": 6.1.0
+    "@lingui/cli": 6.1.0
+    "@lingui/conf": 6.1.0
+    "@lingui/vite-plugin": 6.1.0
     "@playwright/test": 1.60.0
     "@qalisa/vike-plugin-sitemap": 1.7.0
     "@rolldown/plugin-babel": 0.2.3
@@ -48,25 +48,25 @@ catalogs:
     "@types/node": 25.9.1
     "@types/react": 19.2.15
     "@types/react-dom": 19.2.3
-    "@unocss/cli": 66.6.8
+    "@unocss/cli": 66.7.0
     "@vitejs/plugin-react": 6.0.2
     babel-plugin-react-compiler: 1.0.0
-    dependency-cruiser: 17.4.0
+    dependency-cruiser: 17.4.3
     eslint-plugin-better-tailwindcss: 4.5.0
     eslint-plugin-react-hooks: 7.1.1
-    knip: 6.14.1
-    nx: 22.7.2
-    oxfmt: 0.52.0
-    oxlint: 1.67.0
+    knip: 6.15.0
+    nx: 22.7.5
+    oxfmt: 0.53.0
+    oxlint: 1.68.0
     oxlint-tsgolint: 0.23.0
     tailwindcss: 4.3.0
-    tsdown: 0.22.0
-    tsx: 4.22.3
+    tsdown: 0.22.1
+    tsx: 4.22.4
     typescript: 6.0.3
-    unocss: 66.6.8
+    unocss: 66.7.0
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
-    vite: 8.0.13
+    vite: 8.0.14
     vite-plugin-static-copy: 4.1.0
     vite-plugin-svgr: 5.2.0
 
