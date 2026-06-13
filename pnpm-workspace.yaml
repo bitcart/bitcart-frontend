@@ -83,8 +83,9 @@ minimumReleaseAgeExclude:
   - oxlint
   - oxlint-tsgolint
   - "@base-ui/*"
-  # Remove when 7 days passed since 0.2.7
-  - "tmp"
+  # ! TODO: Remove after Jun 20 2026
+  - "@esbuild/*"
+  - esbuild@0.28.1
 
 overrides:
   #! vike-react-query pins devalue to 4.x, but 4.x has vulnerabilities
@@ -98,7 +99,7 @@ overrides:
   yaml: ^2.8.3
   follow-redirects: ^1.16.0
   axios: ^1.15.2
-  tmp: ^0.2.6
+  esbuild: ^0.28.1
 
 peerDependencyRules:
   allowedVersions:
