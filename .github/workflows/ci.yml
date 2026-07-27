@@ -37,7 +37,7 @@ jobs:
     needs: [lint, zizmor]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
 
@@ -46,7 +46,7 @@ jobs:
 
       - name: Restore Nx cache
         id: nx-cache-restore
-        uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: .nx
           key: v1-nx-${{ github.ref_name }}-${{ hashFiles('nx.json') }}
@@ -79,7 +79,7 @@ jobs:
 
       - name: Save Nx cache
         if: always()
-        uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: .nx
           key: ${{ steps.nx-cache-restore.outputs.cache-primary-key }}

@@ -30,9 +30,7 @@ export default defineConfig({
     lingui(),
     babel({
       presets: [linguiTransformerBabelPreset()],
-      plugins: [
-        /*"babel-plugin-react-compiler"*/
-      ],
+      plugins: [/*"babel-plugin-react-compiler"*/],
     }),
     vike(),
 
