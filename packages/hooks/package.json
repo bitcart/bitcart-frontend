@@ -27,13 +27,19 @@
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@testing-library/jest-dom": "catalog:devDependencies",
+    "@testing-library/react": "catalog:devDependencies",
     "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
+    "@types/react-dom": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
+    "jsdom": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "oxlint-tsgolint": "catalog:devDependencies",
+    "react-dom": "catalog:dependencies",
     "tsdown": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies"
+    "typescript": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies"
   }
 }

@@ -11,6 +11,7 @@
     "oxfmt": "oxfmt",
     "nx": "nx",
     "knip": "knip",
+    "vitest": "vitest",
     "workspace": "pnpm -w",
     "packages": "pnpm --filter './packages/*'",
     "core": "pnpm -C packages/core",
@@ -36,7 +37,8 @@
     "oxlint": "catalog:devDependencies",
     "oxlint-tsgolint": "catalog:devDependencies",
     "tailwindcss": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies"
+    "typescript": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies"
   },
   "engines": {
     "node": ">=24",

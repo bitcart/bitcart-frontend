@@ -24,6 +24,8 @@ jobs:
         uv pip install prek rust-just
       cache-dependency-glob: ""
       nx-cache: true
+      extra-checks: |
+        just unit
 
   zizmor:
     name: zizmor

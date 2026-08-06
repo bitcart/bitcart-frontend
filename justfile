@@ -188,7 +188,7 @@ check: format-check lint-check typecheck depcheck
 Run tests.
 ")]
 [group("Code quality")]
-test *args: (e2e args)
+test *args: unit (e2e args)
 
 [doc("
 Run CI checks.
@@ -248,6 +248,22 @@ locales-extract-dev +scope="apps":
     echo "🌐 Locales extracted with pseudo locale included ✅"
 
 ## TESTING
+
+[doc("
+Run unit tests for all packages.
+")]
+[env("BITCART_ENV", "testing")]
+[group("Testing")]
+unit:
+    pnpm vitest run
+
+[doc("
+Run unit testing suite in watch mode for all packages.
+")]
+[env("BITCART_ENV", "testing")]
+[group("Testing")]
+unit-dev:
+    pnpm vitest
 
 [doc("
 Install Chromium for Playwright along with system dependencies.

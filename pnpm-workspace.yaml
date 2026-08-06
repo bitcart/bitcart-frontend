@@ -45,6 +45,10 @@ catalogs:
     "@qalisa/vike-plugin-sitemap": 1.7.0
     "@rolldown/plugin-babel": 0.2.3
     "@stylistic/eslint-plugin": 5.10.0
+    "@testing-library/dom": 10.4.1
+    "@testing-library/jest-dom": 6.9.1
+    "@testing-library/react": 16.3.2
+    "@testing-library/user-event": 14.6.1
     "@types/node": 25.9.5
     "@types/react": 19.2.17
     "@types/react-dom": 19.2.3
@@ -54,6 +58,7 @@ catalogs:
     dependency-cruiser: 18.1.0
     eslint-plugin-better-tailwindcss: 4.7.0
     eslint-plugin-react-hooks: 7.1.1
+    jsdom: 29.1.1
     knip: 6.27.0
     nx: 22.7.7
     oxfmt: 0.60.0
@@ -69,6 +74,7 @@ catalogs:
     vite: 8.1.5
     vite-plugin-static-copy: 4.1.1
     vite-plugin-svgr: 5.2.0
+    vitest: 4.1.8
 
 linkWorkspacePackages: true
 
@@ -84,8 +90,8 @@ minimumReleaseAgeExclude:
   - oxlint-tsgolint
   - "@base-ui/*"
 
-  # TODO: Remove after Jul 30 2026
-  - brace-expansion@5.0.8
+  # TODO: Remove after Aug 7 2026
+  - js-yaml@4.3.1
 
 overrides:
   #* nx@22.x pins axios 1.16.0, which carries 7 advisories (prototype pollution,
@@ -93,15 +99,25 @@ overrides:
   # TODO: Remove once nx bumps its bundled axios past 1.18.0.
   axios: ^1.18.0
 
-  #* minimatch@10 and nx pin brace-expansion below 5.0.8, which still carries
-  #* two high-severity ReDoS advisories.
-  # TODO: Remove once minimatch/nx bump their brace-expansion floor to 5.0.8.
-  brace-expansion: ^5.0.8
+  #* minimatch@10 and nx pin brace-expansion below 5.0.9, which still carries
+  #* a high-severity ReDoS advisory.
+  # TODO: Remove once minimatch/nx bump their brace-expansion floor to 5.0.9.
+  brace-expansion: ^5.0.9
 
   #* cosmiconfig@8 (via vite-plugin-svgr > @svgr/core) allows js-yaml ^4.1.0,
-  #* but only 4.3.0 patches the prototype-pollution advisory.
-  # TODO: Remove once cosmiconfig raises its js-yaml floor to 4.3.0.
-  js-yaml: ^4.3.0
+  #* but only 4.3.1 patches the prototype-pollution advisories.
+  # TODO: Remove once cosmiconfig raises its js-yaml floor to 4.3.1.
+  js-yaml: ^4.3.1
+
+  #* vite pins postcss ^8.5.6, below 8.5.23 which patches a moderate
+  #* ReDoS advisory.
+  # TODO: Remove once vite raises its postcss floor to 8.5.23.
+  postcss: ^8.5.23
+
+  #* jsdom@29 allows undici ^7.25.0, but only 7.29.0 patches five advisories
+  #* (one high, four moderate) around cache poisoning and cookie injection.
+  # TODO: Remove once jsdom raises its undici floor to 7.29.0.
+  undici: ^7.29.0
 
 peerDependencyRules:
   allowedVersions:
