@@ -42,6 +42,7 @@
     "shadcn-ui": "pnpm dlx shadcn@latest",
     "add:components": "pnpm shadcn-ui add -p ./src/components/tmp",
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
+    "depcruise:deps": "depcruise dist --output-type err",
     "build:styles": "unocss",
     "build:main": "tsdown"
   },

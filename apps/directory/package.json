@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "i18n:extract-locales": "lingui extract --clean",
-    "generate:graphviz": "depcruise src --output-type dot | dot -T svg -o graphviz.svg",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "lint:check": "oxlint .",
     "lint": "oxlint . --fix",

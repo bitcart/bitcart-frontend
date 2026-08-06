@@ -21,6 +21,12 @@
       "cache": true
     },
 
+    "depcruise:deps": {
+      "dependsOn": ["build"],
+      "inputs": ["default", "^default"],
+      "cache": true
+    },
+
     "lint": {
       "dependsOn": ["^build", "^lint"],
       "inputs": ["oxlintInputs", "^default"],

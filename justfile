@@ -179,10 +179,17 @@ depcheck *args:
     @pnpm knip --no-progress {{ args }}
 
 [doc("
+Validate that emitted dist code never references a devDependency (would break consumers under deps.skipNodeModulesBundle). Builds packages first via Nx.
+")]
+[group("Code quality")]
+depcruise *nx-args:
+    @pnpm nx run-many --outputStyle=stream --target=depcruise:deps $(just _nx-args {{ nx-args }})
+
+[doc("
 Run all checks without fixing.
 ")]
 [group("Code quality")]
-check: format-check lint-check typecheck depcheck
+check: format-check lint-check typecheck depcheck depcruise
 
 [doc("
 Run tests.
