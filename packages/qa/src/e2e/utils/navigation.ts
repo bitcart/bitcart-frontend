@@ -1,7 +1,7 @@
 import { readdirSync } from "node:fs"
 import { relative, sep } from "node:path"
 
-import type { Page } from "@playwright/test"
+import { expect, type Page } from "@playwright/test"
 
 import {
   MOBILE_MENU_CONTENT_TESTID,
@@ -16,6 +16,39 @@ import {
 } from "@/common"
 
 export const getLinkHrefSelector = (href: string): string => `a[href="${href}"]`
+
+/**
+ * Window flag that distinguishes a client-side (SPA) transition,
+ * which keeps the flag, from a full document reload, which wipes it.
+ */
+const CLIENT_NAVIGATION_SENTINEL_KEY = "__clientNavigationSentinel"
+
+/**
+ * Marks `window` so a later check can distinguish a client-side (SPA)
+ * transition from a full document reload. Set this after the initial load and
+ * before triggering the navigation under test, then assert with
+ * {@link expectClientSideNavigation} once the destination has loaded.
+ */
+export const markClientNavigationSentinel = (page: Page): Promise<void> =>
+  page.evaluate((key) => {
+    const globalScope = window as unknown as Record<string, unknown>
+
+    globalScope[key] = true
+  }, CLIENT_NAVIGATION_SENTINEL_KEY)
+
+/**
+ * Asserts that the most recent navigation was client-side, i.e. the sentinel
+ * set by {@link markClientNavigationSentinel} survived (a full reload would
+ * have wiped it).
+ */
+export const expectClientSideNavigation = async (page: Page): Promise<void> => {
+  const wasClientSide = await page.evaluate(
+    (key) => (window as unknown as Record<string, unknown>)[key] === true,
+    CLIENT_NAVIGATION_SENTINEL_KEY,
+  )
+
+  expect(wasClientSide, "Expected a client-side navigation, but the page fully reloaded").toBe(true)
+}
 
 /**
  * Scans a pages directory and builds a {@link PageRegistry} from the
