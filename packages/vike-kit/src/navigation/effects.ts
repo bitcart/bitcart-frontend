@@ -10,7 +10,7 @@ export type ScrollToArgs = { behavior?: ScrollBehavior } & (
  * after a cross-URL navigation), retries on each animation frame for up to
  * ~500ms before giving up.
  */
-export const scrollTo = ({ behavior = "smooth", ...args }: ScrollToArgs) => {
+export const scrollTo = ({ behavior = "smooth", ...args }: ScrollToArgs): void => {
   let retriesLeft = 30
 
   const tryScroll = () => {

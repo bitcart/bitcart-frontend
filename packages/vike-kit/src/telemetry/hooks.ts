@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-export const createUseMatomoTracking = (config: MatomoConfig) => {
+export const createUseMatomoTracking = (config: MatomoConfig): (() => void) => {
   return (): void => {
     const pageContext = usePageContext()
     const isClient = useIsClient()

@@ -5,6 +5,10 @@ import type { Icon as PhosphorIconComponent } from "@phosphor-icons/react"
 import type { LucideProps } from "lucide-react"
 import type { MouseEventHandler } from "react"
 
+export interface WithChildren {
+  children: React.ReactNode
+}
+
 export type BasicThemeMode = "dark" | "light"
 
 export type ThemeMode = BasicThemeMode | "system"

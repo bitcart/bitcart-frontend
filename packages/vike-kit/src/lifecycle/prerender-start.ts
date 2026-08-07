@@ -12,7 +12,9 @@ export interface OnPrerenderStartDeps<TSupportedLocaleId extends LocaleId | Pseu
 export const createOnPrerenderStart = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   supportedLocaleIds,
 }: OnPrerenderStartDeps<TSupportedLocaleId>) => {
-  return function onPrerenderStart(prerenderContext: { pageContexts: PageContextServer[] }) {
+  return function onPrerenderStart(prerenderContext: { pageContexts: PageContextServer[] }): {
+    prerenderContext: { pageContexts: PageContextServer[] }
+  } {
     const pageContexts: PageContextServer[] = []
 
     for (const pageContext of prerenderContext.pageContexts) {

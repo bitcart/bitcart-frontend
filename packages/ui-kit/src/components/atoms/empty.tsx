@@ -4,7 +4,9 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/utils"
 
-export const Empty: React.FC<React.ComponentProps<"div">> = ({ className, ...props }) => {
+export type EmptyProps = React.ComponentProps<"div"> & {}
+
+export const Empty: React.FC<EmptyProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="empty"
@@ -22,7 +24,9 @@ export const Empty: React.FC<React.ComponentProps<"div">> = ({ className, ...pro
   )
 }
 
-export const EmptyHeader: React.FC<React.ComponentProps<"div">> = ({ className, ...props }) => {
+export type EmptyHeaderProps = React.ComponentProps<"div"> & {}
+
+export const EmptyHeader: React.FC<EmptyHeaderProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="empty-header"
@@ -72,7 +76,9 @@ export const EmptyMedia: React.FC<EmptyMediaProps> = ({
   )
 }
 
-export const EmptyTitle: React.FC<React.ComponentProps<"div">> = ({ className, ...props }) => {
+export type EmptyTitleProps = React.ComponentProps<"div"> & {}
+
+export const EmptyTitle: React.FC<EmptyTitleProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="empty-title"
@@ -82,7 +88,9 @@ export const EmptyTitle: React.FC<React.ComponentProps<"div">> = ({ className, .
   )
 }
 
-export const EmptyDescription: React.FC<React.ComponentProps<"p">> = ({ className, ...props }) => {
+export type EmptyDescriptionProps = React.ComponentProps<"p"> & {}
+
+export const EmptyDescription: React.FC<EmptyDescriptionProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="empty-description"
@@ -100,7 +108,9 @@ export const EmptyDescription: React.FC<React.ComponentProps<"p">> = ({ classNam
   )
 }
 
-export const EmptyContent: React.FC<React.ComponentProps<"div">> = ({ className, ...props }) => {
+export type EmptyContentProps = React.ComponentProps<"div"> & {}
+
+export const EmptyContent: React.FC<EmptyContentProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="empty-content"

@@ -1,4 +1,5 @@
 import { Badge } from "@bitcart/ui-kit/components"
+import type { WithChildren } from "@bitcart/ui-kit/types"
 import { cn } from "@bitcart/ui-kit/utils"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -18,9 +19,8 @@ const catalogEntryBadgeVariants = cva("", {
   },
 })
 
-export type CatalogEntryBadgeProps = VariantProps<typeof catalogEntryBadgeVariants> & {
-  children: React.ReactNode
-}
+export type CatalogEntryBadgeProps = VariantProps<typeof catalogEntryBadgeVariants> &
+  WithChildren & {}
 
 export const CatalogEntryBadge: React.FC<CatalogEntryBadgeProps> = ({ variant, children }) => (
   <Badge variant="plain" className={cn(catalogEntryBadgeVariants({ variant }))}>

@@ -10,7 +10,9 @@ import { fieldVariants } from "./field-variants"
 import { Label } from "./label"
 import { Separator } from "./separator"
 
-export const FieldSet = ({ className, ...props }: React.ComponentProps<"fieldset">) => {
+export type FieldSetProps = React.ComponentProps<"fieldset"> & {}
+
+export const FieldSet: React.FC<FieldSetProps> = ({ className, ...props }) => {
   return (
     <fieldset
       data-slot="field-set"
@@ -24,11 +26,15 @@ export const FieldSet = ({ className, ...props }: React.ComponentProps<"fieldset
   )
 }
 
-export const FieldLegend = ({
+export type FieldLegendProps = React.ComponentProps<"legend"> & {
+  variant?: "legend" | "label"
+}
+
+export const FieldLegend: React.FC<FieldLegendProps> = ({
   className,
   variant = "legend",
   ...props
-}: React.ComponentProps<"legend"> & { variant?: "legend" | "label" }) => {
+}) => {
   return (
     <legend
       data-slot="field-legend"
@@ -44,7 +50,9 @@ export const FieldLegend = ({
   )
 }
 
-export const FieldGroup = ({ className, ...props }: React.ComponentProps<"div">) => {
+export type FieldGroupProps = React.ComponentProps<"div"> & {}
+
+export const FieldGroup: React.FC<FieldGroupProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="field-group"
@@ -63,11 +71,9 @@ export const FieldGroup = ({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-export const Field = ({
-  className,
-  orientation = "vertical",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) => {
+export type FieldProps = React.ComponentProps<"div"> & VariantProps<typeof fieldVariants> & {}
+
+export const Field: React.FC<FieldProps> = ({ className, orientation = "vertical", ...props }) => {
   return (
     <div
       role="group"
@@ -79,7 +85,9 @@ export const Field = ({
   )
 }
 
-export const FieldContent = ({ className, ...props }: React.ComponentProps<"div">) => {
+export type FieldContentProps = React.ComponentProps<"div"> & {}
+
+export const FieldContent: React.FC<FieldContentProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="field-content"
@@ -137,7 +145,9 @@ export const FieldLabel: React.FC<FieldLabelProps> = ({
   )
 }
 
-export const FieldTitle = ({ className, ...props }: React.ComponentProps<"div">) => {
+export type FieldTitleProps = React.ComponentProps<"div"> & {}
+
+export const FieldTitle: React.FC<FieldTitleProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="field-label"
@@ -154,7 +164,9 @@ export const FieldTitle = ({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-export const FieldDescription = ({ className, ...props }: React.ComponentProps<"p">) => {
+export type FieldDescriptionProps = React.ComponentProps<"p"> & {}
+
+export const FieldDescription: React.FC<FieldDescriptionProps> = ({ className, ...props }) => {
   return (
     <p
       data-slot="field-description"
@@ -173,12 +185,14 @@ export const FieldDescription = ({ className, ...props }: React.ComponentProps<"
   )
 }
 
-export const FieldSeparator = ({
+export type FieldSeparatorProps = React.ComponentProps<"div"> & {
+  children?: React.ReactNode
+}
+
+export const FieldSeparator: React.FC<FieldSeparatorProps> = ({
   children,
   className,
   ...props
-}: React.ComponentProps<"div"> & {
-  children?: React.ReactNode
 }) => {
   return (
     <div
@@ -204,13 +218,15 @@ export const FieldSeparator = ({
   )
 }
 
-export const FieldError = ({
+export type FieldErrorProps = React.ComponentProps<"div"> & {
+  errors?: ({ message?: string } | undefined)[]
+}
+
+export const FieldError: React.FC<FieldErrorProps> = ({
   className,
   children,
   errors,
   ...props
-}: React.ComponentProps<"div"> & {
-  errors?: ({ message?: string } | undefined)[]
 }) => {
   const content = useMemo(() => {
     if (children) {

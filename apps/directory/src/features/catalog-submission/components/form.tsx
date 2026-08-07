@@ -8,7 +8,7 @@ import { directoryClient } from "@/common/data/bitcart/directory"
 import { FORM_CONFIG } from "../constants"
 import { useCatalogSubmissionForm } from "../hooks/form"
 
-export const CatalogSubmissionForm = () => {
+export const CatalogSubmissionForm: React.FC = () => {
   const { t } = useLingui()
   const directoryCategories = directoryClient.getCategories()
   const { form, handleSubmit } = useCatalogSubmissionForm()

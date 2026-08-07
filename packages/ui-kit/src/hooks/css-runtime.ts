@@ -9,7 +9,7 @@ export type CssRuntimeFeatureSupportParams = {
 export const useCssRuntimeFeatureSupport = ({
   property,
   value,
-}: CssRuntimeFeatureSupportParams) => {
+}: CssRuntimeFeatureSupportParams): boolean => {
   const isClient = useIsClient()
 
   return useMemo(

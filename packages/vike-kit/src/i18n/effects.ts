@@ -2,8 +2,10 @@ import { i18n } from "@lingui/core"
 
 import type { LocaleMessages, LocaleModules } from "./types"
 
-export const createLoadCatalog = (availableLocaleModules: LocaleModules) => {
-  return async function loadCatalog(locale: string) {
+export const createLoadCatalog = (
+  availableLocaleModules: LocaleModules,
+): ((locale: string) => Promise<LocaleMessages>) => {
+  return async function loadCatalog(locale: string): Promise<LocaleMessages> {
     const moduleLoader = availableLocaleModules[`./_generated/locales/${locale}.po`]
 
     if (!moduleLoader) {
@@ -18,7 +20,7 @@ export const createLoadCatalog = (availableLocaleModules: LocaleModules) => {
   }
 }
 
-export const activateLocaleMessages = (localeId: string, messages: LocaleMessages) => {
+export const activateLocaleMessages = (localeId: string, messages: LocaleMessages): void => {
   if (i18n.locale !== localeId) {
     i18n.loadAndActivate({ locale: localeId, messages })
   }

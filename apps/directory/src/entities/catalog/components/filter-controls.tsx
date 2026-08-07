@@ -15,11 +15,11 @@ export type CatalogFilterControlsProps = {
   className?: string
 }
 
-export const CatalogFilterControls = ({
+export const CatalogFilterControls: React.FC<CatalogFilterControlsProps> = ({
   filterState,
   handlers: { handleCategorySelect, handleSubcategorySelect, handleSubcategoryReset },
   className,
-}: CatalogFilterControlsProps) => {
+}) => {
   const { t } = useLingui()
   const { data: catalog } = directoryHooks.useCatalog()
   const directoryCategories = directoryClient.getCategories()

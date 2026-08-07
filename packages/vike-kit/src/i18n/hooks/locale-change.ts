@@ -12,7 +12,10 @@ export type UseHandleLocaleChangeParams<TSupportedLocaleId extends LocaleId | Ps
 
 export const useHandleLocaleChange = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   supportedLocaleIds,
-}: UseHandleLocaleChangeParams<TSupportedLocaleId>) => {
+}: UseHandleLocaleChangeParams<TSupportedLocaleId>): ((
+  localeId: TSupportedLocaleId,
+  callback?: VoidFunction,
+) => void) => {
   const { urlLogical } = usePageContext()
   const { i18n } = useLingui()
   const { setClientLocaleId } = useClientLocaleId({ supportedLocaleIds })

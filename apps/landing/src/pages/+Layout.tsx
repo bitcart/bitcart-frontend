@@ -1,4 +1,5 @@
 import { WebsiteLayout } from "@bitcart/ui-kit/components"
+import type { WithChildren } from "@bitcart/ui-kit/types"
 import { useHandleLocaleChange, useI18nSetup } from "@bitcart/vike-kit/i18n"
 import { Link, useClientRoute } from "@bitcart/vike-kit/navigation"
 import { createUseMatomoTracking } from "@bitcart/vike-kit/telemetry"
@@ -22,7 +23,7 @@ const useMatomoTracking = createUseMatomoTracking({
   actions: env.BITCART_MATOMO_ACTIONS,
 })
 
-const PageShell = ({ children }: { children: React.ReactNode }) => {
+const PageShell: React.FC<WithChildren> = ({ children }) => {
   const route = useClientRoute()
   const hydrated = useHydrated()
   const handleLocaleChange = useHandleLocaleChange({ supportedLocaleIds: SUPPORTED_LOCALE_IDS })
@@ -40,7 +41,7 @@ const PageShell = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+const Layout: React.FC<WithChildren> = ({ children }) => {
   useI18nSetup({ supportedLocaleIds: SUPPORTED_LOCALE_IDS })
   useMatomoTracking()
 
@@ -50,3 +51,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </I18nProvider>
   )
 }
+
+export default Layout

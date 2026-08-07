@@ -5,13 +5,20 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
 import { cn } from "@/utils"
 
+export type SelectProps<
+  Value,
+  Multiple extends boolean | undefined = false,
+> = SelectPrimitive.Root.Props<Value, Multiple> & {}
+
 export const Select = <Value, Multiple extends boolean | undefined = false>({
   ...props
-}: SelectPrimitive.Root.Props<Value, Multiple>) => {
+}: SelectProps<Value, Multiple>) => {
   return <SelectPrimitive.Root data-slot="select" {...props} />
 }
 
-export const SelectGroup = ({ className, ...props }: SelectPrimitive.Group.Props) => {
+export type SelectGroupProps = SelectPrimitive.Group.Props & {}
+
+export const SelectGroup: React.FC<SelectGroupProps> = ({ className, ...props }) => {
   return (
     <SelectPrimitive.Group
       data-slot="select-group"
@@ -21,7 +28,9 @@ export const SelectGroup = ({ className, ...props }: SelectPrimitive.Group.Props
   )
 }
 
-export const SelectValue = ({ className, ...props }: SelectPrimitive.Value.Props) => {
+export type SelectValueProps = SelectPrimitive.Value.Props & {}
+
+export const SelectValue: React.FC<SelectValueProps> = ({ className, ...props }) => {
   return (
     <SelectPrimitive.Value
       data-slot="select-value"
@@ -31,7 +40,9 @@ export const SelectValue = ({ className, ...props }: SelectPrimitive.Value.Props
   )
 }
 
-export const SelectLabel = ({ className, ...props }: SelectPrimitive.GroupLabel.Props) => {
+export type SelectLabelProps = SelectPrimitive.GroupLabel.Props & {}
+
+export const SelectLabel: React.FC<SelectLabelProps> = ({ className, ...props }) => {
   return (
     <SelectPrimitive.GroupLabel
       data-slot="select-label"
@@ -41,7 +52,9 @@ export const SelectLabel = ({ className, ...props }: SelectPrimitive.GroupLabel.
   )
 }
 
-export const SelectSeparator = ({ className, ...props }: SelectPrimitive.Separator.Props) => {
+export type SelectSeparatorProps = SelectPrimitive.Separator.Props & {}
+
+export const SelectSeparator: React.FC<SelectSeparatorProps> = ({ className, ...props }) => {
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
@@ -51,10 +64,14 @@ export const SelectSeparator = ({ className, ...props }: SelectPrimitive.Separat
   )
 }
 
-export const SelectScrollUpButton = ({
+export type SelectScrollUpButtonProps = React.ComponentProps<
+  typeof SelectPrimitive.ScrollUpArrow
+> & {}
+
+export const SelectScrollUpButton: React.FC<SelectScrollUpButtonProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.ScrollUpArrow>) => {
+}) => {
   return (
     <SelectPrimitive.ScrollUpArrow
       data-slot="select-scroll-up-button"
@@ -69,10 +86,14 @@ export const SelectScrollUpButton = ({
   )
 }
 
-export const SelectScrollDownButton = ({
+export type SelectScrollDownButtonProps = React.ComponentProps<
+  typeof SelectPrimitive.ScrollDownArrow
+> & {}
+
+export const SelectScrollDownButton: React.FC<SelectScrollDownButtonProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.ScrollDownArrow>) => {
+}) => {
   return (
     <SelectPrimitive.ScrollDownArrow
       data-slot="select-scroll-down-button"

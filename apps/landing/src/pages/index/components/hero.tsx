@@ -11,7 +11,7 @@ import { Announcement } from "./announcement"
 const FEATURE_HIGHLIGHT_CONTAINER_CLASS = `gap-2 sm:gap-3 p-3 lg:p-4 max-w-74 sm:w-74 lg:w-a rounded-lg
 border-primary/50 bg-secondary/60 flex items-center justify-center border-2`
 
-export const Hero = () => {
+export const Hero: React.FC = () => {
   const { t } = useLingui()
 
   return (

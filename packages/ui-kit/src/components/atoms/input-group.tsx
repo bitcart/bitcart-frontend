@@ -10,7 +10,9 @@ import { Input, type InputProps } from "./input"
 import { inputGroupAddonVariants, inputGroupButtonVariants } from "./input-group-variants"
 import { Textarea } from "./textarea"
 
-export const InputGroup = ({ className, ...props }: React.ComponentProps<"div">) => {
+export type InputGroupProps = React.ComponentProps<"div"> & {}
+
+export const InputGroup: React.FC<InputGroupProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="input-group"
@@ -84,14 +86,16 @@ export const InputGroupAddon: React.FC<InputGroupAddonProps> = ({
   )
 }
 
-export const InputGroupButton = ({
+export type InputGroupButtonProps = Omit<React.ComponentProps<typeof Button>, "size"> &
+  VariantProps<typeof inputGroupButtonVariants> & {}
+
+export const InputGroupButton: React.FC<InputGroupButtonProps> = ({
   className,
   type = "button",
   variant = "ghost",
   size = "xs",
   ...props
-}: Omit<React.ComponentProps<typeof Button>, "size"> &
-  VariantProps<typeof inputGroupButtonVariants>) => {
+}) => {
   return (
     <Button
       type={type}
@@ -103,7 +107,9 @@ export const InputGroupButton = ({
   )
 }
 
-export const InputGroupText = ({ className, ...props }: React.ComponentProps<"span">) => {
+export type InputGroupTextProps = React.ComponentProps<"span"> & {}
+
+export const InputGroupText: React.FC<InputGroupTextProps> = ({ className, ...props }) => {
   return (
     <span
       className={cn(
@@ -142,7 +148,9 @@ export const InputGroupInput: React.FC<InputGroupInputProps> = ({ className, ...
   )
 }
 
-export const InputGroupTextarea = ({ className, ...props }: React.ComponentProps<"textarea">) => {
+export type InputGroupTextareaProps = React.ComponentProps<"textarea"> & {}
+
+export const InputGroupTextarea: React.FC<InputGroupTextareaProps> = ({ className, ...props }) => {
   return (
     <Textarea
       data-slot="input-group-control"

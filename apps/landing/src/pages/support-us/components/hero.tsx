@@ -3,7 +3,7 @@ import { cn } from "@bitcart/ui-kit/utils"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowRight, Mail } from "lucide-react"
 
-export const Hero = () => {
+export const Hero: React.FC = () => {
   const { t } = useLingui()
 
   return (

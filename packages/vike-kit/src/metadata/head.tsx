@@ -17,7 +17,7 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
   posixLocaleIdMap,
   projectCanonicalName,
 }: HeadProps<TSupportedLocaleId>) =>
-  function Head() {
+  function Head(): React.JSX.Element {
     const { metadata, urlLogical } = usePageContext()
     const normalizedUrl = urlLogical === "/" ? "" : urlLogical
 

@@ -8,16 +8,18 @@ import { cn } from "@/utils"
 import { NavigationMenuPositioner } from "../atoms/navigation-menu"
 import { navigationMenuTriggerStyle } from "./navigation-menu-styles"
 
-export const NavigationMenu = ({
+export type NavigationMenuProps = NavigationMenuPrimitive.Root.Props &
+  Pick<NavigationMenuPrimitive.Positioner.Props, "align"> & {
+    viewport?: boolean
+  }
+
+export const NavigationMenu: React.FC<NavigationMenuProps> = ({
   className,
   children,
   viewport = true,
   align = "start",
   ...props
-}: NavigationMenuPrimitive.Root.Props &
-  Pick<NavigationMenuPrimitive.Positioner.Props, "align"> & {
-    viewport?: boolean
-  }) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
@@ -34,11 +36,13 @@ export const NavigationMenu = ({
   )
 }
 
-export const NavigationMenuTrigger = ({
+export type NavigationMenuTriggerProps = NavigationMenuPrimitive.Trigger.Props & {}
+
+export const NavigationMenuTrigger: React.FC<NavigationMenuTriggerProps> = ({
   className,
   children,
   ...props
-}: NavigationMenuPrimitive.Trigger.Props) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="navigation-menu-trigger"

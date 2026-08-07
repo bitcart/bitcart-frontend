@@ -4,10 +4,11 @@ import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/naviga
 
 import { cn } from "@/utils"
 
-export const NavigationMenuList = ({
-  className,
-  ...props
-}: React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.List>) => {
+export type NavigationMenuListProps = React.ComponentPropsWithRef<
+  typeof NavigationMenuPrimitive.List
+> & {}
+
+export const NavigationMenuList: React.FC<NavigationMenuListProps> = ({ className, ...props }) => {
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
@@ -20,10 +21,11 @@ export const NavigationMenuList = ({
   )
 }
 
-export const NavigationMenuItem = ({
-  className,
-  ...props
-}: React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>) => {
+export type NavigationMenuItemProps = React.ComponentPropsWithRef<
+  typeof NavigationMenuPrimitive.Item
+> & {}
+
+export const NavigationMenuItem: React.FC<NavigationMenuItemProps> = ({ className, ...props }) => {
   return (
     <NavigationMenuPrimitive.Item
       data-slot="navigation-menu-item"
@@ -33,10 +35,12 @@ export const NavigationMenuItem = ({
   )
 }
 
-export const NavigationMenuContent = ({
+export type NavigationMenuContentProps = NavigationMenuPrimitive.Content.Props & {}
+
+export const NavigationMenuContent: React.FC<NavigationMenuContentProps> = ({
   className,
   ...props
-}: NavigationMenuPrimitive.Content.Props) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
@@ -79,14 +83,16 @@ export const NavigationMenuContent = ({
   )
 }
 
-export const NavigationMenuPositioner = ({
+export type NavigationMenuPositionerProps = NavigationMenuPrimitive.Positioner.Props & {}
+
+export const NavigationMenuPositioner: React.FC<NavigationMenuPositionerProps> = ({
   className,
   side = "bottom",
   sideOffset = 8,
   align = "start",
   alignOffset = 0,
   ...props
-}: NavigationMenuPrimitive.Positioner.Props) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Portal>
       <NavigationMenuPrimitive.Positioner
@@ -120,7 +126,9 @@ export const NavigationMenuPositioner = ({
   )
 }
 
-export const NavigationMenuLink = ({ className, ...props }: NavigationMenuPrimitive.Link.Props) => {
+export type NavigationMenuLinkProps = NavigationMenuPrimitive.Link.Props & {}
+
+export const NavigationMenuLink: React.FC<NavigationMenuLinkProps> = ({ className, ...props }) => {
   return (
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
@@ -146,10 +154,14 @@ export const NavigationMenuLink = ({ className, ...props }: NavigationMenuPrimit
   )
 }
 
-export const NavigationMenuIndicator = ({
+export type NavigationMenuIndicatorProps = React.ComponentPropsWithRef<
+  typeof NavigationMenuPrimitive.Icon
+> & {}
+
+export const NavigationMenuIndicator: React.FC<NavigationMenuIndicatorProps> = ({
   className,
   ...props
-}: React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Icon>) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Icon
       data-slot="navigation-menu-indicator"

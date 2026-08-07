@@ -4,11 +4,15 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 
 import { cn } from "@/utils"
 
-export const DropdownMenu = ({ ...props }: MenuPrimitive.Root.Props) => {
+export type DropdownMenuProps = MenuPrimitive.Root.Props & {}
+
+export const DropdownMenu: React.FC<DropdownMenuProps> = ({ ...props }) => {
   return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />
 }
 
-export const DropdownMenuPortal = ({ ...props }: MenuPrimitive.Portal.Props) => {
+export type DropdownMenuPortalProps = MenuPrimitive.Portal.Props & {}
+
+export const DropdownMenuPortal: React.FC<DropdownMenuPortalProps> = ({ ...props }) => {
   return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />
 }
 
@@ -36,11 +40,15 @@ export const DropdownMenuBackdrop: React.FC<DropdownMenuBackdropProps> = ({
   )
 }
 
-export const DropdownMenuTrigger = ({ ...props }: MenuPrimitive.Trigger.Props) => {
+export type DropdownMenuTriggerProps = MenuPrimitive.Trigger.Props & {}
+
+export const DropdownMenuTrigger: React.FC<DropdownMenuTriggerProps> = ({ ...props }) => {
   return <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />
 }
 
-export const DropdownMenuGroup = ({ className, ...props }: MenuPrimitive.Group.Props) => {
+export type DropdownMenuGroupProps = MenuPrimitive.Group.Props & {}
+
+export const DropdownMenuGroup: React.FC<DropdownMenuGroupProps> = ({ className, ...props }) => {
   return (
     <MenuPrimitive.Group
       data-slot="dropdown-menu-group"
@@ -93,16 +101,20 @@ export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({
   )
 }
 
-export const DropdownMenuRadioGroup = ({ ...props }: MenuPrimitive.RadioGroup.Props) => {
+export type DropdownMenuRadioGroupProps = MenuPrimitive.RadioGroup.Props & {}
+
+export const DropdownMenuRadioGroup: React.FC<DropdownMenuRadioGroupProps> = ({ ...props }) => {
   return <MenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />
 }
 
-export const DropdownMenuLabel = ({
+export type DropdownMenuLabelProps = MenuPrimitive.GroupLabel.Props & {
+  inset?: boolean
+}
+
+export const DropdownMenuLabel: React.FC<DropdownMenuLabelProps> = ({
   className,
   inset,
   ...props
-}: MenuPrimitive.GroupLabel.Props & {
-  inset?: boolean
 }) => {
   return (
     <MenuPrimitive.GroupLabel
@@ -114,7 +126,12 @@ export const DropdownMenuLabel = ({
   )
 }
 
-export const DropdownMenuSeparator = ({ className, ...props }: MenuPrimitive.Separator.Props) => {
+export type DropdownMenuSeparatorProps = MenuPrimitive.Separator.Props & {}
+
+export const DropdownMenuSeparator: React.FC<DropdownMenuSeparatorProps> = ({
+  className,
+  ...props
+}) => {
   return (
     <MenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
@@ -124,7 +141,12 @@ export const DropdownMenuSeparator = ({ className, ...props }: MenuPrimitive.Sep
   )
 }
 
-export const DropdownMenuShortcut = ({ className, ...props }: React.ComponentProps<"span">) => {
+export type DropdownMenuShortcutProps = React.ComponentProps<"span"> & {}
+
+export const DropdownMenuShortcut: React.FC<DropdownMenuShortcutProps> = ({
+  className,
+  ...props
+}) => {
   return (
     <span
       data-slot="dropdown-menu-shortcut"
@@ -134,6 +156,8 @@ export const DropdownMenuShortcut = ({ className, ...props }: React.ComponentPro
   )
 }
 
-export const DropdownMenuSub = ({ ...props }: MenuPrimitive.SubmenuRoot.Props) => {
+export type DropdownMenuSubProps = MenuPrimitive.SubmenuRoot.Props & {}
+
+export const DropdownMenuSub: React.FC<DropdownMenuSubProps> = ({ ...props }) => {
   return <MenuPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />
 }

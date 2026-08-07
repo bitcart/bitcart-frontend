@@ -61,12 +61,14 @@ export const DropdownMenuContent: React.FC<DropdownMenuContentProps> = ({
   )
 }
 
-export const DropdownMenuCheckboxItem = ({
+export type DropdownMenuCheckboxItemProps = MenuPrimitive.CheckboxItem.Props & {}
+
+export const DropdownMenuCheckboxItem: React.FC<DropdownMenuCheckboxItemProps> = ({
   className,
   children,
   checked,
   ...props
-}: MenuPrimitive.CheckboxItem.Props) => {
+}) => {
   return (
     <MenuPrimitive.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
@@ -98,11 +100,13 @@ export const DropdownMenuCheckboxItem = ({
   )
 }
 
-export const DropdownMenuRadioItem = ({
+export type DropdownMenuRadioItemProps = MenuPrimitive.RadioItem.Props & {}
+
+export const DropdownMenuRadioItem: React.FC<DropdownMenuRadioItemProps> = ({
   className,
   children,
   ...props
-}: MenuPrimitive.RadioItem.Props) => {
+}) => {
   return (
     <MenuPrimitive.RadioItem
       data-slot="dropdown-menu-radio-item"
@@ -133,13 +137,15 @@ export const DropdownMenuRadioItem = ({
   )
 }
 
-export const DropdownMenuSubTrigger = ({
+export type DropdownMenuSubTriggerProps = MenuPrimitive.SubmenuTrigger.Props & {
+  inset?: boolean
+}
+
+export const DropdownMenuSubTrigger: React.FC<DropdownMenuSubTriggerProps> = ({
   className,
   inset,
   children,
   ...props
-}: MenuPrimitive.SubmenuTrigger.Props & {
-  inset?: boolean
 }) => {
   return (
     <MenuPrimitive.SubmenuTrigger
@@ -169,14 +175,16 @@ export const DropdownMenuSubTrigger = ({
   )
 }
 
-export const DropdownMenuSubContent = ({
+export type DropdownMenuSubContentProps = React.ComponentProps<typeof DropdownMenuContent> & {}
+
+export const DropdownMenuSubContent: React.FC<DropdownMenuSubContentProps> = ({
   className,
   align = "start",
   alignOffset = -3,
   side = "right",
   sideOffset = 0,
   ...props
-}: React.ComponentProps<typeof DropdownMenuContent>) => {
+}) => {
   return (
     <DropdownMenuContent
       data-slot="dropdown-menu-sub-content"

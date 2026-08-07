@@ -8,6 +8,7 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
+    "isolatedDeclarations": true,
     "paths": { "@/*": ["./src/*"] }
   },
 

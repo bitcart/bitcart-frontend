@@ -1,4 +1,5 @@
 import { Button } from "@bitcart/ui-kit/components"
+import { type PageErrorFallbackProps } from "@bitcart/vike-kit/navigation"
 import { useLingui } from "@lingui/react/macro"
 import { AlertCircle, Loader } from "lucide-react"
 import { withFallback } from "vike-react-query"
@@ -10,7 +11,7 @@ import { Hero } from "./components/hero"
 import { IntegrationSection } from "./components/integration-section"
 import { StatsSection } from "./components/stats-section"
 
-const LoadingFallback = () => {
+const LoadingFallback: React.FC = () => {
   const { t } = useLingui()
 
   return (
@@ -27,7 +28,7 @@ const LoadingFallback = () => {
   )
 }
 
-const ErrorFallback = ({ retry, error }: { retry: () => void; error: { message: string } }) => {
+const ErrorFallback: React.FC<PageErrorFallbackProps> = ({ retry, error }) => {
   const { t } = useLingui()
 
   return (

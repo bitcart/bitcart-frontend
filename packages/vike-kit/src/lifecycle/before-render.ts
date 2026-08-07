@@ -3,7 +3,7 @@ import { type BCP47LanguageSubtag, type PosixLocaleIdMap } from "@bitcart/core/u
 import type { PageContext } from "vike/types"
 
 import { activateLocaleMessages, type LocaleMessages } from "@/i18n"
-import { getLayoutMetadata, type StaticLayoutMetadata } from "@/metadata"
+import { getLayoutMetadata, type LayoutMetadata, type StaticLayoutMetadata } from "@/metadata"
 
 export type OnBeforeRenderDeps<TSupportedLocaleId extends BCP47LanguageSubtag> = {
   envTag: RuntimeEnvTag
@@ -20,7 +20,9 @@ export const createOnBeforeRender = <TSupportedLocaleId extends BCP47LanguageSub
   posixLocaleIdMap,
   productionBaseUrl,
 }: OnBeforeRenderDeps<TSupportedLocaleId>) => {
-  return async function onBeforeRender(pageContext: PageContext) {
+  return async function onBeforeRender(
+    pageContext: PageContext,
+  ): Promise<{ pageContext: { metadata: LayoutMetadata; messages: LocaleMessages } }> {
     const { localeId } = pageContext
     const messages = await loadCatalog(localeId as TSupportedLocaleId)
 

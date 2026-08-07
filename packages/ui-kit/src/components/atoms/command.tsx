@@ -14,7 +14,9 @@ import {
   AutocompleteSeparator,
 } from "./autocomplete"
 
-export const Command: React.FC<React.ComponentProps<typeof Autocomplete>> = ({
+export type CommandProps = React.ComponentProps<typeof Autocomplete> & {}
+
+export const Command: React.FC<CommandProps> = ({
   autoHighlight = "always",
   keepHighlight = true,
   ...props
@@ -30,9 +32,9 @@ export const Command: React.FC<React.ComponentProps<typeof Autocomplete>> = ({
   )
 }
 
-export const CommandCollection: React.FC<React.ComponentProps<typeof AutocompleteCollection>> = ({
-  ...props
-}) => {
+export type CommandCollectionProps = React.ComponentProps<typeof AutocompleteCollection> & {}
+
+export const CommandCollection: React.FC<CommandCollectionProps> = ({ ...props }) => {
   return <AutocompleteCollection data-slot="command-collection" {...props} />
 }
 
@@ -41,7 +43,9 @@ export const CommandCreateHandle: typeof CommandDialogPrimitive.createHandle =
 
 export const CommandDialog: typeof CommandDialogPrimitive.Root = CommandDialogPrimitive.Root
 
-export const CommandDialogBackdrop: React.FC<CommandDialogPrimitive.Backdrop.Props> = ({
+export type CommandDialogBackdropProps = CommandDialogPrimitive.Backdrop.Props & {}
+
+export const CommandDialogBackdrop: React.FC<CommandDialogBackdropProps> = ({
   className,
   ...props
 }) => {
@@ -65,11 +69,15 @@ export const CommandDialogBackdrop: React.FC<CommandDialogPrimitive.Backdrop.Pro
 export const CommandDialogPortal: typeof CommandDialogPrimitive.Portal =
   CommandDialogPrimitive.Portal
 
-export const CommandDialogTrigger: React.FC<CommandDialogPrimitive.Trigger.Props> = (props) => {
+export type CommandDialogTriggerProps = CommandDialogPrimitive.Trigger.Props & {}
+
+export const CommandDialogTrigger: React.FC<CommandDialogTriggerProps> = (props) => {
   return <CommandDialogPrimitive.Trigger data-slot="command-dialog-trigger" {...props} />
 }
 
-export const CommandDialogViewport: React.FC<CommandDialogPrimitive.Viewport.Props> = ({
+export type CommandDialogViewportProps = CommandDialogPrimitive.Viewport.Props & {}
+
+export const CommandDialogViewport: React.FC<CommandDialogViewportProps> = ({
   className,
   ...props
 }) => {
@@ -90,10 +98,9 @@ export const CommandDialogViewport: React.FC<CommandDialogPrimitive.Viewport.Pro
   )
 }
 
-export const CommandEmpty: React.FC<React.ComponentProps<typeof AutocompleteEmpty>> = ({
-  className,
-  ...props
-}) => {
+export type CommandEmptyProps = React.ComponentProps<typeof AutocompleteEmpty> & {}
+
+export const CommandEmpty: React.FC<CommandEmptyProps> = ({ className, ...props }) => {
   return (
     <AutocompleteEmpty
       className={cn("not-empty:py-6", className)}
@@ -103,7 +110,9 @@ export const CommandEmpty: React.FC<React.ComponentProps<typeof AutocompleteEmpt
   )
 }
 
-export const CommandFooter: React.FC<React.ComponentProps<"div">> = ({ className, ...props }) => {
+export type CommandFooterProps = React.ComponentProps<"div"> & {}
+
+export const CommandFooter: React.FC<CommandFooterProps> = ({ className, ...props }) => {
   return (
     <div
       className={cn(
@@ -120,30 +129,29 @@ export const CommandFooter: React.FC<React.ComponentProps<"div">> = ({ className
   )
 }
 
-export const CommandGroup: React.FC<React.ComponentProps<typeof AutocompleteGroup>> = ({
-  className,
-  ...props
-}) => {
+export type CommandGroupProps = React.ComponentProps<typeof AutocompleteGroup> & {}
+
+export const CommandGroup: React.FC<CommandGroupProps> = ({ className, ...props }) => {
   return <AutocompleteGroup className={className} data-slot="command-group" {...props} />
 }
 
-export const CommandGroupLabel: React.FC<React.ComponentProps<typeof AutocompleteGroupLabel>> = ({
-  className,
-  ...props
-}) => {
+export type CommandGroupLabelProps = React.ComponentProps<typeof AutocompleteGroupLabel> & {}
+
+export const CommandGroupLabel: React.FC<CommandGroupLabelProps> = ({ className, ...props }) => {
   return <AutocompleteGroupLabel className={className} data-slot="command-group-label" {...props} />
 }
 
-export const CommandItem: React.FC<React.ComponentProps<typeof AutocompleteItem>> = ({
-  className,
-  ...props
-}) => {
+export type CommandItemProps = React.ComponentProps<typeof AutocompleteItem> & {}
+
+export const CommandItem: React.FC<CommandItemProps> = ({ className, ...props }) => {
   return (
     <AutocompleteItem className={cn("py-1.5", className)} data-slot="command-item" {...props} />
   )
 }
 
-export const CommandPanel: React.FC<React.ComponentProps<"div">> = ({ className, ...props }) => {
+export type CommandPanelProps = React.ComponentProps<"div"> & {}
+
+export const CommandPanel: React.FC<CommandPanelProps> = ({ className, ...props }) => {
   return (
     <div
       className={cn(
@@ -166,10 +174,9 @@ export const CommandPanel: React.FC<React.ComponentProps<"div">> = ({ className,
   )
 }
 
-export const CommandSeparator: React.FC<React.ComponentProps<typeof AutocompleteSeparator>> = ({
-  className,
-  ...props
-}) => {
+export type CommandSeparatorProps = React.ComponentProps<typeof AutocompleteSeparator> & {}
+
+export const CommandSeparator: React.FC<CommandSeparatorProps> = ({ className, ...props }) => {
   return (
     <AutocompleteSeparator
       className={cn("my-2", className)}
@@ -179,7 +186,9 @@ export const CommandSeparator: React.FC<React.ComponentProps<typeof Autocomplete
   )
 }
 
-export const CommandShortcut: React.FC<React.ComponentProps<"kbd">> = ({ className, ...props }) => {
+export type CommandShortcutProps = React.ComponentProps<"kbd"> & {}
+
+export const CommandShortcut: React.FC<CommandShortcutProps> = ({ className, ...props }) => {
   return (
     <kbd
       className={cn(

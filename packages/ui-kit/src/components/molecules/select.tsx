@@ -7,13 +7,15 @@ import { cn } from "@/utils"
 
 import { SelectScrollDownButton, SelectScrollUpButton } from "../atoms/select"
 
-export const SelectTrigger = ({
+export type SelectTriggerProps = SelectPrimitive.Trigger.Props & {
+  size?: "sm" | "default"
+}
+
+export const SelectTrigger: React.FC<SelectTriggerProps> = ({
   className,
   size = "default",
   children,
   ...props
-}: SelectPrimitive.Trigger.Props & {
-  size?: "sm" | "default"
 }) => {
   return (
     <SelectPrimitive.Trigger
@@ -55,7 +57,13 @@ export const SelectTrigger = ({
   )
 }
 
-export const SelectContent = ({
+export type SelectContentProps = SelectPrimitive.Popup.Props &
+  Pick<
+    SelectPrimitive.Positioner.Props,
+    "align" | "alignOffset" | "side" | "sideOffset" | "alignItemWithTrigger"
+  > & {}
+
+export const SelectContent: React.FC<SelectContentProps> = ({
   className,
   children,
   side = "bottom",
@@ -64,11 +72,7 @@ export const SelectContent = ({
   alignOffset = 0,
   alignItemWithTrigger = true,
   ...props
-}: SelectPrimitive.Popup.Props &
-  Pick<
-    SelectPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset" | "alignItemWithTrigger"
-  >) => {
+}) => {
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Positioner
@@ -112,7 +116,9 @@ export const SelectContent = ({
   )
 }
 
-export const SelectItem = ({ className, children, ...props }: SelectPrimitive.Item.Props) => {
+export type SelectItemProps = SelectPrimitive.Item.Props & {}
+
+export const SelectItem: React.FC<SelectItemProps> = ({ className, children, ...props }) => {
   return (
     <SelectPrimitive.Item
       data-slot="select-item"

@@ -5,7 +5,7 @@ export default defineConfig({
     index: "src/index.ts",
   },
   format: ["esm"],
-  dts: true,
+  dts: { oxc: true },
   sourcemap: true,
   clean: !!process.env.BITCART_ENV && process.env.BITCART_ENV !== "development",
   tsconfig: "./tsconfig.lib.json",

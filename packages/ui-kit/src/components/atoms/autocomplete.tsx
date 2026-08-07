@@ -6,16 +6,15 @@ import { cn } from "@/utils"
 
 export const Autocomplete: typeof AutocompletePrimitive.Root = AutocompletePrimitive.Root
 
-export const AutocompleteCollection: React.FC<AutocompletePrimitive.Collection.Props> = ({
-  ...props
-}) => {
+export type AutocompleteCollectionProps = AutocompletePrimitive.Collection.Props & {}
+
+export const AutocompleteCollection: React.FC<AutocompleteCollectionProps> = ({ ...props }) => {
   return <AutocompletePrimitive.Collection data-slot="autocomplete-collection" {...props} />
 }
 
-export const AutocompleteEmpty: React.FC<AutocompletePrimitive.Empty.Props> = ({
-  className,
-  ...props
-}) => {
+export type AutocompleteEmptyProps = AutocompletePrimitive.Empty.Props & {}
+
+export const AutocompleteEmpty: React.FC<AutocompleteEmptyProps> = ({ className, ...props }) => {
   return (
     <AutocompletePrimitive.Empty
       className={cn(
@@ -28,10 +27,9 @@ export const AutocompleteEmpty: React.FC<AutocompletePrimitive.Empty.Props> = ({
   )
 }
 
-export const AutocompleteGroup: React.FC<AutocompletePrimitive.Group.Props> = ({
-  className,
-  ...props
-}) => {
+export type AutocompleteGroupProps = AutocompletePrimitive.Group.Props & {}
+
+export const AutocompleteGroup: React.FC<AutocompleteGroupProps> = ({ className, ...props }) => {
   return (
     <AutocompletePrimitive.Group
       className={cn("[[role=group]+&]:mt-1.5", className)}
@@ -41,7 +39,9 @@ export const AutocompleteGroup: React.FC<AutocompletePrimitive.Group.Props> = ({
   )
 }
 
-export const AutocompleteGroupLabel: React.FC<AutocompletePrimitive.GroupLabel.Props> = ({
+export type AutocompleteGroupLabelProps = AutocompletePrimitive.GroupLabel.Props & {}
+
+export const AutocompleteGroupLabel: React.FC<AutocompleteGroupLabelProps> = ({
   className,
   ...props
 }) => {
@@ -54,7 +54,9 @@ export const AutocompleteGroupLabel: React.FC<AutocompletePrimitive.GroupLabel.P
   )
 }
 
-export const AutocompleteItem: React.FC<AutocompletePrimitive.Item.Props> = ({
+export type AutocompleteItemProps = AutocompletePrimitive.Item.Props & {}
+
+export const AutocompleteItem: React.FC<AutocompleteItemProps> = ({
   className,
   children,
   ...props
@@ -80,14 +82,15 @@ export const AutocompleteItem: React.FC<AutocompletePrimitive.Item.Props> = ({
   )
 }
 
-export const AutocompleteRow: React.FC<AutocompletePrimitive.Row.Props> = ({
-  className,
-  ...props
-}) => {
+export type AutocompleteRowProps = AutocompletePrimitive.Row.Props & {}
+
+export const AutocompleteRow: React.FC<AutocompleteRowProps> = ({ className, ...props }) => {
   return <AutocompletePrimitive.Row className={className} data-slot="autocomplete-row" {...props} />
 }
 
-export const AutocompleteSeparator: React.FC<AutocompletePrimitive.Separator.Props> = ({
+export type AutocompleteSeparatorProps = AutocompletePrimitive.Separator.Props & {}
+
+export const AutocompleteSeparator: React.FC<AutocompleteSeparatorProps> = ({
   className,
   ...props
 }) => {
@@ -100,10 +103,9 @@ export const AutocompleteSeparator: React.FC<AutocompletePrimitive.Separator.Pro
   )
 }
 
-export const AutocompleteStatus: React.FC<AutocompletePrimitive.Status.Props> = ({
-  className,
-  ...props
-}) => {
+export type AutocompleteStatusProps = AutocompletePrimitive.Status.Props & {}
+
+export const AutocompleteStatus: React.FC<AutocompleteStatusProps> = ({ className, ...props }) => {
   return (
     <AutocompletePrimitive.Status
       className={cn(
@@ -116,7 +118,9 @@ export const AutocompleteStatus: React.FC<AutocompletePrimitive.Status.Props> = 
   )
 }
 
-export const AutocompleteTrigger: React.FC<AutocompletePrimitive.Trigger.Props> = ({
+export type AutocompleteTriggerProps = AutocompletePrimitive.Trigger.Props & {}
+
+export const AutocompleteTrigger: React.FC<AutocompleteTriggerProps> = ({
   className,
   children,
   ...props
@@ -132,6 +136,8 @@ export const AutocompleteTrigger: React.FC<AutocompletePrimitive.Trigger.Props> 
   )
 }
 
-export const AutocompleteValue: React.FC<AutocompletePrimitive.Value.Props> = ({ ...props }) => {
+export type AutocompleteValueProps = AutocompletePrimitive.Value.Props & {}
+
+export const AutocompleteValue: React.FC<AutocompleteValueProps> = ({ ...props }) => {
   return <AutocompletePrimitive.Value data-slot="autocomplete-value" {...props} />
 }

@@ -20,13 +20,13 @@ export type AccordionTriggerProps = AccordionPrimitive.Trigger.Props & {
   underlineOnHover?: boolean
 }
 
-export const AccordionTrigger = ({
+export const AccordionTrigger: React.FC<AccordionTriggerProps> = ({
   chevronElement = defaultChevronElement,
   underlineOnHover = false,
   className,
   children,
   ...props
-}: AccordionTriggerProps) => {
+}) => {
   return (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger

@@ -2,7 +2,7 @@ import { LinkButton } from "@bitcart/ui-kit/components"
 import { Trans } from "@lingui/react/macro"
 import { ArrowRight, Mail } from "lucide-react"
 
-export const CtaSection = () => {
+export const CtaSection: React.FC = () => {
   return (
     <section
       aria-labelledby="support-cta-heading"

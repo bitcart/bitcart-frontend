@@ -1,3 +1,3 @@
 import { t } from "@lingui/core/macro"
 
-export const getTargetBlankA11yHint = () => t` (opens in new tab)`
+export const getTargetBlankA11yHint = (): string => t` (opens in new tab)`

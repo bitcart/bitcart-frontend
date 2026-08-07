@@ -2,11 +2,11 @@ import { useIsClient } from "@bitcart/hooks"
 import { useMemo } from "react"
 
 import { useCssRuntimeFeatureSupport, useLayoutContext, useWindowScrollThreshold } from "@/hooks"
+import type { WithChildren } from "@/types"
 import { cn } from "@/utils"
 
-export type WebsiteHeaderProps = {
+export type WebsiteHeaderProps = WithChildren & {
   className?: string
-  children: React.ReactNode
 }
 
 export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, children }) => {

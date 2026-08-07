@@ -1,6 +1,6 @@
 import type { MatomoConfig } from "./types"
 
-export const configureMatomo = (config: MatomoConfig) => {
+export const configureMatomo = (config: MatomoConfig): void => {
   if (config.enabled) {
     const _paq = (window._paq = window._paq || [])
 

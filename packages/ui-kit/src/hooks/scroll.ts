@@ -6,7 +6,10 @@ export type WindowScrollThresholdParams = {
   value: number
 }
 
-export const useWindowScrollThreshold = ({ axis, value }: WindowScrollThresholdParams) => {
+export const useWindowScrollThreshold = ({
+  axis,
+  value,
+}: WindowScrollThresholdParams): { isScrolled: boolean } => {
   const isClient = useIsClient()
   const [isScrolled, setIsScrolled] = useState(false)
 

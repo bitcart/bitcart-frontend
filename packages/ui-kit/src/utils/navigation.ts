@@ -10,7 +10,8 @@ import type {
 } from "@/types"
 
 const createNavigationGroupFilter =
-  (targetLayoutRegion: RootLayoutRegionDesignation) => (group: NavigationGroup) => {
+  (targetLayoutRegion: RootLayoutRegionDesignation) =>
+  (group: NavigationGroup): boolean => {
     switch (targetLayoutRegion) {
       case "footer": {
         return "menuOnly" in group ? !group.menuOnly : true

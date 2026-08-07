@@ -1,5 +1,5 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
+import type { LocaleId, PseudoLocaleId, SourceLocaleId } from "@bitcart/core/utils"
 import { useLocalStorage } from "@mantine/hooks"
 import { useCallback, useMemo } from "react"
 
@@ -14,8 +14,10 @@ export type UseClientLocaleIdParams<TSupportedLocaleId extends LocaleId | Pseudo
  */
 export const useClientLocaleId = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   supportedLocaleIds,
-}: UseClientLocaleIdParams<TSupportedLocaleId>) => {
-  // TODO: port useLocalStorage to @bitcart/hooks
+}: UseClientLocaleIdParams<TSupportedLocaleId>): {
+  clientLocaleId: TSupportedLocaleId | SourceLocaleId
+  setClientLocaleId: (localeId: string) => void
+} => {
   const [persistedValue, setValue, _removeValue] = useLocalStorage<TSupportedLocaleId | undefined>({
     key: "localeId",
     defaultValue: SOURCE_LOCALE_ID as TSupportedLocaleId,

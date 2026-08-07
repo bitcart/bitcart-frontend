@@ -17,7 +17,7 @@ export type I18nSetupParams<TSupportedLocaleId extends LocaleId | PseudoLocaleId
  */
 export const useI18nSetup = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   supportedLocaleIds,
-}: I18nSetupParams<TSupportedLocaleId>) => {
+}: I18nSetupParams<TSupportedLocaleId>): void => {
   const { localeId: pageLocaleId, urlLogical, messages } = usePageContext()
   const { clientLocaleId } = useClientLocaleId({ supportedLocaleIds })
 

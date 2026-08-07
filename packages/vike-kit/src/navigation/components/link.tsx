@@ -33,7 +33,7 @@ export const Link = <TSupportedLocaleId extends LocaleId>({
   onClick,
   children,
   ...props
-}: LinkProps<TSupportedLocaleId>) => {
+}: LinkProps<TSupportedLocaleId>): React.JSX.Element => {
   const { localeId: pageLocaleId } = usePageContext()
 
   const localizedHref = useMemo(() => {

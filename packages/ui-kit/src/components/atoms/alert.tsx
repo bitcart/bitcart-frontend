@@ -6,11 +6,9 @@ import { cn } from "@/utils"
 
 import { alertVariants } from "./alert-variants"
 
-export const Alert = ({
-  className,
-  variant,
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) => {
+export type AlertProps = React.ComponentProps<"div"> & VariantProps<typeof alertVariants> & {}
+
+export const Alert: React.FC<AlertProps> = ({ className, variant, ...props }) => {
   return (
     <div
       data-slot="alert"
@@ -21,7 +19,9 @@ export const Alert = ({
   )
 }
 
-export const AlertTitle = ({ className, ...props }: React.ComponentProps<"div">) => {
+export type AlertTitleProps = React.ComponentProps<"div"> & {}
+
+export const AlertTitle: React.FC<AlertTitleProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="alert-title"
@@ -31,7 +31,9 @@ export const AlertTitle = ({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-export const AlertDescription = ({ className, ...props }: React.ComponentProps<"div">) => {
+export type AlertDescriptionProps = React.ComponentProps<"div"> & {}
+
+export const AlertDescription: React.FC<AlertDescriptionProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="alert-description"

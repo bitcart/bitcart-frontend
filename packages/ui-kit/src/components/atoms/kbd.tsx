@@ -2,7 +2,9 @@
 
 import { cn } from "@/utils"
 
-export function Kbd({ className, ...props }: React.ComponentProps<"kbd">): React.ReactElement {
+export type KbdProps = React.ComponentProps<"kbd"> & {}
+
+export const Kbd: React.FC<KbdProps> = ({ className, ...props }) => {
   return (
     <kbd
       className={cn(
@@ -21,7 +23,9 @@ export function Kbd({ className, ...props }: React.ComponentProps<"kbd">): React
   )
 }
 
-export function KbdGroup({ className, ...props }: React.ComponentProps<"kbd">): React.ReactElement {
+export type KbdGroupProps = React.ComponentProps<"kbd"> & {}
+
+export const KbdGroup: React.FC<KbdGroupProps> = ({ className, ...props }) => {
   return (
     <kbd
       className={cn("gap-1 inline-flex items-center", className)}

@@ -8,10 +8,9 @@ import { cn } from "@/utils"
 import { AutocompleteTrigger } from "../atoms/autocomplete"
 import { Input } from "../atoms/input"
 
-const AutocompleteClear: React.FC<AutocompletePrimitive.Clear.Props> = ({
-  className,
-  ...props
-}) => {
+type AutocompleteClearProps = AutocompletePrimitive.Clear.Props & {}
+
+const AutocompleteClear: React.FC<AutocompleteClearProps> = ({ className, ...props }) => {
   return (
     <AutocompletePrimitive.Clear
       className={cn(

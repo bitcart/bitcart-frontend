@@ -10,7 +10,9 @@ export const Popover: React.FC<PopoverProps> = ({ modal: isModal = true, ...prop
   return <PopoverPrimitive.Root modal={isModal} data-slot="popover" {...props} />
 }
 
-export const PopoverTrigger = ({ ...props }: PopoverPrimitive.Trigger.Props) => {
+export type PopoverTriggerProps = PopoverPrimitive.Trigger.Props & {}
+
+export const PopoverTrigger: React.FC<PopoverTriggerProps> = ({ ...props }) => {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
 }
 
