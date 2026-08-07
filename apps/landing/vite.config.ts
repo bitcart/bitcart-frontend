@@ -72,6 +72,7 @@ export default defineConfig({
         {
           src: "src/common/data/bitcart/raw/supporters.json",
           dest: ".",
+          rename: { stripBase: true },
         },
       ],
     }),

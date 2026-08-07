@@ -76,6 +76,10 @@ Each app has its own `playwright.config.ts` and `e2e/` directory. Tests are `*.s
 
 The `webServer` config builds and starts preview servers via `just preview`. `reuseExistingServer` is currently disabled. Desktop Chrome only. CI uploads HTML report as artifact on failure.
 
+#### Page readiness: `waitUntilHydrated`, not `networkidle`
+
+When a template needs the page to be interactive before asserting, navigate with a plain `page.goto(path)` (default `load`) followed by `waitUntilHydrated(page)`. Do **not** gate readiness on `page.goto(path, { waitUntil: "networkidle" })`: pages may issue background requests to external/flaky services (e.g. the Bitcart API on the Coins page), so the network never goes idle and the navigation hangs until timeout. Hydration (`data-is-hydrated="true"`) is the correct, network-independent readiness signal. `networkidle` is fine only for non-interactive concerns like full-page screenshots.
+
 ## Code conventions
 
 ### Comments

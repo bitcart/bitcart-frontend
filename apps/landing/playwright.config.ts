@@ -11,7 +11,7 @@ export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
   forbidOnly: isCI,
-  retries: isCI ? 2 : 0,
+  retries: 2,
   workers: isCI ? 1 : undefined,
   outputDir: "./e2e/test-results",
 

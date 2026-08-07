@@ -62,7 +62,6 @@ export default defineConfig({
         return localizedEntries
       },
 
-      customEntries: [{ loc: `${PRODUCTION_BASE_URL}/directory.json` }],
       robots: false,
     }),
   ],
