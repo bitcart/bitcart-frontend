@@ -43,6 +43,7 @@ node_modules
 
 ## Internationalization
 apps/*/src/common/i18n/_generated/
+templates/*/src/common/i18n/_generated/
 
 ## Generated issue diagrams
 scripts/output/

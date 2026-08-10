@@ -60,6 +60,8 @@ const config: KnipConfig = {
     "packages/vike-kit": {
       ignoreDependencies: ["@stylistic/eslint-plugin", "eslint-plugin-react-hooks"],
     },
+
+    "templates/vike-app": appKnipConfig,
   },
 }
 

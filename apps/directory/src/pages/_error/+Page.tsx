@@ -32,7 +32,9 @@ export function Page() {
       message={errorMeta.message}
     >
       <p className="text-sm text-muted-foreground">
-        {t`If you believe this is an error, please contact support or try refreshing the page.`}
+        {is404
+          ? t`If you believe this is a problem on our side, please contact support.`
+          : t`Please try refreshing the page or contact support if the problem persists.`}
       </p>
     </ErrorPageTemplate>
   )
