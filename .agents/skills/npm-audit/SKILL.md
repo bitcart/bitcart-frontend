@@ -41,10 +41,18 @@ freely while investigating; only `pnpm i` changes the lockfile, and only editing
      tell the user the vulnerability exists but has no safe override path yet (upstream needs to
      bump first), and stop there for that finding. Move on to the next finding rather than guessing.
 
-4. **Add the override**, following the exact style of the existing entries in `pnpm-workspace.yaml`'s
-   `overrides:` block. Read a couple of the current entries first (e.g. `axios`, `postcss`) so new
-   entries read as if the same person wrote them — this repo is consistent about explaining _why_
-   before _what_. The pattern is:
+4. **Add the override.** Always add it, even when the parent's declared range already permits the
+   patched version and you can see that a from-scratch resolution would pick it up on its own.
+   `pnpm i` does not re-resolve dependencies that are already locked at a version still satisfying
+   their range, so a satisfied range plus a fresh exclude will leave the vulnerable version sitting
+   in the lockfile untouched. The override is what actually moves it. Concretely: postcss declaring
+   `nanoid: ^3.3.16` does _not_ mean `pnpm i` will pick up the patched 3.3.17 by itself once 3.3.16
+   is locked; only `nanoid: ^3.3.17` under `overrides:` forces it.
+
+   Follow the exact style of the existing entries in `pnpm-workspace.yaml`'s `overrides:` block. Read
+   a couple of the current entries first (e.g. `brace-expansion`, `nanoid`) so new entries read as if
+   the same person wrote them: this repo is consistent about explaining _why_ before _what_. The
+   pattern is:
 
    ```yaml
    #* <chain that pins the vulnerable version> - <what's wrong, in one line, referencing
@@ -65,22 +73,23 @@ freely while investigating; only `pnpm i` changes the lockfile, and only editing
 
 6. **If `pnpm i` fails with `ERR_PNPM_NO_MATURE_MATCHING_VERSION`**, this repo has a supply-chain
    policy (`minimumReleaseAge: 10080`, i.e. 7 days, near the top of `pnpm-workspace.yaml`) that
-   refuses to install any version published within the last week — a defense against
-   just-compromised packages before the ecosystem has had a chance to catch and pull them. When a
-   patched version is legitimately too new:
-   - Get its exact publish timestamp: `npm view <package> time --json`, and read the entry for the
-     target version.
-   - Ask the user whether to wait it out or add a _temporary, dated_ exclude — don't just add the
-     exclude unilaterally, since it's a deliberate (if brief) bypass of a safety policy the repo
-     opted into. If the wait is only a few hours, waiting may be the better default; if it's days,
-     an exclude is usually more practical. Frame it as a real choice, not a formality.
-   - If excluding: add `<package>@<exact-version>` under `minimumReleaseAgeExclude:` in
-     `pnpm-workspace.yaml`, with `# TODO: Remove after <publish-date + 7 days>` above it — match the
-     style of existing _dated_ entries there (e.g. `js-yaml@4.3.1`). Don't confuse these with the
-     permanent, undated entries above them (`@base-ui/*`, `oxfmt`, `oxlint`, `@oxc-project/*`, etc.)
-     — those are a standing policy for fast-moving pre-1.0/tooling packages, unrelated to any single
-     vulnerability fix, and out of scope here.
+   refuses to install any version published within the last week, a defense against just-compromised
+   packages before the ecosystem has had a chance to catch and pull them. When a patched version is
+   legitimately too new, **add a temporary, dated exclude and move on. Never propose waiting for the
+   maturity window to clear**, and never present waiting as an option alongside the exclude. An open
+   high-severity advisory sitting in the lockfile for hours or days is the larger risk, and "come
+   back later and re-run `pnpm i`" is not a fix anyone reliably performs. The exclude is scoped to a
+   single exact version, carries its own removal date, and gets swept up by step 2 on the next run.
+   - Get the exact publish timestamp: `npm view <package> time --json`, and read the entry for the
+     target version. You need it for the removal date regardless.
+   - Add `<package>@<exact-version>` under `minimumReleaseAgeExclude:` in `pnpm-workspace.yaml`, with
+     `# TODO: Remove after <publish-date + 7 days>` above it, matching the style of existing _dated_
+     entries there. Don't confuse those with the permanent, undated entries above them (`@base-ui/*`,
+     `oxfmt`, `oxlint`, `@oxc-project/*`, etc.), which are a standing policy for fast-moving
+     pre-1.0/tooling packages, unrelated to any single vulnerability fix and out of scope here.
    - Re-run `pnpm i`.
+   - Tell the user the exclude was added and when it expires. That's a report, not a request for
+     permission.
 
 7. **Re-run `pnpm audit` and confirm "No known vulnerabilities found."** If findings remain because
    they had no safe override path (step 3), summarize those clearly to the user rather than reporting
@@ -100,9 +109,12 @@ that obscures which pins are still load-bearing.
    the override no longer changes anything real and is safe to delete.
 
 2. **For every _dated_ entry under `minimumReleaseAgeExclude:`** (i.e. one with a
-   `# TODO: Remove after <date>` comment — never the permanent undated ones), compare today's date
+   `# TODO: Remove after <date>` comment, never the permanent undated ones), compare today's date
    against publish-date + 7 days. If the window has cleared, the exclude is safe to delete; pnpm will
-   resolve the version normally without it from that point on.
+   resolve the version normally without it from that point on. These are exactly the entries step 1
+   adds, so expect to be cleaning up after previous runs of this skill, including excludes whose
+   companion `overrides:` entry is still load-bearing. The two are independent: an expired exclude
+   goes even when the override next to it stays.
 
 3. **Report findings as a table before changing anything** — package, what currently pins it (or the
    publish-timestamp math for excludes), and still-needed vs. stale. This mirrors how the step 1
