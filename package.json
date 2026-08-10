@@ -24,6 +24,7 @@
     "apps": "pnpm --filter './apps/*'",
     "directory": "pnpm -C apps/directory",
     "landing": "pnpm -C apps/landing",
+    "ui-docs": "pnpm -C apps/ui-docs",
     "templates": "pnpm --filter './templates/*'",
     "vike-app-template": "pnpm -C templates/vike-app",
     "workspace-members": "pnpm --filter './apps/*' --filter './packages/*' --filter './templates/*'"

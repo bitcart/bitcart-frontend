@@ -1,0 +1,39 @@
+---
+title: Checkbox
+---
+
+import {
+  CheckedCheckboxExample,
+  DefaultCheckboxExample,
+  DisabledCheckboxExample,
+} from "@/views/ui-kit/checkbox/examples"
+import checkedCode from "@/views/ui-kit/checkbox/examples/checked.tsx?raw"
+import defaultCode from "@/views/ui-kit/checkbox/examples/default.tsx?raw"
+import disabledCode from "@/views/ui-kit/checkbox/examples/disabled.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/checkbox/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.default.variant}
+  description={VARIANT_PRESET_MAP.default.description}
+  code={defaultCode}
+>
+  <DefaultCheckboxExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.checked.variant}
+  description={VARIANT_PRESET_MAP.checked.description}
+  code={checkedCode}
+>
+  <CheckedCheckboxExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.disabled.variant}
+  description={VARIANT_PRESET_MAP.disabled.description}
+  code={disabledCode}
+>
+  <DisabledCheckboxExample />
+</ComponentShowcase>

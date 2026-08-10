@@ -1,0 +1,39 @@
+---
+title: Input
+---
+
+import {
+  DefaultInputExample,
+  DisabledInputExample,
+  InvalidInputExample,
+} from "@/views/ui-kit/input/examples"
+import defaultCode from "@/views/ui-kit/input/examples/default.tsx?raw"
+import disabledCode from "@/views/ui-kit/input/examples/disabled.tsx?raw"
+import invalidCode from "@/views/ui-kit/input/examples/invalid.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/input/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.default.variant}
+  description={VARIANT_PRESET_MAP.default.description}
+  code={defaultCode}
+>
+  <DefaultInputExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.disabled.variant}
+  description={VARIANT_PRESET_MAP.disabled.description}
+  code={disabledCode}
+>
+  <DisabledInputExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.invalid.variant}
+  description={VARIANT_PRESET_MAP.invalid.description}
+  code={invalidCode}
+>
+  <InvalidInputExample />
+</ComponentShowcase>

@@ -1,0 +1,23 @@
+---
+title: Spinner
+---
+
+import { DefaultSpinnerExample, MutedSpinnerExample } from "@/views/ui-kit/spinner/examples"
+import defaultCode from "@/views/ui-kit/spinner/examples/default.tsx?raw"
+import mutedCode from "@/views/ui-kit/spinner/examples/muted.tsx?raw"
+
+<ComponentShowcase
+  title="Default"
+  description="Indeterminate loading indicator, sized through utility classes"
+  code={defaultCode}
+>
+  <DefaultSpinnerExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Muted"
+  description="Toned down for inline use next to secondary text"
+  code={mutedCode}
+>
+  <MutedSpinnerExample />
+</ComponentShowcase>

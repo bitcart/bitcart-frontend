@@ -17,6 +17,7 @@
     "davidanson.vscode-markdownlint",
     "bierner.markdown-mermaid",
     "oxc.oxc-vscode",
-    "tamasfe.even-better-toml"
+    "tamasfe.even-better-toml",
+    "unifiedjs.vscode-mdx"
   ]
 }

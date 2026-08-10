@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 

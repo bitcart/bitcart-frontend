@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { t } from "@lingui/core/macro"
 import { type VariantProps } from "class-variance-authority"

@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"

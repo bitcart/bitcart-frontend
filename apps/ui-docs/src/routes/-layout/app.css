@@ -1,0 +1,64 @@
+@import "tailwindcss";
+@import "@fumadocs/base-ui/css/shadcn.css";
+@import "@fumadocs/base-ui/css/preset.css";
+@import "@fumadocs/story/css/preset.css";
+
+/*
+ * shadcn.css rewires every `--color-fd-*` token to raw shadcn variables that this app
+ * doesn't define. Map the tokens straight to the oklch component variables emitted by
+ * uno.generated.css (linked in __root.tsx) instead, so the docs chrome follows the
+ * active brand and mode. Declared on `body` rather than `:root`: the brand variables
+ * are scoped under the `.theme-<brand>` class on <body>, and `var()` inside a custom
+ * property resolves where the property is declared, so a `:root`-level mapping would
+ * see them as undefined. Being element-own declarations, these also win over the
+ * `:root`-level tokens from shadcn.css for everything inside <body>.
+ */
+body {
+  --color-fd-background: oklch(var(--background));
+  --color-fd-foreground: oklch(var(--foreground));
+  --color-fd-muted: oklch(var(--muted));
+  --color-fd-muted-foreground: oklch(var(--muted-foreground));
+  --color-fd-popover: oklch(var(--popover));
+  --color-fd-popover-foreground: oklch(var(--popover-foreground));
+  --color-fd-card: oklch(var(--card));
+  --color-fd-card-foreground: oklch(var(--card-foreground));
+  --color-fd-border: oklch(var(--border));
+  --color-fd-primary: oklch(var(--primary));
+  --color-fd-primary-foreground: oklch(var(--primary-foreground));
+
+  /*
+   * Mapped by role, not by name: Fumadocs uses `fd-secondary` as a subtle control
+   * surface (search field, story playground inputs), while the brand `--secondary`
+   * is a filled secondary-action color (mid-tone slate in the directory brand).
+   * The brands' `muted` token is the closest match for that surface role.
+   */
+  --color-fd-secondary: oklch(var(--muted));
+
+  --color-fd-secondary-foreground: oklch(var(--foreground));
+  --color-fd-accent: oklch(var(--accent));
+  --color-fd-accent-foreground: oklch(var(--accent-foreground));
+  --color-fd-ring: oklch(var(--ring));
+  --sidebar: var(--color-fd-background);
+  --sidebar-foreground: var(--color-fd-foreground);
+  --sidebar-border: var(--color-fd-border);
+  --sidebar-accent: var(--color-fd-accent);
+  --sidebar-accent-foreground: var(--color-fd-accent-foreground);
+  --sidebar-ring: var(--color-fd-ring);
+  --sidebar-primary-foreground: var(--color-fd-primary-foreground);
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
+
+/*
+* Fixes Fumadocs's bug
+*/
+.empty\:hidden:empty {
+  display: none !important;
+}

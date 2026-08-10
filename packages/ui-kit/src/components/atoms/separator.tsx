@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { Separator as SeparatorPrimitive } from "@base-ui/react/separator"
 
@@ -18,8 +18,8 @@ export const Separator: React.FC<SeparatorProps> = ({
       className={cn(
         `
           bg-border shrink-0
-          data-horizontal:h-px data-horizontal:w-full
-          data-vertical:w-px data-vertical:self-stretch
+          data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full
+          data-[orientation=vertical]:w-px data-[orientation=vertical]:self-stretch
         `,
 
         className,

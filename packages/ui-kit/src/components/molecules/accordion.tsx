@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 import { ChevronDownIcon } from "lucide-react"

@@ -1,4 +1,4 @@
-//* Ported from: https://coss.com/ui
+//* Originally ported from: https://coss.com/ui
 
 import { Input as InputPrimitive } from "@base-ui/react/input"
 

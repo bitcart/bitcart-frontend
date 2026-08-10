@@ -108,6 +108,59 @@ hydrateCache()
 
 The `stylistic-js/lines-around-comment` rule in [packages/configs/src/base/oxlint.ts](packages/configs/src/base/oxlint.ts) enforces a blank line before tagged comments so they stand out, but ignores untagged ones so commented-out code doesn't force awkward spacing. Keep the oxlint `ignorePattern` in sync with `better-comments.tags` when either list changes.
 
+### Blank lines around multiline blocks
+
+Surround any multiline block with blank lines: one before it when anything comes before, and one after it when anything comes after. This applies to every construct with some approximation of a "block": statements (`if`/loops/function declarations), multiline object or array members, `switch` cases, sibling JSX elements, and so on. Single-line siblings may stay clustered together; the padding is only required around constructs that span multiple lines. See [packages/unocss-preset/src/index.ts](packages/unocss-preset/src/index.ts) for a representative real-world example.
+
+```ts
+// ✅ correct — multiline members padded on both sides, single-line ones clustered
+const syncOptions = {
+  name: "catalog-sync",
+  retries: 3,
+  timeout: 30_000,
+
+  hooks: {
+    onError: (error: Error) => logger.report(error),
+    onRetry: () => metrics.increment("catalog-sync.retry"),
+  },
+
+  buildTargets: (env: Environment) =>
+    env === "production" ? PRODUCTION_TARGETS : [...PRODUCTION_TARGETS, ...PREVIEW_TARGETS],
+}
+
+// ❌ avoid — multiline members glued to their neighbors read as one lump
+const syncOptions = {
+  name: "catalog-sync",
+  retries: 3,
+  timeout: 30_000,
+  hooks: {
+    onError: (error: Error) => logger.report(error),
+    onRetry: () => metrics.increment("catalog-sync.retry"),
+  },
+  buildTargets: (env: Environment) =>
+    env === "production" ? PRODUCTION_TARGETS : [...PRODUCTION_TARGETS, ...PREVIEW_TARGETS],
+}
+```
+
+```tsx
+// ✅ correct
+<Button variant="accent" size="sm">
+  Accent sm
+</Button>
+
+<Button variant="accent" size="default">
+  Accent default
+</Button>
+
+// ❌ avoid
+<Button variant="accent" size="sm">
+  Accent sm
+</Button>
+<Button variant="accent" size="default">
+  Accent default
+</Button>
+```
+
 ### Theme-aware colors
 
 Don't hardcode color values (e.g. `bg-white`, `text-purple-700`, `border-gray-200`, raw hex/rgb/oklch) in application and shared UI components. Use semantic tokens from the active theme instead — either from the app's UnoCSS config at `apps/<app>/uno.config.ts` (which can extend/override `colorScheme`) or from the preset's built-in default scheme declared in [packages/unocss-preset/src/color-scheme.ts](packages/unocss-preset/src/color-scheme.ts).

@@ -1,0 +1,184 @@
+---
+title: Layout configuration
+---
+
+## Config format
+
+The UI Kit integration starts with the layout config: a declarative object that defines
+the brand and navigation settings and encapsulates the basic internationalization layer state.
+
+### Lazy evaluation
+
+The UI Kit uses [Lingui](https://lingui.dev) for internationalization, and the layout config
+is expected to have translatable strings. This makes the active locale ID, along with every
+user-facing string, to be valid only for the duration of a single render. Building the config
+as a static object would result in capturing a frozen state only once, rendering the key parts
+of the layout irresponsive to locale changes.
+
+Lingui's `t` macro compiles to a lookup against a mutable global catalog, which makes expressions
+like `` t`Features` `` yield strings only for the locale active at the instant the call runs,
+and reading `i18n.locale` follows the same behavior. Wrapping the object in a function defers all
+of that to render time, making each call produce a config already resolved for the current locale.
+
+### Example
+
+```tsx
+// src/pages/layout.config.ts
+
+import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
+import { i18n } from "@lingui/core"
+import { t } from "@lingui/core/macro"
+
+import { GenericCompanyLogoIcon, RepositoryIcon } from "./icons"
+
+const AVAILABLE_LOCALES = ["en", "de", "fr"]
+
+// 💡 `defineGetLayoutConfig` enforces lazy format and config schema at the definition site
+export const getLayoutConfig = defineGetLayoutConfig(() =>
+  // ⚠️ The returned object must not be a constant, otherwise
+  //    the consuming provider will not be able to track changes.
+  ({
+    i18n: {
+      // 💡 The consuming provider tracks this value, which can change between layout renders
+      activeLocale: i18n.locale,
+
+      availableLocales: AVAILABLE_LOCALES,
+    },
+
+    brand: {
+      name: "Generic Company",
+      projectCanonicalName: "Generic Company",
+      copyrightSinceYear: 2019,
+      logoIcon: GenericCompanyLogoIcon,
+      logoImageSrc: "/logo.svg",
+      logoImageAltText: `Generic Company ${t`logo`}`,
+      tagline: t`Everything a storefront needs`,
+    },
+
+    navigation: {
+      navBarDisplayCapacity: { md: 2, lg: 4, xl: 5, "2xl": 6, "3xl": 6 },
+
+      directory: {
+        labeledLinks: [
+          {
+            groupTitle: t`Product`,
+
+            items: [
+              { label: t`Features`, href: "/#features", globalPriority: 1 },
+              { label: t`Pricing`, href: "/pricing", globalPriority: 2 },
+            ],
+          },
+
+          {
+            groupTitle: t`Resources`,
+
+            items: [
+              {
+                label: t`Documentation`,
+                shortLabel: t`Docs`,
+                href: "https://docs.example.com",
+                isExternal: true,
+                globalPriority: 3,
+              },
+            ],
+          },
+        ],
+
+        iconLinks: [
+          {
+            groupTitle: t`Project links`,
+            footerOnly: true,
+
+            items: [
+              {
+                icon: RepositoryIcon,
+                hint: t`Browse the source code`,
+                href: "https://example.com/source",
+                isExternal: true,
+              },
+            ],
+          },
+        ],
+      },
+    },
+  }),
+)
+```
+
+## Layout context
+
+The layout context is the integration seam between a host application and the UI Kit's
+application state- and metadata-aware components. It carries everything those components need
+but only the application can know, and distributes that knowledge to the entire layout tree,
+forming the backbone of an application shell. Components that strictly depend on it are marked
+accordingly in their documentation.
+
+### Provider setup
+
+`LayoutContextProvider` is the single wiring point: one provider, configured once
+with plain data, makes the entire component tree routable, branded, and localized.
+
+It must be mounted once, at the root level of the application layout, above everything
+that renders UI Kit components:
+
+```tsx
+import { Link, useClientRoute } from "@bitcart/vike-kit/navigation"
+import { LayoutContextProvider } from "@bitcart/ui-kit/providers"
+import { useHydrated } from "vike-react/useHydrated"
+
+import { getLayoutConfig } from "./layout.config"
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const route = useClientRoute()
+  const hydrated = useHydrated()
+
+  return (
+    // 💡 Provider's props have built-in documentation, which should be available
+    //    to every IDE with a properly functioning TypeScript language service.
+    <LayoutContextProvider
+      LinkComponent={Link}
+      currentRoute={route}
+      isHydrated={hydrated}
+      // 💡 The state change deduplication is handled internally, making it safe
+      //    to call `getLayoutConfig` on every render: the updates are registered
+      //    only when the active locale changes.
+      layoutConfig={getLayoutConfig()}
+    >
+      {children}
+    </LayoutContextProvider>
+  )
+}
+```
+
+<Callout type="warn" title="">
+  The example above is purely illustrative and the application-side details will differ depending on
+  the framework used.
+</Callout>
+
+### Consumer access
+
+The existing layout context consumers from the UI Kit already use `useLayoutContext()`
+internally to access the context value. However, should the need arise,
+the hook can be used at the application level within the provider's scope:
+
+```tsx
+import { useLayoutContext } from "@bitcart/ui-kit/hooks"
+
+export const ExampleComponent = () => {
+  const {
+    // 💡 The built-in documentation is available here too!
+    layoutConfig: { brand },
+  } = useLayoutContext()
+
+  return (
+    <div className="flex flex-col justify-center items-center gap-2">
+      <h1 className="flex items-center gap-2">
+        <brand.logoIcon className="size-5" />
+        <span>{brand.name}</span>
+      </h1>
+
+      <h2>{brand.tagline}</h2>
+    </div>
+  )
+}
+```

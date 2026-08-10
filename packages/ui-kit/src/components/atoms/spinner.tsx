@@ -1,4 +1,4 @@
-//* Ported from: https://coss.com/ui
+//* Originally ported from: https://coss.com/ui
 
 import { t } from "@lingui/core/macro"
 import { Loader2Icon } from "lucide-react"

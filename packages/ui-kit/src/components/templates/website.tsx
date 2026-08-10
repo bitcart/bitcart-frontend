@@ -5,13 +5,13 @@ import { t } from "@lingui/core/macro"
 
 import { useCurrentBreakpoint, useSoftKeyboardTracker } from "@/hooks"
 import { LayoutContextProvider, ThemeProvider, type LayoutContextProviderProps } from "@/providers"
-import { type LayoutConfig } from "@/types"
 import { cn } from "@/utils"
 
+import { FloatingActionButton } from "../atoms/floating-action-button"
 import { LinkButton } from "../atoms/link-button"
 import { ThemeToggle, ThemeToggleFallback } from "../molecules/theme-toggle"
 import { Toaster } from "../molecules/toaster"
-import { LocaleSelector, type LocaleSelectorProps } from "../organisms/locale-selector"
+import { LayoutLocaleSelector, type LayoutLocaleSelectorProps } from "../organisms/locale-selector"
 import { WebsiteFooter } from "../organisms/website-footer"
 import { WebsiteHeader } from "../organisms/website-header"
 import { WebsiteMobileMenu } from "../organisms/website-mobile-menu"
@@ -21,8 +21,15 @@ export type WebsiteLayoutProps<TSupportedLocaleId extends LocaleId | PseudoLocal
   LayoutContextProviderProps,
   "layoutConfig"
 > & {
-  config: LayoutConfig
-  localeChangeHandler: LocaleSelectorProps<TSupportedLocaleId>["handleSelect"]
+  /**
+   * The application's declarative layout configuration: brand identity,
+   * basic localization metadata, and the navigation link groups.
+   *
+   * **Must be the result of `getLayoutConfig()`.**
+   */
+  config: LayoutContextProviderProps["layoutConfig"]
+
+  localeChangeHandler: LayoutLocaleSelectorProps<TSupportedLocaleId>["handleSelect"]
 
   classNames?: {
     root?: string
@@ -31,7 +38,7 @@ export type WebsiteLayoutProps<TSupportedLocaleId extends LocaleId | PseudoLocal
 
 export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
   config,
-  isHydrated,
+  isHydrated = true,
   localeChangeHandler,
   classNames,
   children,
@@ -71,9 +78,8 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocale
           </LinkButton>
 
           <WebsiteMobileMenu
-            layoutControls={<LocaleSelector handleSelect={localeChangeHandler} />}
-            triggerSize="fab"
-            triggerVariant="fab"
+            layoutControls={<LayoutLocaleSelector handleSelect={localeChangeHandler} />}
+            triggerRender={<FloatingActionButton />}
             classNames={{
               trigger: `
                 md:hidden fixed z-40 bottom-[calc(env(safe-area-inset-bottom,0px)+var(--spacing)*4)]
@@ -95,7 +101,7 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocale
               <ThemeToggleFallback className="max-md:hidden" />
             )}
 
-            <LocaleSelector
+            <LayoutLocaleSelector
               handleSelect={localeChangeHandler}
               classNames={{ trigger: "max-md:hidden" }}
             />

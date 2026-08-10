@@ -1,4 +1,4 @@
-//* Ported from: https://coss.com/ui
+//* Originally ported from: https://coss.com/ui
 
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"

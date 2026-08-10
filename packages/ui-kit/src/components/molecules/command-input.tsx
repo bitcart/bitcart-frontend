@@ -1,4 +1,4 @@
-//* Ported from: https://coss.com/ui
+//* Originally ported from: https://coss.com/ui
 
 import { SearchIcon } from "lucide-react"
 

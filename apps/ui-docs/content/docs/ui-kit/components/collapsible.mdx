@@ -1,0 +1,29 @@
+---
+title: Collapsible
+---
+
+import {
+  DefaultCollapsibleExample,
+  OpenCollapsibleExample,
+} from "@/views/ui-kit/collapsible/examples"
+import defaultCode from "@/views/ui-kit/collapsible/examples/default.tsx?raw"
+import openCode from "@/views/ui-kit/collapsible/examples/open.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/collapsible/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.default.variant}
+  description={VARIANT_PRESET_MAP.default.description}
+  code={defaultCode}
+>
+  <DefaultCollapsibleExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.open.variant}
+  description={VARIANT_PRESET_MAP.open.description}
+  code={openCode}
+>
+  <OpenCollapsibleExample />
+</ComponentShowcase>

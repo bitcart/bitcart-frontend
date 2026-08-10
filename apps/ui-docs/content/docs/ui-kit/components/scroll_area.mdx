@@ -1,0 +1,39 @@
+---
+title: Scroll Area
+---
+
+import {
+  DefaultScrollAreaExample,
+  FadeScrollAreaExample,
+  GutterScrollAreaExample,
+} from "@/views/ui-kit/scroll-area/examples"
+import defaultCode from "@/views/ui-kit/scroll-area/examples/default.tsx?raw"
+import fadeCode from "@/views/ui-kit/scroll-area/examples/fade.tsx?raw"
+import gutterCode from "@/views/ui-kit/scroll-area/examples/gutter.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/scroll-area/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.default.variant}
+  description={VARIANT_PRESET_MAP.default.description}
+  code={defaultCode}
+>
+  <DefaultScrollAreaExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.fade.variant}
+  description={VARIANT_PRESET_MAP.fade.description}
+  code={fadeCode}
+>
+  <FadeScrollAreaExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.gutter.variant}
+  description={VARIANT_PRESET_MAP.gutter.description}
+  code={gutterCode}
+>
+  <GutterScrollAreaExample />
+</ComponentShowcase>

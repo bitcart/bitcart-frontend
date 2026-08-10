@@ -1,0 +1,26 @@
+---
+title: Dropdown Menu
+---
+
+import {
+  DefaultDropdownMenuExample,
+  SelectionDropdownMenuExample,
+} from "@/views/ui-kit/dropdown-menu/examples"
+import defaultCode from "@/views/ui-kit/dropdown-menu/examples/default.tsx?raw"
+import selectionCode from "@/views/ui-kit/dropdown-menu/examples/selection.tsx?raw"
+
+<ComponentShowcase
+  title="Actions"
+  description="Grouped commands with icons, shortcuts, and a destructive entry"
+  code={defaultCode}
+>
+  <DefaultDropdownMenuExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Selection"
+  description="Checkbox items for toggles and a radio group for exclusive choices"
+  code={selectionCode}
+>
+  <SelectionDropdownMenuExample />
+</ComponentShowcase>

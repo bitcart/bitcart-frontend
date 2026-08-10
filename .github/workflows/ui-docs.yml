@@ -1,0 +1,79 @@
+name: UI Docs
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: ui-docs-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write # to publish on github pages
+      id-token: write # OIDC token for pages deployment
+
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: bitcart/bitcart-actions/actions/setup-node@master
+
+      - name: Restore Nx cache
+        id: nx-cache-restore
+        uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: .nx
+          key: v1-nx-${{ github.ref_name }}-${{ hashFiles('nx.json') }}
+          restore-keys: |
+            v1-nx-${{ github.ref_name }}-
+
+      - name: Set up Python
+        uses: bitcart/bitcart-actions/actions/setup-python@master
+        with:
+          cache-dependency-glob: ""
+
+      - name: Install just
+        run: uv pip install rust-just
+
+      - name: Set up GitHub Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+
+      - name: Build UI Docs
+        run: just build -p ui-docs
+
+      - name: Create SPA fallback page
+        # All docs routes are prerendered, but unknown URLs still need the SPA shell.
+        # TanStack Start emits it as _shell.html and expects the host to rewrite to it;
+        # GitHub Pages can't rewrite, so serve the shell as the 404 fallback instead.
+        run: cp apps/ui-docs/.output/public/_shell.html apps/ui-docs/.output/public/404.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: apps/ui-docs/.output/public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+
+      - name: Save Nx cache
+        if: always()
+        uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: .nx
+          key: ${{ steps.nx-cache-restore.outputs.cache-primary-key }}

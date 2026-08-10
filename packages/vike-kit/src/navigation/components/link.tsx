@@ -1,15 +1,19 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
 import type { A11yAwareLinkProps } from "@bitcart/core/types"
-import { isLmbClick, type LocaleId } from "@bitcart/core/utils"
+import {
+  isLmbClick,
+  type LocaleId,
+  getDestinationTypeAwareLinkProps,
+  isExternalHref,
+} from "@bitcart/core/utils"
 import { useCallback, useMemo } from "react"
 import { usePageContext } from "vike-react/usePageContext"
 
 import { scrollTo } from "../effects"
-import { getAnchorElementProps, isExternalHref } from "../utils"
 
 export type LinkProps<TSupportedLocaleId extends LocaleId> = A11yAwareLinkProps & {
   disabled?: boolean
-  untracked?: boolean
+  originAware?: boolean
 
   /**
    * Prepended to `href`, if specified,
@@ -27,7 +31,7 @@ export type LinkProps<TSupportedLocaleId extends LocaleId> = A11yAwareLinkProps 
 export const Link = <TSupportedLocaleId extends LocaleId>({
   a11yHint,
   disabled: isDisabled = false,
-  untracked: isUntracked = false,
+  originAware: isOriginAware = true,
   href,
   locale,
   onClick,
@@ -44,7 +48,10 @@ export const Link = <TSupportedLocaleId extends LocaleId>({
     } else return href
   }, [href, locale, pageLocaleId])
 
-  const anchorProps = getAnchorElementProps(localizedHref, props)
+  const anchorElementProps = {
+    ...getDestinationTypeAwareLinkProps({ href: localizedHref, isOriginAware }),
+    ...props,
+  }
 
   const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement>>(
     (event) => {
@@ -76,13 +83,12 @@ export const Link = <TSupportedLocaleId extends LocaleId>({
 
             const targetHash = target.hash.slice(1)
 
-            //! Defer to the next macrotask. Firefox cancels in-flight smooth
-            //! scrolls if the document's scroll position changes around the
-            //! same tick (e.g. the browser auto-clamping `scrollY` when the
-            //! new SPA page is shorter than the previous one), so the
-            //! animation collapses into an instant jump. setTimeout(0) lets
-            //! that clamp happen first and the smooth scroll then runs
-            //! uninterrupted.
+            //! Deferring scroll to the next macrotask.
+            //! Firefox cancels in-flight smooth scrolls if the document's scroll position
+            //! changes around the same tick (e.g. the browser auto-clamping `scrollY`
+            //! when the new SPA page is shorter than the previous one), so the animation
+            //! collapses into an instant jump. setTimeout(0) lets that clamp happen first
+            //! and the smooth scroll then runs uninterrupted.
             //
             //* See https://github.com/turbolinks/turbolinks/issues/556
             //* for the same race in another framework.
@@ -99,12 +105,7 @@ export const Link = <TSupportedLocaleId extends LocaleId>({
   )
 
   return (
-    <a
-      href={localizedHref}
-      onClick={handleClick}
-      rel={isUntracked ? "noopener noreferrer" : anchorProps.rel}
-      {...anchorProps}
-    >
+    <a href={localizedHref} onClick={handleClick} {...anchorElementProps}>
       {children}
       {a11yHint && <span className="sr-only">{a11yHint}</span>}
     </a>

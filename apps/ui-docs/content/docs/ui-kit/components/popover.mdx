@@ -1,0 +1,23 @@
+---
+title: Popover
+---
+
+import { DefaultPopoverExample, SidePopoverExample } from "@/views/ui-kit/popover/examples"
+import defaultCode from "@/views/ui-kit/popover/examples/default.tsx?raw"
+import sideCode from "@/views/ui-kit/popover/examples/side.tsx?raw"
+
+<ComponentShowcase
+  title="Default"
+  description="Anchored surface below the trigger, dismissed by clicking outside"
+  code={defaultCode}
+>
+  <DefaultPopoverExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Side placement"
+  description="Flips the surface next to the trigger when vertical space is tight"
+  code={sideCode}
+>
+  <SidePopoverExample />
+</ComponentShowcase>

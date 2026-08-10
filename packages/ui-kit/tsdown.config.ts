@@ -4,6 +4,7 @@ import svgr from "vite-plugin-svgr"
 export default defineConfig({
   entry: {
     "components/index": "src/components/index.ts",
+    constants: "src/constants.ts",
     fonts: "src/fonts.ts",
     "hooks/index": "src/hooks/index.ts",
     icons: "src/icons/index.ts",

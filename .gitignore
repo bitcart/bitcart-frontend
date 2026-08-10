@@ -15,10 +15,14 @@ node_modules
 **/dist-ssr
 **/tmp
 **/.tmp
+**/.cache
+**/.nitro
+**/.output
+**/.tanstack
 
 ## Generated files
 **/dist-graphviz.svg
-**/uno.generated.css
+**/*.generated.css
 
 ## Environment
 **/.env

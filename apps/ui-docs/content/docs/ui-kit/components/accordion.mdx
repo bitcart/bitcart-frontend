@@ -1,0 +1,26 @@
+---
+title: Accordion
+---
+
+import {
+  DefaultAccordionExample,
+  MultipleAccordionExample,
+} from "@/views/ui-kit/accordion/examples"
+import defaultCode from "@/views/ui-kit/accordion/examples/default.tsx?raw"
+import multipleCode from "@/views/ui-kit/accordion/examples/multiple.tsx?raw"
+
+<ComponentShowcase
+  title="Default"
+  description="One panel at a time, expanding a panel collapses the previous one"
+  code={defaultCode}
+>
+  <DefaultAccordionExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Multiple"
+  description="Any number of panels can stay expanded simultaneously"
+  code={multipleCode}
+>
+  <MultipleAccordionExample />
+</ComponentShowcase>

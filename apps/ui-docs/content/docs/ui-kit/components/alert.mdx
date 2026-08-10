@@ -1,0 +1,39 @@
+---
+title: Alert
+---
+
+import {
+  AccentAlertExample,
+  DefaultAlertExample,
+  DestructiveAlertExample,
+} from "@/views/ui-kit/alert/examples"
+import accentCode from "@/views/ui-kit/alert/examples/accent.tsx?raw"
+import defaultCode from "@/views/ui-kit/alert/examples/default.tsx?raw"
+import destructiveCode from "@/views/ui-kit/alert/examples/destructive.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/alert/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.default.variant}
+  description={VARIANT_PRESET_MAP.default.description}
+  code={defaultCode}
+>
+  <DefaultAlertExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.accent.variant}
+  description={VARIANT_PRESET_MAP.accent.description}
+  code={accentCode}
+>
+  <AccentAlertExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.destructive.variant}
+  description={VARIANT_PRESET_MAP.destructive.description}
+  code={destructiveCode}
+>
+  <DestructiveAlertExample />
+</ComponentShowcase>

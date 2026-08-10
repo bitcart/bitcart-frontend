@@ -1,0 +1,39 @@
+---
+title: Calendar
+---
+
+import {
+  DropdownCalendarExample,
+  RangeCalendarExample,
+  SingleCalendarExample,
+} from "@/views/ui-kit/calendar/examples"
+import dropdownCode from "@/views/ui-kit/calendar/examples/dropdown.tsx?raw"
+import rangeCode from "@/views/ui-kit/calendar/examples/range.tsx?raw"
+import singleCode from "@/views/ui-kit/calendar/examples/single.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/calendar/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.single.variant}
+  description={VARIANT_PRESET_MAP.single.description}
+  code={singleCode}
+>
+  <SingleCalendarExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.range.variant}
+  description={VARIANT_PRESET_MAP.range.description}
+  code={rangeCode}
+>
+  <RangeCalendarExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.dropdown.variant}
+  description={VARIANT_PRESET_MAP.dropdown.description}
+  code={dropdownCode}
+>
+  <DropdownCalendarExample />
+</ComponentShowcase>

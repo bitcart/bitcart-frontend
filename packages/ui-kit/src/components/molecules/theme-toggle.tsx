@@ -6,9 +6,9 @@ import {
 } from "@bitcart/qa"
 import { t } from "@lingui/core/macro"
 import { Loader, Monitor, Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
 import { useCallback, useMemo } from "react"
 
+import { useTheme } from "@/hooks"
 import { cn } from "@/utils"
 
 import { Button } from "../atoms/button"

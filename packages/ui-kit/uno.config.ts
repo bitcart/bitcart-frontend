@@ -1,6 +1,7 @@
 import { presetBitcart } from "@bitcart/unocss-preset"
 import { defineConfig } from "unocss"
 
+//* The Uno's output within this package is only intended for consumption by Oxlint
 export default defineConfig({
   cli: {
     entry: {

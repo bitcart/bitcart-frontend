@@ -25,10 +25,19 @@ export * from "./types"
 export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcartOptions) => {
   const {
     baseRadius: baseRadiusRem = DEFAULT_BASE_RADIUS_REM,
-    colorScheme: colorSchemeCustomizations,
+    colorSchemes: colorSchemeCustomizations,
     prefix,
     preflights: additionalPreflights = [],
   } = options ?? {}
+
+  //* Array form: each scheme is scoped under `.theme-<name>` instead of `:root`.
+  //* `radius: false` drops the per-theme `--radius` shadcn default, which nothing consumes.
+  const shadcnThemeOptions = Array.isArray(colorSchemeCustomizations)
+    ? colorSchemeCustomizations.map((colorScheme) => ({
+        color: getColorScheme(colorScheme),
+        radius: false,
+      }))
+    : { color: getColorScheme(colorSchemeCustomizations) }
 
   return {
     name: `unocss-preset-${PRESET_NAME}`,
@@ -42,13 +51,11 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
       presetAnimations(),
 
       // @ts-expect-error https://github.com/unocss-community/unocss-preset-shadcn/issues/35
-      presetShadcn({
-        color: getColorScheme(colorSchemeCustomizations),
-      }),
+      presetShadcn(shadcnThemeOptions),
     ],
 
-    // Additional allow-list of transition properties
-    // See https://github.com/unocss/unocss/issues/4188
+    //* Additional allow-list of transition properties
+    //* See https://github.com/unocss/unocss/issues/4188
     theme: {
       breakpoint: BREAKPOINTS,
 

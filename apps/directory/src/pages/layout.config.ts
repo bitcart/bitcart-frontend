@@ -1,5 +1,5 @@
 import { BitcartLogoIcon } from "@bitcart/ui-kit/icons"
-import type { LayoutConfig } from "@bitcart/ui-kit/types"
+import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
 import { type StaticLayoutMetadata } from "@bitcart/vike-kit/metadata"
 import { i18n } from "@lingui/core"
 import { t } from "@lingui/core/macro"
@@ -26,7 +26,7 @@ export const getLayoutMetadata = (): StaticLayoutMetadata => ({
   author: "MrNaif2018",
 })
 
-export const getLayoutConfig = (): LayoutConfig => ({
+export const getLayoutConfig = defineGetLayoutConfig(() => ({
   i18n: {
     activeLocale: i18n.locale,
     availableLocales: SUPPORTED_LOCALE_IDS,
@@ -127,4 +127,4 @@ export const getLayoutConfig = (): LayoutConfig => ({
       ],
     },
   },
-})
+}))

@@ -1,0 +1,23 @@
+---
+title: Empty
+---
+
+import { DefaultEmptyExample, IconEmptyExample } from "@/views/ui-kit/empty/examples"
+import defaultCode from "@/views/ui-kit/empty/examples/default.tsx?raw"
+import iconCode from "@/views/ui-kit/empty/examples/icon.tsx?raw"
+
+<ComponentShowcase
+  title="Default"
+  description="Title, description, and a call to action"
+  code={defaultCode}
+>
+  <DefaultEmptyExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Icon media"
+  description="Leads with an icon in a muted tile via EmptyMedia"
+  code={iconCode}
+>
+  <IconEmptyExample />
+</ComponentShowcase>

@@ -1,0 +1,17 @@
+---
+title: Card
+---
+
+import { DefaultCardExample } from "@/views/ui-kit/card/examples"
+import defaultCode from "@/views/ui-kit/card/examples/default.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/card/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.default.variant}
+  description={VARIANT_PRESET_MAP.default.description}
+  code={defaultCode}
+>
+  <DefaultCardExample />
+</ComponentShowcase>

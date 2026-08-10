@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible"
 

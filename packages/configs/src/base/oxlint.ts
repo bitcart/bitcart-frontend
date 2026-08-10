@@ -33,8 +33,8 @@ export const baseOxlintConfig = defineConfig({
 
         /**
          * Only enforce a blank line before comments that start with a
-         * Better Comments highlight modifier. Everything else — including
-         * commented-out code — is ignored. Make sure to keep it in sync
+         * Better Comments highlight modifier. Everything else, including
+         * commented-out code, is ignored. Make sure to keep it in sync
          * with `better-comments.tags` in workspace VSCode settings.
          */
         ignorePattern: String.raw`^\s*(?![!?*/#]|[Tt][Oo][Dd][Oo]\b).`,

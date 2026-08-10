@@ -1,4 +1,4 @@
-//* Ported from: https://coss.com/ui
+//* Originally ported from: https://coss.com/ui
 
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox"
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
@@ -205,7 +205,7 @@ export const DrawerFooter: React.FC<DrawerFooterProps> = ({
 
       {
         "cursor-default": !allowSelection,
-        "bg-muted/72 py-6 border-t": variant === "default",
+        "py-6 border-t": variant === "default",
 
         [`
           in-[[data-slot=drawer-popup]:has([data-slot=drawer-panel])]:pt-3

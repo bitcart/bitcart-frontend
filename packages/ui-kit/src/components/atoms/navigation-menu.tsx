@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
 
@@ -54,8 +54,8 @@ export const NavigationMenuContent: React.FC<NavigationMenuContentProps> = ({
           data-[motion=from-start]:slide-in-from-left-52
           data-[motion=to-end]:slide-out-to-right-52
           data-[motion=to-start]:slide-out-to-left-52
-          top-0 left-0 p-2 pr-2.5
-          md:absolute md:w-auto
+          p-2 pr-2.5
+          md:w-auto
           w-full
         `,
         `

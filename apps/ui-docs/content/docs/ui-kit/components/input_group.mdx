@@ -1,0 +1,46 @@
+---
+title: Input Group
+---
+
+import {
+  ButtonInputGroupExample,
+  DefaultInputGroupExample,
+  TextareaInputGroupExample,
+  TextInputGroupExample,
+} from "@/views/ui-kit/input-group/examples"
+import buttonCode from "@/views/ui-kit/input-group/examples/button.tsx?raw"
+import defaultCode from "@/views/ui-kit/input-group/examples/default.tsx?raw"
+import textCode from "@/views/ui-kit/input-group/examples/text.tsx?raw"
+import textareaCode from "@/views/ui-kit/input-group/examples/textarea.tsx?raw"
+
+<ComponentShowcase
+  title="Icon addon"
+  description="Leading icon decorates the control"
+  code={defaultCode}
+>
+  <DefaultInputGroupExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Text addon"
+  description="Static text prefix or suffix, e.g. a unit or protocol"
+  code={textCode}
+>
+  <TextInputGroupExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Button addon"
+  description="An action attached to the control"
+  code={buttonCode}
+>
+  <ButtonInputGroupExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Textarea"
+  description="Multi-line control with a block-aligned addon"
+  code={textareaCode}
+>
+  <TextareaInputGroupExample />
+</ComponentShowcase>

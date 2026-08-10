@@ -1,4 +1,4 @@
-//* Ported from: https://coss.com/ui
+//* Originally ported from: https://coss.com/ui
 
 import { Autocomplete as AutocompletePrimitive } from "@base-ui/react/autocomplete"
 import { ChevronsUpDownIcon, XIcon } from "lucide-react"

@@ -7,7 +7,7 @@ import { useCallback } from "react"
 import { useLayoutContext } from "@/hooks"
 import { cn } from "@/utils"
 
-import { Button } from "../atoms/button"
+import { Button, type ButtonProps } from "../atoms/button"
 import {
   DropdownMenu,
   DropdownMenuGroup,
@@ -17,22 +17,20 @@ import {
 import { DropdownMenuContent } from "../molecules/dropdown-menu"
 
 export type LocaleSelectorProps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = {
+  activeLocaleId: TSupportedLocaleId
+  optionLocaleIds: readonly (LocaleId | PseudoLocaleId)[]
   handleSelect: (localeId: TSupportedLocaleId, callback?: VoidFunction) => void
+  triggerVariant?: ButtonProps["variant"]
   classNames?: { trigger?: string }
 }
 
 export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
+  activeLocaleId,
+  optionLocaleIds,
   handleSelect,
+  triggerVariant = "ghost",
   classNames,
 }: LocaleSelectorProps<TSupportedLocaleId>) => {
-  const {
-    layoutConfig: {
-      i18n: { activeLocale, availableLocales: optionLocaleIds },
-    },
-  } = useLayoutContext()
-
-  const activeLocaleId = activeLocale as TSupportedLocaleId
-
   const createHandleSelect = useCallback(
     (localeId: TSupportedLocaleId) => () => handleSelect(localeId),
     [handleSelect],
@@ -41,7 +39,7 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocal
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        render={<Button variant="ghost" />}
+        render={<Button variant={triggerVariant} />}
         className={classNames?.trigger}
         aria-label={t`Select language`}
         data-testid={LOCALE_SELECTOR_TRIGGER_TESTID}
@@ -75,5 +73,28 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocal
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
+  )
+}
+
+export type LayoutLocaleSelectorProps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> = Omit<
+  LocaleSelectorProps<TSupportedLocaleId>,
+  "activeLocaleId" | "optionLocaleIds"
+> & {}
+
+export const LayoutLocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>(
+  props: LayoutLocaleSelectorProps<TSupportedLocaleId>,
+) => {
+  const {
+    layoutConfig: {
+      i18n: { activeLocale, availableLocales },
+    },
+  } = useLayoutContext()
+
+  return (
+    <LocaleSelector
+      {...props}
+      activeLocaleId={activeLocale as TSupportedLocaleId}
+      optionLocaleIds={availableLocales}
+    />
   )
 }

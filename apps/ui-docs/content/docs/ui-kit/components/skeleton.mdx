@@ -1,0 +1,23 @@
+---
+title: Skeleton
+---
+
+import { CircleSkeletonExample, DefaultSkeletonExample } from "@/views/ui-kit/skeleton/examples"
+import circleCode from "@/views/ui-kit/skeleton/examples/circle.tsx?raw"
+import defaultCode from "@/views/ui-kit/skeleton/examples/default.tsx?raw"
+
+<ComponentShowcase
+  title="Default"
+  description="Pulsing placeholder sized through utility classes"
+  code={defaultCode}
+>
+  <DefaultSkeletonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Circle"
+  description="Fully rounded, to stand in for avatars and icons"
+  code={circleCode}
+>
+  <CircleSkeletonExample />
+</ComponentShowcase>

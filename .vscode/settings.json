@@ -33,6 +33,9 @@
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
+  "[mdx]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
   "[chatagent]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
@@ -123,21 +126,34 @@
       "italic": false
     }
   ],
+  "cSpell.globRoot": "../",
+  "cSpell.ignorePaths": [
+    "pnpm-lock.yaml",
+    "**/node_modules/**/*",
+    "**/dist/**/*",
+    "**/*.gen.*",
+    "**/*.po"
+  ],
   "cSpell.words": [
     "activedescendant",
     "aleksejdix",
+    "Anson",
     "anthropics",
     "arrowsize",
+    "autofetch",
     "axios",
     "bitcart",
     "Bokmål",
+    "chatagent",
     "cmdk",
+    "combinators",
     "currentcolor",
     "custodially",
     "daypicker",
     "depcheck",
     "depcruise",
     "Deutsch",
+    "devserver",
     "domcontentloaded",
     "dotagents",
     "dotenv",
@@ -151,6 +167,7 @@
     "forgejo",
     "Français",
     "frontmost",
+    "fumadocs",
     "Ƒēàţũŕēś",
     "getsentry",
     "Graphviz",
@@ -168,6 +185,7 @@
     "linejoin",
     "lingui",
     "Litecoin",
+    "llms",
     "lucide",
     "Luxembourgish",
     "macrotask",
@@ -178,6 +196,7 @@
     "minimatch",
     "Monero",
     "Navlink",
+    "nefrob",
     "networkidle",
     "Neue",
     "newrank",
@@ -194,6 +213,8 @@
     "ntvs",
     "Occitan",
     "oklch",
+    "onig",
+    "orama",
     "overscroll",
     "oxfmt",
     "oxlint",
@@ -222,8 +243,10 @@
     "serversguru",
     "setaf",
     "shadcn",
+    "Shiki",
     "Skhron",
     "sonner",
+    "srvx",
     "stablecoins",
     "subsetted",
     "subtag",
@@ -243,6 +266,7 @@
     "unocss",
     "unplugin",
     "unrs",
+    "unwasm",
     "vaul",
     "viewports",
     "vike",
@@ -255,5 +279,30 @@
     "Беларуская",
     "Русский",
     "Українська"
-  ]
+  ],
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": ["comment", "keyword", "constant", "storage.modifier", "storage.type.class.js"],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": [
+          "invalid",
+          "entity.name.type.class",
+          "keyword.operator",
+          "constant.numeric.css",
+          "keyword.other.unit.px.css",
+          "constant.numeric.decimal.js",
+          "constant.numeric.json"
+        ],
+        "settings": {
+          "fontStyle": ""
+        }
+      }
+    ],
+    "comments": ""
+  }
 }

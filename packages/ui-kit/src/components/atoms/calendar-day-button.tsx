@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { getDefaultClassNames, type DayButton } from "@daypicker/react"
 import { useEffect, useRef } from "react"

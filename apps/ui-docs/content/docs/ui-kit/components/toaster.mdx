@@ -1,0 +1,49 @@
+---
+title: Toaster
+---
+
+import {
+  CloseButtonToasterExample,
+  DefaultToasterExample,
+  RichColorsToasterExample,
+  TopCenterToasterExample,
+} from "@/views/ui-kit/toaster/examples"
+import closeButtonCode from "@/views/ui-kit/toaster/examples/close-button.tsx?raw"
+import defaultCode from "@/views/ui-kit/toaster/examples/default.tsx?raw"
+import richColorsCode from "@/views/ui-kit/toaster/examples/rich-colors.tsx?raw"
+import topCenterCode from "@/views/ui-kit/toaster/examples/top-center.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/toaster/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.default.variant}
+  description={VARIANT_PRESET_MAP.default.description}
+  code={defaultCode}
+>
+  <DefaultToasterExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.topCenter.variant}
+  description={VARIANT_PRESET_MAP.topCenter.description}
+  code={topCenterCode}
+>
+  <TopCenterToasterExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.richColors.variant}
+  description={VARIANT_PRESET_MAP.richColors.description}
+  code={richColorsCode}
+>
+  <RichColorsToasterExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.closeButton.variant}
+  description={VARIANT_PRESET_MAP.closeButton.description}
+  code={closeButtonCode}
+>
+  <CloseButtonToasterExample />
+</ComponentShowcase>

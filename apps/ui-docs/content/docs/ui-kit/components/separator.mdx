@@ -1,0 +1,29 @@
+---
+title: Separator
+---
+
+import {
+  HorizontalSeparatorExample,
+  VerticalSeparatorExample,
+} from "@/views/ui-kit/separator/examples"
+import horizontalCode from "@/views/ui-kit/separator/examples/horizontal.tsx?raw"
+import verticalCode from "@/views/ui-kit/separator/examples/vertical.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/separator/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.horizontal.variant}
+  description={VARIANT_PRESET_MAP.horizontal.description}
+  code={horizontalCode}
+>
+  <HorizontalSeparatorExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.vertical.variant}
+  description={VARIANT_PRESET_MAP.vertical.description}
+  code={verticalCode}
+>
+  <VerticalSeparatorExample />
+</ComponentShowcase>

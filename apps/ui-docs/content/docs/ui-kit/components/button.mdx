@@ -1,0 +1,109 @@
+---
+title: Button
+---
+
+import {
+  AccentButtonExample,
+  DefaultButtonExample,
+  DestructiveButtonExample,
+  ExpandingButtonExample,
+  GhostButtonExample,
+  InlineButtonExample,
+  LinkButtonExample,
+  OutlineButtonExample,
+  SecondaryButtonExample,
+  WhiteButtonExample,
+} from "@/views/ui-kit/button/examples"
+import accentCode from "@/views/ui-kit/button/examples/accent.tsx?raw"
+import defaultCode from "@/views/ui-kit/button/examples/default.tsx?raw"
+import destructiveCode from "@/views/ui-kit/button/examples/destructive.tsx?raw"
+import expandingCode from "@/views/ui-kit/button/examples/expanding.tsx?raw"
+import ghostCode from "@/views/ui-kit/button/examples/ghost.tsx?raw"
+import inlineCode from "@/views/ui-kit/button/examples/inline.tsx?raw"
+import linkCode from "@/views/ui-kit/button/examples/link.tsx?raw"
+import outlineCode from "@/views/ui-kit/button/examples/outline.tsx?raw"
+import secondaryCode from "@/views/ui-kit/button/examples/secondary.tsx?raw"
+import whiteCode from "@/views/ui-kit/button/examples/white.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/button/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.default.variant}
+  description={VARIANT_PRESET_MAP.default.description}
+  code={defaultCode}
+>
+  <DefaultButtonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.secondary.variant}
+  description={VARIANT_PRESET_MAP.secondary.description}
+  code={secondaryCode}
+>
+  <SecondaryButtonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.accent.variant}
+  description={VARIANT_PRESET_MAP.accent.description}
+  code={accentCode}
+>
+  <AccentButtonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.destructive.variant}
+  description={VARIANT_PRESET_MAP.destructive.description}
+  code={destructiveCode}
+>
+  <DestructiveButtonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.outline.variant}
+  description={VARIANT_PRESET_MAP.outline.description}
+  code={outlineCode}
+>
+  <OutlineButtonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.ghost.variant}
+  description={VARIANT_PRESET_MAP.ghost.description}
+  code={ghostCode}
+>
+  <GhostButtonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.link.variant}
+  description={VARIANT_PRESET_MAP.link.description}
+  code={linkCode}
+>
+  <LinkButtonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.inline.variant}
+  description={VARIANT_PRESET_MAP.inline.description}
+  code={inlineCode}
+>
+  <InlineButtonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.white.variant}
+  description={VARIANT_PRESET_MAP.white.description}
+  code={whiteCode}
+>
+  <WhiteButtonExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.expanding.variant}
+  description={VARIANT_PRESET_MAP.expanding.description}
+  code={expandingCode}
+>
+  <ExpandingButtonExample />
+</ComponentShowcase>

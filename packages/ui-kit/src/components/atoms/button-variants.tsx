@@ -1,21 +1,19 @@
 import { cva } from "class-variance-authority"
 
 export const buttonVariants = cva(
-  [
-    `
-      gap-2 font-medium
-      [&_svg:not-[class*='size-']]:size-4
-      focus-visible:border-ring focus-visible:ring-ring/90
-      aria-invalid:ring-destructive/20 aria-invalid:border-destructive
-      dark:aria-invalid:ring-destructive/40
-      focus-visible:outline-ring
-      inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap
-      transition-all duration-200 outline-none
-      focus-visible:ring-3 focus-visible:outline-2
-      disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
-      [&_svg]:pointer-events-none [&_svg]:shrink-0
-    `,
-  ],
+  `
+    gap-2 font-medium
+    [&_svg:not-[class*='size-']]:size-4
+    focus-visible:border-ring focus-visible:ring-ring/90
+    aria-invalid:ring-destructive/20 aria-invalid:border-destructive
+    dark:aria-invalid:ring-destructive/40
+    focus-visible:outline-ring
+    inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap transition-all
+    duration-200 outline-none
+    focus-visible:ring-3 focus-visible:outline-2
+    disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
+    [&_svg]:pointer-events-none [&_svg]:shrink-0
+  `,
 
   {
     variants: {
@@ -69,19 +67,6 @@ export const buttonVariants = cva(
           hover:underline
           focus:underline
         `,
-
-        //* Floating Action Button
-        fab: `
-          not-active:glassy
-          text-foreground
-          focus-visible:ring-ring
-          border-input/80 elevation-2 shadow-foreground/25 border-b-none
-          active:bg-background
-          border-1
-          focus-visible:border-none
-          active:border-none
-          disabled:border-none disabled:opacity-100
-        `,
       },
 
       size: {
@@ -121,11 +106,6 @@ export const buttonVariants = cva(
         "icon-sm": "p-2 size-8 rounded-md [&_svg:not-[class*='size-']]:size-3",
         icon: "p-2 size-9 rounded-md [&_svg:not-[class*='size-']]:size-4",
         "icon-lg": "p-2 size-10 rounded-md [&_svg:not-[class*='size-']]:size-5",
-
-        //* Floating Action Button
-        //* See https://m3.material.io/components/floating-action-button/specs
-        "fab-sm": "size-14 [&_svg]:size-6 rounded-4",
-        fab: "size-20 [&_svg]:size-7 rounded-5",
       },
     },
 

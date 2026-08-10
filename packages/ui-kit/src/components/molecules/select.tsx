@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { Select as SelectPrimitive } from "@base-ui/react/select"
 import { CheckIcon, ChevronDownIcon } from "lucide-react"
@@ -37,7 +37,7 @@ export const SelectTrigger: React.FC<SelectTriggerProps> = ({
           data-[size=sm]:h-9
           *:data-[slot=select-value]:gap-2
           [&_svg:not-[class*='size-']]:size-4
-          flex w-full items-center justify-between border-2 whitespace-nowrap
+          flex w-full cursor-pointer items-center justify-between border-2 whitespace-nowrap
           transition-[color,box-shadow] outline-none
           focus-visible:ring-[3px]
           disabled:cursor-not-allowed disabled:opacity-50

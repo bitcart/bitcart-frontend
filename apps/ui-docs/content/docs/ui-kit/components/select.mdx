@@ -1,0 +1,23 @@
+---
+title: Select
+---
+
+import { DefaultSelectExample, SmallSelectExample } from "@/views/ui-kit/select/examples"
+import defaultCode from "@/views/ui-kit/select/examples/default.tsx?raw"
+import smallCode from "@/views/ui-kit/select/examples/small.tsx?raw"
+
+<ComponentShowcase
+  title="Default"
+  description="Grouped options with a placeholder until a value is chosen"
+  code={defaultCode}
+>
+  <DefaultSelectExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Small"
+  description="Shorter trigger for dense toolbars and inline filters"
+  code={smallCode}
+>
+  <SmallSelectExample />
+</ComponentShowcase>

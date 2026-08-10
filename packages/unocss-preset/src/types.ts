@@ -89,7 +89,15 @@ export type PresetBitcartOptions = {
    */
   baseRadius?: number
 
-  colorScheme?: ThemeColorSchemeParams
+  /**
+   * A single scheme emits its CSS variables on `:root`. An array emits each scheme
+   * scoped under a `.theme-<name>` class instead (with dark overrides under
+   * `.dark .theme-<name>`), letting one build serve multiple brands — hence the
+   * mandatory `name`. Note that no `:root` fallback is generated in array mode,
+   * so a theme class must always be present on an element below the dark-mode root.
+   */
+  colorSchemes?: ThemeColorSchemeParams | (ThemeColorSchemeParams & { name: string })[]
+
   prefix?: PresetMiniOptions["prefix"]
 
   /**

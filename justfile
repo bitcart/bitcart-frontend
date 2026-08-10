@@ -213,7 +213,12 @@ pre-commit:
 ## SERVICES
 
 [doc("
-Start all development server instances in parallel
+Start all development server instances in parallel.
+
+Examples:
+
+- `just dev` to start all apps
+- `just dev -p ui-docs` to start the UI Docs app
 ")]
 [env("BITCART_ENV", "development")]
 [group("Services")]
@@ -224,6 +229,11 @@ dev *nx-args:
 
 [doc("
 Serve production preview for every application in parallel.
+
+Examples:
+
+- `just preview` to start all apps
+- `just preview -p ui-docs` to start the UI Docs app
 ")]
 [group("Services")]
 [no-exit-message]
@@ -289,6 +299,7 @@ e2e *nx-args:
 
 [doc("
 Run E2E tests for a specific app.
+
 Example: `just e2e-app landing`
 ")]
 [env("BITCART_ENV", "testing")]
@@ -298,6 +309,7 @@ e2e-app app *args:
 
 [doc("
 Open Playwright interactive UI for a specific app.
+
 Example: `just e2e-ui landing`
 ")]
 [group("Testing")]
@@ -306,6 +318,7 @@ e2e-ui app:
 
 [doc("
 Open the Playwright HTML test report for a specific app.
+
 Example: `just e2e-report landing`
 ")]
 [group("Testing")]

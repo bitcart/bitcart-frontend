@@ -1,0 +1,29 @@
+---
+title: Drawer
+---
+
+import {
+  BottomPositionDrawerExample,
+  SidePositionDrawerExample,
+} from "@/views/ui-kit/drawer/examples"
+import bottomPositionCode from "@/views/ui-kit/drawer/examples/bottom-position.tsx?raw"
+import sidePositionCode from "@/views/ui-kit/drawer/examples/side-position.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/drawer/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.bottomPosition.variant}
+  description={VARIANT_PRESET_MAP.bottomPosition.description}
+  code={bottomPositionCode}
+>
+  <BottomPositionDrawerExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.sidePosition.variant}
+  description={VARIANT_PRESET_MAP.sidePosition.description}
+  code={sidePositionCode}
+>
+  <SidePositionDrawerExample />
+</ComponentShowcase>

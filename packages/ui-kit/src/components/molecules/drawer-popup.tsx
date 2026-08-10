@@ -1,4 +1,4 @@
-//* Ported from: https://coss.com/ui
+//* Originally ported from: https://coss.com/ui
 
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
 import { t } from "@lingui/core/macro"

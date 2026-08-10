@@ -1,4 +1,5 @@
 import type { HttpHref, InternalHref, MailtoHref } from "@bitcart/core/types"
+import { getDestinationTypeAwareLinkProps } from "@bitcart/core/utils"
 import { type VariantProps } from "class-variance-authority"
 import { createElement } from "react"
 
@@ -13,13 +14,17 @@ export type LinkButtonProps = VariantProps<typeof buttonVariants> &
     | { href: InternalHref | MailtoHref; isExternalLink?: false }
     | { href: HttpHref; isExternalLink: true }
   ) & {
+    disabled?: boolean
     expandOnHover?: boolean
     isExternalLink?: boolean
+    isOriginAware?: boolean
   }
 
 export const LinkButton: React.FC<LinkButtonProps> = ({
+  disabled = false,
   expandOnHover = false,
   isExternalLink = false,
+  isOriginAware = true,
   size,
   variant,
   className,
@@ -29,20 +34,36 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
 }) => {
   const { Link } = useLayoutContext()
 
+  const linkProps = {
+    ...getDestinationTypeAwareLinkProps({ href, isOriginAware }),
+    ...props,
+  }
+
   const a11yAwareLinkProps = isExternalLink
     ? { href: href as HttpHref, a11yHint: getTargetBlankA11yHint() }
     : { href: href as InternalHref | MailtoHref }
+
+  const disabledProps = disabled ? { "aria-disabled": true, tabIndex: -1 } : {}
 
   return createElement(
     Link,
 
     {
-      className: cn(buttonVariants({ variant, size }), className, {
-        "sm:hover:scale-105 hover:scale-102": expandOnHover,
-      }),
+      className: cn(
+        buttonVariants({ variant, size }),
 
-      ...props,
+        {
+          //* Anchors can't be `:disabled`, so the CVA `disabled:*` styles never match
+          "sm:hover:scale-105 hover:scale-102": expandOnHover && !disabled,
+          "pointer-events-none cursor-not-allowed opacity-50": disabled,
+        },
+
+        className,
+      ),
+
+      ...linkProps,
       ...a11yAwareLinkProps,
+      ...disabledProps,
     },
 
     children,

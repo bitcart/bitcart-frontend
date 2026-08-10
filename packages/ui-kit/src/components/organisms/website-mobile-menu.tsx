@@ -12,26 +12,32 @@ import { isEmptyish } from "remeda"
 import { useArrowKeyNavigation, useCurrentBreakpoint, useLayoutContext } from "@/hooks"
 import { cn } from "@/utils"
 
-import { Button, type ButtonProps } from "../atoms/button"
-import { Drawer, DrawerFooter, DrawerHeader, DrawerTrigger } from "../atoms/drawer"
+import { Button } from "../atoms/button"
+import {
+  Drawer,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTrigger,
+  type DrawerTriggerProps,
+} from "../atoms/drawer"
 import { LinkButton } from "../atoms/link-button"
 import { DrawerPanel } from "../molecules/drawer-panel"
 import { DrawerPopup } from "../molecules/drawer-popup"
 import { ThemeToggle } from "../molecules/theme-toggle"
 
+const DEFAULT_TRIGGER_RENDER = <Button size="icon-lg" variant="ghost" />
+
 export type WebsiteMobileMenuProps = {
   layoutControls?: React.ReactNode
   triggerIcon?: React.ReactNode
-  triggerSize?: ButtonProps["size"]
-  triggerVariant?: ButtonProps["variant"]
+  triggerRender?: DrawerTriggerProps["render"]
   classNames?: { trigger?: string; popup?: string }
 }
 
 export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
   layoutControls,
   triggerIcon: customTriggerIcon,
-  triggerSize = "icon-lg",
-  triggerVariant = "ghost",
+  triggerRender = DEFAULT_TRIGGER_RENDER,
   classNames,
 }) => {
   const {
@@ -66,9 +72,9 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
 
   const triggerIcon = useMemo(() => {
     if (isClient) {
-      return customTriggerIcon ?? <Menu className="size-6" />
+      return customTriggerIcon ?? <Menu />
     } else {
-      return <Loader className="size-6 animate-spin text-foreground" />
+      return <Loader className="animate-spin text-foreground" />
     }
   }, [customTriggerIcon, isClient])
 
@@ -77,7 +83,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
       <DrawerTrigger
         disabled={!isClient}
         onClick={toggle}
-        render={<Button size={triggerSize} variant={triggerVariant} />}
+        render={triggerRender}
         className={classNames?.trigger}
         aria-label={isOpen ? t`Close menu` : t`Open menu`}
         data-testid={MOBILE_MENU_TOGGLE_TESTID}

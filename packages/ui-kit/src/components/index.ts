@@ -240,6 +240,11 @@ export {
   type FieldTitleProps,
 } from "./atoms/field"
 
+export {
+  FloatingActionButton,
+  type FloatingActionButtonProps,
+} from "./atoms/floating-action-button"
+
 export { Input, type InputProps } from "./atoms/input"
 
 export {
@@ -351,6 +356,7 @@ export {
   type NavigationMenuTriggerProps,
 } from "./molecules/navigation-menu"
 
+export { navigationMenuTriggerStyle } from "./molecules/navigation-menu-styles"
 export { PopoverContent, type PopoverContentProps } from "./molecules/popover"
 
 export {
@@ -372,7 +378,7 @@ export {
 } from "./molecules/select"
 
 export { ThemeToggle, type ThemeToggleProps, ThemeToggleFallback } from "./molecules/theme-toggle"
-export { Toaster } from "./molecules/toaster"
+export { Toaster, type ToasterProps } from "./molecules/toaster"
 
 /**
  ** ORGANISMS

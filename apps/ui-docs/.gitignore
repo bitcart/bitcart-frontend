@@ -1,0 +1,6 @@
+/build/
+/api/
+/server/build
+/public/build
+
+.source

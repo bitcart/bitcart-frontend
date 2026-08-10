@@ -1,0 +1,39 @@
+---
+title: Textarea
+---
+
+import {
+  DefaultTextareaExample,
+  DisabledTextareaExample,
+  InvalidTextareaExample,
+} from "@/views/ui-kit/textarea/examples"
+import defaultCode from "@/views/ui-kit/textarea/examples/default.tsx?raw"
+import disabledCode from "@/views/ui-kit/textarea/examples/disabled.tsx?raw"
+import invalidCode from "@/views/ui-kit/textarea/examples/invalid.tsx?raw"
+import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/textarea/stories"
+
+<mainStory.WithControl />
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.default.variant}
+  description={VARIANT_PRESET_MAP.default.description}
+  code={defaultCode}
+>
+  <DefaultTextareaExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.disabled.variant}
+  description={VARIANT_PRESET_MAP.disabled.description}
+  code={disabledCode}
+>
+  <DisabledTextareaExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.invalid.variant}
+  description={VARIANT_PRESET_MAP.invalid.description}
+  code={invalidCode}
+>
+  <InvalidTextareaExample />
+</ComponentShowcase>

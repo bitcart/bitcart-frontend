@@ -1,18 +1,19 @@
+import type { DestinationTypeAwareLinkInputs, DestinationTypeAwareLinkProps } from "@/types"
+
 export const isExternalHref = (href: string): boolean => {
   return !href.startsWith("/") && !href.startsWith("#")
 }
 
-export const getAnchorElementProps = (
-  href: string,
-  additionalProps?: object,
-): React.HTMLProps<HTMLAnchorElement> => {
+export const getDestinationTypeAwareLinkProps = ({
+  href,
+  isOriginAware = true,
+}: DestinationTypeAwareLinkInputs): DestinationTypeAwareLinkProps => {
   if (isExternalHref(href) && !href.startsWith("mailto:")) {
     return {
       target: "_blank",
-      rel: "noopener",
-      ...additionalProps,
+      rel: isOriginAware ? "noopener" : "noopener noreferrer",
     }
-  } else return additionalProps ?? {}
+  } else return {}
 }
 
 /**

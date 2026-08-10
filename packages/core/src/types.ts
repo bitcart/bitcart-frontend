@@ -25,6 +25,10 @@ export type A11yAwareLinkProps =
       a11yHint: string
     }
 
+export type DestinationTypeAwareLinkInputs = { href: string; isOriginAware?: boolean }
+
+export type DestinationTypeAwareLinkProps = { target: "_blank"; rel: "noopener" } | {}
+
 /**
  * Framework-agnostic client route bindings.
  */

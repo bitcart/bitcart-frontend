@@ -1,0 +1,26 @@
+---
+title: Autocomplete
+---
+
+import {
+  DefaultAutocompleteExample,
+  ExtendedAutocompleteExample,
+} from "@/views/ui-kit/autocomplete/examples"
+import defaultCode from "@/views/ui-kit/autocomplete/examples/default.tsx?raw"
+import extendedCode from "@/views/ui-kit/autocomplete/examples/extended.tsx?raw"
+
+<ComponentShowcase
+  title="Default"
+  description="Free-text input that filters the list as the query narrows"
+  code={defaultCode}
+>
+  <DefaultAutocompleteExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Trigger and clear"
+  description="Adds a button to open the full list and one to reset the query"
+  code={extendedCode}
+>
+  <ExtendedAutocompleteExample />
+</ComponentShowcase>

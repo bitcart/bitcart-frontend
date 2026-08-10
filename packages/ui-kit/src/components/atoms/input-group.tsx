@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { type VariantProps } from "class-variance-authority"
 import { useCallback } from "react"

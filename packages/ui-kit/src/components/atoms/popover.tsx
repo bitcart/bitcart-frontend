@@ -1,4 +1,4 @@
-//* Ported from: https://ui.shadcn.com
+//* Originally ported from: https://ui.shadcn.com
 
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
 
