@@ -26,19 +26,14 @@ export type Brand = (typeof BRANDS)[number]
 export const MODES = ["light", "dark"] as const
 export type Mode = (typeof MODES)[number]
 
-export type ThemeKey = `${Brand}-${Mode}`
+export const SYSTEM_MODE = "system" as const
 
-export const THEME_KEYS: ThemeKey[] = BRANDS.flatMap((brand) =>
-  MODES.map((mode) => `${brand}-${mode}` as ThemeKey),
-)
+export type ModeSelection = Mode | typeof SYSTEM_MODE
 
-export const DEFAULT_THEME_KEY: ThemeKey = "landing-light"
+export const MODE_SELECTIONS: ModeSelection[] = [SYSTEM_MODE, ...MODES]
 
-/**
- * next-themes `value` mapping: the stored theme key carries brand and mode, but only
- * the mode may reach the `class` attribute, since Fumadocs styling and the brand
- * stylesheets' dark selector both key off the `light`/`dark` classes.
- */
-export const THEME_MODE_CLASS_BY_KEY = Object.fromEntries(
-  THEME_KEYS.map((themeKey) => [themeKey, themeKey.split("-")[1] as Mode]),
-) as Record<ThemeKey, Mode>
+export const DEFAULT_BRAND: Brand = "landing"
+export const DEFAULT_MODE: Mode = "light"
+
+export const BRAND_STORAGE_KEY = "brand"
+export const MODE_STORAGE_KEY = "theme"

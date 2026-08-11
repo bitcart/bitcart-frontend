@@ -4,25 +4,80 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
 import { useTheme } from "@fumadocs/base-ui/provider/base"
 import { useLingui } from "@lingui/react/macro"
 import { PaletteIcon } from "lucide-react"
-import { useEffect } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { capitalize } from "remeda"
 
 import {
   type Brand,
+  BRAND_STORAGE_KEY,
   BRANDS,
-  DEFAULT_THEME_KEY,
-  THEME_KEYS,
-  type ThemeKey,
+  DEFAULT_BRAND,
+  type Mode,
+  MODE_SELECTIONS,
+  type ModeSelection,
+  SYSTEM_MODE,
 } from "@/common/constants"
-import { parseThemeKey } from "@/common/utils"
+import { BrandContext, type BrandContextValue, useBrand } from "@/common/contexts"
+import { resolveBrand, resolveMode } from "@/common/utils"
 
-const applyTheme = (brand: Brand): void => {
+const readStoredBrand = (): Brand => {
+  try {
+    return resolveBrand(localStorage.getItem(BRAND_STORAGE_KEY))
+  } catch {
+    return DEFAULT_BRAND
+  }
+}
+
+export type BrandProviderProps = {
+  children: React.ReactNode
+}
+
+/**
+ * Owns the brand half of the theme, as next-themes owns the mode half.
+ */
+export const BrandProvider: React.FC<BrandProviderProps> = ({ children }) => {
+  //! Read during the initial client render rather than in an effect, so that `ThemeSync`
+  //! never applies the SSR'd default over the stored brand.
+  const [brand, setBrandState] = useState<Brand>(() =>
+    typeof window === "undefined" ? DEFAULT_BRAND : readStoredBrand(),
+  )
+
+  const setBrand = useCallback((nextBrand: Brand) => {
+    setBrandState(nextBrand)
+
+    try {
+      localStorage.setItem(BRAND_STORAGE_KEY, nextBrand)
+    } catch {
+      //! Persisting is best-effort; the selection still applies in memory.
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key === BRAND_STORAGE_KEY) {
+        setBrandState(resolveBrand(event.newValue))
+      }
+    }
+
+    window.addEventListener("storage", handleStorage)
+
+    return () => window.removeEventListener("storage", handleStorage)
+  }, [])
+
+  const value = useMemo<BrandContextValue>(() => ({ brand, setBrand }), [brand, setBrand])
+
+  return <BrandContext.Provider value={value}>{children}</BrandContext.Provider>
+}
+
+const applyTheme = (brand: Brand, mode: Mode): void => {
   //* The brand class lives on <body> rather than <html>: the generated dark-mode
   //* selectors are descendant combinators (`.dark .theme-<brand>`), and next-themes
   //* owns the light/dark class on <html>.
@@ -31,70 +86,104 @@ const applyTheme = (brand: Brand): void => {
   }
 
   document.documentElement.dataset.brand = brand
+
+  //! Owned here rather than by next-themes, which knows about the mode only.
+  document.documentElement.style.colorScheme = mode
 }
 
 /**
- * Keeps the active brand's `theme-<brand>` class on <body> in sync with the active
- * next-themes theme. Mode (light/dark) is handled natively by next-themes through
- * the `value` class mapping; the brand half of the theme key selects which
- * `.theme-<brand>` CSS variable scope from uno.generated.css applies.
+ * Projects both selections onto the document, except the light/dark class on <html>,
+ * which is next-themes' own.
  */
-export const ThemeBrandSync: React.FC = () => {
-  const { theme } = useTheme()
+export const ThemeSync: React.FC = () => {
+  const { brand } = useBrand()
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
-    applyTheme(parseThemeKey(theme).brand)
-  }, [theme])
+    applyTheme(brand, resolveMode(resolvedTheme))
+  }, [brand, resolvedTheme])
 
   return null
 }
 
+//! The app's uno config scans `src/views/**` and the UI Kit, not `src/common/**`, so only
+//! utilities already emitted into uno.generated.css can be used here.
+const GROUP_LABEL_CLASS_NAME = "text-muted-foreground text-xs font-normal"
+
+type ThemeOptionProps = {
+  label: string
+  isActive: boolean
+  onSelect: () => void
+}
+
+const ThemeOption: React.FC<ThemeOptionProps> = ({ label, isActive, onSelect }) => (
+  <DropdownMenuItem
+    onClick={onSelect}
+    render={
+      <Button
+        variant={isActive ? "accent" : "ghost"}
+        className={cn("focus-visible:ring-transparent", { "text-foreground": isActive })}
+        aria-label={label}
+      />
+    }
+  >
+    <span className="w-full text-left">{label}</span>
+  </DropdownMenuItem>
+)
+
 /**
- * Selector for the four brand-mode theme combinations, replacing the built-in
- * Fumadocs theme switch (which only cycles light/dark/system).
+ * Selects both theme dimensions, replacing the built-in Fumadocs theme switch, which has
+ * no notion of the brand.
  */
 export const ThemeSelector: React.FC = () => {
   const { t } = useLingui()
-  const { theme, setTheme } = useTheme()
+  const { brand, setBrand } = useBrand()
+  const { theme, resolvedTheme, setTheme } = useTheme()
 
-  //* `theme` may be undefined or invalid on the first render.
-  const currentKey: ThemeKey = THEME_KEYS.includes(theme as ThemeKey)
-    ? (theme as ThemeKey)
-    : DEFAULT_THEME_KEY
+  //* `theme` is the selection, not the resolution, and is undefined before hydration.
+  const modeSelection: ModeSelection = MODE_SELECTIONS.includes(theme as ModeSelection)
+    ? (theme as ModeSelection)
+    : SYSTEM_MODE
 
-  const options = THEME_KEYS.map((key) => {
-    const { brand, mode } = parseThemeKey(key)
-
-    return { value: key, label: `${capitalize(brand)} ${capitalize(mode)}` }
-  })
-
-  const currentOption = options.find(({ value }) => value === currentKey)
+  const modeLabels: Record<ModeSelection, string> = {
+    system: t`System`,
+    light: t`Light`,
+    dark: t`Dark`,
+  }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="outline" />} aria-label={t`Select theme`}>
         <PaletteIcon className="h-4 w-4" />
-        {currentOption?.label}
+        {`${capitalize(brand)} ${capitalize(resolveMode(resolvedTheme))}`}
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-50">
         <DropdownMenuGroup>
-          {options.map(({ value, label }) => (
-            <DropdownMenuItem
+          <DropdownMenuLabel className={GROUP_LABEL_CLASS_NAME}>{t`Brand`}</DropdownMenuLabel>
+
+          {BRANDS.map((value) => (
+            <ThemeOption
               key={value}
-              onClick={() => setTheme(value)}
-              render={
-                <Button
-                  variant={value === currentKey ? "accent" : "ghost"}
-                  className={cn("focus-visible:ring-transparent", {
-                    "text-foreground": value === currentKey,
-                  })}
-                  aria-label={label}
-                />
-              }
-            >
-              <span className="w-full text-left">{label}</span>
-            </DropdownMenuItem>
+              label={capitalize(value)}
+              isActive={value === brand}
+              onSelect={() => setBrand(value)}
+            />
+          ))}
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className={GROUP_LABEL_CLASS_NAME}>{t`Mode`}</DropdownMenuLabel>
+
+          {MODE_SELECTIONS.map((value) => (
+            <ThemeOption
+              key={value}
+              label={modeLabels[value]}
+              isActive={value === modeSelection}
+              onSelect={() => setTheme(value)}
+            />
           ))}
         </DropdownMenuGroup>
       </DropdownMenuContent>

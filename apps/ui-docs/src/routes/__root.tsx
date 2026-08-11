@@ -3,10 +3,9 @@ import { RootProvider } from "@fumadocs/base-ui/provider/tanstack"
 import { I18nProvider } from "@lingui/react"
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router"
 
-import { DEFAULT_THEME_KEY, THEME_KEYS, THEME_MODE_CLASS_BY_KEY } from "@/common/constants"
+import { DEFAULT_BRAND } from "@/common/constants"
 import { i18n } from "@/common/i18n"
-import { SearchDialog, ThemeBrandSync } from "@/common/ui/components"
-import { parseThemeKey } from "@/common/utils"
+import { BrandProvider, SearchDialog, ThemeSync } from "@/common/ui/components"
 
 import { THEME_INIT_SCRIPT } from "./-layout/constants"
 
@@ -24,27 +23,19 @@ function RootComponent() {
           hence the suppressed hydration warning. */}
       <body
         suppressHydrationWarning
-        className={cn(
-          `theme-${parseThemeKey(DEFAULT_THEME_KEY).brand}`,
-          "flex min-h-screen flex-col",
-        )}
+        className={cn(`theme-${DEFAULT_BRAND}`, "flex min-h-screen flex-col")}
       >
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
 
         <I18nProvider i18n={i18n}>
-          <RootProvider
-            search={{ SearchDialog }}
-            theme={{
-              themes: [...THEME_KEYS],
-              defaultTheme: DEFAULT_THEME_KEY,
-              enableSystem: false,
-              disableTransitionOnChange: true,
-              value: THEME_MODE_CLASS_BY_KEY,
-            }}
-          >
-            <ThemeBrandSync />
+          {/*! Fumadocs already defaults the mode to light/dark/system on the `class`
+              attribute; `color-scheme` is applied alongside the brand instead. */}
+          <RootProvider search={{ SearchDialog }} theme={{ enableColorScheme: false }}>
+            <BrandProvider>
+              <ThemeSync />
 
-            <Outlet />
+              <Outlet />
+            </BrandProvider>
           </RootProvider>
         </I18nProvider>
 

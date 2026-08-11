@@ -1,9 +1,7 @@
-import { type Brand, DEFAULT_THEME_KEY, type Mode, THEME_KEYS, type ThemeKey } from "../constants"
+import { type Brand, BRANDS, DEFAULT_BRAND, DEFAULT_MODE, type Mode, MODES } from "../constants"
 
-export const parseThemeKey = (themeKey: string | undefined): { brand: Brand; mode: Mode } => {
-  const [brand, mode] = (
-    THEME_KEYS.includes(themeKey as ThemeKey) ? (themeKey as ThemeKey) : DEFAULT_THEME_KEY
-  ).split("-") as [Brand, Mode]
+export const resolveBrand = (brand: string | null | undefined): Brand =>
+  BRANDS.includes(brand as Brand) ? (brand as Brand) : DEFAULT_BRAND
 
-  return { brand, mode }
-}
+export const resolveMode = (resolvedTheme: string | undefined): Mode =>
+  MODES.includes(resolvedTheme as Mode) ? (resolvedTheme as Mode) : DEFAULT_MODE
