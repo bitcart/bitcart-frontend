@@ -8,7 +8,7 @@ export const appDependencyCruiserConfig = {
     ...baseDependencyCruiserConfig.options,
 
     tsConfig: {
-      fileName: "tsconfig.app.json",
+      fileName: "tsconfig.json",
     },
   },
 }

@@ -1,25 +1,49 @@
-import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
 import {
   type BCP47LanguageSubtag,
-  type PosixLocaleIdLike,
   type PosixLocaleIdMap,
-} from "@bitcart/core/utils"
+  type SourceLocaleId,
+} from "@bitcart/core/i18n"
+import {
+  getDocumentHeadManifest,
+  type DocumentFavicon,
+  type DocumentViewportParams,
+} from "@bitcart/core/metadata"
+import type { TwitterHandle } from "@bitcart/core/types"
 import { useMemo } from "react"
-import { Fragment } from "react/jsx-runtime"
 import { usePageContext } from "vike-react/usePageContext"
 
+import { renderDocumentHeadManifest } from "./utils"
+
 export type HeadProps<TSupportedLocaleId extends BCP47LanguageSubtag> = {
-  posixLocaleIdMap: PosixLocaleIdMap<TSupportedLocaleId>
-  projectCanonicalName: string
+  favicon?: DocumentFavicon
+  ogSiteName: string
+  posixLocaleIdMap: PosixLocaleIdMap<TSupportedLocaleId | SourceLocaleId>
+  twitterHandles?: { author?: TwitterHandle; site?: TwitterHandle }
+  viewportParams?: DocumentViewportParams
 }
 
 export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
+  favicon,
+  ogSiteName,
   posixLocaleIdMap,
-  projectCanonicalName,
+  twitterHandles,
+  viewportParams,
 }: HeadProps<TSupportedLocaleId>) =>
   function Head(): React.JSX.Element {
     const { metadata, urlLogical } = usePageContext()
-    const normalizedUrl = urlLogical === "/" ? "" : urlLogical
+
+    const manifest = getDocumentHeadManifest({
+      favicon,
+      isCharsetSetElsewhere: true,
+      isOgTitleSetElsewhere: true,
+      isRoutingLocaleDependent: true,
+      metadata,
+      ogSiteName,
+      posixLocaleIdMap,
+      routePath: urlLogical,
+      twitterHandles,
+      viewportParams,
+    })
 
     const metadataJsonInnerHtml = useMemo(
       () => ({
@@ -85,71 +109,7 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
           }}
         />
 
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
-        />
-
-        <meta name="description" content={metadata.description} />
-        <meta name="og:description" content={metadata.description} />
-        <meta name="twitter:title" content={metadata.title} />
-        <meta name="author" content={metadata.author} />
-        <meta property="og:url" content={metadata.url} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={projectCanonicalName} />
-        <meta property="og:locale" content={metadata.locale} />
-        <meta property="og:image" content={metadata.image.src} />
-        <meta property="og:image:alt" content={metadata.image.alt} />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content={metadata.image.width} />
-        <meta property="og:image:height" content={metadata.image.height} />
-
-        {metadata.image.secureUrl && (
-          <meta property="og:image:secure_url" content={metadata.image.secureUrl} />
-        )}
-
-        {metadata.image.secureUrl && (
-          <>
-            <meta name="twitter:card" content="summary" />
-            <meta name="twitter:image" content={metadata.image.secureUrl} />
-            <meta name="twitter:image:alt" content={metadata.image.alt} />
-          </>
-        )}
-
-        <meta name="twitter:site" content="@BitcartCC" />
-        <meta name="twitter:creator" content="@BitcartCC" />
-
-        <link rel="canonical" href={metadata.url} />
-
-        {Object.entries<PosixLocaleIdLike<TSupportedLocaleId>>(posixLocaleIdMap).map(
-          ([localeId, posixLocaleId]) => (
-            <Fragment key={localeId}>
-              {posixLocaleId !== metadata.locale && (
-                <meta property="og:locale:alternate" content={posixLocaleId} />
-              )}
-
-              <link
-                rel="alternate"
-                href={
-                  localeId === SOURCE_LOCALE_ID
-                    ? `${metadata.baseUrl}${normalizedUrl}`
-                    : `${metadata.baseUrl}/${localeId}${normalizedUrl}`
-                }
-                hrefLang={localeId}
-                type="text/html"
-              />
-            </Fragment>
-          ),
-        )}
-
-        <link
-          rel="alternate"
-          href={`${metadata.baseUrl}${normalizedUrl}`}
-          hrefLang="x-default"
-          type="text/html"
-        />
+        {renderDocumentHeadManifest(manifest)}
 
         <script type="application/ld+json" dangerouslySetInnerHTML={metadataJsonInnerHtml} />
       </>

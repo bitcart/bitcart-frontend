@@ -8,7 +8,6 @@ type AppKnipConfig = Omit<WorkspaceProjectConfig, "entry" | "project"> & {
 export const appKnipConfig: AppKnipConfig = {
   entry: [
     "src/pages/**/+*.{ts,tsx}",
-    "vite.config.ts",
     "lingui.config.ts",
     "env.config.ts",
     "node-env.ts",

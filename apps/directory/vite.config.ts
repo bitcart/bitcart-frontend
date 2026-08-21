@@ -9,20 +9,23 @@ import react from "@vitejs/plugin-react"
 import vike from "vike/plugin"
 import { defineConfig } from "vite"
 
-import linguiConfig from "./lingui.config"
-import { nodeEnv } from "./node-env"
+import linguiConfig from "./lingui.config.ts"
+import { nodeEnv } from "./node-env.ts"
 
+const DEV_ENV_PORT = 3001
 const { PRODUCTION_BASE_URL } = nodeEnv
-
 const { locales: LINGUI_LOCALES, sourceLocale: LINGUI_SOURCE_LOCALE } = linguiConfig
 
-// https://vitejs.dev/config/
 export default defineConfig({
   envPrefix: "BITCART_",
 
   server: {
     allowedHosts: [".internal", ".local"],
-    port: 3001,
+    port: DEV_ENV_PORT,
+  },
+
+  preview: {
+    port: DEV_ENV_PORT,
   },
 
   plugins: [

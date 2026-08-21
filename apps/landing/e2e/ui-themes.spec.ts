@@ -1,4 +1,8 @@
-import { createThemePersistenceTest, themeCycleToggleTest } from "@bitcart/qa/e2e"
+import {
+  createThemePersistenceTest,
+  foreignThemeRecoveryTest,
+  themeCycleToggleTest,
+} from "@bitcart/qa/e2e"
 import { test } from "@playwright/test"
 
 import { PAGE_CATALOG } from "./constants"
@@ -10,4 +14,6 @@ test.describe("Landing: UI themes", () => {
     "theme persists across navigation",
     createThemePersistenceTest({ pageCatalog: PAGE_CATALOG }),
   )
+
+  test("theme recovers from a foreign persisted value", foreignThemeRecoveryTest)
 })

@@ -1,4 +1,4 @@
-import { getLocaleDisplayName, type LocaleId, type PseudoLocaleId } from "@bitcart/core/utils"
+import { getLocaleDisplayName, type LocaleId, type PseudoLocaleId } from "@bitcart/core/i18n"
 import { LOCALE_SELECTOR_TRIGGER_TESTID } from "@bitcart/qa"
 import { t } from "@lingui/core/macro"
 import { Globe } from "lucide-react"

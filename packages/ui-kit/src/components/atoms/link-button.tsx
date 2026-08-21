@@ -1,5 +1,9 @@
-import type { HttpHref, InternalHref, MailtoHref } from "@bitcart/core/types"
-import { getDestinationTypeAwareLinkProps } from "@bitcart/core/utils"
+import {
+  getDestinationTypeAwareLinkProps,
+  type HttpHref,
+  type InternalHref,
+  type MailtoHref,
+} from "@bitcart/core/navigation"
 import { type VariantProps } from "class-variance-authority"
 import { createElement } from "react"
 

@@ -19,7 +19,7 @@ export default defineConfig({
   sourcemap: true,
   clean: !!process.env.BITCART_ENV && process.env.BITCART_ENV !== "development",
   tsconfig: "./tsconfig.lib.json",
-  deps: { skipNodeModulesBundle: true },
+  deps: { neverBundle: true },
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
   unbundle: true,
 })

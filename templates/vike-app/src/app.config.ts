@@ -1,14 +1,20 @@
-import { PSEUDO_LOCALE_ID, PSEUDO_POSIX_LOCALE_ID_MAP } from "@bitcart/core/constants"
-import type { PosixLocaleIdMap, PseudoPosixLocaleIdMap } from "@bitcart/core/utils"
+import { PSEUDO_LOCALE_ID, type PosixLocaleIdMap } from "@bitcart/core/i18n"
+import type { StaticDocumentMetadata } from "@bitcart/core/metadata"
+import { t } from "@lingui/core/macro"
 
-import { SUPPORTED_LOCALE_IDS as LOCALE_IDS } from "../constants"
+import { BRAND_UMBRELLA_NAME } from "@/common/constants"
+
+import { SUPPORTED_LOCALE_IDS } from "../constants"
 import { env } from "./env"
 
-export const SUPPORTED_LOCALE_IDS =
-  env.BITCART_ENV === "production" ? LOCALE_IDS : [...LOCALE_IDS, PSEUDO_LOCALE_ID]
+export { SUPPORTED_LOCALE_IDS }
 
-export const POSIX_LOCALE_ID_MAP: PosixLocaleIdMap<(typeof LOCALE_IDS)[number]> &
-  (PseudoPosixLocaleIdMap | {}) = {
+export const APP_LOCALE_IDS =
+  env.BITCART_ENV === "production"
+    ? SUPPORTED_LOCALE_IDS
+    : [...SUPPORTED_LOCALE_IDS, PSEUDO_LOCALE_ID]
+
+export const APP_POSIX_LOCALE_ID_MAP: PosixLocaleIdMap<(typeof SUPPORTED_LOCALE_IDS)[number]> = {
   be: "be_BY",
   de: "de_DE",
   en: "en_US",
@@ -20,6 +26,20 @@ export const POSIX_LOCALE_ID_MAP: PosixLocaleIdMap<(typeof LOCALE_IDS)[number]> 
   ru: "ru_RU",
   tr: "tr_TR",
   uk: "uk_UA",
-
-  ...(env.BITCART_ENV === "production" ? {} : PSEUDO_POSIX_LOCALE_ID_MAP),
 }
+
+export const getAppDocumentMetadata = (): StaticDocumentMetadata => ({
+  title: t`Bitcart Vike Example - Minimal App Boilerplate`,
+
+  description: t`Minimal Vike application boilerplate with the shared Bitcart app shell, internationalization, and theming`,
+
+  image: {
+    src: "/logo.png",
+    alt: `${BRAND_UMBRELLA_NAME} ${t`logo`}`,
+    type: "image/png",
+    width: "600",
+    height: "532",
+  },
+
+  author: "MrNaif2018",
+})

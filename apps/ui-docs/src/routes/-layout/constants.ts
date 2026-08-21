@@ -1,5 +1,3 @@
-import type { ClientRoute } from "@bitcart/core/types"
-
 import {
   BRAND_STORAGE_KEY,
   BRANDS,
@@ -50,9 +48,3 @@ const init = () => {
 
 init()
 `.trim()
-
-export const STORY_LAYOUT_CONTEXT_ROUTE_STUB = {
-  hash: null,
-  pathname: "/",
-  pathnameWithHash: "/",
-} as ClientRoute

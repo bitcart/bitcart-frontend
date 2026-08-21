@@ -264,6 +264,7 @@ export {
 
 export { Kbd, KbdGroup, type KbdGroupProps, type KbdProps } from "./atoms/kbd"
 export { Label, type LabelProps } from "./atoms/label"
+export { LayoutContainer, type LayoutContainerProps } from "./atoms/layout-container"
 export { LinkButton, type LinkButtonProps } from "./atoms/link-button"
 
 export {
@@ -390,7 +391,13 @@ export {
   type FeatureGalleryProps,
 } from "./organisms/feature-gallery"
 
-export { LocaleSelector, type LocaleSelectorProps } from "./organisms/locale-selector"
+export {
+  LayoutLocaleSelector,
+  LocaleSelector,
+  type LayoutLocaleSelectorProps,
+  type LocaleSelectorProps,
+} from "./organisms/locale-selector"
+
 export { WebsiteFooter, type WebsiteFooterProps } from "./organisms/website-footer"
 export { WebsiteHeader, type WebsiteHeaderProps } from "./organisms/website-header"
 export { WebsiteMobileMenu, type WebsiteMobileMenuProps } from "./organisms/website-mobile-menu"

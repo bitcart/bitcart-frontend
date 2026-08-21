@@ -12,7 +12,7 @@ export default defineConfig({
 
   presets: [
     presetBitcart({
-      colorScheme: {
+      colorSchemes: {
         name: "bitcart-vike-app-template",
 
         light: {},

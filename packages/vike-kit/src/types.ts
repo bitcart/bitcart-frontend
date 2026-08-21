@@ -1,7 +1,6 @@
-import type { InternalHref } from "@bitcart/core/types"
+import type { DocumentMetadata } from "@bitcart/core/metadata"
+import type { InternalHref } from "@bitcart/core/navigation"
 import type { Url, PageContext as VikePageContext } from "vike/types"
-
-import type { LayoutMetadata } from "@/metadata"
 
 export type RouteUrl = Url & {
   href: InternalHref
@@ -12,7 +11,7 @@ export type PageContextPayload = {
   localeId: string
   posixLocaleId: string
   messages: Record<string, string>
-  metadata: LayoutMetadata
+  metadata: DocumentMetadata
   urlLogical: InternalHref
   urlParsed: RouteUrl
   urlPathname: `/${string}`

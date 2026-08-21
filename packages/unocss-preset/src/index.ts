@@ -2,7 +2,7 @@ import {
   definePreset,
   presetTypography,
   presetWind4,
-  PresetWind4Theme,
+  type PresetWind4Theme,
   transformerVariantGroup,
 } from "unocss"
 import { presetAnimations } from "unocss-preset-animations"

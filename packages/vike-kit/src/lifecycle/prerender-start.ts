@@ -1,5 +1,4 @@
-import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
+import { SOURCE_LOCALE_ID, type LocaleId, type PseudoLocaleId } from "@bitcart/core/i18n"
 import type { PageContextServer } from "vike/types"
 
 export interface OnPrerenderStartDeps<TSupportedLocaleId extends LocaleId | PseudoLocaleId> {

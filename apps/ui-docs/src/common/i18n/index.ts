@@ -1,12 +1,16 @@
-import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
-import { i18n, type Messages } from "@lingui/core"
+// FIXME: Rewrite the i18n layer once a shared Tanstack Start kit package is available and stable.
 
-//* Catalogs are emitted by `just locales-extract(-dev)`; outside production the set
-//* also contains the pseudo locale.
+import {
+  SOURCE_LOCALE_ID,
+  type LocaleId,
+  type LocaleModuleCatalog,
+  type PseudoLocaleId,
+} from "@bitcart/core/i18n"
+import { i18n } from "@lingui/core"
+
 const AVAILABLE_LOCALE_MODULES = import.meta.glob("./_generated/locales/*.po", {
   eager: true,
-}) as Record<string, { messages: Messages }>
+}) as LocaleModuleCatalog
 
 const getLocaleId = (catalogModulePath: string) =>
   catalogModulePath.replace("./_generated/locales/", "").replace(".po", "") as

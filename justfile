@@ -179,7 +179,8 @@ depcheck *args:
     @pnpm knip --no-progress {{ args }}
 
 [doc("
-Validate that emitted dist code never references a devDependency (would break consumers under deps.skipNodeModulesBundle). Builds packages first via Nx.
+Validate that emitted dist code never references a devDependency.
+Builds packages first via Nx.
 ")]
 [group("Code quality")]
 depcruise *nx-args:

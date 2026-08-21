@@ -1,4 +1,4 @@
-import { runtimeEnvTagSchema } from "@bitcart/core/zod"
+import { runtimeEnvTagSchema } from "@bitcart/core/validation"
 import { z } from "zod"
 
 export const envConfig = {

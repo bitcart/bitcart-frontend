@@ -12,7 +12,7 @@ export type WebsiteFooterProps = {
 export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
   const {
     Link,
-    layoutConfig: { brand, navigation },
+    layoutConfig: { brand, project, navigation },
   } = useLayoutContext()
 
   /**
@@ -24,8 +24,8 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
   )
 
   const copyrightText = `© ${
-    brand.copyrightSinceYear ? `${brand.copyrightSinceYear} — ` : ""
-  }${new Date().getFullYear()} ${brand.name}. ${brand.copyrightAppendix ?? t`All rights reserved.`}`
+    project?.copyrightSinceYear ? `${project?.copyrightSinceYear} — ` : ""
+  }${new Date().getFullYear()} ${brand.name}. ${project?.copyrightAppendix ?? t`All rights reserved.`}`
 
   const iconLinks = useMemo(
     () =>
@@ -57,14 +57,21 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
     <footer className={cn("border-muted dark:border-border border-t", classNames?.root)}>
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 py-12 mx-auto">
         <div className="gap-15 lg:gap-8 lg:flex-row flex flex-col">
-          <div className="max-w-112 flex w-full flex-col">
+          <div className="max-w-md flex w-full flex-col">
             <Link href={navigation.rootRoutePathname} className="space-x-3 mb-4 flex items-center">
-              <img alt={brand.logoImageAltText} src={brand.logoImageSrc} className="size-8" />
-              <span className="text-xl font-bold">{brand.projectCanonicalName}</span>
+              <img
+                alt={t`${project?.canonicalName ?? brand.name} logo`}
+                src={project?.logoImageSrc ?? brand.logoImageSrc}
+                className="size-8"
+              />
+
+              <span className="text-xl font-bold">{project?.canonicalName ?? brand.name}</span>
             </Link>
 
-            {brand.tagline && (
-              <p className="text-muted-foreground mb-4 max-w-md">{brand.tagline}</p>
+            {(project?.description ?? brand.tagline) && (
+              <p className="text-muted-foreground mb-4 max-w-md">
+                {project?.description ?? brand.tagline}
+              </p>
             )}
 
             <div className="gap-4 flex">{iconLinks}</div>

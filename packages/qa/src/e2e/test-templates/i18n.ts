@@ -1,9 +1,9 @@
-import { WithLocaleId, getLocaleDisplayName } from "@bitcart/core/utils"
+import { type WithLocaleId, getLocaleDisplayName } from "@bitcart/core/i18n"
 import { expect } from "@playwright/test"
 
-import { LOCALE_SELECTOR_TRIGGER_TESTID, type WithPageCatalog } from "@/common"
+import { LOCALE_SELECTOR_TRIGGER_TESTID, type WithPageCatalog, type WithTestRoute } from "@/common"
 
-import type { E2ETestTemplate, GenericE2ETestTemplate } from "../types"
+import type { GenericE2ETestTemplate } from "../types"
 import {
   clickNavLinkByHref,
   expectNoUncompiledLocaleMessageIds,
@@ -16,15 +16,19 @@ import {
 /**
  * The locale selector must be visible and the default locale must be English.
  */
-export const testLocaleSelectorVisibilityWithDefaultLocale: E2ETestTemplate = async ({ page }) => {
-  await page.goto("/")
-  await waitUntilHydrated(page)
+export const createLocaleSelectorVisibilityWithDefaultLocaleTest: GenericE2ETestTemplate<
+  WithTestRoute
+> =
+  ({ testRoute = "/" } = {}) =>
+  async ({ page }) => {
+    await page.goto(testRoute)
+    await waitUntilHydrated(page)
 
-  const localeSelectorTrigger = page.getByTestId(LOCALE_SELECTOR_TRIGGER_TESTID)
+    const localeSelectorTrigger = page.getByTestId(LOCALE_SELECTOR_TRIGGER_TESTID)
 
-  await expect(localeSelectorTrigger).toBeVisible()
-  await expect(localeSelectorTrigger).toContainText("English")
-}
+    await expect(localeSelectorTrigger).toBeVisible()
+    await expect(localeSelectorTrigger).toContainText("English")
+  }
 
 /**
  * Switching to a given locale via the locale selector

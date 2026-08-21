@@ -1,8 +1,8 @@
-import { PSEUDO_LOCALE_ID, SOURCE_LOCALE_ID } from "@bitcart/core/constants"
+import { PSEUDO_LOCALE_ID, SOURCE_LOCALE_ID } from "@bitcart/core/i18n"
 import { defineConfig } from "@lingui/conf"
 
-import { SUPPORTED_LOCALE_IDS } from "./constants"
-import { nodeEnv } from "./node-env"
+import { SUPPORTED_LOCALE_IDS } from "./constants.ts"
+import { nodeEnv } from "./node-env.ts"
 
 export default defineConfig({
   sourceLocale: SOURCE_LOCALE_ID,

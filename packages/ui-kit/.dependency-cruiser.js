@@ -6,6 +6,7 @@ export default {
 
   options: {
     ...libDependencyCruiserConfig.options,
+    tsConfig: { fileName: "tsconfig.json" },
 
     reporterOptions: {
       dot: {

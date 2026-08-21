@@ -9,9 +9,18 @@ import { Loader, Monitor, Moon, Sun } from "lucide-react"
 import { useCallback, useMemo } from "react"
 
 import { useTheme } from "@/hooks"
-import { cn } from "@/utils"
+import type { ThemeMode } from "@/types"
+import { cn, isThemeMode } from "@/utils"
 
 import { Button } from "../atoms/button"
+
+const DEFAULT_THEME_MODE: ThemeMode = "system"
+
+const NEXT_THEME_MODE: Record<ThemeMode, ThemeMode> = {
+  system: "light",
+  light: "dark",
+  dark: "system",
+}
 
 export type ThemeToggleProps = {
   className?: string
@@ -30,27 +39,12 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
 }) => {
   const { theme, setTheme } = useTheme()
 
-  const toggleTheme = useCallback(() => {
-    switch (theme) {
-      case "system": {
-        setTheme("light")
-        break
-      }
-
-      case "light": {
-        setTheme("dark")
-        break
-      }
-
-      case "dark": {
-        setTheme("system")
-        break
-      }
-    }
-  }, [setTheme, theme])
+  //* Mitigates unrecoverable state caused by an invalid cached setting.
+  const themeMode = isThemeMode(theme) ? theme : DEFAULT_THEME_MODE
+  const toggleTheme = useCallback(() => setTheme(NEXT_THEME_MODE[themeMode]), [setTheme, themeMode])
 
   const getThemeLabel = useCallback(() => {
-    switch (theme) {
+    switch (themeMode) {
       case "light": {
         return t`Light`
       }
@@ -63,7 +57,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         return t`System`
       }
     }
-  }, [theme])
+  }, [themeMode])
 
   const getButtonHint = useCallback(
     () => t`Current theme: ${getThemeLabel()}. Click to cycle through themes.`,
@@ -73,7 +67,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   const icon = useMemo(() => {
     const elementClassName = "text-foreground"
 
-    switch (theme) {
+    switch (themeMode) {
       case "light": {
         return <Sun className={elementClassName} data-testid={UI_THEME_ICON_LIGHT_TESTID} />
       }
@@ -86,7 +80,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         return <Monitor className={elementClassName} data-testid={UI_THEME_ICON_SYSTEM_TESTID} />
       }
     }
-  }, [theme])
+  }, [themeMode])
 
   return (
     <Button

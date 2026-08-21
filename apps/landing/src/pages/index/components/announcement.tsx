@@ -1,4 +1,4 @@
-import type { HttpHref } from "@bitcart/core/types"
+import type { HttpHref } from "@bitcart/core/navigation"
 import { LinkButton } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
 import { Trans, useLingui } from "@lingui/react/macro"

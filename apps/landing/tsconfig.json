@@ -1,4 +1,18 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+  "extends": [
+    "@bitcart/configs/by-package-type/app-ts",
+    "@bitcart/configs/by-view-layer/react-ts",
+    "@bitcart/configs/by-target-platform/browser-ts"
+  ],
+
+  "compilerOptions": {
+    "types": ["node", "vite/client"],
+
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+
+  "exclude": ["dist", "node_modules"],
+  "include": ["src", "e2e", "*.ts"]
 }

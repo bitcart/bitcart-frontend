@@ -47,12 +47,16 @@ export const getLayoutConfig = defineGetLayoutConfig(() =>
 
     brand: {
       name: "Generic Company",
-      projectCanonicalName: "Generic Company",
-      copyrightSinceYear: 2019,
+      tagline: t`Everything a small business needs`,
       logoIcon: GenericCompanyLogoIcon,
       logoImageSrc: "/logo.svg",
       logoImageAltText: `Generic Company ${t`logo`}`,
-      tagline: t`Everything a storefront needs`,
+    },
+
+    project {
+      canonicalName: "Storefriend",
+      copyrightSinceYear: 2019,
+      description: t`User-friendly storefront constructor`,
     },
 
     navigation: {

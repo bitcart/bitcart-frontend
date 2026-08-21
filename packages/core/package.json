@@ -7,9 +7,17 @@
   ],
   "type": "module",
   "exports": {
-    "./constants": {
-      "import": "./dist/constants.js",
-      "types": "./dist/constants.d.ts"
+    "./i18n": {
+      "import": "./dist/i18n/index.js",
+      "types": "./dist/i18n/index.d.ts"
+    },
+    "./metadata": {
+      "import": "./dist/metadata/index.js",
+      "types": "./dist/metadata/index.d.ts"
+    },
+    "./navigation": {
+      "import": "./dist/navigation/index.js",
+      "types": "./dist/navigation/index.d.ts"
     },
     "./types": {
       "types": "./dist/types.d.ts"
@@ -18,13 +26,13 @@
       "import": "./dist/utils/index.js",
       "types": "./dist/utils/index.d.ts"
     },
-    "./zod": {
-      "import": "./dist/zod/index.js",
-      "types": "./dist/zod/index.d.ts"
+    "./validation": {
+      "import": "./dist/validation/index.js",
+      "types": "./dist/validation/index.d.ts"
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.lib.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.lib.json",
     "lint:check": "oxlint .",
     "lint": "oxlint . --fix",
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
@@ -33,6 +41,7 @@
     "build": "tsdown"
   },
   "dependencies": {
+    "@lingui/core": "catalog:dependencies",
     "remeda": "catalog:dependencies",
     "zod": "catalog:dependencies"
   },

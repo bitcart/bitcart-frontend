@@ -36,13 +36,26 @@ export const WebsiteNavigationMenu: React.FC<WebsiteNavigationMenuProps> = ({
     currentRoute,
 
     layoutConfig: {
-      navigation: { navBarDisplayCapacity: maxVisibleRowLinks },
+      navigation: { navBarDisplayCapacity },
     },
 
     primaryNavCatalog: { iconLinks, labeledLinks },
   } = useLayoutContext()
 
   const currentBreakpoint = useCurrentBreakpoint()
+
+  const maxVisibleRowLinks = useMemo(
+    () =>
+      navBarDisplayCapacity ?? {
+        md: labeledLinks.length,
+        lg: labeledLinks.length,
+        xl: labeledLinks.length,
+        "2xl": labeledLinks.length,
+        "3xl": labeledLinks.length,
+      },
+
+    [labeledLinks.length, navBarDisplayCapacity],
+  )
 
   const shouldDisplayDropdown = useMemo(() => {
     if (currentBreakpoint === "sm") {

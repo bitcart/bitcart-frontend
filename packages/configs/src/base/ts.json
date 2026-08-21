@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "allowUnreachableCode": false,
     "emitDecoratorMetadata": true,
@@ -13,9 +14,10 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strictNullChecks": true,
+    "strict": true,
     "target": "ES2022",
     "useDefineForClassFields": true,
+    "verbatimModuleSyntax": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false
   }

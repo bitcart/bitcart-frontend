@@ -1,6 +1,5 @@
 import { BitcartLogoIcon } from "@bitcart/ui-kit/icons"
 import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
-import { type StaticLayoutMetadata } from "@bitcart/vike-kit/metadata"
 import { i18n } from "@lingui/core"
 import { t } from "@lingui/core/macro"
 import { GithubLogoIcon } from "@phosphor-icons/react/dist/csr/GithubLogo"
@@ -8,38 +7,26 @@ import { InstagramLogoIcon } from "@phosphor-icons/react/dist/csr/InstagramLogo"
 import { LinkedinLogoIcon } from "@phosphor-icons/react/dist/csr/LinkedinLogo"
 import { RedditLogoIcon } from "@phosphor-icons/react/dist/csr/RedditLogo"
 
-import { SUPPORTED_LOCALE_IDS } from "@/app.config"
+import { APP_LOCALE_IDS } from "@/app.config"
 import { BRAND_UMBRELLA_NAME, PROJECT_CANONICAL_NAME } from "@/common/constants"
-
-export const getLayoutMetadata = (): StaticLayoutMetadata => ({
-  title: t`Bitcart Directory - Apps, Hosts & Merchants Using Bitcart`,
-
-  description: t`Directory of apps, hosting providers, and merchants using Bitcart for cryptocurrency payments`,
-
-  image: {
-    src: "/logo.png",
-    alt: `${BRAND_UMBRELLA_NAME} ${t`logo`}`,
-    width: "600",
-    height: "532",
-  },
-
-  author: "MrNaif2018",
-})
 
 export const getLayoutConfig = defineGetLayoutConfig(() => ({
   i18n: {
     activeLocale: i18n.locale,
-    availableLocales: SUPPORTED_LOCALE_IDS,
+    availableLocales: APP_LOCALE_IDS,
   },
 
   brand: {
     name: BRAND_UMBRELLA_NAME,
-    copyrightSinceYear: 2018,
     logoIcon: BitcartLogoIcon,
     logoImageSrc: "/logo.svg",
-    logoImageAltText: `${BRAND_UMBRELLA_NAME} ${t`logo`}`,
-    projectCanonicalName: PROJECT_CANONICAL_NAME,
-    tagline: t`Discover businesses that accept cryptocurrency payments through Bitcart. Find merchants, restaurants, and services that support crypto transactions.`,
+  },
+
+  project: {
+    canonicalName: PROJECT_CANONICAL_NAME,
+    copyrightSinceYear: 2018,
+
+    description: t`Discover businesses that accept cryptocurrency payments through Bitcart. Find merchants, restaurants, and services that support crypto transactions.`,
   },
 
   navigation: {

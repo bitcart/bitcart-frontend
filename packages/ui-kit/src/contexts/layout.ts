@@ -1,4 +1,4 @@
-import type { InternalHref, ClientRoute } from "@bitcart/core/types"
+import type { InternalHref, ClientRoute } from "@bitcart/core/navigation"
 import { createContext } from "react"
 
 import type {

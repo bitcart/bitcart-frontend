@@ -64,7 +64,7 @@
 <!-- node_modules/@tanstack/react&#45;form -->
 <g id="node2" class="node">
 <title>node_modules/@tanstack/react&#45;form</title>
-<g id="a_node2"><a xlink:href="https://www.npmjs.com/package/@tanstack/react-form" xlink:title="@tanstack+react&#45;form@1.33.0_react&#45;dom@19.2.7_react@19.2.7__react@19.2.7">
+<g id="a_node2"><a xlink:href="https://www.npmjs.com/package/@tanstack/react-form" xlink:title="@tanstack+react&#45;form@1.33.3_@tanstack+react&#45;start@1.168.42_crossws@0.4.10_srvx@0.11.22__b30042d9b8c26490d1d4a45bed07c443">
 <polygon fill="#f9e6e6" stroke="black" points="1057,-70 871,-70 867,-66 867,-16 1053,-16 1057,-20 1057,-70"/>
 <polyline fill="none" stroke="black" points="1053,-66 867,-66 "/>
 <polyline fill="none" stroke="black" points="1053,-66 1053,-16 "/>
@@ -76,7 +76,7 @@
 <!-- node_modules/react -->
 <g id="node3" class="node">
 <title>node_modules/react</title>
-<g id="a_node3"><a xlink:href="https://www.npmjs.com/package/react" xlink:title="react@19.2.7">
+<g id="a_node3"><a xlink:href="https://www.npmjs.com/package/react" xlink:title="react@19.2.8">
 <polygon fill="#f9e6e6" stroke="black" points="783.5,-70 730.5,-70 726.5,-66 726.5,-16 779.5,-16 783.5,-20 783.5,-70"/>
 <polyline fill="none" stroke="black" points="779.5,-66 726.5,-66 "/>
 <polyline fill="none" stroke="black" points="779.5,-66 779.5,-16 "/>

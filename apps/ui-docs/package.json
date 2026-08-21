@@ -14,7 +14,7 @@
     "dev:main": "vite dev --host",
     "build:main": "vite build",
     "start": "serve .output/public --config ../../serve.json",
-    "preview": "vite preview",
+    "preview": "vite preview --host",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {

@@ -1,45 +1,64 @@
+import {
+  type BCP47LanguageSubtag,
+  type LocaleMessages,
+  type PosixLocaleIdMap,
+  type SourceLocaleId,
+} from "@bitcart/core/i18n"
+import {
+  getPageDocumentMetadata,
+  type DocumentMetadata,
+  type StaticDocumentMetadata,
+} from "@bitcart/core/metadata"
 import type { RuntimeEnvTag } from "@bitcart/core/types"
-import { type BCP47LanguageSubtag, type PosixLocaleIdMap } from "@bitcart/core/utils"
 import type { PageContext } from "vike/types"
 
-import { activateLocaleMessages, type LocaleMessages } from "@/i18n"
-import { getLayoutMetadata, type LayoutMetadata, type StaticLayoutMetadata } from "@/metadata"
+import { activateLocaleMessages } from "@/i18n"
 
 export type OnBeforeRenderDeps<TSupportedLocaleId extends BCP47LanguageSubtag> = {
   envTag: RuntimeEnvTag
-  getStaticMetadata: () => StaticLayoutMetadata
-  loadCatalog: (locale: string) => Promise<LocaleMessages>
-  posixLocaleIdMap: PosixLocaleIdMap<TSupportedLocaleId>
+  getStaticDocumentMetadata: () => StaticDocumentMetadata
+  loadLocale: (locale: string) => Promise<LocaleMessages>
+  posixLocaleIdMap: PosixLocaleIdMap<TSupportedLocaleId | SourceLocaleId>
   productionBaseUrl: string
+  supportedLocaleIds: readonly TSupportedLocaleId[]
 }
 
 export const createOnBeforeRender = <TSupportedLocaleId extends BCP47LanguageSubtag>({
   envTag,
-  getStaticMetadata,
-  loadCatalog,
+  getStaticDocumentMetadata,
+  loadLocale,
   posixLocaleIdMap,
   productionBaseUrl,
+  supportedLocaleIds,
 }: OnBeforeRenderDeps<TSupportedLocaleId>) => {
   return async function onBeforeRender(
     pageContext: PageContext,
-  ): Promise<{ pageContext: { metadata: LayoutMetadata; messages: LocaleMessages } }> {
-    const { localeId } = pageContext
-    const messages = await loadCatalog(localeId as TSupportedLocaleId)
+  ): Promise<{ pageContext: { metadata: DocumentMetadata; messages: LocaleMessages } }> {
+    const { headers, localeId } = pageContext
+    const localeMessages = await loadLocale(localeId)
 
-    activateLocaleMessages(localeId as TSupportedLocaleId, messages)
+    activateLocaleMessages(localeId, localeMessages)
 
-    const metadata = getLayoutMetadata({
-      envTag,
-      pageContext,
-      posixLocaleId: posixLocaleIdMap[localeId as TSupportedLocaleId],
-      productionBaseUrl,
-      staticParams: getStaticMetadata(),
+    const baseUrl =
+      typeof headers?.host === "string"
+        ? `${
+            envTag !== "production" ? (headers["x-forwarded-proto"] ?? "http") : "https"
+          }://${headers.host}`
+        : productionBaseUrl
+
+    const metadata = getPageDocumentMetadata({
+      baseUrl,
+      localeId,
+      posixLocaleIdMap,
+      routePath: pageContext.urlOriginal,
+      staticParams: getStaticDocumentMetadata(),
+      supportedLocaleIds,
     })
 
     return {
       pageContext: {
         metadata,
-        messages,
+        messages: localeMessages,
       },
     }
   }

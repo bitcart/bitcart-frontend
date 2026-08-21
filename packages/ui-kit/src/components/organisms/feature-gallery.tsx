@@ -1,4 +1,4 @@
-import type { HttpHref, InternalHref } from "@bitcart/core/types"
+import type { HttpHref, InternalHref } from "@bitcart/core/navigation"
 
 import { Button } from "../atoms/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../atoms/card"

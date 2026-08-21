@@ -1,6 +1,5 @@
-import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
+import type { LocaleId, PseudoLocaleId } from "@bitcart/core/i18n"
 import { useIsClient } from "@bitcart/hooks"
-import { LAYOUT_CONTAINER_TESTID } from "@bitcart/qa"
 import { t } from "@lingui/core/macro"
 
 import { useCurrentBreakpoint, useSoftKeyboardTracker } from "@/hooks"
@@ -8,6 +7,7 @@ import { LayoutContextProvider, ThemeProvider, type LayoutContextProviderProps }
 import { cn } from "@/utils"
 
 import { FloatingActionButton } from "../atoms/floating-action-button"
+import { LayoutContainer } from "../atoms/layout-container"
 import { LinkButton } from "../atoms/link-button"
 import { ThemeToggle, ThemeToggleFallback } from "../molecules/theme-toggle"
 import { Toaster } from "../molecules/toaster"
@@ -52,10 +52,8 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocale
   return (
     <LayoutContextProvider isHydrated={isHydrated} layoutConfig={config} {...props}>
       <ThemeProvider>
-        <div
+        <LayoutContainer
           className={cn("bg-background flex min-h-screen flex-col", classNames?.root)}
-          data-is-hydrated={isHydrated}
-          data-testid={LAYOUT_CONTAINER_TESTID}
         >
           <LinkButton
             id="main-content-link"
@@ -112,7 +110,7 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocale
           </main>
 
           <WebsiteFooter classNames={{ root: "max-md:pb-16" }} />
-        </div>
+        </LayoutContainer>
 
         <Toaster position="top-center" />
       </ThemeProvider>

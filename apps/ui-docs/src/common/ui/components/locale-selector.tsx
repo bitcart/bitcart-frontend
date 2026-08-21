@@ -1,5 +1,4 @@
-import { PSEUDO_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
+import { PSEUDO_LOCALE_ID, type LocaleId, type PseudoLocaleId } from "@bitcart/core/i18n"
 import { LocaleSelector as LocaleSelectorComponent } from "@bitcart/ui-kit/components"
 import { useLingui } from "@lingui/react"
 import { useCallback } from "react"

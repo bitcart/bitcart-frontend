@@ -1,6 +1,5 @@
+import { scrollTo } from "@bitcart/core/navigation"
 import type { PageContextClient } from "vike/types"
-
-import { scrollTo } from "@/navigation"
 
 export const createOnPageTransitionEnd = (): ((pageContext: PageContextClient) => void) => {
   return function onPageTransitionEnd(pageContext: PageContextClient) {

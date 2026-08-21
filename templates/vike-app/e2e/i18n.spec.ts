@@ -1,7 +1,7 @@
 import {
+  createLocaleSelectorVisibilityWithDefaultLocaleTest,
   createLocaleSwitchTest,
   createPseudoLocalizationRenderTest,
-  testLocaleSelectorVisibilityWithDefaultLocale,
 } from "@bitcart/qa/e2e"
 import { test } from "@playwright/test"
 
@@ -10,7 +10,7 @@ import { PAGE_CATALOG } from "./constants"
 test.describe("Vike Example: Internationalization", () => {
   test(
     "locale selector is visible and shows English by default",
-    testLocaleSelectorVisibilityWithDefaultLocale,
+    createLocaleSelectorVisibilityWithDefaultLocaleTest(),
   )
 
   test(

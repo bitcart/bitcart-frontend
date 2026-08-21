@@ -5,6 +5,7 @@ packages:
 
 allowBuilds:
   esbuild: true
+  lightningcss: true
   nx: true
 
 catalogMode: strict
@@ -20,11 +21,16 @@ catalogs:
     "@orama/orama": 3.1.18
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
+    "@tanstack/react-devtools": "0.10.9"
     "@tanstack/react-form": 1.33.3
     "@tanstack/react-query": 5.101.4
-    "@tanstack/react-router": 1.170.15
-    "@tanstack/react-router-devtools": 1.167.0
-    "@tanstack/react-start": 1.168.25
+    "@tanstack/react-query-devtools": "5.101.4"
+    "@tanstack/react-router": "1.170.25"
+    "@tanstack/react-router-devtools": "1.167.1"
+    "@tanstack/react-router-ssr-query": "1.167.1"
+    "@tanstack/react-start": "1.168.42"
+    "@tanstack/react-store": "0.11.1"
+    "@tanstack/store": "0.11.1"
     "@tanstack/start-static-server-functions": 1.167.17
     "@web3icons/react": 4.1.20
     class-variance-authority: 0.7.1
@@ -35,6 +41,7 @@ catalogs:
     inter-ui: 4.1.1
     lucide-react: 1.28.0
     next-themes: 0.4.6
+    qrcode.react: 4.2.0
     react: 19.2.8
     react-dom: 19.2.8
     remeda: 2.39.0
@@ -45,6 +52,7 @@ catalogs:
     vike-react: 0.6.25
     vike-react-query: 0.1.13
     zod: 4.4.3
+    canvas-confetti: 1.9.4
   devDependencies:
     "@effect/language-service": 0.87.1
     "@fumadocs/story": 1.1.1
@@ -57,10 +65,14 @@ catalogs:
     "@rolldown/plugin-babel": 0.2.3
     "@stylistic/eslint-plugin": 5.10.0
     "@tailwindcss/vite": 4.3.3
+    "@tanstack/devtools-event-client": "0.5.0"
+    "@tanstack/devtools-vite": "0.8.3"
+    "@tanstack/router-cli": "^1.132.0"
     "@testing-library/dom": 10.4.1
     "@testing-library/jest-dom": 6.9.1
     "@testing-library/react": 16.3.2
     "@testing-library/user-event": 14.6.1
+    "@types/canvas-confetti": 1.9.0
     "@types/mdx": 2.0.14
     "@types/node": 25.9.5
     "@types/react": 19.2.18
@@ -76,7 +88,7 @@ catalogs:
     nitro: 3.0.260610-beta
     nx: 22.7.8
     oxfmt: 0.62.0
-    oxlint: 1.77.0
+    oxlint: 1.78.0
     oxlint-tsgolint: 7.0.2001
     serve: 14.2.6
     srvx: 0.11.16
@@ -106,20 +118,23 @@ minimumReleaseAgeExclude:
   - oxlint-tsgolint
   - "@base-ui/*"
 
-  # TODO: Remove after Aug 10 2026
-  - nanoid@3.3.17
-
 overrides:
-  #* minimatch@10 and nx pin brace-expansion below 5.0.9, which still carries
-  #* a high-severity ReDoS advisory.
-  # TODO: Remove once minimatch/nx bump their brace-expansion floor to 5.0.9.
-  brace-expansion: ^5.0.9
+  #* nx exact-pins brace-expansion 5.0.8, which still carries a high-severity ReDoS
+  #* advisory. Scoped to nx rather than workspace-wide: minimatch@10's own ranges
+  #* (^5.0.5, ^5.0.8) already resolve to the patched 5.0.9, while a global pin would
+  #* also force v5 into minimatch@3 (via serve-handler), whose ^1.1.7 resolves to the
+  #* patched 1.1.18 and whose `require('brace-expansion')` needs v1's callable export.
+  # TODO: Remove once nx bumps its brace-expansion pin to 5.0.9.
+  "nx>brace-expansion": ^5.0.9
 
-  #* postcss pins nanoid ^3.3.16, below 3.3.17 which patches a high-severity
-  #* advisory where custom generators loop indefinitely on zero size. postcss's
-  #* own range already allows the patched release.
-  # TODO: Remove once postcss raises its nanoid floor to 3.3.17.
-  nanoid: ^3.3.17
+  #* @tanstack/start-static-server-functions exact-pins an older start-client-core
+  #* than the rest of the Start stack resolves, so two copies land in the tree.
+  #* Their middleware typings are identical, but `TSS_SERVER_FUNCTION_FACTORY` is a
+  #* `unique symbol` per copy, making `staticFunctionMiddleware` nominally
+  #* unassignable to `.middleware()`. Runtime is unaffected (`Symbol.for` resolves
+  #* through the global registry) -- this only ever broke typecheck.
+  # TODO: Remove once upstream ships both packages against one start-client-core.
+  "@tanstack/start-static-server-functions>@tanstack/start-client-core": 1.170.21
 
 peerDependencyRules:
   allowedVersions:

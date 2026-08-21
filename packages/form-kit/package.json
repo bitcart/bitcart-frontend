@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.lib.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint:check": "oxlint .",
     "lint": "oxlint . --fix",
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",

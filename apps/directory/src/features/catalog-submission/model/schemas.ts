@@ -1,5 +1,5 @@
 import type { FromSchema } from "@bitcart/core/types"
-import { emptyAsUndefined } from "@bitcart/core/zod"
+import { emptyAsUndefined } from "@bitcart/core/validation"
 import { t } from "@lingui/core/macro"
 import { discriminatedUnion, literal, object, regexes, string, url, enum as zodEnum } from "zod"
 

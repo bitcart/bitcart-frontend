@@ -1,5 +1,5 @@
-import type { A11yAwareLinkProps, HttpHref, InternalHref } from "@bitcart/core/types"
-import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
+import type { LocaleId, PseudoLocaleId } from "@bitcart/core/i18n"
+import type { A11yAwareLinkProps, HttpHref, InternalHref } from "@bitcart/core/navigation"
 import type { BreakpointKey } from "@bitcart/unocss-preset"
 import type { Icon as PhosphorIconComponent } from "@phosphor-icons/react"
 import type { LucideProps } from "lucide-react"
@@ -135,13 +135,18 @@ export type LayoutI18nConfig = {
 
 export type LayoutBrandAttributes = {
   name: string
-  copyrightAppendix?: string
-  copyrightSinceYear?: number
+  tagline?: string
   logoIcon?: IconComponent
   logoImageSrc: string
-  logoImageAltText: string
-  projectCanonicalName: string
-  tagline?: string
+}
+
+export type LayoutProjectAttributes = {
+  canonicalName?: string
+  copyrightAppendix?: string
+  copyrightSinceYear?: number
+  description?: string
+  logoIcon?: IconComponent
+  logoImageSrc?: string
 }
 
 /**
@@ -180,7 +185,7 @@ export type LayoutNavigationConfig = {
    *
    * @example { md: 2, lg: 4, xl: 6, "2xl": 7, "3xl": 8 }
    */
-  navBarDisplayCapacity: Record<Exclude<BreakpointKey, "sm">, number>
+  navBarDisplayCapacity?: Record<Exclude<BreakpointKey, "sm">, number>
 
   /**
    * Navigation directory containing link groups segregated by link type
@@ -200,7 +205,23 @@ export type NavigationGroup = NavigationLinkGroup<NavigationLink>
  */
 export type LayoutConfig = {
   i18n: LayoutI18nConfig
+
+  /**
+   * Brand umbrella attributes.
+   *
+   * Double as the project attributes, if those are not specified, which is useful in applications
+   * that are not focused on one specific project, e.g. brand umbrella landing pages.
+   */
   brand: LayoutBrandAttributes
+
+  /**
+   * Project-specific attributes, if applicable.
+   *
+   * Take precedence over the brand attributes ({@link LayoutConfig.brand})
+   * in all places except for the copyright notice.
+   */
+  project?: LayoutProjectAttributes
+
   navigation: LayoutNavigationConfig
 }
 

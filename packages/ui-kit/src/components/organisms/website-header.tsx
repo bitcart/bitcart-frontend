@@ -1,4 +1,5 @@
 import { useIsClient } from "@bitcart/hooks"
+import { t } from "@lingui/core/macro"
 import { useMemo } from "react"
 
 import { useCssRuntimeFeatureSupport, useLayoutContext, useWindowScrollThreshold } from "@/hooks"
@@ -15,6 +16,7 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, childre
 
     layoutConfig: {
       brand,
+      project,
       navigation: { rootRoutePathname },
     },
   } = useLayoutContext()
@@ -27,31 +29,27 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, childre
     value: "scroll-state",
   })
 
-  const hasCompositeLogo = useMemo(
-    () => brand.projectCanonicalName.startsWith(`${brand.name} `),
-    [brand.name, brand.projectCanonicalName],
-  )
+  const logoLabelText = project?.canonicalName ?? brand.name
+  const logoLabelTextFragments = useMemo(() => logoLabelText.split(" "), [logoLabelText])
 
-  //* Prevents collisions with the nav menu on small screens, for websites under brand umbrellas
+  //* Prevents collisions with the nav menu on small screens.
   const logoLabel = useMemo(
     () =>
-      hasCompositeLogo ? (
+      logoLabelTextFragments.length > 1 ? (
         <>
-          <span
-            className={"text-lg font-bold gap-1 text-2xl max-lg:flex hidden flex-col leading-none"}
-          >
-            {brand.projectCanonicalName.split(" ").map((nameFragment) => (
-              <span key={nameFragment}>{nameFragment}</span>
+          <span className="text-lg font-bold gap-1 max-lg:flex hidden flex-col leading-none">
+            {logoLabelTextFragments.map((textFragment) => (
+              <span key={textFragment}>{textFragment}</span>
             ))}
           </span>
 
-          <span className="text-2xl font-bold max-lg:hidden">{brand.projectCanonicalName}</span>
+          <span className="text-2xl font-bold max-lg:hidden">{logoLabelText}</span>
         </>
       ) : (
-        <span className="text-2xl font-bold">{brand.projectCanonicalName}</span>
+        <span className="text-2xl font-bold">{logoLabelText}</span>
       ),
 
-    [brand.projectCanonicalName, hasCompositeLogo],
+    [logoLabelText, logoLabelTextFragments],
   )
 
   return (
@@ -83,9 +81,14 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, childre
               focus-visible:outline-3
               [#root:has(#main-content-link:focus)_&]:opacity-0
             `)}
+            aria-label={t`Go to homepage`}
           >
             <div className="size-10 flex items-center justify-center">
-              <img alt={brand.logoImageAltText} src={brand.logoImageSrc} className="size-10" />
+              <img
+                alt={t`${project?.canonicalName ?? brand.name} logo`}
+                src={project?.logoImageSrc ?? brand.logoImageSrc}
+                className="size-10"
+              />
             </div>
 
             {logoLabel}

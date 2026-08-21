@@ -10,7 +10,7 @@ export const libDependencyCruiserConfig = {
       severity: "error",
 
       comment:
-        "Emitted dist code references a devDependency. Because deps.skipNodeModulesBundle keeps node_modules imports external, this becomes a broken import for consumers (devDependencies aren't installed in production). Declare it in `dependencies` or `peerDependencies`.",
+        "Emitted dist code references a devDependency. Because deps.neverBundle keeps node_modules imports external, this becomes a broken import for consumers (devDependencies aren't installed in production). Declare it in `dependencies` or `peerDependencies`.",
 
       from: { path: "(^|/)dist/.+\\.(?:js|cjs|mjs)$" },
 

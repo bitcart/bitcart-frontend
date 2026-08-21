@@ -1,13 +1,13 @@
 import { WebsiteLayout } from "@bitcart/ui-kit/components"
 import type { WithChildren } from "@bitcart/ui-kit/types"
-import { useHandleLocaleChange, useI18nSetup } from "@bitcart/vike-kit/i18n"
+import { useHandleLocaleChange, useI18nInitialization } from "@bitcart/vike-kit/i18n"
 import { Link, useClientRoute } from "@bitcart/vike-kit/navigation"
 import { createUseMatomoTracking } from "@bitcart/vike-kit/telemetry"
 import { i18n } from "@lingui/core"
 import { I18nProvider } from "@lingui/react"
 import { useHydrated } from "vike-react/useHydrated"
 
-import { SUPPORTED_LOCALE_IDS } from "@/app.config"
+import { APP_LOCALE_IDS } from "@/app.config"
 import { IS_MATOMO_ENABLED } from "@/common/constants"
 import { env } from "@/env"
 
@@ -26,7 +26,7 @@ const useMatomoTracking = createUseMatomoTracking({
 const PageShell: React.FC<WithChildren> = ({ children }) => {
   const route = useClientRoute()
   const hydrated = useHydrated()
-  const handleLocaleChange = useHandleLocaleChange({ supportedLocaleIds: SUPPORTED_LOCALE_IDS })
+  const handleLocaleChange = useHandleLocaleChange({ supportedLocaleIds: APP_LOCALE_IDS })
 
   return (
     <WebsiteLayout
@@ -42,7 +42,7 @@ const PageShell: React.FC<WithChildren> = ({ children }) => {
 }
 
 const Layout: React.FC<WithChildren> = ({ children }) => {
-  useI18nSetup({ supportedLocaleIds: SUPPORTED_LOCALE_IDS })
+  useI18nInitialization({ supportedLocaleIds: APP_LOCALE_IDS })
   useMatomoTracking()
 
   return (

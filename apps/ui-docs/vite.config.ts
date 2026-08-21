@@ -8,9 +8,15 @@ import mdx from "fumadocs-mdx/vite"
 import { nitro } from "nitro/vite"
 import { defineConfig } from "vite"
 
+const DEV_ENV_PORT = 3100
+
 export default defineConfig({
   server: {
-    port: 3100,
+    port: DEV_ENV_PORT,
+  },
+
+  preview: {
+    port: DEV_ENV_PORT,
   },
 
   plugins: [

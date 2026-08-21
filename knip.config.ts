@@ -7,15 +7,23 @@ const config: KnipConfig = {
 
   ignoreIssues: {
     "**/*.{ts,tsx}": ["exports", "types"],
+
+    // TODO: Remove before Checkout's release!
+    "pnpm-workspace.yaml": ["catalog", "catalogReferences"],
   },
+
+  // TODO: Remove before Checkout's release!
+  ignoreWorkspaces: ["apps/checkout"],
 
   workspaces: {
     ".": {
+      tailwind: false,
       entry: ["scripts/**/*.{js,ts}"],
       project: ["scripts/**/*.{js,ts}"],
       ignoreDependencies: ["@playwright/test", "@stylistic/eslint-plugin", "tailwindcss"],
     },
 
+    "apps/checkout": appKnipConfig,
     "apps/directory": appKnipConfig,
 
     "apps/landing": {
@@ -32,7 +40,6 @@ const config: KnipConfig = {
         //* Imported from content/docs MDX files, which Knip does not parse.
         "src/views/**/examples/*.{ts,tsx}",
 
-        "vite.config.ts",
         "lingui.config.ts",
         "env.config.ts",
         "node-env.ts",
@@ -49,9 +56,9 @@ const config: KnipConfig = {
         //* TanStack Start's server runtime.
         "srvx",
 
-        //! Never imported from source: Base UI's transitive CJS dep, declared directly
-        //! so nitro's server pass can resolve it after the vite SSR pass externalizes
-        //! it (see environments.ssr in vite.config.ts).
+        //* Never imported from source: Base UI's transitive CJS dep, declared directly
+        //* so nitro's server pass can resolve it after the vite SSR pass externalizes
+        //* it (see environments.ssr in vite.config.ts).
         "use-sync-external-store",
       ],
     },

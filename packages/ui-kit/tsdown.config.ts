@@ -14,12 +14,12 @@ export default defineConfig({
   },
 
   clean: !!process.env.BITCART_ENV && process.env.BITCART_ENV !== "development",
-  deps: { skipNodeModulesBundle: true },
+  deps: { neverBundle: true },
   dts: true,
   format: ["esm"],
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
   plugins: [svgr()],
   sourcemap: true,
-  tsconfig: "./tsconfig.lib.json",
+  tsconfig: "./tsconfig.json",
   unbundle: true,
 })

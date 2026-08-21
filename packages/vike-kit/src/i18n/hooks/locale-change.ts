@@ -1,11 +1,9 @@
-import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { LocaleId, PseudoLocaleId } from "@bitcart/core/utils"
+import { SOURCE_LOCALE_ID, type LocaleId, type PseudoLocaleId } from "@bitcart/core/i18n"
+import { useClientLocaleId, type UseClientLocaleIdParams } from "@bitcart/hooks"
 import { useLingui } from "@lingui/react"
 import { useCallback } from "react"
 import { usePageContext } from "vike-react/usePageContext"
 import { navigate } from "vike/client/router"
-
-import { useClientLocaleId, type UseClientLocaleIdParams } from "./client-locale"
 
 export type UseHandleLocaleChangeParams<TSupportedLocaleId extends LocaleId | PseudoLocaleId> =
   UseClientLocaleIdParams<TSupportedLocaleId> & {}

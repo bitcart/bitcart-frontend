@@ -6,7 +6,7 @@ export default defineConfig({
   },
 
   clean: !!process.env.BITCART_ENV && process.env.BITCART_ENV !== "development",
-  deps: { skipNodeModulesBundle: true },
+  deps: { neverBundle: true },
   dts: { oxc: true },
   format: ["esm"],
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),

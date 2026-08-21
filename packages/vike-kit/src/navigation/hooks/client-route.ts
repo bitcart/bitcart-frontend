@@ -1,4 +1,4 @@
-import type { ClientRoute } from "@bitcart/core/types"
+import type { ClientRoute } from "@bitcart/core/navigation"
 import { useMemo, useSyncExternalStore } from "react"
 import { usePageContext } from "vike-react/usePageContext"
 

@@ -1,47 +1,19 @@
-import type { RuntimeEnvTag } from "@bitcart/core/types"
-import { type BCP47LanguageSubtag, type PosixLocaleIdLike } from "@bitcart/core/utils"
-import type { PageContextServer } from "vike/types"
+import type { DocumentHeadManifest } from "@bitcart/core/metadata"
+import { createElement, Fragment, type ReactNode } from "react"
 
-import type { PageContextOriginal } from "../types"
-import type { LayoutMetadata, StaticLayoutMetadata } from "./types"
+export const renderDocumentHeadManifest = ({ links, meta }: DocumentHeadManifest): ReactNode =>
+  createElement(Fragment, null, [
+    ...meta.map((attributes, index) =>
+      createElement("meta", {
+        ...attributes,
+        key: `meta-${attributes.name ?? attributes.property ?? index}`,
+      }),
+    ),
 
-export type LayoutMetadataInputs = {
-  envTag: RuntimeEnvTag
-  pageContext: PageContextOriginal
-  posixLocaleId: PosixLocaleIdLike<BCP47LanguageSubtag>
-  productionBaseUrl: string
-  staticParams: StaticLayoutMetadata
-}
-
-export const getLayoutMetadata = ({
-  envTag,
-  pageContext: { urlOriginal: pageUrl, ...pageContext },
-  posixLocaleId,
-  productionBaseUrl,
-  staticParams,
-}: LayoutMetadataInputs): LayoutMetadata => {
-  const headers =
-    "headers" in (pageContext as PageContextServer)
-      ? (pageContext as PageContextServer).headers
-      : undefined
-
-  const baseUrl =
-    typeof headers?.host === "string"
-      ? `${
-          envTag !== "production" ? (headers["x-forwarded-proto"] ?? "http") : "https"
-        }://${headers.host}`
-      : productionBaseUrl
-
-  return {
-    ...staticParams,
-    baseUrl,
-
-    image: {
-      ...staticParams.image,
-      secureUrl: baseUrl.includes("https://") ? baseUrl + staticParams.image.src : undefined,
-    },
-
-    locale: posixLocaleId,
-    url: baseUrl + (pageUrl.endsWith("/") ? pageUrl.slice(0, -1) : pageUrl),
-  }
-}
+    ...links.map((attributes, index) =>
+      createElement("link", {
+        ...attributes,
+        key: `link-${attributes.rel}-${attributes.hrefLang ?? index}`,
+      }),
+    ),
+  ])

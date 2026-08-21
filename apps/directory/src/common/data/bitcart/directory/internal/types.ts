@@ -1,4 +1,4 @@
-import type { HttpHref } from "@bitcart/core/types"
+import type { HttpHref } from "@bitcart/core/navigation"
 
 export type DirectoryEntryCategoryId = "app" | "host" | "merchant"
 

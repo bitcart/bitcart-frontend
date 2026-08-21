@@ -1,7 +1,7 @@
 import { createEnv } from "@t3-oss/env-core"
 import dotenv from "dotenv"
 
-import { envConfig } from "./env.config"
+import { envConfig } from "./env.config.ts"
 
 dotenv.config({ path: "../../.env", quiet: true })
 

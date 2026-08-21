@@ -23,7 +23,7 @@ import {
 import { LocaleSelector, ThemeSelector } from "@/common/ui/components"
 import { slugsToMarkdownPath } from "@/common/utils"
 import { contentSource } from "@/content"
-import { getBaseLayoutProps } from "@/routes/-layout/layout.config"
+import { getBaseLayoutProps } from "@/routes/-layout/config"
 import { getMDXComponents } from "@/routes/-layout/mdx"
 
 export const Route = createFileRoute("/$")({

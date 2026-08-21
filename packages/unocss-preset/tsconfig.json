@@ -1,4 +1,16 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.lib.json" }, { "path": "./tsconfig.node.json" }]
+  "extends": ["@bitcart/configs/by-package-type/lib-ts"],
+
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "types": ["node"],
+
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+
+  "exclude": ["dist", "node_modules"],
+  "include": ["src", "*.config.ts"]
 }

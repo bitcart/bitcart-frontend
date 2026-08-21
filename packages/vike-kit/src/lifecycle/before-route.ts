@@ -1,6 +1,5 @@
-import { SOURCE_LOCALE_ID } from "@bitcart/core/constants"
-import type { InternalHref } from "@bitcart/core/types"
-import type { LocaleOrPseudoLocaleId } from "@bitcart/core/utils"
+import { SOURCE_LOCALE_ID, type LocaleOrPseudoLocaleId } from "@bitcart/core/i18n"
+import type { InternalHref } from "@bitcart/core/navigation"
 import { modifyUrl } from "vike/modifyUrl"
 import type { PageContext } from "vike/types"
 

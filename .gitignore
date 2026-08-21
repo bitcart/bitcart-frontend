@@ -11,14 +11,17 @@ lerna-debug.log*
 node_modules
 
 ## Build output and temporary files
+**/.cache
 **/dist
 **/dist-ssr
-**/tmp
-**/.tmp
-**/.cache
 **/.nitro
 **/.output
 **/.tanstack
+**/tmp
+**/.tmp
+**/__unconfig*
+.vinxi
+.wrangler
 
 ## Generated files
 **/dist-graphviz.svg
@@ -26,10 +29,11 @@ node_modules
 
 ## Environment
 **/.env
-*.local
+**/*.local
 
 ## Deployment
-.netlify
+**/.nitro
+**/.netlify
 
 ## Tool cache
 .nx/cache

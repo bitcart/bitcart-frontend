@@ -1,5 +1,5 @@
 import { readdirSync } from "node:fs"
-import { relative, sep } from "node:path"
+import { join, relative, sep } from "node:path"
 
 import { expect, type Page } from "@playwright/test"
 
@@ -15,13 +15,15 @@ import {
   type PageCatalog,
 } from "@/common"
 
-export const getLinkHrefSelector = (href: string): string => `a[href="${href}"]`
-
 /**
  * Window flag that distinguishes a client-side (SPA) transition,
  * which keeps the flag, from a full document reload, which wipes it.
  */
 const CLIENT_NAVIGATION_SENTINEL_KEY = "__clientNavigationSentinel"
+
+const ROUTE_FILE_EXTENSION_PATTERN = /\.[jt]sx?$/
+
+export const getLinkHrefSelector = (href: string): string => `a[href="${href}"]`
 
 /**
  * Marks `window` so a later check can distinguish a client-side (SPA)
@@ -50,17 +52,84 @@ export const expectClientSideNavigation = async (page: Page): Promise<void> => {
   expect(wasClientSide, "Expected a client-side navigation, but the page fully reloaded").toBe(true)
 }
 
+const isRouteGroupSegment = (segment: string): boolean =>
+  segment.startsWith("(") && segment.endsWith(")")
+
 /**
- * Scans a pages directory and builds a {@link PageRegistry} from the
- * filesystem, deriving route paths from directory structure and names from
- * the immediate parent directory of each matched page file.
+ * Derives a {@link PageRegistryEntry} from a Vike page file, whose route comes
+ * from the directories above it (the file name itself is always the same).
  *
- * Directories prefixed with `_` are excluded.
+ * Returns `null` for pages under a private directory (e.g. `_error`, `_layout`).
  */
-export const createPageRegistry = ({
-  pagesSrcDir,
-  pageFileName,
-}: PageRegistryParams): PageRegistry => {
+const deriveVikePageEntry = (pageSubdirPath: string): PageRegistryEntry | null => {
+  const segments = pageSubdirPath ? pageSubdirPath.split(sep) : []
+
+  //* Skip private directories (e.g. _error, _layout)
+  if (segments.some((s) => s.startsWith("_"))) return null
+
+  const path = segments.length === 0 || segments[0] === "index" ? "/" : `/${segments.join("/")}`
+
+  return { path, name: segments.at(-1) ?? "/" }
+}
+
+/**
+ * Derives a {@link PageRegistryEntry} from a TanStack Router route file, whose
+ * route comes from the file's own path under the routes directory.
+ *
+ * Returns `null` for files that describe no navigable URL of their own: the root
+ * route, `-` prefixed (excluded) files and directories, `.lazy` companions,
+ * dynamic/splat segments, and bare layout routes.
+ */
+const deriveTanStackRouterPageEntry = (routeFilePath: string): PageRegistryEntry | null => {
+  const rawSegments = routeFilePath
+    .replace(ROUTE_FILE_EXTENSION_PATTERN, "")
+    .split(sep)
+    .flatMap((segment) => segment.split("."))
+
+  const lastRawSegment = rawSegments.at(-1) ?? ""
+
+  //* The root route wraps every match instead of owning a URL, `-` prefixed files and
+  //* directories are kept out of the route tree entirely, and dynamic (`$postId`) or
+  //* splat (`$`) segments have no URL that can be visited as-is
+  const isOutsideRouteTree = rawSegments.some(
+    (s) => s === "__root" || s.startsWith("-") || s.includes("$"),
+  )
+
+  //* `.lazy` companions re-declare a route their critical file already covers, while
+  //* pathless layouts (`_auth`) and route groups (`(marketing)`) only wrap children
+  const isWrapperOnly =
+    lastRawSegment === "lazy" ||
+    lastRawSegment.startsWith("_") ||
+    isRouteGroupSegment(lastRawSegment)
+
+  if (isOutsideRouteTree || isWrapperOnly) return null
+
+  //* `index` and `route` files resolve to the path of their parent, and pathless
+  //* layouts and route groups leave no trace in the URL
+  const segments = rawSegments.filter(
+    (segment, index) =>
+      !(index === rawSegments.length - 1 && (segment === "index" || segment === "route")) &&
+      !segment.startsWith("_") &&
+      !isRouteGroupSegment(segment),
+  )
+
+  const path = segments.length === 0 ? "/" : `/${segments.join("/")}`
+
+  return { path, name: segments.at(-1) ?? lastRawSegment }
+}
+
+/**
+ * Scans a pages directory and builds a {@link PageRegistry} from the filesystem,
+ * deriving each route path the way the app's file-routing convention does.
+ *
+ * With the default `vike` convention, paths come from the directory structure
+ * and directories prefixed with `_` are excluded. With `tanstack-router`, paths
+ * come from the route file's own path and only navigable leaf routes are kept.
+ */
+export const createPageRegistry = (params: PageRegistryParams): PageRegistry => {
+  const { pagesSrcDir, convention = "vike" } = params
+  const pageFileName = params.pageFileName ?? ROUTE_FILE_EXTENSION_PATTERN
+
   const isMatch: (name: string) => boolean =
     typeof pageFileName === "string"
       ? (name) => name === pageFileName
@@ -72,17 +141,15 @@ export const createPageRegistry = ({
     if (!entry.isFile() || !isMatch(entry.name)) continue
 
     const pageSubdirPath = relative(pagesSrcDir, entry.parentPath)
-    const pageSubdirPathSegments = pageSubdirPath ? pageSubdirPath.split(sep) : []
 
-    //* Skip private directories (e.g. _error, _layout)
-    if (pageSubdirPathSegments.some((s) => s.startsWith("_"))) continue
+    const pageEntry =
+      convention === "tanstack-router"
+        ? deriveTanStackRouterPageEntry(join(pageSubdirPath, entry.name))
+        : deriveVikePageEntry(pageSubdirPath)
 
-    const path =
-      pageSubdirPathSegments.length === 0 || pageSubdirPathSegments[0] === "index"
-        ? "/"
-        : `/${pageSubdirPathSegments.join("/")}`
-
-    registry[path] = { path, name: pageSubdirPathSegments.at(-1) ?? "/" }
+    if (pageEntry) {
+      registry[pageEntry.path] = pageEntry
+    }
   }
 
   return registry
