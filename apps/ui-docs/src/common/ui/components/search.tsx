@@ -11,23 +11,14 @@ import {
   type SharedProps,
 } from "@fumadocs/base-ui/components/dialog/search"
 import { useI18n } from "@fumadocs/base-ui/contexts/i18n"
-import { create } from "@orama/orama"
 import { useDocsSearch } from "fumadocs-core/search/client"
-import { oramaStaticClient } from "fumadocs-core/search/client/orama-static"
-
-const initOrama = () =>
-  create({
-    schema: { _: "string" },
-
-    //* https://docs.orama.com/docs/orama-js/supported-languages
-    language: "english",
-  })
+import { staticClient } from "fumadocs-core/search/client/orama-static"
 
 export const SearchDialog = (props: SharedProps) => {
   const { locale } = useI18n()
 
   const { search, setSearch, query } = useDocsSearch({
-    client: oramaStaticClient({ initOrama, locale }),
+    client: staticClient({ locale }),
   })
 
   return (

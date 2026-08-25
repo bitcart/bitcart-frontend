@@ -32,10 +32,12 @@ export default defineConfig({
   plugins: [
     react(),
     lingui(),
+
     babel({
       presets: [linguiTransformerBabelPreset()],
       plugins: [/*"babel-plugin-react-compiler"*/],
     }),
+
     vike(),
 
     vikeSitemap({
@@ -92,6 +94,7 @@ export default defineConfig({
 
   build: {
     sourcemap: true,
+
     rolldownOptions: {
       output: {
         codeSplitting: {

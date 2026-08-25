@@ -23,7 +23,6 @@
     "@fumadocs/base-ui": "catalog:dependencies",
     "@lingui/core": "catalog:dependencies",
     "@lingui/react": "catalog:dependencies",
-    "@orama/orama": "catalog:dependencies",
     "@phosphor-icons/react": "catalog:dependencies",
     "@t3-oss/env-core": "catalog:dependencies",
     "@tanstack/react-router": "catalog:dependencies",

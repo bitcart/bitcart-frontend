@@ -20,7 +20,7 @@ export const useBlockchainCatalog = (params?: UseBlockchainCatalogParams) =>
   useSuspenseQuery({
     queryKey: ["useBlockchainCatalog", params],
 
-    queryFn: ({ queryKey: [_, queryParams] }) =>
+    queryFn: ({ queryKey: [_tag, queryParams] }) =>
       getBlockchainCatalog(typeof queryParams === "object" ? queryParams : undefined),
   })
 
@@ -30,6 +30,6 @@ export const useFungibleTokenCatalog = (params: UseFungibleTokenCatalogParams) =
   useSuspenseQuery({
     queryKey: ["useFungibleTokenCatalog", params],
 
-    queryFn: ({ queryKey: [_, queryParams] }) =>
+    queryFn: ({ queryKey: [_tag, queryParams] }) =>
       getFungibleTokenCatalog(queryParams as UseFungibleTokenCatalogParams),
   })
