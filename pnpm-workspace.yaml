@@ -14,36 +14,36 @@ catalogs:
   dependencies:
     "@base-ui/react": 1.7.0
     "@daypicker/react": 10.0.1
-    "@fumadocs/base-ui": 16.14.4
+    "@fumadocs/base-ui": 16.15.1
     "@lingui/core": 6.6.0
     "@lingui/react": 6.6.0
-    "@mantine/hooks": 9.5.1
+    "@mantine/hooks": 9.5.2
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
-    "@tanstack/react-devtools": "0.10.10"
+    "@tanstack/react-devtools": "0.10.12"
     "@tanstack/react-form": 1.33.5
-    "@tanstack/react-query": 5.101.4
-    "@tanstack/react-query-devtools": "5.101.4"
-    "@tanstack/react-router": "1.170.29"
+    "@tanstack/react-query": 5.102.2
+    "@tanstack/react-query-devtools": "5.102.2"
+    "@tanstack/react-router": "1.170.32"
     "@tanstack/react-router-devtools": "1.167.1"
     "@tanstack/react-router-ssr-query": "1.167.1"
-    "@tanstack/react-start": "1.168.46"
+    "@tanstack/react-start": "1.168.49"
     "@tanstack/react-store": "0.11.1"
     "@tanstack/store": "0.11.1"
-    "@tanstack/start-static-server-functions": 1.167.29
-    "@web3icons/react": 4.1.20
+    "@tanstack/start-static-server-functions": 1.167.32
+    "@web3icons/react": 4.1.21
     class-variance-authority: 0.7.1
     dotenv: 17.4.2
     effect: 3.22.1
-    fumadocs-core: 16.14.4
-    fumadocs-mdx: 15.2.3
+    fumadocs-core: 16.15.1
+    fumadocs-mdx: 15.3.1
     inter-ui: 4.1.1
-    lucide-react: 1.31.0
+    lucide-react: 1.33.0
     next-themes: 0.4.6
     qrcode.react: 4.2.0
     react: 19.2.8
     react-dom: 19.2.8
-    remeda: 2.40.0
+    remeda: 2.43.0
     sonner: 2.0.8
     tailwind-merge: 3.6.0
     use-sync-external-store: 1.6.0
@@ -65,19 +65,19 @@ catalogs:
     "@stylistic/eslint-plugin": 5.10.0
     "@tailwindcss/vite": 4.3.3
     "@tanstack/devtools-event-client": "0.5.0"
-    "@tanstack/devtools-vite": "0.8.3"
+    "@tanstack/devtools-vite": "0.8.5"
     "@tanstack/router-cli": "^1.132.0"
     "@testing-library/dom": 10.4.1
     "@testing-library/jest-dom": 6.9.1
     "@testing-library/react": 16.3.2
-    "@testing-library/user-event": 14.6.4
+    "@testing-library/user-event": 14.6.6
     "@types/canvas-confetti": 1.9.0
     "@types/mdx": 2.0.14
     "@types/node": 25.9.5
     "@types/react": 19.2.18
-    "@types/react-dom": 19.2.4
-    "@unocss/cli": 66.7.5
-    "@vitejs/plugin-react": 6.0.5
+    "@types/react-dom": 19.2.5
+    "@unocss/cli": 66.8.1
+    "@vitejs/plugin-react": 6.1.0
     babel-plugin-react-compiler: 1.0.0
     dependency-cruiser: 18.2.0
     eslint-plugin-better-tailwindcss: 4.7.0
@@ -86,22 +86,22 @@ catalogs:
     knip: 6.32.2
     nitro: 3.0.260610-beta
     nx: 22.7.8
-    oxfmt: 0.64.0
-    oxlint: 1.79.0
+    oxfmt: 0.65.0
+    oxlint: 1.80.0
     oxlint-tsgolint: 7.0.2001
     serve: 14.2.6
-    srvx: 0.12.5
+    srvx: 0.12.7
     tailwindcss: 4.3.3
     tsdown: 0.22.14
     tsx: 4.23.12
     typescript: 6.0.3
-    unocss: 66.7.5
+    unocss: 66.8.1
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
-    vite: 8.2.1
+    vite: 8.2.2
     vite-plugin-static-copy: 4.1.1
     vite-plugin-svgr: 5.2.0
-    vitest: 4.1.10
+    vitest: 4.1.11
 
 linkWorkspacePackages: true
 
