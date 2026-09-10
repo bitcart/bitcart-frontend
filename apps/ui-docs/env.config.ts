@@ -1,4 +1,4 @@
-import { runtimeEnvTagSchema } from "@bitcart/core/validation"
+import { runtimeEnvTagSchema } from "@bitcart/core/env"
 
 export const envConfig = {
   clientEnvSchemas: {},

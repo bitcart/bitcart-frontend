@@ -2,7 +2,7 @@ import { entries, isDefined } from "remeda"
 
 import { definedEntries } from "@/common/utils"
 
-import type { TwitterHandle } from "../common/types"
+import type { AccountHandle } from "../common/types"
 import {
   getPosixLocaleId,
   SOURCE_LOCALE_ID,
@@ -77,7 +77,7 @@ export type DocumentHeadManifestParams<TSupportedLocaleId extends BCP47LanguageS
   ogSiteName: string
   posixLocaleIdMap: PosixLocaleIdMap<TSupportedLocaleId | SourceLocaleId>
   routePath: string
-  twitterHandles?: { author?: TwitterHandle; site?: TwitterHandle }
+  twitterHandles?: { author?: AccountHandle; site?: AccountHandle }
   viewportParams?: DocumentViewportParams
 }
 

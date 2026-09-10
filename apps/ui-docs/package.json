@@ -4,7 +4,7 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
-    "generate:graphviz": "depcruise src --output-type dot | dot -T svg -o graphviz.svg",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
     "i18n:extract-locales": "lingui extract --clean",
     "typecheck": "fumadocs-mdx && tsc --noEmit -p tsconfig.json",
     "lint:check": "oxlint .",
@@ -32,6 +32,7 @@
     "dotenv": "catalog:dependencies",
     "fumadocs-core": "catalog:dependencies",
     "fumadocs-mdx": "catalog:dependencies",
+    "fumadocs-ui": "catalog:dependencies",
     "inter-ui": "catalog:dependencies",
     "lucide-react": "catalog:dependencies",
     "react": "catalog:dependencies",

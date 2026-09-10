@@ -17,7 +17,7 @@
     "lint:check": "oxlint .",
     "lint": "oxlint . --fix",
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
-    "depcruise:deps": "depcruise dist --output-type err",
+    "depcruise:deps": "depcruise dist --output-type err-long",
     "build": "tsdown"
   },
   "dependencies": {
@@ -28,15 +28,23 @@
     "remeda": "catalog:dependencies"
   },
   "devDependencies": {
+    "@bitcart/api-sdk": "workspace:^",
     "@bitcart/configs": "workspace:*",
+    "@lingui/babel-plugin-lingui-macro": "catalog:devDependencies",
+    "@lingui/conf": "catalog:devDependencies",
+    "@rolldown/plugin-babel": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@testing-library/dom": "catalog:devDependencies",
+    "@testing-library/react": "catalog:devDependencies",
     "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
+    "jsdom": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies"
+    "typescript": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies"
   }
 }

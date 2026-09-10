@@ -1,4 +1,4 @@
-import type { TwitterHandle } from "@bitcart/core/types"
+import type { AccountHandle } from "@bitcart/core/types"
 
 import { env } from "#/env"
 
@@ -10,4 +10,4 @@ export const {
   PROJECT_CANONICAL_NAME,
 } = env
 
-export const BRAND_X_HANDLE: TwitterHandle = "@BitcartCC"
+export const BRAND_X_HANDLE: AccountHandle = "@BitcartCC"

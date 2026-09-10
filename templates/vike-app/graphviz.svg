@@ -118,8 +118,8 @@
 <!-- node_modules/@lingui/core&#45;&gt;node_modules/@lingui/babel&#45;plugin&#45;lingui&#45;macro -->
 <g id="edge3" class="edge">
 <title>node_modules/@lingui/core&#45;&gt;node_modules/@lingui/babel&#45;plugin&#45;lingui&#45;macro</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1039.17,-301C1039.17,-301 1217.69,-301 1217.69,-301"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1237.69,-301 1217.69,-310 1227.69,-301.5 1217.69,-301.5 1217.69,-301 1217.69,-300.5 1227.69,-300.5 1217.69,-292 1237.69,-301 1237.69,-301"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1039.03,-312.41C1085.79,-307.87 1154.19,-301.23 1217.71,-295.06"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1237.67,-293.12 1218.64,-304.01 1227.77,-294.58 1217.82,-295.55 1217.77,-295.05 1217.72,-294.55 1227.67,-293.59 1216.9,-286.09 1237.67,-293.12 1237.67,-293.12"/>
 </g>
 <!-- node_modules/babel&#45;plugin&#45;macros -->
 <g id="node9" class="node">
@@ -133,8 +133,8 @@
 <!-- node_modules/@lingui/core&#45;&gt;node_modules/babel&#45;plugin&#45;macros -->
 <g id="edge4" class="edge">
 <title>node_modules/@lingui/core&#45;&gt;node_modules/babel&#45;plugin&#45;macros</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1039.27,-296C1079.28,-296 1125,-296 1125,-296 1125,-296 1125,-181.5 1125,-181.5 1125,-181.5 1272.32,-181.5 1272.32,-181.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1292.32,-181.5 1272.32,-190.5 1282.32,-182 1272.32,-182 1272.32,-181.5 1272.32,-181 1282.32,-181 1272.32,-172.5 1292.32,-181.5 1292.32,-181.5"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1039.12,-308.01C1093.25,-298.62 1166,-286 1166,-286 1166,-286 1238,-247 1238,-247 1238,-247 1274.19,-229.03 1310.41,-211.05"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1328.59,-202.01 1314.68,-218.97 1319.86,-206.91 1310.9,-211.36 1310.68,-210.91 1310.46,-210.46 1319.42,-206.01 1306.68,-202.85 1328.59,-202.01 1328.59,-202.01"/>
 </g>
 <!-- node_modules/@lingui/react -->
 <g id="node7" class="node">
@@ -148,14 +148,14 @@
 <!-- node_modules/@lingui/react&#45;&gt;node_modules/@lingui/babel&#45;plugin&#45;lingui&#45;macro -->
 <g id="edge5" class="edge">
 <title>node_modules/@lingui/react&#45;&gt;node_modules/@lingui/babel&#45;plugin&#45;lingui&#45;macro</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M675,-150.2C675,-196.46 675,-285.5 675,-285.5 675,-285.5 1217.95,-285.5 1217.95,-285.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1237.95,-285.5 1217.95,-294.5 1227.95,-286 1217.95,-286 1217.95,-285.5 1217.95,-285 1227.95,-285 1217.95,-276.5 1237.95,-285.5 1237.95,-285.5"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M684.45,-111.63C733.74,-102.43 795,-91 795,-91 795,-91 1166,-91 1166,-91 1166,-91 1238,-208 1238,-208 1238,-208 1273.71,-225.48 1309.68,-243.1"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1327.77,-251.96 1305.85,-251.24 1318.57,-248.01 1309.59,-243.61 1309.81,-243.16 1310.03,-242.71 1319.01,-247.11 1313.76,-235.08 1327.77,-251.96 1327.77,-251.96"/>
 </g>
 <!-- node_modules/@lingui/react&#45;&gt;node_modules/babel&#45;plugin&#45;macros -->
 <g id="edge6" class="edge">
 <title>node_modules/@lingui/react&#45;&gt;node_modules/babel&#45;plugin&#45;macros</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M680,-150.13C680,-153.34 680,-155.5 680,-155.5 680,-155.5 1272.33,-155.5 1272.33,-155.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1292.33,-155.5 1272.33,-164.5 1282.33,-156 1272.33,-156 1272.33,-155.5 1272.33,-155 1282.33,-155 1272.33,-146.5 1292.33,-155.5 1292.33,-155.5"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M684.45,-108.07C733.74,-96 795,-81 795,-81 795,-81 1166,-81 1166,-81 1166,-81 1240.26,-113.17 1301.9,-139.87"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1320.53,-147.94 1298.6,-148.25 1311.15,-144.42 1301.97,-140.45 1302.17,-139.99 1302.37,-139.53 1311.55,-143.5 1305.75,-131.73 1320.53,-147.94 1320.53,-147.94"/>
 </g>
 <!-- node_modules/@t3&#45;oss/env&#45;core -->
 <g id="node8" class="node">
@@ -187,8 +187,8 @@
 <!-- env.config.ts&#45;&gt;@bitcart/core -->
 <g id="edge1" class="edge">
 <title>env.config.ts&#45;&gt;@bitcart/core</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1730,-441.01C1730,-614.42 1730,-1564 1730,-1564 1730,-1564 1809.76,-1564 1809.76,-1564"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1829.76,-1564 1809.76,-1573 1819.76,-1564.5 1809.76,-1564.5 1809.76,-1564 1809.76,-1563.5 1819.76,-1563.5 1809.76,-1555 1829.76,-1564 1829.76,-1564"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1685.11,-441.22C1707.98,-592.66 1819.53,-1331.43 1848.9,-1525.98"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1851.92,-1545.98 1840.03,-1527.55 1849.93,-1536.16 1848.44,-1526.28 1848.93,-1526.2 1849.43,-1526.13 1850.92,-1536.02 1857.83,-1524.86 1851.92,-1545.98 1851.92,-1545.98"/>
 </g>
 <!-- node_modules/zod -->
 <g id="node12" class="node">
@@ -205,8 +205,8 @@
 <!-- env.config.ts&#45;&gt;node_modules/zod -->
 <g id="edge2" class="edge">
 <title>env.config.ts&#45;&gt;node_modules/zod</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M1739.62,-414C1794.02,-414 1866,-414 1866,-414 1866,-414 1866,-365.25 1866,-365.25"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="1866,-345.25 1875,-365.25 1866,-355.25 1866,-365.25 1866,-365.25 1866,-365.25 1866,-355.25 1857,-365.25 1866,-345.25 1866,-345.25"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M1739.75,-388.82C1750.29,-384.3 1758,-381 1758,-381 1758,-381 1786.64,-362.59 1812.95,-345.68"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="1830,-334.72 1818.04,-353.1 1821.58,-340.13 1813.17,-345.53 1813.17,-345.53 1813.17,-345.53 1821.58,-340.13 1808.3,-337.96 1830,-334.72 1830,-334.72"/>
 </g>
 <!-- node_modules/@brillout/json&#45;serializer -->
 <g id="node13" class="node">
@@ -247,13 +247,13 @@
 <!-- node_modules/@phosphor&#45;icons/react&#45;&gt;node_modules/react -->
 <g id="edge7" class="edge">
 <title>node_modules/@phosphor&#45;icons/react&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M710,-290.98C710,-276.66 710,-262 710,-262 710,-262 931.81,-262 931.81,-262"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="951.81,-262 931.81,-271 941.81,-262 931.81,-262 931.81,-262 931.81,-262 941.81,-262 931.81,-253 951.81,-262 951.81,-262"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M723.26,-299.39C760.99,-292.35 795,-286 795,-286 795,-286 877.52,-271.24 932.18,-261.46"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="951.88,-257.94 933.78,-270.32 942.03,-259.7 932.19,-261.46 932.19,-261.46 932.19,-261.46 942.03,-259.7 930.61,-252.6 951.88,-257.94 951.88,-257.94"/>
 </g>
 <!-- node_modules/vike -->
 <g id="node16" class="node">
 <title>node_modules/vike</title>
-<g id="a_node16"><a xlink:href="https://www.npmjs.com/package/vike" xlink:title="vike@0.4.260_react&#45;streaming@0.4.20_react&#45;dom@19.2.8_react@19.2.8__react@19.2.8__srvx@0_37ef5ca806f92ebcb073eac16ce7f99b">
+<g id="a_node16"><a xlink:href="https://www.npmjs.com/package/vike" xlink:title="vike@0.4.263_react&#45;streaming@0.4.20_react&#45;dom@19.2.8_react@19.2.8__react@19.2.8__srvx@0_6fe300a9f2373c981fb88eb129c4dde9">
 <polygon fill="#f9e6e6" stroke="black" points="649.5,-280 599.5,-280 595.5,-276 595.5,-226 645.5,-226 649.5,-230 649.5,-280"/>
 <polyline fill="none" stroke="black" points="645.5,-276 595.5,-276 "/>
 <polyline fill="none" stroke="black" points="645.5,-276 645.5,-226 "/>
@@ -265,14 +265,14 @@
 <!-- node_modules/vike&#45;&gt;node_modules/@brillout/picocolors -->
 <g id="edge8" class="edge">
 <title>node_modules/vike&#45;&gt;node_modules/@brillout/picocolors</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M649.82,-235C671.08,-235 697,-235 697,-235 697,-235 697,-123 697,-123 697,-123 872.35,-123 872.35,-123"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="892.35,-123 872.35,-132 882.35,-123.5 872.35,-123.5 872.35,-123 872.35,-122.5 882.35,-122.5 872.35,-114 892.35,-123 892.35,-123"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M649.64,-244.59C679.12,-235.11 723,-221 723,-221 723,-221 795,-156 795,-156 795,-156 831.81,-149.42 872.54,-142.13"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="892.38,-138.58 874.28,-150.96 882.63,-140.83 872.78,-142.6 872.7,-142.1 872.61,-141.61 882.45,-139.85 871.11,-133.24 892.38,-138.58 892.38,-138.58"/>
 </g>
 <!-- node_modules/vike&#45;&gt;node_modules/@brillout/json&#45;serializer -->
 <g id="edge10" class="edge">
 <title>node_modules/vike&#45;&gt;node_modules/@brillout/json&#45;serializer</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M649.61,-253C719.44,-253 900,-253 900,-253 900,-253 900,-235.19 900,-235.19"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="900,-215.19 909,-235.19 900,-225.19 900,-235.19 900,-235.19 900,-235.19 900,-225.19 891,-235.19 900,-215.19 900,-215.19"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M649.55,-248.14C697.52,-239.19 795,-221 795,-221 795,-221 823,-215.99 857.19,-209.88"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="877.27,-206.29 859.16,-218.67 867.42,-208.05 857.58,-209.81 857.58,-209.81 857.58,-209.81 867.42,-208.05 856,-200.95 877.27,-206.29 877.27,-206.29"/>
 </g>
 <!-- virtual:vike:global&#45;entry:client:client&#45;routing -->
 <g id="node17" class="node">
@@ -286,8 +286,8 @@
 <!-- node_modules/vike&#45;&gt;virtual:vike:global&#45;entry:client:client&#45;routing -->
 <g id="edge9" class="edge">
 <title>node_modules/vike&#45;&gt;virtual:vike:global&#45;entry:client:client&#45;routing</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M649.67,-244C707.39,-244 837,-244 837,-244 837,-244 837,-74.04 837,-74.04"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="837,-54.04 846,-74.04 837.5,-64.04 837.5,-74.04 837,-74.04 836.5,-74.04 836.5,-64.04 828,-74.04 837,-54.04 837,-54.04"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M649.64,-244.59C679.12,-235.11 723,-221 723,-221 723,-221 795,-60 795,-60 795,-60 800.05,-59.1 808.48,-57.59"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="828.41,-54.02 810.31,-66.4 818.66,-56.28 808.81,-58.04 808.72,-57.55 808.64,-57.05 818.48,-55.29 807.14,-48.69 828.41,-54.02 828.41,-54.02"/>
 </g>
 <!-- src/app.config.ts -->
 <g id="node18" class="node">
@@ -301,20 +301,20 @@
 <!-- src/app.config.ts&#45;&gt;@bitcart/core -->
 <g id="edge14" class="edge">
 <title>src/app.config.ts&#45;&gt;@bitcart/core</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M672,-1470.13C672,-1510.58 672,-1582 672,-1582 672,-1582 1809.74,-1582 1809.74,-1582"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1829.74,-1582 1809.74,-1591 1819.74,-1582.5 1809.74,-1582.5 1809.74,-1582 1809.74,-1581.5 1819.74,-1581.5 1809.74,-1573 1829.74,-1582 1829.74,-1582"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M683.54,-1449.64C838.16,-1466.75 1238,-1511 1238,-1511 1238,-1511 1666.15,-1553.95 1809.71,-1568.36"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1829.84,-1570.38 1809.04,-1577.33 1819.84,-1569.87 1809.89,-1568.88 1809.94,-1568.38 1809.99,-1567.88 1819.94,-1568.88 1810.84,-1559.42 1829.84,-1570.38 1829.84,-1570.38"/>
 </g>
 <!-- src/app.config.ts&#45;&gt;node_modules/@lingui/core -->
 <g id="edge15" class="edge">
 <title>src/app.config.ts&#45;&gt;node_modules/@lingui/core</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M683.64,-1443C728.99,-1443 783,-1443 783,-1443 783,-1443 783,-334.2 783,-334.2 783,-334.2 901.78,-334.2 901.78,-334.2"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="921.78,-334.2 901.78,-343.2 911.78,-334.2 901.78,-334.2 901.78,-334.2 901.78,-334.2 911.78,-334.2 901.78,-325.2 921.78,-334.2 921.78,-334.2"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M627.87,-1415.98C654.6,-1250.57 795,-382 795,-382 795,-382 852.2,-362.16 902.9,-344.57"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="921.88,-337.99 905.94,-353.04 912.43,-341.26 902.99,-344.54 902.99,-344.54 902.99,-344.54 912.43,-341.26 900.04,-336.04 921.88,-337.99 921.88,-337.99"/>
 </g>
 <!-- src/app.config.ts&#45;&gt;constants.ts -->
 <g id="edge11" class="edge">
 <title>src/app.config.ts&#45;&gt;constants.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M668,-1415.74C668,-1252.74 668,-414 668,-414 668,-414 903.18,-414 903.18,-414"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="923.18,-414 903.18,-423 913.18,-414.5 903.18,-414.5 903.18,-414 903.18,-413.5 913.18,-413.5 903.18,-405 923.18,-414 923.18,-414"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M628.18,-1415.84C655.66,-1256.21 795,-447 795,-447 795,-447 852.76,-436.67 903.64,-427.57"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="923.39,-424.04 905.29,-436.42 913.64,-426.29 903.79,-428.05 903.7,-427.56 903.62,-427.06 913.46,-425.3 902.12,-418.7 923.39,-424.04 923.39,-424.04"/>
 </g>
 <!-- src/env.ts -->
 <g id="node19" class="node">
@@ -328,8 +328,8 @@
 <!-- src/app.config.ts&#45;&gt;src/env.ts -->
 <g id="edge12" class="edge">
 <title>src/app.config.ts&#45;&gt;src/env.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M673,-1415.85C673,-1309.17 673,-924.5 673,-924.5 673,-924.5 1331.13,-924.5 1331.13,-924.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1351.13,-924.5 1331.13,-933.5 1341.13,-925 1331.13,-925 1331.13,-924.5 1331.13,-924 1341.13,-924 1331.13,-915.5 1351.13,-924.5 1351.13,-924.5"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M653.37,-1415.83C702.51,-1371.13 795,-1287 795,-1287 795,-1287 1193.55,-1026.72 1334.4,-934.74"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1351.39,-923.65 1339.56,-942.12 1343.29,-929.53 1334.91,-935 1334.64,-934.58 1334.37,-934.16 1342.74,-928.69 1329.72,-927.05 1351.39,-923.65 1351.39,-923.65"/>
 </g>
 <!-- src/common/constants.ts -->
 <g id="node20" class="node">
@@ -343,26 +343,26 @@
 <!-- src/app.config.ts&#45;&gt;src/common/constants.ts -->
 <g id="edge13" class="edge">
 <title>src/app.config.ts&#45;&gt;src/common/constants.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M679,-1415.87C679,-1384.03 679,-1335.5 679,-1335.5 679,-1335.5 903.44,-1335.5 903.44,-1335.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="923.44,-1335.5 903.44,-1344.5 913.44,-1336 903.44,-1336 903.44,-1335.5 903.44,-1335 913.44,-1335 903.44,-1326.5 923.44,-1335.5 923.44,-1335.5"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M683.67,-1423.04C704.63,-1416.09 723,-1410 723,-1410 723,-1410 828.53,-1374.62 904.21,-1349.24"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="923.21,-1342.87 907.11,-1357.76 913.89,-1346.53 904.41,-1349.71 904.25,-1349.23 904.09,-1348.76 913.57,-1345.58 901.39,-1340.7 923.21,-1342.87 923.21,-1342.87"/>
 </g>
 <!-- src/env.ts&#45;&gt;node_modules/@t3&#45;oss/env&#45;core -->
 <g id="edge19" class="edge">
 <title>src/env.ts&#45;&gt;node_modules/@t3&#45;oss/env&#45;core</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1416.67,-894C1479.71,-894 1612,-894 1612,-894 1612,-894 1612,-365.01 1612,-365.01"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1612,-345.01 1621,-365.01 1612.5,-355.01 1612.5,-365.01 1612,-365.01 1611.5,-365.01 1611.5,-355.01 1603,-365.01 1612,-345.01 1612,-345.01"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1396.36,-875.72C1441.01,-768.52 1602,-382 1602,-382 1602,-382 1615.14,-371.08 1630.56,-358.26"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1646.35,-345.14 1636.72,-364.85 1638.97,-351.92 1631.28,-358.31 1630.96,-357.93 1630.64,-357.54 1638.34,-351.15 1625.21,-351 1646.35,-345.14 1646.35,-345.14"/>
 </g>
 <!-- src/env.ts&#45;&gt;env.config.ts -->
 <g id="edge18" class="edge">
 <title>src/env.ts&#45;&gt;env.config.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1416.67,-912C1483.58,-912 1630,-912 1630,-912 1630,-912 1630,-461.13 1630,-461.13"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1630,-441.13 1639,-461.13 1630.5,-451.13 1630.5,-461.13 1630,-461.13 1629.5,-461.13 1629.5,-451.13 1621,-461.13 1630,-441.13 1630,-441.13"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1401.44,-875.66C1449.89,-795.07 1592.49,-557.89 1652.21,-458.55"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1662.68,-441.15 1660.09,-462.92 1657.95,-449.97 1652.8,-458.54 1652.37,-458.29 1651.95,-458.03 1657.1,-449.46 1644.66,-453.65 1662.68,-441.15 1662.68,-441.15"/>
 </g>
 <!-- src/common/constants.ts&#45;&gt;src/env.ts -->
 <g id="edge16" class="edge">
 <title>src/common/constants.ts&#45;&gt;src/env.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1037.88,-1301C1149.28,-1301 1384,-1301 1384,-1301 1384,-1301 1384,-950.04 1384,-950.04"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1384,-930.04 1393,-950.04 1384.5,-940.04 1384.5,-950.04 1384,-950.04 1383.5,-950.04 1383.5,-940.04 1375,-950.04 1384,-930.04 1384,-930.04"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1037.61,-1314.57C1091.89,-1305.45 1166,-1293 1166,-1293 1166,-1293 1301.05,-1050.28 1358.07,-947.8"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1367.91,-930.11 1366.05,-951.97 1363.49,-939.1 1358.63,-947.83 1358.19,-947.59 1357.75,-947.35 1362.61,-938.61 1350.32,-943.22 1367.91,-930.11 1367.91,-930.11"/>
 </g>
 <!-- src/common/i18n/index.ts -->
 <g id="node21" class="node">
@@ -376,8 +376,8 @@
 <!-- src/common/i18n/index.ts&#45;&gt;@bitcart/core -->
 <g id="edge17" class="edge">
 <title>src/common/i18n/index.ts&#45;&gt;@bitcart/core</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1720.67,-1332C1770.39,-1332 1848,-1332 1848,-1332 1848,-1332 1848,-1525.82 1848,-1525.82"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1848,-1545.82 1839,-1525.82 1847.5,-1535.82 1847.5,-1525.82 1848,-1525.82 1848.5,-1525.82 1848.5,-1535.82 1857,-1525.82 1848,-1545.82 1848,-1545.82"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1720.85,-1348.04C1739.64,-1355.61 1758,-1363 1758,-1363 1758,-1363 1805.97,-1465.8 1834.79,-1527.55"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1843.39,-1545.98 1826.78,-1531.66 1838.71,-1537.13 1834.48,-1528.06 1834.93,-1527.85 1835.38,-1527.64 1839.61,-1536.7 1843.09,-1524.05 1843.39,-1545.98 1843.39,-1545.98"/>
 </g>
 <!-- src/pages/+Head.tsx -->
 <g id="node22" class="node">
@@ -391,20 +391,20 @@
 <!-- src/pages/+Head.tsx&#45;&gt;@bitcart/vike&#45;kit -->
 <g id="edge22" class="edge">
 <title>src/pages/+Head.tsx&#45;&gt;@bitcart/vike&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M381.42,-908.25C426.77,-908.25 486,-908.25 486,-908.25 486,-908.25 486,-1638 486,-1638 486,-1638 564.84,-1638 564.84,-1638"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.84,-1638 564.84,-1647 574.84,-1638.5 564.84,-1638.5 564.84,-1638 564.84,-1637.5 574.84,-1637.5 564.84,-1629 584.84,-1638 584.84,-1638"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M381.07,-905.8C413.54,-914.85 450,-925 450,-925 450,-925 514,-1606 514,-1606 514,-1606 539.43,-1613.57 565.56,-1621.35"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.81,-1627.08 563.07,-1630 575.08,-1624.7 565.49,-1621.85 565.64,-1621.37 565.78,-1620.89 575.36,-1623.74 568.2,-1612.74 584.81,-1627.08 584.81,-1627.08"/>
 </g>
 <!-- src/pages/+Head.tsx&#45;&gt;src/app.config.ts -->
 <g id="edge20" class="edge">
 <title>src/pages/+Head.tsx&#45;&gt;src/app.config.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M381.16,-897.5C452.78,-897.5 575,-897.5 575,-897.5 575,-897.5 575,-1395.95 575,-1395.95"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="575,-1415.95 566,-1395.95 574.5,-1405.95 574.5,-1395.95 575,-1395.95 575.5,-1395.95 575.5,-1405.95 584,-1395.95 575,-1415.95 575,-1415.95"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M381.07,-905.8C413.54,-914.85 450,-925 450,-925 450,-925 514,-1410 514,-1410 514,-1410 526.06,-1413.7 542.1,-1418.62"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="561.46,-1424.57 539.7,-1427.3 551.76,-1422.11 542.2,-1419.18 542.34,-1418.7 542.49,-1418.22 552.05,-1421.16 544.99,-1410.1 561.46,-1424.57 561.46,-1424.57"/>
 </g>
 <!-- src/pages/+Head.tsx&#45;&gt;src/common/constants.ts -->
 <g id="edge21" class="edge">
 <title>src/pages/+Head.tsx&#45;&gt;src/common/constants.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M381.11,-886.75C530.96,-886.75 962,-886.75 962,-886.75 962,-886.75 962,-1276.98 962,-1276.98"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="962,-1296.98 953,-1276.98 961.5,-1286.98 961.5,-1276.98 962,-1276.98 962.5,-1276.98 962.5,-1286.98 971,-1276.98 962,-1296.98 962,-1296.98"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M381.07,-905.8C413.54,-914.85 450,-925 450,-925 450,-925 793.57,-1183.89 927.2,-1284.59"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="943.52,-1296.89 922.13,-1292.04 935.23,-1291.27 927.25,-1285.25 927.55,-1284.85 927.85,-1284.45 935.84,-1290.47 932.97,-1277.66 943.52,-1296.89 943.52,-1296.89"/>
 </g>
 <!-- src/pages/+Layout.tsx -->
 <g id="node23" class="node">
@@ -418,38 +418,38 @@
 <!-- src/pages/+Layout.tsx&#45;&gt;@bitcart/ui&#45;kit -->
 <g id="edge26" class="edge">
 <title>src/pages/+Layout.tsx&#45;&gt;@bitcart/ui&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70,-854.13C70,-989.9 70,-1589.2 70,-1589.2 70,-1589.2 573.96,-1589.2 573.96,-1589.2"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="593.96,-1589.2 573.96,-1598.2 583.96,-1589.7 573.96,-1589.7 573.96,-1589.2 573.96,-1588.7 583.96,-1588.7 573.96,-1580.2 593.96,-1589.2 593.96,-1589.2"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M87.3,-854.31C111.57,-979.44 211,-1492 211,-1492 211,-1492 466.13,-1542.34 574.12,-1563.65"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="593.93,-1567.56 572.56,-1572.52 584.02,-1566.11 574.21,-1564.18 574.31,-1563.69 574.4,-1563.2 584.21,-1565.13 576.05,-1554.86 593.93,-1567.56 593.93,-1567.56"/>
 </g>
 <!-- src/pages/+Layout.tsx&#45;&gt;@bitcart/vike&#45;kit -->
 <g id="edge27" class="edge">
 <title>src/pages/+Layout.tsx&#45;&gt;@bitcart/vike&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M47,-854.23C47,-997.72 47,-1659.6 47,-1659.6 47,-1659.6 564.74,-1659.6 564.74,-1659.6"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.74,-1659.6 564.74,-1668.6 574.74,-1660.1 564.74,-1660.1 564.74,-1659.6 564.74,-1659.1 574.74,-1659.1 564.74,-1650.6 584.74,-1659.6 584.74,-1659.6"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M87.06,-854.24C110.91,-982.74 211,-1522 211,-1522 211,-1522 452.9,-1590.36 565.31,-1622.12"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.71,-1627.6 563.02,-1630.83 574.95,-1625.37 565.33,-1622.65 565.46,-1622.16 565.6,-1621.68 575.22,-1624.4 567.91,-1613.5 584.71,-1627.6 584.71,-1627.6"/>
 </g>
 <!-- src/pages/+Layout.tsx&#45;&gt;node_modules/@lingui/core -->
 <g id="edge28" class="edge">
 <title>src/pages/+Layout.tsx&#45;&gt;node_modules/@lingui/core</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M81,-799.87C81,-796.66 81,-794.5 81,-794.5 81,-794.5 759,-794.5 759,-794.5 759,-794.5 759,-312.6 759,-312.6 759,-312.6 901.72,-312.6 901.72,-312.6"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="921.72,-312.6 901.72,-321.6 911.72,-313.1 901.72,-313.1 901.72,-312.6 901.72,-312.1 911.72,-312.1 901.72,-303.6 921.72,-312.6 921.72,-312.6"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M132.01,-799.8C136.27,-797.48 139,-796 139,-796 139,-796 211,-181 211,-181 211,-181 514,-91 514,-91 514,-91 723,-91 723,-91 723,-91 795,-286 795,-286 795,-286 851.45,-295.79 901.9,-304.54"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="921.88,-308.01 900.64,-313.46 911.94,-306.79 902.09,-305.08 902.18,-304.59 902.26,-304.1 912.11,-305.81 903.71,-295.72 921.88,-308.01 921.88,-308.01"/>
 </g>
 <!-- src/pages/+Layout.tsx&#45;&gt;node_modules/@lingui/react -->
 <g id="edge29" class="edge">
 <title>src/pages/+Layout.tsx&#45;&gt;node_modules/@lingui/react</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M138.25,-821.6C179.53,-821.6 228,-821.6 228,-821.6 228,-821.6 228,-109.5 228,-109.5 228,-109.5 540.86,-109.5 540.86,-109.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="560.86,-109.5 540.86,-118.5 550.86,-110 540.86,-110 540.86,-109.5 540.86,-109 550.86,-109 540.86,-100.5 560.86,-109.5 560.86,-109.5"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M132.01,-799.8C136.27,-797.48 139,-796 139,-796 139,-796 211,-284 211,-284 211,-284 514,-156 514,-156 514,-156 525.85,-152.36 541.69,-147.5"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="560.84,-141.62 544.36,-156.09 551.43,-145.03 541.87,-147.97 541.72,-147.49 541.57,-147.01 551.13,-144.08 539.08,-138.89 560.84,-141.62 560.84,-141.62"/>
 </g>
 <!-- src/pages/+Layout.tsx&#45;&gt;node_modules/react -->
 <g id="edge30" class="edge">
 <title>src/pages/+Layout.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M138.12,-810.8C157.8,-810.8 175,-810.8 175,-810.8 175,-810.8 175,-282.75 175,-282.75 175,-282.75 971,-282.75 971,-282.75 971,-282.75 971,-282.48 971,-282.48"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="971,-280 980,-300 971,-290 971,-300 971,-300 971,-300 971,-290 962,-300 971,-280 971,-280"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M132.01,-799.8C136.27,-797.48 139,-796 139,-796 139,-796 211,-108 211,-108 211,-108 514,-89 514,-89 514,-89 723,-89 723,-89 723,-89 795,-221 795,-221 795,-221 877.15,-235.25 931.82,-244.73"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="951.88,-248.21 930.63,-253.66 942.03,-246.5 932.17,-244.79 932.17,-244.79 932.17,-244.79 942.03,-246.5 933.71,-235.92 951.88,-248.21 951.88,-248.21"/>
 </g>
 <!-- src/pages/+Layout.tsx&#45;&gt;src/app.config.ts -->
 <g id="edge25" class="edge">
 <title>src/pages/+Layout.tsx&#45;&gt;src/app.config.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M93,-854.26C93,-974.55 93,-1452 93,-1452 93,-1452 541.24,-1452 541.24,-1452"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="561.24,-1452 541.24,-1461 551.24,-1452.5 541.24,-1452.5 541.24,-1452 541.24,-1451.5 551.24,-1451.5 541.24,-1443 561.24,-1452 561.24,-1452"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M88.31,-854.05C114.21,-965.07 211,-1380 211,-1380 211,-1380 421.77,-1412.35 541.25,-1430.68"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="561.37,-1433.77 540.24,-1439.63 551.41,-1432.75 541.53,-1431.23 541.6,-1430.74 541.68,-1430.24 551.56,-1431.76 542.97,-1421.84 561.37,-1433.77 561.37,-1433.77"/>
 </g>
 <!-- src/pages/layout.config.ts -->
 <g id="node24" class="node">
@@ -463,8 +463,8 @@
 <!-- src/pages/+Layout.tsx&#45;&gt;src/pages/layout.config.ts -->
 <g id="edge23" class="edge">
 <title>src/pages/+Layout.tsx&#45;&gt;src/pages/layout.config.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M138.24,-843.2C138.24,-843.2 239.71,-843.2 239.71,-843.2"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="259.71,-843.2 239.71,-852.2 249.71,-843.7 239.71,-843.7 239.71,-843.2 239.71,-842.7 249.71,-842.7 239.71,-834.2 259.71,-843.2 259.71,-843.2"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M138.16,-827C168.18,-827 205.86,-827 239.83,-827"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="259.85,-827 239.85,-836 249.85,-827.5 239.85,-827.5 239.85,-827 239.85,-826.5 249.85,-826.5 239.85,-818 259.85,-827 259.85,-827"/>
 </g>
 <!-- src/pages/uno.generated.css -->
 <g id="node25" class="node">
@@ -478,8 +478,8 @@
 <!-- src/pages/+Layout.tsx&#45;&gt;src/pages/uno.generated.css -->
 <g id="edge24" class="edge">
 <title>src/pages/+Layout.tsx&#45;&gt;src/pages/uno.generated.css</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M116,-854.15C116,-932.26 116,-1152 116,-1152 116,-1152 226.95,-1152 226.95,-1152"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="246.95,-1152 226.95,-1161 236.95,-1152.5 226.95,-1152.5 226.95,-1152 226.95,-1151.5 236.95,-1151.5 226.95,-1143 246.95,-1152 246.95,-1152"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M93.9,-854.04C125.84,-926.57 211,-1120 211,-1120 211,-1120 217.49,-1121.75 227.43,-1124.44"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="246.88,-1129.69 225.22,-1133.16 237.09,-1127.56 227.44,-1124.96 227.57,-1124.47 227.7,-1123.99 237.35,-1126.6 229.91,-1115.78 246.88,-1129.69 246.88,-1129.69"/>
 </g>
 <!-- node_modules/vike&#45;react -->
 <g id="node26" class="node">
@@ -493,38 +493,38 @@
 <!-- src/pages/+Layout.tsx&#45;&gt;node_modules/vike&#45;react -->
 <g id="edge31" class="edge">
 <title>src/pages/+Layout.tsx&#45;&gt;node_modules/vike&#45;react</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M138.01,-832.4C185.01,-832.4 244,-832.4 244,-832.4 244,-832.4 244,-174.5 244,-174.5 244,-174.5 554.18,-174.5 554.18,-174.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="574.18,-174.5 554.18,-183.5 564.18,-175 554.18,-175 554.18,-174.5 554.18,-174 564.18,-174 554.18,-165.5 574.18,-174.5 574.18,-174.5"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M132.01,-799.8C136.27,-797.48 139,-796 139,-796 139,-796 211,-525 211,-525 211,-525 514,-221 514,-221 514,-221 533.01,-215.16 555.05,-208.4"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="574.35,-202.47 557.87,-216.95 564.94,-205.89 555.38,-208.82 555.23,-208.34 555.08,-207.87 564.64,-204.93 552.59,-199.74 574.35,-202.47 574.35,-202.47"/>
 </g>
 <!-- src/pages/layout.config.ts&#45;&gt;@bitcart/ui&#45;kit -->
 <g id="edge57" class="edge">
 <title>src/pages/layout.config.ts&#45;&gt;@bitcart/ui&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M401.09,-843.2C464.27,-843.2 547,-843.2 547,-843.2 547,-843.2 547,-1578.4 547,-1578.4 547,-1578.4 573.96,-1578.4 573.96,-1578.4"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="593.96,-1578.4 573.96,-1587.4 583.96,-1578.9 573.96,-1578.9 573.96,-1578.4 573.96,-1577.9 583.96,-1577.9 573.96,-1569.4 593.96,-1578.4 593.96,-1578.4"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M401.12,-846.39C426.91,-853.57 450,-860 450,-860 450,-860 514,-1532 514,-1532 514,-1532 545.97,-1544.19 575.04,-1555.28"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="593.82,-1562.44 571.92,-1563.72 584.29,-1559.35 574.95,-1555.78 575.13,-1555.31 575.31,-1554.85 584.65,-1558.41 578.34,-1546.91 593.82,-1562.44 593.82,-1562.44"/>
 </g>
 <!-- src/pages/layout.config.ts&#45;&gt;node_modules/@lingui/core -->
 <g id="edge58" class="edge">
 <title>src/pages/layout.config.ts&#45;&gt;node_modules/@lingui/core</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M401.27,-810.8C525.79,-810.8 771,-810.8 771,-810.8 771,-810.8 771,-323.4 771,-323.4 771,-323.4 901.86,-323.4 901.86,-323.4"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="921.86,-323.4 901.86,-332.4 911.86,-323.9 901.86,-323.9 901.86,-323.4 901.86,-322.9 911.86,-322.9 901.86,-314.4 921.86,-323.4 921.86,-323.4"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M401.12,-808.2C426.91,-801.23 450,-795 450,-795 450,-795 514,-629 514,-629 514,-629 723,-489 723,-489 723,-489 795,-382 795,-382 795,-382 852.2,-362.16 902.9,-344.57"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="921.88,-337.99 905.94,-353.04 912.6,-341.74 903.15,-345.01 902.99,-344.54 902.82,-344.07 912.27,-340.79 900.04,-336.04 921.88,-337.99 921.88,-337.99"/>
 </g>
 <!-- src/pages/layout.config.ts&#45;&gt;node_modules/@phosphor&#45;icons/react -->
 <g id="edge59" class="edge">
 <title>src/pages/layout.config.ts&#45;&gt;node_modules/@phosphor&#45;icons/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M398,-799.99C398,-694.76 398,-318 398,-318 398,-318 501.74,-318 501.74,-318"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="521.74,-318 501.74,-327 511.74,-318 501.74,-318 501.74,-318 501.74,-318 511.74,-318 501.74,-309 521.74,-318 521.74,-318"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M401.12,-808.2C426.91,-801.23 450,-795 450,-795 450,-795 514,-517 514,-517 514,-517 565.35,-421.95 597.07,-363.23"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="606.78,-345.25 605.19,-367.13 602.03,-354.05 597.27,-362.85 597.27,-362.85 597.27,-362.85 602.03,-354.05 589.35,-358.57 606.78,-345.25 606.78,-345.25"/>
 </g>
 <!-- src/pages/layout.config.ts&#45;&gt;src/app.config.ts -->
 <g id="edge55" class="edge">
 <title>src/pages/layout.config.ts&#45;&gt;src/app.config.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M401.05,-832.4C474.51,-832.4 579,-832.4 579,-832.4 579,-832.4 579,-1395.98 579,-1395.98"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="579,-1415.98 570,-1395.98 578.5,-1405.98 578.5,-1395.98 579,-1395.98 579.5,-1395.98 579.5,-1405.98 588,-1395.98 579,-1415.98 579,-1415.98"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M401.12,-846.39C426.91,-853.57 450,-860 450,-860 450,-860 514,-1410 514,-1410 514,-1410 526.06,-1413.7 542.1,-1418.62"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="561.46,-1424.57 539.7,-1427.3 551.76,-1422.11 542.2,-1419.18 542.34,-1418.7 542.49,-1418.22 552.05,-1421.16 544.99,-1410.1 561.46,-1424.57 561.46,-1424.57"/>
 </g>
 <!-- src/pages/layout.config.ts&#45;&gt;src/common/constants.ts -->
 <g id="edge56" class="edge">
 <title>src/pages/layout.config.ts&#45;&gt;src/common/constants.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M401.2,-821.6C573.3,-821.6 1000,-821.6 1000,-821.6 1000,-821.6 1000,-1276.99 1000,-1276.99"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1000,-1296.99 991,-1276.99 999.5,-1286.99 999.5,-1276.99 1000,-1276.99 1000.5,-1276.99 1000.5,-1286.99 1009,-1276.99 1000,-1296.99 1000,-1296.99"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M401.12,-846.39C426.91,-853.57 450,-860 450,-860 450,-860 723,-972 723,-972 723,-972 879.31,-1186.5 947.88,-1280.61"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="959.8,-1296.96 940.75,-1286.1 953.51,-1289.18 947.62,-1281.09 948.02,-1280.8 948.42,-1280.51 954.31,-1288.59 955.29,-1275.5 959.8,-1296.96 959.8,-1296.96"/>
 </g>
 <!-- src/pages/+config.ts -->
 <g id="node27" class="node">
@@ -538,14 +538,14 @@
 <!-- src/pages/+config.ts&#45;&gt;@bitcart/vike&#45;kit -->
 <g id="edge32" class="edge">
 <title>src/pages/+config.ts&#45;&gt;@bitcart/vike&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M380.09,-771C442.6,-771 542,-771 542,-771 542,-771 542,-1616.4 542,-1616.4 542,-1616.4 564.61,-1616.4 564.61,-1616.4"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.61,-1616.4 564.61,-1625.4 574.61,-1616.9 564.61,-1616.9 564.61,-1616.4 564.61,-1615.9 574.61,-1615.9 564.61,-1607.4 584.61,-1616.4 584.61,-1616.4"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M380.04,-775.52C412.77,-784.63 450,-795 450,-795 450,-795 514,-1606 514,-1606 514,-1606 539.43,-1613.57 565.56,-1621.35"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.81,-1627.08 563.07,-1630 575.08,-1624.7 565.49,-1621.85 565.64,-1621.37 565.78,-1620.89 575.36,-1623.74 568.2,-1612.74 584.81,-1627.08 584.81,-1627.08"/>
 </g>
 <!-- src/pages/+config.ts&#45;&gt;node_modules/vike&#45;react -->
 <g id="edge33" class="edge">
 <title>src/pages/+config.ts&#45;&gt;node_modules/vike&#45;react</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M380.37,-753C385.57,-753 389,-753 389,-753 389,-753 389,-201.5 389,-201.5 389,-201.5 554.4,-201.5 554.4,-201.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="574.4,-201.5 554.4,-210.5 564.4,-202 554.4,-202 554.4,-201.5 554.4,-201 564.4,-201 554.4,-192.5 574.4,-201.5 574.4,-201.5"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M380.04,-748.48C412.77,-739.37 450,-729 450,-729 450,-729 514,-221 514,-221 514,-221 533.01,-215.16 555.05,-208.4"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="574.35,-202.47 557.87,-216.95 564.94,-205.89 555.38,-208.82 555.23,-208.34 555.08,-207.87 564.64,-204.93 552.59,-199.74 574.35,-202.47 574.35,-202.47"/>
 </g>
 <!-- src/pages/+lang.ts -->
 <g id="node28" class="node">
@@ -559,8 +559,8 @@
 <!-- src/pages/+lang.ts&#45;&gt;@bitcart/vike&#45;kit -->
 <g id="edge34" class="edge">
 <title>src/pages/+lang.ts&#45;&gt;@bitcart/vike&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M331,-1374.26C331,-1449.45 331,-1654.2 331,-1654.2 331,-1654.2 564.99,-1654.2 564.99,-1654.2"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.99,-1654.2 564.99,-1663.2 574.99,-1654.7 564.99,-1654.7 564.99,-1654.2 564.99,-1653.7 574.99,-1653.7 564.99,-1645.2 584.99,-1654.2 584.99,-1654.2"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M350.69,-1374.23C397.54,-1440.73 514,-1606 514,-1606 514,-1606 539.43,-1613.57 565.56,-1621.35"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.81,-1627.08 563.07,-1630 575.08,-1624.7 565.49,-1621.85 565.64,-1621.37 565.78,-1620.89 575.36,-1623.74 568.2,-1612.74 584.81,-1627.08 584.81,-1627.08"/>
 </g>
 <!-- src/pages/+onBeforeRender.shared.ts -->
 <g id="node29" class="node">
@@ -574,26 +574,26 @@
 <!-- src/pages/+onBeforeRender.shared.ts&#45;&gt;@bitcart/vike&#45;kit -->
 <g id="edge38" class="edge">
 <title>src/pages/+onBeforeRender.shared.ts&#45;&gt;@bitcart/vike&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M442,-984.33C442,-1111.99 442,-1643.4 442,-1643.4 442,-1643.4 564.66,-1643.4 564.66,-1643.4"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.66,-1643.4 564.66,-1652.4 574.66,-1643.9 564.66,-1643.9 564.66,-1643.4 564.66,-1642.9 574.66,-1642.9 564.66,-1634.4 584.66,-1643.4 584.66,-1643.4"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M428.54,-984.02C441.27,-987.57 450,-990 450,-990 450,-990 514,-1606 514,-1606 514,-1606 539.43,-1613.57 565.56,-1621.35"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.81,-1627.08 563.07,-1630 575.08,-1624.7 565.49,-1621.85 565.64,-1621.37 565.78,-1620.89 575.36,-1623.74 568.2,-1612.74 584.81,-1627.08 584.81,-1627.08"/>
 </g>
 <!-- src/pages/+onBeforeRender.shared.ts&#45;&gt;src/app.config.ts -->
 <g id="edge35" class="edge">
 <title>src/pages/+onBeforeRender.shared.ts&#45;&gt;src/app.config.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M444,-984.01C444,-1084.92 444,-1434 444,-1434 444,-1434 541.07,-1434 541.07,-1434"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="561.07,-1434 541.07,-1443 551.07,-1434.5 541.07,-1434.5 541.07,-1434 541.07,-1433.5 551.07,-1433.5 541.07,-1425 561.07,-1434 561.07,-1434"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M428.54,-984.02C441.27,-987.57 450,-990 450,-990 450,-990 514,-1410 514,-1410 514,-1410 526.06,-1413.7 542.1,-1418.62"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="561.46,-1424.57 539.7,-1427.3 551.76,-1422.11 542.2,-1419.18 542.34,-1418.7 542.49,-1418.22 552.05,-1421.16 544.99,-1410.1 561.46,-1424.57 561.46,-1424.57"/>
 </g>
 <!-- src/pages/+onBeforeRender.shared.ts&#45;&gt;src/common/constants.ts -->
 <g id="edge36" class="edge">
 <title>src/pages/+onBeforeRender.shared.ts&#45;&gt;src/common/constants.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M448,-984.02C448,-1065.78 448,-1305 448,-1305 448,-1305 903.26,-1305 903.26,-1305"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="923.26,-1305 903.26,-1314 913.26,-1305.5 903.26,-1305.5 903.26,-1305 903.26,-1304.5 913.26,-1304.5 903.26,-1296 923.26,-1305 923.26,-1305"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M428.54,-984.02C441.27,-987.57 450,-990 450,-990 450,-990 514,-1477 514,-1477 514,-1477 723,-1477 723,-1477 723,-1477 840.93,-1406.66 916.86,-1361.36"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="934.23,-1351 921.67,-1368.98 925.9,-1356.55 917.31,-1361.68 917.06,-1361.25 916.8,-1360.82 925.39,-1355.69 912.45,-1353.52 934.23,-1351 934.23,-1351"/>
 </g>
 <!-- src/pages/+onBeforeRender.shared.ts&#45;&gt;src/common/i18n/index.ts -->
 <g id="edge37" class="edge">
 <title>src/pages/+onBeforeRender.shared.ts&#45;&gt;src/common/i18n/index.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M446,-984.04C446,-1073.62 446,-1355 446,-1355 446,-1355 1619.29,-1355 1619.29,-1355"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1639.29,-1355 1619.29,-1364 1629.29,-1355.5 1619.29,-1355.5 1619.29,-1355 1619.29,-1354.5 1629.29,-1354.5 1619.29,-1346 1639.29,-1355 1639.29,-1355"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M428.54,-984.02C441.27,-987.57 450,-990 450,-990 450,-990 514,-1480 514,-1480 514,-1480 1238,-1490 1238,-1490 1238,-1490 1530,-1490 1530,-1490 1530,-1490 1595.49,-1420.55 1639.64,-1373.74"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1653.39,-1359.16 1646.21,-1379.89 1646.89,-1366.78 1640.03,-1374.05 1639.66,-1373.71 1639.3,-1373.37 1646.16,-1366.09 1633.12,-1367.54 1653.39,-1359.16 1653.39,-1359.16"/>
 </g>
 <!-- src/pages/+onBeforeRoute.ts -->
 <g id="node30" class="node">
@@ -607,14 +607,14 @@
 <!-- src/pages/+onBeforeRoute.ts&#45;&gt;@bitcart/vike&#45;kit -->
 <g id="edge40" class="edge">
 <title>src/pages/+onBeforeRoute.ts&#45;&gt;@bitcart/vike&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M415.09,-1031C472.12,-1031 537,-1031 537,-1031 537,-1031 537,-1621.8 537,-1621.8 537,-1621.8 564.75,-1621.8 564.75,-1621.8"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.75,-1621.8 564.75,-1630.8 574.75,-1622.3 564.75,-1622.3 564.75,-1621.8 564.75,-1621.3 574.75,-1621.3 564.75,-1612.8 584.75,-1621.8 584.75,-1621.8"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M415.09,-1045.28C434.7,-1050.74 450,-1055 450,-1055 450,-1055 514,-1606 514,-1606 514,-1606 539.43,-1613.57 565.56,-1621.35"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.81,-1627.08 563.07,-1630 575.08,-1624.7 565.49,-1621.85 565.64,-1621.37 565.78,-1620.89 575.36,-1623.74 568.2,-1612.74 584.81,-1627.08 584.81,-1627.08"/>
 </g>
 <!-- src/pages/+onBeforeRoute.ts&#45;&gt;src/app.config.ts -->
 <g id="edge39" class="edge">
 <title>src/pages/+onBeforeRoute.ts&#45;&gt;src/app.config.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M415.28,-1013C484.17,-1013 570,-1013 570,-1013 570,-1013 570,-1395.78 570,-1395.78"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="570,-1415.78 561,-1395.78 569.5,-1405.78 569.5,-1395.78 570,-1395.78 570.5,-1395.78 570.5,-1405.78 579,-1395.78 570,-1415.78 570,-1415.78"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M415.09,-1045.28C434.7,-1050.74 450,-1055 450,-1055 450,-1055 514,-1410 514,-1410 514,-1410 526.06,-1413.7 542.1,-1418.62"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="561.46,-1424.57 539.7,-1427.3 551.76,-1422.11 542.2,-1419.18 542.34,-1418.7 542.49,-1418.22 552.05,-1421.16 544.99,-1410.1 561.46,-1424.57 561.46,-1424.57"/>
 </g>
 <!-- src/pages/+onPageTransitionEnd.ts -->
 <g id="node31" class="node">
@@ -628,8 +628,8 @@
 <!-- src/pages/+onPageTransitionEnd.ts&#45;&gt;@bitcart/vike&#45;kit -->
 <g id="edge41" class="edge">
 <title>src/pages/+onPageTransitionEnd.ts&#45;&gt;@bitcart/vike&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M407,-1309.27C407,-1394.28 407,-1648.8 407,-1648.8 407,-1648.8 564.96,-1648.8 564.96,-1648.8"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.96,-1648.8 564.96,-1657.8 574.96,-1649.3 564.96,-1649.3 564.96,-1648.8 564.96,-1648.3 574.96,-1648.3 564.96,-1639.8 584.96,-1648.8 584.96,-1648.8"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M428.54,-1309.02C441.27,-1312.57 450,-1315 450,-1315 450,-1315 514,-1606 514,-1606 514,-1606 539.43,-1613.57 565.56,-1621.35"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.81,-1627.08 563.07,-1630 575.08,-1624.7 565.49,-1621.85 565.64,-1621.37 565.78,-1620.89 575.36,-1623.74 568.2,-1612.74 584.81,-1627.08 584.81,-1627.08"/>
 </g>
 <!-- src/pages/+onPrerenderStart.ts -->
 <g id="node32" class="node">
@@ -643,14 +643,14 @@
 <!-- src/pages/+onPrerenderStart.ts&#45;&gt;@bitcart/vike&#45;kit -->
 <g id="edge43" class="edge">
 <title>src/pages/+onPrerenderStart.ts&#45;&gt;@bitcart/vike&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M424.17,-1096C476.79,-1096 532,-1096 532,-1096 532,-1096 532,-1627.2 532,-1627.2 532,-1627.2 564.91,-1627.2 564.91,-1627.2"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.91,-1627.2 564.91,-1636.2 574.91,-1627.7 564.91,-1627.7 564.91,-1627.2 564.91,-1626.7 574.91,-1626.7 564.91,-1618.2 584.91,-1627.2 584.91,-1627.2"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M424.29,-1112.84C439.28,-1117.01 450,-1120 450,-1120 450,-1120 514,-1606 514,-1606 514,-1606 539.43,-1613.57 565.56,-1621.35"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.81,-1627.08 563.07,-1630 575.08,-1624.7 565.49,-1621.85 565.64,-1621.37 565.78,-1620.89 575.36,-1623.74 568.2,-1612.74 584.81,-1627.08 584.81,-1627.08"/>
 </g>
 <!-- src/pages/+onPrerenderStart.ts&#45;&gt;src/app.config.ts -->
 <g id="edge42" class="edge">
 <title>src/pages/+onPrerenderStart.ts&#45;&gt;src/app.config.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M424.25,-1078C489.93,-1078 566,-1078 566,-1078 566,-1078 566,-1395.86 566,-1395.86"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="566,-1415.86 557,-1395.86 565.5,-1405.86 565.5,-1395.86 566,-1395.86 566.5,-1395.86 566.5,-1405.86 575,-1395.86 566,-1415.86 566,-1415.86"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M424.29,-1112.84C439.28,-1117.01 450,-1120 450,-1120 450,-1120 514,-1410 514,-1410 514,-1410 526.06,-1413.7 542.1,-1418.62"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="561.46,-1424.57 539.7,-1427.3 551.76,-1422.11 542.2,-1419.18 542.34,-1418.7 542.49,-1418.22 552.05,-1421.16 544.99,-1410.1 561.46,-1424.57 561.46,-1424.57"/>
 </g>
 <!-- src/pages/+title.ts -->
 <g id="node33" class="node">
@@ -664,8 +664,8 @@
 <!-- src/pages/+title.ts&#45;&gt;@bitcart/vike&#45;kit -->
 <g id="edge44" class="edge">
 <title>src/pages/+title.ts&#45;&gt;@bitcart/vike&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M370.74,-1217C428.23,-1217 527,-1217 527,-1217 527,-1217 527,-1632.6 527,-1632.6 527,-1632.6 564.76,-1632.6 564.76,-1632.6"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.76,-1632.6 564.76,-1641.6 574.76,-1633.1 564.76,-1633.1 564.76,-1632.6 564.76,-1632.1 574.76,-1632.1 564.76,-1623.6 584.76,-1632.6 584.76,-1632.6"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M370.63,-1227.9C405.15,-1237.51 450,-1250 450,-1250 450,-1250 514,-1606 514,-1606 514,-1606 539.43,-1613.57 565.56,-1621.35"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="584.81,-1627.08 563.07,-1630 575.08,-1624.7 565.49,-1621.85 565.64,-1621.37 565.78,-1620.89 575.36,-1623.74 568.2,-1612.74 584.81,-1627.08 584.81,-1627.08"/>
 </g>
 <!-- src/pages/_error/+Page.tsx -->
 <g id="node34" class="node">
@@ -679,32 +679,32 @@
 <!-- src/pages/_error/+Page.tsx&#45;&gt;@bitcart/ui&#45;kit -->
 <g id="edge45" class="edge">
 <title>src/pages/_error/+Page.tsx&#45;&gt;@bitcart/ui&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M379.66,-684C444.91,-684 552,-684 552,-684 552,-684 552,-1567.6 552,-1567.6 552,-1567.6 573.82,-1567.6 573.82,-1567.6"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="593.82,-1567.6 573.82,-1576.6 583.82,-1568.1 573.82,-1568.1 573.82,-1567.6 573.82,-1567.1 583.82,-1567.1 573.82,-1558.6 593.82,-1567.6 593.82,-1567.6"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M379.7,-678.61C412.51,-687.19 450,-697 450,-697 450,-697 514,-1532 514,-1532 514,-1532 545.97,-1544.19 575.04,-1555.28"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="593.82,-1562.44 571.92,-1563.72 584.29,-1559.35 574.95,-1555.78 575.13,-1555.31 575.31,-1554.85 584.65,-1558.41 578.34,-1546.91 593.82,-1562.44 593.82,-1562.44"/>
 </g>
 <!-- src/pages/_error/+Page.tsx&#45;&gt;node_modules/@lingui/react -->
 <g id="edge46" class="edge">
 <title>src/pages/_error/+Page.tsx&#45;&gt;node_modules/@lingui/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M379.56,-648C381.72,-648 383,-648 383,-648 383,-648 383,-136.5 383,-136.5 383,-136.5 540.82,-136.5 540.82,-136.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="560.82,-136.5 540.82,-145.5 550.82,-136.5 540.82,-136.5 540.82,-136.5 540.82,-136.5 550.82,-136.5 540.82,-127.5 560.82,-136.5 560.82,-136.5"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M379.7,-649.32C412.51,-637.97 450,-625 450,-625 450,-625 514,-156 514,-156 514,-156 525.85,-152.36 541.69,-147.5"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="560.84,-141.62 544.36,-156.09 551.28,-144.56 541.72,-147.49 541.72,-147.49 541.72,-147.49 551.28,-144.56 539.08,-138.89 560.84,-141.62 560.84,-141.62"/>
 </g>
 <!-- src/pages/_error/+Page.tsx&#45;&gt;node_modules/react -->
 <g id="edge47" class="edge">
 <title>src/pages/_error/+Page.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M379.71,-675C388.54,-675 395,-675 395,-675 395,-675 395,-288.25 395,-288.25 395,-288.25 990,-288.25 990,-288.25 990,-288.25 990,-287.43 990,-287.43"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="990,-280.07 999,-300.07 990,-290.07 990,-300.07 990,-300.07 990,-300.07 990,-290.07 981,-300.07 990,-280.07 990,-280.07"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M379.7,-649.32C412.51,-637.97 450,-625 450,-625 450,-625 514,-549 514,-549 514,-549 723,-414 723,-414 723,-414 795,-286 795,-286 795,-286 877.52,-271.24 932.18,-261.46"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="951.88,-257.94 933.78,-270.32 942.03,-259.7 932.19,-261.46 932.19,-261.46 932.19,-261.46 942.03,-259.7 930.61,-252.6 951.88,-257.94 951.88,-257.94"/>
 </g>
 <!-- src/pages/_error/+Page.tsx&#45;&gt;node_modules/vike -->
 <g id="edge49" class="edge">
 <title>src/pages/_error/+Page.tsx&#45;&gt;node_modules/vike</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M379.55,-666C386.86,-666 392,-666 392,-666 392,-666 392,-253 392,-253 392,-253 575.15,-253 575.15,-253"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="595.15,-253 575.15,-262 585.15,-253 575.15,-253 575.15,-253 575.15,-253 585.15,-253 575.15,-244 595.15,-253 595.15,-253"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M379.7,-649.32C412.51,-637.97 450,-625 450,-625 450,-625 514,-286 514,-286 514,-286 546.78,-275.94 576.14,-266.92"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="595.48,-260.99 579,-275.46 585.92,-263.92 576.36,-266.86 576.36,-266.86 576.36,-266.86 585.92,-263.92 573.72,-258.25 595.48,-260.99 595.48,-260.99"/>
 </g>
 <!-- src/pages/_error/+Page.tsx&#45;&gt;node_modules/vike&#45;react -->
 <g id="edge48" class="edge">
 <title>src/pages/_error/+Page.tsx&#45;&gt;node_modules/vike&#45;react</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M379.63,-657C383.53,-657 386,-657 386,-657 386,-657 386,-188 386,-188 386,-188 554.36,-188 554.36,-188"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="574.36,-188 554.36,-197 564.36,-188.5 554.36,-188.5 554.36,-188 554.36,-187.5 564.36,-187.5 554.36,-179 574.36,-188 574.36,-188"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M379.7,-649.32C412.51,-637.97 450,-625 450,-625 450,-625 514,-221 514,-221 514,-221 533.01,-215.16 555.05,-208.4"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="574.35,-202.47 557.87,-216.95 564.94,-205.89 555.38,-208.82 555.23,-208.34 555.08,-207.87 564.64,-204.93 552.59,-199.74 574.35,-202.47 574.35,-202.47"/>
 </g>
 <!-- src/pages/_error/+title.ts -->
 <g id="node35" class="node">
@@ -718,14 +718,14 @@
 <!-- src/pages/_error/+title.ts&#45;&gt;node_modules/@lingui/core -->
 <g id="edge51" class="edge">
 <title>src/pages/_error/+title.ts&#45;&gt;node_modules/@lingui/core</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M662.58,-666C698.97,-666 747,-666 747,-666 747,-666 747,-301.8 747,-301.8 747,-301.8 901.88,-301.8 901.88,-301.8"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="921.88,-301.8 901.88,-310.8 911.88,-301.8 901.88,-301.8 901.88,-301.8 901.88,-301.8 911.88,-301.8 901.88,-292.8 921.88,-301.8 921.88,-301.8"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M662.54,-653.84C690.41,-645.15 723,-635 723,-635 723,-635 795,-382 795,-382 795,-382 852.2,-362.16 902.9,-344.57"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="921.88,-337.99 905.94,-353.04 912.43,-341.26 902.99,-344.54 902.99,-344.54 902.99,-344.54 912.43,-341.26 900.04,-336.04 921.88,-337.99 921.88,-337.99"/>
 </g>
 <!-- src/pages/_error/+title.ts&#45;&gt;src/common/constants.ts -->
 <g id="edge50" class="edge">
 <title>src/pages/_error/+title.ts&#45;&gt;src/common/constants.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M623,-693.29C623,-814.83 623,-1301 623,-1301 623,-1301 903.46,-1301 903.46,-1301"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="923.46,-1301 903.46,-1310 913.46,-1301.5 903.46,-1301.5 903.46,-1301 903.46,-1300.5 913.46,-1300.5 903.46,-1292 923.46,-1301 923.46,-1301"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M662.54,-678.16C690.41,-686.85 723,-697 723,-697 723,-697 901.37,-1133.02 960.62,-1277.85"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="968.31,-1296.66 952.41,-1281.55 964.06,-1287.59 960.28,-1278.33 960.74,-1278.14 961.2,-1277.96 964.99,-1287.21 969.07,-1274.74 968.31,-1296.66 968.31,-1296.66"/>
 </g>
 <!-- src/pages/index/+Page.tsx -->
 <g id="node36" class="node">
@@ -739,20 +739,20 @@
 <!-- src/pages/index/+Page.tsx&#45;&gt;@bitcart/ui&#45;kit -->
 <g id="edge52" class="edge">
 <title>src/pages/index/+Page.tsx&#45;&gt;@bitcart/ui&#45;kit</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M379.65,-571C446.26,-571 557,-571 557,-571 557,-571 557,-1556.8 557,-1556.8 557,-1556.8 573.96,-1556.8 573.96,-1556.8"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="593.96,-1556.8 573.96,-1565.8 583.96,-1557.3 573.96,-1557.3 573.96,-1556.8 573.96,-1556.3 583.96,-1556.3 573.96,-1547.8 593.96,-1556.8 593.96,-1556.8"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M379.36,-589.06C412.25,-607.65 450,-629 450,-629 450,-629 514,-1532 514,-1532 514,-1532 545.97,-1544.19 575.04,-1555.28"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="593.82,-1562.44 571.92,-1563.72 584.29,-1559.35 574.95,-1555.78 575.13,-1555.31 575.31,-1554.85 584.65,-1558.41 578.34,-1546.91 593.82,-1562.44 593.82,-1562.44"/>
 </g>
 <!-- src/pages/index/+Page.tsx&#45;&gt;node_modules/@lingui/react -->
 <g id="edge53" class="edge">
 <title>src/pages/index/+Page.tsx&#45;&gt;node_modules/@lingui/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M331,-534.87C331,-439.16 331,-123 331,-123 331,-123 540.68,-123 540.68,-123"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="560.68,-123 540.68,-132 550.68,-123 540.68,-123 540.68,-123 540.68,-123 550.68,-123 540.68,-114 560.68,-123 560.68,-123"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M343.76,-534.73C384.68,-443.7 514,-156 514,-156 514,-156 525.85,-152.36 541.69,-147.5"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="560.84,-141.62 544.36,-156.09 551.28,-144.56 541.72,-147.49 541.72,-147.49 541.72,-147.49 551.28,-144.56 539.08,-138.89 560.84,-141.62 560.84,-141.62"/>
 </g>
 <!-- src/pages/index/+Page.tsx&#45;&gt;node_modules/react -->
 <g id="edge54" class="edge">
 <title>src/pages/index/+Page.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M379.7,-553C487.5,-553 735,-553 735,-553 735,-553 735,-271 735,-271 735,-271 931.86,-271 931.86,-271"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="951.86,-271 931.86,-280 941.86,-271 931.86,-271 931.86,-271 931.86,-271 941.86,-271 931.86,-262 951.86,-271 951.86,-271"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M379.51,-536.13C484.05,-479.78 723,-351 723,-351 723,-351 795,-286 795,-286 795,-286 877.52,-271.24 932.18,-261.46"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="951.88,-257.94 933.78,-270.32 942.03,-259.7 932.19,-261.46 932.19,-261.46 932.19,-261.46 942.03,-259.7 930.61,-252.6 951.88,-257.94 951.88,-257.94"/>
 </g>
 <!-- src/vite&#45;env.d.ts -->
 <g id="node37" class="node">

@@ -74,7 +74,7 @@ Each app has its own `playwright.config.ts` and `e2e/` directory. Tests are `*.s
 - Landing: `apps/landing/e2e/` — port 3000
 - Directory: `apps/directory/e2e/` — port 3001
 
-The `webServer` config builds and starts preview servers via `just preview`. `reuseExistingServer` is currently disabled. Desktop Chrome only. CI uploads HTML report as artifact on failure.
+The `webServer` config starts preview servers via `pnpm preview`. `reuseExistingServer` is enabled. Desktop Chrome only. CI uploads HTML report as artifact on failure.
 
 #### Page readiness: `waitUntilHydrated`, not `networkidle`
 
@@ -243,6 +243,27 @@ if (condition) {
 }
 
 return <Bar />
+```
+
+Only the last branch of an if-else chain stays unwrapped, and only when its body is a single `return` that still fits on the condition's line. Braces stay on every branch ahead of the last one:
+
+```ts
+// ✅ correct
+if (issues.length > 0) {
+  return issues.join("; ")
+} else if (typeof detail === "string") {
+  return `${label}: ${detail}`
+} else if (typeof label === "string") {
+  return label
+} else if (typeof message === "string") return message
+
+// ❌ avoid — a branch with an `else` after it is unwrapped, breaking the chain across two statements
+if (issues.length > 0) {
+  return issues.join("; ")
+} else if (typeof detail === "string") {
+  return `${label}: ${detail}`
+} else if (typeof label === "string") return label
+else if (typeof message === "string") return message
 ```
 
 Only use a bare early return when it is a true guard clause at the very top of a function (e.g. `if (!value) return null`) with no meaningful else branch and with an explicit return type:

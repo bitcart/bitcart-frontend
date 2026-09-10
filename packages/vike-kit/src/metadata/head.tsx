@@ -8,7 +8,7 @@ import {
   type DocumentFavicon,
   type DocumentViewportParams,
 } from "@bitcart/core/metadata"
-import type { TwitterHandle } from "@bitcart/core/types"
+import type { AccountHandle } from "@bitcart/core/types"
 import { useMemo } from "react"
 import { usePageContext } from "vike-react/usePageContext"
 
@@ -18,7 +18,7 @@ export type HeadProps<TSupportedLocaleId extends BCP47LanguageSubtag> = {
   favicon?: DocumentFavicon
   ogSiteName: string
   posixLocaleIdMap: PosixLocaleIdMap<TSupportedLocaleId | SourceLocaleId>
-  twitterHandles?: { author?: TwitterHandle; site?: TwitterHandle }
+  twitterHandles?: { author?: AccountHandle; site?: AccountHandle }
   viewportParams?: DocumentViewportParams
 }
 

@@ -34,7 +34,7 @@
     "watch-deps": {
       "continuous": true,
       "dependsOn": ["build-deps"],
-      "command": "pnpm nx watch --projects @bitcart/checkout --includeDependentProjects -- pnpm nx build-deps @bitcart/checkout"
+      "command": "pnpm nx watch --projects @bitcart/checkout --includeDependencies -- pnpm nx build-deps @bitcart/checkout"
     },
 
     "dev": {

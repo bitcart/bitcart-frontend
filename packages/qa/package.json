@@ -21,7 +21,7 @@
     "lint": "oxlint . --fix",
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
     "generate:dist-graphviz": "depcruise dist --output-type dot | dot -T svg -o dist-graphviz.svg",
-    "depcruise:deps": "depcruise dist --output-type err",
+    "depcruise:deps": "depcruise dist --output-type err-long",
     "build": "tsdown"
   },
   "dependencies": {

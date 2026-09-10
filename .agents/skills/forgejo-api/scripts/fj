@@ -1,0 +1,98 @@
+#!/usr/bin/env sh
+# fj — authenticated curl against the Forgejo API on git.bitcart.ai.
+#
+# Usage: fj [curl-args...] PATH
+#
+#   PATH is the last argument, starts with "/", and is relative to
+#   https://git.bitcart.ai/api/v1. Either {repo} or {owner}/{repo} expands to
+#   the current repo, so paths copied out of API.md work as written; write the
+#   owner and name in yourself to address another repo.
+#
+# The host is always git.bitcart.ai. A remote is consulted only to learn which
+# repo {repo} means: $FORGEJO_REPO if set, else any remote pointing at the
+# forge. FORGEJO_TOKEN comes from the environment or the repo-root .env.
+#
+#   fj '/repos/{repo}/issues?state=open&type=issues'
+#   fj -X POST --data @- '/repos/{repo}/issues/42/comments' <<'JSON'
+#   { "body": "…" }
+#   JSON
+#
+# Sources FORGEJO_TOKEN from the repo-root .env and sends it as an
+# Authorization header, adds -sS, sets a JSON Content-Type whenever a body is
+# being sent, and refuses the curl flags that would echo the token.
+
+set -eu
+
+fail() {
+  printf 'fj: %s\n' "$1" >&2
+  exit 1
+}
+
+[ "$#" -gt 0 ] || fail "no path given. Usage: fj [curl-args...] PATH"
+
+path=""
+total=$#
+i=1
+while [ "$i" -le "$total" ]; do
+  arg=$1
+  shift
+  if [ "$i" -eq "$total" ]; then
+    path=$arg
+  else
+    set -- "$@" "$arg"
+  fi
+  i=$((i + 1))
+done
+
+case "$path" in
+/*) ;;
+*) fail "path must start with '/' and be relative to the API root: got '$path'" ;;
+esac
+
+sends_body=""
+for arg in "$@"; do
+  case "$arg" in
+  -v | --verbose | --trace | --trace-ascii | --trace-config)
+    fail "$arg echoes request headers including the token. For the status code use -w '\\n%{http_code}\\n'."
+    ;;
+  -d | --data | --data-raw | --data-binary | --data-urlencode | --json)
+    sends_body=yes
+    ;;
+  esac
+done
+
+root=$(git rev-parse --show-toplevel 2>/dev/null) || root=$PWD
+
+if [ -z "${FORGEJO_TOKEN:-}" ] && [ -f "$root/.env" ]; then
+  set -a
+  # shellcheck disable=SC1091
+  . "$root/.env"
+  set +a
+fi
+[ -n "${FORGEJO_TOKEN:-}" ] || fail "FORGEJO_TOKEN is unset — add it to $root/.env or export it"
+
+repo=""
+case "$path" in
+*'{repo}'*)
+  repo=${FORGEJO_REPO:-}
+  if [ -z "$repo" ]; then
+    for name in bitcart-git $(git -C "$root" remote 2>/dev/null); do
+      remote=$(git -C "$root" remote get-url "$name" 2>/dev/null) || continue
+      case "$remote" in
+      *git.bitcart.ai*)
+        repo=$(printf '%s' "$remote" | sed -e 's#.*git\.bitcart\.ai[:/]##' -e 's#\.git$##')
+        break
+        ;;
+      esac
+    done
+  fi
+  [ -n "$repo" ] || fail "no remote points at git.bitcart.ai — set FORGEJO_REPO=owner/name, or write the owner and repo into the path"
+  ;;
+esac
+
+url="https://git.bitcart.ai/api/v1$(printf '%s' "$path" | sed -e "s#{owner}/{repo}#$repo#g" -e "s#{repo}#$repo#g")"
+
+# Without this header Forgejo ignores the body and returns a confusing 422.
+[ -n "$sends_body" ] && set -- "$@" -H "Content-Type: application/json"
+
+exec curl -sS -H "Authorization: token $FORGEJO_TOKEN" "$@" "$url"

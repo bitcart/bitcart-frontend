@@ -1,10 +1,8 @@
-import { useTheme } from "@bitcart/ui-kit/hooks"
+import { bitcartInvoices, bitcartStores } from "@bitcart/api-sdk/endpoints"
 import { useQueryClient, useQueryErrorResetBoundary } from "@tanstack/react-query"
 import { createFileRoute, useRouter, type ErrorComponentProps } from "@tanstack/react-router"
 import { useCallback, useEffect, useState } from "react"
 
-import { bitcartHooks } from "#/common/data/bitcart"
-import type { InvoiceStatus, InvoiceWsMessage } from "#/common/data/bitcart/types"
 import { useCountdown } from "#/common/hooks"
 
 import { ErrorFallback } from "./-components/error-fallback"
@@ -46,38 +44,40 @@ function InvoicePage() {
   const { invoiceId } = Route.useParams()
   const { template } = Route.useSearch()
   const queryClient = useQueryClient()
-  const { setTheme } = useTheme()
 
-  const { data: invoice } = bitcartHooks.useInvoice(invoiceId)
-  const { data: store } = bitcartHooks.useStore(invoice.store_id)
+  const { data: invoice, queryKey: invoiceQueryKey } = bitcartInvoices.useInvoiceSuspense({
+    invoiceId,
+  })
 
-  const [currentStatus, setCurrentStatus] = useState<InvoiceStatus>(invoice.status)
+  //* The schema allows a storeless invoice, which counts as a malformed response.
+  // TODO: Drop once the API schema provides the correct type.
+  if (!invoice.store_id) {
+    throw new Error(`Invoice ${invoiceId} is not associated with a store`)
+  }
+
+  const { data: store } = bitcartStores.useStoreSuspense({ storeId: invoice.store_id })
+
   const [selectedPaymentIndex, setSelectedPaymentIndex] = useState(0)
-
   const { formatted: countdownFormatted } = useCountdown(invoice.time_left)
 
   const handleWsMessage = useCallback(
-    (message: InvoiceWsMessage) => {
-      setCurrentStatus(message.status)
-      void queryClient.invalidateQueries({ queryKey: ["invoice", invoiceId] })
+    (_message: bitcartInvoices.InvoiceWsMessage) => {
+      void queryClient.invalidateQueries({ queryKey: invoiceQueryKey })
     },
-    [queryClient, invoiceId],
+
+    [invoiceQueryKey, queryClient],
   )
 
-  bitcartHooks.useInvoiceWebsocket({
+  bitcartInvoices.useInvoiceWebsocket({
     invoiceId,
-    status: currentStatus,
+    status: invoice.status,
     onMessage: handleWsMessage,
   })
-
-  useEffect(() => {
-    setTheme(store.checkout_settings.use_dark_mode ? "dark" : "light")
-  }, [setTheme, store.checkout_settings.use_dark_mode])
 
   const templateProps = {
     invoice,
     store,
-    currentStatus,
+    currentStatus: invoice.status,
     selectedPaymentIndex,
     setSelectedPaymentIndex,
     countdownFormatted,

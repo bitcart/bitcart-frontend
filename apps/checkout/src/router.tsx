@@ -1,15 +1,21 @@
+import { BitcartApiConfig } from "@bitcart/api-sdk/config"
+import { applyZodL10n } from "@bitcart/core/validation"
 import { i18n } from "@lingui/core"
 import { I18nProvider } from "@lingui/react"
 import { QueryClient } from "@tanstack/react-query"
 import { createRouter as createTanStackRouter } from "@tanstack/react-router"
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query"
 
+import { BITCART_API_URL } from "#/common/constants"
 import { activateSourceLocale } from "#/common/i18n"
 
 import { routeTree } from "./routeTree.gen"
 
 export function getRouter() {
   activateSourceLocale()
+  applyZodL10n()
+
+  BitcartApiConfig.baseUrl = BITCART_API_URL
 
   const queryClient = new QueryClient()
 

@@ -26,6 +26,7 @@ jobs:
       nx-cache: true
       extra-checks: |
         just unit
+        just api-check
 
   zizmor:
     name: zizmor

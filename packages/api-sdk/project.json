@@ -1,0 +1,52 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "@bitcart/api-sdk",
+
+  "targets": {
+    "generate:api": {
+      "executor": "nx:run-commands",
+
+      "options": {
+        "commands": [
+          "orval --config orval.config.ts",
+          "tsx ./scripts/postprocess.ts",
+          "oxfmt src/schemas/generated src/endpoints/_internal/generated"
+        ],
+
+        "parallel": false,
+        "cwd": "packages/api-sdk"
+      },
+
+      "inputs": [
+        "{projectRoot}/openapi.json",
+        "{projectRoot}/orval.config.ts",
+        "{projectRoot}/scripts/**",
+        { "externalDependencies": ["orval", "oxfmt", "tsx"] }
+      ],
+
+      "outputs": [
+        "{projectRoot}/src/endpoints/_internal/generated",
+        "{projectRoot}/src/mocks/generated",
+        "{projectRoot}/src/schemas/generated"
+      ],
+
+      "cache": true
+    },
+
+    "build": {
+      "dependsOn": ["generate:api", "^build"]
+    },
+
+    "typecheck": {
+      "dependsOn": ["generate:api", "^build", "^typecheck"]
+    },
+
+    "lint:check": {
+      "dependsOn": ["generate:api", "^build", "^lint:check"]
+    },
+
+    "lint": {
+      "dependsOn": ["generate:api", "^build", "^lint"]
+    }
+  }
+}

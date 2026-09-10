@@ -36,9 +36,7 @@ node_modules
 **/.netlify
 
 ## Tool cache
-.nx/cache
-.nx/workspace-data
-.nx/polygraph
+.nx/
 
 ## Editor directories and files
 .idea

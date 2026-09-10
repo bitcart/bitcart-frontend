@@ -1,9 +1,9 @@
 # Forgejo API endpoint reference
 
-Paths below are relative to `https://git.bitcart.ai/api/v1`, and `{owner}/{repo}` comes from the
-`bitcart-git` remote. Every call needs the `Authorization: token $FORGEJO_TOKEN` header from
-[SKILL.md](SKILL.md). Where a shape here disagrees with `https://git.bitcart.ai/swagger.v1.json`, the
-instance's spec wins — check it whenever a call returns 422.
+Paths below are relative to `https://git.bitcart.ai/api/v1` and pass verbatim to `scripts/fj`, which
+expands `{owner}/{repo}` to the current repo and attaches the token — see [SKILL.md](SKILL.md).
+Substitute a different owner and name to address another repo. Where a shape here disagrees with `https://git.bitcart.ai/swagger.v1.json`,
+the instance's spec wins — check it whenever a call returns 422.
 
 ## Issues and PRs share one numbering space
 
@@ -51,6 +51,24 @@ request cannot both be `#42`, because both draw from a single per-repo counter. 
 **Note the path change between creating and editing.** Create is addressed by issue _index_; edit and
 delete are addressed by global comment _id_ with no index in the path at all. Mixing them up yields a
 404 that looks like a missing issue. The `id` comes from the list response, not from the issue number.
+
+## Dependencies between issues
+
+| Action           | Request                                                    |
+| ---------------- | ---------------------------------------------------------- |
+| What blocks this | `GET /repos/{owner}/{repo}/issues/{index}/dependencies`    |
+| What this blocks | `GET /repos/{owner}/{repo}/issues/{index}/blocks`          |
+| Add a blocker    | `POST /repos/{owner}/{repo}/issues/{index}/dependencies`   |
+| Remove a blocker | `DELETE /repos/{owner}/{repo}/issues/{index}/dependencies` |
+
+The two `GET`s are opposite ends of one link, so either issue can find the other. PRs and issues
+share a numbering space here as everywhere else, which makes this the way to attach a follow-up
+issue to the PR that spawned it without relying on prose in a body or comment.
+
+**The body is `IssueMeta`, and all three fields are required** — `{"index": 266, "owner": "bitcart",
+"repo": "bitcart-frontend"}` — even when the target lives in the repo you are already addressing in
+the path. Sending `{"index": 266}` alone returns **404**, which reads exactly like a missing issue or
+a scope problem and is neither.
 
 ## Labels and milestones
 
@@ -104,6 +122,36 @@ to add one label silently strips every other label off the issue.
 - Inline comments anchor with `new_position` (line in the new file) or `old_position`, and a `path`
   that must match the diff exactly. A wrong path is accepted but the comment lands nowhere useful.
 
+## Actions: runs, jobs and logs
+
+| Action        | Request                                                                    |
+| ------------- | -------------------------------------------------------------------------- |
+| List runs     | `GET /repos/{owner}/{repo}/actions/runs?limit=50` → `{workflow_runs: […]}` |
+| Get one run   | `GET /repos/{owner}/{repo}/actions/runs/{run_id}`                          |
+| Jobs of a run | `GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs` → a bare array      |
+| One job's log | `GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs` → `text/plain`      |
+| Every log     | `GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs` → `application/zip` |
+| Artifacts     | `GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts`                |
+| Cancel a run  | `POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel`                  |
+
+**No number in a run's web URL is an API id.** In `…/actions/runs/1765/jobs/1/attempt/1`, `1765` is
+the run index (`index_in_repo`) where the API wants the global `id`, `1` is a 0-based position in
+the job list ordered by job id, and `attempt` is 1-based and unreachable — logs always serve the
+latest. Select on `index_in_repo` in the newest-first runs list, then index the jobs array. Passing
+a run index as `{run_id}` 404s with a body pointing at `/api/swagger`, which reads as an endpoint
+missing on this version but means a wrong id.
+
+- **`jq`-select the runs list**, which inlines a whole repository object and the triggering
+  `event_payload` per entry — tens of KB per run.
+- **Jobs come back as a bare array**, with `conclusion`, `html_url` and `run_number` null; read the
+  outcome from `status`.
+- **A job that calls a reusable workflow 500s on `/logs`** — it has no log of its own, the steps ran
+  in a separate job named after the job _inside_ the called workflow.
+- **An out-of-range job index silently serves job 0** rather than 404ing, so a guessed index renders
+  the wrong job. Confirm by name.
+- Logs are timestamped plain text with ANSI escapes and `::group::` folds, thousands of lines long —
+  save and `rg` rather than reading inline.
+
 ## Pagination
 
 `page` is 1-based and `limit` is capped by the instance (commonly 50; the default page size is
@@ -112,9 +160,10 @@ smaller still, around 30). **A single request is very unlikely to return everyth
 Page until a response returns fewer items than `limit`:
 
 ```bash
+fj=.agents/skills/forgejo-api/scripts/fj
 page=1; while :; do
-  n=$(curl -sS -H "Authorization: token $FORGEJO_TOKEN" \
-    ".../issues?state=all&type=issues&limit=50&page=$page" | tee "/tmp/p$page.json" | jq length)
+  n=$($fj "/repos/{repo}/issues?state=all&type=issues&limit=50&page=$page" |
+    tee "/tmp/p$page.json" | jq length)
   [ "$n" -lt 50 ] && break
   page=$((page + 1))
 done

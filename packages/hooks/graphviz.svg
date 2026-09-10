@@ -39,7 +39,7 @@
 <!-- node_modules/@mantine/hooks -->
 <g id="node2" class="node">
 <title>node_modules/@mantine/hooks</title>
-<g id="a_node2"><a xlink:href="https://www.npmjs.com/package/@mantine/hooks" xlink:title="@mantine+hooks@9.5.1_react@19.2.8">
+<g id="a_node2"><a xlink:href="https://www.npmjs.com/package/@mantine/hooks" xlink:title="@mantine+hooks@9.5.2_react@19.2.8">
 <polygon fill="#f9e6e6" stroke="black" points="656,-239 508,-239 504,-235 504,-185 652,-185 656,-189 656,-239"/>
 <polyline fill="none" stroke="black" points="652,-235 504,-235 "/>
 <polyline fill="none" stroke="black" points="652,-235 652,-185 "/>
@@ -51,7 +51,7 @@
 <!-- node_modules/@testing&#45;library/react -->
 <g id="node3" class="node">
 <title>node_modules/@testing&#45;library/react</title>
-<g id="a_node3"><a xlink:href="https://www.npmjs.com/package/@testing-library/react" xlink:title="@testing&#45;library+react@16.3.2_@testing&#45;library+dom@10.4.1_@types+react&#45;dom@19.2.4_@type_2a46ce64b8cc64b21842ce81a682d490">
+<g id="a_node3"><a xlink:href="https://www.npmjs.com/package/@testing-library/react" xlink:title="@testing&#45;library+react@16.3.2_@testing&#45;library+dom@10.4.1_@types+react&#45;dom@19.2.5_@type_1b8e19e5f86dea2095f2cde781456fd6">
 <polygon fill="#f9e6e6" stroke="black" points="432,-369 244,-369 240,-365 240,-315 428,-315 432,-319 432,-369"/>
 <polyline fill="none" stroke="black" points="428,-365 240,-365 "/>
 <polyline fill="none" stroke="black" points="428,-365 428,-315 "/>
@@ -87,7 +87,7 @@
 <!-- node_modules/remeda -->
 <g id="node6" class="node">
 <title>node_modules/remeda</title>
-<g id="a_node6"><a xlink:href="https://www.npmjs.com/package/remeda" xlink:title="remeda@2.39.0">
+<g id="a_node6"><a xlink:href="https://www.npmjs.com/package/remeda" xlink:title="remeda@2.43.0">
 <polygon fill="#f9e6e6" stroke="black" points="619,-304 545,-304 541,-300 541,-250 615,-250 619,-254 619,-304"/>
 <polyline fill="none" stroke="black" points="615,-300 541,-300 "/>
 <polyline fill="none" stroke="black" points="615,-300 615,-250 "/>
@@ -99,7 +99,7 @@
 <!-- node_modules/vitest -->
 <g id="node7" class="node">
 <title>node_modules/vitest</title>
-<g id="a_node7"><a xlink:href="https://www.npmjs.com/package/vitest" xlink:title="vitest@4.1.10_@types+node@25.9.5_jsdom@29.1.1_vite@8.2.0_@types+node@25.9.5_esbuild@0.2_bc4a46a9dd61971f37d49f245bcacc13">
+<g id="a_node7"><a xlink:href="https://www.npmjs.com/package/vitest" xlink:title="vitest@4.1.11_@types+node@25.9.5_jsdom@29.1.1_msw@2.15.0_@types+node@25.9.5_typescript@_97b27d10c426e58e40459bbd184f4fda">
 <polygon fill="#f9e6e6" stroke="black" points="366.5,-239 309.5,-239 305.5,-235 305.5,-185 362.5,-185 366.5,-189 366.5,-239"/>
 <polyline fill="none" stroke="black" points="362.5,-235 305.5,-235 "/>
 <polyline fill="none" stroke="black" points="362.5,-235 362.5,-185 "/>
@@ -120,20 +120,20 @@
 <!-- src/client&#45;locale.ts&#45;&gt;@bitcart/core -->
 <g id="edge1" class="edge">
 <title>src/client&#45;locale.ts&#45;&gt;@bitcart/core</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M403.32,-43C403.32,-43 532.96,-43 532.96,-43"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="552.96,-43 532.96,-52 542.96,-43.5 532.96,-43.5 532.96,-43 532.96,-42.5 542.96,-42.5 532.96,-34 552.96,-43 552.96,-43"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M403.13,-43C444.23,-43 496.05,-43 532.77,-43"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="552.94,-43 532.94,-52 542.94,-43.5 532.94,-43.5 532.94,-43 532.94,-42.5 542.94,-42.5 532.94,-34 552.94,-43 552.94,-43"/>
 </g>
 <!-- src/client&#45;locale.ts&#45;&gt;node_modules/@mantine/hooks -->
 <g id="edge2" class="edge">
 <title>src/client&#45;locale.ts&#45;&gt;node_modules/@mantine/hooks</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M398,-70.15C398,-117.93 398,-212 398,-212 398,-212 483.87,-212 483.87,-212"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="503.87,-212 483.87,-221 493.87,-212 483.87,-212 483.87,-212 483.87,-212 493.87,-212 483.87,-203 503.87,-212 503.87,-212"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M403.24,-65.31C419.33,-70.73 432,-75 432,-75 432,-75 491.85,-130.77 535.17,-171.15"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="549.96,-184.93 529.19,-177.88 542.64,-178.12 535.33,-171.3 535.33,-171.3 535.33,-171.3 542.64,-178.12 541.46,-164.71 549.96,-184.93 549.96,-184.93"/>
 </g>
 <!-- src/client&#45;locale.ts&#45;&gt;node_modules/react -->
 <g id="edge3" class="edge">
 <title>src/client&#45;locale.ts&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M392,-70.33C392,-137.95 392,-307.67 392,-307.67 392,-307.67 590,-307.67 590,-307.67 590,-307.67 590,-308.39 590,-308.39"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="590,-314.95 581,-294.95 590,-304.95 590,-294.95 590,-294.95 590,-294.95 590,-304.95 599,-294.95 590,-314.95 590,-314.95"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M403.24,-65.31C419.33,-70.73 432,-75 432,-75 432,-75 504,-310 504,-310 504,-310 517.48,-315.75 533.01,-322.38"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="551.5,-330.27 529.57,-330.7 542.3,-326.34 533.1,-322.42 533.1,-322.42 533.1,-322.42 542.3,-326.34 536.64,-314.14 551.5,-330.27 551.5,-330.27"/>
 </g>
 <!-- src/index.ts -->
 <g id="node9" class="node">
@@ -147,8 +147,8 @@
 <!-- src/index.ts&#45;&gt;src/client&#45;locale.ts -->
 <g id="edge4" class="edge">
 <title>src/index.ts&#45;&gt;src/client&#45;locale.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M132.57,-34C132.57,-34 248.58,-34 248.58,-34"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="268.58,-41 248.58,-34 268.58,-27 268.58,-41"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M132.69,-43C164.09,-43 209.09,-43 248.68,-43"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="268.79,-50 248.79,-43 268.79,-36 268.79,-50"/>
 </g>
 <!-- src/is&#45;client.ts -->
 <g id="node10" class="node">
@@ -162,20 +162,20 @@
 <!-- src/index.ts&#45;&gt;src/is&#45;client.ts -->
 <g id="edge5" class="edge">
 <title>src/index.ts&#45;&gt;src/is&#45;client.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M132.67,-52C182.39,-52 260,-52 260,-52 260,-52 260,-94.5 260,-94.5 260,-94.5 266.15,-94.5 266.15,-94.5"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="286.15,-101.5 266.15,-94.5 286.15,-87.5 286.15,-101.5"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M132.69,-53.66C168.92,-63.39 223.26,-77.99 266.5,-89.6"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="284.28,-101.62 266.78,-89.68 287.91,-88.1 284.28,-101.62"/>
 </g>
 <!-- src/is&#45;client.ts&#45;&gt;node_modules/react -->
 <g id="edge11" class="edge">
 <title>src/is&#45;client.ts&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M385.53,-108C422.98,-108 468,-108 468,-108 468,-108 468,-342 468,-342 468,-342 531.45,-342 531.45,-342"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="551.45,-342 531.45,-351 541.45,-342 531.45,-342 531.45,-342 531.45,-342 541.45,-342 531.45,-333 551.45,-342 551.45,-342"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M385.61,-130.52C408.99,-141.34 432,-152 432,-152 432,-152 504,-310 504,-310 504,-310 517.48,-315.75 533.01,-322.38"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="551.5,-330.27 529.57,-330.7 542.3,-326.34 533.1,-322.42 533.1,-322.42 533.1,-322.42 542.3,-326.34 536.64,-314.14 551.5,-330.27 551.5,-330.27"/>
 </g>
 <!-- src/is&#45;client.ts&#45;&gt;node_modules/remeda -->
 <g id="edge12" class="edge">
 <title>src/is&#45;client.ts&#45;&gt;node_modules/remeda</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M376,-135.29C376,-175.13 376,-244.5 376,-244.5 376,-244.5 580,-244.5 580,-244.5 580,-244.5 580,-245.04 580,-245.04"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="580,-249.87 571,-229.87 580,-239.87 580,-229.87 580,-229.87 580,-229.87 580,-239.87 589,-229.87 580,-249.87 580,-249.87"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M385.61,-130.52C408.99,-141.34 432,-152 432,-152 432,-152 504,-245 504,-245 504,-245 511.64,-248.26 522.04,-252.7"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="540.62,-260.63 518.69,-261.05 531.42,-256.7 522.23,-252.78 522.23,-252.78 522.23,-252.78 531.42,-256.7 525.76,-244.5 540.62,-260.63 540.62,-260.63"/>
 </g>
 <!-- src/is&#45;client.spec.tsx -->
 <g id="node11" class="node">
@@ -189,32 +189,32 @@
 <!-- src/is&#45;client.spec.tsx&#45;&gt;node_modules/@testing&#45;library/react -->
 <g id="edge7" class="edge">
 <title>src/is&#45;client.spec.tsx&#45;&gt;node_modules/@testing&#45;library/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M168.22,-121.5C208.63,-121.5 250,-121.5 250,-121.5 250,-121.5 250,-294.96 250,-294.96"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="250,-314.96 241,-294.96 250,-304.96 250,-294.96 250,-294.96 250,-294.96 250,-304.96 259,-294.96 250,-314.96 250,-314.96"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M111.75,-135.24C142.57,-180.04 202.69,-267.41 232.54,-301.2"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="247.64,-314.86 226.77,-308.12 240.23,-308.15 232.81,-301.44 232.81,-301.44 232.81,-301.44 240.23,-308.15 238.85,-294.77 247.64,-314.86 247.64,-314.86"/>
 </g>
 <!-- src/is&#45;client.spec.tsx&#45;&gt;node_modules/react&#45;dom -->
 <g id="edge8" class="edge">
 <title>src/is&#45;client.spec.tsx&#45;&gt;node_modules/react&#45;dom</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M92,-135.15C92,-182.93 92,-277 92,-277 92,-277 266.33,-277 266.33,-277"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="286.33,-277 266.33,-286 276.33,-277 266.33,-277 266.33,-277 266.33,-277 276.33,-277 266.33,-268 286.33,-277 286.33,-277"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M120.46,-135.07C160.97,-174.99 232,-245 232,-245 232,-245 247.85,-249.92 267.11,-255.91"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="286.21,-261.84 264.44,-264.5 276.66,-258.88 267.12,-255.91 267.12,-255.91 267.12,-255.91 276.66,-258.88 269.79,-247.31 286.21,-261.84 286.21,-261.84"/>
 </g>
 <!-- src/is&#45;client.spec.tsx&#45;&gt;node_modules/react -->
 <g id="edge9" class="edge">
 <title>src/is&#45;client.spec.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M54,-135C54,-190.31 54,-311.33 54,-311.33 54,-311.33 571,-311.33 571,-311.33 571,-311.33 571,-311.66 571,-311.66"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="571,-314.62 562,-294.61 571,-304.62 571,-294.62 571,-294.62 571,-294.62 571,-304.62 580,-294.62 571,-314.62 571,-314.62"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M168.2,-125.31C200.95,-132.85 232,-140 232,-140 232,-140 432,-180 432,-180 432,-180 504,-310 504,-310 504,-310 517.48,-315.75 533.01,-322.38"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="551.5,-330.27 529.57,-330.7 542.3,-326.34 533.1,-322.42 533.1,-322.42 533.1,-322.42 542.3,-326.34 536.64,-314.14 551.5,-330.27 551.5,-330.27"/>
 </g>
 <!-- src/is&#45;client.spec.tsx&#45;&gt;node_modules/vitest -->
 <g id="edge10" class="edge">
 <title>src/is&#45;client.spec.tsx&#45;&gt;node_modules/vitest</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M130,-135.05C130,-165.87 130,-212 130,-212 130,-212 285.16,-212 285.16,-212"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="305.16,-212 285.16,-221 295.16,-212 285.16,-212 285.16,-212 285.16,-212 295.16,-212 285.16,-203 305.16,-212 305.16,-212"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M152.76,-135.08C190.43,-152.16 232,-171 232,-171 232,-171 259.87,-182.1 286.62,-192.74"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="305.48,-200.25 283.57,-201.22 296.19,-196.55 286.9,-192.85 286.9,-192.85 286.9,-192.85 296.19,-196.55 290.23,-184.49 305.48,-200.25 305.48,-200.25"/>
 </g>
 <!-- src/is&#45;client.spec.tsx&#45;&gt;src/is&#45;client.ts -->
 <g id="edge6" class="edge">
 <title>src/is&#45;client.spec.tsx&#45;&gt;src/is&#45;client.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M168.2,-108C168.2,-108 266.14,-108 266.14,-108"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="286.14,-108 266.14,-117 276.14,-108.5 266.14,-108.5 266.14,-108 266.14,-107.5 276.14,-107.5 266.14,-99 286.14,-108 286.14,-108"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M168.24,-108C199.47,-108 235.47,-108 266,-108"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="286.15,-108 266.15,-117 276.15,-108.5 266.15,-108.5 266.15,-108 266.15,-107.5 276.15,-107.5 266.15,-99 286.15,-108 286.15,-108"/>
 </g>
 </g>
 </svg>

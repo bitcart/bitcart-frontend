@@ -1,15 +1,15 @@
+import { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
 import type { HttpHref } from "@bitcart/core/navigation"
 import { LinkButton } from "@bitcart/ui-kit/components"
+import type { IconComponent } from "@bitcart/ui-kit/types"
 import { cn } from "@bitcart/ui-kit/utils"
 import { t } from "@lingui/core/macro"
 import confetti from "canvas-confetti"
-import { CheckIcon, ClockIcon, XIcon } from "lucide-react"
+import { CheckIcon, ClockIcon, RotateCcwIcon, XIcon } from "lucide-react"
 import { useEffect } from "react"
 
-import type { InvoiceStatus } from "#/common/data/bitcart/types"
-
 type StatusOverlayProps = {
-  status: InvoiceStatus
+  status: bitcartInvoices.InvoiceStatus
   storeName: string
   invoiceId: string
   orderAmount: string
@@ -18,7 +18,18 @@ type StatusOverlayProps = {
   children?: React.ReactNode
 }
 
-const STATUS_CONFIG = {
+type StatusDisplayParams = {
+  bg: string
+  iconBg: string
+  titleColor: string
+  Icon: IconComponent
+  title: () => string
+}
+
+const TERMINAL_STATUS_DISPLAY_PARAMS: Record<
+  bitcartInvoices.InvoiceTerminalStatus,
+  StatusDisplayParams
+> = {
   complete: {
     bg: "bg-green-50",
     iconBg: "text-green-600",
@@ -26,6 +37,15 @@ const STATUS_CONFIG = {
     Icon: CheckIcon,
     title: () => t`Payment complete`,
   },
+
+  refunded: {
+    bg: "bg-amber-50",
+    iconBg: "text-amber-600",
+    titleColor: "text-amber-600",
+    Icon: RotateCcwIcon,
+    title: () => t`Payment refunded`,
+  },
+
   expired: {
     bg: "bg-gray-50",
     iconBg: "text-gray-500",
@@ -33,6 +53,7 @@ const STATUS_CONFIG = {
     Icon: ClockIcon,
     title: () => t`Invoice expired`,
   },
+
   invalid: {
     bg: "bg-red-50",
     iconBg: "text-red-500",
@@ -40,7 +61,7 @@ const STATUS_CONFIG = {
     Icon: XIcon,
     title: () => t`This invoice has been marked as invalid`,
   },
-} as const
+}
 
 export const StatusOverlay = ({
   status,
@@ -79,11 +100,11 @@ export const StatusOverlay = ({
     }
   }, [status])
 
-  if (status !== "complete" && status !== "expired" && status !== "invalid") {
+  if (!bitcartInvoices.isTerminalStatus(status)) {
     return null
   }
 
-  const config = STATUS_CONFIG[status]
+  const config = TERMINAL_STATUS_DISPLAY_PARAMS[status]
   const { Icon } = config
 
   return (
@@ -114,6 +135,7 @@ export const StatusOverlay = ({
           </LinkButton>
         )}
       </div>
+
       {children}
     </div>
   )

@@ -1,9 +1,8 @@
+import type { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
 import { Input } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
 import { t } from "@lingui/core/macro"
 import { useCallback, useState } from "react"
-
-import type { InvoicePayment } from "#/common/data/bitcart/types"
 
 const CopyField = ({ label, value }: { label: string; value: string }) => {
   const [copied, setCopied] = useState(false)
@@ -40,7 +39,7 @@ const CopyField = ({ label, value }: { label: string; value: string }) => {
 }
 
 type CopyTabProps = {
-  payment: InvoicePayment
+  payment: bitcartInvoices.InvoicePayment
 }
 
 export const CopyTab = ({ payment }: CopyTabProps) => {

@@ -1,3 +1,5 @@
+import { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
+import type { HttpHref } from "@bitcart/core/navigation"
 import { Button } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
 import { t } from "@lingui/core/macro"
@@ -165,6 +167,7 @@ export const AccordionTemplate = ({
   countdownFormatted,
 }: CheckoutTemplateProps) => {
   const payment = invoice.payments[selectedPaymentIndex]
+  const isInvoiceStatusTerminal = bitcartInvoices.isTerminalStatus(currentStatus)
 
   const [openSection, setOpenSection] = useState<SectionId>(
     invoice.payments.length > 1 ? "currency" : "amount",
@@ -173,9 +176,6 @@ export const AccordionTemplate = ({
   const [completedSections, setCompletedSections] = useState<Set<SectionId>>(
     () => new Set(invoice.payments.length <= 1 ? ["currency" as SectionId] : []),
   )
-
-  const isTerminal =
-    currentStatus === "complete" || currentStatus === "expired" || currentStatus === "invalid"
 
   const advanceTo = useCallback(
     (section: SectionId) => {
@@ -196,7 +196,7 @@ export const AccordionTemplate = ({
 
   if (!payment) {
     return null
-  } else if (isTerminal) {
+  } else if (isInvoiceStatusTerminal) {
     return (
       <div className="max-w-md rounded-2xl shadow-xl w-full overflow-hidden">
         <StatusOverlay
@@ -205,7 +205,7 @@ export const AccordionTemplate = ({
           invoiceId={invoice.id}
           orderAmount={invoice.price}
           orderCurrency={invoice.currency}
-          redirectUrl={invoice.redirect_url}
+          redirectUrl={(invoice.redirect_url ?? "") as HttpHref}
         />
       </div>
     )

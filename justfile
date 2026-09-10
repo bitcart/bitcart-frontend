@@ -128,6 +128,41 @@ Example: `just add-ui-kit-components @coss/command accordion`
 add-ui-kit-components +component-names:
     pnpm ui-kit add:components {{ component-names }}
 
+## API SDK
+
+[doc("
+Regenerate the API SDK from the pinned OpenAPI schema.
+")]
+[group("API SDK")]
+api-generate:
+    @pnpm nx run @bitcart/api-sdk:generate:api
+
+[doc("
+Pull a fresh OpenAPI schema from a running backend, then regenerate the API SDK.
+Review the resulting diff: it is the API surface changing.
+
+Example: `just api-sync http://localhost:8000`
+")]
+[group("API SDK")]
+api-sync base-url="https://api.bitcart.ai":
+    curl -fsS '{{ base-url }}/openapi.json' -o packages/api-sdk/openapi.json
+    @just format packages/api-sdk/openapi.json
+    @just api-generate
+
+[doc("
+Verify the committed API SDK still matches the pinned schema.
+")]
+[group("API SDK")]
+api-check: api-generate
+    #!/usr/bin/env sh
+    drift=$(git status --porcelain -- 'packages/api-sdk/src/*/generated/*')
+    if [ -n "$drift" ]; then
+        echo "The generated API SDK does not match openapi.json." >&2
+        echo "Run 'just api-generate' and commit the result." >&2
+        echo "$drift" >&2
+        exit 1
+    fi
+
 ## CODE QUALITY
 
 [doc("
@@ -190,7 +225,7 @@ depcruise *nx-args:
 Run all checks without fixing.
 ")]
 [group("Code quality")]
-check: format-check lint-check typecheck depcheck depcruise
+check: api-check format-check lint-check typecheck depcheck depcruise
 
 [doc("
 Run tests.
@@ -272,7 +307,7 @@ Run unit tests for all packages.
 ")]
 [env("BITCART_ENV", "testing")]
 [group("Testing")]
-unit:
+unit: build-packages
     pnpm vitest run
 
 [doc("
@@ -280,7 +315,7 @@ Run unit testing suite in watch mode for all packages.
 ")]
 [env("BITCART_ENV", "testing")]
 [group("Testing")]
-unit-dev:
+unit-dev: build-packages
     pnpm vitest
 
 [doc("
@@ -306,6 +341,7 @@ Example: `just e2e-app landing`
 [env("BITCART_ENV", "testing")]
 [group("Testing")]
 e2e-app app *args:
+    @pnpm nx run @bitcart/{{ app }}:build
     pnpm {{ app }} e2e {{ args }}
 
 [doc("
@@ -315,6 +351,7 @@ Example: `just e2e-ui landing`
 ")]
 [group("Testing")]
 e2e-ui app:
+    @pnpm nx run @bitcart/{{ app }}:build
     pnpm {{ app }} e2e:ui
 
 [doc("

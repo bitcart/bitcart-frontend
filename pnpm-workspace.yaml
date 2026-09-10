@@ -8,13 +8,18 @@ allowBuilds:
   lightningcss: true
   nx: true
 
+  #* msw's postinstall only copies the browser service worker into a public directory,
+  #* which is meaningless from inside a workspace package. Generated handlers are consumed
+  #* through `setupServer`; run `msw init` explicitly if browser-side mocking is ever needed.
+  msw: false
+
 catalogMode: strict
 
 catalogs:
   dependencies:
     "@base-ui/react": 1.7.0
     "@daypicker/react": 10.0.1
-    "@fumadocs/base-ui": 16.15.1
+    "@fumadocs/base-ui": 16.15.4
     "@lingui/core": 6.6.0
     "@lingui/react": 6.6.0
     "@mantine/hooks": 9.5.2
@@ -26,7 +31,7 @@ catalogs:
     "@tanstack/react-query-devtools": "5.102.2"
     "@tanstack/react-router": "1.170.32"
     "@tanstack/react-router-devtools": "1.167.1"
-    "@tanstack/react-router-ssr-query": "1.167.1"
+    "@tanstack/react-router-ssr-query": "1.167.2"
     "@tanstack/react-start": "1.168.49"
     "@tanstack/react-store": "0.11.1"
     "@tanstack/store": "0.11.1"
@@ -35,8 +40,9 @@ catalogs:
     class-variance-authority: 0.7.1
     dotenv: 17.4.2
     effect: 3.22.1
-    fumadocs-core: 16.15.1
+    fumadocs-core: 16.15.4
     fumadocs-mdx: 15.3.1
+    fumadocs-ui: 16.15.4
     inter-ui: 4.1.1
     lucide-react: 1.33.0
     next-themes: 0.4.6
@@ -54,6 +60,7 @@ catalogs:
     canvas-confetti: 1.9.4
   devDependencies:
     "@effect/language-service": 0.87.2
+    "@faker-js/faker": 10.6.0
     "@fumadocs/story": 1.2.0
     "@lingui/babel-plugin-lingui-macro": 6.6.0
     "@lingui/cli": 6.6.0
@@ -84,8 +91,10 @@ catalogs:
     eslint-plugin-react-hooks: 7.1.1
     jsdom: 29.1.1
     knip: 6.32.2
+    msw: 2.15.0
     nitro: 3.0.260610-beta
-    nx: 22.7.8
+    nx: 23.2.0
+    orval: 8.24.0
     oxfmt: 0.65.0
     oxlint: 1.80.0
     oxlint-tsgolint: 7.0.2001
@@ -116,20 +125,13 @@ minimumReleaseAgeExclude:
   - oxlint
   - oxlint-tsgolint
   - "@base-ui/*"
-  # TODO: Remove after Aug 1 2026
-  - "@brillout/vite-plugin-server-entry@0.7.21"
-  - magic-string@1.2.2
-  # TODO: Remove after Aug 1 2026
-  - vike@0.4.263
 
 overrides:
-  #* nx exact-pins brace-expansion 5.0.8, which still carries a high-severity ReDoS
-  #* advisory. Scoped to nx rather than workspace-wide: minimatch@10's own ranges
-  #* (^5.0.5, ^5.0.8) already resolve to the patched 5.0.9, while a global pin would
-  #* also force v5 into minimatch@3 (via serve-handler), whose ^1.1.7 resolves to the
-  #* patched 1.1.18 and whose `require('brace-expansion')` needs v1's callable export.
-  # TODO: Remove once nx bumps its brace-expansion pin to 5.0.9.
-  "nx>brace-expansion": ^5.0.9
+  # TODO: Remove once orval bumps its js-yaml pin to 4.3.2.
+  js-yaml: ^4.3.2
+
+  # TODO: Remove once nx bumps its smol-toml pin to 1.7.1.
+  "nx>smol-toml": ^1.7.1
 
 peerDependencyRules:
   allowedVersions:

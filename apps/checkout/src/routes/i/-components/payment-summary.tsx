@@ -1,14 +1,13 @@
+import type { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
 import { t } from "@lingui/core/macro"
 import { ChevronDownIcon } from "lucide-react"
 import { useState } from "react"
 
-import type { InvoicePayment } from "#/common/data/bitcart/types"
-
 type PaymentSummaryProps = {
   storeName: string
-  payment: InvoicePayment
+  payment: bitcartInvoices.InvoicePayment
   orderAmount: string
   orderCurrency: string
 }

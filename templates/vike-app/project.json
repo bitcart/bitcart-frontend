@@ -31,7 +31,7 @@
     "watch-deps": {
       "continuous": true,
       "dependsOn": ["build-deps"],
-      "command": "pnpm nx watch --projects @bitcart/vike-app-template --includeDependentProjects -- pnpm nx build-deps @bitcart/vike-app-template"
+      "command": "pnpm nx watch --projects @bitcart/vike-app-template --includeDependencies -- pnpm nx build-deps @bitcart/vike-app-template"
     },
 
     "dev": {

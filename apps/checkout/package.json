@@ -6,7 +6,7 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "generate:graphviz": "depcruise src --output-type dot | dot -T svg -o graphviz.svg",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
     "generate-routes": "tsr generate",
     "i18n:extract-locales": "lingui extract --clean",
     "typecheck": "tsc --noEmit -p tsconfig.json",
@@ -23,6 +23,7 @@
     "release": "../../scripts/release-static-site.sh checkout"
   },
   "dependencies": {
+    "@bitcart/api-sdk": "workspace:*",
     "@bitcart/core": "workspace:*",
     "@bitcart/hooks": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",

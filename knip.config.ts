@@ -3,7 +3,7 @@ import type { KnipConfig } from "knip"
 
 const config: KnipConfig = {
   ignoreBinaries: ["dot"],
-  ignoreDependencies: ["@bitcart/core", "remeda"],
+  ignoreDependencies: ["remeda"],
 
   ignoreIssues: {
     "**/*.{ts,tsx}": ["exports", "types"],
@@ -56,11 +56,21 @@ const config: KnipConfig = {
         //* TanStack Start's server runtime.
         "srvx",
 
-        //* Never imported from source: Base UI's transitive CJS dep, declared directly
-        //* so nitro's server pass can resolve it after the vite SSR pass externalizes
-        //* it (see environments.ssr in vite.config.ts).
+        //* Base UI's transitive CJS dep. Declared directly and never imported to let nitro
+        //* resolve it after environments.ssr in vite.config.ts externalizes it.
         "use-sync-external-store",
       ],
+    },
+
+    "packages/api-sdk": {
+      //* Orval's `transformer` option and the Nx target's `tsx` call both name them
+      //* as string paths, which Knip cannot follow.
+      entry: ["scripts/{postprocess,transform-spec}.ts"],
+
+      // TODO: Remove once each endpoint gets at least one exported wrapper.
+      ignore: ["src/endpoints/_internal/generated/**"],
+
+      ignoreDependencies: ["@stylistic/eslint-plugin"],
     },
 
     "packages/configs": {
@@ -73,7 +83,11 @@ const config: KnipConfig = {
     },
 
     "packages/form-kit": {
-      ignoreDependencies: ["@stylistic/eslint-plugin", "eslint-plugin-react-hooks"],
+      ignoreDependencies: [
+        "@lingui/babel-plugin-lingui-macro",
+        "@stylistic/eslint-plugin",
+        "eslint-plugin-react-hooks",
+      ],
     },
 
     "packages/hooks": {

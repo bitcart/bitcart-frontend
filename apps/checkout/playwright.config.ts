@@ -37,12 +37,11 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "just preview -p @bitcart/checkout --outputStyle static",
+    command: "pnpm preview",
 
     //* For the readiness probe.
     url: "http://localhost:3002/i/1",
 
     reuseExistingServer: true,
-    cwd: "../..",
   },
 })

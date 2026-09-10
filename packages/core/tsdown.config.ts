@@ -2,6 +2,7 @@ import { defineConfig } from "tsdown"
 
 export default defineConfig({
   entry: {
+    "env/index": "src/env/index.ts",
     "i18n/index": "src/i18n/index.ts",
     "metadata/index": "src/metadata/index.ts",
     "navigation/index": "src/navigation/index.ts",

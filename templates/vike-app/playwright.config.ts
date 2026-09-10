@@ -37,9 +37,8 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "just preview -p @bitcart/vike-app-template --outputStyle static",
+    command: "pnpm preview",
     url: "http://localhost:3011",
     reuseExistingServer: true,
-    cwd: "../..",
   },
 })

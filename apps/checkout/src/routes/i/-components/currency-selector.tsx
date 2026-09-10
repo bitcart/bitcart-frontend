@@ -1,3 +1,4 @@
+import type { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
 import {
   Select,
   SelectContent,
@@ -7,10 +8,8 @@ import {
 } from "@bitcart/ui-kit/components"
 import { t } from "@lingui/core/macro"
 
-import type { InvoicePayment } from "#/common/data/bitcart"
-
 type CurrencySelectorProps = {
-  payments: InvoicePayment[]
+  payments: bitcartInvoices.InvoicePayment[]
   selectedIndex: number
   onSelect: (index: number) => void
 }

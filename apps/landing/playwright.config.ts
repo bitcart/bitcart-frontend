@@ -37,9 +37,8 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "just preview -p @bitcart/landing --outputStyle static",
+    command: "pnpm preview",
     url: "http://localhost:3000",
     reuseExistingServer: true,
-    cwd: "../..",
   },
 })

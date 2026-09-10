@@ -3,13 +3,10 @@ export const baseDependencyCruiserConfig = {
   options: {
     reporterOptions: {
       dot: {
-        //* Collapse each external package to a single block instead of projecting its
-        //* internals: the pnpm virtual-store dir (`.pnpm/<name>@<version>_<peers>`) for resolved
-        //* node_modules, and any scoped package referenced by bare specifier (workspace
-        //* `@bitcart/*` deps and packages like `@web3icons/react` that resolve to `@scope/name`).
-        //* The verbose pnpm store key is rewritten to the bare package name by
-        //* scripts/graphviz-postprocess.js.
-        collapsePattern: "node_modules/[.]pnpm/[^/]+|@[^/]+/[^/]+",
+        collapsePattern: [
+          "node_modules/[.]pnpm/[^/]+|@[^/]+/[^/]+",
+          "^(?:src|dist)/.+/_?generated(?=/)",
+        ],
 
         theme: {
           edge: {
@@ -25,7 +22,10 @@ export const baseDependencyCruiserConfig = {
             newrank: true,
             nodesep: 0.15,
             ranksep: 1,
-            splines: "ortho",
+
+            //* Do not use `ortho`: graphviz 2.43's orthogonal router sizes its trapezoid table
+            //* upfront and overflows on big graphs, while also being ~190x slower than `polyline`.
+            splines: "polyline",
           },
 
           node: {
