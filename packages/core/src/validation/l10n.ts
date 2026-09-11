@@ -1,104 +1,115 @@
-import { plural, t } from "@lingui/core/macro"
 import { z } from "zod"
 
-/**
- * Translations for Zod's built-in issues.
- */
-const localizeIssue: z.core.$ZodErrorMap<z.core.$ZodIssue> = (issue) => {
-  switch (issue.code) {
-    case "invalid_type": {
-      return issue.input === undefined ? t`Required` : t`Expected ${issue.expected}`
-    }
+export type ZodL10nMessages = {
+  required: () => string
+  invalidType: (expected: string) => string
 
-    case "too_small": {
-      const minimum = Number(issue.minimum)
+  stringTooSmall: (minimum: number) => string
+  stringTooBig: (maximum: number) => string
+  collectionTooSmall: (minimum: number) => string
+  collectionTooBig: (maximum: number) => string
+  valueTooSmall: (minimum: number) => string
+  valueTooBig: (maximum: number) => string
 
-      if (issue.origin === "string") {
-        return plural(minimum, {
-          one: "Must be at least # character",
-          other: "Must be at least # characters",
-        })
-      }
+  invalidEmail: () => string
+  invalidUrl: () => string
+  invalidUuid: () => string
+  invalidDateTime: () => string
+  invalidDate: () => string
+  invalidFormat: () => string
 
-      if (issue.origin === "array" || issue.origin === "set") {
-        return plural(minimum, {
-          one: "Must have at least # item",
-          other: "Must have at least # items",
-        })
-      }
-
-      return t`Must be at least ${minimum}`
-    }
-
-    case "too_big": {
-      const maximum = Number(issue.maximum)
-
-      if (issue.origin === "string") {
-        return plural(maximum, {
-          one: "Must be at most # character",
-          other: "Must be at most # characters",
-        })
-      }
-
-      if (issue.origin === "array" || issue.origin === "set") {
-        return plural(maximum, {
-          one: "Must have at most # item",
-          other: "Must have at most # items",
-        })
-      }
-
-      return t`Must be at most ${maximum}`
-    }
-
-    case "invalid_format": {
-      switch (issue.format) {
-        case "email": {
-          return t`Must be a valid email address`
-        }
-
-        case "url": {
-          return t`Must be a valid URL`
-        }
-
-        case "uuid": {
-          return t`Must be a valid UUID`
-        }
-
-        case "datetime": {
-          return t`Must be a valid date and time`
-        }
-
-        case "date": {
-          return t`Must be a valid date`
-        }
-
-        default: {
-          return t`Invalid format`
-        }
-      }
-    }
-
-    case "invalid_value": {
-      return t`Not one of the allowed values`
-    }
-
-    case "not_multiple_of": {
-      return t`Must be a multiple of ${Number(issue.divisor)}`
-    }
-
-    case "unrecognized_keys": {
-      return t`Unrecognized field`
-    }
-
-    default: {
-      return undefined
-    }
-  }
+  invalidValue: () => string
+  notMultipleOf: (divisor: number) => string
+  unrecognizedKey: () => string
 }
 
+export const createZodErrorMap =
+  (messages: ZodL10nMessages): z.core.$ZodErrorMap<z.core.$ZodIssue> =>
+  (issue) => {
+    switch (issue.code) {
+      case "invalid_type": {
+        return issue.input === undefined
+          ? messages.required()
+          : messages.invalidType(issue.expected)
+      }
+
+      case "too_small": {
+        const minimum = Number(issue.minimum)
+
+        if (issue.origin === "string") {
+          return messages.stringTooSmall(minimum)
+        }
+
+        if (issue.origin === "array" || issue.origin === "set") {
+          return messages.collectionTooSmall(minimum)
+        }
+
+        return messages.valueTooSmall(minimum)
+      }
+
+      case "too_big": {
+        const maximum = Number(issue.maximum)
+
+        if (issue.origin === "string") {
+          return messages.stringTooBig(maximum)
+        }
+
+        if (issue.origin === "array" || issue.origin === "set") {
+          return messages.collectionTooBig(maximum)
+        }
+
+        return messages.valueTooBig(maximum)
+      }
+
+      case "invalid_format": {
+        switch (issue.format) {
+          case "email": {
+            return messages.invalidEmail()
+          }
+
+          case "url": {
+            return messages.invalidUrl()
+          }
+
+          case "uuid": {
+            return messages.invalidUuid()
+          }
+
+          case "datetime": {
+            return messages.invalidDateTime()
+          }
+
+          case "date": {
+            return messages.invalidDate()
+          }
+
+          default: {
+            return messages.invalidFormat()
+          }
+        }
+      }
+
+      case "invalid_value": {
+        return messages.invalidValue()
+      }
+
+      case "not_multiple_of": {
+        return messages.notMultipleOf(Number(issue.divisor))
+      }
+
+      case "unrecognized_keys": {
+        return messages.unrecognizedKey()
+      }
+
+      default: {
+        return undefined
+      }
+    }
+  }
+
 /**
- * Routes Zod's default messages through the active Lingui catalogue.
+ * Routes Zod's default messages through the given messages.
  */
-export const applyZodL10n = (): void => {
-  z.config({ localeError: localizeIssue })
+export const applyZodL10n = (messages: ZodL10nMessages): void => {
+  z.config({ localeError: createZodErrorMap(messages) })
 }

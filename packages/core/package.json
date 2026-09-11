@@ -45,7 +45,6 @@
     "build": "tsdown"
   },
   "dependencies": {
-    "@lingui/core": "catalog:dependencies",
     "remeda": "catalog:dependencies",
     "zod": "catalog:dependencies"
   },

@@ -3,6 +3,7 @@ import { defineConfig } from "tsdown"
 export default defineConfig({
   entry: {
     "hooks/index": "src/hooks/index.ts",
+    "validation/index": "src/validation/index.ts",
   },
 
   format: ["esm"],

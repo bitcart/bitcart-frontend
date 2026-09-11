@@ -1,5 +1,5 @@
 import { BitcartApiConfig } from "@bitcart/api-sdk/config"
-import { applyZodL10n } from "@bitcart/core/validation"
+import { applyZodL10n } from "@bitcart/form-kit/validation"
 import { i18n } from "@lingui/core"
 import { I18nProvider } from "@lingui/react"
 import { QueryClient } from "@tanstack/react-query"

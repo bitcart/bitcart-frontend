@@ -10,6 +10,10 @@
     "./hooks": {
       "import": "./dist/hooks/index.js",
       "types": "./dist/hooks/index.d.ts"
+    },
+    "./validation": {
+      "import": "./dist/validation/index.js",
+      "types": "./dist/validation/index.d.ts"
     }
   },
   "scripts": {
@@ -23,6 +27,7 @@
   "dependencies": {
     "@bitcart/core": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",
+    "@lingui/core": "catalog:dependencies",
     "@tanstack/react-form": "catalog:dependencies",
     "react": "catalog:dependencies",
     "remeda": "catalog:dependencies"

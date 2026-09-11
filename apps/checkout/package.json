@@ -25,6 +25,7 @@
   "dependencies": {
     "@bitcart/api-sdk": "workspace:*",
     "@bitcart/core": "workspace:*",
+    "@bitcart/form-kit": "workspace:*",
     "@bitcart/hooks": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",
     "@lingui/core": "catalog:dependencies",

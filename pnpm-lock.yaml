@@ -346,6 +346,9 @@ importers:
       '@bitcart/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@bitcart/form-kit':
+        specifier: workspace:*
+        version: link:../../packages/form-kit
       '@bitcart/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks
@@ -1002,9 +1005,6 @@ importers:
 
   packages/core:
     dependencies:
-      '@lingui/core':
-        specifier: catalog:dependencies
-        version: 6.6.0(@babel/core@7.29.7(supports-color@7.2.0))(@babel/types@7.29.8)
       remeda:
         specifier: catalog:dependencies
         version: 2.45.0
@@ -1060,6 +1060,9 @@ importers:
       '@bitcart/ui-kit':
         specifier: workspace:*
         version: link:../ui-kit
+      '@lingui/core':
+        specifier: catalog:dependencies
+        version: 6.6.0(@babel/core@7.29.7(supports-color@7.2.0))(@babel/types@7.29.8)
       '@tanstack/react-form':
         specifier: catalog:dependencies
         version: 1.33.5(@tanstack/react-start@1.168.49(crossws@0.4.12(srvx@1.0.3))(esbuild@0.28.2)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(rolldown@1.2.7)(supports-color@7.2.0)(vite@8.2.2(@types/node@25.9.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)

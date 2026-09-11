@@ -17,7 +17,7 @@ export default defineConfig({
   catalogs: [
     {
       path: "<rootDir>/src/common/i18n/_generated/locales/{locale}",
-      include: ["src", "../../packages/core/src", "../../packages/ui-kit/src"],
+      include: ["src", "../../packages/ui-kit/src"],
 
       // Delete the following line if you encounter TS issues during extraction
       exclude: ["src/**/*.d.ts"],

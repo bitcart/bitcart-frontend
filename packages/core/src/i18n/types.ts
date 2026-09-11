@@ -1,6 +1,6 @@
-import type { Messages as LocaleMessages } from "@lingui/core"
+type CompiledLocaleMessage = (string | [name: string, type?: string, format?: unknown])[]
 
-export { type LocaleMessages }
+export type LocaleMessages = Record<string, string | CompiledLocaleMessage>
 
 /**
  * Valid ISO 3166-1 alpha-2 country codes
