@@ -1,9 +1,8 @@
 import type { ApiFailure } from "#/types"
 import { getApiErrorMessage } from "#/utils"
 
-// FIXME: Revisit on every new Orval release, until this workaround can finally be discarded.
-//! Dropping the envelope at the codegen level (`includeHttpResponseReturnType: false`)
-//! is broken in Orval 8.24.
+// todo: Drop this helper and the `select` wrappers calling it, once the envelope is removed.
+//* Orval 8.28.1 returns the payload directly under `includeHttpResponseReturnType: false`.
 /**
  * Extracts payload from `data.data`, applying a consumer-provided `select` if present.
  */

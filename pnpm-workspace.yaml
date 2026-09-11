@@ -17,18 +17,18 @@ catalogMode: strict
 
 catalogs:
   dependencies:
-    "@base-ui/react": 1.7.0
+    "@base-ui/react": 1.8.0
     "@daypicker/react": 10.0.1
-    "@fumadocs/base-ui": 16.15.4
+    "@fumadocs/base-ui": 16.15.6
     "@lingui/core": 6.6.0
     "@lingui/react": 6.6.0
-    "@mantine/hooks": 9.5.2
+    "@mantine/hooks": 9.6.0
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
     "@tanstack/react-devtools": "0.10.12"
     "@tanstack/react-form": 1.33.5
-    "@tanstack/react-query": 5.102.2
-    "@tanstack/react-query-devtools": "5.102.2"
+    "@tanstack/react-query": 5.102.8
+    "@tanstack/react-query-devtools": "5.102.8"
     "@tanstack/react-router": "1.170.32"
     "@tanstack/react-router-devtools": "1.167.1"
     "@tanstack/react-router-ssr-query": "1.167.2"
@@ -40,28 +40,28 @@ catalogs:
     class-variance-authority: 0.7.1
     dotenv: 17.4.2
     effect: 3.22.1
-    fumadocs-core: 16.15.4
-    fumadocs-mdx: 15.3.1
-    fumadocs-ui: 16.15.4
+    fumadocs-core: 16.15.6
+    fumadocs-mdx: 15.4.0
+    fumadocs-ui: 16.15.6
     inter-ui: 4.1.1
-    lucide-react: 1.33.0
+    lucide-react: 1.41.0
     next-themes: 0.4.6
     qrcode.react: 4.2.0
     react: 19.2.8
     react-dom: 19.2.8
-    remeda: 2.43.0
+    remeda: 2.45.0
     sonner: 2.0.8
     tailwind-merge: 3.6.0
     use-sync-external-store: 1.6.0
-    vike: 0.4.263
+    vike: 0.4.266
     vike-react: 0.6.26
     vike-react-query: 0.1.13
-    zod: 4.4.3
+    zod: 4.5.4
     canvas-confetti: 1.9.4
   devDependencies:
     "@effect/language-service": 0.87.2
     "@faker-js/faker": 10.6.0
-    "@fumadocs/story": 1.2.0
+    "@fumadocs/story": 1.3.0
     "@lingui/babel-plugin-lingui-macro": 6.6.0
     "@lingui/cli": 6.6.0
     "@lingui/conf": 6.6.0
@@ -76,35 +76,35 @@ catalogs:
     "@tanstack/router-cli": "^1.132.0"
     "@testing-library/dom": 10.4.1
     "@testing-library/jest-dom": 6.9.1
-    "@testing-library/react": 16.3.2
-    "@testing-library/user-event": 14.6.6
+    "@testing-library/react": 16.3.3
+    "@testing-library/user-event": 14.6.7
     "@types/canvas-confetti": 1.9.0
     "@types/mdx": 2.0.14
     "@types/node": 25.9.5
     "@types/react": 19.2.18
-    "@types/react-dom": 19.2.5
-    "@unocss/cli": 66.8.1
-    "@vitejs/plugin-react": 6.1.0
+    "@types/react-dom": 19.2.7
+    "@unocss/cli": 66.10.0
+    "@vitejs/plugin-react": 6.1.1
     babel-plugin-react-compiler: 1.0.0
     dependency-cruiser: 18.2.0
     eslint-plugin-better-tailwindcss: 4.7.0
     eslint-plugin-react-hooks: 7.1.1
     jsdom: 29.1.1
-    knip: 6.32.2
+    knip: 6.34.0
     msw: 2.15.0
     nitro: 3.0.260610-beta
     nx: 23.2.0
-    orval: 8.24.0
-    oxfmt: 0.65.0
-    oxlint: 1.80.0
+    orval: 8.28.1
+    oxfmt: 0.67.0
+    oxlint: 1.82.0
     oxlint-tsgolint: 7.0.2001
     serve: 14.2.6
-    srvx: 0.12.7
+    srvx: 0.12.8
     tailwindcss: 4.3.3
-    tsdown: 0.22.14
-    tsx: 4.23.12
+    tsdown: 0.23.0
+    tsx: 4.23.13
     typescript: 6.0.3
-    unocss: 66.8.1
+    unocss: 66.10.0
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
     vite: 8.2.2

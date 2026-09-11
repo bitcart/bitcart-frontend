@@ -9,7 +9,7 @@ import * as zod from "zod"
 
 export const BodyProductsUpdateProductMultipart = zod.object({
   data: zod.string().describe("JSON string containing product update data"),
-  image: zod.instanceof(File).optional().describe("Product image"),
+  image: zod.instanceof(Blob).optional().describe("Product image"),
 })
 
 export type BodyProductsUpdateProductMultipart = zod.input<

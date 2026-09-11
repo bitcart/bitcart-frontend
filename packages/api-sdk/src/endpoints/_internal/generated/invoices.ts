@@ -33,10 +33,13 @@ import type {
   BatchAction,
   CreateInvoice,
   CustomerUpdateData,
+  DisplayInvoiceOutput,
+  DisplayRefundOutput,
   HTTPValidationError,
   InvoicesExportInvoicesParams,
   InvoicesListItemsParams,
   MethodUpdateData,
+  OffsetPaginationDisplayInvoiceOutput,
   OptionalUpdateInvoice,
   RefundData,
   SubmitRefundData,
@@ -340,7 +343,7 @@ export function useInvoicesExportInvoicesSuspense<
 }
 
 export type invoicesListItemsResponse200 = {
-  data: OffsetPaginationDisplayInvoice
+  data: OffsetPaginationDisplayInvoiceOutput
   status: 200
 }
 
@@ -615,7 +618,7 @@ export function useInvoicesListItemsSuspense<
 }
 
 export type invoicesCreateItemResponse200 = {
-  data: DisplayInvoice
+  data: DisplayInvoiceOutput
   status: 200
 }
 
@@ -643,10 +646,18 @@ export const invoicesCreateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<invoicesCreateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getInvoicesCreateItemUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createInvoice),
   })
 
@@ -658,6 +669,8 @@ export const invoicesCreateItem = async (
   return { data, status: res.status, headers: res.headers } as invoicesCreateItemResponseSuccess
 }
 
+export const getInvoicesCreateItemMutationKey = () => ["invoicesCreateItem"] as const
+
 export const getInvoicesCreateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -665,7 +678,7 @@ export const getInvoicesCreateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof invoicesCreateItem>>,
     TError,
-    { data: CreateInvoice },
+    InvoicesCreateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -673,10 +686,10 @@ export const getInvoicesCreateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof invoicesCreateItem>>,
   TError,
-  { data: CreateInvoice },
+  InvoicesCreateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["invoicesCreateItem"]
+  const mutationKey = getInvoicesCreateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -689,7 +702,7 @@ export const getInvoicesCreateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof invoicesCreateItem>>,
-    { data: CreateInvoice }
+    InvoicesCreateItemMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -707,6 +720,7 @@ export type InvoicesCreateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type InvoicesCreateItemMutationVariables = { data: CreateInvoice }
 
 /**
  * @summary Create Item
@@ -719,7 +733,7 @@ export const useInvoicesCreateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof invoicesCreateItem>>,
       TError,
-      { data: CreateInvoice },
+      InvoicesCreateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -729,7 +743,7 @@ export const useInvoicesCreateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof invoicesCreateItem>>,
   TError,
-  { data: CreateInvoice },
+  InvoicesCreateItemMutationVariables,
   TContext
 > => {
   return useMutation(getInvoicesCreateItemMutationOptions(options), queryClient)
@@ -966,7 +980,7 @@ export function useInvoicesGetCountSuspense<
 }
 
 export type invoicesGetItemResponse200 = {
-  data: DisplayInvoice
+  data: DisplayInvoiceOutput
   status: 200
 }
 
@@ -1228,7 +1242,7 @@ export function useInvoicesGetItemSuspense<
 }
 
 export type invoicesUpdateItemResponse200 = {
-  data: DisplayInvoice
+  data: DisplayInvoiceOutput
   status: 200
 }
 
@@ -1257,10 +1271,18 @@ export const invoicesUpdateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<invoicesUpdateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getInvoicesUpdateItemUrl(itemId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(optionalUpdateInvoice),
   })
 
@@ -1272,6 +1294,8 @@ export const invoicesUpdateItem = async (
   return { data, status: res.status, headers: res.headers } as invoicesUpdateItemResponseSuccess
 }
 
+export const getInvoicesUpdateItemMutationKey = () => ["invoicesUpdateItem"] as const
+
 export const getInvoicesUpdateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1279,7 +1303,7 @@ export const getInvoicesUpdateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof invoicesUpdateItem>>,
     TError,
-    { itemId: string; data: OptionalUpdateInvoice },
+    InvoicesUpdateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1287,10 +1311,10 @@ export const getInvoicesUpdateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof invoicesUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateInvoice },
+  InvoicesUpdateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["invoicesUpdateItem"]
+  const mutationKey = getInvoicesUpdateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1303,7 +1327,7 @@ export const getInvoicesUpdateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof invoicesUpdateItem>>,
-    { itemId: string; data: OptionalUpdateInvoice }
+    InvoicesUpdateItemMutationVariables
   > = (props) => {
     const { itemId, data } = props ?? {}
 
@@ -1321,6 +1345,7 @@ export type InvoicesUpdateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type InvoicesUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateInvoice }
 
 /**
  * @summary Update Item
@@ -1333,7 +1358,7 @@ export const useInvoicesUpdateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof invoicesUpdateItem>>,
       TError,
-      { itemId: string; data: OptionalUpdateInvoice },
+      InvoicesUpdateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1343,13 +1368,13 @@ export const useInvoicesUpdateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof invoicesUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateInvoice },
+  InvoicesUpdateItemMutationVariables,
   TContext
 > => {
   return useMutation(getInvoicesUpdateItemMutationOptions(options), queryClient)
 }
 export type invoicesDeleteItemResponse200 = {
-  data: DisplayInvoice
+  data: DisplayInvoiceOutput
   status: 200
 }
 
@@ -1390,6 +1415,8 @@ export const invoicesDeleteItem = async (
   return { data, status: res.status, headers: res.headers } as invoicesDeleteItemResponseSuccess
 }
 
+export const getInvoicesDeleteItemMutationKey = () => ["invoicesDeleteItem"] as const
+
 export const getInvoicesDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1397,7 +1424,7 @@ export const getInvoicesDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof invoicesDeleteItem>>,
     TError,
-    { itemId: string },
+    InvoicesDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1405,10 +1432,10 @@ export const getInvoicesDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof invoicesDeleteItem>>,
   TError,
-  { itemId: string },
+  InvoicesDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["invoicesDeleteItem"]
+  const mutationKey = getInvoicesDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1421,7 +1448,7 @@ export const getInvoicesDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof invoicesDeleteItem>>,
-    { itemId: string }
+    InvoicesDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -1439,6 +1466,7 @@ export type InvoicesDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type InvoicesDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -1451,7 +1479,7 @@ export const useInvoicesDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof invoicesDeleteItem>>,
       TError,
-      { itemId: string },
+      InvoicesDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1461,7 +1489,7 @@ export const useInvoicesDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof invoicesDeleteItem>>,
   TError,
-  { itemId: string },
+  InvoicesDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getInvoicesDeleteItemMutationOptions(options), queryClient)
@@ -1495,10 +1523,18 @@ export const invoicesBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<invoicesBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getInvoicesBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -1508,6 +1544,8 @@ export const invoicesBatchAction = async (
   return { data, status: res.status, headers: res.headers } as invoicesBatchActionResponseSuccess
 }
 
+export const getInvoicesBatchActionMutationKey = () => ["invoicesBatchAction"] as const
+
 export const getInvoicesBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1515,7 +1553,7 @@ export const getInvoicesBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof invoicesBatchAction>>,
     TError,
-    { data: BatchAction },
+    InvoicesBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1523,10 +1561,10 @@ export const getInvoicesBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof invoicesBatchAction>>,
   TError,
-  { data: BatchAction },
+  InvoicesBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["invoicesBatchAction"]
+  const mutationKey = getInvoicesBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1539,7 +1577,7 @@ export const getInvoicesBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof invoicesBatchAction>>,
-    { data: BatchAction }
+    InvoicesBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1557,6 +1595,7 @@ export type InvoicesBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type InvoicesBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -1569,7 +1608,7 @@ export const useInvoicesBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof invoicesBatchAction>>,
       TError,
-      { data: BatchAction },
+      InvoicesBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1579,13 +1618,13 @@ export const useInvoicesBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof invoicesBatchAction>>,
   TError,
-  { data: BatchAction },
+  InvoicesBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getInvoicesBatchActionMutationOptions(options), queryClient)
 }
 export type invoicesGetOrCreateInvoiceByOrderIdResponse200 = {
-  data: DisplayInvoice
+  data: DisplayInvoiceOutput
   status: 200
 }
 
@@ -1616,10 +1655,18 @@ export const invoicesGetOrCreateInvoiceByOrderId = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<invoicesGetOrCreateInvoiceByOrderIdResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getInvoicesGetOrCreateInvoiceByOrderIdUrl(orderId), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createInvoice),
   })
 
@@ -1635,6 +1682,9 @@ export const invoicesGetOrCreateInvoiceByOrderId = async (
   } as invoicesGetOrCreateInvoiceByOrderIdResponseSuccess
 }
 
+export const getInvoicesGetOrCreateInvoiceByOrderIdMutationKey = () =>
+  ["invoicesGetOrCreateInvoiceByOrderId"] as const
+
 export const getInvoicesGetOrCreateInvoiceByOrderIdMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1642,7 +1692,7 @@ export const getInvoicesGetOrCreateInvoiceByOrderIdMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof invoicesGetOrCreateInvoiceByOrderId>>,
     TError,
-    { orderId: string; data: CreateInvoice },
+    InvoicesGetOrCreateInvoiceByOrderIdMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1650,10 +1700,10 @@ export const getInvoicesGetOrCreateInvoiceByOrderIdMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof invoicesGetOrCreateInvoiceByOrderId>>,
   TError,
-  { orderId: string; data: CreateInvoice },
+  InvoicesGetOrCreateInvoiceByOrderIdMutationVariables,
   TContext
 > => {
-  const mutationKey = ["invoicesGetOrCreateInvoiceByOrderId"]
+  const mutationKey = getInvoicesGetOrCreateInvoiceByOrderIdMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1666,7 +1716,7 @@ export const getInvoicesGetOrCreateInvoiceByOrderIdMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof invoicesGetOrCreateInvoiceByOrderId>>,
-    { orderId: string; data: CreateInvoice }
+    InvoicesGetOrCreateInvoiceByOrderIdMutationVariables
   > = (props) => {
     const { orderId, data } = props ?? {}
 
@@ -1684,6 +1734,10 @@ export type InvoicesGetOrCreateInvoiceByOrderIdMutationError = globalThis.Error 
   info?: HTTPValidationError
   status?: number
 }
+export type InvoicesGetOrCreateInvoiceByOrderIdMutationVariables = {
+  orderId: string
+  data: CreateInvoice
+}
 
 /**
  * @summary Get Or Create Invoice By Order Id
@@ -1696,7 +1750,7 @@ export const useInvoicesGetOrCreateInvoiceByOrderId = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof invoicesGetOrCreateInvoiceByOrderId>>,
       TError,
-      { orderId: string; data: CreateInvoice },
+      InvoicesGetOrCreateInvoiceByOrderIdMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1706,13 +1760,13 @@ export const useInvoicesGetOrCreateInvoiceByOrderId = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof invoicesGetOrCreateInvoiceByOrderId>>,
   TError,
-  { orderId: string; data: CreateInvoice },
+  InvoicesGetOrCreateInvoiceByOrderIdMutationVariables,
   TContext
 > => {
   return useMutation(getInvoicesGetOrCreateInvoiceByOrderIdMutationOptions(options), queryClient)
 }
 export type invoicesUpdateInvoiceResponse200 = {
-  data: DisplayInvoice
+  data: DisplayInvoiceOutput
   status: 200
 }
 
@@ -1741,10 +1795,18 @@ export const invoicesUpdateInvoice = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<invoicesUpdateInvoiceResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getInvoicesUpdateInvoiceUrl(modelId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(customerUpdateData),
   })
 
@@ -1756,6 +1818,8 @@ export const invoicesUpdateInvoice = async (
   return { data, status: res.status, headers: res.headers } as invoicesUpdateInvoiceResponseSuccess
 }
 
+export const getInvoicesUpdateInvoiceMutationKey = () => ["invoicesUpdateInvoice"] as const
+
 export const getInvoicesUpdateInvoiceMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1763,7 +1827,7 @@ export const getInvoicesUpdateInvoiceMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof invoicesUpdateInvoice>>,
     TError,
-    { modelId: string; data: CustomerUpdateData },
+    InvoicesUpdateInvoiceMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1771,10 +1835,10 @@ export const getInvoicesUpdateInvoiceMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof invoicesUpdateInvoice>>,
   TError,
-  { modelId: string; data: CustomerUpdateData },
+  InvoicesUpdateInvoiceMutationVariables,
   TContext
 > => {
-  const mutationKey = ["invoicesUpdateInvoice"]
+  const mutationKey = getInvoicesUpdateInvoiceMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1787,7 +1851,7 @@ export const getInvoicesUpdateInvoiceMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof invoicesUpdateInvoice>>,
-    { modelId: string; data: CustomerUpdateData }
+    InvoicesUpdateInvoiceMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -1805,6 +1869,7 @@ export type InvoicesUpdateInvoiceMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type InvoicesUpdateInvoiceMutationVariables = { modelId: string; data: CustomerUpdateData }
 
 /**
  * @summary Update Invoice
@@ -1817,7 +1882,7 @@ export const useInvoicesUpdateInvoice = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof invoicesUpdateInvoice>>,
       TError,
-      { modelId: string; data: CustomerUpdateData },
+      InvoicesUpdateInvoiceMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1827,7 +1892,7 @@ export const useInvoicesUpdateInvoice = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof invoicesUpdateInvoice>>,
   TError,
-  { modelId: string; data: CustomerUpdateData },
+  InvoicesUpdateInvoiceMutationVariables,
   TContext
 > => {
   return useMutation(getInvoicesUpdateInvoiceMutationOptions(options), queryClient)
@@ -1863,10 +1928,18 @@ export const invoicesUpdatePaymentDetails = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<invoicesUpdatePaymentDetailsResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getInvoicesUpdatePaymentDetailsUrl(modelId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(methodUpdateData),
   })
 
@@ -1880,6 +1953,9 @@ export const invoicesUpdatePaymentDetails = async (
   } as invoicesUpdatePaymentDetailsResponseSuccess
 }
 
+export const getInvoicesUpdatePaymentDetailsMutationKey = () =>
+  ["invoicesUpdatePaymentDetails"] as const
+
 export const getInvoicesUpdatePaymentDetailsMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1887,7 +1963,7 @@ export const getInvoicesUpdatePaymentDetailsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof invoicesUpdatePaymentDetails>>,
     TError,
-    { modelId: string; data: MethodUpdateData },
+    InvoicesUpdatePaymentDetailsMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1895,10 +1971,10 @@ export const getInvoicesUpdatePaymentDetailsMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof invoicesUpdatePaymentDetails>>,
   TError,
-  { modelId: string; data: MethodUpdateData },
+  InvoicesUpdatePaymentDetailsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["invoicesUpdatePaymentDetails"]
+  const mutationKey = getInvoicesUpdatePaymentDetailsMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1911,7 +1987,7 @@ export const getInvoicesUpdatePaymentDetailsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof invoicesUpdatePaymentDetails>>,
-    { modelId: string; data: MethodUpdateData }
+    InvoicesUpdatePaymentDetailsMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -1929,6 +2005,10 @@ export type InvoicesUpdatePaymentDetailsMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type InvoicesUpdatePaymentDetailsMutationVariables = {
+  modelId: string
+  data: MethodUpdateData
+}
 
 /**
  * @summary Update Payment Details
@@ -1941,7 +2021,7 @@ export const useInvoicesUpdatePaymentDetails = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof invoicesUpdatePaymentDetails>>,
       TError,
-      { modelId: string; data: MethodUpdateData },
+      InvoicesUpdatePaymentDetailsMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1951,13 +2031,13 @@ export const useInvoicesUpdatePaymentDetails = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof invoicesUpdatePaymentDetails>>,
   TError,
-  { modelId: string; data: MethodUpdateData },
+  InvoicesUpdatePaymentDetailsMutationVariables,
   TContext
 > => {
   return useMutation(getInvoicesUpdatePaymentDetailsMutationOptions(options), queryClient)
 }
 export type invoicesRefundInvoiceResponse200 = {
-  data: DisplayRefund
+  data: DisplayRefundOutput
   status: 200
 }
 
@@ -1986,10 +2066,18 @@ export const invoicesRefundInvoice = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<invoicesRefundInvoiceResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getInvoicesRefundInvoiceUrl(modelId), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(refundData),
   })
 
@@ -2001,6 +2089,8 @@ export const invoicesRefundInvoice = async (
   return { data, status: res.status, headers: res.headers } as invoicesRefundInvoiceResponseSuccess
 }
 
+export const getInvoicesRefundInvoiceMutationKey = () => ["invoicesRefundInvoice"] as const
+
 export const getInvoicesRefundInvoiceMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2008,7 +2098,7 @@ export const getInvoicesRefundInvoiceMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof invoicesRefundInvoice>>,
     TError,
-    { modelId: string; data: RefundData },
+    InvoicesRefundInvoiceMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -2016,10 +2106,10 @@ export const getInvoicesRefundInvoiceMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof invoicesRefundInvoice>>,
   TError,
-  { modelId: string; data: RefundData },
+  InvoicesRefundInvoiceMutationVariables,
   TContext
 > => {
-  const mutationKey = ["invoicesRefundInvoice"]
+  const mutationKey = getInvoicesRefundInvoiceMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -2032,7 +2122,7 @@ export const getInvoicesRefundInvoiceMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof invoicesRefundInvoice>>,
-    { modelId: string; data: RefundData }
+    InvoicesRefundInvoiceMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -2050,6 +2140,7 @@ export type InvoicesRefundInvoiceMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type InvoicesRefundInvoiceMutationVariables = { modelId: string; data: RefundData }
 
 /**
  * @summary Refund Invoice
@@ -2062,7 +2153,7 @@ export const useInvoicesRefundInvoice = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof invoicesRefundInvoice>>,
       TError,
-      { modelId: string; data: RefundData },
+      InvoicesRefundInvoiceMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -2072,13 +2163,13 @@ export const useInvoicesRefundInvoice = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof invoicesRefundInvoice>>,
   TError,
-  { modelId: string; data: RefundData },
+  InvoicesRefundInvoiceMutationVariables,
   TContext
 > => {
   return useMutation(getInvoicesRefundInvoiceMutationOptions(options), queryClient)
 }
 export type invoicesGetRefundResponse200 = {
-  data: DisplayRefund
+  data: DisplayRefundOutput
   status: 200
 }
 
@@ -2342,7 +2433,7 @@ export function useInvoicesGetRefundSuspense<
 }
 
 export type invoicesSubmitRefundResponse200 = {
-  data: DisplayRefund
+  data: DisplayRefundOutput
   status: 200
 }
 
@@ -2371,10 +2462,18 @@ export const invoicesSubmitRefund = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<invoicesSubmitRefundResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getInvoicesSubmitRefundUrl(refundId), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(submitRefundData),
   })
 
@@ -2386,6 +2485,8 @@ export const invoicesSubmitRefund = async (
   return { data, status: res.status, headers: res.headers } as invoicesSubmitRefundResponseSuccess
 }
 
+export const getInvoicesSubmitRefundMutationKey = () => ["invoicesSubmitRefund"] as const
+
 export const getInvoicesSubmitRefundMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2393,7 +2494,7 @@ export const getInvoicesSubmitRefundMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof invoicesSubmitRefund>>,
     TError,
-    { refundId: string; data: SubmitRefundData },
+    InvoicesSubmitRefundMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -2401,10 +2502,10 @@ export const getInvoicesSubmitRefundMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof invoicesSubmitRefund>>,
   TError,
-  { refundId: string; data: SubmitRefundData },
+  InvoicesSubmitRefundMutationVariables,
   TContext
 > => {
-  const mutationKey = ["invoicesSubmitRefund"]
+  const mutationKey = getInvoicesSubmitRefundMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -2417,7 +2518,7 @@ export const getInvoicesSubmitRefundMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof invoicesSubmitRefund>>,
-    { refundId: string; data: SubmitRefundData }
+    InvoicesSubmitRefundMutationVariables
   > = (props) => {
     const { refundId, data } = props ?? {}
 
@@ -2435,6 +2536,7 @@ export type InvoicesSubmitRefundMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type InvoicesSubmitRefundMutationVariables = { refundId: string; data: SubmitRefundData }
 
 /**
  * @summary Submit Refund
@@ -2447,7 +2549,7 @@ export const useInvoicesSubmitRefund = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof invoicesSubmitRefund>>,
       TError,
-      { refundId: string; data: SubmitRefundData },
+      InvoicesSubmitRefundMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -2457,7 +2559,7 @@ export const useInvoicesSubmitRefund = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof invoicesSubmitRefund>>,
   TError,
-  { refundId: string; data: SubmitRefundData },
+  InvoicesSubmitRefundMutationVariables,
   TContext
 > => {
   return useMutation(getInvoicesSubmitRefundMutationOptions(options), queryClient)

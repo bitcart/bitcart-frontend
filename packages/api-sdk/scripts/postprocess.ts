@@ -167,18 +167,22 @@ const postprocessSchemas: Flow = () => {
   }
 }
 
-//* Replaces the failure branch Orval emits in every generated operation with `createApiFailure`.
+//* Repairs Orval's generated operations.
 //*
-//* Orval's own branch throws a message-less `Error` and runs `JSON.parse` over the response body
-//* unconditionally, unlike the success branch next to it, which parses only a JSON content type.
-//* A plain-text 500 or a proxy's HTML 502 therefore threw a `SyntaxError` before `status` was
-//* assigned, and every classifier in `src/utils.ts` read that `SyntaxError` as a foreign error.
+//* 1. The failure branch. Orval's own branch throws a message-less `Error` and runs `JSON.parse`
+//*    over the response body unconditionally, unlike the success branch next to it, which parses
+//*    only a JSON content type. A plain-text 500 or a proxy's HTML 502 therefore threw a
+//*    `SyntaxError` before `status` was assigned, and every classifier in `src/utils.ts` read that
+//*    `SyntaxError` as a foreign error. `createApiFailure` replaces it.
+//* 2. Response type imports. Each success response is typed as the `<Schema>Output` alias exported
+//*    beside its Zod schema, which Orval never adds to the file's imports.
 //*
-//! The rewrite is a regex over Orval's output shape, which an upgrade can reshape silently.
+//! Both rewrites are regexes over Orval's output shape, which an upgrade can reshape silently.
 //! Every matched block is checked statement by statement, and the flow fails as soon as one block
 //! or one file fails to match.
 const postprocessEndpoints: Flow = () => {
   const FAILURE_IMPORT = 'import { createApiFailure } from "../utils"'
+  const SCHEMAS_MODULE = "../../../schemas/generated"
 
   //* The whole `if (!res.ok) { ... throw err }` branch, however oxfmt wrapped the `err` annotation.
   const FAILURE_BLOCK = /^ {2}if \(!res\.ok\) \{\n(?: {4,}.*\n)*? {4}throw err\n {2}\}$/gm
@@ -194,6 +198,24 @@ const postprocessEndpoints: Flow = () => {
 
   //* A single-line import, or the closing line of a multi-line one.
   const IMPORT_END = /^(?:import .*"|} from ".*")$/gm
+
+  //* The generated schemas imported as types. Some operation files carry no such import.
+  const SCHEMA_TYPE_IMPORT =
+    /^import type \{([^}]*)\} from "\.\.\/\.\.\/\.\.\/schemas\/generated"$/m
+
+  //* The generated schemas imported as values, emitted for every schema validated at runtime.
+  const SCHEMA_VALUE_IMPORT = /^import \{[^}]*\} from "\.\.\/\.\.\/\.\.\/schemas\/generated"$/m
+
+  //* The success response member, typed as the Zod output alias of its schema.
+  const RESPONSE_TYPE = /^ {2}data: (\w+Output)$/gm
+
+  const EXPORTED_TYPE = /^export type (\w+)/gm
+
+  const exportedTypes = new Set(
+    walk(SCHEMAS_ROOT, ".zod.ts").flatMap((file) =>
+      [...readFileSync(file, "utf8").matchAll(EXPORTED_TYPE)].map(([, name]) => name),
+    ),
+  )
 
   const failures: string[] = []
 
@@ -235,8 +257,60 @@ const postprocessEndpoints: Flow = () => {
     return `${source.slice(0, insertAt)}\n${FAILURE_IMPORT}${source.slice(insertAt)}`
   }
 
+  const addResponseTypeImports = (source: string, file: string) => {
+    const referenced = new Set([...source.matchAll(RESPONSE_TYPE)].map(([, name]) => name))
+
+    if (referenced.size === 0) return { rewrites: 0, source }
+
+    const undeclared = [...referenced].filter((name) => !exportedTypes.has(name))
+
+    if (undeclared.length > 0) {
+      failures.push(`${file}: the generated schemas do not export ${undeclared.join(", ")}`)
+
+      return { rewrites: 0, source }
+    }
+
+    const typeImport = SCHEMA_TYPE_IMPORT.exec(source)
+
+    if (typeImport) {
+      const imported = typeImport[1]
+        .split(",")
+        .map((name) => name.trim())
+        .filter(Boolean)
+
+      const added = [...referenced].filter((name) => !imported.includes(name))
+      const names = [...imported, ...added].sort()
+
+      return {
+        rewrites: added.length,
+        source: source.replace(
+          SCHEMA_TYPE_IMPORT,
+          `import type { ${names.join(", ")} } from "${SCHEMAS_MODULE}"`,
+        ),
+      }
+    }
+
+    const valueImport = SCHEMA_VALUE_IMPORT.exec(source)
+
+    if (!valueImport) {
+      failures.push(`${file}: no import from \`${SCHEMAS_MODULE}\` to extend`)
+
+      return { rewrites: 0, source }
+    }
+
+    const names = [...referenced].sort()
+    const insertAt = valueImport.index + valueImport[0].length
+    const declaration = `import type { ${names.join(", ")} } from "${SCHEMAS_MODULE}"`
+
+    return {
+      rewrites: names.length,
+      source: `${source.slice(0, insertAt)}\n${declaration}${source.slice(insertAt)}`,
+    }
+  }
+
   const pending = new Map<string, string>()
   let rewritten = 0
+  let imported = 0
 
   for (const file of walk(ENDPOINTS_ROOT, ".ts")) {
     const original = readFileSync(file, "utf8")
@@ -248,12 +322,28 @@ const postprocessEndpoints: Flow = () => {
       continue
     }
 
-    rewritten += withHelper.rewrites
+    const withFailureImport = addFailureImport(withHelper.source, file)
+    const withResponseTypes = addResponseTypeImports(withFailureImport, file)
 
-    pending.set(file, addFailureImport(withHelper.source, file))
+    rewritten += withHelper.rewrites
+    imported += withResponseTypes.rewrites
+
+    pending.set(file, withResponseTypes.source)
   }
 
-  return { pending, succeeded: report("endpoints", failures, `${rewritten} failure branch(es)`) }
+  if (imported === 0) {
+    failures.push("no success response was typed as a Zod output alias")
+  }
+
+  return {
+    pending,
+
+    succeeded: report(
+      "endpoints",
+      failures,
+      `${rewritten} failure branch(es), ${imported} response type import(s)`,
+    ),
+  }
 }
 
 const flows = [postprocessSchemas, postprocessEndpoints].map((flow) => flow())

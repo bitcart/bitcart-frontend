@@ -8,7 +8,7 @@
 import * as zod from "zod"
 
 export const BodyManageRestoreBackup = zod.object({
-  backup: zod.instanceof(File),
+  backup: zod.instanceof(Blob),
 })
 
 export type BodyManageRestoreBackup = zod.input<typeof BodyManageRestoreBackup>

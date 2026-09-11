@@ -29,8 +29,10 @@ import type {
   BatchAction,
   BodyFilesCreateFile,
   BodyFilesPatchFile,
+  DisplayFileOutput,
   FilesListItemsParams,
   HTTPValidationError,
+  OffsetPaginationDisplayFileOutput,
 } from "../../../schemas/generated"
 import { createApiFailure } from "../utils"
 
@@ -50,7 +52,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type filesListItemsResponse200 = {
-  data: OffsetPaginationDisplayFile
+  data: OffsetPaginationDisplayFileOutput
   status: 200
 }
 
@@ -323,7 +325,7 @@ export function useFilesListItemsSuspense<
 }
 
 export type filesCreateFileResponse200 = {
-  data: DisplayFile
+  data: DisplayFileOutput
   status: 200
 }
 
@@ -368,6 +370,8 @@ export const filesCreateFile = async (
   return { data, status: res.status, headers: res.headers } as filesCreateFileResponseSuccess
 }
 
+export const getFilesCreateFileMutationKey = () => ["filesCreateFile"] as const
+
 export const getFilesCreateFileMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -375,7 +379,7 @@ export const getFilesCreateFileMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof filesCreateFile>>,
     TError,
-    { data: BodyFilesCreateFile },
+    FilesCreateFileMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -383,10 +387,10 @@ export const getFilesCreateFileMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof filesCreateFile>>,
   TError,
-  { data: BodyFilesCreateFile },
+  FilesCreateFileMutationVariables,
   TContext
 > => {
-  const mutationKey = ["filesCreateFile"]
+  const mutationKey = getFilesCreateFileMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -399,7 +403,7 @@ export const getFilesCreateFileMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof filesCreateFile>>,
-    { data: BodyFilesCreateFile }
+    FilesCreateFileMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -415,6 +419,7 @@ export type FilesCreateFileMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type FilesCreateFileMutationVariables = { data: BodyFilesCreateFile }
 
 /**
  * @summary Create File
@@ -427,7 +432,7 @@ export const useFilesCreateFile = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof filesCreateFile>>,
       TError,
-      { data: BodyFilesCreateFile },
+      FilesCreateFileMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -437,7 +442,7 @@ export const useFilesCreateFile = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof filesCreateFile>>,
   TError,
-  { data: BodyFilesCreateFile },
+  FilesCreateFileMutationVariables,
   TContext
 > => {
   return useMutation(getFilesCreateFileMutationOptions(options), queryClient)
@@ -669,7 +674,7 @@ export function useFilesGetCountSuspense<
 }
 
 export type filesGetItemResponse200 = {
-  data: DisplayFile
+  data: DisplayFileOutput
   status: 200
 }
 
@@ -927,7 +932,7 @@ export function useFilesGetItemSuspense<
 }
 
 export type filesDeleteItemResponse200 = {
-  data: DisplayFile
+  data: DisplayFileOutput
   status: 200
 }
 
@@ -968,6 +973,8 @@ export const filesDeleteItem = async (
   return { data, status: res.status, headers: res.headers } as filesDeleteItemResponseSuccess
 }
 
+export const getFilesDeleteItemMutationKey = () => ["filesDeleteItem"] as const
+
 export const getFilesDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -975,7 +982,7 @@ export const getFilesDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof filesDeleteItem>>,
     TError,
-    { itemId: string },
+    FilesDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -983,10 +990,10 @@ export const getFilesDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof filesDeleteItem>>,
   TError,
-  { itemId: string },
+  FilesDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["filesDeleteItem"]
+  const mutationKey = getFilesDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -999,7 +1006,7 @@ export const getFilesDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof filesDeleteItem>>,
-    { itemId: string }
+    FilesDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -1015,6 +1022,7 @@ export type FilesDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type FilesDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -1027,7 +1035,7 @@ export const useFilesDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof filesDeleteItem>>,
       TError,
-      { itemId: string },
+      FilesDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1037,7 +1045,7 @@ export const useFilesDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof filesDeleteItem>>,
   TError,
-  { itemId: string },
+  FilesDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getFilesDeleteItemMutationOptions(options), queryClient)
@@ -1071,10 +1079,18 @@ export const filesBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<filesBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getFilesBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -1084,6 +1100,8 @@ export const filesBatchAction = async (
   return { data, status: res.status, headers: res.headers } as filesBatchActionResponseSuccess
 }
 
+export const getFilesBatchActionMutationKey = () => ["filesBatchAction"] as const
+
 export const getFilesBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1091,7 +1109,7 @@ export const getFilesBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof filesBatchAction>>,
     TError,
-    { data: BatchAction },
+    FilesBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1099,10 +1117,10 @@ export const getFilesBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof filesBatchAction>>,
   TError,
-  { data: BatchAction },
+  FilesBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["filesBatchAction"]
+  const mutationKey = getFilesBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1115,7 +1133,7 @@ export const getFilesBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof filesBatchAction>>,
-    { data: BatchAction }
+    FilesBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1133,6 +1151,7 @@ export type FilesBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type FilesBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -1145,7 +1164,7 @@ export const useFilesBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof filesBatchAction>>,
       TError,
-      { data: BatchAction },
+      FilesBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1155,13 +1174,13 @@ export const useFilesBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof filesBatchAction>>,
   TError,
-  { data: BatchAction },
+  FilesBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getFilesBatchActionMutationOptions(options), queryClient)
 }
 export type filesPatchFileResponse200 = {
-  data: DisplayFile
+  data: DisplayFileOutput
   status: 200
 }
 
@@ -1207,6 +1226,8 @@ export const filesPatchFile = async (
   return { data, status: res.status, headers: res.headers } as filesPatchFileResponseSuccess
 }
 
+export const getFilesPatchFileMutationKey = () => ["filesPatchFile"] as const
+
 export const getFilesPatchFileMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1214,7 +1235,7 @@ export const getFilesPatchFileMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof filesPatchFile>>,
     TError,
-    { modelId: string; data: BodyFilesPatchFile },
+    FilesPatchFileMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1222,10 +1243,10 @@ export const getFilesPatchFileMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof filesPatchFile>>,
   TError,
-  { modelId: string; data: BodyFilesPatchFile },
+  FilesPatchFileMutationVariables,
   TContext
 > => {
-  const mutationKey = ["filesPatchFile"]
+  const mutationKey = getFilesPatchFileMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1238,7 +1259,7 @@ export const getFilesPatchFileMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof filesPatchFile>>,
-    { modelId: string; data: BodyFilesPatchFile }
+    FilesPatchFileMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -1254,6 +1275,7 @@ export type FilesPatchFileMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type FilesPatchFileMutationVariables = { modelId: string; data: BodyFilesPatchFile }
 
 /**
  * @summary Patch File
@@ -1266,7 +1288,7 @@ export const useFilesPatchFile = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof filesPatchFile>>,
       TError,
-      { modelId: string; data: BodyFilesPatchFile },
+      FilesPatchFileMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1276,7 +1298,7 @@ export const useFilesPatchFile = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof filesPatchFile>>,
   TError,
-  { modelId: string; data: BodyFilesPatchFile },
+  FilesPatchFileMutationVariables,
   TContext
 > => {
   return useMutation(getFilesPatchFileMutationOptions(options), queryClient)

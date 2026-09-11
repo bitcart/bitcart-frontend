@@ -22,6 +22,7 @@ import type {
 
 import { BitcartApiConfig } from "../../../config"
 import { UpdateCheckUpdates200 } from "../../../schemas/generated"
+import type { UpdateCheckUpdates200Output } from "../../../schemas/generated"
 import { createApiFailure } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
@@ -40,7 +41,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type updateCheckUpdatesResponse200 = {
-  data: UpdateCheckUpdates200
+  data: UpdateCheckUpdates200Output
   status: 200
 }
 

@@ -28,7 +28,9 @@ import { DisplayPayout, OffsetPaginationDisplayPayout } from "../../../schemas/g
 import type {
   BatchAction,
   CreatePayout,
+  DisplayPayoutOutput,
   HTTPValidationError,
+  OffsetPaginationDisplayPayoutOutput,
   OptionalUpdatePayout,
   PayoutsListItemsParams,
 } from "../../../schemas/generated"
@@ -50,7 +52,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type payoutsListItemsResponse200 = {
-  data: OffsetPaginationDisplayPayout
+  data: OffsetPaginationDisplayPayoutOutput
   status: 200
 }
 
@@ -323,7 +325,7 @@ export function usePayoutsListItemsSuspense<
 }
 
 export type payoutsCreateItemResponse200 = {
-  data: DisplayPayout
+  data: DisplayPayoutOutput
   status: 200
 }
 
@@ -351,10 +353,18 @@ export const payoutsCreateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<payoutsCreateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getPayoutsCreateItemUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createPayout),
   })
 
@@ -366,6 +376,8 @@ export const payoutsCreateItem = async (
   return { data, status: res.status, headers: res.headers } as payoutsCreateItemResponseSuccess
 }
 
+export const getPayoutsCreateItemMutationKey = () => ["payoutsCreateItem"] as const
+
 export const getPayoutsCreateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -373,7 +385,7 @@ export const getPayoutsCreateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof payoutsCreateItem>>,
     TError,
-    { data: CreatePayout },
+    PayoutsCreateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -381,10 +393,10 @@ export const getPayoutsCreateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof payoutsCreateItem>>,
   TError,
-  { data: CreatePayout },
+  PayoutsCreateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["payoutsCreateItem"]
+  const mutationKey = getPayoutsCreateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -397,7 +409,7 @@ export const getPayoutsCreateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof payoutsCreateItem>>,
-    { data: CreatePayout }
+    PayoutsCreateItemMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -415,6 +427,7 @@ export type PayoutsCreateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type PayoutsCreateItemMutationVariables = { data: CreatePayout }
 
 /**
  * @summary Create Item
@@ -427,7 +440,7 @@ export const usePayoutsCreateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof payoutsCreateItem>>,
       TError,
-      { data: CreatePayout },
+      PayoutsCreateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -437,7 +450,7 @@ export const usePayoutsCreateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof payoutsCreateItem>>,
   TError,
-  { data: CreatePayout },
+  PayoutsCreateItemMutationVariables,
   TContext
 > => {
   return useMutation(getPayoutsCreateItemMutationOptions(options), queryClient)
@@ -674,7 +687,7 @@ export function usePayoutsGetCountSuspense<
 }
 
 export type payoutsGetItemResponse200 = {
-  data: DisplayPayout
+  data: DisplayPayoutOutput
   status: 200
 }
 
@@ -936,7 +949,7 @@ export function usePayoutsGetItemSuspense<
 }
 
 export type payoutsUpdateItemResponse200 = {
-  data: DisplayPayout
+  data: DisplayPayoutOutput
   status: 200
 }
 
@@ -965,10 +978,18 @@ export const payoutsUpdateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<payoutsUpdateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getPayoutsUpdateItemUrl(itemId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(optionalUpdatePayout),
   })
 
@@ -980,6 +1001,8 @@ export const payoutsUpdateItem = async (
   return { data, status: res.status, headers: res.headers } as payoutsUpdateItemResponseSuccess
 }
 
+export const getPayoutsUpdateItemMutationKey = () => ["payoutsUpdateItem"] as const
+
 export const getPayoutsUpdateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -987,7 +1010,7 @@ export const getPayoutsUpdateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof payoutsUpdateItem>>,
     TError,
-    { itemId: string; data: OptionalUpdatePayout },
+    PayoutsUpdateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -995,10 +1018,10 @@ export const getPayoutsUpdateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof payoutsUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdatePayout },
+  PayoutsUpdateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["payoutsUpdateItem"]
+  const mutationKey = getPayoutsUpdateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1011,7 +1034,7 @@ export const getPayoutsUpdateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof payoutsUpdateItem>>,
-    { itemId: string; data: OptionalUpdatePayout }
+    PayoutsUpdateItemMutationVariables
   > = (props) => {
     const { itemId, data } = props ?? {}
 
@@ -1029,6 +1052,7 @@ export type PayoutsUpdateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type PayoutsUpdateItemMutationVariables = { itemId: string; data: OptionalUpdatePayout }
 
 /**
  * @summary Update Item
@@ -1041,7 +1065,7 @@ export const usePayoutsUpdateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof payoutsUpdateItem>>,
       TError,
-      { itemId: string; data: OptionalUpdatePayout },
+      PayoutsUpdateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1051,13 +1075,13 @@ export const usePayoutsUpdateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof payoutsUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdatePayout },
+  PayoutsUpdateItemMutationVariables,
   TContext
 > => {
   return useMutation(getPayoutsUpdateItemMutationOptions(options), queryClient)
 }
 export type payoutsDeleteItemResponse200 = {
-  data: DisplayPayout
+  data: DisplayPayoutOutput
   status: 200
 }
 
@@ -1098,6 +1122,8 @@ export const payoutsDeleteItem = async (
   return { data, status: res.status, headers: res.headers } as payoutsDeleteItemResponseSuccess
 }
 
+export const getPayoutsDeleteItemMutationKey = () => ["payoutsDeleteItem"] as const
+
 export const getPayoutsDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1105,7 +1131,7 @@ export const getPayoutsDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof payoutsDeleteItem>>,
     TError,
-    { itemId: string },
+    PayoutsDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1113,10 +1139,10 @@ export const getPayoutsDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof payoutsDeleteItem>>,
   TError,
-  { itemId: string },
+  PayoutsDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["payoutsDeleteItem"]
+  const mutationKey = getPayoutsDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1129,7 +1155,7 @@ export const getPayoutsDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof payoutsDeleteItem>>,
-    { itemId: string }
+    PayoutsDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -1147,6 +1173,7 @@ export type PayoutsDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type PayoutsDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -1159,7 +1186,7 @@ export const usePayoutsDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof payoutsDeleteItem>>,
       TError,
-      { itemId: string },
+      PayoutsDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1169,7 +1196,7 @@ export const usePayoutsDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof payoutsDeleteItem>>,
   TError,
-  { itemId: string },
+  PayoutsDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getPayoutsDeleteItemMutationOptions(options), queryClient)
@@ -1203,10 +1230,18 @@ export const payoutsBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<payoutsBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getPayoutsBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -1216,6 +1251,8 @@ export const payoutsBatchAction = async (
   return { data, status: res.status, headers: res.headers } as payoutsBatchActionResponseSuccess
 }
 
+export const getPayoutsBatchActionMutationKey = () => ["payoutsBatchAction"] as const
+
 export const getPayoutsBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1223,7 +1260,7 @@ export const getPayoutsBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof payoutsBatchAction>>,
     TError,
-    { data: BatchAction },
+    PayoutsBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1231,10 +1268,10 @@ export const getPayoutsBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof payoutsBatchAction>>,
   TError,
-  { data: BatchAction },
+  PayoutsBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["payoutsBatchAction"]
+  const mutationKey = getPayoutsBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1247,7 +1284,7 @@ export const getPayoutsBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof payoutsBatchAction>>,
-    { data: BatchAction }
+    PayoutsBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1265,6 +1302,7 @@ export type PayoutsBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type PayoutsBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -1277,7 +1315,7 @@ export const usePayoutsBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof payoutsBatchAction>>,
       TError,
-      { data: BatchAction },
+      PayoutsBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1287,7 +1325,7 @@ export const usePayoutsBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof payoutsBatchAction>>,
   TError,
-  { data: BatchAction },
+  PayoutsBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getPayoutsBatchActionMutationOptions(options), queryClient)

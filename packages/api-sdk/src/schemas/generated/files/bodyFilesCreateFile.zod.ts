@@ -8,7 +8,7 @@
 import * as zod from "zod"
 
 export const BodyFilesCreateFile = zod.object({
-  file: zod.instanceof(File),
+  file: zod.instanceof(Blob),
 })
 
 export type BodyFilesCreateFile = zod.input<typeof BodyFilesCreateFile>

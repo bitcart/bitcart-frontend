@@ -29,6 +29,7 @@ import type {
   AddLicenseRequest,
   BodyPluginsInstallPlugin,
   HTTPValidationError,
+  PluginsGetPlugins200Output,
   PluginsUpdatePluginSettingsBody,
   UninstallPluginData,
 } from "../../../schemas/generated"
@@ -50,7 +51,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type pluginsGetPluginsResponse200 = {
-  data: PluginsGetPlugins200
+  data: PluginsGetPlugins200Output
   status: 200
 }
 
@@ -328,6 +329,8 @@ export const pluginsInstallPlugin = async (
   return { data, status: res.status, headers: res.headers } as pluginsInstallPluginResponseSuccess
 }
 
+export const getPluginsInstallPluginMutationKey = () => ["pluginsInstallPlugin"] as const
+
 export const getPluginsInstallPluginMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -335,7 +338,7 @@ export const getPluginsInstallPluginMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof pluginsInstallPlugin>>,
     TError,
-    { data: BodyPluginsInstallPlugin },
+    PluginsInstallPluginMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -343,10 +346,10 @@ export const getPluginsInstallPluginMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof pluginsInstallPlugin>>,
   TError,
-  { data: BodyPluginsInstallPlugin },
+  PluginsInstallPluginMutationVariables,
   TContext
 > => {
-  const mutationKey = ["pluginsInstallPlugin"]
+  const mutationKey = getPluginsInstallPluginMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -359,7 +362,7 @@ export const getPluginsInstallPluginMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof pluginsInstallPlugin>>,
-    { data: BodyPluginsInstallPlugin }
+    PluginsInstallPluginMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -377,6 +380,7 @@ export type PluginsInstallPluginMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type PluginsInstallPluginMutationVariables = { data: BodyPluginsInstallPlugin }
 
 /**
  * @summary Install Plugin
@@ -389,7 +393,7 @@ export const usePluginsInstallPlugin = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof pluginsInstallPlugin>>,
       TError,
-      { data: BodyPluginsInstallPlugin },
+      PluginsInstallPluginMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -399,7 +403,7 @@ export const usePluginsInstallPlugin = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof pluginsInstallPlugin>>,
   TError,
-  { data: BodyPluginsInstallPlugin },
+  PluginsInstallPluginMutationVariables,
   TContext
 > => {
   return useMutation(getPluginsInstallPluginMutationOptions(options), queryClient)
@@ -433,10 +437,18 @@ export const pluginsUninstallPlugin = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<pluginsUninstallPluginResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getPluginsUninstallPluginUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(uninstallPluginData),
   })
 
@@ -446,6 +458,8 @@ export const pluginsUninstallPlugin = async (
   return { data, status: res.status, headers: res.headers } as pluginsUninstallPluginResponseSuccess
 }
 
+export const getPluginsUninstallPluginMutationKey = () => ["pluginsUninstallPlugin"] as const
+
 export const getPluginsUninstallPluginMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -453,7 +467,7 @@ export const getPluginsUninstallPluginMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof pluginsUninstallPlugin>>,
     TError,
-    { data: UninstallPluginData },
+    PluginsUninstallPluginMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -461,10 +475,10 @@ export const getPluginsUninstallPluginMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof pluginsUninstallPlugin>>,
   TError,
-  { data: UninstallPluginData },
+  PluginsUninstallPluginMutationVariables,
   TContext
 > => {
-  const mutationKey = ["pluginsUninstallPlugin"]
+  const mutationKey = getPluginsUninstallPluginMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -477,7 +491,7 @@ export const getPluginsUninstallPluginMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof pluginsUninstallPlugin>>,
-    { data: UninstallPluginData }
+    PluginsUninstallPluginMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -495,6 +509,7 @@ export type PluginsUninstallPluginMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type PluginsUninstallPluginMutationVariables = { data: UninstallPluginData }
 
 /**
  * @summary Uninstall Plugin
@@ -507,7 +522,7 @@ export const usePluginsUninstallPlugin = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof pluginsUninstallPlugin>>,
       TError,
-      { data: UninstallPluginData },
+      PluginsUninstallPluginMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -517,7 +532,7 @@ export const usePluginsUninstallPlugin = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof pluginsUninstallPlugin>>,
   TError,
-  { data: UninstallPluginData },
+  PluginsUninstallPluginMutationVariables,
   TContext
 > => {
   return useMutation(getPluginsUninstallPluginMutationOptions(options), queryClient)
@@ -1071,10 +1086,18 @@ export const pluginsUpdatePluginSettings = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<pluginsUpdatePluginSettingsResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getPluginsUpdatePluginSettingsUrl(pluginName), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(pluginsUpdatePluginSettingsBody),
   })
 
@@ -1088,6 +1111,9 @@ export const pluginsUpdatePluginSettings = async (
   } as pluginsUpdatePluginSettingsResponseSuccess
 }
 
+export const getPluginsUpdatePluginSettingsMutationKey = () =>
+  ["pluginsUpdatePluginSettings"] as const
+
 export const getPluginsUpdatePluginSettingsMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1095,7 +1121,7 @@ export const getPluginsUpdatePluginSettingsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof pluginsUpdatePluginSettings>>,
     TError,
-    { pluginName: string; data: PluginsUpdatePluginSettingsBody },
+    PluginsUpdatePluginSettingsMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1103,10 +1129,10 @@ export const getPluginsUpdatePluginSettingsMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof pluginsUpdatePluginSettings>>,
   TError,
-  { pluginName: string; data: PluginsUpdatePluginSettingsBody },
+  PluginsUpdatePluginSettingsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["pluginsUpdatePluginSettings"]
+  const mutationKey = getPluginsUpdatePluginSettingsMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1119,7 +1145,7 @@ export const getPluginsUpdatePluginSettingsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof pluginsUpdatePluginSettings>>,
-    { pluginName: string; data: PluginsUpdatePluginSettingsBody }
+    PluginsUpdatePluginSettingsMutationVariables
   > = (props) => {
     const { pluginName, data } = props ?? {}
 
@@ -1137,6 +1163,10 @@ export type PluginsUpdatePluginSettingsMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type PluginsUpdatePluginSettingsMutationVariables = {
+  pluginName: string
+  data: PluginsUpdatePluginSettingsBody
+}
 
 /**
  * @summary Update Plugin Settings
@@ -1149,7 +1179,7 @@ export const usePluginsUpdatePluginSettings = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof pluginsUpdatePluginSettings>>,
       TError,
-      { pluginName: string; data: PluginsUpdatePluginSettingsBody },
+      PluginsUpdatePluginSettingsMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1159,7 +1189,7 @@ export const usePluginsUpdatePluginSettings = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof pluginsUpdatePluginSettings>>,
   TError,
-  { pluginName: string; data: PluginsUpdatePluginSettingsBody },
+  PluginsUpdatePluginSettingsMutationVariables,
   TContext
 > => {
   return useMutation(getPluginsUpdatePluginSettingsMutationOptions(options), queryClient)
@@ -1428,10 +1458,18 @@ export const pluginsAddLicense = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<pluginsAddLicenseResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getPluginsAddLicenseUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(addLicenseRequest),
   })
 
@@ -1441,6 +1479,8 @@ export const pluginsAddLicense = async (
   return { data, status: res.status, headers: res.headers } as pluginsAddLicenseResponseSuccess
 }
 
+export const getPluginsAddLicenseMutationKey = () => ["pluginsAddLicense"] as const
+
 export const getPluginsAddLicenseMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1448,7 +1488,7 @@ export const getPluginsAddLicenseMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof pluginsAddLicense>>,
     TError,
-    { data: AddLicenseRequest },
+    PluginsAddLicenseMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1456,10 +1496,10 @@ export const getPluginsAddLicenseMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof pluginsAddLicense>>,
   TError,
-  { data: AddLicenseRequest },
+  PluginsAddLicenseMutationVariables,
   TContext
 > => {
-  const mutationKey = ["pluginsAddLicense"]
+  const mutationKey = getPluginsAddLicenseMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1472,7 +1512,7 @@ export const getPluginsAddLicenseMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof pluginsAddLicense>>,
-    { data: AddLicenseRequest }
+    PluginsAddLicenseMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1490,6 +1530,7 @@ export type PluginsAddLicenseMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type PluginsAddLicenseMutationVariables = { data: AddLicenseRequest }
 
 /**
  * @summary Add License
@@ -1502,7 +1543,7 @@ export const usePluginsAddLicense = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof pluginsAddLicense>>,
       TError,
-      { data: AddLicenseRequest },
+      PluginsAddLicenseMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1512,7 +1553,7 @@ export const usePluginsAddLicense = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof pluginsAddLicense>>,
   TError,
-  { data: AddLicenseRequest },
+  PluginsAddLicenseMutationVariables,
   TContext
 > => {
   return useMutation(getPluginsAddLicenseMutationOptions(options), queryClient)
@@ -1557,6 +1598,8 @@ export const pluginsDeleteLicense = async (
   return { data, status: res.status, headers: res.headers } as pluginsDeleteLicenseResponseSuccess
 }
 
+export const getPluginsDeleteLicenseMutationKey = () => ["pluginsDeleteLicense"] as const
+
 export const getPluginsDeleteLicenseMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1564,7 +1607,7 @@ export const getPluginsDeleteLicenseMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof pluginsDeleteLicense>>,
     TError,
-    { licenseKey: string },
+    PluginsDeleteLicenseMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1572,10 +1615,10 @@ export const getPluginsDeleteLicenseMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof pluginsDeleteLicense>>,
   TError,
-  { licenseKey: string },
+  PluginsDeleteLicenseMutationVariables,
   TContext
 > => {
-  const mutationKey = ["pluginsDeleteLicense"]
+  const mutationKey = getPluginsDeleteLicenseMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1588,7 +1631,7 @@ export const getPluginsDeleteLicenseMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof pluginsDeleteLicense>>,
-    { licenseKey: string }
+    PluginsDeleteLicenseMutationVariables
   > = (props) => {
     const { licenseKey } = props ?? {}
 
@@ -1606,6 +1649,7 @@ export type PluginsDeleteLicenseMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type PluginsDeleteLicenseMutationVariables = { licenseKey: string }
 
 /**
  * @summary Delete License
@@ -1618,7 +1662,7 @@ export const usePluginsDeleteLicense = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof pluginsDeleteLicense>>,
       TError,
-      { licenseKey: string },
+      PluginsDeleteLicenseMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1628,7 +1672,7 @@ export const usePluginsDeleteLicense = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof pluginsDeleteLicense>>,
   TError,
-  { licenseKey: string },
+  PluginsDeleteLicenseMutationVariables,
   TContext
 > => {
   return useMutation(getPluginsDeleteLicenseMutationOptions(options), queryClient)

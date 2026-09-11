@@ -32,10 +32,13 @@ import {
 import type {
   BatchAction,
   CreateStore,
+  DisplayStoreOutput,
   EmailSettings,
   HTTPValidationError,
+  OffsetPaginationDisplayStoreOutput,
   OptionalUpdateStore,
   PublicStore,
+  RatesResponseOutput,
   StoreCheckoutSettings,
   StorePluginSettings,
   StoreThemeSettings,
@@ -60,7 +63,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type storesListItemsResponse200 = {
-  data: OffsetPaginationDisplayStore
+  data: OffsetPaginationDisplayStoreOutput
   status: 200
 }
 
@@ -333,7 +336,7 @@ export function useStoresListItemsSuspense<
 }
 
 export type storesCreateItemResponse200 = {
-  data: DisplayStore
+  data: DisplayStoreOutput
   status: 200
 }
 
@@ -361,10 +364,18 @@ export const storesCreateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<storesCreateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getStoresCreateItemUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createStore),
   })
 
@@ -376,6 +387,8 @@ export const storesCreateItem = async (
   return { data, status: res.status, headers: res.headers } as storesCreateItemResponseSuccess
 }
 
+export const getStoresCreateItemMutationKey = () => ["storesCreateItem"] as const
+
 export const getStoresCreateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -383,7 +396,7 @@ export const getStoresCreateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof storesCreateItem>>,
     TError,
-    { data: CreateStore },
+    StoresCreateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -391,10 +404,10 @@ export const getStoresCreateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof storesCreateItem>>,
   TError,
-  { data: CreateStore },
+  StoresCreateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["storesCreateItem"]
+  const mutationKey = getStoresCreateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -407,7 +420,7 @@ export const getStoresCreateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof storesCreateItem>>,
-    { data: CreateStore }
+    StoresCreateItemMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -425,6 +438,7 @@ export type StoresCreateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type StoresCreateItemMutationVariables = { data: CreateStore }
 
 /**
  * @summary Create Item
@@ -437,7 +451,7 @@ export const useStoresCreateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof storesCreateItem>>,
       TError,
-      { data: CreateStore },
+      StoresCreateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -447,7 +461,7 @@ export const useStoresCreateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof storesCreateItem>>,
   TError,
-  { data: CreateStore },
+  StoresCreateItemMutationVariables,
   TContext
 > => {
   return useMutation(getStoresCreateItemMutationOptions(options), queryClient)
@@ -684,7 +698,7 @@ export function useStoresGetCountSuspense<
 }
 
 export type storesUpdateItemResponse200 = {
-  data: DisplayStore
+  data: DisplayStoreOutput
   status: 200
 }
 
@@ -713,10 +727,18 @@ export const storesUpdateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<storesUpdateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getStoresUpdateItemUrl(itemId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(optionalUpdateStore),
   })
 
@@ -728,6 +750,8 @@ export const storesUpdateItem = async (
   return { data, status: res.status, headers: res.headers } as storesUpdateItemResponseSuccess
 }
 
+export const getStoresUpdateItemMutationKey = () => ["storesUpdateItem"] as const
+
 export const getStoresUpdateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -735,7 +759,7 @@ export const getStoresUpdateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof storesUpdateItem>>,
     TError,
-    { itemId: string; data: OptionalUpdateStore },
+    StoresUpdateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -743,10 +767,10 @@ export const getStoresUpdateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof storesUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateStore },
+  StoresUpdateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["storesUpdateItem"]
+  const mutationKey = getStoresUpdateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -759,7 +783,7 @@ export const getStoresUpdateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof storesUpdateItem>>,
-    { itemId: string; data: OptionalUpdateStore }
+    StoresUpdateItemMutationVariables
   > = (props) => {
     const { itemId, data } = props ?? {}
 
@@ -777,6 +801,7 @@ export type StoresUpdateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type StoresUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateStore }
 
 /**
  * @summary Update Item
@@ -789,7 +814,7 @@ export const useStoresUpdateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof storesUpdateItem>>,
       TError,
-      { itemId: string; data: OptionalUpdateStore },
+      StoresUpdateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -799,13 +824,13 @@ export const useStoresUpdateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof storesUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateStore },
+  StoresUpdateItemMutationVariables,
   TContext
 > => {
   return useMutation(getStoresUpdateItemMutationOptions(options), queryClient)
 }
 export type storesDeleteItemResponse200 = {
-  data: DisplayStore
+  data: DisplayStoreOutput
   status: 200
 }
 
@@ -846,6 +871,8 @@ export const storesDeleteItem = async (
   return { data, status: res.status, headers: res.headers } as storesDeleteItemResponseSuccess
 }
 
+export const getStoresDeleteItemMutationKey = () => ["storesDeleteItem"] as const
+
 export const getStoresDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -853,7 +880,7 @@ export const getStoresDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof storesDeleteItem>>,
     TError,
-    { itemId: string },
+    StoresDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -861,10 +888,10 @@ export const getStoresDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof storesDeleteItem>>,
   TError,
-  { itemId: string },
+  StoresDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["storesDeleteItem"]
+  const mutationKey = getStoresDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -877,7 +904,7 @@ export const getStoresDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof storesDeleteItem>>,
-    { itemId: string }
+    StoresDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -895,6 +922,7 @@ export type StoresDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type StoresDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -907,7 +935,7 @@ export const useStoresDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof storesDeleteItem>>,
       TError,
-      { itemId: string },
+      StoresDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -917,7 +945,7 @@ export const useStoresDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof storesDeleteItem>>,
   TError,
-  { itemId: string },
+  StoresDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getStoresDeleteItemMutationOptions(options), queryClient)
@@ -951,10 +979,18 @@ export const storesBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<storesBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getStoresBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -964,6 +1000,8 @@ export const storesBatchAction = async (
   return { data, status: res.status, headers: res.headers } as storesBatchActionResponseSuccess
 }
 
+export const getStoresBatchActionMutationKey = () => ["storesBatchAction"] as const
+
 export const getStoresBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -971,7 +1009,7 @@ export const getStoresBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof storesBatchAction>>,
     TError,
-    { data: BatchAction },
+    StoresBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -979,10 +1017,10 @@ export const getStoresBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof storesBatchAction>>,
   TError,
-  { data: BatchAction },
+  StoresBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["storesBatchAction"]
+  const mutationKey = getStoresBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -995,7 +1033,7 @@ export const getStoresBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof storesBatchAction>>,
-    { data: BatchAction }
+    StoresBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1013,6 +1051,7 @@ export type StoresBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type StoresBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -1025,7 +1064,7 @@ export const useStoresBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof storesBatchAction>>,
       TError,
-      { data: BatchAction },
+      StoresBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1035,7 +1074,7 @@ export const useStoresBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof storesBatchAction>>,
   TError,
-  { data: BatchAction },
+  StoresBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getStoresBatchActionMutationOptions(options), queryClient)
@@ -1561,7 +1600,7 @@ export function useStoresPingEmailSuspense<
 }
 
 export type storesSetStoreCheckoutSettingsResponse200 = {
-  data: DisplayStore
+  data: DisplayStoreOutput
   status: 200
 }
 
@@ -1592,10 +1631,18 @@ export const storesSetStoreCheckoutSettings = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<storesSetStoreCheckoutSettingsResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getStoresSetStoreCheckoutSettingsUrl(modelId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(storeCheckoutSettings),
   })
 
@@ -1611,6 +1658,9 @@ export const storesSetStoreCheckoutSettings = async (
   } as storesSetStoreCheckoutSettingsResponseSuccess
 }
 
+export const getStoresSetStoreCheckoutSettingsMutationKey = () =>
+  ["storesSetStoreCheckoutSettings"] as const
+
 export const getStoresSetStoreCheckoutSettingsMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1618,7 +1668,7 @@ export const getStoresSetStoreCheckoutSettingsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof storesSetStoreCheckoutSettings>>,
     TError,
-    { modelId: string; data: StoreCheckoutSettings },
+    StoresSetStoreCheckoutSettingsMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1626,10 +1676,10 @@ export const getStoresSetStoreCheckoutSettingsMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof storesSetStoreCheckoutSettings>>,
   TError,
-  { modelId: string; data: StoreCheckoutSettings },
+  StoresSetStoreCheckoutSettingsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["storesSetStoreCheckoutSettings"]
+  const mutationKey = getStoresSetStoreCheckoutSettingsMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1642,7 +1692,7 @@ export const getStoresSetStoreCheckoutSettingsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof storesSetStoreCheckoutSettings>>,
-    { modelId: string; data: StoreCheckoutSettings }
+    StoresSetStoreCheckoutSettingsMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -1660,6 +1710,10 @@ export type StoresSetStoreCheckoutSettingsMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type StoresSetStoreCheckoutSettingsMutationVariables = {
+  modelId: string
+  data: StoreCheckoutSettings
+}
 
 /**
  * @summary Set Store Checkout Settings
@@ -1672,7 +1726,7 @@ export const useStoresSetStoreCheckoutSettings = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof storesSetStoreCheckoutSettings>>,
       TError,
-      { modelId: string; data: StoreCheckoutSettings },
+      StoresSetStoreCheckoutSettingsMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1682,13 +1736,13 @@ export const useStoresSetStoreCheckoutSettings = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof storesSetStoreCheckoutSettings>>,
   TError,
-  { modelId: string; data: StoreCheckoutSettings },
+  StoresSetStoreCheckoutSettingsMutationVariables,
   TContext
 > => {
   return useMutation(getStoresSetStoreCheckoutSettingsMutationOptions(options), queryClient)
 }
 export type storesSetStoreEmailSettingsResponse200 = {
-  data: DisplayStore
+  data: DisplayStoreOutput
   status: 200
 }
 
@@ -1717,10 +1771,18 @@ export const storesSetStoreEmailSettings = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<storesSetStoreEmailSettingsResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getStoresSetStoreEmailSettingsUrl(modelId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(emailSettings),
   })
 
@@ -1736,6 +1798,9 @@ export const storesSetStoreEmailSettings = async (
   } as storesSetStoreEmailSettingsResponseSuccess
 }
 
+export const getStoresSetStoreEmailSettingsMutationKey = () =>
+  ["storesSetStoreEmailSettings"] as const
+
 export const getStoresSetStoreEmailSettingsMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1743,7 +1808,7 @@ export const getStoresSetStoreEmailSettingsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof storesSetStoreEmailSettings>>,
     TError,
-    { modelId: string; data: EmailSettings },
+    StoresSetStoreEmailSettingsMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1751,10 +1816,10 @@ export const getStoresSetStoreEmailSettingsMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof storesSetStoreEmailSettings>>,
   TError,
-  { modelId: string; data: EmailSettings },
+  StoresSetStoreEmailSettingsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["storesSetStoreEmailSettings"]
+  const mutationKey = getStoresSetStoreEmailSettingsMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1767,7 +1832,7 @@ export const getStoresSetStoreEmailSettingsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof storesSetStoreEmailSettings>>,
-    { modelId: string; data: EmailSettings }
+    StoresSetStoreEmailSettingsMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -1785,6 +1850,7 @@ export type StoresSetStoreEmailSettingsMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type StoresSetStoreEmailSettingsMutationVariables = { modelId: string; data: EmailSettings }
 
 /**
  * @summary Set Store Email Settings
@@ -1797,7 +1863,7 @@ export const useStoresSetStoreEmailSettings = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof storesSetStoreEmailSettings>>,
       TError,
-      { modelId: string; data: EmailSettings },
+      StoresSetStoreEmailSettingsMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1807,13 +1873,13 @@ export const useStoresSetStoreEmailSettings = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof storesSetStoreEmailSettings>>,
   TError,
-  { modelId: string; data: EmailSettings },
+  StoresSetStoreEmailSettingsMutationVariables,
   TContext
 > => {
   return useMutation(getStoresSetStoreEmailSettingsMutationOptions(options), queryClient)
 }
 export type storesSetStoreThemeSettingsResponse200 = {
-  data: DisplayStore
+  data: DisplayStoreOutput
   status: 200
 }
 
@@ -1842,10 +1908,18 @@ export const storesSetStoreThemeSettings = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<storesSetStoreThemeSettingsResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getStoresSetStoreThemeSettingsUrl(modelId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(storeThemeSettings),
   })
 
@@ -1861,6 +1935,9 @@ export const storesSetStoreThemeSettings = async (
   } as storesSetStoreThemeSettingsResponseSuccess
 }
 
+export const getStoresSetStoreThemeSettingsMutationKey = () =>
+  ["storesSetStoreThemeSettings"] as const
+
 export const getStoresSetStoreThemeSettingsMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1868,7 +1945,7 @@ export const getStoresSetStoreThemeSettingsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof storesSetStoreThemeSettings>>,
     TError,
-    { modelId: string; data: StoreThemeSettings },
+    StoresSetStoreThemeSettingsMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1876,10 +1953,10 @@ export const getStoresSetStoreThemeSettingsMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof storesSetStoreThemeSettings>>,
   TError,
-  { modelId: string; data: StoreThemeSettings },
+  StoresSetStoreThemeSettingsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["storesSetStoreThemeSettings"]
+  const mutationKey = getStoresSetStoreThemeSettingsMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1892,7 +1969,7 @@ export const getStoresSetStoreThemeSettingsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof storesSetStoreThemeSettings>>,
-    { modelId: string; data: StoreThemeSettings }
+    StoresSetStoreThemeSettingsMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -1910,6 +1987,10 @@ export type StoresSetStoreThemeSettingsMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type StoresSetStoreThemeSettingsMutationVariables = {
+  modelId: string
+  data: StoreThemeSettings
+}
 
 /**
  * @summary Set Store Theme Settings
@@ -1922,7 +2003,7 @@ export const useStoresSetStoreThemeSettings = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof storesSetStoreThemeSettings>>,
       TError,
-      { modelId: string; data: StoreThemeSettings },
+      StoresSetStoreThemeSettingsMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1932,13 +2013,13 @@ export const useStoresSetStoreThemeSettings = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof storesSetStoreThemeSettings>>,
   TError,
-  { modelId: string; data: StoreThemeSettings },
+  StoresSetStoreThemeSettingsMutationVariables,
   TContext
 > => {
   return useMutation(getStoresSetStoreThemeSettingsMutationOptions(options), queryClient)
 }
 export type storesSetStorePluginSettingsResponse200 = {
-  data: DisplayStore
+  data: DisplayStoreOutput
   status: 200
 }
 
@@ -1968,10 +2049,18 @@ export const storesSetStorePluginSettings = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<storesSetStorePluginSettingsResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getStoresSetStorePluginSettingsUrl(modelId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(storePluginSettings),
   })
 
@@ -1987,6 +2076,9 @@ export const storesSetStorePluginSettings = async (
   } as storesSetStorePluginSettingsResponseSuccess
 }
 
+export const getStoresSetStorePluginSettingsMutationKey = () =>
+  ["storesSetStorePluginSettings"] as const
+
 export const getStoresSetStorePluginSettingsMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1994,7 +2086,7 @@ export const getStoresSetStorePluginSettingsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof storesSetStorePluginSettings>>,
     TError,
-    { modelId: string; data: StorePluginSettings },
+    StoresSetStorePluginSettingsMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -2002,10 +2094,10 @@ export const getStoresSetStorePluginSettingsMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof storesSetStorePluginSettings>>,
   TError,
-  { modelId: string; data: StorePluginSettings },
+  StoresSetStorePluginSettingsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["storesSetStorePluginSettings"]
+  const mutationKey = getStoresSetStorePluginSettingsMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -2018,7 +2110,7 @@ export const getStoresSetStorePluginSettingsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof storesSetStorePluginSettings>>,
-    { modelId: string; data: StorePluginSettings }
+    StoresSetStorePluginSettingsMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -2036,6 +2128,10 @@ export type StoresSetStorePluginSettingsMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type StoresSetStorePluginSettingsMutationVariables = {
+  modelId: string
+  data: StorePluginSettings
+}
 
 /**
  * @summary Set Store Plugin Settings
@@ -2048,7 +2144,7 @@ export const useStoresSetStorePluginSettings = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof storesSetStorePluginSettings>>,
       TError,
-      { modelId: string; data: StorePluginSettings },
+      StoresSetStorePluginSettingsMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -2058,7 +2154,7 @@ export const useStoresSetStorePluginSettings = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof storesSetStorePluginSettings>>,
   TError,
-  { modelId: string; data: StorePluginSettings },
+  StoresSetStorePluginSettingsMutationVariables,
   TContext
 > => {
   return useMutation(getStoresSetStorePluginSettingsMutationOptions(options), queryClient)
@@ -2093,10 +2189,18 @@ export const storesSetStoreRateRules = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<storesSetStoreRateRulesResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getStoresSetStoreRateRulesUrl(modelId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(storesSetStoreRateRulesBody),
   })
 
@@ -2110,6 +2214,8 @@ export const storesSetStoreRateRules = async (
   } as storesSetStoreRateRulesResponseSuccess
 }
 
+export const getStoresSetStoreRateRulesMutationKey = () => ["storesSetStoreRateRules"] as const
+
 export const getStoresSetStoreRateRulesMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2117,7 +2223,7 @@ export const getStoresSetStoreRateRulesMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof storesSetStoreRateRules>>,
     TError,
-    { modelId: string; data?: string },
+    StoresSetStoreRateRulesMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -2125,10 +2231,10 @@ export const getStoresSetStoreRateRulesMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof storesSetStoreRateRules>>,
   TError,
-  { modelId: string; data?: string },
+  StoresSetStoreRateRulesMutationVariables,
   TContext
 > => {
-  const mutationKey = ["storesSetStoreRateRules"]
+  const mutationKey = getStoresSetStoreRateRulesMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -2141,7 +2247,7 @@ export const getStoresSetStoreRateRulesMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof storesSetStoreRateRules>>,
-    { modelId: string; data?: string }
+    StoresSetStoreRateRulesMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -2159,6 +2265,7 @@ export type StoresSetStoreRateRulesMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type StoresSetStoreRateRulesMutationVariables = { modelId: string; data?: string }
 
 /**
  * @summary Set Store Rate Rules
@@ -2171,7 +2278,7 @@ export const useStoresSetStoreRateRules = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof storesSetStoreRateRules>>,
       TError,
-      { modelId: string; data?: string },
+      StoresSetStoreRateRulesMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -2181,13 +2288,13 @@ export const useStoresSetStoreRateRules = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof storesSetStoreRateRules>>,
   TError,
-  { modelId: string; data?: string },
+  StoresSetStoreRateRulesMutationVariables,
   TContext
 > => {
   return useMutation(getStoresSetStoreRateRulesMutationOptions(options), queryClient)
 }
 export type storesGetStoreRatesResponse200 = {
-  data: RatesResponse
+  data: RatesResponseOutput
   status: 200
 }
 

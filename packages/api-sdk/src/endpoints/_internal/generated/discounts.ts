@@ -29,7 +29,9 @@ import type {
   BatchAction,
   CreateDiscount,
   DiscountsListItemsParams,
+  DisplayDiscountOutput,
   HTTPValidationError,
+  OffsetPaginationDisplayDiscountOutput,
   OptionalUpdateDiscount,
 } from "../../../schemas/generated"
 import { createApiFailure } from "../utils"
@@ -50,7 +52,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type discountsListItemsResponse200 = {
-  data: OffsetPaginationDisplayDiscount
+  data: OffsetPaginationDisplayDiscountOutput
   status: 200
 }
 
@@ -327,7 +329,7 @@ export function useDiscountsListItemsSuspense<
 }
 
 export type discountsCreateItemResponse200 = {
-  data: DisplayDiscount
+  data: DisplayDiscountOutput
   status: 200
 }
 
@@ -355,10 +357,18 @@ export const discountsCreateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<discountsCreateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getDiscountsCreateItemUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createDiscount),
   })
 
@@ -370,6 +380,8 @@ export const discountsCreateItem = async (
   return { data, status: res.status, headers: res.headers } as discountsCreateItemResponseSuccess
 }
 
+export const getDiscountsCreateItemMutationKey = () => ["discountsCreateItem"] as const
+
 export const getDiscountsCreateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -377,7 +389,7 @@ export const getDiscountsCreateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof discountsCreateItem>>,
     TError,
-    { data: CreateDiscount },
+    DiscountsCreateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -385,10 +397,10 @@ export const getDiscountsCreateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof discountsCreateItem>>,
   TError,
-  { data: CreateDiscount },
+  DiscountsCreateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["discountsCreateItem"]
+  const mutationKey = getDiscountsCreateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -401,7 +413,7 @@ export const getDiscountsCreateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof discountsCreateItem>>,
-    { data: CreateDiscount }
+    DiscountsCreateItemMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -419,6 +431,7 @@ export type DiscountsCreateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type DiscountsCreateItemMutationVariables = { data: CreateDiscount }
 
 /**
  * @summary Create Item
@@ -431,7 +444,7 @@ export const useDiscountsCreateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof discountsCreateItem>>,
       TError,
-      { data: CreateDiscount },
+      DiscountsCreateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -441,7 +454,7 @@ export const useDiscountsCreateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof discountsCreateItem>>,
   TError,
-  { data: CreateDiscount },
+  DiscountsCreateItemMutationVariables,
   TContext
 > => {
   return useMutation(getDiscountsCreateItemMutationOptions(options), queryClient)
@@ -680,7 +693,7 @@ export function useDiscountsGetCountSuspense<
 }
 
 export type discountsGetItemResponse200 = {
-  data: DisplayDiscount
+  data: DisplayDiscountOutput
   status: 200
 }
 
@@ -942,7 +955,7 @@ export function useDiscountsGetItemSuspense<
 }
 
 export type discountsUpdateItemResponse200 = {
-  data: DisplayDiscount
+  data: DisplayDiscountOutput
   status: 200
 }
 
@@ -971,10 +984,18 @@ export const discountsUpdateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<discountsUpdateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getDiscountsUpdateItemUrl(itemId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(optionalUpdateDiscount),
   })
 
@@ -986,6 +1007,8 @@ export const discountsUpdateItem = async (
   return { data, status: res.status, headers: res.headers } as discountsUpdateItemResponseSuccess
 }
 
+export const getDiscountsUpdateItemMutationKey = () => ["discountsUpdateItem"] as const
+
 export const getDiscountsUpdateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -993,7 +1016,7 @@ export const getDiscountsUpdateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof discountsUpdateItem>>,
     TError,
-    { itemId: string; data: OptionalUpdateDiscount },
+    DiscountsUpdateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1001,10 +1024,10 @@ export const getDiscountsUpdateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof discountsUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateDiscount },
+  DiscountsUpdateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["discountsUpdateItem"]
+  const mutationKey = getDiscountsUpdateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1017,7 +1040,7 @@ export const getDiscountsUpdateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof discountsUpdateItem>>,
-    { itemId: string; data: OptionalUpdateDiscount }
+    DiscountsUpdateItemMutationVariables
   > = (props) => {
     const { itemId, data } = props ?? {}
 
@@ -1035,6 +1058,7 @@ export type DiscountsUpdateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type DiscountsUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateDiscount }
 
 /**
  * @summary Update Item
@@ -1047,7 +1071,7 @@ export const useDiscountsUpdateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof discountsUpdateItem>>,
       TError,
-      { itemId: string; data: OptionalUpdateDiscount },
+      DiscountsUpdateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1057,13 +1081,13 @@ export const useDiscountsUpdateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof discountsUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateDiscount },
+  DiscountsUpdateItemMutationVariables,
   TContext
 > => {
   return useMutation(getDiscountsUpdateItemMutationOptions(options), queryClient)
 }
 export type discountsDeleteItemResponse200 = {
-  data: DisplayDiscount
+  data: DisplayDiscountOutput
   status: 200
 }
 
@@ -1104,6 +1128,8 @@ export const discountsDeleteItem = async (
   return { data, status: res.status, headers: res.headers } as discountsDeleteItemResponseSuccess
 }
 
+export const getDiscountsDeleteItemMutationKey = () => ["discountsDeleteItem"] as const
+
 export const getDiscountsDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1111,7 +1137,7 @@ export const getDiscountsDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof discountsDeleteItem>>,
     TError,
-    { itemId: string },
+    DiscountsDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1119,10 +1145,10 @@ export const getDiscountsDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof discountsDeleteItem>>,
   TError,
-  { itemId: string },
+  DiscountsDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["discountsDeleteItem"]
+  const mutationKey = getDiscountsDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1135,7 +1161,7 @@ export const getDiscountsDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof discountsDeleteItem>>,
-    { itemId: string }
+    DiscountsDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -1153,6 +1179,7 @@ export type DiscountsDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type DiscountsDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -1165,7 +1192,7 @@ export const useDiscountsDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof discountsDeleteItem>>,
       TError,
-      { itemId: string },
+      DiscountsDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1175,7 +1202,7 @@ export const useDiscountsDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof discountsDeleteItem>>,
   TError,
-  { itemId: string },
+  DiscountsDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getDiscountsDeleteItemMutationOptions(options), queryClient)
@@ -1209,10 +1236,18 @@ export const discountsBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<discountsBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getDiscountsBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -1222,6 +1257,8 @@ export const discountsBatchAction = async (
   return { data, status: res.status, headers: res.headers } as discountsBatchActionResponseSuccess
 }
 
+export const getDiscountsBatchActionMutationKey = () => ["discountsBatchAction"] as const
+
 export const getDiscountsBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1229,7 +1266,7 @@ export const getDiscountsBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof discountsBatchAction>>,
     TError,
-    { data: BatchAction },
+    DiscountsBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1237,10 +1274,10 @@ export const getDiscountsBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof discountsBatchAction>>,
   TError,
-  { data: BatchAction },
+  DiscountsBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["discountsBatchAction"]
+  const mutationKey = getDiscountsBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1253,7 +1290,7 @@ export const getDiscountsBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof discountsBatchAction>>,
-    { data: BatchAction }
+    DiscountsBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1271,6 +1308,7 @@ export type DiscountsBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type DiscountsBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -1283,7 +1321,7 @@ export const useDiscountsBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof discountsBatchAction>>,
       TError,
-      { data: BatchAction },
+      DiscountsBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1293,7 +1331,7 @@ export const useDiscountsBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof discountsBatchAction>>,
   TError,
-  { data: BatchAction },
+  DiscountsBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getDiscountsBatchActionMutationOptions(options), queryClient)

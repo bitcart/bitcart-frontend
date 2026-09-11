@@ -29,7 +29,9 @@ import type {
   BatchAction,
   BodyProductsCreateProductMultipart,
   BodyProductsUpdateProductMultipart,
+  DisplayProductOutput,
   HTTPValidationError,
+  OffsetPaginationDisplayProductOutput,
   ProductsCategoriesParams,
   ProductsGetMaxProductPriceParams,
   ProductsGetProductParams,
@@ -616,7 +618,7 @@ export function useProductsGetMaxProductPriceSuspense<
 }
 
 export type productsDeleteItemResponse200 = {
-  data: DisplayProduct
+  data: DisplayProductOutput
   status: 200
 }
 
@@ -657,6 +659,8 @@ export const productsDeleteItem = async (
   return { data, status: res.status, headers: res.headers } as productsDeleteItemResponseSuccess
 }
 
+export const getProductsDeleteItemMutationKey = () => ["productsDeleteItem"] as const
+
 export const getProductsDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -664,7 +668,7 @@ export const getProductsDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof productsDeleteItem>>,
     TError,
-    { itemId: string },
+    ProductsDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -672,10 +676,10 @@ export const getProductsDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof productsDeleteItem>>,
   TError,
-  { itemId: string },
+  ProductsDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["productsDeleteItem"]
+  const mutationKey = getProductsDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -688,7 +692,7 @@ export const getProductsDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof productsDeleteItem>>,
-    { itemId: string }
+    ProductsDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -706,6 +710,7 @@ export type ProductsDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ProductsDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -718,7 +723,7 @@ export const useProductsDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof productsDeleteItem>>,
       TError,
-      { itemId: string },
+      ProductsDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -728,13 +733,13 @@ export const useProductsDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof productsDeleteItem>>,
   TError,
-  { itemId: string },
+  ProductsDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getProductsDeleteItemMutationOptions(options), queryClient)
 }
 export type productsUpdateProductMultipartResponse200 = {
-  data: DisplayProduct
+  data: DisplayProductOutput
   status: 200
 }
 
@@ -789,6 +794,9 @@ export const productsUpdateProductMultipart = async (
   } as productsUpdateProductMultipartResponseSuccess
 }
 
+export const getProductsUpdateProductMultipartMutationKey = () =>
+  ["productsUpdateProductMultipart"] as const
+
 export const getProductsUpdateProductMultipartMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -796,7 +804,7 @@ export const getProductsUpdateProductMultipartMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof productsUpdateProductMultipart>>,
     TError,
-    { itemId: string; data: BodyProductsUpdateProductMultipart },
+    ProductsUpdateProductMultipartMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -804,10 +812,10 @@ export const getProductsUpdateProductMultipartMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof productsUpdateProductMultipart>>,
   TError,
-  { itemId: string; data: BodyProductsUpdateProductMultipart },
+  ProductsUpdateProductMultipartMutationVariables,
   TContext
 > => {
-  const mutationKey = ["productsUpdateProductMultipart"]
+  const mutationKey = getProductsUpdateProductMultipartMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -820,7 +828,7 @@ export const getProductsUpdateProductMultipartMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof productsUpdateProductMultipart>>,
-    { itemId: string; data: BodyProductsUpdateProductMultipart }
+    ProductsUpdateProductMultipartMutationVariables
   > = (props) => {
     const { itemId, data } = props ?? {}
 
@@ -838,6 +846,10 @@ export type ProductsUpdateProductMultipartMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ProductsUpdateProductMultipartMutationVariables = {
+  itemId: string
+  data: BodyProductsUpdateProductMultipart
+}
 
 /**
  * @summary Update Product Multipart
@@ -850,7 +862,7 @@ export const useProductsUpdateProductMultipart = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof productsUpdateProductMultipart>>,
       TError,
-      { itemId: string; data: BodyProductsUpdateProductMultipart },
+      ProductsUpdateProductMultipartMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -860,7 +872,7 @@ export const useProductsUpdateProductMultipart = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof productsUpdateProductMultipart>>,
   TError,
-  { itemId: string; data: BodyProductsUpdateProductMultipart },
+  ProductsUpdateProductMultipartMutationVariables,
   TContext
 > => {
   return useMutation(getProductsUpdateProductMultipartMutationOptions(options), queryClient)
@@ -894,10 +906,18 @@ export const productsBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<productsBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getProductsBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -907,6 +927,8 @@ export const productsBatchAction = async (
   return { data, status: res.status, headers: res.headers } as productsBatchActionResponseSuccess
 }
 
+export const getProductsBatchActionMutationKey = () => ["productsBatchAction"] as const
+
 export const getProductsBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -914,7 +936,7 @@ export const getProductsBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof productsBatchAction>>,
     TError,
-    { data: BatchAction },
+    ProductsBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -922,10 +944,10 @@ export const getProductsBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof productsBatchAction>>,
   TError,
-  { data: BatchAction },
+  ProductsBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["productsBatchAction"]
+  const mutationKey = getProductsBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -938,7 +960,7 @@ export const getProductsBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof productsBatchAction>>,
-    { data: BatchAction }
+    ProductsBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -956,6 +978,7 @@ export type ProductsBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ProductsBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -968,7 +991,7 @@ export const useProductsBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof productsBatchAction>>,
       TError,
-      { data: BatchAction },
+      ProductsBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -978,13 +1001,13 @@ export const useProductsBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof productsBatchAction>>,
   TError,
-  { data: BatchAction },
+  ProductsBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getProductsBatchActionMutationOptions(options), queryClient)
 }
 export type productsCreateProductMultipartResponse200 = {
-  data: DisplayProduct
+  data: DisplayProductOutput
   status: 200
 }
 
@@ -1038,6 +1061,9 @@ export const productsCreateProductMultipart = async (
   } as productsCreateProductMultipartResponseSuccess
 }
 
+export const getProductsCreateProductMultipartMutationKey = () =>
+  ["productsCreateProductMultipart"] as const
+
 export const getProductsCreateProductMultipartMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1045,7 +1071,7 @@ export const getProductsCreateProductMultipartMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof productsCreateProductMultipart>>,
     TError,
-    { data: BodyProductsCreateProductMultipart },
+    ProductsCreateProductMultipartMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1053,10 +1079,10 @@ export const getProductsCreateProductMultipartMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof productsCreateProductMultipart>>,
   TError,
-  { data: BodyProductsCreateProductMultipart },
+  ProductsCreateProductMultipartMutationVariables,
   TContext
 > => {
-  const mutationKey = ["productsCreateProductMultipart"]
+  const mutationKey = getProductsCreateProductMultipartMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1069,7 +1095,7 @@ export const getProductsCreateProductMultipartMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof productsCreateProductMultipart>>,
-    { data: BodyProductsCreateProductMultipart }
+    ProductsCreateProductMultipartMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1087,6 +1113,9 @@ export type ProductsCreateProductMultipartMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ProductsCreateProductMultipartMutationVariables = {
+  data: BodyProductsCreateProductMultipart
+}
 
 /**
  * @summary Create Product Multipart
@@ -1099,7 +1128,7 @@ export const useProductsCreateProductMultipart = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof productsCreateProductMultipart>>,
       TError,
-      { data: BodyProductsCreateProductMultipart },
+      ProductsCreateProductMultipartMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1109,13 +1138,13 @@ export const useProductsCreateProductMultipart = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof productsCreateProductMultipart>>,
   TError,
-  { data: BodyProductsCreateProductMultipart },
+  ProductsCreateProductMultipartMutationVariables,
   TContext
 > => {
   return useMutation(getProductsCreateProductMultipartMutationOptions(options), queryClient)
 }
 export type productsListItemsResponse200 = {
-  data: OffsetPaginationDisplayProduct
+  data: OffsetPaginationDisplayProductOutput
   status: 200
 }
 
@@ -1671,7 +1700,7 @@ export function useProductsProductsCountSuspense<
 }
 
 export type productsGetProductResponse200 = {
-  data: DisplayProduct
+  data: DisplayProductOutput
   status: 200
 }
 

@@ -78,10 +78,18 @@ export const configuratorGenerateDeployment = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<configuratorGenerateDeploymentResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getConfiguratorGenerateDeploymentUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(configuratorDeploySettings),
   })
 
@@ -95,6 +103,9 @@ export const configuratorGenerateDeployment = async (
   } as configuratorGenerateDeploymentResponseSuccess
 }
 
+export const getConfiguratorGenerateDeploymentMutationKey = () =>
+  ["configuratorGenerateDeployment"] as const
+
 export const getConfiguratorGenerateDeploymentMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -102,7 +113,7 @@ export const getConfiguratorGenerateDeploymentMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof configuratorGenerateDeployment>>,
     TError,
-    { data: ConfiguratorDeploySettings },
+    ConfiguratorGenerateDeploymentMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -110,10 +121,10 @@ export const getConfiguratorGenerateDeploymentMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof configuratorGenerateDeployment>>,
   TError,
-  { data: ConfiguratorDeploySettings },
+  ConfiguratorGenerateDeploymentMutationVariables,
   TContext
 > => {
-  const mutationKey = ["configuratorGenerateDeployment"]
+  const mutationKey = getConfiguratorGenerateDeploymentMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -126,7 +137,7 @@ export const getConfiguratorGenerateDeploymentMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof configuratorGenerateDeployment>>,
-    { data: ConfiguratorDeploySettings }
+    ConfiguratorGenerateDeploymentMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -144,6 +155,7 @@ export type ConfiguratorGenerateDeploymentMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ConfiguratorGenerateDeploymentMutationVariables = { data: ConfiguratorDeploySettings }
 
 /**
  * @summary Generate Deployment
@@ -156,7 +168,7 @@ export const useConfiguratorGenerateDeployment = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof configuratorGenerateDeployment>>,
       TError,
-      { data: ConfiguratorDeploySettings },
+      ConfiguratorGenerateDeploymentMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -166,7 +178,7 @@ export const useConfiguratorGenerateDeployment = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof configuratorGenerateDeployment>>,
   TError,
-  { data: ConfiguratorDeploySettings },
+  ConfiguratorGenerateDeploymentMutationVariables,
   TContext
 > => {
   return useMutation(getConfiguratorGenerateDeploymentMutationOptions(options), queryClient)
@@ -500,10 +512,18 @@ export const configuratorGetServerSettings = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<configuratorGetServerSettingsResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getConfiguratorGetServerSettingsUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(sSHSettingsNull),
   })
 
@@ -517,6 +537,9 @@ export const configuratorGetServerSettings = async (
   } as configuratorGetServerSettingsResponseSuccess
 }
 
+export const getConfiguratorGetServerSettingsMutationKey = () =>
+  ["configuratorGetServerSettings"] as const
+
 export const getConfiguratorGetServerSettingsMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -524,7 +547,7 @@ export const getConfiguratorGetServerSettingsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof configuratorGetServerSettings>>,
     TError,
-    { data?: SSHSettings | null },
+    ConfiguratorGetServerSettingsMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -532,10 +555,10 @@ export const getConfiguratorGetServerSettingsMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof configuratorGetServerSettings>>,
   TError,
-  { data?: SSHSettings | null },
+  ConfiguratorGetServerSettingsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["configuratorGetServerSettings"]
+  const mutationKey = getConfiguratorGetServerSettingsMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -548,7 +571,7 @@ export const getConfiguratorGetServerSettingsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof configuratorGetServerSettings>>,
-    { data?: SSHSettings | null }
+    ConfiguratorGetServerSettingsMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -566,6 +589,7 @@ export type ConfiguratorGetServerSettingsMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ConfiguratorGetServerSettingsMutationVariables = { data?: SSHSettings | null }
 
 /**
  * @summary Get Server Settings
@@ -578,7 +602,7 @@ export const useConfiguratorGetServerSettings = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof configuratorGetServerSettings>>,
       TError,
-      { data?: SSHSettings | null },
+      ConfiguratorGetServerSettingsMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -588,7 +612,7 @@ export const useConfiguratorGetServerSettings = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof configuratorGetServerSettings>>,
   TError,
-  { data?: SSHSettings | null },
+  ConfiguratorGetServerSettingsMutationVariables,
   TContext
 > => {
   return useMutation(getConfiguratorGetServerSettingsMutationOptions(options), queryClient)

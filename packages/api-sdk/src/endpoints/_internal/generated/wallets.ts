@@ -31,12 +31,16 @@ import {
   OffsetPaginationDisplayWallet,
 } from "../../../schemas/generated"
 import type {
+  BalanceResponseOutput,
   BatchAction,
   CloseChannelScheme,
   CreateWallet,
   CreateWalletData,
+  DisplayWalletOutput,
   HTTPValidationError,
   LNPayScheme,
+  MoneyOutput,
+  OffsetPaginationDisplayWalletOutput,
   OpenChannelScheme,
   OptionalUpdateWallet,
   WalletsGetWalletRateParams,
@@ -60,7 +64,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type walletsGetBalancesResponse200 = {
-  data: Money
+  data: MoneyOutput
   status: 200
 }
 
@@ -577,10 +581,18 @@ export const walletsCreateWallet = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<walletsCreateWalletResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getWalletsCreateWalletUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createWalletData),
   })
 
@@ -590,6 +602,8 @@ export const walletsCreateWallet = async (
   return { data, status: res.status, headers: res.headers } as walletsCreateWalletResponseSuccess
 }
 
+export const getWalletsCreateWalletMutationKey = () => ["walletsCreateWallet"] as const
+
 export const getWalletsCreateWalletMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -597,7 +611,7 @@ export const getWalletsCreateWalletMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof walletsCreateWallet>>,
     TError,
-    { data: CreateWalletData },
+    WalletsCreateWalletMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -605,10 +619,10 @@ export const getWalletsCreateWalletMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof walletsCreateWallet>>,
   TError,
-  { data: CreateWalletData },
+  WalletsCreateWalletMutationVariables,
   TContext
 > => {
-  const mutationKey = ["walletsCreateWallet"]
+  const mutationKey = getWalletsCreateWalletMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -621,7 +635,7 @@ export const getWalletsCreateWalletMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof walletsCreateWallet>>,
-    { data: CreateWalletData }
+    WalletsCreateWalletMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -639,6 +653,7 @@ export type WalletsCreateWalletMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type WalletsCreateWalletMutationVariables = { data: CreateWalletData }
 
 /**
  * @summary Create Wallet
@@ -651,7 +666,7 @@ export const useWalletsCreateWallet = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof walletsCreateWallet>>,
       TError,
-      { data: CreateWalletData },
+      WalletsCreateWalletMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -661,13 +676,13 @@ export const useWalletsCreateWallet = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof walletsCreateWallet>>,
   TError,
-  { data: CreateWalletData },
+  WalletsCreateWalletMutationVariables,
   TContext
 > => {
   return useMutation(getWalletsCreateWalletMutationOptions(options), queryClient)
 }
 export type walletsListItemsResponse200 = {
-  data: OffsetPaginationDisplayWallet
+  data: OffsetPaginationDisplayWalletOutput
   status: 200
 }
 
@@ -940,7 +955,7 @@ export function useWalletsListItemsSuspense<
 }
 
 export type walletsCreateItemResponse200 = {
-  data: DisplayWallet
+  data: DisplayWalletOutput
   status: 200
 }
 
@@ -968,10 +983,18 @@ export const walletsCreateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<walletsCreateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getWalletsCreateItemUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createWallet),
   })
 
@@ -983,6 +1006,8 @@ export const walletsCreateItem = async (
   return { data, status: res.status, headers: res.headers } as walletsCreateItemResponseSuccess
 }
 
+export const getWalletsCreateItemMutationKey = () => ["walletsCreateItem"] as const
+
 export const getWalletsCreateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -990,7 +1015,7 @@ export const getWalletsCreateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof walletsCreateItem>>,
     TError,
-    { data: CreateWallet },
+    WalletsCreateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -998,10 +1023,10 @@ export const getWalletsCreateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof walletsCreateItem>>,
   TError,
-  { data: CreateWallet },
+  WalletsCreateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["walletsCreateItem"]
+  const mutationKey = getWalletsCreateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1014,7 +1039,7 @@ export const getWalletsCreateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof walletsCreateItem>>,
-    { data: CreateWallet }
+    WalletsCreateItemMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1032,6 +1057,7 @@ export type WalletsCreateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type WalletsCreateItemMutationVariables = { data: CreateWallet }
 
 /**
  * @summary Create Item
@@ -1044,7 +1070,7 @@ export const useWalletsCreateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof walletsCreateItem>>,
       TError,
-      { data: CreateWallet },
+      WalletsCreateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1054,7 +1080,7 @@ export const useWalletsCreateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof walletsCreateItem>>,
   TError,
-  { data: CreateWallet },
+  WalletsCreateItemMutationVariables,
   TContext
 > => {
   return useMutation(getWalletsCreateItemMutationOptions(options), queryClient)
@@ -1291,7 +1317,7 @@ export function useWalletsGetCountSuspense<
 }
 
 export type walletsGetItemResponse200 = {
-  data: DisplayWallet
+  data: DisplayWalletOutput
   status: 200
 }
 
@@ -1553,7 +1579,7 @@ export function useWalletsGetItemSuspense<
 }
 
 export type walletsUpdateItemResponse200 = {
-  data: DisplayWallet
+  data: DisplayWalletOutput
   status: 200
 }
 
@@ -1582,10 +1608,18 @@ export const walletsUpdateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<walletsUpdateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getWalletsUpdateItemUrl(itemId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(optionalUpdateWallet),
   })
 
@@ -1597,6 +1631,8 @@ export const walletsUpdateItem = async (
   return { data, status: res.status, headers: res.headers } as walletsUpdateItemResponseSuccess
 }
 
+export const getWalletsUpdateItemMutationKey = () => ["walletsUpdateItem"] as const
+
 export const getWalletsUpdateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1604,7 +1640,7 @@ export const getWalletsUpdateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof walletsUpdateItem>>,
     TError,
-    { itemId: string; data: OptionalUpdateWallet },
+    WalletsUpdateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1612,10 +1648,10 @@ export const getWalletsUpdateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof walletsUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateWallet },
+  WalletsUpdateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["walletsUpdateItem"]
+  const mutationKey = getWalletsUpdateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1628,7 +1664,7 @@ export const getWalletsUpdateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof walletsUpdateItem>>,
-    { itemId: string; data: OptionalUpdateWallet }
+    WalletsUpdateItemMutationVariables
   > = (props) => {
     const { itemId, data } = props ?? {}
 
@@ -1646,6 +1682,7 @@ export type WalletsUpdateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type WalletsUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateWallet }
 
 /**
  * @summary Update Item
@@ -1658,7 +1695,7 @@ export const useWalletsUpdateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof walletsUpdateItem>>,
       TError,
-      { itemId: string; data: OptionalUpdateWallet },
+      WalletsUpdateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1668,13 +1705,13 @@ export const useWalletsUpdateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof walletsUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateWallet },
+  WalletsUpdateItemMutationVariables,
   TContext
 > => {
   return useMutation(getWalletsUpdateItemMutationOptions(options), queryClient)
 }
 export type walletsDeleteItemResponse200 = {
-  data: DisplayWallet
+  data: DisplayWalletOutput
   status: 200
 }
 
@@ -1715,6 +1752,8 @@ export const walletsDeleteItem = async (
   return { data, status: res.status, headers: res.headers } as walletsDeleteItemResponseSuccess
 }
 
+export const getWalletsDeleteItemMutationKey = () => ["walletsDeleteItem"] as const
+
 export const getWalletsDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1722,7 +1761,7 @@ export const getWalletsDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof walletsDeleteItem>>,
     TError,
-    { itemId: string },
+    WalletsDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1730,10 +1769,10 @@ export const getWalletsDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof walletsDeleteItem>>,
   TError,
-  { itemId: string },
+  WalletsDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["walletsDeleteItem"]
+  const mutationKey = getWalletsDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1746,7 +1785,7 @@ export const getWalletsDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof walletsDeleteItem>>,
-    { itemId: string }
+    WalletsDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -1764,6 +1803,7 @@ export type WalletsDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type WalletsDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -1776,7 +1816,7 @@ export const useWalletsDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof walletsDeleteItem>>,
       TError,
-      { itemId: string },
+      WalletsDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1786,7 +1826,7 @@ export const useWalletsDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof walletsDeleteItem>>,
   TError,
-  { itemId: string },
+  WalletsDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getWalletsDeleteItemMutationOptions(options), queryClient)
@@ -1820,10 +1860,18 @@ export const walletsBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<walletsBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getWalletsBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -1833,6 +1881,8 @@ export const walletsBatchAction = async (
   return { data, status: res.status, headers: res.headers } as walletsBatchActionResponseSuccess
 }
 
+export const getWalletsBatchActionMutationKey = () => ["walletsBatchAction"] as const
+
 export const getWalletsBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1840,7 +1890,7 @@ export const getWalletsBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof walletsBatchAction>>,
     TError,
-    { data: BatchAction },
+    WalletsBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1848,10 +1898,10 @@ export const getWalletsBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof walletsBatchAction>>,
   TError,
-  { data: BatchAction },
+  WalletsBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["walletsBatchAction"]
+  const mutationKey = getWalletsBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1864,7 +1914,7 @@ export const getWalletsBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof walletsBatchAction>>,
-    { data: BatchAction }
+    WalletsBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1882,6 +1932,7 @@ export type WalletsBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type WalletsBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -1894,7 +1945,7 @@ export const useWalletsBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof walletsBatchAction>>,
       TError,
-      { data: BatchAction },
+      WalletsBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1904,7 +1955,7 @@ export const useWalletsBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof walletsBatchAction>>,
   TError,
-  { data: BatchAction },
+  WalletsBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getWalletsBatchActionMutationOptions(options), queryClient)
@@ -2214,7 +2265,7 @@ export function useWalletsGetWalletRateSuspense<
 }
 
 export type walletsGetWalletBalanceResponse200 = {
-  data: BalanceResponse
+  data: BalanceResponseOutput
   status: 200
 }
 
@@ -3371,10 +3422,18 @@ export const walletsOpenWalletChannel = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<walletsOpenWalletChannelResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getWalletsOpenWalletChannelUrl(modelId), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(openChannelScheme),
   })
 
@@ -3388,6 +3447,8 @@ export const walletsOpenWalletChannel = async (
   } as walletsOpenWalletChannelResponseSuccess
 }
 
+export const getWalletsOpenWalletChannelMutationKey = () => ["walletsOpenWalletChannel"] as const
+
 export const getWalletsOpenWalletChannelMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -3395,7 +3456,7 @@ export const getWalletsOpenWalletChannelMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof walletsOpenWalletChannel>>,
     TError,
-    { modelId: string; data: OpenChannelScheme },
+    WalletsOpenWalletChannelMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -3403,10 +3464,10 @@ export const getWalletsOpenWalletChannelMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof walletsOpenWalletChannel>>,
   TError,
-  { modelId: string; data: OpenChannelScheme },
+  WalletsOpenWalletChannelMutationVariables,
   TContext
 > => {
-  const mutationKey = ["walletsOpenWalletChannel"]
+  const mutationKey = getWalletsOpenWalletChannelMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -3419,7 +3480,7 @@ export const getWalletsOpenWalletChannelMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof walletsOpenWalletChannel>>,
-    { modelId: string; data: OpenChannelScheme }
+    WalletsOpenWalletChannelMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -3437,6 +3498,7 @@ export type WalletsOpenWalletChannelMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type WalletsOpenWalletChannelMutationVariables = { modelId: string; data: OpenChannelScheme }
 
 /**
  * @summary Open Wallet Channel
@@ -3449,7 +3511,7 @@ export const useWalletsOpenWalletChannel = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof walletsOpenWalletChannel>>,
       TError,
-      { modelId: string; data: OpenChannelScheme },
+      WalletsOpenWalletChannelMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -3459,7 +3521,7 @@ export const useWalletsOpenWalletChannel = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof walletsOpenWalletChannel>>,
   TError,
-  { modelId: string; data: OpenChannelScheme },
+  WalletsOpenWalletChannelMutationVariables,
   TContext
 > => {
   return useMutation(getWalletsOpenWalletChannelMutationOptions(options), queryClient)
@@ -3494,10 +3556,18 @@ export const walletsCloseWalletChannel = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<walletsCloseWalletChannelResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getWalletsCloseWalletChannelUrl(modelId), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(closeChannelScheme),
   })
 
@@ -3511,6 +3581,8 @@ export const walletsCloseWalletChannel = async (
   } as walletsCloseWalletChannelResponseSuccess
 }
 
+export const getWalletsCloseWalletChannelMutationKey = () => ["walletsCloseWalletChannel"] as const
+
 export const getWalletsCloseWalletChannelMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -3518,7 +3590,7 @@ export const getWalletsCloseWalletChannelMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof walletsCloseWalletChannel>>,
     TError,
-    { modelId: string; data: CloseChannelScheme },
+    WalletsCloseWalletChannelMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -3526,10 +3598,10 @@ export const getWalletsCloseWalletChannelMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof walletsCloseWalletChannel>>,
   TError,
-  { modelId: string; data: CloseChannelScheme },
+  WalletsCloseWalletChannelMutationVariables,
   TContext
 > => {
-  const mutationKey = ["walletsCloseWalletChannel"]
+  const mutationKey = getWalletsCloseWalletChannelMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -3542,7 +3614,7 @@ export const getWalletsCloseWalletChannelMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof walletsCloseWalletChannel>>,
-    { modelId: string; data: CloseChannelScheme }
+    WalletsCloseWalletChannelMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -3560,6 +3632,10 @@ export type WalletsCloseWalletChannelMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type WalletsCloseWalletChannelMutationVariables = {
+  modelId: string
+  data: CloseChannelScheme
+}
 
 /**
  * @summary Close Wallet Channel
@@ -3572,7 +3648,7 @@ export const useWalletsCloseWalletChannel = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof walletsCloseWalletChannel>>,
       TError,
-      { modelId: string; data: CloseChannelScheme },
+      WalletsCloseWalletChannelMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -3582,7 +3658,7 @@ export const useWalletsCloseWalletChannel = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof walletsCloseWalletChannel>>,
   TError,
-  { modelId: string; data: CloseChannelScheme },
+  WalletsCloseWalletChannelMutationVariables,
   TContext
 > => {
   return useMutation(getWalletsCloseWalletChannelMutationOptions(options), queryClient)
@@ -3617,10 +3693,18 @@ export const walletsWalletLnpay = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<walletsWalletLnpayResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getWalletsWalletLnpayUrl(modelId), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(lNPayScheme),
   })
 
@@ -3630,6 +3714,8 @@ export const walletsWalletLnpay = async (
   return { data, status: res.status, headers: res.headers } as walletsWalletLnpayResponseSuccess
 }
 
+export const getWalletsWalletLnpayMutationKey = () => ["walletsWalletLnpay"] as const
+
 export const getWalletsWalletLnpayMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -3637,7 +3723,7 @@ export const getWalletsWalletLnpayMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof walletsWalletLnpay>>,
     TError,
-    { modelId: string; data: LNPayScheme },
+    WalletsWalletLnpayMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -3645,10 +3731,10 @@ export const getWalletsWalletLnpayMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof walletsWalletLnpay>>,
   TError,
-  { modelId: string; data: LNPayScheme },
+  WalletsWalletLnpayMutationVariables,
   TContext
 > => {
-  const mutationKey = ["walletsWalletLnpay"]
+  const mutationKey = getWalletsWalletLnpayMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -3661,7 +3747,7 @@ export const getWalletsWalletLnpayMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof walletsWalletLnpay>>,
-    { modelId: string; data: LNPayScheme }
+    WalletsWalletLnpayMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -3679,6 +3765,7 @@ export type WalletsWalletLnpayMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type WalletsWalletLnpayMutationVariables = { modelId: string; data: LNPayScheme }
 
 /**
  * @summary Wallet Lnpay
@@ -3691,7 +3778,7 @@ export const useWalletsWalletLnpay = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof walletsWalletLnpay>>,
       TError,
-      { modelId: string; data: LNPayScheme },
+      WalletsWalletLnpayMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -3701,7 +3788,7 @@ export const useWalletsWalletLnpay = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof walletsWalletLnpay>>,
   TError,
-  { modelId: string; data: LNPayScheme },
+  WalletsWalletLnpayMutationVariables,
   TContext
 > => {
   return useMutation(getWalletsWalletLnpayMutationOptions(options), queryClient)

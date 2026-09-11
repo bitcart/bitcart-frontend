@@ -50,9 +50,7 @@
     "@lingui/core": "catalog:dependencies",
     "@lingui/react": "catalog:dependencies",
     "react": "catalog:dependencies",
-    "remeda": "catalog:dependencies",
-    "vike": "catalog:dependencies",
-    "vike-react": "catalog:dependencies"
+    "remeda": "catalog:dependencies"
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
@@ -64,6 +62,12 @@
     "oxlint": "catalog:devDependencies",
     "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies"
+    "typescript": "catalog:devDependencies",
+    "vike": "catalog:dependencies",
+    "vike-react": "catalog:dependencies"
+  },
+  "peerDependencies": {
+    "vike": "catalog:dependencies",
+    "vike-react": "catalog:dependencies"
   }
 }

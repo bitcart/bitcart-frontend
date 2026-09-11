@@ -26,15 +26,18 @@ import type {
 import { BitcartApiConfig } from "../../../config"
 import { AuthResponse, OffsetPaginationToken, Token } from "../../../schemas/generated"
 import type {
+  AuthResponseOutput,
   BatchAction,
   BodyTokenCreateOauth2Token,
   EditToken,
   FIDO2Auth,
   HTTPCreateLoginToken,
   HTTPValidationError,
+  OffsetPaginationTokenOutput,
   TOTPAuth,
   TokenGetTokenCountParams,
   TokenGetTokensParams,
+  TokenOutput,
 } from "../../../schemas/generated"
 import { createApiFailure } from "../utils"
 
@@ -54,7 +57,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type tokenCreateTokenResponse200 = {
-  data: AuthResponse
+  data: AuthResponseOutput
   status: 200
 }
 
@@ -82,10 +85,18 @@ export const tokenCreateToken = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<tokenCreateTokenResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getTokenCreateTokenUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(hTTPCreateLoginTokenNull),
   })
 
@@ -97,6 +108,8 @@ export const tokenCreateToken = async (
   return { data, status: res.status, headers: res.headers } as tokenCreateTokenResponseSuccess
 }
 
+export const getTokenCreateTokenMutationKey = () => ["tokenCreateToken"] as const
+
 export const getTokenCreateTokenMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -104,7 +117,7 @@ export const getTokenCreateTokenMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof tokenCreateToken>>,
     TError,
-    { data?: HTTPCreateLoginToken | null },
+    TokenCreateTokenMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -112,10 +125,10 @@ export const getTokenCreateTokenMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof tokenCreateToken>>,
   TError,
-  { data?: HTTPCreateLoginToken | null },
+  TokenCreateTokenMutationVariables,
   TContext
 > => {
-  const mutationKey = ["tokenCreateToken"]
+  const mutationKey = getTokenCreateTokenMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -128,7 +141,7 @@ export const getTokenCreateTokenMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof tokenCreateToken>>,
-    { data?: HTTPCreateLoginToken | null }
+    TokenCreateTokenMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -146,6 +159,7 @@ export type TokenCreateTokenMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TokenCreateTokenMutationVariables = { data?: HTTPCreateLoginToken | null }
 
 /**
  * @summary Create Token
@@ -158,7 +172,7 @@ export const useTokenCreateToken = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof tokenCreateToken>>,
       TError,
-      { data?: HTTPCreateLoginToken | null },
+      TokenCreateTokenMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -168,13 +182,13 @@ export const useTokenCreateToken = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof tokenCreateToken>>,
   TError,
-  { data?: HTTPCreateLoginToken | null },
+  TokenCreateTokenMutationVariables,
   TContext
 > => {
   return useMutation(getTokenCreateTokenMutationOptions(options), queryClient)
 }
 export type tokenGetTokensResponse200 = {
-  data: OffsetPaginationToken
+  data: OffsetPaginationTokenOutput
   status: 200
 }
 
@@ -507,10 +521,21 @@ export const tokenCreateOauth2Token = async (
     formUrlEncoded.append(`client_secret`, bodyTokenCreateOauth2Token.client_secret)
   }
 
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getTokenCreateOauth2TokenUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded", ...options?.headers },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      ...getHeaders(options?.headers),
+    },
     body: formUrlEncoded,
   })
 
@@ -520,6 +545,8 @@ export const tokenCreateOauth2Token = async (
   return { data, status: res.status, headers: res.headers } as tokenCreateOauth2TokenResponseSuccess
 }
 
+export const getTokenCreateOauth2TokenMutationKey = () => ["tokenCreateOauth2Token"] as const
+
 export const getTokenCreateOauth2TokenMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -527,7 +554,7 @@ export const getTokenCreateOauth2TokenMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof tokenCreateOauth2Token>>,
     TError,
-    { data: BodyTokenCreateOauth2Token },
+    TokenCreateOauth2TokenMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -535,10 +562,10 @@ export const getTokenCreateOauth2TokenMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof tokenCreateOauth2Token>>,
   TError,
-  { data: BodyTokenCreateOauth2Token },
+  TokenCreateOauth2TokenMutationVariables,
   TContext
 > => {
-  const mutationKey = ["tokenCreateOauth2Token"]
+  const mutationKey = getTokenCreateOauth2TokenMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -551,7 +578,7 @@ export const getTokenCreateOauth2TokenMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof tokenCreateOauth2Token>>,
-    { data: BodyTokenCreateOauth2Token }
+    TokenCreateOauth2TokenMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -569,6 +596,7 @@ export type TokenCreateOauth2TokenMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TokenCreateOauth2TokenMutationVariables = { data: BodyTokenCreateOauth2Token }
 
 /**
  * @summary Create Oauth2 Token
@@ -581,7 +609,7 @@ export const useTokenCreateOauth2Token = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof tokenCreateOauth2Token>>,
       TError,
-      { data: BodyTokenCreateOauth2Token },
+      TokenCreateOauth2TokenMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -591,7 +619,7 @@ export const useTokenCreateOauth2Token = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof tokenCreateOauth2Token>>,
   TError,
-  { data: BodyTokenCreateOauth2Token },
+  TokenCreateOauth2TokenMutationVariables,
   TContext
 > => {
   return useMutation(getTokenCreateOauth2TokenMutationOptions(options), queryClient)
@@ -625,10 +653,18 @@ export const tokenCreateTokenTotpAuth = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<tokenCreateTokenTotpAuthResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getTokenCreateTokenTotpAuthUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(tOTPAuth),
   })
 
@@ -642,6 +678,8 @@ export const tokenCreateTokenTotpAuth = async (
   } as tokenCreateTokenTotpAuthResponseSuccess
 }
 
+export const getTokenCreateTokenTotpAuthMutationKey = () => ["tokenCreateTokenTotpAuth"] as const
+
 export const getTokenCreateTokenTotpAuthMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -649,7 +687,7 @@ export const getTokenCreateTokenTotpAuthMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof tokenCreateTokenTotpAuth>>,
     TError,
-    { data: TOTPAuth },
+    TokenCreateTokenTotpAuthMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -657,10 +695,10 @@ export const getTokenCreateTokenTotpAuthMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof tokenCreateTokenTotpAuth>>,
   TError,
-  { data: TOTPAuth },
+  TokenCreateTokenTotpAuthMutationVariables,
   TContext
 > => {
-  const mutationKey = ["tokenCreateTokenTotpAuth"]
+  const mutationKey = getTokenCreateTokenTotpAuthMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -673,7 +711,7 @@ export const getTokenCreateTokenTotpAuthMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof tokenCreateTokenTotpAuth>>,
-    { data: TOTPAuth }
+    TokenCreateTokenTotpAuthMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -691,6 +729,7 @@ export type TokenCreateTokenTotpAuthMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TokenCreateTokenTotpAuthMutationVariables = { data: TOTPAuth }
 
 /**
  * @summary Create Token Totp Auth
@@ -703,7 +742,7 @@ export const useTokenCreateTokenTotpAuth = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof tokenCreateTokenTotpAuth>>,
       TError,
-      { data: TOTPAuth },
+      TokenCreateTokenTotpAuthMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -713,7 +752,7 @@ export const useTokenCreateTokenTotpAuth = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof tokenCreateTokenTotpAuth>>,
   TError,
-  { data: TOTPAuth },
+  TokenCreateTokenTotpAuthMutationVariables,
   TContext
 > => {
   return useMutation(getTokenCreateTokenTotpAuthMutationOptions(options), queryClient)
@@ -747,10 +786,18 @@ export const tokenCreateTokenFido2Begin = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<tokenCreateTokenFido2BeginResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getTokenCreateTokenFido2BeginUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(fIDO2Auth),
   })
 
@@ -764,6 +811,9 @@ export const tokenCreateTokenFido2Begin = async (
   } as tokenCreateTokenFido2BeginResponseSuccess
 }
 
+export const getTokenCreateTokenFido2BeginMutationKey = () =>
+  ["tokenCreateTokenFido2Begin"] as const
+
 export const getTokenCreateTokenFido2BeginMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -771,7 +821,7 @@ export const getTokenCreateTokenFido2BeginMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof tokenCreateTokenFido2Begin>>,
     TError,
-    { data: FIDO2Auth },
+    TokenCreateTokenFido2BeginMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -779,10 +829,10 @@ export const getTokenCreateTokenFido2BeginMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof tokenCreateTokenFido2Begin>>,
   TError,
-  { data: FIDO2Auth },
+  TokenCreateTokenFido2BeginMutationVariables,
   TContext
 > => {
-  const mutationKey = ["tokenCreateTokenFido2Begin"]
+  const mutationKey = getTokenCreateTokenFido2BeginMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -795,7 +845,7 @@ export const getTokenCreateTokenFido2BeginMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof tokenCreateTokenFido2Begin>>,
-    { data: FIDO2Auth }
+    TokenCreateTokenFido2BeginMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -813,6 +863,7 @@ export type TokenCreateTokenFido2BeginMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TokenCreateTokenFido2BeginMutationVariables = { data: FIDO2Auth }
 
 /**
  * @summary Create Token Fido2 Begin
@@ -825,7 +876,7 @@ export const useTokenCreateTokenFido2Begin = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof tokenCreateTokenFido2Begin>>,
       TError,
-      { data: FIDO2Auth },
+      TokenCreateTokenFido2BeginMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -835,7 +886,7 @@ export const useTokenCreateTokenFido2Begin = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof tokenCreateTokenFido2Begin>>,
   TError,
-  { data: FIDO2Auth },
+  TokenCreateTokenFido2BeginMutationVariables,
   TContext
 > => {
   return useMutation(getTokenCreateTokenFido2BeginMutationOptions(options), queryClient)
@@ -876,6 +927,9 @@ export const tokenCreateTokenFido2Complete = async (
   } as tokenCreateTokenFido2CompleteResponseSuccess
 }
 
+export const getTokenCreateTokenFido2CompleteMutationKey = () =>
+  ["tokenCreateTokenFido2Complete"] as const
+
 export const getTokenCreateTokenFido2CompleteMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -894,7 +948,7 @@ export const getTokenCreateTokenFido2CompleteMutationOptions = <
   void,
   TContext
 > => {
-  const mutationKey = ["tokenCreateTokenFido2Complete"]
+  const mutationKey = getTokenCreateTokenFido2CompleteMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -951,7 +1005,7 @@ export const useTokenCreateTokenFido2Complete = <
   return useMutation(getTokenCreateTokenFido2CompleteMutationOptions(options), queryClient)
 }
 export type tokenDeleteTokenResponse200 = {
-  data: Token
+  data: TokenOutput
   status: 200
 }
 
@@ -992,6 +1046,8 @@ export const tokenDeleteToken = async (
   return { data, status: res.status, headers: res.headers } as tokenDeleteTokenResponseSuccess
 }
 
+export const getTokenDeleteTokenMutationKey = () => ["tokenDeleteToken"] as const
+
 export const getTokenDeleteTokenMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -999,7 +1055,7 @@ export const getTokenDeleteTokenMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof tokenDeleteToken>>,
     TError,
-    { tokenId: string },
+    TokenDeleteTokenMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1007,10 +1063,10 @@ export const getTokenDeleteTokenMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof tokenDeleteToken>>,
   TError,
-  { tokenId: string },
+  TokenDeleteTokenMutationVariables,
   TContext
 > => {
-  const mutationKey = ["tokenDeleteToken"]
+  const mutationKey = getTokenDeleteTokenMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1023,7 +1079,7 @@ export const getTokenDeleteTokenMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof tokenDeleteToken>>,
-    { tokenId: string }
+    TokenDeleteTokenMutationVariables
   > = (props) => {
     const { tokenId } = props ?? {}
 
@@ -1041,6 +1097,7 @@ export type TokenDeleteTokenMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TokenDeleteTokenMutationVariables = { tokenId: string }
 
 /**
  * @summary Delete Token
@@ -1053,7 +1110,7 @@ export const useTokenDeleteToken = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof tokenDeleteToken>>,
       TError,
-      { tokenId: string },
+      TokenDeleteTokenMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1063,13 +1120,13 @@ export const useTokenDeleteToken = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof tokenDeleteToken>>,
   TError,
-  { tokenId: string },
+  TokenDeleteTokenMutationVariables,
   TContext
 > => {
   return useMutation(getTokenDeleteTokenMutationOptions(options), queryClient)
 }
 export type tokenGetCurrentTokenResponse200 = {
-  data: Token
+  data: TokenOutput
   status: 200
 }
 
@@ -1594,7 +1651,7 @@ export function useTokenGetTokenCountSuspense<
 }
 
 export type tokenPatchTokenResponse200 = {
-  data: Token
+  data: TokenOutput
   status: 200
 }
 
@@ -1623,10 +1680,18 @@ export const tokenPatchToken = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<tokenPatchTokenResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getTokenPatchTokenUrl(modelId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(editToken),
   })
 
@@ -1638,6 +1703,8 @@ export const tokenPatchToken = async (
   return { data, status: res.status, headers: res.headers } as tokenPatchTokenResponseSuccess
 }
 
+export const getTokenPatchTokenMutationKey = () => ["tokenPatchToken"] as const
+
 export const getTokenPatchTokenMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1645,7 +1712,7 @@ export const getTokenPatchTokenMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof tokenPatchToken>>,
     TError,
-    { modelId: string; data: EditToken },
+    TokenPatchTokenMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1653,10 +1720,10 @@ export const getTokenPatchTokenMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof tokenPatchToken>>,
   TError,
-  { modelId: string; data: EditToken },
+  TokenPatchTokenMutationVariables,
   TContext
 > => {
-  const mutationKey = ["tokenPatchToken"]
+  const mutationKey = getTokenPatchTokenMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1669,7 +1736,7 @@ export const getTokenPatchTokenMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof tokenPatchToken>>,
-    { modelId: string; data: EditToken }
+    TokenPatchTokenMutationVariables
   > = (props) => {
     const { modelId, data } = props ?? {}
 
@@ -1685,6 +1752,7 @@ export type TokenPatchTokenMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TokenPatchTokenMutationVariables = { modelId: string; data: EditToken }
 
 /**
  * @summary Patch Token
@@ -1697,7 +1765,7 @@ export const useTokenPatchToken = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof tokenPatchToken>>,
       TError,
-      { modelId: string; data: EditToken },
+      TokenPatchTokenMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1707,7 +1775,7 @@ export const useTokenPatchToken = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof tokenPatchToken>>,
   TError,
-  { modelId: string; data: EditToken },
+  TokenPatchTokenMutationVariables,
   TContext
 > => {
   return useMutation(getTokenPatchTokenMutationOptions(options), queryClient)
@@ -1741,10 +1809,18 @@ export const tokenBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<tokenBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getTokenBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -1754,6 +1830,8 @@ export const tokenBatchAction = async (
   return { data, status: res.status, headers: res.headers } as tokenBatchActionResponseSuccess
 }
 
+export const getTokenBatchActionMutationKey = () => ["tokenBatchAction"] as const
+
 export const getTokenBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1761,7 +1839,7 @@ export const getTokenBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof tokenBatchAction>>,
     TError,
-    { data: BatchAction },
+    TokenBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1769,10 +1847,10 @@ export const getTokenBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof tokenBatchAction>>,
   TError,
-  { data: BatchAction },
+  TokenBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["tokenBatchAction"]
+  const mutationKey = getTokenBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1785,7 +1863,7 @@ export const getTokenBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof tokenBatchAction>>,
-    { data: BatchAction }
+    TokenBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1803,6 +1881,7 @@ export type TokenBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TokenBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -1815,7 +1894,7 @@ export const useTokenBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof tokenBatchAction>>,
       TError,
-      { data: BatchAction },
+      TokenBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1825,7 +1904,7 @@ export const useTokenBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof tokenBatchAction>>,
   TError,
-  { data: BatchAction },
+  TokenBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getTokenBatchActionMutationOptions(options), queryClient)

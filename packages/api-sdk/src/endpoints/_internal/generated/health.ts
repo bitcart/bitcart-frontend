@@ -22,6 +22,7 @@ import type {
 
 import { BitcartApiConfig } from "../../../config"
 import { HealthLive200, HealthReady200 } from "../../../schemas/generated"
+import type { HealthLive200Output, HealthReady200Output } from "../../../schemas/generated"
 import { createApiFailure } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
@@ -40,7 +41,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type healthLiveResponse200 = {
-  data: HealthLive200
+  data: HealthLive200Output
   status: 200
 }
 
@@ -258,7 +259,7 @@ export function useHealthLiveSuspense<
 }
 
 export type healthReadyResponse200 = {
-  data: HealthReady200
+  data: HealthReady200Output
   status: 200
 }
 

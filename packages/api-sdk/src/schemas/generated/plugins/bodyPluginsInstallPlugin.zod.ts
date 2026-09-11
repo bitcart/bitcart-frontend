@@ -8,7 +8,7 @@
 import * as zod from "zod"
 
 export const BodyPluginsInstallPlugin = zod.object({
-  plugin: zod.instanceof(File),
+  plugin: zod.instanceof(Blob),
 })
 
 export type BodyPluginsInstallPlugin = zod.input<typeof BodyPluginsInstallPlugin>

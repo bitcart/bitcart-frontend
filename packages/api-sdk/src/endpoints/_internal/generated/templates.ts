@@ -28,7 +28,9 @@ import { DisplayTemplate, OffsetPaginationDisplayTemplate } from "../../../schem
 import type {
   BatchAction,
   CreateTemplate,
+  DisplayTemplateOutput,
   HTTPValidationError,
+  OffsetPaginationDisplayTemplateOutput,
   OptionalUpdateTemplate,
   TemplatesGetTemplateListParams,
   TemplatesListItemsParams,
@@ -338,7 +340,7 @@ export function useTemplatesGetTemplateListSuspense<
 }
 
 export type templatesListItemsResponse200 = {
-  data: OffsetPaginationDisplayTemplate
+  data: OffsetPaginationDisplayTemplateOutput
   status: 200
 }
 
@@ -615,7 +617,7 @@ export function useTemplatesListItemsSuspense<
 }
 
 export type templatesCreateItemResponse200 = {
-  data: DisplayTemplate
+  data: DisplayTemplateOutput
   status: 200
 }
 
@@ -643,10 +645,18 @@ export const templatesCreateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<templatesCreateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getTemplatesCreateItemUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createTemplate),
   })
 
@@ -658,6 +668,8 @@ export const templatesCreateItem = async (
   return { data, status: res.status, headers: res.headers } as templatesCreateItemResponseSuccess
 }
 
+export const getTemplatesCreateItemMutationKey = () => ["templatesCreateItem"] as const
+
 export const getTemplatesCreateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -665,7 +677,7 @@ export const getTemplatesCreateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof templatesCreateItem>>,
     TError,
-    { data: CreateTemplate },
+    TemplatesCreateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -673,10 +685,10 @@ export const getTemplatesCreateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof templatesCreateItem>>,
   TError,
-  { data: CreateTemplate },
+  TemplatesCreateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["templatesCreateItem"]
+  const mutationKey = getTemplatesCreateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -689,7 +701,7 @@ export const getTemplatesCreateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof templatesCreateItem>>,
-    { data: CreateTemplate }
+    TemplatesCreateItemMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -707,6 +719,7 @@ export type TemplatesCreateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TemplatesCreateItemMutationVariables = { data: CreateTemplate }
 
 /**
  * @summary Create Item
@@ -719,7 +732,7 @@ export const useTemplatesCreateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof templatesCreateItem>>,
       TError,
-      { data: CreateTemplate },
+      TemplatesCreateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -729,7 +742,7 @@ export const useTemplatesCreateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof templatesCreateItem>>,
   TError,
-  { data: CreateTemplate },
+  TemplatesCreateItemMutationVariables,
   TContext
 > => {
   return useMutation(getTemplatesCreateItemMutationOptions(options), queryClient)
@@ -968,7 +981,7 @@ export function useTemplatesGetCountSuspense<
 }
 
 export type templatesGetItemResponse200 = {
-  data: DisplayTemplate
+  data: DisplayTemplateOutput
   status: 200
 }
 
@@ -1230,7 +1243,7 @@ export function useTemplatesGetItemSuspense<
 }
 
 export type templatesUpdateItemResponse200 = {
-  data: DisplayTemplate
+  data: DisplayTemplateOutput
   status: 200
 }
 
@@ -1259,10 +1272,18 @@ export const templatesUpdateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<templatesUpdateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getTemplatesUpdateItemUrl(itemId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(optionalUpdateTemplate),
   })
 
@@ -1274,6 +1295,8 @@ export const templatesUpdateItem = async (
   return { data, status: res.status, headers: res.headers } as templatesUpdateItemResponseSuccess
 }
 
+export const getTemplatesUpdateItemMutationKey = () => ["templatesUpdateItem"] as const
+
 export const getTemplatesUpdateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1281,7 +1304,7 @@ export const getTemplatesUpdateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof templatesUpdateItem>>,
     TError,
-    { itemId: string; data: OptionalUpdateTemplate },
+    TemplatesUpdateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1289,10 +1312,10 @@ export const getTemplatesUpdateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof templatesUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateTemplate },
+  TemplatesUpdateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["templatesUpdateItem"]
+  const mutationKey = getTemplatesUpdateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1305,7 +1328,7 @@ export const getTemplatesUpdateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof templatesUpdateItem>>,
-    { itemId: string; data: OptionalUpdateTemplate }
+    TemplatesUpdateItemMutationVariables
   > = (props) => {
     const { itemId, data } = props ?? {}
 
@@ -1323,6 +1346,7 @@ export type TemplatesUpdateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TemplatesUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateTemplate }
 
 /**
  * @summary Update Item
@@ -1335,7 +1359,7 @@ export const useTemplatesUpdateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof templatesUpdateItem>>,
       TError,
-      { itemId: string; data: OptionalUpdateTemplate },
+      TemplatesUpdateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1345,13 +1369,13 @@ export const useTemplatesUpdateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof templatesUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateTemplate },
+  TemplatesUpdateItemMutationVariables,
   TContext
 > => {
   return useMutation(getTemplatesUpdateItemMutationOptions(options), queryClient)
 }
 export type templatesDeleteItemResponse200 = {
-  data: DisplayTemplate
+  data: DisplayTemplateOutput
   status: 200
 }
 
@@ -1392,6 +1416,8 @@ export const templatesDeleteItem = async (
   return { data, status: res.status, headers: res.headers } as templatesDeleteItemResponseSuccess
 }
 
+export const getTemplatesDeleteItemMutationKey = () => ["templatesDeleteItem"] as const
+
 export const getTemplatesDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1399,7 +1425,7 @@ export const getTemplatesDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof templatesDeleteItem>>,
     TError,
-    { itemId: string },
+    TemplatesDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1407,10 +1433,10 @@ export const getTemplatesDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof templatesDeleteItem>>,
   TError,
-  { itemId: string },
+  TemplatesDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["templatesDeleteItem"]
+  const mutationKey = getTemplatesDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1423,7 +1449,7 @@ export const getTemplatesDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof templatesDeleteItem>>,
-    { itemId: string }
+    TemplatesDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -1441,6 +1467,7 @@ export type TemplatesDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TemplatesDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -1453,7 +1480,7 @@ export const useTemplatesDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof templatesDeleteItem>>,
       TError,
-      { itemId: string },
+      TemplatesDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1463,7 +1490,7 @@ export const useTemplatesDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof templatesDeleteItem>>,
   TError,
-  { itemId: string },
+  TemplatesDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getTemplatesDeleteItemMutationOptions(options), queryClient)
@@ -1497,10 +1524,18 @@ export const templatesBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<templatesBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getTemplatesBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -1510,6 +1545,8 @@ export const templatesBatchAction = async (
   return { data, status: res.status, headers: res.headers } as templatesBatchActionResponseSuccess
 }
 
+export const getTemplatesBatchActionMutationKey = () => ["templatesBatchAction"] as const
+
 export const getTemplatesBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1517,7 +1554,7 @@ export const getTemplatesBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof templatesBatchAction>>,
     TError,
-    { data: BatchAction },
+    TemplatesBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1525,10 +1562,10 @@ export const getTemplatesBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof templatesBatchAction>>,
   TError,
-  { data: BatchAction },
+  TemplatesBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["templatesBatchAction"]
+  const mutationKey = getTemplatesBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1541,7 +1578,7 @@ export const getTemplatesBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof templatesBatchAction>>,
-    { data: BatchAction }
+    TemplatesBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1559,6 +1596,7 @@ export type TemplatesBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type TemplatesBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -1571,7 +1609,7 @@ export const useTemplatesBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof templatesBatchAction>>,
       TError,
-      { data: BatchAction },
+      TemplatesBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1581,7 +1619,7 @@ export const useTemplatesBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof templatesBatchAction>>,
   TError,
-  { data: BatchAction },
+  TemplatesBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getTemplatesBatchActionMutationOptions(options), queryClient)

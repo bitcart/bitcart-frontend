@@ -31,8 +31,10 @@ import {
 import type {
   BatchAction,
   CreateNotification,
+  DisplayNotificationOutput,
   HTTPValidationError,
   NotificationsListItemsParams,
+  OffsetPaginationDisplayNotificationOutput,
   OptionalUpdateNotification,
 } from "../../../schemas/generated"
 import { createApiFailure } from "../utils"
@@ -617,7 +619,7 @@ export function useNotificationsGetNotificationsSchemaSuspense<
 }
 
 export type notificationsListItemsResponse200 = {
-  data: OffsetPaginationDisplayNotification
+  data: OffsetPaginationDisplayNotificationOutput
   status: 200
 }
 
@@ -902,7 +904,7 @@ export function useNotificationsListItemsSuspense<
 }
 
 export type notificationsCreateItemResponse200 = {
-  data: DisplayNotification
+  data: DisplayNotificationOutput
   status: 200
 }
 
@@ -930,10 +932,18 @@ export const notificationsCreateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<notificationsCreateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getNotificationsCreateItemUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createNotification),
   })
 
@@ -949,6 +959,8 @@ export const notificationsCreateItem = async (
   } as notificationsCreateItemResponseSuccess
 }
 
+export const getNotificationsCreateItemMutationKey = () => ["notificationsCreateItem"] as const
+
 export const getNotificationsCreateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -956,7 +968,7 @@ export const getNotificationsCreateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof notificationsCreateItem>>,
     TError,
-    { data: CreateNotification },
+    NotificationsCreateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -964,10 +976,10 @@ export const getNotificationsCreateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof notificationsCreateItem>>,
   TError,
-  { data: CreateNotification },
+  NotificationsCreateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["notificationsCreateItem"]
+  const mutationKey = getNotificationsCreateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -980,7 +992,7 @@ export const getNotificationsCreateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof notificationsCreateItem>>,
-    { data: CreateNotification }
+    NotificationsCreateItemMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -998,6 +1010,7 @@ export type NotificationsCreateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type NotificationsCreateItemMutationVariables = { data: CreateNotification }
 
 /**
  * @summary Create Item
@@ -1010,7 +1023,7 @@ export const useNotificationsCreateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof notificationsCreateItem>>,
       TError,
-      { data: CreateNotification },
+      NotificationsCreateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1020,7 +1033,7 @@ export const useNotificationsCreateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof notificationsCreateItem>>,
   TError,
-  { data: CreateNotification },
+  NotificationsCreateItemMutationVariables,
   TContext
 > => {
   return useMutation(getNotificationsCreateItemMutationOptions(options), queryClient)
@@ -1267,7 +1280,7 @@ export function useNotificationsGetCountSuspense<
 }
 
 export type notificationsGetItemResponse200 = {
-  data: DisplayNotification
+  data: DisplayNotificationOutput
   status: 200
 }
 
@@ -1541,7 +1554,7 @@ export function useNotificationsGetItemSuspense<
 }
 
 export type notificationsUpdateItemResponse200 = {
-  data: DisplayNotification
+  data: DisplayNotificationOutput
   status: 200
 }
 
@@ -1570,10 +1583,18 @@ export const notificationsUpdateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<notificationsUpdateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getNotificationsUpdateItemUrl(itemId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(optionalUpdateNotification),
   })
 
@@ -1589,6 +1610,8 @@ export const notificationsUpdateItem = async (
   } as notificationsUpdateItemResponseSuccess
 }
 
+export const getNotificationsUpdateItemMutationKey = () => ["notificationsUpdateItem"] as const
+
 export const getNotificationsUpdateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1596,7 +1619,7 @@ export const getNotificationsUpdateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof notificationsUpdateItem>>,
     TError,
-    { itemId: string; data: OptionalUpdateNotification },
+    NotificationsUpdateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1604,10 +1627,10 @@ export const getNotificationsUpdateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof notificationsUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateNotification },
+  NotificationsUpdateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["notificationsUpdateItem"]
+  const mutationKey = getNotificationsUpdateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1620,7 +1643,7 @@ export const getNotificationsUpdateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof notificationsUpdateItem>>,
-    { itemId: string; data: OptionalUpdateNotification }
+    NotificationsUpdateItemMutationVariables
   > = (props) => {
     const { itemId, data } = props ?? {}
 
@@ -1638,6 +1661,10 @@ export type NotificationsUpdateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type NotificationsUpdateItemMutationVariables = {
+  itemId: string
+  data: OptionalUpdateNotification
+}
 
 /**
  * @summary Update Item
@@ -1650,7 +1677,7 @@ export const useNotificationsUpdateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof notificationsUpdateItem>>,
       TError,
-      { itemId: string; data: OptionalUpdateNotification },
+      NotificationsUpdateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1660,13 +1687,13 @@ export const useNotificationsUpdateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof notificationsUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateNotification },
+  NotificationsUpdateItemMutationVariables,
   TContext
 > => {
   return useMutation(getNotificationsUpdateItemMutationOptions(options), queryClient)
 }
 export type notificationsDeleteItemResponse200 = {
-  data: DisplayNotification
+  data: DisplayNotificationOutput
   status: 200
 }
 
@@ -1711,6 +1738,8 @@ export const notificationsDeleteItem = async (
   } as notificationsDeleteItemResponseSuccess
 }
 
+export const getNotificationsDeleteItemMutationKey = () => ["notificationsDeleteItem"] as const
+
 export const getNotificationsDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1718,7 +1747,7 @@ export const getNotificationsDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof notificationsDeleteItem>>,
     TError,
-    { itemId: string },
+    NotificationsDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1726,10 +1755,10 @@ export const getNotificationsDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof notificationsDeleteItem>>,
   TError,
-  { itemId: string },
+  NotificationsDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["notificationsDeleteItem"]
+  const mutationKey = getNotificationsDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1742,7 +1771,7 @@ export const getNotificationsDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof notificationsDeleteItem>>,
-    { itemId: string }
+    NotificationsDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -1760,6 +1789,7 @@ export type NotificationsDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type NotificationsDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -1772,7 +1802,7 @@ export const useNotificationsDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof notificationsDeleteItem>>,
       TError,
-      { itemId: string },
+      NotificationsDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1782,7 +1812,7 @@ export const useNotificationsDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof notificationsDeleteItem>>,
   TError,
-  { itemId: string },
+  NotificationsDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getNotificationsDeleteItemMutationOptions(options), queryClient)
@@ -1816,10 +1846,18 @@ export const notificationsBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<notificationsBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getNotificationsBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -1833,6 +1871,8 @@ export const notificationsBatchAction = async (
   } as notificationsBatchActionResponseSuccess
 }
 
+export const getNotificationsBatchActionMutationKey = () => ["notificationsBatchAction"] as const
+
 export const getNotificationsBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1840,7 +1880,7 @@ export const getNotificationsBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof notificationsBatchAction>>,
     TError,
-    { data: BatchAction },
+    NotificationsBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1848,10 +1888,10 @@ export const getNotificationsBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof notificationsBatchAction>>,
   TError,
-  { data: BatchAction },
+  NotificationsBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["notificationsBatchAction"]
+  const mutationKey = getNotificationsBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1864,7 +1904,7 @@ export const getNotificationsBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof notificationsBatchAction>>,
-    { data: BatchAction }
+    NotificationsBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1882,6 +1922,7 @@ export type NotificationsBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type NotificationsBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -1894,7 +1935,7 @@ export const useNotificationsBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof notificationsBatchAction>>,
       TError,
-      { data: BatchAction },
+      NotificationsBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1904,7 +1945,7 @@ export const useNotificationsBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof notificationsBatchAction>>,
   TError,
-  { data: BatchAction },
+  NotificationsBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getNotificationsBatchActionMutationOptions(options), queryClient)

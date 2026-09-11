@@ -25,7 +25,13 @@ import type {
 
 import { BitcartApiConfig } from "../../../config"
 import { BackupsPolicy, GlobalStorePolicy, Policy } from "../../../schemas/generated"
-import type { BodyManageRestoreBackup, HTTPValidationError } from "../../../schemas/generated"
+import type {
+  BackupsPolicyOutput,
+  BodyManageRestoreBackup,
+  GlobalStorePolicyOutput,
+  HTTPValidationError,
+  PolicyOutput,
+} from "../../../schemas/generated"
 import { createApiFailure } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
@@ -277,7 +283,7 @@ export function useManageGetPoliciesSuspense<
 }
 
 export type manageSetPoliciesResponse200 = {
-  data: Policy
+  data: PolicyOutput
   status: 200
 }
 
@@ -305,10 +311,18 @@ export const manageSetPolicies = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<manageSetPoliciesResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getManageSetPoliciesUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(policy),
   })
 
@@ -320,6 +334,8 @@ export const manageSetPolicies = async (
   return { data, status: res.status, headers: res.headers } as manageSetPoliciesResponseSuccess
 }
 
+export const getManageSetPoliciesMutationKey = () => ["manageSetPolicies"] as const
+
 export const getManageSetPoliciesMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -327,7 +343,7 @@ export const getManageSetPoliciesMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof manageSetPolicies>>,
     TError,
-    { data: Policy },
+    ManageSetPoliciesMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -335,10 +351,10 @@ export const getManageSetPoliciesMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof manageSetPolicies>>,
   TError,
-  { data: Policy },
+  ManageSetPoliciesMutationVariables,
   TContext
 > => {
-  const mutationKey = ["manageSetPolicies"]
+  const mutationKey = getManageSetPoliciesMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -351,7 +367,7 @@ export const getManageSetPoliciesMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof manageSetPolicies>>,
-    { data: Policy }
+    ManageSetPoliciesMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -369,6 +385,7 @@ export type ManageSetPoliciesMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ManageSetPoliciesMutationVariables = { data: Policy }
 
 /**
  * @summary Set Policies
@@ -381,7 +398,7 @@ export const useManageSetPolicies = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof manageSetPolicies>>,
       TError,
-      { data: Policy },
+      ManageSetPoliciesMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -391,13 +408,13 @@ export const useManageSetPolicies = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof manageSetPolicies>>,
   TError,
-  { data: Policy },
+  ManageSetPoliciesMutationVariables,
   TContext
 > => {
   return useMutation(getManageSetPoliciesMutationOptions(options), queryClient)
 }
 export type manageGetStorePoliciesResponse200 = {
-  data: GlobalStorePolicy
+  data: GlobalStorePolicyOutput
   status: 200
 }
 
@@ -645,7 +662,7 @@ export function useManageGetStorePoliciesSuspense<
 }
 
 export type manageSetStorePoliciesResponse200 = {
-  data: GlobalStorePolicy
+  data: GlobalStorePolicyOutput
   status: 200
 }
 
@@ -673,10 +690,18 @@ export const manageSetStorePolicies = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<manageSetStorePoliciesResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getManageSetStorePoliciesUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(globalStorePolicy),
   })
 
@@ -688,6 +713,8 @@ export const manageSetStorePolicies = async (
   return { data, status: res.status, headers: res.headers } as manageSetStorePoliciesResponseSuccess
 }
 
+export const getManageSetStorePoliciesMutationKey = () => ["manageSetStorePolicies"] as const
+
 export const getManageSetStorePoliciesMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -695,7 +722,7 @@ export const getManageSetStorePoliciesMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof manageSetStorePolicies>>,
     TError,
-    { data: GlobalStorePolicy },
+    ManageSetStorePoliciesMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -703,10 +730,10 @@ export const getManageSetStorePoliciesMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof manageSetStorePolicies>>,
   TError,
-  { data: GlobalStorePolicy },
+  ManageSetStorePoliciesMutationVariables,
   TContext
 > => {
-  const mutationKey = ["manageSetStorePolicies"]
+  const mutationKey = getManageSetStorePoliciesMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -719,7 +746,7 @@ export const getManageSetStorePoliciesMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof manageSetStorePolicies>>,
-    { data: GlobalStorePolicy }
+    ManageSetStorePoliciesMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -737,6 +764,7 @@ export type ManageSetStorePoliciesMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ManageSetStorePoliciesMutationVariables = { data: GlobalStorePolicy }
 
 /**
  * @summary Set Store Policies
@@ -749,7 +777,7 @@ export const useManageSetStorePolicies = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof manageSetStorePolicies>>,
       TError,
-      { data: GlobalStorePolicy },
+      ManageSetStorePoliciesMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -759,7 +787,7 @@ export const useManageSetStorePolicies = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof manageSetStorePolicies>>,
   TError,
-  { data: GlobalStorePolicy },
+  ManageSetStorePoliciesMutationVariables,
   TContext
 > => {
   return useMutation(getManageSetStorePoliciesMutationOptions(options), queryClient)
@@ -795,6 +823,8 @@ export const manageRestartServer = async (
   return { data, status: res.status, headers: res.headers } as manageRestartServerResponseSuccess
 }
 
+export const getManageRestartServerMutationKey = () => ["manageRestartServer"] as const
+
 export const getManageRestartServerMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -808,7 +838,7 @@ export const getManageRestartServerMutationOptions = <
   fetch?: RequestInit
   fetcher?: typeof globalThis.fetch
 }): UseMutationOptions<Awaited<ReturnType<typeof manageRestartServer>>, TError, void, TContext> => {
-  const mutationKey = ["manageRestartServer"]
+  const mutationKey = getManageRestartServerMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -890,6 +920,8 @@ export const managePluginReload = async (
   return { data, status: res.status, headers: res.headers } as managePluginReloadResponseSuccess
 }
 
+export const getManagePluginReloadMutationKey = () => ["managePluginReload"] as const
+
 export const getManagePluginReloadMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -903,7 +935,7 @@ export const getManagePluginReloadMutationOptions = <
   fetch?: RequestInit
   fetcher?: typeof globalThis.fetch
 }): UseMutationOptions<Awaited<ReturnType<typeof managePluginReload>>, TError, void, TContext> => {
-  const mutationKey = ["managePluginReload"]
+  const mutationKey = getManagePluginReloadMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -979,6 +1011,8 @@ export const manageUpdateServer = async (
   return { data, status: res.status, headers: res.headers } as manageUpdateServerResponseSuccess
 }
 
+export const getManageUpdateServerMutationKey = () => ["manageUpdateServer"] as const
+
 export const getManageUpdateServerMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -992,7 +1026,7 @@ export const getManageUpdateServerMutationOptions = <
   fetch?: RequestInit
   fetcher?: typeof globalThis.fetch
 }): UseMutationOptions<Awaited<ReturnType<typeof manageUpdateServer>>, TError, void, TContext> => {
-  const mutationKey = ["manageUpdateServer"]
+  const mutationKey = getManageUpdateServerMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1068,6 +1102,8 @@ export const manageCleanupImages = async (
   return { data, status: res.status, headers: res.headers } as manageCleanupImagesResponseSuccess
 }
 
+export const getManageCleanupImagesMutationKey = () => ["manageCleanupImages"] as const
+
 export const getManageCleanupImagesMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1081,7 +1117,7 @@ export const getManageCleanupImagesMutationOptions = <
   fetch?: RequestInit
   fetcher?: typeof globalThis.fetch
 }): UseMutationOptions<Awaited<ReturnType<typeof manageCleanupImages>>, TError, void, TContext> => {
-  const mutationKey = ["manageCleanupImages"]
+  const mutationKey = getManageCleanupImagesMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1163,6 +1199,8 @@ export const manageCleanupLogs = async (
   return { data, status: res.status, headers: res.headers } as manageCleanupLogsResponseSuccess
 }
 
+export const getManageCleanupLogsMutationKey = () => ["manageCleanupLogs"] as const
+
 export const getManageCleanupLogsMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1176,7 +1214,7 @@ export const getManageCleanupLogsMutationOptions = <
   fetch?: RequestInit
   fetcher?: typeof globalThis.fetch
 }): UseMutationOptions<Awaited<ReturnType<typeof manageCleanupLogs>>, TError, void, TContext> => {
-  const mutationKey = ["manageCleanupLogs"]
+  const mutationKey = getManageCleanupLogsMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1252,6 +1290,8 @@ export const manageCleanupServer = async (
   return { data, status: res.status, headers: res.headers } as manageCleanupServerResponseSuccess
 }
 
+export const getManageCleanupServerMutationKey = () => ["manageCleanupServer"] as const
+
 export const getManageCleanupServerMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1265,7 +1305,7 @@ export const getManageCleanupServerMutationOptions = <
   fetch?: RequestInit
   fetcher?: typeof globalThis.fetch
 }): UseMutationOptions<Awaited<ReturnType<typeof manageCleanupServer>>, TError, void, TContext> => {
-  const mutationKey = ["manageCleanupServer"]
+  const mutationKey = getManageCleanupServerMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1861,6 +1901,8 @@ export const manageDeleteLog = async (
   return { data, status: res.status, headers: res.headers } as manageDeleteLogResponseSuccess
 }
 
+export const getManageDeleteLogMutationKey = () => ["manageDeleteLog"] as const
+
 export const getManageDeleteLogMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1868,7 +1910,7 @@ export const getManageDeleteLogMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof manageDeleteLog>>,
     TError,
-    { log: string },
+    ManageDeleteLogMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1876,10 +1918,10 @@ export const getManageDeleteLogMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof manageDeleteLog>>,
   TError,
-  { log: string },
+  ManageDeleteLogMutationVariables,
   TContext
 > => {
-  const mutationKey = ["manageDeleteLog"]
+  const mutationKey = getManageDeleteLogMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1892,7 +1934,7 @@ export const getManageDeleteLogMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof manageDeleteLog>>,
-    { log: string }
+    ManageDeleteLogMutationVariables
   > = (props) => {
     const { log } = props ?? {}
 
@@ -1908,6 +1950,7 @@ export type ManageDeleteLogMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ManageDeleteLogMutationVariables = { log: string }
 
 /**
  * @summary Delete Log
@@ -1920,7 +1963,7 @@ export const useManageDeleteLog = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof manageDeleteLog>>,
       TError,
-      { log: string },
+      ManageDeleteLogMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1930,7 +1973,7 @@ export const useManageDeleteLog = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof manageDeleteLog>>,
   TError,
-  { log: string },
+  ManageDeleteLogMutationVariables,
   TContext
 > => {
   return useMutation(getManageDeleteLogMutationOptions(options), queryClient)
@@ -2637,7 +2680,7 @@ export function useManageGetDaemonsSuspense<
 }
 
 export type manageGetBackupPoliciesResponse200 = {
-  data: BackupsPolicy
+  data: BackupsPolicyOutput
   status: 200
 }
 
@@ -2891,7 +2934,7 @@ export function useManageGetBackupPoliciesSuspense<
 }
 
 export type manageSetBackupPoliciesResponse200 = {
-  data: BackupsPolicy
+  data: BackupsPolicyOutput
   status: 200
 }
 
@@ -2919,10 +2962,18 @@ export const manageSetBackupPolicies = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<manageSetBackupPoliciesResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getManageSetBackupPoliciesUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(backupsPolicy),
   })
 
@@ -2938,6 +2989,8 @@ export const manageSetBackupPolicies = async (
   } as manageSetBackupPoliciesResponseSuccess
 }
 
+export const getManageSetBackupPoliciesMutationKey = () => ["manageSetBackupPolicies"] as const
+
 export const getManageSetBackupPoliciesMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2945,7 +2998,7 @@ export const getManageSetBackupPoliciesMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof manageSetBackupPolicies>>,
     TError,
-    { data: BackupsPolicy },
+    ManageSetBackupPoliciesMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -2953,10 +3006,10 @@ export const getManageSetBackupPoliciesMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof manageSetBackupPolicies>>,
   TError,
-  { data: BackupsPolicy },
+  ManageSetBackupPoliciesMutationVariables,
   TContext
 > => {
-  const mutationKey = ["manageSetBackupPolicies"]
+  const mutationKey = getManageSetBackupPoliciesMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -2969,7 +3022,7 @@ export const getManageSetBackupPoliciesMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof manageSetBackupPolicies>>,
-    { data: BackupsPolicy }
+    ManageSetBackupPoliciesMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -2987,6 +3040,7 @@ export type ManageSetBackupPoliciesMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ManageSetBackupPoliciesMutationVariables = { data: BackupsPolicy }
 
 /**
  * @summary Set Backup Policies
@@ -2999,7 +3053,7 @@ export const useManageSetBackupPolicies = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof manageSetBackupPolicies>>,
       TError,
-      { data: BackupsPolicy },
+      ManageSetBackupPoliciesMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -3009,7 +3063,7 @@ export const useManageSetBackupPolicies = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof manageSetBackupPolicies>>,
   TError,
-  { data: BackupsPolicy },
+  ManageSetBackupPoliciesMutationVariables,
   TContext
 > => {
   return useMutation(getManageSetBackupPoliciesMutationOptions(options), queryClient)
@@ -3549,6 +3603,8 @@ export const managePerformBackup = async (
   return { data, status: res.status, headers: res.headers } as managePerformBackupResponseSuccess
 }
 
+export const getManagePerformBackupMutationKey = () => ["managePerformBackup"] as const
+
 export const getManagePerformBackupMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -3562,7 +3618,7 @@ export const getManagePerformBackupMutationOptions = <
   fetch?: RequestInit
   fetcher?: typeof globalThis.fetch
 }): UseMutationOptions<Awaited<ReturnType<typeof managePerformBackup>>, TError, void, TContext> => {
-  const mutationKey = ["managePerformBackup"]
+  const mutationKey = getManagePerformBackupMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -3929,6 +3985,8 @@ export const manageRestoreBackup = async (
   return { data, status: res.status, headers: res.headers } as manageRestoreBackupResponseSuccess
 }
 
+export const getManageRestoreBackupMutationKey = () => ["manageRestoreBackup"] as const
+
 export const getManageRestoreBackupMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -3936,7 +3994,7 @@ export const getManageRestoreBackupMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof manageRestoreBackup>>,
     TError,
-    { data: BodyManageRestoreBackup },
+    ManageRestoreBackupMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -3944,10 +4002,10 @@ export const getManageRestoreBackupMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof manageRestoreBackup>>,
   TError,
-  { data: BodyManageRestoreBackup },
+  ManageRestoreBackupMutationVariables,
   TContext
 > => {
-  const mutationKey = ["manageRestoreBackup"]
+  const mutationKey = getManageRestoreBackupMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -3960,7 +4018,7 @@ export const getManageRestoreBackupMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof manageRestoreBackup>>,
-    { data: BodyManageRestoreBackup }
+    ManageRestoreBackupMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -3978,6 +4036,7 @@ export type ManageRestoreBackupMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type ManageRestoreBackupMutationVariables = { data: BodyManageRestoreBackup }
 
 /**
  * @summary Restore Backup
@@ -3990,7 +4049,7 @@ export const useManageRestoreBackup = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof manageRestoreBackup>>,
       TError,
-      { data: BodyManageRestoreBackup },
+      ManageRestoreBackupMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -4000,7 +4059,7 @@ export const useManageRestoreBackup = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof manageRestoreBackup>>,
   TError,
-  { data: BodyManageRestoreBackup },
+  ManageRestoreBackupMutationVariables,
   TContext
 > => {
   return useMutation(getManageRestoreBackupMutationOptions(options), queryClient)

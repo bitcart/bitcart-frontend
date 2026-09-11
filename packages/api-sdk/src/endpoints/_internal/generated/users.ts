@@ -34,9 +34,13 @@ import type {
   BatchAction,
   ChangePassword,
   CreateUser,
+  DisplayUserOutput,
+  DisplayUserWithTokenOutput,
   EmailVerifyFinalize,
+  EmailVerifyResponseOutput,
   HTTPValidationError,
   LoginFIDOData,
+  OffsetPaginationDisplayUserOutput,
   OptionalUpdateUser,
   ResetPasswordData,
   ResetPasswordFinalize,
@@ -64,7 +68,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 }
 
 export type usersMeResponse200 = {
-  data: DisplayUser
+  data: DisplayUserOutput
   status: 200
 }
 
@@ -282,7 +286,7 @@ export function useUsersMeSuspense<
 }
 
 export type usersSetSettingsResponse200 = {
-  data: DisplayUser
+  data: DisplayUserOutput
   status: 200
 }
 
@@ -310,10 +314,18 @@ export const usersSetSettings = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersSetSettingsResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersSetSettingsUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(userPreferences),
   })
 
@@ -325,6 +337,8 @@ export const usersSetSettings = async (
   return { data, status: res.status, headers: res.headers } as usersSetSettingsResponseSuccess
 }
 
+export const getUsersSetSettingsMutationKey = () => ["usersSetSettings"] as const
+
 export const getUsersSetSettingsMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -332,7 +346,7 @@ export const getUsersSetSettingsMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersSetSettings>>,
     TError,
-    { data: UserPreferences },
+    UsersSetSettingsMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -340,10 +354,10 @@ export const getUsersSetSettingsMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersSetSettings>>,
   TError,
-  { data: UserPreferences },
+  UsersSetSettingsMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersSetSettings"]
+  const mutationKey = getUsersSetSettingsMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -356,7 +370,7 @@ export const getUsersSetSettingsMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersSetSettings>>,
-    { data: UserPreferences }
+    UsersSetSettingsMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -374,6 +388,7 @@ export type UsersSetSettingsMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersSetSettingsMutationVariables = { data: UserPreferences }
 
 /**
  * @summary Set Settings
@@ -386,7 +401,7 @@ export const useUsersSetSettings = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersSetSettings>>,
       TError,
-      { data: UserPreferences },
+      UsersSetSettingsMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -396,7 +411,7 @@ export const useUsersSetSettings = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersSetSettings>>,
   TError,
-  { data: UserPreferences },
+  UsersSetSettingsMutationVariables,
   TContext
 > => {
   return useMutation(getUsersSetSettingsMutationOptions(options), queryClient)
@@ -430,10 +445,18 @@ export const usersResetPassword = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersResetPasswordResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersResetPasswordUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(resetPasswordData),
   })
 
@@ -443,6 +466,8 @@ export const usersResetPassword = async (
   return { data, status: res.status, headers: res.headers } as usersResetPasswordResponseSuccess
 }
 
+export const getUsersResetPasswordMutationKey = () => ["usersResetPassword"] as const
+
 export const getUsersResetPasswordMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -450,7 +475,7 @@ export const getUsersResetPasswordMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersResetPassword>>,
     TError,
-    { data: ResetPasswordData },
+    UsersResetPasswordMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -458,10 +483,10 @@ export const getUsersResetPasswordMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersResetPassword>>,
   TError,
-  { data: ResetPasswordData },
+  UsersResetPasswordMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersResetPassword"]
+  const mutationKey = getUsersResetPasswordMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -474,7 +499,7 @@ export const getUsersResetPasswordMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersResetPassword>>,
-    { data: ResetPasswordData }
+    UsersResetPasswordMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -492,6 +517,7 @@ export type UsersResetPasswordMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersResetPasswordMutationVariables = { data: ResetPasswordData }
 
 /**
  * @summary Reset Password
@@ -504,7 +530,7 @@ export const useUsersResetPassword = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersResetPassword>>,
       TError,
-      { data: ResetPasswordData },
+      UsersResetPasswordMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -514,7 +540,7 @@ export const useUsersResetPassword = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersResetPassword>>,
   TError,
-  { data: ResetPasswordData },
+  UsersResetPasswordMutationVariables,
   TContext
 > => {
   return useMutation(getUsersResetPasswordMutationOptions(options), queryClient)
@@ -548,10 +574,18 @@ export const usersFinalizePasswordReset = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersFinalizePasswordResetResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersFinalizePasswordResetUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(resetPasswordFinalize),
   })
 
@@ -565,6 +599,9 @@ export const usersFinalizePasswordReset = async (
   } as usersFinalizePasswordResetResponseSuccess
 }
 
+export const getUsersFinalizePasswordResetMutationKey = () =>
+  ["usersFinalizePasswordReset"] as const
+
 export const getUsersFinalizePasswordResetMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -572,7 +609,7 @@ export const getUsersFinalizePasswordResetMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersFinalizePasswordReset>>,
     TError,
-    { data: ResetPasswordFinalize },
+    UsersFinalizePasswordResetMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -580,10 +617,10 @@ export const getUsersFinalizePasswordResetMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersFinalizePasswordReset>>,
   TError,
-  { data: ResetPasswordFinalize },
+  UsersFinalizePasswordResetMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersFinalizePasswordReset"]
+  const mutationKey = getUsersFinalizePasswordResetMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -596,7 +633,7 @@ export const getUsersFinalizePasswordResetMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersFinalizePasswordReset>>,
-    { data: ResetPasswordFinalize }
+    UsersFinalizePasswordResetMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -614,6 +651,7 @@ export type UsersFinalizePasswordResetMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersFinalizePasswordResetMutationVariables = { data: ResetPasswordFinalize }
 
 /**
  * @summary Finalize Password Reset
@@ -626,7 +664,7 @@ export const useUsersFinalizePasswordReset = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersFinalizePasswordReset>>,
       TError,
-      { data: ResetPasswordFinalize },
+      UsersFinalizePasswordResetMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -636,7 +674,7 @@ export const useUsersFinalizePasswordReset = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersFinalizePasswordReset>>,
   TError,
-  { data: ResetPasswordFinalize },
+  UsersFinalizePasswordResetMutationVariables,
   TContext
 > => {
   return useMutation(getUsersFinalizePasswordResetMutationOptions(options), queryClient)
@@ -670,10 +708,18 @@ export const usersSendVerificationEmail = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersSendVerificationEmailResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersSendVerificationEmailUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(verifyEmailData),
   })
 
@@ -687,6 +733,9 @@ export const usersSendVerificationEmail = async (
   } as usersSendVerificationEmailResponseSuccess
 }
 
+export const getUsersSendVerificationEmailMutationKey = () =>
+  ["usersSendVerificationEmail"] as const
+
 export const getUsersSendVerificationEmailMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -694,7 +743,7 @@ export const getUsersSendVerificationEmailMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersSendVerificationEmail>>,
     TError,
-    { data: VerifyEmailData },
+    UsersSendVerificationEmailMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -702,10 +751,10 @@ export const getUsersSendVerificationEmailMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersSendVerificationEmail>>,
   TError,
-  { data: VerifyEmailData },
+  UsersSendVerificationEmailMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersSendVerificationEmail"]
+  const mutationKey = getUsersSendVerificationEmailMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -718,7 +767,7 @@ export const getUsersSendVerificationEmailMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersSendVerificationEmail>>,
-    { data: VerifyEmailData }
+    UsersSendVerificationEmailMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -736,6 +785,7 @@ export type UsersSendVerificationEmailMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersSendVerificationEmailMutationVariables = { data: VerifyEmailData }
 
 /**
  * @summary Send Verification Email
@@ -748,7 +798,7 @@ export const useUsersSendVerificationEmail = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersSendVerificationEmail>>,
       TError,
-      { data: VerifyEmailData },
+      UsersSendVerificationEmailMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -758,13 +808,13 @@ export const useUsersSendVerificationEmail = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersSendVerificationEmail>>,
   TError,
-  { data: VerifyEmailData },
+  UsersSendVerificationEmailMutationVariables,
   TContext
 > => {
   return useMutation(getUsersSendVerificationEmailMutationOptions(options), queryClient)
 }
 export type usersFinalizeEmailVerificationResponse200 = {
-  data: EmailVerifyResponse
+  data: EmailVerifyResponseOutput
   status: 200
 }
 
@@ -809,10 +859,18 @@ export const usersFinalizeEmailVerification = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersFinalizeEmailVerificationResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersFinalizeEmailVerificationUrl(params), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(emailVerifyFinalize),
   })
 
@@ -828,6 +886,9 @@ export const usersFinalizeEmailVerification = async (
   } as usersFinalizeEmailVerificationResponseSuccess
 }
 
+export const getUsersFinalizeEmailVerificationMutationKey = () =>
+  ["usersFinalizeEmailVerification"] as const
+
 export const getUsersFinalizeEmailVerificationMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -835,7 +896,7 @@ export const getUsersFinalizeEmailVerificationMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersFinalizeEmailVerification>>,
     TError,
-    { data: EmailVerifyFinalize; params?: UsersFinalizeEmailVerificationParams },
+    UsersFinalizeEmailVerificationMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -843,10 +904,10 @@ export const getUsersFinalizeEmailVerificationMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersFinalizeEmailVerification>>,
   TError,
-  { data: EmailVerifyFinalize; params?: UsersFinalizeEmailVerificationParams },
+  UsersFinalizeEmailVerificationMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersFinalizeEmailVerification"]
+  const mutationKey = getUsersFinalizeEmailVerificationMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -859,7 +920,7 @@ export const getUsersFinalizeEmailVerificationMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersFinalizeEmailVerification>>,
-    { data: EmailVerifyFinalize; params?: UsersFinalizeEmailVerificationParams }
+    UsersFinalizeEmailVerificationMutationVariables
   > = (props) => {
     const { data, params } = props ?? {}
 
@@ -877,6 +938,10 @@ export type UsersFinalizeEmailVerificationMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersFinalizeEmailVerificationMutationVariables = {
+  data: EmailVerifyFinalize
+  params?: UsersFinalizeEmailVerificationParams
+}
 
 /**
  * @summary Finalize Email Verification
@@ -889,7 +954,7 @@ export const useUsersFinalizeEmailVerification = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersFinalizeEmailVerification>>,
       TError,
-      { data: EmailVerifyFinalize; params?: UsersFinalizeEmailVerificationParams },
+      UsersFinalizeEmailVerificationMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -899,7 +964,7 @@ export const useUsersFinalizeEmailVerification = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersFinalizeEmailVerification>>,
   TError,
-  { data: EmailVerifyFinalize; params?: UsersFinalizeEmailVerificationParams },
+  UsersFinalizeEmailVerificationMutationVariables,
   TContext
 > => {
   return useMutation(getUsersFinalizeEmailVerificationMutationOptions(options), queryClient)
@@ -933,10 +998,18 @@ export const usersChangePassword = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersChangePasswordResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersChangePasswordUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(changePassword),
   })
 
@@ -946,6 +1019,8 @@ export const usersChangePassword = async (
   return { data, status: res.status, headers: res.headers } as usersChangePasswordResponseSuccess
 }
 
+export const getUsersChangePasswordMutationKey = () => ["usersChangePassword"] as const
+
 export const getUsersChangePasswordMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -953,7 +1028,7 @@ export const getUsersChangePasswordMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersChangePassword>>,
     TError,
-    { data: ChangePassword },
+    UsersChangePasswordMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -961,10 +1036,10 @@ export const getUsersChangePasswordMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersChangePassword>>,
   TError,
-  { data: ChangePassword },
+  UsersChangePasswordMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersChangePassword"]
+  const mutationKey = getUsersChangePasswordMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -977,7 +1052,7 @@ export const getUsersChangePasswordMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersChangePassword>>,
-    { data: ChangePassword }
+    UsersChangePasswordMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -995,6 +1070,7 @@ export type UsersChangePasswordMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersChangePasswordMutationVariables = { data: ChangePassword }
 
 /**
  * @summary Change Password
@@ -1007,7 +1083,7 @@ export const useUsersChangePassword = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersChangePassword>>,
       TError,
-      { data: ChangePassword },
+      UsersChangePasswordMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1017,7 +1093,7 @@ export const useUsersChangePassword = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersChangePassword>>,
   TError,
-  { data: ChangePassword },
+  UsersChangePasswordMutationVariables,
   TContext
 > => {
   return useMutation(getUsersChangePasswordMutationOptions(options), queryClient)
@@ -1051,10 +1127,18 @@ export const usersVerifyTotp = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersVerifyTotpResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersVerifyTotpUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(verifyTOTP),
   })
 
@@ -1064,6 +1148,8 @@ export const usersVerifyTotp = async (
   return { data, status: res.status, headers: res.headers } as usersVerifyTotpResponseSuccess
 }
 
+export const getUsersVerifyTotpMutationKey = () => ["usersVerifyTotp"] as const
+
 export const getUsersVerifyTotpMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1071,7 +1157,7 @@ export const getUsersVerifyTotpMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersVerifyTotp>>,
     TError,
-    { data: VerifyTOTP },
+    UsersVerifyTotpMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1079,10 +1165,10 @@ export const getUsersVerifyTotpMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersVerifyTotp>>,
   TError,
-  { data: VerifyTOTP },
+  UsersVerifyTotpMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersVerifyTotp"]
+  const mutationKey = getUsersVerifyTotpMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1095,7 +1181,7 @@ export const getUsersVerifyTotpMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersVerifyTotp>>,
-    { data: VerifyTOTP }
+    UsersVerifyTotpMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1111,6 +1197,7 @@ export type UsersVerifyTotpMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersVerifyTotpMutationVariables = { data: VerifyTOTP }
 
 /**
  * @summary Verify Totp
@@ -1123,7 +1210,7 @@ export const useUsersVerifyTotp = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersVerifyTotp>>,
       TError,
-      { data: VerifyTOTP },
+      UsersVerifyTotpMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1133,7 +1220,7 @@ export const useUsersVerifyTotp = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersVerifyTotp>>,
   TError,
-  { data: VerifyTOTP },
+  UsersVerifyTotpMutationVariables,
   TContext
 > => {
   return useMutation(getUsersVerifyTotpMutationOptions(options), queryClient)
@@ -1169,6 +1256,8 @@ export const usersDisableTotp = async (
   return { data, status: res.status, headers: res.headers } as usersDisableTotpResponseSuccess
 }
 
+export const getUsersDisableTotpMutationKey = () => ["usersDisableTotp"] as const
+
 export const getUsersDisableTotpMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1182,7 +1271,7 @@ export const getUsersDisableTotpMutationOptions = <
   fetch?: RequestInit
   fetcher?: typeof globalThis.fetch
 }): UseMutationOptions<Awaited<ReturnType<typeof usersDisableTotp>>, TError, void, TContext> => {
-  const mutationKey = ["usersDisableTotp"]
+  const mutationKey = getUsersDisableTotpMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1256,10 +1345,18 @@ export const usersRegisterFido2 = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersRegisterFido2ResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersRegisterFido2Url(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(loginFIDOData),
   })
 
@@ -1269,6 +1366,8 @@ export const usersRegisterFido2 = async (
   return { data, status: res.status, headers: res.headers } as usersRegisterFido2ResponseSuccess
 }
 
+export const getUsersRegisterFido2MutationKey = () => ["usersRegisterFido2"] as const
+
 export const getUsersRegisterFido2MutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1276,7 +1375,7 @@ export const getUsersRegisterFido2MutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersRegisterFido2>>,
     TError,
-    { data: LoginFIDOData },
+    UsersRegisterFido2MutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1284,10 +1383,10 @@ export const getUsersRegisterFido2MutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersRegisterFido2>>,
   TError,
-  { data: LoginFIDOData },
+  UsersRegisterFido2MutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersRegisterFido2"]
+  const mutationKey = getUsersRegisterFido2MutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1300,7 +1399,7 @@ export const getUsersRegisterFido2MutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersRegisterFido2>>,
-    { data: LoginFIDOData }
+    UsersRegisterFido2MutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -1318,6 +1417,7 @@ export type UsersRegisterFido2MutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersRegisterFido2MutationVariables = { data: LoginFIDOData }
 
 /**
  * @summary Register Fido2
@@ -1330,7 +1430,7 @@ export const useUsersRegisterFido2 = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersRegisterFido2>>,
       TError,
-      { data: LoginFIDOData },
+      UsersRegisterFido2MutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1340,7 +1440,7 @@ export const useUsersRegisterFido2 = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersRegisterFido2>>,
   TError,
-  { data: LoginFIDOData },
+  UsersRegisterFido2MutationVariables,
   TContext
 > => {
   return useMutation(getUsersRegisterFido2MutationOptions(options), queryClient)
@@ -1381,6 +1481,9 @@ export const usersFido2CompleteRegistration = async (
   } as usersFido2CompleteRegistrationResponseSuccess
 }
 
+export const getUsersFido2CompleteRegistrationMutationKey = () =>
+  ["usersFido2CompleteRegistration"] as const
+
 export const getUsersFido2CompleteRegistrationMutationOptions = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1399,7 +1502,7 @@ export const getUsersFido2CompleteRegistrationMutationOptions = <
   void,
   TContext
 > => {
-  const mutationKey = ["usersFido2CompleteRegistration"]
+  const mutationKey = getUsersFido2CompleteRegistrationMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1495,6 +1598,8 @@ export const usersFido2DeleteDevice = async (
   return { data, status: res.status, headers: res.headers } as usersFido2DeleteDeviceResponseSuccess
 }
 
+export const getUsersFido2DeleteDeviceMutationKey = () => ["usersFido2DeleteDevice"] as const
+
 export const getUsersFido2DeleteDeviceMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1502,7 +1607,7 @@ export const getUsersFido2DeleteDeviceMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersFido2DeleteDevice>>,
     TError,
-    { deviceId: string },
+    UsersFido2DeleteDeviceMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -1510,10 +1615,10 @@ export const getUsersFido2DeleteDeviceMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersFido2DeleteDevice>>,
   TError,
-  { deviceId: string },
+  UsersFido2DeleteDeviceMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersFido2DeleteDevice"]
+  const mutationKey = getUsersFido2DeleteDeviceMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -1526,7 +1631,7 @@ export const getUsersFido2DeleteDeviceMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersFido2DeleteDevice>>,
-    { deviceId: string }
+    UsersFido2DeleteDeviceMutationVariables
   > = (props) => {
     const { deviceId } = props ?? {}
 
@@ -1544,6 +1649,7 @@ export type UsersFido2DeleteDeviceMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersFido2DeleteDeviceMutationVariables = { deviceId: string }
 
 /**
  * @summary Fido2 Delete Device
@@ -1556,7 +1662,7 @@ export const useUsersFido2DeleteDevice = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersFido2DeleteDevice>>,
       TError,
-      { deviceId: string },
+      UsersFido2DeleteDeviceMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -1566,7 +1672,7 @@ export const useUsersFido2DeleteDevice = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersFido2DeleteDevice>>,
   TError,
-  { deviceId: string },
+  UsersFido2DeleteDeviceMutationVariables,
   TContext
 > => {
   return useMutation(getUsersFido2DeleteDeviceMutationOptions(options), queryClient)
@@ -1798,7 +1904,7 @@ export function useUsersGetStatsSuspense<
 }
 
 export type usersListItemsResponse200 = {
-  data: OffsetPaginationDisplayUser
+  data: OffsetPaginationDisplayUserOutput
   status: 200
 }
 
@@ -2071,7 +2177,7 @@ export function useUsersListItemsSuspense<
 }
 
 export type usersCreateUserResponse200 = {
-  data: DisplayUserWithToken
+  data: DisplayUserWithTokenOutput
   status: 200
 }
 
@@ -2099,10 +2205,18 @@ export const usersCreateUser = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersCreateUserResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersCreateUserUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(createUser),
   })
 
@@ -2114,6 +2228,8 @@ export const usersCreateUser = async (
   return { data, status: res.status, headers: res.headers } as usersCreateUserResponseSuccess
 }
 
+export const getUsersCreateUserMutationKey = () => ["usersCreateUser"] as const
+
 export const getUsersCreateUserMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2121,7 +2237,7 @@ export const getUsersCreateUserMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersCreateUser>>,
     TError,
-    { data: CreateUser },
+    UsersCreateUserMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -2129,10 +2245,10 @@ export const getUsersCreateUserMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersCreateUser>>,
   TError,
-  { data: CreateUser },
+  UsersCreateUserMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersCreateUser"]
+  const mutationKey = getUsersCreateUserMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -2145,7 +2261,7 @@ export const getUsersCreateUserMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersCreateUser>>,
-    { data: CreateUser }
+    UsersCreateUserMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -2161,6 +2277,7 @@ export type UsersCreateUserMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersCreateUserMutationVariables = { data: CreateUser }
 
 /**
  * @summary Create User
@@ -2173,7 +2290,7 @@ export const useUsersCreateUser = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersCreateUser>>,
       TError,
-      { data: CreateUser },
+      UsersCreateUserMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -2183,7 +2300,7 @@ export const useUsersCreateUser = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersCreateUser>>,
   TError,
-  { data: CreateUser },
+  UsersCreateUserMutationVariables,
   TContext
 > => {
   return useMutation(getUsersCreateUserMutationOptions(options), queryClient)
@@ -2415,7 +2532,7 @@ export function useUsersGetCountSuspense<
 }
 
 export type usersGetItemResponse200 = {
-  data: DisplayUser
+  data: DisplayUserOutput
   status: 200
 }
 
@@ -2673,7 +2790,7 @@ export function useUsersGetItemSuspense<
 }
 
 export type usersUpdateItemResponse200 = {
-  data: DisplayUser
+  data: DisplayUserOutput
   status: 200
 }
 
@@ -2702,10 +2819,18 @@ export const usersUpdateItem = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersUpdateItemResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersUpdateItemUrl(itemId), {
     ...options,
     method: "PATCH",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(optionalUpdateUser),
   })
 
@@ -2717,6 +2842,8 @@ export const usersUpdateItem = async (
   return { data, status: res.status, headers: res.headers } as usersUpdateItemResponseSuccess
 }
 
+export const getUsersUpdateItemMutationKey = () => ["usersUpdateItem"] as const
+
 export const getUsersUpdateItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2724,7 +2851,7 @@ export const getUsersUpdateItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersUpdateItem>>,
     TError,
-    { itemId: string; data: OptionalUpdateUser },
+    UsersUpdateItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -2732,10 +2859,10 @@ export const getUsersUpdateItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateUser },
+  UsersUpdateItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersUpdateItem"]
+  const mutationKey = getUsersUpdateItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -2748,7 +2875,7 @@ export const getUsersUpdateItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersUpdateItem>>,
-    { itemId: string; data: OptionalUpdateUser }
+    UsersUpdateItemMutationVariables
   > = (props) => {
     const { itemId, data } = props ?? {}
 
@@ -2764,6 +2891,7 @@ export type UsersUpdateItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateUser }
 
 /**
  * @summary Update Item
@@ -2776,7 +2904,7 @@ export const useUsersUpdateItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersUpdateItem>>,
       TError,
-      { itemId: string; data: OptionalUpdateUser },
+      UsersUpdateItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -2786,13 +2914,13 @@ export const useUsersUpdateItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersUpdateItem>>,
   TError,
-  { itemId: string; data: OptionalUpdateUser },
+  UsersUpdateItemMutationVariables,
   TContext
 > => {
   return useMutation(getUsersUpdateItemMutationOptions(options), queryClient)
 }
 export type usersDeleteItemResponse200 = {
-  data: DisplayUser
+  data: DisplayUserOutput
   status: 200
 }
 
@@ -2833,6 +2961,8 @@ export const usersDeleteItem = async (
   return { data, status: res.status, headers: res.headers } as usersDeleteItemResponseSuccess
 }
 
+export const getUsersDeleteItemMutationKey = () => ["usersDeleteItem"] as const
+
 export const getUsersDeleteItemMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2840,7 +2970,7 @@ export const getUsersDeleteItemMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersDeleteItem>>,
     TError,
-    { itemId: string },
+    UsersDeleteItemMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -2848,10 +2978,10 @@ export const getUsersDeleteItemMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersDeleteItem>>,
   TError,
-  { itemId: string },
+  UsersDeleteItemMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersDeleteItem"]
+  const mutationKey = getUsersDeleteItemMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -2864,7 +2994,7 @@ export const getUsersDeleteItemMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersDeleteItem>>,
-    { itemId: string }
+    UsersDeleteItemMutationVariables
   > = (props) => {
     const { itemId } = props ?? {}
 
@@ -2880,6 +3010,7 @@ export type UsersDeleteItemMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersDeleteItemMutationVariables = { itemId: string }
 
 /**
  * @summary Delete Item
@@ -2892,7 +3023,7 @@ export const useUsersDeleteItem = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersDeleteItem>>,
       TError,
-      { itemId: string },
+      UsersDeleteItemMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -2902,7 +3033,7 @@ export const useUsersDeleteItem = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersDeleteItem>>,
   TError,
-  { itemId: string },
+  UsersDeleteItemMutationVariables,
   TContext
 > => {
   return useMutation(getUsersDeleteItemMutationOptions(options), queryClient)
@@ -2936,10 +3067,18 @@ export const usersBatchAction = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<usersBatchActionResponseSuccess> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Array.isArray(h)) return Object.fromEntries(h)
+    return h
+  }
   const res = await (fetchFn ?? fetch)(getUsersBatchActionUrl(), {
     ...options,
     method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(batchAction),
   })
 
@@ -2949,6 +3088,8 @@ export const usersBatchAction = async (
   return { data, status: res.status, headers: res.headers } as usersBatchActionResponseSuccess
 }
 
+export const getUsersBatchActionMutationKey = () => ["usersBatchAction"] as const
+
 export const getUsersBatchActionMutationOptions = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2956,7 +3097,7 @@ export const getUsersBatchActionMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof usersBatchAction>>,
     TError,
-    { data: BatchAction },
+    UsersBatchActionMutationVariables,
     TContext
   >
   fetch?: RequestInit
@@ -2964,10 +3105,10 @@ export const getUsersBatchActionMutationOptions = <
 }): UseMutationOptions<
   Awaited<ReturnType<typeof usersBatchAction>>,
   TError,
-  { data: BatchAction },
+  UsersBatchActionMutationVariables,
   TContext
 > => {
-  const mutationKey = ["usersBatchAction"]
+  const mutationKey = getUsersBatchActionMutationKey()
   const {
     mutation: mutationOptions,
     fetch: fetchOptions,
@@ -2980,7 +3121,7 @@ export const getUsersBatchActionMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof usersBatchAction>>,
-    { data: BatchAction }
+    UsersBatchActionMutationVariables
   > = (props) => {
     const { data } = props ?? {}
 
@@ -2998,6 +3139,7 @@ export type UsersBatchActionMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
+export type UsersBatchActionMutationVariables = { data: BatchAction }
 
 /**
  * @summary Batch Action
@@ -3010,7 +3152,7 @@ export const useUsersBatchAction = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof usersBatchAction>>,
       TError,
-      { data: BatchAction },
+      UsersBatchActionMutationVariables,
       TContext
     >
     fetch?: RequestInit
@@ -3020,7 +3162,7 @@ export const useUsersBatchAction = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof usersBatchAction>>,
   TError,
-  { data: BatchAction },
+  UsersBatchActionMutationVariables,
   TContext
 > => {
   return useMutation(getUsersBatchActionMutationOptions(options), queryClient)

@@ -18,7 +18,8 @@
     "./by-view-layer/react-oxlint": "./src/by-view-layer/react-oxlint.ts",
     "./by-view-layer/react-ts": "./src/by-view-layer/react-ts.json",
     "./by-view-layer/react-vite": "./src/by-view-layer/react-vite.ts",
-    "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts"
+    "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts",
+    "./supplementary/vike-vite": "./src/supplementary/vike-vite.ts"
   },
   "devDependencies": {
     "@types/node": "catalog:devDependencies",
