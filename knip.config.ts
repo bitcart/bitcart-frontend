@@ -2,6 +2,10 @@ import { appKnipConfig } from "@bitcart/configs/by-package-type/app-knip"
 import type { KnipConfig } from "knip"
 
 const config: KnipConfig = {
+  //* dependency-cruiser resolves a `.ts` config, but Knip's plugin only looks for the `.js`,
+  //* `.cjs`, `.mjs` and `.json` forms.
+  "dependency-cruiser": { config: [".dependency-cruiser.ts"] },
+
   ignoreBinaries: ["dot"],
   ignoreDependencies: ["remeda"],
 
@@ -18,8 +22,8 @@ const config: KnipConfig = {
   workspaces: {
     ".": {
       tailwind: false,
-      entry: ["scripts/**/*.{js,ts}"],
-      project: ["scripts/**/*.{js,ts}"],
+      entry: ["scripts/**/*.ts"],
+      project: ["scripts/**/*.ts"],
       ignoreDependencies: ["@playwright/test", "@stylistic/eslint-plugin", "tailwindcss"],
     },
 
@@ -74,8 +78,8 @@ const config: KnipConfig = {
     },
 
     "packages/configs": {
-      entry: ["src/**/*.{js,ts}"],
-      project: ["src/**/*.{js,ts}"],
+      entry: ["src/**/*.ts"],
+      project: ["src/**/*.ts"],
     },
 
     "packages/core": {

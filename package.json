@@ -36,6 +36,8 @@
     "@effect/language-service": "catalog:devDependencies",
     "@playwright/test": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@types/node": "catalog:devDependencies",
+    "dependency-cruiser": "catalog:devDependencies",
     "knip": "catalog:devDependencies",
     "nx": "catalog:devDependencies",
     "oxfmt": "catalog:devDependencies",

@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "exports": {
-    "./base/dependency-cruiser": "./src/base/dependency-cruiser.js",
+    "./base/dependency-cruiser": "./src/base/dependency-cruiser.ts",
     "./base/ts": "./src/base/ts.json",
     "./base/oxlint": "./src/base/oxlint.ts",
-    "./by-package-type/app-dependency-cruiser": "./src/by-package-type/app-dependency-cruiser.js",
+    "./by-package-type/app-dependency-cruiser": "./src/by-package-type/app-dependency-cruiser.ts",
     "./by-package-type/app-knip": "./src/by-package-type/app-knip.ts",
     "./by-package-type/app-ts": "./src/by-package-type/app-ts.json",
-    "./by-package-type/lib-dependency-cruiser": "./src/by-package-type/lib-dependency-cruiser.js",
+    "./by-package-type/lib-dependency-cruiser": "./src/by-package-type/lib-dependency-cruiser.ts",
     "./by-package-type/lib-ts": "./src/by-package-type/lib-ts.json",
     "./by-target-platform/nodejs-ts": {
       "default": "./src/by-target-platform/nodejs-ts.json"

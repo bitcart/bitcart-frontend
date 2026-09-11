@@ -1,6 +1,6 @@
 import { appDependencyCruiserConfig } from "@bitcart/configs/by-package-type/app-dependency-cruiser"
+import type { IConfiguration } from "dependency-cruiser"
 
-/** @type {import('dependency-cruiser').IConfiguration} */
 export default {
   ...appDependencyCruiserConfig,
-}
+} satisfies IConfiguration

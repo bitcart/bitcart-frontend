@@ -1,6 +1,6 @@
 import { libDependencyCruiserConfig } from "@bitcart/configs/by-package-type/lib-dependency-cruiser"
+import type { IConfiguration } from "dependency-cruiser"
 
-/** @type {import('dependency-cruiser').IConfiguration} */
 export default {
   ...libDependencyCruiserConfig,
 
@@ -8,4 +8,4 @@ export default {
     ...libDependencyCruiserConfig.options,
     tsConfig: { fileName: "tsconfig.json" },
   },
-}
+} satisfies IConfiguration

@@ -2,6 +2,8 @@
 import { resolve } from "node:path"
 import { createInterface } from "node:readline"
 
+import type { IConfiguration } from "dependency-cruiser"
+
 // Matches: optional indent + "source" -> "dest" + optional [attrs]
 const EDGE_REGEX = /^(\s*)"([^"]+)"\s*->\s*"([^"]+)"(\s*\[([^\]]*)\])?\s*$/
 
@@ -9,19 +11,25 @@ const EDGE_REGEX = /^(\s*)"([^"]+)"\s*->\s*"([^"]+)"(\s*\[([^\]]*)\])?\s*$/
 //* the regex is unanchored, so on a clustered line it still picks out the inner node.
 const NODE_REGEX = /"([^"]+)"\s*(\[[^\]]*\])/
 
-const configPath = resolve(process.cwd(), ".dependency-cruiser.js")
-const { default: config } = await import(configPath)
+//* dependency-cruiser types a theme entry's `criteria` and `attributes` as `any`; these are the
+//* only fields this script reads off them.
+type ModuleThemeEntry = {
+  criteria?: { source?: string }
+  attributes?: { fillcolor?: string }
+}
 
-const modules = config?.options?.reporterOptions?.dot?.theme?.modules ?? []
+const configPath = resolve(process.cwd(), ".dependency-cruiser.ts")
+const { default: config } = (await import(configPath)) as { default: IConfiguration }
 
-const compiledRules = modules
-  .filter(({ criteria, attributes }) => criteria?.source && attributes?.fillcolor)
-  .map(({ criteria, attributes }) => ({
-    pattern: new RegExp(criteria.source),
-    color: attributes.fillcolor,
-  }))
+const modules: ModuleThemeEntry[] = config?.options?.reporterOptions?.dot?.theme?.modules ?? []
 
-function getEdgeColor(source) {
+const compiledRules = modules.flatMap(({ criteria, attributes }) =>
+  criteria?.source && attributes?.fillcolor
+    ? [{ pattern: new RegExp(criteria.source), color: attributes.fillcolor }]
+    : [],
+)
+
+function getEdgeColor(source: string): string | null {
   for (const { pattern, color } of compiledRules) {
     if (pattern.test(source)) return color
   }
@@ -31,7 +39,7 @@ function getEdgeColor(source) {
 
 //* App source, workspace packages and virtual modules are kept as-is; everything else is an
 //* external npm package (pnpm store paths and bare specifiers, scoped or not).
-function isExternalPackage(id) {
+function isExternalPackage(id: string): boolean {
   return !(
     id.startsWith("src/") ||
     id.startsWith("@bitcart/") ||
@@ -43,7 +51,7 @@ function isExternalPackage(id) {
 //* Derive the bare package name from a pnpm virtual-store key — the segment before the
 //* package's own version, with the scope separator decoded (`+` -> `/`). Examples:
 //* `@base-ui+react@1.5.0_react@19.2.7` -> `@base-ui/react`, `lucide-react@1.17.0_...` -> `lucide-react`.
-function cleanPnpmName(storeKey) {
+function cleanPnpmName(storeKey: string): string {
   const match = storeKey.match(/^(@?[^@]+)@/)
   const name = match ? match[1] : storeKey
 
@@ -52,7 +60,7 @@ function cleanPnpmName(storeKey) {
 
 //* Canonical package name for any external module id — from the pnpm store key, a scoped
 //* `@scope/name`, or the first segment of a bare specifier.
-function packageName(id) {
+function packageName(id: string): string {
   const stored = id.match(/^node_modules\/\.pnpm\/(.+)$/)
 
   if (stored) {
@@ -68,7 +76,7 @@ function packageName(id) {
 //* Collapse external packages to one flat node under `node_modules`, so all npm dependencies
 //* sit in a single scope (no `.pnpm`, no per-subpath sprawl). Duplicate representations of the
 //* same package converge on the same id and merge.
-function mapId(id) {
+function mapId(id: string): string {
   if (isExternalPackage(id)) {
     return `node_modules/${packageName(id)}`
   } else return id
@@ -77,11 +85,11 @@ function mapId(id) {
 //* dependency-cruiser tints collapsed nodes with an 8-digit (alpha) `fillcolor`, but
 //* graphviz 2.43 drops the alpha and renders it opaque — so the red label sits on a solid
 //* red box and disappears. Composite the color over white to recover the intended tint.
-function flattenAlphaOverWhite(hex8) {
-  const channel = (offset) => parseInt(hex8.slice(offset, offset + 2), 16)
+function flattenAlphaOverWhite(hex8: string): string {
+  const channel = (offset: number) => parseInt(hex8.slice(offset, offset + 2), 16)
   const alpha = channel(7) / 255
 
-  const over = (value) =>
+  const over = (value: number) =>
     Math.round(value * alpha + 255 * (1 - alpha))
       .toString(16)
       .padStart(2, "0")
@@ -89,8 +97,8 @@ function flattenAlphaOverWhite(hex8) {
   return `#${over(channel(1))}${over(channel(3))}${over(channel(5))}`
 }
 
-const seenNodes = new Set()
-const seenEdges = new Set()
+const seenNodes = new Set<string>()
+const seenEdges = new Set<string>()
 const lines = createInterface({ input: process.stdin })
 
 for await (const line of lines) {
@@ -130,10 +138,10 @@ for await (const line of lines) {
         .replace(/URL="[^"]*"/, `URL="https://www.npmjs.com/package/${name}"`)
         .replace(
           /fillcolor="(#[0-9a-fA-F]{8})"/,
-          (_m, hex) => `fillcolor="${flattenAlphaOverWhite(hex)}"`,
+          (_match: string, hex: string) => `fillcolor="${flattenAlphaOverWhite(hex)}"`,
         )
 
-      const indent = line.match(/^\s*/)[0]
+      const indent = line.match(/^\s*/)?.[0] ?? ""
 
       process.stdout.write(
         `${indent}subgraph "cluster_node_modules" {label="node_modules" "${id}" ${attrs} }\n`,

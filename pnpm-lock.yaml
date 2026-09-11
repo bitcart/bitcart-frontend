@@ -307,6 +307,12 @@ importers:
       '@stylistic/eslint-plugin':
         specifier: catalog:devDependencies
         version: 5.10.0(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))
+      '@types/node':
+        specifier: catalog:devDependencies
+        version: 25.9.5
+      dependency-cruiser:
+        specifier: catalog:devDependencies
+        version: 18.2.0
       knip:
         specifier: catalog:devDependencies
         version: 6.32.2

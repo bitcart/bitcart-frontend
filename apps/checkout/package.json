@@ -6,7 +6,7 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.js | dot -T svg -o graphviz.svg",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.ts | dot -T svg -o graphviz.svg",
     "generate-routes": "tsr generate",
     "i18n:extract-locales": "lingui extract --clean",
     "typecheck": "tsc --noEmit -p tsconfig.json",

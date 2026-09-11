@@ -14,5 +14,5 @@
   },
 
   "exclude": ["dist", "node_modules"],
-  "include": ["src", "e2e", "*.ts"]
+  "include": ["src", "e2e", "*.ts", ".*.ts"]
 }

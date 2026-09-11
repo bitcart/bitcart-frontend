@@ -1,6 +1,6 @@
-import { baseDependencyCruiserConfig } from "../base/dependency-cruiser.js"
+import { baseDependencyCruiserConfig } from "@bitcart/configs/base/dependency-cruiser"
+import type { IConfiguration } from "dependency-cruiser"
 
-/** @type {import('dependency-cruiser').IConfiguration} */
 export const appDependencyCruiserConfig = {
   ...baseDependencyCruiserConfig,
 
@@ -11,4 +11,4 @@ export const appDependencyCruiserConfig = {
       fileName: "tsconfig.json",
     },
   },
-}
+} satisfies IConfiguration

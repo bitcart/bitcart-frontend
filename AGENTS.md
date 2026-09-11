@@ -74,6 +74,7 @@ TanStack React Query via `vike-react-query` for server/client data synchronizati
 - **Package manager:** pnpm (strict catalog mode for dependency versions in `pnpm-workspace.yaml`)
 - **Task runner:** Nx for caching and orchestration across workspace packages
 - **Path aliases:** `@/*` → `./src/*` per app; `@bitcart/*` → workspace packages
+- **Scripts and configs:** TypeScript only — the repo has no `.js`, `.mjs` or `.cjs`. Node runs `.ts` directly (`#!/usr/bin/env node`). Fall back to JS only when a caller cannot load TypeScript, and then use `.js`. Every package's root tsconfig `include` ends with `"*.ts", ".*.ts"`. Keep the second entry: TypeScript wildcards skip dotfiles, and a bare `"*.ts"` would silently drop `.dependency-cruiser.ts`
 - **Formatting:** oxfmt, the only formatter — it handles all file types, not just JS/TS, so pass it any path. JS/TS style: no semicolons, double quotes, 100 char width
 - **Imports:** Ordered by: builtin → external → internal (`@bitcart/*`) → siblings/parent
 - **Unused params:** Prefix with `_` (e.g., `_event`)

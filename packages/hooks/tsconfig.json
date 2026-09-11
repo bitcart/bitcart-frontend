@@ -16,5 +16,5 @@
   },
 
   "exclude": ["dist", "node_modules"],
-  "include": ["src", "*.config.ts", "*.setup.ts"]
+  "include": ["src", "*.ts", ".*.ts"]
 }

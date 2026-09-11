@@ -1,6 +1,6 @@
-import { baseDependencyCruiserConfig } from "../base/dependency-cruiser.js"
+import { baseDependencyCruiserConfig } from "@bitcart/configs/base/dependency-cruiser"
+import type { IConfiguration } from "dependency-cruiser"
 
-/** @type {import('dependency-cruiser').IConfiguration} */
 export const libDependencyCruiserConfig = {
   ...baseDependencyCruiserConfig,
 
@@ -64,4 +64,4 @@ export const libDependencyCruiserConfig = {
 
     doNotFollow: { path: "node_modules" },
   },
-}
+} satisfies IConfiguration

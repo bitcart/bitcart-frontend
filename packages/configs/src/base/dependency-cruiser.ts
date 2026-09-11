@@ -1,4 +1,5 @@
-/** @type {import('dependency-cruiser').IConfiguration} */
+import type { IConfiguration } from "dependency-cruiser"
+
 export const baseDependencyCruiserConfig = {
   options: {
     reporterOptions: {
@@ -36,4 +37,4 @@ export const baseDependencyCruiserConfig = {
       },
     },
   },
-}
+} satisfies IConfiguration
