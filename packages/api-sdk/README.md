@@ -2,6 +2,12 @@
 
 TypeScript SDK for the Bitcart Merchants API.
 
+## OpenAPI schema
+
+`openapi.json` is the pinned API surface the SDK is generated from. Pin a new one with
+`just api-sync <source>`, where the source is a running backend's base URL or a path to a schema
+exported by the backend's `just openapi` — including the `openapi` artifact its CI uploads.
+
 ## Mocking
 
 `msw` and `@faker-js/faker` back the generated request handlers behind the `@bitcart/api-sdk/mocks`

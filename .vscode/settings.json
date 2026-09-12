@@ -54,7 +54,8 @@
     "**/routeTree.gen.ts": true
   },
   "files.readonlyInclude": {
-    "**/routeTree.gen.ts": true
+    "**/routeTree.gen.ts": true,
+    "packages/api-sdk/openapi.json": true
   },
   "git.autofetch": true,
   "gitlens.remotes": [

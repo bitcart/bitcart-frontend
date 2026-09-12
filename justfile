@@ -1,4 +1,4 @@
-set dotenv-load := true
+set dotenv-load
 
 ## GENERAL
 
@@ -138,16 +138,32 @@ api-generate:
     @pnpm nx run @bitcart/api-sdk:generate:api
 
 [doc("
-Pull a fresh OpenAPI schema from a running backend, then regenerate the API SDK.
+Pin a fresh OpenAPI schema, then regenerate the API SDK.
+The source is a running backend's base URL, or a path to a schema exported by the backend's `just openapi` command.
 Review the resulting diff: it is the API surface changing.
 
 Example: `just api-sync http://localhost:8000`
+Example: `just api-sync ../bitcart/openapi.json`
 ")]
 [group("API SDK")]
-api-sync base-url="https://api.bitcart.ai":
-    curl -fsS '{{ base-url }}/openapi.json' -o packages/api-sdk/openapi.json
-    @just format packages/api-sdk/openapi.json
-    @just api-generate
+api-sync source="https://api.bitcart.ai":
+    #!/usr/bin/env sh
+    set -eu
+    source='{{ source }}'
+    destination=packages/api-sdk/openapi.json
+    case "$source" in
+        http://*|https://*)
+            case "$source" in
+                *.json) url="$source" ;;
+                *) url="${source%/}/openapi.json" ;;
+            esac
+            curl -fsS "$url" -o "$destination"
+            ;;
+        *)
+            cp "$source" "$destination"
+            ;;
+    esac
+    just api-generate
 
 [doc("
 Verify the committed API SDK still matches the pinned schema.
