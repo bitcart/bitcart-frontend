@@ -16,7 +16,7 @@ export const OffsetPaginationDisplayPayout = zod
     previous: zod.union([zod.string(), zod.null()]),
     next: zod.union([zod.string(), zod.null()]),
   })
-  .describe("Container for data returned using limit\/offset pagination.")
+  .describe("Container for data returned using limit/offset pagination.")
 
 export type OffsetPaginationDisplayPayout = zod.input<typeof OffsetPaginationDisplayPayout>
 export type OffsetPaginationDisplayPayoutOutput = zod.output<typeof OffsetPaginationDisplayPayout>

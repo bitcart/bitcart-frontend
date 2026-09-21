@@ -6,8 +6,8 @@ import { contentSource } from "@/content"
 export const Route = createFileRoute("/llms.txt")({
   server: {
     handlers: {
-      GET() {
-        return new Response(llms(contentSource).index())
+      GET: async () => {
+        return new Response(await llms(contentSource).index())
       },
     },
   },
