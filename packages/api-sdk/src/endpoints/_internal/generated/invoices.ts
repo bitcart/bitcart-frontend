@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -44,7 +49,7 @@ import type {
   RefundData,
   SubmitRefundData,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -59,23 +64,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
     })
   }
   return result
-}
-
-export type invoicesExportInvoicesResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type invoicesExportInvoicesResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesExportInvoicesResponseSuccess = invoicesExportInvoicesResponse200 & {
-  headers: Headers
-}
-export type invoicesExportInvoicesResponseError = invoicesExportInvoicesResponse422 & {
-  headers: Headers
 }
 
 export const getInvoicesExportInvoicesUrl = (params?: InvoicesExportInvoicesParams) => {
@@ -101,16 +89,16 @@ export const invoicesExportInvoices = async (
   params?: InvoicesExportInvoicesParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesExportInvoicesResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getInvoicesExportInvoicesUrl(params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: invoicesExportInvoicesResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as invoicesExportInvoicesResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getInvoicesExportInvoicesQueryKey = (params?: InvoicesExportInvoicesParams) => {
@@ -257,11 +245,13 @@ export const getInvoicesExportInvoicesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof invoicesExportInvoices>>> = ({ signal }) =>
     invoicesExportInvoices(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof invoicesExportInvoices>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type InvoicesExportInvoicesSuspenseQueryResult = NonNullable<
@@ -342,23 +332,6 @@ export function useInvoicesExportInvoicesSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type invoicesListItemsResponse200 = {
-  data: OffsetPaginationDisplayInvoiceOutput
-  status: 200
-}
-
-export type invoicesListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesListItemsResponseSuccess = invoicesListItemsResponse200 & {
-  headers: Headers
-}
-export type invoicesListItemsResponseError = invoicesListItemsResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesListItemsUrl = (params?: InvoicesListItemsParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -382,7 +355,7 @@ export const invoicesListItems = async (
   params?: InvoicesListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayInvoiceOutput> => {
   const res = await (fetchFn ?? fetch)(getInvoicesListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -390,12 +363,12 @@ export const invoicesListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayInvoice.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as invoicesListItemsResponseSuccess
+  return data
 }
 
 export const getInvoicesListItemsQueryKey = (params?: InvoicesListItemsParams) => {
@@ -532,11 +505,13 @@ export const getInvoicesListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof invoicesListItems>>> = ({ signal }) =>
     invoicesListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof invoicesListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type InvoicesListItemsSuspenseQueryResult = NonNullable<
@@ -617,23 +592,6 @@ export function useInvoicesListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type invoicesCreateItemResponse200 = {
-  data: DisplayInvoiceOutput
-  status: 200
-}
-
-export type invoicesCreateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesCreateItemResponseSuccess = invoicesCreateItemResponse200 & {
-  headers: Headers
-}
-export type invoicesCreateItemResponseError = invoicesCreateItemResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesCreateItemUrl = () => {
   return `${BitcartApiConfig.baseUrl}/invoices`
 }
@@ -645,7 +603,7 @@ export const invoicesCreateItem = async (
   createInvoice: CreateInvoice,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesCreateItemResponseSuccess> => {
+): Promise<DisplayInvoiceOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -674,10 +632,10 @@ export const invoicesCreateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayInvoice.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as invoicesCreateItemResponseSuccess
+  return data
 }
 
 export const getInvoicesCreateItemMutationKey = () => ["invoicesCreateItem"] as const
@@ -759,15 +717,6 @@ export const useInvoicesCreateItem = <
 > => {
   return useMutation(getInvoicesCreateItemMutationOptions(options), queryClient)
 }
-export type invoicesGetCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type invoicesGetCountResponseSuccess = invoicesGetCountResponse200 & {
-  headers: Headers
-}
-
 export const getInvoicesGetCountUrl = () => {
   return `${BitcartApiConfig.baseUrl}/invoices/count`
 }
@@ -778,16 +727,16 @@ export const getInvoicesGetCountUrl = () => {
 export const invoicesGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesGetCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getInvoicesGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: invoicesGetCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as invoicesGetCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getInvoicesGetCountQueryKey = () => {
@@ -909,11 +858,13 @@ export const getInvoicesGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof invoicesGetCount>>> = ({ signal }) =>
     invoicesGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof invoicesGetCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type InvoicesGetCountSuspenseQueryResult = NonNullable<
@@ -990,23 +941,6 @@ export function useInvoicesGetCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type invoicesGetItemResponse200 = {
-  data: DisplayInvoiceOutput
-  status: 200
-}
-
-export type invoicesGetItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesGetItemResponseSuccess = invoicesGetItemResponse200 & {
-  headers: Headers
-}
-export type invoicesGetItemResponseError = invoicesGetItemResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesGetItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/invoices/${itemId}`
 }
@@ -1018,7 +952,7 @@ export const invoicesGetItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesGetItemResponseSuccess> => {
+): Promise<DisplayInvoiceOutput> => {
   const res = await (fetchFn ?? fetch)(getInvoicesGetItemUrl(itemId), {
     ...options,
     method: "GET",
@@ -1026,10 +960,10 @@ export const invoicesGetItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayInvoice.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as invoicesGetItemResponseSuccess
+  return data
 }
 
 export const getInvoicesGetItemQueryKey = (itemId: string) => {
@@ -1167,11 +1101,13 @@ export const getInvoicesGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof invoicesGetItem>>> = ({ signal }) =>
     invoicesGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof invoicesGetItem>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type InvoicesGetItemSuspenseQueryResult = NonNullable<
@@ -1252,23 +1188,6 @@ export function useInvoicesGetItemSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type invoicesUpdateItemResponse200 = {
-  data: DisplayInvoiceOutput
-  status: 200
-}
-
-export type invoicesUpdateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesUpdateItemResponseSuccess = invoicesUpdateItemResponse200 & {
-  headers: Headers
-}
-export type invoicesUpdateItemResponseError = invoicesUpdateItemResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesUpdateItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/invoices/${itemId}`
 }
@@ -1281,7 +1200,7 @@ export const invoicesUpdateItem = async (
   optionalUpdateInvoice: OptionalUpdateInvoice,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesUpdateItemResponseSuccess> => {
+): Promise<DisplayInvoiceOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1310,10 +1229,10 @@ export const invoicesUpdateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayInvoice.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as invoicesUpdateItemResponseSuccess
+  return data
 }
 
 export const getInvoicesUpdateItemMutationKey = () => ["invoicesUpdateItem"] as const
@@ -1395,23 +1314,6 @@ export const useInvoicesUpdateItem = <
 > => {
   return useMutation(getInvoicesUpdateItemMutationOptions(options), queryClient)
 }
-export type invoicesDeleteItemResponse200 = {
-  data: DisplayInvoiceOutput
-  status: 200
-}
-
-export type invoicesDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesDeleteItemResponseSuccess = invoicesDeleteItemResponse200 & {
-  headers: Headers
-}
-export type invoicesDeleteItemResponseError = invoicesDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/invoices/${itemId}`
 }
@@ -1423,7 +1325,7 @@ export const invoicesDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesDeleteItemResponseSuccess> => {
+): Promise<DisplayInvoiceOutput> => {
   const res = await (fetchFn ?? fetch)(getInvoicesDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -1431,10 +1333,10 @@ export const invoicesDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayInvoice.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as invoicesDeleteItemResponseSuccess
+  return data
 }
 
 export const getInvoicesDeleteItemMutationKey = () => ["invoicesDeleteItem"] as const
@@ -1516,23 +1418,6 @@ export const useInvoicesDeleteItem = <
 > => {
   return useMutation(getInvoicesDeleteItemMutationOptions(options), queryClient)
 }
-export type invoicesBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type invoicesBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesBatchActionResponseSuccess = invoicesBatchActionResponse200 & {
-  headers: Headers
-}
-export type invoicesBatchActionResponseError = invoicesBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/invoices/batch`
 }
@@ -1544,7 +1429,7 @@ export const invoicesBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1572,9 +1457,9 @@ export const invoicesBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: invoicesBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as invoicesBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getInvoicesBatchActionMutationKey = () => ["invoicesBatchAction"] as const
@@ -1656,25 +1541,6 @@ export const useInvoicesBatchAction = <
 > => {
   return useMutation(getInvoicesBatchActionMutationOptions(options), queryClient)
 }
-export type invoicesGetOrCreateInvoiceByOrderIdResponse200 = {
-  data: DisplayInvoiceOutput
-  status: 200
-}
-
-export type invoicesGetOrCreateInvoiceByOrderIdResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesGetOrCreateInvoiceByOrderIdResponseSuccess =
-  invoicesGetOrCreateInvoiceByOrderIdResponse200 & {
-    headers: Headers
-  }
-export type invoicesGetOrCreateInvoiceByOrderIdResponseError =
-  invoicesGetOrCreateInvoiceByOrderIdResponse422 & {
-    headers: Headers
-  }
-
 export const getInvoicesGetOrCreateInvoiceByOrderIdUrl = (orderId: string) => {
   return `${BitcartApiConfig.baseUrl}/invoices/order_id/${orderId}`
 }
@@ -1687,7 +1553,7 @@ export const invoicesGetOrCreateInvoiceByOrderId = async (
   createInvoice: CreateInvoice,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesGetOrCreateInvoiceByOrderIdResponseSuccess> => {
+): Promise<DisplayInvoiceOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1716,14 +1582,10 @@ export const invoicesGetOrCreateInvoiceByOrderId = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayInvoice.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as invoicesGetOrCreateInvoiceByOrderIdResponseSuccess
+  return data
 }
 
 export const getInvoicesGetOrCreateInvoiceByOrderIdMutationKey = () =>
@@ -1809,23 +1671,6 @@ export const useInvoicesGetOrCreateInvoiceByOrderId = <
 > => {
   return useMutation(getInvoicesGetOrCreateInvoiceByOrderIdMutationOptions(options), queryClient)
 }
-export type invoicesUpdateInvoiceResponse200 = {
-  data: DisplayInvoiceOutput
-  status: 200
-}
-
-export type invoicesUpdateInvoiceResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesUpdateInvoiceResponseSuccess = invoicesUpdateInvoiceResponse200 & {
-  headers: Headers
-}
-export type invoicesUpdateInvoiceResponseError = invoicesUpdateInvoiceResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesUpdateInvoiceUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/invoices/${modelId}/customer`
 }
@@ -1838,7 +1683,7 @@ export const invoicesUpdateInvoice = async (
   customerUpdateData: CustomerUpdateData,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesUpdateInvoiceResponseSuccess> => {
+): Promise<DisplayInvoiceOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1867,10 +1712,10 @@ export const invoicesUpdateInvoice = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayInvoice.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as invoicesUpdateInvoiceResponseSuccess
+  return data
 }
 
 export const getInvoicesUpdateInvoiceMutationKey = () => ["invoicesUpdateInvoice"] as const
@@ -1952,24 +1797,6 @@ export const useInvoicesUpdateInvoice = <
 > => {
   return useMutation(getInvoicesUpdateInvoiceMutationOptions(options), queryClient)
 }
-export type invoicesUpdatePaymentDetailsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type invoicesUpdatePaymentDetailsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesUpdatePaymentDetailsResponseSuccess =
-  invoicesUpdatePaymentDetailsResponse200 & {
-    headers: Headers
-  }
-export type invoicesUpdatePaymentDetailsResponseError = invoicesUpdatePaymentDetailsResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesUpdatePaymentDetailsUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/invoices/${modelId}/details`
 }
@@ -1982,7 +1809,7 @@ export const invoicesUpdatePaymentDetails = async (
   methodUpdateData: MethodUpdateData,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesUpdatePaymentDetailsResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -2010,13 +1837,9 @@ export const invoicesUpdatePaymentDetails = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: invoicesUpdatePaymentDetailsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as invoicesUpdatePaymentDetailsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getInvoicesUpdatePaymentDetailsMutationKey = () =>
@@ -2102,23 +1925,6 @@ export const useInvoicesUpdatePaymentDetails = <
 > => {
   return useMutation(getInvoicesUpdatePaymentDetailsMutationOptions(options), queryClient)
 }
-export type invoicesRefundInvoiceResponse200 = {
-  data: DisplayRefundOutput
-  status: 200
-}
-
-export type invoicesRefundInvoiceResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesRefundInvoiceResponseSuccess = invoicesRefundInvoiceResponse200 & {
-  headers: Headers
-}
-export type invoicesRefundInvoiceResponseError = invoicesRefundInvoiceResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesRefundInvoiceUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/invoices/${modelId}/refunds`
 }
@@ -2131,7 +1937,7 @@ export const invoicesRefundInvoice = async (
   refundData: RefundData,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesRefundInvoiceResponseSuccess> => {
+): Promise<DisplayRefundOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -2160,10 +1966,10 @@ export const invoicesRefundInvoice = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayRefund.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as invoicesRefundInvoiceResponseSuccess
+  return data
 }
 
 export const getInvoicesRefundInvoiceMutationKey = () => ["invoicesRefundInvoice"] as const
@@ -2245,23 +2051,6 @@ export const useInvoicesRefundInvoice = <
 > => {
   return useMutation(getInvoicesRefundInvoiceMutationOptions(options), queryClient)
 }
-export type invoicesGetRefundResponse200 = {
-  data: DisplayRefundOutput
-  status: 200
-}
-
-export type invoicesGetRefundResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesGetRefundResponseSuccess = invoicesGetRefundResponse200 & {
-  headers: Headers
-}
-export type invoicesGetRefundResponseError = invoicesGetRefundResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesGetRefundUrl = (refundId: string) => {
   return `${BitcartApiConfig.baseUrl}/invoices/refunds/${refundId}`
 }
@@ -2273,7 +2062,7 @@ export const invoicesGetRefund = async (
   refundId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesGetRefundResponseSuccess> => {
+): Promise<DisplayRefundOutput> => {
   const res = await (fetchFn ?? fetch)(getInvoicesGetRefundUrl(refundId), {
     ...options,
     method: "GET",
@@ -2281,10 +2070,10 @@ export const invoicesGetRefund = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayRefund.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as invoicesGetRefundResponseSuccess
+  return data
 }
 
 export const getInvoicesGetRefundQueryKey = (refundId: string) => {
@@ -2424,11 +2213,13 @@ export const getInvoicesGetRefundSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof invoicesGetRefund>>> = ({ signal }) =>
     invoicesGetRefund(refundId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof invoicesGetRefund>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type InvoicesGetRefundSuspenseQueryResult = NonNullable<
@@ -2509,23 +2300,6 @@ export function useInvoicesGetRefundSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type invoicesSubmitRefundResponse200 = {
-  data: DisplayRefundOutput
-  status: 200
-}
-
-export type invoicesSubmitRefundResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type invoicesSubmitRefundResponseSuccess = invoicesSubmitRefundResponse200 & {
-  headers: Headers
-}
-export type invoicesSubmitRefundResponseError = invoicesSubmitRefundResponse422 & {
-  headers: Headers
-}
-
 export const getInvoicesSubmitRefundUrl = (refundId: string) => {
   return `${BitcartApiConfig.baseUrl}/invoices/refunds/${refundId}/submit`
 }
@@ -2538,7 +2312,7 @@ export const invoicesSubmitRefund = async (
   submitRefundData: SubmitRefundData,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<invoicesSubmitRefundResponseSuccess> => {
+): Promise<DisplayRefundOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -2567,10 +2341,10 @@ export const invoicesSubmitRefund = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayRefund.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as invoicesSubmitRefundResponseSuccess
+  return data
 }
 
 export const getInvoicesSubmitRefundMutationKey = () => ["invoicesSubmitRefund"] as const

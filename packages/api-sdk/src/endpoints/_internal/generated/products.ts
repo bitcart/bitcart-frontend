@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -38,7 +43,7 @@ import type {
   ProductsListItemsParams,
   ProductsProductsCountParams,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -53,23 +58,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
     })
   }
   return result
-}
-
-export type productsCategoriesResponse200 = {
-  data: string[]
-  status: 200
-}
-
-export type productsCategoriesResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type productsCategoriesResponseSuccess = productsCategoriesResponse200 & {
-  headers: Headers
-}
-export type productsCategoriesResponseError = productsCategoriesResponse422 & {
-  headers: Headers
 }
 
 export const getProductsCategoriesUrl = (params: ProductsCategoriesParams) => {
@@ -95,16 +83,16 @@ export const productsCategories = async (
   params: ProductsCategoriesParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<productsCategoriesResponseSuccess> => {
+): Promise<string[]> => {
   const res = await (fetchFn ?? fetch)(getProductsCategoriesUrl(params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: productsCategoriesResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as productsCategoriesResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: string[] = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getProductsCategoriesQueryKey = (params?: ProductsCategoriesParams) => {
@@ -243,11 +231,13 @@ export const getProductsCategoriesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof productsCategories>>> = ({ signal }) =>
     productsCategories(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof productsCategories>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ProductsCategoriesSuspenseQueryResult = NonNullable<
@@ -328,23 +318,6 @@ export function useProductsCategoriesSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type productsGetMaxProductPriceResponse200 = {
-  data: number
-  status: 200
-}
-
-export type productsGetMaxProductPriceResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type productsGetMaxProductPriceResponseSuccess = productsGetMaxProductPriceResponse200 & {
-  headers: Headers
-}
-export type productsGetMaxProductPriceResponseError = productsGetMaxProductPriceResponse422 & {
-  headers: Headers
-}
-
 export const getProductsGetMaxProductPriceUrl = (params: ProductsGetMaxProductPriceParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -368,20 +341,16 @@ export const productsGetMaxProductPrice = async (
   params: ProductsGetMaxProductPriceParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<productsGetMaxProductPriceResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getProductsGetMaxProductPriceUrl(params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: productsGetMaxProductPriceResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as productsGetMaxProductPriceResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getProductsGetMaxProductPriceQueryKey = (
@@ -532,11 +501,13 @@ export const getProductsGetMaxProductPriceSuspenseQueryOptions = <
     signal,
   }) => productsGetMaxProductPrice(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof productsGetMaxProductPrice>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ProductsGetMaxProductPriceSuspenseQueryResult = NonNullable<
@@ -617,23 +588,6 @@ export function useProductsGetMaxProductPriceSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type productsDeleteItemResponse200 = {
-  data: DisplayProductOutput
-  status: 200
-}
-
-export type productsDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type productsDeleteItemResponseSuccess = productsDeleteItemResponse200 & {
-  headers: Headers
-}
-export type productsDeleteItemResponseError = productsDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getProductsDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/products/${itemId}`
 }
@@ -645,7 +599,7 @@ export const productsDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<productsDeleteItemResponseSuccess> => {
+): Promise<DisplayProductOutput> => {
   const res = await (fetchFn ?? fetch)(getProductsDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -653,10 +607,10 @@ export const productsDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayProduct.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as productsDeleteItemResponseSuccess
+  return data
 }
 
 export const getProductsDeleteItemMutationKey = () => ["productsDeleteItem"] as const
@@ -738,25 +692,6 @@ export const useProductsDeleteItem = <
 > => {
   return useMutation(getProductsDeleteItemMutationOptions(options), queryClient)
 }
-export type productsUpdateProductMultipartResponse200 = {
-  data: DisplayProductOutput
-  status: 200
-}
-
-export type productsUpdateProductMultipartResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type productsUpdateProductMultipartResponseSuccess =
-  productsUpdateProductMultipartResponse200 & {
-    headers: Headers
-  }
-export type productsUpdateProductMultipartResponseError =
-  productsUpdateProductMultipartResponse422 & {
-    headers: Headers
-  }
-
 export const getProductsUpdateProductMultipartUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/products/${itemId}`
 }
@@ -769,7 +704,7 @@ export const productsUpdateProductMultipart = async (
   bodyProductsUpdateProductMultipart: BodyProductsUpdateProductMultipart,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<productsUpdateProductMultipartResponseSuccess> => {
+): Promise<DisplayProductOutput> => {
   const formData = new FormData()
   formData.append(`data`, bodyProductsUpdateProductMultipart.data)
   if (bodyProductsUpdateProductMultipart.image !== undefined) {
@@ -784,14 +719,10 @@ export const productsUpdateProductMultipart = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayProduct.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as productsUpdateProductMultipartResponseSuccess
+  return data
 }
 
 export const getProductsUpdateProductMultipartMutationKey = () =>
@@ -877,23 +808,6 @@ export const useProductsUpdateProductMultipart = <
 > => {
   return useMutation(getProductsUpdateProductMultipartMutationOptions(options), queryClient)
 }
-export type productsBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type productsBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type productsBatchActionResponseSuccess = productsBatchActionResponse200 & {
-  headers: Headers
-}
-export type productsBatchActionResponseError = productsBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getProductsBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/products/batch`
 }
@@ -905,7 +819,7 @@ export const productsBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<productsBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -933,9 +847,9 @@ export const productsBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: productsBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as productsBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getProductsBatchActionMutationKey = () => ["productsBatchAction"] as const
@@ -1017,25 +931,6 @@ export const useProductsBatchAction = <
 > => {
   return useMutation(getProductsBatchActionMutationOptions(options), queryClient)
 }
-export type productsCreateProductMultipartResponse200 = {
-  data: DisplayProductOutput
-  status: 200
-}
-
-export type productsCreateProductMultipartResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type productsCreateProductMultipartResponseSuccess =
-  productsCreateProductMultipartResponse200 & {
-    headers: Headers
-  }
-export type productsCreateProductMultipartResponseError =
-  productsCreateProductMultipartResponse422 & {
-    headers: Headers
-  }
-
 export const getProductsCreateProductMultipartUrl = () => {
   return `${BitcartApiConfig.baseUrl}/products`
 }
@@ -1047,7 +942,7 @@ export const productsCreateProductMultipart = async (
   bodyProductsCreateProductMultipart: BodyProductsCreateProductMultipart,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<productsCreateProductMultipartResponseSuccess> => {
+): Promise<DisplayProductOutput> => {
   const formData = new FormData()
   formData.append(`data`, bodyProductsCreateProductMultipart.data)
   if (bodyProductsCreateProductMultipart.image !== undefined) {
@@ -1062,14 +957,10 @@ export const productsCreateProductMultipart = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayProduct.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as productsCreateProductMultipartResponseSuccess
+  return data
 }
 
 export const getProductsCreateProductMultipartMutationKey = () =>
@@ -1154,23 +1045,6 @@ export const useProductsCreateProductMultipart = <
 > => {
   return useMutation(getProductsCreateProductMultipartMutationOptions(options), queryClient)
 }
-export type productsListItemsResponse200 = {
-  data: OffsetPaginationDisplayProductOutput
-  status: 200
-}
-
-export type productsListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type productsListItemsResponseSuccess = productsListItemsResponse200 & {
-  headers: Headers
-}
-export type productsListItemsResponseError = productsListItemsResponse422 & {
-  headers: Headers
-}
-
 export const getProductsListItemsUrl = (params?: ProductsListItemsParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -1194,7 +1068,7 @@ export const productsListItems = async (
   params?: ProductsListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<productsListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayProductOutput> => {
   const res = await (fetchFn ?? fetch)(getProductsListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -1202,12 +1076,12 @@ export const productsListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayProduct.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as productsListItemsResponseSuccess
+  return data
 }
 
 export const getProductsListItemsQueryKey = (params?: ProductsListItemsParams) => {
@@ -1344,11 +1218,13 @@ export const getProductsListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof productsListItems>>> = ({ signal }) =>
     productsListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof productsListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ProductsListItemsSuspenseQueryResult = NonNullable<
@@ -1429,23 +1305,6 @@ export function useProductsListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type productsProductsCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type productsProductsCountResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type productsProductsCountResponseSuccess = productsProductsCountResponse200 & {
-  headers: Headers
-}
-export type productsProductsCountResponseError = productsProductsCountResponse422 & {
-  headers: Headers
-}
-
 export const getProductsProductsCountUrl = (params?: ProductsProductsCountParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -1469,16 +1328,16 @@ export const productsProductsCount = async (
   params?: ProductsProductsCountParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<productsProductsCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getProductsProductsCountUrl(params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: productsProductsCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as productsProductsCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getProductsProductsCountQueryKey = (params?: ProductsProductsCountParams) => {
@@ -1625,11 +1484,13 @@ export const getProductsProductsCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof productsProductsCount>>> = ({ signal }) =>
     productsProductsCount(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof productsProductsCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ProductsProductsCountSuspenseQueryResult = NonNullable<
@@ -1710,23 +1571,6 @@ export function useProductsProductsCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type productsGetProductResponse200 = {
-  data: DisplayProductOutput
-  status: 200
-}
-
-export type productsGetProductResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type productsGetProductResponseSuccess = productsGetProductResponse200 & {
-  headers: Headers
-}
-export type productsGetProductResponseError = productsGetProductResponse422 & {
-  headers: Headers
-}
-
 export const getProductsGetProductUrl = (modelId: string, params?: ProductsGetProductParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -1751,7 +1595,7 @@ export const productsGetProduct = async (
   params?: ProductsGetProductParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<productsGetProductResponseSuccess> => {
+): Promise<DisplayProductOutput> => {
   const res = await (fetchFn ?? fetch)(getProductsGetProductUrl(modelId, params), {
     ...options,
     method: "GET",
@@ -1759,10 +1603,10 @@ export const productsGetProduct = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayProduct.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as productsGetProductResponseSuccess
+  return data
 }
 
 export const getProductsGetProductQueryKey = (
@@ -1913,11 +1757,13 @@ export const getProductsGetProductSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof productsGetProduct>>> = ({ signal }) =>
     productsGetProduct(modelId, params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof productsGetProduct>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ProductsGetProductSuspenseQueryResult = NonNullable<

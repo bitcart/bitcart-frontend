@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -32,7 +37,7 @@ import type {
   HTTPValidationError,
   PolicyOutput,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -49,15 +54,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type manageGetPoliciesResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageGetPoliciesResponseSuccess = manageGetPoliciesResponse200 & {
-  headers: Headers
-}
-
 export const getManageGetPoliciesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/policies`
 }
@@ -68,16 +64,16 @@ export const getManageGetPoliciesUrl = () => {
 export const manageGetPolicies = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageGetPoliciesResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageGetPoliciesUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageGetPoliciesResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageGetPoliciesResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageGetPoliciesQueryKey = () => {
@@ -201,11 +197,13 @@ export const getManageGetPoliciesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetPolicies>>> = ({ signal }) =>
     manageGetPolicies({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageGetPolicies>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageGetPoliciesSuspenseQueryResult = NonNullable<
@@ -282,23 +280,6 @@ export function useManageGetPoliciesSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageSetPoliciesResponse200 = {
-  data: PolicyOutput
-  status: 200
-}
-
-export type manageSetPoliciesResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type manageSetPoliciesResponseSuccess = manageSetPoliciesResponse200 & {
-  headers: Headers
-}
-export type manageSetPoliciesResponseError = manageSetPoliciesResponse422 & {
-  headers: Headers
-}
-
 export const getManageSetPoliciesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/policies`
 }
@@ -310,7 +291,7 @@ export const manageSetPolicies = async (
   policy: Policy,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageSetPoliciesResponseSuccess> => {
+): Promise<PolicyOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -339,10 +320,10 @@ export const manageSetPolicies = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? Policy.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as manageSetPoliciesResponseSuccess
+  return data
 }
 
 export const getManageSetPoliciesMutationKey = () => ["manageSetPolicies"] as const
@@ -424,15 +405,6 @@ export const useManageSetPolicies = <
 > => {
   return useMutation(getManageSetPoliciesMutationOptions(options), queryClient)
 }
-export type manageGetStorePoliciesResponse200 = {
-  data: GlobalStorePolicyOutput
-  status: 200
-}
-
-export type manageGetStorePoliciesResponseSuccess = manageGetStorePoliciesResponse200 & {
-  headers: Headers
-}
-
 export const getManageGetStorePoliciesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/stores`
 }
@@ -443,7 +415,7 @@ export const getManageGetStorePoliciesUrl = () => {
 export const manageGetStorePolicies = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageGetStorePoliciesResponseSuccess> => {
+): Promise<GlobalStorePolicyOutput> => {
   const res = await (fetchFn ?? fetch)(getManageGetStorePoliciesUrl(), {
     ...options,
     method: "GET",
@@ -451,10 +423,10 @@ export const manageGetStorePolicies = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? GlobalStorePolicy.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as manageGetStorePoliciesResponseSuccess
+  return data
 }
 
 export const getManageGetStorePoliciesQueryKey = () => {
@@ -591,11 +563,13 @@ export const getManageGetStorePoliciesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetStorePolicies>>> = ({ signal }) =>
     manageGetStorePolicies({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageGetStorePolicies>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageGetStorePoliciesSuspenseQueryResult = NonNullable<
@@ -672,23 +646,6 @@ export function useManageGetStorePoliciesSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageSetStorePoliciesResponse200 = {
-  data: GlobalStorePolicyOutput
-  status: 200
-}
-
-export type manageSetStorePoliciesResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type manageSetStorePoliciesResponseSuccess = manageSetStorePoliciesResponse200 & {
-  headers: Headers
-}
-export type manageSetStorePoliciesResponseError = manageSetStorePoliciesResponse422 & {
-  headers: Headers
-}
-
 export const getManageSetStorePoliciesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/stores`
 }
@@ -700,7 +657,7 @@ export const manageSetStorePolicies = async (
   globalStorePolicy: GlobalStorePolicy,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageSetStorePoliciesResponseSuccess> => {
+): Promise<GlobalStorePolicyOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -729,10 +686,10 @@ export const manageSetStorePolicies = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? GlobalStorePolicy.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as manageSetStorePoliciesResponseSuccess
+  return data
 }
 
 export const getManageSetStorePoliciesMutationKey = () => ["manageSetStorePolicies"] as const
@@ -814,15 +771,6 @@ export const useManageSetStorePolicies = <
 > => {
   return useMutation(getManageSetStorePoliciesMutationOptions(options), queryClient)
 }
-export type manageRestartServerResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageRestartServerResponseSuccess = manageRestartServerResponse200 & {
-  headers: Headers
-}
-
 export const getManageRestartServerUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/restart`
 }
@@ -833,16 +781,16 @@ export const getManageRestartServerUrl = () => {
 export const manageRestartServer = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageRestartServerResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageRestartServerUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageRestartServerResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageRestartServerResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageRestartServerMutationKey = () => ["manageRestartServer"] as const
@@ -911,15 +859,6 @@ export const useManageRestartServer = <
 ): UseMutationResult<Awaited<ReturnType<typeof manageRestartServer>>, TError, void, TContext> => {
   return useMutation(getManageRestartServerMutationOptions(options), queryClient)
 }
-export type managePluginReloadResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type managePluginReloadResponseSuccess = managePluginReloadResponse200 & {
-  headers: Headers
-}
-
 export const getManagePluginReloadUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/plugin-reload`
 }
@@ -930,16 +869,16 @@ export const getManagePluginReloadUrl = () => {
 export const managePluginReload = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<managePluginReloadResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManagePluginReloadUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: managePluginReloadResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as managePluginReloadResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManagePluginReloadMutationKey = () => ["managePluginReload"] as const
@@ -1002,15 +941,6 @@ export const useManagePluginReload = <
 ): UseMutationResult<Awaited<ReturnType<typeof managePluginReload>>, TError, void, TContext> => {
   return useMutation(getManagePluginReloadMutationOptions(options), queryClient)
 }
-export type manageUpdateServerResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageUpdateServerResponseSuccess = manageUpdateServerResponse200 & {
-  headers: Headers
-}
-
 export const getManageUpdateServerUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/update`
 }
@@ -1021,16 +951,16 @@ export const getManageUpdateServerUrl = () => {
 export const manageUpdateServer = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageUpdateServerResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageUpdateServerUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageUpdateServerResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageUpdateServerResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageUpdateServerMutationKey = () => ["manageUpdateServer"] as const
@@ -1093,15 +1023,6 @@ export const useManageUpdateServer = <
 ): UseMutationResult<Awaited<ReturnType<typeof manageUpdateServer>>, TError, void, TContext> => {
   return useMutation(getManageUpdateServerMutationOptions(options), queryClient)
 }
-export type manageCleanupImagesResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageCleanupImagesResponseSuccess = manageCleanupImagesResponse200 & {
-  headers: Headers
-}
-
 export const getManageCleanupImagesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/cleanup/images`
 }
@@ -1112,16 +1033,16 @@ export const getManageCleanupImagesUrl = () => {
 export const manageCleanupImages = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageCleanupImagesResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageCleanupImagesUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageCleanupImagesResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageCleanupImagesResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageCleanupImagesMutationKey = () => ["manageCleanupImages"] as const
@@ -1190,15 +1111,6 @@ export const useManageCleanupImages = <
 ): UseMutationResult<Awaited<ReturnType<typeof manageCleanupImages>>, TError, void, TContext> => {
   return useMutation(getManageCleanupImagesMutationOptions(options), queryClient)
 }
-export type manageCleanupLogsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageCleanupLogsResponseSuccess = manageCleanupLogsResponse200 & {
-  headers: Headers
-}
-
 export const getManageCleanupLogsUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/cleanup/logs`
 }
@@ -1209,16 +1121,16 @@ export const getManageCleanupLogsUrl = () => {
 export const manageCleanupLogs = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageCleanupLogsResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageCleanupLogsUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageCleanupLogsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageCleanupLogsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageCleanupLogsMutationKey = () => ["manageCleanupLogs"] as const
@@ -1281,15 +1193,6 @@ export const useManageCleanupLogs = <
 ): UseMutationResult<Awaited<ReturnType<typeof manageCleanupLogs>>, TError, void, TContext> => {
   return useMutation(getManageCleanupLogsMutationOptions(options), queryClient)
 }
-export type manageCleanupServerResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageCleanupServerResponseSuccess = manageCleanupServerResponse200 & {
-  headers: Headers
-}
-
 export const getManageCleanupServerUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/cleanup`
 }
@@ -1300,16 +1203,16 @@ export const getManageCleanupServerUrl = () => {
 export const manageCleanupServer = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageCleanupServerResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageCleanupServerUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageCleanupServerResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageCleanupServerResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageCleanupServerMutationKey = () => ["manageCleanupServer"] as const
@@ -1378,15 +1281,6 @@ export const useManageCleanupServer = <
 ): UseMutationResult<Awaited<ReturnType<typeof manageCleanupServer>>, TError, void, TContext> => {
   return useMutation(getManageCleanupServerMutationOptions(options), queryClient)
 }
-export type manageGetLogsListResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageGetLogsListResponseSuccess = manageGetLogsListResponse200 & {
-  headers: Headers
-}
-
 export const getManageGetLogsListUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/logs`
 }
@@ -1397,16 +1291,16 @@ export const getManageGetLogsListUrl = () => {
 export const manageGetLogsList = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageGetLogsListResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageGetLogsListUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageGetLogsListResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageGetLogsListResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageGetLogsListQueryKey = () => {
@@ -1530,11 +1424,13 @@ export const getManageGetLogsListSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetLogsList>>> = ({ signal }) =>
     manageGetLogsList({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageGetLogsList>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageGetLogsListSuspenseQueryResult = NonNullable<
@@ -1611,23 +1507,6 @@ export function useManageGetLogsListSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageGetLogContentsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageGetLogContentsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type manageGetLogContentsResponseSuccess = manageGetLogContentsResponse200 & {
-  headers: Headers
-}
-export type manageGetLogContentsResponseError = manageGetLogContentsResponse422 & {
-  headers: Headers
-}
-
 export const getManageGetLogContentsUrl = (log: string) => {
   return `${BitcartApiConfig.baseUrl}/manage/logs/${log}`
 }
@@ -1639,16 +1518,16 @@ export const manageGetLogContents = async (
   log: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageGetLogContentsResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageGetLogContentsUrl(log), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageGetLogContentsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageGetLogContentsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageGetLogContentsQueryKey = (log: string) => {
@@ -1798,11 +1677,13 @@ export const getManageGetLogContentsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetLogContents>>> = ({ signal }) =>
     manageGetLogContents(log, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageGetLogContents>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageGetLogContentsSuspenseQueryResult = NonNullable<
@@ -1883,23 +1764,6 @@ export function useManageGetLogContentsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageDeleteLogResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageDeleteLogResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type manageDeleteLogResponseSuccess = manageDeleteLogResponse200 & {
-  headers: Headers
-}
-export type manageDeleteLogResponseError = manageDeleteLogResponse422 & {
-  headers: Headers
-}
-
 export const getManageDeleteLogUrl = (log: string) => {
   return `${BitcartApiConfig.baseUrl}/manage/logs/${log}`
 }
@@ -1911,16 +1775,16 @@ export const manageDeleteLog = async (
   log: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageDeleteLogResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageDeleteLogUrl(log), {
     ...options,
     method: "DELETE",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageDeleteLogResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageDeleteLogResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageDeleteLogMutationKey = () => ["manageDeleteLog"] as const
@@ -2000,15 +1864,6 @@ export const useManageDeleteLog = <
 > => {
   return useMutation(getManageDeleteLogMutationOptions(options), queryClient)
 }
-export type manageGetSyncinfoResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageGetSyncinfoResponseSuccess = manageGetSyncinfoResponse200 & {
-  headers: Headers
-}
-
 export const getManageGetSyncinfoUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/syncinfo`
 }
@@ -2019,16 +1874,16 @@ export const getManageGetSyncinfoUrl = () => {
 export const manageGetSyncinfo = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageGetSyncinfoResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageGetSyncinfoUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageGetSyncinfoResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageGetSyncinfoResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageGetSyncinfoQueryKey = () => {
@@ -2152,11 +2007,13 @@ export const getManageGetSyncinfoSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetSyncinfo>>> = ({ signal }) =>
     manageGetSyncinfo({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageGetSyncinfo>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageGetSyncinfoSuspenseQueryResult = NonNullable<
@@ -2233,15 +2090,6 @@ export function useManageGetSyncinfoSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageTestEmailPingResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageTestEmailPingResponseSuccess = manageTestEmailPingResponse200 & {
-  headers: Headers
-}
-
 export const getManageTestEmailPingUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/testping`
 }
@@ -2252,16 +2100,16 @@ export const getManageTestEmailPingUrl = () => {
 export const manageTestEmailPing = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageTestEmailPingResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageTestEmailPingUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageTestEmailPingResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageTestEmailPingResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageTestEmailPingQueryKey = () => {
@@ -2389,11 +2237,13 @@ export const getManageTestEmailPingSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageTestEmailPing>>> = ({ signal }) =>
     manageTestEmailPing({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageTestEmailPing>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageTestEmailPingSuspenseQueryResult = NonNullable<
@@ -2470,15 +2320,6 @@ export function useManageTestEmailPingSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageGetDaemonsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageGetDaemonsResponseSuccess = manageGetDaemonsResponse200 & {
-  headers: Headers
-}
-
 export const getManageGetDaemonsUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/daemons`
 }
@@ -2489,16 +2330,16 @@ export const getManageGetDaemonsUrl = () => {
 export const manageGetDaemons = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageGetDaemonsResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageGetDaemonsUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageGetDaemonsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageGetDaemonsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageGetDaemonsQueryKey = () => {
@@ -2620,11 +2461,13 @@ export const getManageGetDaemonsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetDaemons>>> = ({ signal }) =>
     manageGetDaemons({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageGetDaemons>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageGetDaemonsSuspenseQueryResult = NonNullable<
@@ -2701,15 +2544,6 @@ export function useManageGetDaemonsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageGetBackupPoliciesResponse200 = {
-  data: BackupsPolicyOutput
-  status: 200
-}
-
-export type manageGetBackupPoliciesResponseSuccess = manageGetBackupPoliciesResponse200 & {
-  headers: Headers
-}
-
 export const getManageGetBackupPoliciesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/backups`
 }
@@ -2720,7 +2554,7 @@ export const getManageGetBackupPoliciesUrl = () => {
 export const manageGetBackupPolicies = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageGetBackupPoliciesResponseSuccess> => {
+): Promise<BackupsPolicyOutput> => {
   const res = await (fetchFn ?? fetch)(getManageGetBackupPoliciesUrl(), {
     ...options,
     method: "GET",
@@ -2728,14 +2562,10 @@ export const manageGetBackupPolicies = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? BackupsPolicy.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as manageGetBackupPoliciesResponseSuccess
+  return data
 }
 
 export const getManageGetBackupPoliciesQueryKey = () => {
@@ -2874,11 +2704,13 @@ export const getManageGetBackupPoliciesSuspenseQueryOptions = <
     signal,
   }) => manageGetBackupPolicies({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageGetBackupPolicies>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageGetBackupPoliciesSuspenseQueryResult = NonNullable<
@@ -2955,23 +2787,6 @@ export function useManageGetBackupPoliciesSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageSetBackupPoliciesResponse200 = {
-  data: BackupsPolicyOutput
-  status: 200
-}
-
-export type manageSetBackupPoliciesResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type manageSetBackupPoliciesResponseSuccess = manageSetBackupPoliciesResponse200 & {
-  headers: Headers
-}
-export type manageSetBackupPoliciesResponseError = manageSetBackupPoliciesResponse422 & {
-  headers: Headers
-}
-
 export const getManageSetBackupPoliciesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/backups`
 }
@@ -2983,7 +2798,7 @@ export const manageSetBackupPolicies = async (
   backupsPolicy: BackupsPolicy,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageSetBackupPoliciesResponseSuccess> => {
+): Promise<BackupsPolicyOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -3012,14 +2827,10 @@ export const manageSetBackupPolicies = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? BackupsPolicy.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as manageSetBackupPoliciesResponseSuccess
+  return data
 }
 
 export const getManageSetBackupPoliciesMutationKey = () => ["manageSetBackupPolicies"] as const
@@ -3101,15 +2912,6 @@ export const useManageSetBackupPolicies = <
 > => {
   return useMutation(getManageSetBackupPoliciesMutationOptions(options), queryClient)
 }
-export type manageGetBackupProvidersResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageGetBackupProvidersResponseSuccess = manageGetBackupProvidersResponse200 & {
-  headers: Headers
-}
-
 export const getManageGetBackupProvidersUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/backups/providers`
 }
@@ -3120,20 +2922,16 @@ export const getManageGetBackupProvidersUrl = () => {
 export const manageGetBackupProviders = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageGetBackupProvidersResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageGetBackupProvidersUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageGetBackupProvidersResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as manageGetBackupProvidersResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageGetBackupProvidersQueryKey = () => {
@@ -3272,11 +3070,13 @@ export const getManageGetBackupProvidersSuspenseQueryOptions = <
     signal,
   }) => manageGetBackupProviders({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageGetBackupProviders>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageGetBackupProvidersSuspenseQueryResult = NonNullable<
@@ -3353,15 +3153,6 @@ export function useManageGetBackupProvidersSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageGetBackupFrequenciesResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageGetBackupFrequenciesResponseSuccess = manageGetBackupFrequenciesResponse200 & {
-  headers: Headers
-}
-
 export const getManageGetBackupFrequenciesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/backups/frequencies`
 }
@@ -3372,20 +3163,16 @@ export const getManageGetBackupFrequenciesUrl = () => {
 export const manageGetBackupFrequencies = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageGetBackupFrequenciesResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageGetBackupFrequenciesUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageGetBackupFrequenciesResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as manageGetBackupFrequenciesResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageGetBackupFrequenciesQueryKey = () => {
@@ -3524,11 +3311,13 @@ export const getManageGetBackupFrequenciesSuspenseQueryOptions = <
     signal,
   }) => manageGetBackupFrequencies({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageGetBackupFrequencies>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageGetBackupFrequenciesSuspenseQueryResult = NonNullable<
@@ -3605,15 +3394,6 @@ export function useManageGetBackupFrequenciesSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type managePerformBackupResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type managePerformBackupResponseSuccess = managePerformBackupResponse200 & {
-  headers: Headers
-}
-
 export const getManagePerformBackupUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/backups/backup`
 }
@@ -3624,16 +3404,16 @@ export const getManagePerformBackupUrl = () => {
 export const managePerformBackup = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<managePerformBackupResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManagePerformBackupUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: managePerformBackupResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as managePerformBackupResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManagePerformBackupMutationKey = () => ["managePerformBackup"] as const
@@ -3702,23 +3482,6 @@ export const useManagePerformBackup = <
 ): UseMutationResult<Awaited<ReturnType<typeof managePerformBackup>>, TError, void, TContext> => {
   return useMutation(getManagePerformBackupMutationOptions(options), queryClient)
 }
-export type manageDownloadBackupResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageDownloadBackupResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type manageDownloadBackupResponseSuccess = manageDownloadBackupResponse200 & {
-  headers: Headers
-}
-export type manageDownloadBackupResponseError = manageDownloadBackupResponse422 & {
-  headers: Headers
-}
-
 export const getManageDownloadBackupUrl = (fileId: string) => {
   return `${BitcartApiConfig.baseUrl}/manage/backups/download/${fileId}`
 }
@@ -3730,16 +3493,16 @@ export const manageDownloadBackup = async (
   fileId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageDownloadBackupResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getManageDownloadBackupUrl(fileId), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageDownloadBackupResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageDownloadBackupResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageDownloadBackupQueryKey = (fileId: string) => {
@@ -3889,11 +3652,13 @@ export const getManageDownloadBackupSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageDownloadBackup>>> = ({ signal }) =>
     manageDownloadBackup(fileId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof manageDownloadBackup>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ManageDownloadBackupSuspenseQueryResult = NonNullable<
@@ -3974,23 +3739,6 @@ export function useManageDownloadBackupSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type manageRestoreBackupResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type manageRestoreBackupResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type manageRestoreBackupResponseSuccess = manageRestoreBackupResponse200 & {
-  headers: Headers
-}
-export type manageRestoreBackupResponseError = manageRestoreBackupResponse422 & {
-  headers: Headers
-}
-
 export const getManageRestoreBackupUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/backups/restore`
 }
@@ -4002,7 +3750,7 @@ export const manageRestoreBackup = async (
   bodyManageRestoreBackup: BodyManageRestoreBackup,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<manageRestoreBackupResponseSuccess> => {
+): Promise<unknown> => {
   const formData = new FormData()
   formData.append(`backup`, bodyManageRestoreBackup.backup)
 
@@ -4013,9 +3761,9 @@ export const manageRestoreBackup = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: manageRestoreBackupResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as manageRestoreBackupResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getManageRestoreBackupMutationKey = () => ["manageRestoreBackup"] as const

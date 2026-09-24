@@ -1,17 +1,7 @@
-import type { ApiFailure } from "#/types"
-import { getApiErrorMessage } from "#/utils"
+import type { ApiFailureError } from "#/types"
+import { getNormalizedErrorMessage } from "#/utils"
 
-// todo: Drop this helper and the `select` wrappers calling it, once the envelope is removed.
-//* Orval 8.28.1 returns the payload directly under `includeHttpResponseReturnType: false`.
-/**
- * Extracts payload from `data.data`, applying a consumer-provided `select` if present.
- */
-export const stripPayloadEnvelope =
-  <TSource, TData = TSource>(select?: (data: TSource) => TData) =>
-  ({ data }: { data: unknown }) =>
-    select ? select(data as TSource) : (data as unknown as TData)
-
-const parseFailureBody = (response: Response, body: string | null): unknown => {
+const parseResponseBody = (response: Response, body: string | null): unknown => {
   if (!body) return {}
 
   const contentType = (response.headers.get("content-type") ?? "").toLowerCase()
@@ -31,16 +21,14 @@ const parseFailureBody = (response: Response, body: string | null): unknown => {
  *
  * Orval's own failure branch throws a message-less `Error` and parses every body as JSON: a
  * plain-text 500 or a proxy's HTML 502 threw a `SyntaxError` before `status` was assigned.
- * `scripts/postprocess.ts` rewrites that branch into a call to `createApiFailure`.
+ * `scripts/postprocess.ts` rewrites that branch into a call to `createApiFailureError`.
  */
-export const createApiFailure = (response: Response, body: string | null): ApiFailure => {
-  const failure: ApiFailure = new Error()
+export const createApiFailureError = (response: Response, body: string | null): ApiFailureError => {
+  const failure: ApiFailureError = new Error()
 
-  failure.info = parseFailureBody(response, body)
+  failure.info = parseResponseBody(response, body)
   failure.status = response.status
-
-  //* A logger, an error overlay or a generic boundary reads only `message`, never `info`.
-  failure.message = getApiErrorMessage(failure)
+  failure.message = getNormalizedErrorMessage(failure)
 
   return failure
 }

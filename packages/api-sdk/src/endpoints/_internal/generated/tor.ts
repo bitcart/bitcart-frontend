@@ -5,7 +5,11 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,7 +25,7 @@ import type {
 } from "@tanstack/react-query"
 
 import { BitcartApiConfig } from "../../../config"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -38,15 +42,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type torGetServicesResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type torGetServicesResponseSuccess = torGetServicesResponse200 & {
-  headers: Headers
-}
-
 export const getTorGetServicesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/tor/services`
 }
@@ -57,16 +52,16 @@ export const getTorGetServicesUrl = () => {
 export const torGetServices = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<torGetServicesResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getTorGetServicesUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: torGetServicesResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as torGetServicesResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTorGetServicesQueryKey = () => {
@@ -188,11 +183,13 @@ export const getTorGetServicesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof torGetServices>>> = ({ signal }) =>
     torGetServices({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof torGetServices>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type TorGetServicesSuspenseQueryResult = NonNullable<

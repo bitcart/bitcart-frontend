@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -33,7 +38,7 @@ import type {
   PluginsUpdatePluginSettingsBody,
   UninstallPluginData,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -50,15 +55,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type pluginsGetPluginsResponse200 = {
-  data: PluginsGetPlugins200Output
-  status: 200
-}
-
-export type pluginsGetPluginsResponseSuccess = pluginsGetPluginsResponse200 & {
-  headers: Headers
-}
-
 export const getPluginsGetPluginsUrl = () => {
   return `${BitcartApiConfig.baseUrl}/plugins`
 }
@@ -69,7 +65,7 @@ export const getPluginsGetPluginsUrl = () => {
 export const pluginsGetPlugins = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<pluginsGetPluginsResponseSuccess> => {
+): Promise<PluginsGetPlugins200Output> => {
   const res = await (fetchFn ?? fetch)(getPluginsGetPluginsUrl(), {
     ...options,
     method: "GET",
@@ -77,10 +73,10 @@ export const pluginsGetPlugins = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? PluginsGetPlugins200.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as pluginsGetPluginsResponseSuccess
+  return data
 }
 
 export const getPluginsGetPluginsQueryKey = () => {
@@ -204,11 +200,13 @@ export const getPluginsGetPluginsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof pluginsGetPlugins>>> = ({ signal }) =>
     pluginsGetPlugins({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof pluginsGetPlugins>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type PluginsGetPluginsSuspenseQueryResult = NonNullable<
@@ -285,23 +283,6 @@ export function usePluginsGetPluginsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type pluginsInstallPluginResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type pluginsInstallPluginResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type pluginsInstallPluginResponseSuccess = pluginsInstallPluginResponse200 & {
-  headers: Headers
-}
-export type pluginsInstallPluginResponseError = pluginsInstallPluginResponse422 & {
-  headers: Headers
-}
-
 export const getPluginsInstallPluginUrl = () => {
   return `${BitcartApiConfig.baseUrl}/plugins/install`
 }
@@ -313,7 +294,7 @@ export const pluginsInstallPlugin = async (
   bodyPluginsInstallPlugin: BodyPluginsInstallPlugin,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<pluginsInstallPluginResponseSuccess> => {
+): Promise<unknown> => {
   const formData = new FormData()
   formData.append(`plugin`, bodyPluginsInstallPlugin.plugin)
 
@@ -324,9 +305,9 @@ export const pluginsInstallPlugin = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: pluginsInstallPluginResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as pluginsInstallPluginResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPluginsInstallPluginMutationKey = () => ["pluginsInstallPlugin"] as const
@@ -408,23 +389,6 @@ export const usePluginsInstallPlugin = <
 > => {
   return useMutation(getPluginsInstallPluginMutationOptions(options), queryClient)
 }
-export type pluginsUninstallPluginResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type pluginsUninstallPluginResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type pluginsUninstallPluginResponseSuccess = pluginsUninstallPluginResponse200 & {
-  headers: Headers
-}
-export type pluginsUninstallPluginResponseError = pluginsUninstallPluginResponse422 & {
-  headers: Headers
-}
-
 export const getPluginsUninstallPluginUrl = () => {
   return `${BitcartApiConfig.baseUrl}/plugins/uninstall`
 }
@@ -436,7 +400,7 @@ export const pluginsUninstallPlugin = async (
   uninstallPluginData: UninstallPluginData,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<pluginsUninstallPluginResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -464,9 +428,9 @@ export const pluginsUninstallPlugin = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: pluginsUninstallPluginResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as pluginsUninstallPluginResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPluginsUninstallPluginMutationKey = () => ["pluginsUninstallPlugin"] as const
@@ -548,15 +512,6 @@ export const usePluginsUninstallPlugin = <
 > => {
   return useMutation(getPluginsUninstallPluginMutationOptions(options), queryClient)
 }
-export type pluginsGetPluginsListResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type pluginsGetPluginsListResponseSuccess = pluginsGetPluginsListResponse200 & {
-  headers: Headers
-}
-
 export const getPluginsGetPluginsListUrl = () => {
   return `${BitcartApiConfig.baseUrl}/plugins/settings/list`
 }
@@ -567,16 +522,16 @@ export const getPluginsGetPluginsListUrl = () => {
 export const pluginsGetPluginsList = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<pluginsGetPluginsListResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getPluginsGetPluginsListUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: pluginsGetPluginsListResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as pluginsGetPluginsListResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPluginsGetPluginsListQueryKey = () => {
@@ -708,11 +663,13 @@ export const getPluginsGetPluginsListSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof pluginsGetPluginsList>>> = ({ signal }) =>
     pluginsGetPluginsList({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof pluginsGetPluginsList>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type PluginsGetPluginsListSuspenseQueryResult = NonNullable<
@@ -789,23 +746,6 @@ export function usePluginsGetPluginsListSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type pluginsGetPluginSettingsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type pluginsGetPluginSettingsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type pluginsGetPluginSettingsResponseSuccess = pluginsGetPluginSettingsResponse200 & {
-  headers: Headers
-}
-export type pluginsGetPluginSettingsResponseError = pluginsGetPluginSettingsResponse422 & {
-  headers: Headers
-}
-
 export const getPluginsGetPluginSettingsUrl = (pluginName: string) => {
   return `${BitcartApiConfig.baseUrl}/plugins/settings/${pluginName}`
 }
@@ -817,20 +757,16 @@ export const pluginsGetPluginSettings = async (
   pluginName: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<pluginsGetPluginSettingsResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getPluginsGetPluginSettingsUrl(pluginName), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: pluginsGetPluginSettingsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as pluginsGetPluginSettingsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPluginsGetPluginSettingsQueryKey = (pluginName: string) => {
@@ -982,11 +918,13 @@ export const getPluginsGetPluginSettingsSuspenseQueryOptions = <
     signal,
   }) => pluginsGetPluginSettings(pluginName, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type PluginsGetPluginSettingsSuspenseQueryResult = NonNullable<
@@ -1067,23 +1005,6 @@ export function usePluginsGetPluginSettingsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type pluginsUpdatePluginSettingsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type pluginsUpdatePluginSettingsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type pluginsUpdatePluginSettingsResponseSuccess = pluginsUpdatePluginSettingsResponse200 & {
-  headers: Headers
-}
-export type pluginsUpdatePluginSettingsResponseError = pluginsUpdatePluginSettingsResponse422 & {
-  headers: Headers
-}
-
 export const getPluginsUpdatePluginSettingsUrl = (pluginName: string) => {
   return `${BitcartApiConfig.baseUrl}/plugins/settings/${pluginName}`
 }
@@ -1096,7 +1017,7 @@ export const pluginsUpdatePluginSettings = async (
   pluginsUpdatePluginSettingsBody: PluginsUpdatePluginSettingsBody,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<pluginsUpdatePluginSettingsResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1124,13 +1045,9 @@ export const pluginsUpdatePluginSettings = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: pluginsUpdatePluginSettingsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as pluginsUpdatePluginSettingsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPluginsUpdatePluginSettingsMutationKey = () =>
@@ -1216,15 +1133,6 @@ export const usePluginsUpdatePluginSettings = <
 > => {
   return useMutation(getPluginsUpdatePluginSettingsMutationOptions(options), queryClient)
 }
-export type pluginsGetLicensesResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type pluginsGetLicensesResponseSuccess = pluginsGetLicensesResponse200 & {
-  headers: Headers
-}
-
 export const getPluginsGetLicensesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/plugins/licenses`
 }
@@ -1235,16 +1143,16 @@ export const getPluginsGetLicensesUrl = () => {
 export const pluginsGetLicenses = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<pluginsGetLicensesResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getPluginsGetLicensesUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: pluginsGetLicensesResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as pluginsGetLicensesResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPluginsGetLicensesQueryKey = () => {
@@ -1370,11 +1278,13 @@ export const getPluginsGetLicensesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof pluginsGetLicenses>>> = ({ signal }) =>
     pluginsGetLicenses({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof pluginsGetLicenses>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type PluginsGetLicensesSuspenseQueryResult = NonNullable<
@@ -1451,23 +1361,6 @@ export function usePluginsGetLicensesSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type pluginsAddLicenseResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type pluginsAddLicenseResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type pluginsAddLicenseResponseSuccess = pluginsAddLicenseResponse200 & {
-  headers: Headers
-}
-export type pluginsAddLicenseResponseError = pluginsAddLicenseResponse422 & {
-  headers: Headers
-}
-
 export const getPluginsAddLicenseUrl = () => {
   return `${BitcartApiConfig.baseUrl}/plugins/licenses`
 }
@@ -1479,7 +1372,7 @@ export const pluginsAddLicense = async (
   addLicenseRequest: AddLicenseRequest,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<pluginsAddLicenseResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1507,9 +1400,9 @@ export const pluginsAddLicense = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: pluginsAddLicenseResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as pluginsAddLicenseResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPluginsAddLicenseMutationKey = () => ["pluginsAddLicense"] as const
@@ -1591,23 +1484,6 @@ export const usePluginsAddLicense = <
 > => {
   return useMutation(getPluginsAddLicenseMutationOptions(options), queryClient)
 }
-export type pluginsDeleteLicenseResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type pluginsDeleteLicenseResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type pluginsDeleteLicenseResponseSuccess = pluginsDeleteLicenseResponse200 & {
-  headers: Headers
-}
-export type pluginsDeleteLicenseResponseError = pluginsDeleteLicenseResponse422 & {
-  headers: Headers
-}
-
 export const getPluginsDeleteLicenseUrl = (licenseKey: string) => {
   return `${BitcartApiConfig.baseUrl}/plugins/licenses/${licenseKey}`
 }
@@ -1619,16 +1495,16 @@ export const pluginsDeleteLicense = async (
   licenseKey: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<pluginsDeleteLicenseResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getPluginsDeleteLicenseUrl(licenseKey), {
     ...options,
     method: "DELETE",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: pluginsDeleteLicenseResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as pluginsDeleteLicenseResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPluginsDeleteLicenseMutationKey = () => ["pluginsDeleteLicense"] as const

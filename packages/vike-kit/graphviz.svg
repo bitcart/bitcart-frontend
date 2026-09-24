@@ -111,7 +111,7 @@
 <!-- node_modules/react -->
 <g id="node5" class="node">
 <title>node_modules/react</title>
-<g id="a_node5"><a xlink:href="https://www.npmjs.com/package/react" xlink:title="react@19.2.8">
+<g id="a_node5"><a xlink:href="https://www.npmjs.com/package/react" xlink:title="react@19.3.0">
 <polygon fill="#f9e6e6" stroke="black" points="758,-70 705,-70 701,-66 701,-16 754,-16 758,-20 758,-70"/>
 <polyline fill="none" stroke="black" points="754,-66 701,-66 "/>
 <polyline fill="none" stroke="black" points="754,-66 754,-16 "/>
@@ -123,7 +123,7 @@
 <!-- node_modules/vike -->
 <g id="node6" class="node">
 <title>node_modules/vike</title>
-<g id="a_node6"><a xlink:href="https://www.npmjs.com/package/vike" xlink:title="vike@0.4.263_react&#45;streaming@0.4.20_react&#45;dom@19.2.8_react@19.2.8__react@19.2.8__srvx@0_6fe300a9f2373c981fb88eb129c4dde9">
+<g id="a_node6"><a xlink:href="https://www.npmjs.com/package/vike" xlink:title="vike@0.4.266_react&#45;streaming@0.4.20_react&#45;dom@19.3.0_react@19.3.0__react@19.3.0__srvx@1_4bccc38625cfff1f7aab2f0d67c73b8a">
 <polygon fill="#f9e6e6" stroke="black" points="756.5,-265 706.5,-265 702.5,-261 702.5,-211 752.5,-211 756.5,-215 756.5,-265"/>
 <polyline fill="none" stroke="black" points="752.5,-261 702.5,-261 "/>
 <polyline fill="none" stroke="black" points="752.5,-261 752.5,-211 "/>

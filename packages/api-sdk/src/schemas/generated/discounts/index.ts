@@ -6,8 +6,8 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./createDiscount.zod"
-export * from "./discountsListItemsParams.zod"
-export * from "./displayDiscount.zod"
-export * from "./offsetPaginationDisplayDiscount.zod"
-export * from "./optionalUpdateDiscount.zod"
+export * from "./CreateDiscount.zod"
+export * from "./DiscountsListItemsParams.zod"
+export * from "./DisplayDiscount.zod"
+export * from "./OffsetPaginationDisplayDiscount.zod"
+export * from "./OptionalUpdateDiscount.zod"

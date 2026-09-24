@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -30,7 +35,7 @@ import type {
   HTTPValidationError,
   SSHSettings,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -47,25 +52,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type configuratorGenerateDeploymentResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type configuratorGenerateDeploymentResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type configuratorGenerateDeploymentResponseSuccess =
-  configuratorGenerateDeploymentResponse200 & {
-    headers: Headers
-  }
-export type configuratorGenerateDeploymentResponseError =
-  configuratorGenerateDeploymentResponse422 & {
-    headers: Headers
-  }
-
 export const getConfiguratorGenerateDeploymentUrl = () => {
   return `${BitcartApiConfig.baseUrl}/configurator/deploy`
 }
@@ -77,7 +63,7 @@ export const configuratorGenerateDeployment = async (
   configuratorDeploySettings: ConfiguratorDeploySettings,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<configuratorGenerateDeploymentResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -105,13 +91,9 @@ export const configuratorGenerateDeployment = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: configuratorGenerateDeploymentResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as configuratorGenerateDeploymentResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getConfiguratorGenerateDeploymentMutationKey = () =>
@@ -194,23 +176,6 @@ export const useConfiguratorGenerateDeployment = <
 > => {
   return useMutation(getConfiguratorGenerateDeploymentMutationOptions(options), queryClient)
 }
-export type configuratorGetDeployResultResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type configuratorGetDeployResultResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type configuratorGetDeployResultResponseSuccess = configuratorGetDeployResultResponse200 & {
-  headers: Headers
-}
-export type configuratorGetDeployResultResponseError = configuratorGetDeployResultResponse422 & {
-  headers: Headers
-}
-
 export const getConfiguratorGetDeployResultUrl = (deployId: string) => {
   return `${BitcartApiConfig.baseUrl}/configurator/deploy-result/${deployId}`
 }
@@ -222,20 +187,16 @@ export const configuratorGetDeployResult = async (
   deployId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<configuratorGetDeployResultResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getConfiguratorGetDeployResultUrl(deployId), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: configuratorGetDeployResultResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as configuratorGetDeployResultResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getConfiguratorGetDeployResultQueryKey = (deployId: string) => {
@@ -391,11 +352,13 @@ export const getConfiguratorGetDeployResultSuspenseQueryOptions = <
     signal,
   }) => configuratorGetDeployResult(deployId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof configuratorGetDeployResult>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ConfiguratorGetDeployResultSuspenseQueryResult = NonNullable<
@@ -492,25 +455,6 @@ export function useConfiguratorGetDeployResultSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type configuratorGetServerSettingsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type configuratorGetServerSettingsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type configuratorGetServerSettingsResponseSuccess =
-  configuratorGetServerSettingsResponse200 & {
-    headers: Headers
-  }
-export type configuratorGetServerSettingsResponseError =
-  configuratorGetServerSettingsResponse422 & {
-    headers: Headers
-  }
-
 export const getConfiguratorGetServerSettingsUrl = () => {
   return `${BitcartApiConfig.baseUrl}/configurator/server-settings`
 }
@@ -522,7 +466,7 @@ export const configuratorGetServerSettings = async (
   sSHSettingsNull?: SSHSettings | null,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<configuratorGetServerSettingsResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -550,13 +494,9 @@ export const configuratorGetServerSettings = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: configuratorGetServerSettingsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as configuratorGetServerSettingsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getConfiguratorGetServerSettingsMutationKey = () =>
@@ -639,23 +579,6 @@ export const useConfiguratorGetServerSettings = <
 > => {
   return useMutation(getConfiguratorGetServerSettingsMutationOptions(options), queryClient)
 }
-export type configuratorCheckDnsEntryResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type configuratorCheckDnsEntryResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type configuratorCheckDnsEntryResponseSuccess = configuratorCheckDnsEntryResponse200 & {
-  headers: Headers
-}
-export type configuratorCheckDnsEntryResponseError = configuratorCheckDnsEntryResponse422 & {
-  headers: Headers
-}
-
 export const getConfiguratorCheckDnsEntryUrl = (params: ConfiguratorCheckDnsEntryParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -679,20 +602,16 @@ export const configuratorCheckDnsEntry = async (
   params: ConfiguratorCheckDnsEntryParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<configuratorCheckDnsEntryResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getConfiguratorCheckDnsEntryUrl(params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: configuratorCheckDnsEntryResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as configuratorCheckDnsEntryResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getConfiguratorCheckDnsEntryQueryKey = (params?: ConfiguratorCheckDnsEntryParams) => {
@@ -844,11 +763,13 @@ export const getConfiguratorCheckDnsEntrySuspenseQueryOptions = <
     signal,
   }) => configuratorCheckDnsEntry(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type ConfiguratorCheckDnsEntrySuspenseQueryResult = NonNullable<

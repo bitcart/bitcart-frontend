@@ -2,37 +2,46 @@
 
 ## Project Overview
 
-Bitcart frontend monorepo containing two web applications and shared packages. Built with React 19, Vike (file-based routing SSR framework), TypeScript, and UnoCSS.
+Bitcart frontend monorepo containing web applications, shared packages and app templates. Built with React 19, TypeScript and UnoCSS. Landing and Directory run on Vike, Checkout and UI Docs on TanStack Start; both are file-based routing frameworks.
 
 ## Monorepo Structure
 
-- **apps/landing** — Bitcart.ai landing website
-- **apps/directory** — Merchants directory website
+- **apps/checkout** — Invoice checkout application (TanStack Start)
+- **apps/directory** — Merchants directory website (Vike)
+- **apps/landing** — Bitcart.ai landing website (Vike)
+- **apps/ui-docs** — UI Kit documentation site built on Fumadocs (TanStack Start)
+- **packages/api-sdk** — TypeScript SDK for the Bitcart Merchants API. orval generates the raw client, Zod schemas and MSW mocks from a pinned OpenAPI schema into the three `generated/` directories; everything else is authored, including the per-tag `endpoints/` wrappers and hooks, `auth/`, `utils/` and the SDK configuration. Only the `generated/` trees are safe to overwrite
+- **packages/configs** — Shared configurations (TypeScript, oxlint, dependency-cruiser, etc.)
 - **packages/core** — Foundational utilities, types, Zod schemas, i18n utilities
-- **packages/ui-kit** — Reusable React component library (atomic design: atoms/molecules/organisms/templates) with shadcn/ui + UnoCSS
 - **packages/form-kit** — Form utilities using TanStack React Form
 - **packages/hooks** — Framework- and presentation-agnostic, SSR-safe React hooks
-- **packages/vike-kit** — Shared Vike configuration, i18n, navigation, telemetry, metadata
+- **packages/qa** — Shared Playwright E2E utilities, test templates, testid constants, and unit test mocks
+- **packages/ui-kit** — Reusable React component library (atomic design: atoms/molecules/organisms/templates) with shadcn/ui + UnoCSS
 - **packages/unocss-preset** — Custom UnoCSS styling preset
-- **packages/qa** — Shared Playwright test utilities, templates, and testid constants
-- **packages/configs** — Shared configurations (TypeScript, oxlint, dependency-cruiser, etc.)
+- **packages/vike-kit** — Shared Vike configuration, i18n, navigation, telemetry, metadata
+- **templates/vike-app** — Minimal Vike application boilerplate
 
 ## Commands
 
 All commands use `just` (command runner). Run `just` to see available recipes.
 
 ```bash
-just dev                    # Start all dev servers (installs deps, watches styles + runs Vike)
-just build                  # Build all packages
+just dev                    # Install dependencies, then start every dev server
+just preview                # Serve a production preview of every app
+just build                  # Build every workspace member
+just build-packages         # Build library packages only, excluding apps
 just format                 # Auto-format code (oxfmt)
 just lint                   # Lint with autofix (oxlint)
 just fix                    # Format + lint (auto-fix)
 just format-check           # Verify formatting without fixing
 just lint-check             # Verify linting without fixing
 just typecheck              # Type checking
-just depcheck             # Detect unused dependencies, files, and exports (knip)
-just check                  # All checks: format-check + lint-check + typecheck + depcheck (no tests)
-just test                   # Run all tests
+just depcheck               # Detect unused dependencies, files, and exports (knip)
+just depcruise              # Verify emitted dist code never references a devDependency
+just check                  # All checks: api-check, format-check, lint-check, typecheck, depcheck, depcruise
+just unit                   # Run unit tests (vitest)
+just unit-dev               # Run unit tests in watch mode
+just test                   # Run all tests: unit + e2e
 just ci                     # Full CI pipeline: check + test
 just locales-extract        # Extract i18n catalogs for all apps
 just locales-extract-dev    # Extract i18n catalogs with pseudo locale (for dev)
@@ -41,9 +50,18 @@ just e2e-app landing        # Run E2E tests for a specific app
 just e2e-ui landing         # Open Playwright interactive UI for a specific app
 just e2e-report landing     # Open HTML test report for a specific app
 just e2e-setup              # Install Playwright browsers (Chromium)
+just list-members           # List all workspace members
 ```
 
-To target a specific workspace package via Nx:
+The API SDK's `generated/` trees are committed to the repository, and these recipes rewrite them. Authored SDK code is untouched by all three:
+
+```bash
+just api-generate           # Regenerate the SDK from the pinned OpenAPI schema
+just api-check              # Verify the committed SDK still matches the pinned schema
+just api-sync <source>      # Pin a fresh schema from a backend URL or an exported file, then regenerate
+```
+
+Recipes taking Nx arguments accept `-p <member>` to narrow the run, as in `just dev -p ui-docs`. To target a specific workspace package via Nx:
 
 ```bash
 pnpm nx run landing:dev     # Dev server for landing only
@@ -63,11 +81,11 @@ just add-dev <ws-member> <package>   # Add dev dependency to a workspace package
 
 ### Styling
 
-UnoCSS with a custom `@bitcart/unocss-preset`. Styles are generated to `src/pages/uno.generated.css` (auto-generated, do not edit). The UI Kit uses shadcn/ui patterns with Base UI primitives and Class Variance Authority (CVA) for variants.
+UnoCSS with a custom `@bitcart/unocss-preset`. Every app declares its own stylesheet destination under `cli.entry.outFile` in `apps/<app>/uno.config.ts`: the Vike apps emit `src/pages/uno.generated.css`, the TanStack Start apps `src/routes/-layout/uno.generated.css` (auto-generated, do not edit). UI Docs also runs Tailwind through `@tailwindcss/vite`, which backs the Fumadocs stylesheets imported in `apps/ui-docs/src/routes/-layout/app.css`. The UI Kit uses shadcn/ui patterns with Base UI primitives and Class Variance Authority (CVA) for variants.
 
 ### Data Fetching
 
-TanStack React Query via `vike-react-query` for server/client data synchronization.
+TanStack React Query for server/client data synchronization, integrated per framework: Landing and Directory through `vike-react-query`, Checkout through `@tanstack/react-router-ssr-query`. UI Docs has no query layer; its content is resolved at build time by `fumadocs-mdx`.
 
 ## Conventions
 

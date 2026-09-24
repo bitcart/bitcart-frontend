@@ -1,13 +1,17 @@
-import { getApiErrorMessage, isNotFoundError } from "@bitcart/api-sdk/utils"
+import { getNormalizedErrorMessage, isNotFoundError } from "@bitcart/api-sdk/utils"
 import { Button } from "@bitcart/ui-kit/components"
 import { t } from "@lingui/core/macro"
 import { AlertCircleIcon } from "lucide-react"
+import type React from "react"
 
 import { CheckoutCard } from "./checkout-card"
 import { CheckoutHeader } from "./checkout-header"
 import { PoweredByFooter } from "./powered-by-footer"
 
-export const ErrorFallback = ({ retry, error }: { retry: () => void; error: unknown }) => {
+// FIXME: Extract into a Tanstack Kit package, once it exists.
+export type ErrorFallbackProps = { retry: () => void; error: unknown }
+
+export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ retry, error }) => {
   const isNotFound = isNotFoundError(error)
 
   return (
@@ -24,7 +28,7 @@ export const ErrorFallback = ({ retry, error }: { retry: () => void; error: unkn
         <p className="mt-1 text-muted-foreground text-sm">
           {isNotFound
             ? t`This invoice does not exist, or is no longer available.`
-            : getApiErrorMessage(error)}
+            : getNormalizedErrorMessage(error)}
         </p>
 
         <Button className="mt-4" onClick={retry}>

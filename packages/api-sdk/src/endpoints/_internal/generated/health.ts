@@ -5,7 +5,11 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -23,7 +27,7 @@ import type {
 import { BitcartApiConfig } from "../../../config"
 import { HealthLive200, HealthReady200 } from "../../../schemas/generated"
 import type { HealthLive200Output, HealthReady200Output } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -40,15 +44,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type healthLiveResponse200 = {
-  data: HealthLive200Output
-  status: 200
-}
-
-export type healthLiveResponseSuccess = healthLiveResponse200 & {
-  headers: Headers
-}
-
 export const getHealthLiveUrl = () => {
   return `${BitcartApiConfig.baseUrl}/health/live`
 }
@@ -59,7 +54,7 @@ export const getHealthLiveUrl = () => {
 export const healthLive = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<healthLiveResponseSuccess> => {
+): Promise<HealthLive200Output> => {
   const res = await (fetchFn ?? fetch)(getHealthLiveUrl(), {
     ...options,
     method: "GET",
@@ -67,10 +62,10 @@ export const healthLive = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? HealthLive200.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as healthLiveResponseSuccess
+  return data
 }
 
 export const getHealthLiveQueryKey = () => {
@@ -190,11 +185,13 @@ export const getHealthLiveSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof healthLive>>> = ({ signal }) =>
     healthLive({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof healthLive>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type HealthLiveSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof healthLive>>>
@@ -258,15 +255,6 @@ export function useHealthLiveSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type healthReadyResponse200 = {
-  data: HealthReady200Output
-  status: 200
-}
-
-export type healthReadyResponseSuccess = healthReadyResponse200 & {
-  headers: Headers
-}
-
 export const getHealthReadyUrl = () => {
   return `${BitcartApiConfig.baseUrl}/health/ready`
 }
@@ -277,7 +265,7 @@ export const getHealthReadyUrl = () => {
 export const healthReady = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<healthReadyResponseSuccess> => {
+): Promise<HealthReady200Output> => {
   const res = await (fetchFn ?? fetch)(getHealthReadyUrl(), {
     ...options,
     method: "GET",
@@ -285,10 +273,10 @@ export const healthReady = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? HealthReady200.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as healthReadyResponseSuccess
+  return data
 }
 
 export const getHealthReadyQueryKey = () => {
@@ -408,11 +396,13 @@ export const getHealthReadySuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof healthReady>>> = ({ signal }) =>
     healthReady({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof healthReady>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type HealthReadySuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof healthReady>>>

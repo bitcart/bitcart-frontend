@@ -7,27 +7,27 @@
  * string.
  */
 
-import type { ApiFailure, ApiValidationIssue } from "#/types"
+import type { ApiFailureError, ApiValidationIssue } from "#/types"
 
 //* A plain-text API error fits in a sentence. An HTML error page does not.
 const MAX_PLAIN_BODY_LENGTH = 200
 
-export const isApiFailure = (error: unknown): error is ApiFailure =>
-  error instanceof Error && typeof (error as ApiFailure).status === "number"
+export const isApiFailure = (error: unknown): error is ApiFailureError =>
+  error instanceof Error && typeof (error as ApiFailureError).status === "number"
 
-export const getApiStatus = (error: unknown): number | undefined =>
+export const getErrorStatusCode = (error: unknown): number | undefined =>
   isApiFailure(error) ? error.status : undefined
 
 /**
  * Distinguishes a missing or expired token and an insufficient scope from other failures.
  */
 export const isAuthError = (error: unknown): boolean => {
-  const status = getApiStatus(error)
+  const status = getErrorStatusCode(error)
 
   return status === 401 || status === 403
 }
 
-export const isNotFoundError = (error: unknown): boolean => getApiStatus(error) === 404
+export const isNotFoundError = (error: unknown): boolean => getErrorStatusCode(error) === 404
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null
@@ -56,7 +56,7 @@ export const getValidationIssues = (error: unknown): ApiValidationIssue[] => {
 /**
  * Extracts or produces a human-readable message for a failed request.
  */
-export const getApiErrorMessage = (error: unknown): string => {
+export const getNormalizedErrorMessage = (error: unknown): string => {
   if (!isApiFailure(error)) return "Request failed"
 
   const { info, status } = error

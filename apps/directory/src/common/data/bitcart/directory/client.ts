@@ -1,4 +1,4 @@
-import { Effect, identity } from "effect"
+import { identity, pipe } from "remeda"
 
 import {
   catalogCategoryFilter,
@@ -19,18 +19,16 @@ export type GetCatalogParams = {
 export const getCatalog = (
   { category, subcategory, searchTerm = "" }: GetCatalogParams | undefined = { searchTerm: "" },
 ): Promise<DirectoryCatalog> =>
-  Effect.runPromise(
-    Effect.promise(getDirectoryEntries).pipe(
-      Effect.andThen((data) => ({ entries: data, totalCount: data.length })),
+  getDirectoryEntries().then((entries) =>
+    pipe(
+      { entries, totalCount: entries.length },
 
-      Effect.andThen(
-        category === undefined ? identity : (data) => catalogCategoryFilter(data, category),
-      ),
+      category === undefined ? identity() : (data) => catalogCategoryFilter(data, category),
 
-      Effect.andThen(
-        subcategory == undefined ? identity : (data) => catalogSubcategoryFilter(data, subcategory),
-      ),
+      subcategory === undefined
+        ? identity()
+        : (data) => catalogSubcategoryFilter(data, subcategory),
 
-      Effect.andThen((data) => catalogEntrySearch(data, searchTerm)),
+      (data) => catalogEntrySearch(data, searchTerm),
     ),
   )

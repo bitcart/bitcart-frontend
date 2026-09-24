@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -50,7 +55,7 @@ import type {
   VerifyEmailData,
   VerifyTOTP,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -67,15 +72,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type usersMeResponse200 = {
-  data: DisplayUserOutput
-  status: 200
-}
-
-export type usersMeResponseSuccess = usersMeResponse200 & {
-  headers: Headers
-}
-
 export const getUsersMeUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/me`
 }
@@ -86,7 +82,7 @@ export const getUsersMeUrl = () => {
 export const usersMe = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersMeResponseSuccess> => {
+): Promise<DisplayUserOutput> => {
   const res = await (fetchFn ?? fetch)(getUsersMeUrl(), {
     ...options,
     method: "GET",
@@ -94,10 +90,10 @@ export const usersMe = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayUser.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as usersMeResponseSuccess
+  return data
 }
 
 export const getUsersMeQueryKey = () => {
@@ -217,11 +213,13 @@ export const getUsersMeSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof usersMe>>> = ({ signal }) =>
     usersMe({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof usersMe>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type UsersMeSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof usersMe>>>
@@ -285,23 +283,6 @@ export function useUsersMeSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type usersSetSettingsResponse200 = {
-  data: DisplayUserOutput
-  status: 200
-}
-
-export type usersSetSettingsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersSetSettingsResponseSuccess = usersSetSettingsResponse200 & {
-  headers: Headers
-}
-export type usersSetSettingsResponseError = usersSetSettingsResponse422 & {
-  headers: Headers
-}
-
 export const getUsersSetSettingsUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/me/settings`
 }
@@ -313,7 +294,7 @@ export const usersSetSettings = async (
   userPreferences: UserPreferences,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersSetSettingsResponseSuccess> => {
+): Promise<DisplayUserOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -342,10 +323,10 @@ export const usersSetSettings = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayUser.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as usersSetSettingsResponseSuccess
+  return data
 }
 
 export const getUsersSetSettingsMutationKey = () => ["usersSetSettings"] as const
@@ -427,23 +408,6 @@ export const useUsersSetSettings = <
 > => {
   return useMutation(getUsersSetSettingsMutationOptions(options), queryClient)
 }
-export type usersResetPasswordResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersResetPasswordResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersResetPasswordResponseSuccess = usersResetPasswordResponse200 & {
-  headers: Headers
-}
-export type usersResetPasswordResponseError = usersResetPasswordResponse422 & {
-  headers: Headers
-}
-
 export const getUsersResetPasswordUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/reset_password`
 }
@@ -455,7 +419,7 @@ export const usersResetPassword = async (
   resetPasswordData: ResetPasswordData,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersResetPasswordResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -483,9 +447,9 @@ export const usersResetPassword = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersResetPasswordResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as usersResetPasswordResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersResetPasswordMutationKey = () => ["usersResetPassword"] as const
@@ -567,23 +531,6 @@ export const useUsersResetPassword = <
 > => {
   return useMutation(getUsersResetPasswordMutationOptions(options), queryClient)
 }
-export type usersFinalizePasswordResetResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersFinalizePasswordResetResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersFinalizePasswordResetResponseSuccess = usersFinalizePasswordResetResponse200 & {
-  headers: Headers
-}
-export type usersFinalizePasswordResetResponseError = usersFinalizePasswordResetResponse422 & {
-  headers: Headers
-}
-
 export const getUsersFinalizePasswordResetUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/reset_password/finalize`
 }
@@ -595,7 +542,7 @@ export const usersFinalizePasswordReset = async (
   resetPasswordFinalize: ResetPasswordFinalize,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersFinalizePasswordResetResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -623,13 +570,9 @@ export const usersFinalizePasswordReset = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersFinalizePasswordResetResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as usersFinalizePasswordResetResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersFinalizePasswordResetMutationKey = () =>
@@ -712,23 +655,6 @@ export const useUsersFinalizePasswordReset = <
 > => {
   return useMutation(getUsersFinalizePasswordResetMutationOptions(options), queryClient)
 }
-export type usersSendVerificationEmailResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersSendVerificationEmailResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersSendVerificationEmailResponseSuccess = usersSendVerificationEmailResponse200 & {
-  headers: Headers
-}
-export type usersSendVerificationEmailResponseError = usersSendVerificationEmailResponse422 & {
-  headers: Headers
-}
-
 export const getUsersSendVerificationEmailUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/verify`
 }
@@ -740,7 +666,7 @@ export const usersSendVerificationEmail = async (
   verifyEmailData: VerifyEmailData,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersSendVerificationEmailResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -768,13 +694,9 @@ export const usersSendVerificationEmail = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersSendVerificationEmailResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as usersSendVerificationEmailResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersSendVerificationEmailMutationKey = () =>
@@ -857,25 +779,6 @@ export const useUsersSendVerificationEmail = <
 > => {
   return useMutation(getUsersSendVerificationEmailMutationOptions(options), queryClient)
 }
-export type usersFinalizeEmailVerificationResponse200 = {
-  data: EmailVerifyResponseOutput
-  status: 200
-}
-
-export type usersFinalizeEmailVerificationResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersFinalizeEmailVerificationResponseSuccess =
-  usersFinalizeEmailVerificationResponse200 & {
-    headers: Headers
-  }
-export type usersFinalizeEmailVerificationResponseError =
-  usersFinalizeEmailVerificationResponse422 & {
-    headers: Headers
-  }
-
 export const getUsersFinalizeEmailVerificationUrl = (
   params?: UsersFinalizeEmailVerificationParams,
 ) => {
@@ -902,7 +805,7 @@ export const usersFinalizeEmailVerification = async (
   params?: UsersFinalizeEmailVerificationParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersFinalizeEmailVerificationResponseSuccess> => {
+): Promise<EmailVerifyResponseOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -931,14 +834,10 @@ export const usersFinalizeEmailVerification = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? EmailVerifyResponse.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as usersFinalizeEmailVerificationResponseSuccess
+  return data
 }
 
 export const getUsersFinalizeEmailVerificationMutationKey = () =>
@@ -1024,23 +923,6 @@ export const useUsersFinalizeEmailVerification = <
 > => {
   return useMutation(getUsersFinalizeEmailVerificationMutationOptions(options), queryClient)
 }
-export type usersChangePasswordResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersChangePasswordResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersChangePasswordResponseSuccess = usersChangePasswordResponse200 & {
-  headers: Headers
-}
-export type usersChangePasswordResponseError = usersChangePasswordResponse422 & {
-  headers: Headers
-}
-
 export const getUsersChangePasswordUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/password`
 }
@@ -1052,7 +934,7 @@ export const usersChangePassword = async (
   changePassword: ChangePassword,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersChangePasswordResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1080,9 +962,9 @@ export const usersChangePassword = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersChangePasswordResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as usersChangePasswordResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersChangePasswordMutationKey = () => ["usersChangePassword"] as const
@@ -1164,23 +1046,6 @@ export const useUsersChangePassword = <
 > => {
   return useMutation(getUsersChangePasswordMutationOptions(options), queryClient)
 }
-export type usersVerifyTotpResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersVerifyTotpResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersVerifyTotpResponseSuccess = usersVerifyTotpResponse200 & {
-  headers: Headers
-}
-export type usersVerifyTotpResponseError = usersVerifyTotpResponse422 & {
-  headers: Headers
-}
-
 export const getUsersVerifyTotpUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/2fa/totp/verify`
 }
@@ -1192,7 +1057,7 @@ export const usersVerifyTotp = async (
   verifyTOTP: VerifyTOTP,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersVerifyTotpResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1220,9 +1085,9 @@ export const usersVerifyTotp = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersVerifyTotpResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as usersVerifyTotpResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersVerifyTotpMutationKey = () => ["usersVerifyTotp"] as const
@@ -1302,15 +1167,6 @@ export const useUsersVerifyTotp = <
 > => {
   return useMutation(getUsersVerifyTotpMutationOptions(options), queryClient)
 }
-export type usersDisableTotpResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersDisableTotpResponseSuccess = usersDisableTotpResponse200 & {
-  headers: Headers
-}
-
 export const getUsersDisableTotpUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/2fa/disable`
 }
@@ -1321,16 +1177,16 @@ export const getUsersDisableTotpUrl = () => {
 export const usersDisableTotp = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersDisableTotpResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getUsersDisableTotpUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersDisableTotpResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as usersDisableTotpResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersDisableTotpMutationKey = () => ["usersDisableTotp"] as const
@@ -1393,23 +1249,6 @@ export const useUsersDisableTotp = <
 ): UseMutationResult<Awaited<ReturnType<typeof usersDisableTotp>>, TError, void, TContext> => {
   return useMutation(getUsersDisableTotpMutationOptions(options), queryClient)
 }
-export type usersRegisterFido2Response200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersRegisterFido2Response422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersRegisterFido2ResponseSuccess = usersRegisterFido2Response200 & {
-  headers: Headers
-}
-export type usersRegisterFido2ResponseError = usersRegisterFido2Response422 & {
-  headers: Headers
-}
-
 export const getUsersRegisterFido2Url = () => {
   return `${BitcartApiConfig.baseUrl}/users/2fa/fido2/register/begin`
 }
@@ -1421,7 +1260,7 @@ export const usersRegisterFido2 = async (
   loginFIDOData: LoginFIDOData,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersRegisterFido2ResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1449,9 +1288,9 @@ export const usersRegisterFido2 = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersRegisterFido2ResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as usersRegisterFido2ResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersRegisterFido2MutationKey = () => ["usersRegisterFido2"] as const
@@ -1533,16 +1372,6 @@ export const useUsersRegisterFido2 = <
 > => {
   return useMutation(getUsersRegisterFido2MutationOptions(options), queryClient)
 }
-export type usersFido2CompleteRegistrationResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersFido2CompleteRegistrationResponseSuccess =
-  usersFido2CompleteRegistrationResponse200 & {
-    headers: Headers
-  }
-
 export const getUsersFido2CompleteRegistrationUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/2fa/fido2/register/complete`
 }
@@ -1553,20 +1382,16 @@ export const getUsersFido2CompleteRegistrationUrl = () => {
 export const usersFido2CompleteRegistration = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersFido2CompleteRegistrationResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getUsersFido2CompleteRegistrationUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersFido2CompleteRegistrationResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as usersFido2CompleteRegistrationResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersFido2CompleteRegistrationMutationKey = () =>
@@ -1646,23 +1471,6 @@ export const useUsersFido2CompleteRegistration = <
 > => {
   return useMutation(getUsersFido2CompleteRegistrationMutationOptions(options), queryClient)
 }
-export type usersFido2DeleteDeviceResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersFido2DeleteDeviceResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersFido2DeleteDeviceResponseSuccess = usersFido2DeleteDeviceResponse200 & {
-  headers: Headers
-}
-export type usersFido2DeleteDeviceResponseError = usersFido2DeleteDeviceResponse422 & {
-  headers: Headers
-}
-
 export const getUsersFido2DeleteDeviceUrl = (deviceId: string) => {
   return `${BitcartApiConfig.baseUrl}/users/2fa/fido2/${deviceId}`
 }
@@ -1674,16 +1482,16 @@ export const usersFido2DeleteDevice = async (
   deviceId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersFido2DeleteDeviceResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getUsersFido2DeleteDeviceUrl(deviceId), {
     ...options,
     method: "DELETE",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersFido2DeleteDeviceResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as usersFido2DeleteDeviceResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersFido2DeleteDeviceMutationKey = () => ["usersFido2DeleteDevice"] as const
@@ -1765,15 +1573,6 @@ export const useUsersFido2DeleteDevice = <
 > => {
   return useMutation(getUsersFido2DeleteDeviceMutationOptions(options), queryClient)
 }
-export type usersGetStatsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type usersGetStatsResponseSuccess = usersGetStatsResponse200 & {
-  headers: Headers
-}
-
 export const getUsersGetStatsUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/stats`
 }
@@ -1784,16 +1583,16 @@ export const getUsersGetStatsUrl = () => {
 export const usersGetStats = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersGetStatsResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getUsersGetStatsUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersGetStatsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as usersGetStatsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersGetStatsQueryKey = () => {
@@ -1913,11 +1712,13 @@ export const getUsersGetStatsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof usersGetStats>>> = ({ signal }) =>
     usersGetStats({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof usersGetStats>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type UsersGetStatsSuspenseQueryResult = NonNullable<
@@ -1991,23 +1792,6 @@ export function useUsersGetStatsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type usersListItemsResponse200 = {
-  data: OffsetPaginationDisplayUserOutput
-  status: 200
-}
-
-export type usersListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersListItemsResponseSuccess = usersListItemsResponse200 & {
-  headers: Headers
-}
-export type usersListItemsResponseError = usersListItemsResponse422 & {
-  headers: Headers
-}
-
 export const getUsersListItemsUrl = (params?: UsersListItemsParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -2031,7 +1815,7 @@ export const usersListItems = async (
   params?: UsersListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayUserOutput> => {
   const res = await (fetchFn ?? fetch)(getUsersListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -2039,12 +1823,12 @@ export const usersListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayUser.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as usersListItemsResponseSuccess
+  return data
 }
 
 export const getUsersListItemsQueryKey = (params?: UsersListItemsParams) => {
@@ -2179,11 +1963,13 @@ export const getUsersListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof usersListItems>>> = ({ signal }) =>
     usersListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof usersListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type UsersListItemsSuspenseQueryResult = NonNullable<
@@ -2264,23 +2050,6 @@ export function useUsersListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type usersCreateUserResponse200 = {
-  data: DisplayUserWithTokenOutput
-  status: 200
-}
-
-export type usersCreateUserResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersCreateUserResponseSuccess = usersCreateUserResponse200 & {
-  headers: Headers
-}
-export type usersCreateUserResponseError = usersCreateUserResponse422 & {
-  headers: Headers
-}
-
 export const getUsersCreateUserUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users`
 }
@@ -2292,7 +2061,7 @@ export const usersCreateUser = async (
   createUser: CreateUser,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersCreateUserResponseSuccess> => {
+): Promise<DisplayUserWithTokenOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -2321,10 +2090,10 @@ export const usersCreateUser = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayUserWithToken.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as usersCreateUserResponseSuccess
+  return data
 }
 
 export const getUsersCreateUserMutationKey = () => ["usersCreateUser"] as const
@@ -2404,15 +2173,6 @@ export const useUsersCreateUser = <
 > => {
   return useMutation(getUsersCreateUserMutationOptions(options), queryClient)
 }
-export type usersGetCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type usersGetCountResponseSuccess = usersGetCountResponse200 & {
-  headers: Headers
-}
-
 export const getUsersGetCountUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/count`
 }
@@ -2423,16 +2183,16 @@ export const getUsersGetCountUrl = () => {
 export const usersGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersGetCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getUsersGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersGetCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as usersGetCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersGetCountQueryKey = () => {
@@ -2552,11 +2312,13 @@ export const getUsersGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof usersGetCount>>> = ({ signal }) =>
     usersGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof usersGetCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type UsersGetCountSuspenseQueryResult = NonNullable<
@@ -2630,23 +2392,6 @@ export function useUsersGetCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type usersGetItemResponse200 = {
-  data: DisplayUserOutput
-  status: 200
-}
-
-export type usersGetItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersGetItemResponseSuccess = usersGetItemResponse200 & {
-  headers: Headers
-}
-export type usersGetItemResponseError = usersGetItemResponse422 & {
-  headers: Headers
-}
-
 export const getUsersGetItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/users/${itemId}`
 }
@@ -2658,7 +2403,7 @@ export const usersGetItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersGetItemResponseSuccess> => {
+): Promise<DisplayUserOutput> => {
   const res = await (fetchFn ?? fetch)(getUsersGetItemUrl(itemId), {
     ...options,
     method: "GET",
@@ -2666,10 +2411,10 @@ export const usersGetItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayUser.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as usersGetItemResponseSuccess
+  return data
 }
 
 export const getUsersGetItemQueryKey = (itemId: string) => {
@@ -2807,11 +2552,13 @@ export const getUsersGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof usersGetItem>>> = ({ signal }) =>
     usersGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof usersGetItem>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type UsersGetItemSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof usersGetItem>>>
@@ -2888,23 +2635,6 @@ export function useUsersGetItemSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type usersUpdateItemResponse200 = {
-  data: DisplayUserOutput
-  status: 200
-}
-
-export type usersUpdateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersUpdateItemResponseSuccess = usersUpdateItemResponse200 & {
-  headers: Headers
-}
-export type usersUpdateItemResponseError = usersUpdateItemResponse422 & {
-  headers: Headers
-}
-
 export const getUsersUpdateItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/users/${itemId}`
 }
@@ -2917,7 +2647,7 @@ export const usersUpdateItem = async (
   optionalUpdateUser: OptionalUpdateUser,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersUpdateItemResponseSuccess> => {
+): Promise<DisplayUserOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -2946,10 +2676,10 @@ export const usersUpdateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayUser.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as usersUpdateItemResponseSuccess
+  return data
 }
 
 export const getUsersUpdateItemMutationKey = () => ["usersUpdateItem"] as const
@@ -3029,23 +2759,6 @@ export const useUsersUpdateItem = <
 > => {
   return useMutation(getUsersUpdateItemMutationOptions(options), queryClient)
 }
-export type usersDeleteItemResponse200 = {
-  data: DisplayUserOutput
-  status: 200
-}
-
-export type usersDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersDeleteItemResponseSuccess = usersDeleteItemResponse200 & {
-  headers: Headers
-}
-export type usersDeleteItemResponseError = usersDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getUsersDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/users/${itemId}`
 }
@@ -3057,7 +2770,7 @@ export const usersDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersDeleteItemResponseSuccess> => {
+): Promise<DisplayUserOutput> => {
   const res = await (fetchFn ?? fetch)(getUsersDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -3065,10 +2778,10 @@ export const usersDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayUser.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as usersDeleteItemResponseSuccess
+  return data
 }
 
 export const getUsersDeleteItemMutationKey = () => ["usersDeleteItem"] as const
@@ -3148,23 +2861,6 @@ export const useUsersDeleteItem = <
 > => {
   return useMutation(getUsersDeleteItemMutationOptions(options), queryClient)
 }
-export type usersBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type usersBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type usersBatchActionResponseSuccess = usersBatchActionResponse200 & {
-  headers: Headers
-}
-export type usersBatchActionResponseError = usersBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getUsersBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/users/batch`
 }
@@ -3176,7 +2872,7 @@ export const usersBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<usersBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -3204,9 +2900,9 @@ export const usersBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: usersBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as usersBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getUsersBatchActionMutationKey = () => ["usersBatchAction"] as const

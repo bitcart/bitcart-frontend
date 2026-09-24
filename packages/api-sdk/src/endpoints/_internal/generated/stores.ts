@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -45,7 +50,7 @@ import type {
   StoresGetStoreRatesParams,
   StoresListItemsParams,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -60,23 +65,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
     })
   }
   return result
-}
-
-export type storesListItemsResponse200 = {
-  data: OffsetPaginationDisplayStoreOutput
-  status: 200
-}
-
-export type storesListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesListItemsResponseSuccess = storesListItemsResponse200 & {
-  headers: Headers
-}
-export type storesListItemsResponseError = storesListItemsResponse422 & {
-  headers: Headers
 }
 
 export const getStoresListItemsUrl = (params?: StoresListItemsParams) => {
@@ -102,7 +90,7 @@ export const storesListItems = async (
   params?: StoresListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayStoreOutput> => {
   const res = await (fetchFn ?? fetch)(getStoresListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -110,12 +98,12 @@ export const storesListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayStore.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as storesListItemsResponseSuccess
+  return data
 }
 
 export const getStoresListItemsQueryKey = (params?: StoresListItemsParams) => {
@@ -250,11 +238,13 @@ export const getStoresListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesListItems>>> = ({ signal }) =>
     storesListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof storesListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type StoresListItemsSuspenseQueryResult = NonNullable<
@@ -335,23 +325,6 @@ export function useStoresListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type storesCreateItemResponse200 = {
-  data: DisplayStoreOutput
-  status: 200
-}
-
-export type storesCreateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesCreateItemResponseSuccess = storesCreateItemResponse200 & {
-  headers: Headers
-}
-export type storesCreateItemResponseError = storesCreateItemResponse422 & {
-  headers: Headers
-}
-
 export const getStoresCreateItemUrl = () => {
   return `${BitcartApiConfig.baseUrl}/stores`
 }
@@ -363,7 +336,7 @@ export const storesCreateItem = async (
   createStore: CreateStore,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesCreateItemResponseSuccess> => {
+): Promise<DisplayStoreOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -392,10 +365,10 @@ export const storesCreateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayStore.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as storesCreateItemResponseSuccess
+  return data
 }
 
 export const getStoresCreateItemMutationKey = () => ["storesCreateItem"] as const
@@ -477,15 +450,6 @@ export const useStoresCreateItem = <
 > => {
   return useMutation(getStoresCreateItemMutationOptions(options), queryClient)
 }
-export type storesGetCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type storesGetCountResponseSuccess = storesGetCountResponse200 & {
-  headers: Headers
-}
-
 export const getStoresGetCountUrl = () => {
   return `${BitcartApiConfig.baseUrl}/stores/count`
 }
@@ -496,16 +460,16 @@ export const getStoresGetCountUrl = () => {
 export const storesGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesGetCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getStoresGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: storesGetCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as storesGetCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getStoresGetCountQueryKey = () => {
@@ -627,11 +591,13 @@ export const getStoresGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesGetCount>>> = ({ signal }) =>
     storesGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof storesGetCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type StoresGetCountSuspenseQueryResult = NonNullable<
@@ -708,23 +674,6 @@ export function useStoresGetCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type storesUpdateItemResponse200 = {
-  data: DisplayStoreOutput
-  status: 200
-}
-
-export type storesUpdateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesUpdateItemResponseSuccess = storesUpdateItemResponse200 & {
-  headers: Headers
-}
-export type storesUpdateItemResponseError = storesUpdateItemResponse422 & {
-  headers: Headers
-}
-
 export const getStoresUpdateItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/stores/${itemId}`
 }
@@ -737,7 +686,7 @@ export const storesUpdateItem = async (
   optionalUpdateStore: OptionalUpdateStore,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesUpdateItemResponseSuccess> => {
+): Promise<DisplayStoreOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -766,10 +715,10 @@ export const storesUpdateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayStore.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as storesUpdateItemResponseSuccess
+  return data
 }
 
 export const getStoresUpdateItemMutationKey = () => ["storesUpdateItem"] as const
@@ -851,23 +800,6 @@ export const useStoresUpdateItem = <
 > => {
   return useMutation(getStoresUpdateItemMutationOptions(options), queryClient)
 }
-export type storesDeleteItemResponse200 = {
-  data: DisplayStoreOutput
-  status: 200
-}
-
-export type storesDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesDeleteItemResponseSuccess = storesDeleteItemResponse200 & {
-  headers: Headers
-}
-export type storesDeleteItemResponseError = storesDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getStoresDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/stores/${itemId}`
 }
@@ -879,7 +811,7 @@ export const storesDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesDeleteItemResponseSuccess> => {
+): Promise<DisplayStoreOutput> => {
   const res = await (fetchFn ?? fetch)(getStoresDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -887,10 +819,10 @@ export const storesDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayStore.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as storesDeleteItemResponseSuccess
+  return data
 }
 
 export const getStoresDeleteItemMutationKey = () => ["storesDeleteItem"] as const
@@ -972,23 +904,6 @@ export const useStoresDeleteItem = <
 > => {
   return useMutation(getStoresDeleteItemMutationOptions(options), queryClient)
 }
-export type storesBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type storesBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesBatchActionResponseSuccess = storesBatchActionResponse200 & {
-  headers: Headers
-}
-export type storesBatchActionResponseError = storesBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getStoresBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/stores/batch`
 }
@@ -1000,7 +915,7 @@ export const storesBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1028,9 +943,9 @@ export const storesBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: storesBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as storesBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getStoresBatchActionMutationKey = () => ["storesBatchAction"] as const
@@ -1112,23 +1027,6 @@ export const useStoresBatchAction = <
 > => {
   return useMutation(getStoresBatchActionMutationOptions(options), queryClient)
 }
-export type storesGetItemResponse200 = {
-  data: DisplayStore | PublicStore
-  status: 200
-}
-
-export type storesGetItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesGetItemResponseSuccess = storesGetItemResponse200 & {
-  headers: Headers
-}
-export type storesGetItemResponseError = storesGetItemResponse422 & {
-  headers: Headers
-}
-
 export const getStoresGetItemUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/stores/${modelId}`
 }
@@ -1140,16 +1038,16 @@ export const storesGetItem = async (
   modelId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesGetItemResponseSuccess> => {
+): Promise<DisplayStore | PublicStore> => {
   const res = await (fetchFn ?? fetch)(getStoresGetItemUrl(modelId), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: storesGetItemResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as storesGetItemResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: DisplayStore | PublicStore = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getStoresGetItemQueryKey = (modelId: string) => {
@@ -1287,11 +1185,13 @@ export const getStoresGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesGetItem>>> = ({ signal }) =>
     storesGetItem(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof storesGetItem>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type StoresGetItemSuspenseQueryResult = NonNullable<
@@ -1372,23 +1272,6 @@ export function useStoresGetItemSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type storesPingEmailResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type storesPingEmailResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesPingEmailResponseSuccess = storesPingEmailResponse200 & {
-  headers: Headers
-}
-export type storesPingEmailResponseError = storesPingEmailResponse422 & {
-  headers: Headers
-}
-
 export const getStoresPingEmailUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/stores/${modelId}/ping`
 }
@@ -1400,16 +1283,16 @@ export const storesPingEmail = async (
   modelId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesPingEmailResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getStoresPingEmailUrl(modelId), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: storesPingEmailResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as storesPingEmailResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getStoresPingEmailQueryKey = (modelId: string) => {
@@ -1547,11 +1430,13 @@ export const getStoresPingEmailSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesPingEmail>>> = ({ signal }) =>
     storesPingEmail(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof storesPingEmail>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type StoresPingEmailSuspenseQueryResult = NonNullable<
@@ -1632,25 +1517,6 @@ export function useStoresPingEmailSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type storesSetStoreCheckoutSettingsResponse200 = {
-  data: DisplayStoreOutput
-  status: 200
-}
-
-export type storesSetStoreCheckoutSettingsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesSetStoreCheckoutSettingsResponseSuccess =
-  storesSetStoreCheckoutSettingsResponse200 & {
-    headers: Headers
-  }
-export type storesSetStoreCheckoutSettingsResponseError =
-  storesSetStoreCheckoutSettingsResponse422 & {
-    headers: Headers
-  }
-
 export const getStoresSetStoreCheckoutSettingsUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/stores/${modelId}/checkout_settings`
 }
@@ -1663,7 +1529,7 @@ export const storesSetStoreCheckoutSettings = async (
   storeCheckoutSettings: StoreCheckoutSettings,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesSetStoreCheckoutSettingsResponseSuccess> => {
+): Promise<DisplayStoreOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1692,14 +1558,10 @@ export const storesSetStoreCheckoutSettings = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayStore.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as storesSetStoreCheckoutSettingsResponseSuccess
+  return data
 }
 
 export const getStoresSetStoreCheckoutSettingsMutationKey = () =>
@@ -1785,23 +1647,6 @@ export const useStoresSetStoreCheckoutSettings = <
 > => {
   return useMutation(getStoresSetStoreCheckoutSettingsMutationOptions(options), queryClient)
 }
-export type storesSetStoreEmailSettingsResponse200 = {
-  data: DisplayStoreOutput
-  status: 200
-}
-
-export type storesSetStoreEmailSettingsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesSetStoreEmailSettingsResponseSuccess = storesSetStoreEmailSettingsResponse200 & {
-  headers: Headers
-}
-export type storesSetStoreEmailSettingsResponseError = storesSetStoreEmailSettingsResponse422 & {
-  headers: Headers
-}
-
 export const getStoresSetStoreEmailSettingsUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/stores/${modelId}/email_settings`
 }
@@ -1814,7 +1659,7 @@ export const storesSetStoreEmailSettings = async (
   emailSettings: EmailSettings,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesSetStoreEmailSettingsResponseSuccess> => {
+): Promise<DisplayStoreOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1843,14 +1688,10 @@ export const storesSetStoreEmailSettings = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayStore.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as storesSetStoreEmailSettingsResponseSuccess
+  return data
 }
 
 export const getStoresSetStoreEmailSettingsMutationKey = () =>
@@ -1933,23 +1774,6 @@ export const useStoresSetStoreEmailSettings = <
 > => {
   return useMutation(getStoresSetStoreEmailSettingsMutationOptions(options), queryClient)
 }
-export type storesSetStoreThemeSettingsResponse200 = {
-  data: DisplayStoreOutput
-  status: 200
-}
-
-export type storesSetStoreThemeSettingsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesSetStoreThemeSettingsResponseSuccess = storesSetStoreThemeSettingsResponse200 & {
-  headers: Headers
-}
-export type storesSetStoreThemeSettingsResponseError = storesSetStoreThemeSettingsResponse422 & {
-  headers: Headers
-}
-
 export const getStoresSetStoreThemeSettingsUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/stores/${modelId}/theme_settings`
 }
@@ -1962,7 +1786,7 @@ export const storesSetStoreThemeSettings = async (
   storeThemeSettings: StoreThemeSettings,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesSetStoreThemeSettingsResponseSuccess> => {
+): Promise<DisplayStoreOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1991,14 +1815,10 @@ export const storesSetStoreThemeSettings = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayStore.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as storesSetStoreThemeSettingsResponseSuccess
+  return data
 }
 
 export const getStoresSetStoreThemeSettingsMutationKey = () =>
@@ -2084,24 +1904,6 @@ export const useStoresSetStoreThemeSettings = <
 > => {
   return useMutation(getStoresSetStoreThemeSettingsMutationOptions(options), queryClient)
 }
-export type storesSetStorePluginSettingsResponse200 = {
-  data: DisplayStoreOutput
-  status: 200
-}
-
-export type storesSetStorePluginSettingsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesSetStorePluginSettingsResponseSuccess =
-  storesSetStorePluginSettingsResponse200 & {
-    headers: Headers
-  }
-export type storesSetStorePluginSettingsResponseError = storesSetStorePluginSettingsResponse422 & {
-  headers: Headers
-}
-
 export const getStoresSetStorePluginSettingsUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/stores/${modelId}/plugin_settings`
 }
@@ -2114,7 +1916,7 @@ export const storesSetStorePluginSettings = async (
   storePluginSettings: StorePluginSettings,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesSetStorePluginSettingsResponseSuccess> => {
+): Promise<DisplayStoreOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -2143,14 +1945,10 @@ export const storesSetStorePluginSettings = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayStore.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as storesSetStorePluginSettingsResponseSuccess
+  return data
 }
 
 export const getStoresSetStorePluginSettingsMutationKey = () =>
@@ -2236,23 +2034,6 @@ export const useStoresSetStorePluginSettings = <
 > => {
   return useMutation(getStoresSetStorePluginSettingsMutationOptions(options), queryClient)
 }
-export type storesSetStoreRateRulesResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type storesSetStoreRateRulesResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesSetStoreRateRulesResponseSuccess = storesSetStoreRateRulesResponse200 & {
-  headers: Headers
-}
-export type storesSetStoreRateRulesResponseError = storesSetStoreRateRulesResponse422 & {
-  headers: Headers
-}
-
 export const getStoresSetStoreRateRulesUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/stores/${modelId}/rate_rules`
 }
@@ -2265,7 +2046,7 @@ export const storesSetStoreRateRules = async (
   storesSetStoreRateRulesBody?: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesSetStoreRateRulesResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -2293,13 +2074,9 @@ export const storesSetStoreRateRules = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: storesSetStoreRateRulesResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as storesSetStoreRateRulesResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getStoresSetStoreRateRulesMutationKey = () => ["storesSetStoreRateRules"] as const
@@ -2381,23 +2158,6 @@ export const useStoresSetStoreRateRules = <
 > => {
   return useMutation(getStoresSetStoreRateRulesMutationOptions(options), queryClient)
 }
-export type storesGetStoreRatesResponse200 = {
-  data: RatesResponseOutput
-  status: 200
-}
-
-export type storesGetStoreRatesResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type storesGetStoreRatesResponseSuccess = storesGetStoreRatesResponse200 & {
-  headers: Headers
-}
-export type storesGetStoreRatesResponseError = storesGetStoreRatesResponse422 & {
-  headers: Headers
-}
-
 export const getStoresGetStoreRatesUrl = (modelId: string, params: StoresGetStoreRatesParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -2422,7 +2182,7 @@ export const storesGetStoreRates = async (
   params: StoresGetStoreRatesParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<storesGetStoreRatesResponseSuccess> => {
+): Promise<RatesResponseOutput> => {
   const res = await (fetchFn ?? fetch)(getStoresGetStoreRatesUrl(modelId, params), {
     ...options,
     method: "GET",
@@ -2430,10 +2190,10 @@ export const storesGetStoreRates = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? RatesResponse.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as storesGetStoreRatesResponseSuccess
+  return data
 }
 
 export const getStoresGetStoreRatesQueryKey = (
@@ -2589,11 +2349,13 @@ export const getStoresGetStoreRatesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesGetStoreRates>>> = ({ signal }) =>
     storesGetStoreRates(modelId, params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof storesGetStoreRates>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type StoresGetStoreRatesSuspenseQueryResult = NonNullable<

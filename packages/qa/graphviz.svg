@@ -83,7 +83,7 @@
 <!-- node_modules/@playwright/test -->
 <g id="node3" class="node">
 <title>node_modules/@playwright/test</title>
-<g id="a_node3"><a xlink:href="https://www.npmjs.com/package/@playwright/test" xlink:title="@playwright+test@1.62.1">
+<g id="a_node3"><a xlink:href="https://www.npmjs.com/package/@playwright/test" xlink:title="@playwright+test@1.63.0">
 <polygon fill="#f9e6e6" stroke="black" points="1111,-70 962,-70 958,-66 958,-16 1107,-16 1111,-20 1111,-70"/>
 <polyline fill="none" stroke="black" points="1107,-66 958,-66 "/>
 <polyline fill="none" stroke="black" points="1107,-66 1107,-16 "/>

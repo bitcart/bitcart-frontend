@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
-    "@effect/language-service": "catalog:devDependencies",
     "@playwright/test": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/node": "catalog:devDependencies",

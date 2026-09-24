@@ -1,10 +1,11 @@
 import type { bitcartInvoices, bitcartStores } from "@bitcart/api-sdk/endpoints"
 
 export type CheckoutTemplateProps = {
-  invoice: bitcartInvoices.Invoice
-  store: bitcartStores.Store
-  currentStatus: bitcartInvoices.InvoiceStatus
-  selectedPaymentIndex: number
-  setSelectedPaymentIndex: (index: number) => void
+  activePaymentMethodIndex: number
   countdownFormatted: string
+  currentStatus: bitcartInvoices.InvoiceStatus
+  invoice: bitcartInvoices.Invoice
+  invoiceWsConnectionHandle: bitcartInvoices.UseInvoiceWebsocketResult
+  onPaymentMethodSelect: (index: number) => void
+  store: bitcartStores.Store
 }

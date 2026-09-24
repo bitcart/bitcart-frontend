@@ -1,6 +1,5 @@
+import { bitcartCryptos } from "@bitcart/api-sdk/endpoints"
 import { useLingui } from "@lingui/react/macro"
-
-import { bitcartHooks } from "@/common/data/bitcart"
 
 export type StatsSectionProps = {}
 
@@ -9,7 +8,7 @@ export const StatsSection: React.FC<StatsSectionProps> = () => {
 
   const {
     data: { totalCounts },
-  } = bitcartHooks.useAssetCatalog()
+  } = bitcartCryptos.usePaymentMethodCatalogSuspense()
 
   return (
     <section aria-label={t`Statistics`} className="py-8 sm:py-12 bg-background">
@@ -27,7 +26,7 @@ export const StatsSection: React.FC<StatsSectionProps> = () => {
 
           <div className="space-y-2">
             <div className="text-2xl sm:text-3xl font-bold text-accent-foreground">
-              {totalCounts.fungibleTokens}+
+              {totalCounts.tokens}+
             </div>
 
             <div className="text-muted-foreground text-sm sm:text-base">{t`Supported Tokens`}</div>

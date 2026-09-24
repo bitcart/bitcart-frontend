@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -34,7 +39,7 @@ import type {
   OffsetPaginationDisplayDiscountOutput,
   OptionalUpdateDiscount,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -49,23 +54,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
     })
   }
   return result
-}
-
-export type discountsListItemsResponse200 = {
-  data: OffsetPaginationDisplayDiscountOutput
-  status: 200
-}
-
-export type discountsListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type discountsListItemsResponseSuccess = discountsListItemsResponse200 & {
-  headers: Headers
-}
-export type discountsListItemsResponseError = discountsListItemsResponse422 & {
-  headers: Headers
 }
 
 export const getDiscountsListItemsUrl = (params?: DiscountsListItemsParams) => {
@@ -91,7 +79,7 @@ export const discountsListItems = async (
   params?: DiscountsListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<discountsListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayDiscountOutput> => {
   const res = await (fetchFn ?? fetch)(getDiscountsListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -99,12 +87,12 @@ export const discountsListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayDiscount.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as discountsListItemsResponseSuccess
+  return data
 }
 
 export const getDiscountsListItemsQueryKey = (params?: DiscountsListItemsParams) => {
@@ -243,11 +231,13 @@ export const getDiscountsListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof discountsListItems>>> = ({ signal }) =>
     discountsListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof discountsListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type DiscountsListItemsSuspenseQueryResult = NonNullable<
@@ -328,23 +318,6 @@ export function useDiscountsListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type discountsCreateItemResponse200 = {
-  data: DisplayDiscountOutput
-  status: 200
-}
-
-export type discountsCreateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type discountsCreateItemResponseSuccess = discountsCreateItemResponse200 & {
-  headers: Headers
-}
-export type discountsCreateItemResponseError = discountsCreateItemResponse422 & {
-  headers: Headers
-}
-
 export const getDiscountsCreateItemUrl = () => {
   return `${BitcartApiConfig.baseUrl}/discounts`
 }
@@ -356,7 +329,7 @@ export const discountsCreateItem = async (
   createDiscount: CreateDiscount,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<discountsCreateItemResponseSuccess> => {
+): Promise<DisplayDiscountOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -385,10 +358,10 @@ export const discountsCreateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayDiscount.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as discountsCreateItemResponseSuccess
+  return data
 }
 
 export const getDiscountsCreateItemMutationKey = () => ["discountsCreateItem"] as const
@@ -470,15 +443,6 @@ export const useDiscountsCreateItem = <
 > => {
   return useMutation(getDiscountsCreateItemMutationOptions(options), queryClient)
 }
-export type discountsGetCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type discountsGetCountResponseSuccess = discountsGetCountResponse200 & {
-  headers: Headers
-}
-
 export const getDiscountsGetCountUrl = () => {
   return `${BitcartApiConfig.baseUrl}/discounts/count`
 }
@@ -489,16 +453,16 @@ export const getDiscountsGetCountUrl = () => {
 export const discountsGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<discountsGetCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getDiscountsGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: discountsGetCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as discountsGetCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getDiscountsGetCountQueryKey = () => {
@@ -622,11 +586,13 @@ export const getDiscountsGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof discountsGetCount>>> = ({ signal }) =>
     discountsGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof discountsGetCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type DiscountsGetCountSuspenseQueryResult = NonNullable<
@@ -703,23 +669,6 @@ export function useDiscountsGetCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type discountsGetItemResponse200 = {
-  data: DisplayDiscountOutput
-  status: 200
-}
-
-export type discountsGetItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type discountsGetItemResponseSuccess = discountsGetItemResponse200 & {
-  headers: Headers
-}
-export type discountsGetItemResponseError = discountsGetItemResponse422 & {
-  headers: Headers
-}
-
 export const getDiscountsGetItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/discounts/${itemId}`
 }
@@ -731,7 +680,7 @@ export const discountsGetItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<discountsGetItemResponseSuccess> => {
+): Promise<DisplayDiscountOutput> => {
   const res = await (fetchFn ?? fetch)(getDiscountsGetItemUrl(itemId), {
     ...options,
     method: "GET",
@@ -739,10 +688,10 @@ export const discountsGetItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayDiscount.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as discountsGetItemResponseSuccess
+  return data
 }
 
 export const getDiscountsGetItemQueryKey = (itemId: string) => {
@@ -880,11 +829,13 @@ export const getDiscountsGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof discountsGetItem>>> = ({ signal }) =>
     discountsGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof discountsGetItem>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type DiscountsGetItemSuspenseQueryResult = NonNullable<
@@ -965,23 +916,6 @@ export function useDiscountsGetItemSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type discountsUpdateItemResponse200 = {
-  data: DisplayDiscountOutput
-  status: 200
-}
-
-export type discountsUpdateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type discountsUpdateItemResponseSuccess = discountsUpdateItemResponse200 & {
-  headers: Headers
-}
-export type discountsUpdateItemResponseError = discountsUpdateItemResponse422 & {
-  headers: Headers
-}
-
 export const getDiscountsUpdateItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/discounts/${itemId}`
 }
@@ -994,7 +928,7 @@ export const discountsUpdateItem = async (
   optionalUpdateDiscount: OptionalUpdateDiscount,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<discountsUpdateItemResponseSuccess> => {
+): Promise<DisplayDiscountOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1023,10 +957,10 @@ export const discountsUpdateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayDiscount.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as discountsUpdateItemResponseSuccess
+  return data
 }
 
 export const getDiscountsUpdateItemMutationKey = () => ["discountsUpdateItem"] as const
@@ -1108,23 +1042,6 @@ export const useDiscountsUpdateItem = <
 > => {
   return useMutation(getDiscountsUpdateItemMutationOptions(options), queryClient)
 }
-export type discountsDeleteItemResponse200 = {
-  data: DisplayDiscountOutput
-  status: 200
-}
-
-export type discountsDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type discountsDeleteItemResponseSuccess = discountsDeleteItemResponse200 & {
-  headers: Headers
-}
-export type discountsDeleteItemResponseError = discountsDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getDiscountsDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/discounts/${itemId}`
 }
@@ -1136,7 +1053,7 @@ export const discountsDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<discountsDeleteItemResponseSuccess> => {
+): Promise<DisplayDiscountOutput> => {
   const res = await (fetchFn ?? fetch)(getDiscountsDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -1144,10 +1061,10 @@ export const discountsDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayDiscount.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as discountsDeleteItemResponseSuccess
+  return data
 }
 
 export const getDiscountsDeleteItemMutationKey = () => ["discountsDeleteItem"] as const
@@ -1229,23 +1146,6 @@ export const useDiscountsDeleteItem = <
 > => {
   return useMutation(getDiscountsDeleteItemMutationOptions(options), queryClient)
 }
-export type discountsBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type discountsBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type discountsBatchActionResponseSuccess = discountsBatchActionResponse200 & {
-  headers: Headers
-}
-export type discountsBatchActionResponseError = discountsBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getDiscountsBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/discounts/batch`
 }
@@ -1257,7 +1157,7 @@ export const discountsBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<discountsBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1285,9 +1185,9 @@ export const discountsBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: discountsBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as discountsBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getDiscountsBatchActionMutationKey = () => ["discountsBatchAction"] as const

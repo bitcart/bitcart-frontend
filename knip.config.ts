@@ -67,14 +67,8 @@ const config: KnipConfig = {
     },
 
     "packages/api-sdk": {
-      //* Orval's `transformer` option and the Nx target's `tsx` call both name them
-      //* as string paths, which Knip cannot follow.
-      entry: ["scripts/{postprocess,transform-spec}.ts"],
-
       // TODO: Remove once each endpoint gets at least one exported wrapper.
       ignore: ["src/endpoints/_internal/generated/**"],
-
-      ignoreDependencies: ["@stylistic/eslint-plugin"],
     },
 
     "packages/configs": {
@@ -82,40 +76,20 @@ const config: KnipConfig = {
       project: ["src/**/*.ts"],
     },
 
-    "packages/core": {
-      ignoreDependencies: ["@stylistic/eslint-plugin"],
-    },
-
     "packages/form-kit": {
-      ignoreDependencies: [
-        "@lingui/babel-plugin-lingui-macro",
-        "@stylistic/eslint-plugin",
-        "eslint-plugin-react-hooks",
-      ],
+      ignoreDependencies: ["@lingui/babel-plugin-lingui-macro", "eslint-plugin-react-hooks"],
     },
 
     "packages/hooks": {
-      ignoreDependencies: ["@stylistic/eslint-plugin", "eslint-plugin-react-hooks"],
-    },
-
-    "packages/qa": {
-      ignoreDependencies: ["@stylistic/eslint-plugin"],
+      ignoreDependencies: ["eslint-plugin-react-hooks"],
     },
 
     "packages/ui-kit": {
-      ignoreDependencies: [
-        "@stylistic/eslint-plugin",
-        "eslint-plugin-better-tailwindcss",
-        "eslint-plugin-react-hooks",
-      ],
-    },
-
-    "packages/unocss-preset": {
-      ignoreDependencies: ["@stylistic/eslint-plugin"],
+      ignoreDependencies: ["eslint-plugin-better-tailwindcss", "eslint-plugin-react-hooks"],
     },
 
     "packages/vike-kit": {
-      ignoreDependencies: ["@stylistic/eslint-plugin", "eslint-plugin-react-hooks"],
+      ignoreDependencies: ["eslint-plugin-react-hooks"],
     },
 
     "templates/vike-app": appKnipConfig,

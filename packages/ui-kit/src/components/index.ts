@@ -333,6 +333,12 @@ export { Calendar, type CalendarProps } from "./molecules/calendar"
 export { CommandInput, type CommandInputProps } from "./molecules/command-input"
 export { CommandList, type CommandListProps } from "./molecules/command-list"
 export { CommandDialogPopup, type CommandDialogPopupProps } from "./molecules/command-dialog-popup"
+
+export {
+  SocketConnectionStatusBanner,
+  type SocketConnectionStatusBannerProps,
+} from "./molecules/connection-status"
+
 export { DialogContent, type DialogContentProps } from "./molecules/dialog-content"
 export { DrawerPanel, type DrawerPanelProps } from "./molecules/drawer-panel"
 export { DrawerPopup, type DrawerPopupProps } from "./molecules/drawer-popup"

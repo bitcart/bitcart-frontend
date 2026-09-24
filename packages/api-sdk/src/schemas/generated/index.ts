@@ -6,12 +6,12 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./batchAction.zod"
-export * from "./emailSettings.zod"
-export * from "./hTTPValidationError.zod"
-export * from "./money.zod"
-export * from "./userPreferences.zod"
-export * from "./validationError.zod"
+export * from "./BatchAction.zod"
+export * from "./EmailSettings.zod"
+export * from "./HTTPValidationError.zod"
+export * from "./Money.zod"
+export * from "./UserPreferences.zod"
+export * from "./ValidationError.zod"
 export * from "./configurator"
 export * from "./cryptos"
 export * from "./discounts"

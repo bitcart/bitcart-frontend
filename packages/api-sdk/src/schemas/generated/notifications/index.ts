@@ -6,8 +6,8 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./createNotification.zod"
-export * from "./displayNotification.zod"
-export * from "./notificationsListItemsParams.zod"
-export * from "./offsetPaginationDisplayNotification.zod"
-export * from "./optionalUpdateNotification.zod"
+export * from "./CreateNotification.zod"
+export * from "./DisplayNotification.zod"
+export * from "./NotificationsListItemsParams.zod"
+export * from "./OffsetPaginationDisplayNotification.zod"
+export * from "./OptionalUpdateNotification.zod"

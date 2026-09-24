@@ -32,7 +32,6 @@
     "@tanstack/react-query": "catalog:dependencies",
     "class-variance-authority": "catalog:dependencies",
     "dotenv": "catalog:dependencies",
-    "effect": "catalog:dependencies",
     "inter-ui": "catalog:dependencies",
     "lucide-react": "catalog:dependencies",
     "react": "catalog:dependencies",

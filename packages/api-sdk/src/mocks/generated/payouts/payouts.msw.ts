@@ -49,7 +49,15 @@ export const getPayoutsListItemsResponseMock = (
         null,
       ]),
       amount: faker.string.alpha({ length: { min: 10, max: 20 } }),
-      status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      status: faker.helpers.arrayElement([
+        "approved",
+        "cancelled",
+        "complete",
+        "failed",
+        "pending",
+        "sent",
+        "unknown",
+      ] as const),
     }),
   ),
   count: faker.number.int(),
@@ -91,7 +99,15 @@ export const getPayoutsCreateItemResponseMock = (
   used_fee: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
   tx_hash: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   amount: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  status: faker.helpers.arrayElement([
+    "approved",
+    "cancelled",
+    "complete",
+    "failed",
+    "pending",
+    "sent",
+    "unknown",
+  ] as const),
   ...overrideResponse,
 })
 
@@ -127,7 +143,15 @@ export const getPayoutsGetItemResponseMock = (
   used_fee: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
   tx_hash: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   amount: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  status: faker.helpers.arrayElement([
+    "approved",
+    "cancelled",
+    "complete",
+    "failed",
+    "pending",
+    "sent",
+    "unknown",
+  ] as const),
   ...overrideResponse,
 })
 
@@ -161,7 +185,15 @@ export const getPayoutsUpdateItemResponseMock = (
   used_fee: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
   tx_hash: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   amount: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  status: faker.helpers.arrayElement([
+    "approved",
+    "cancelled",
+    "complete",
+    "failed",
+    "pending",
+    "sent",
+    "unknown",
+  ] as const),
   ...overrideResponse,
 })
 
@@ -195,7 +227,15 @@ export const getPayoutsDeleteItemResponseMock = (
   used_fee: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
   tx_hash: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   amount: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  status: faker.helpers.arrayElement([
+    "approved",
+    "cancelled",
+    "complete",
+    "failed",
+    "pending",
+    "sent",
+    "unknown",
+  ] as const),
   ...overrideResponse,
 })
 

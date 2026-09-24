@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",
+    "@bitcart/hooks": "workspace:*",
     "@tanstack/react-query": "catalog:dependencies",
     "react": "catalog:dependencies",
     "remeda": "catalog:dependencies",
@@ -62,13 +63,16 @@
     "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
+    "jsdom": "catalog:devDependencies",
     "msw": "catalog:devDependencies",
     "orval": "catalog:devDependencies",
+    "oxfmt": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "tsx": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies"
+    "typescript": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies"
   },
   "peerDependencies": {
     "@faker-js/faker": "catalog:devDependencies",

@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -34,7 +39,7 @@ import type {
   OptionalUpdatePayout,
   PayoutsListItemsParams,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -49,23 +54,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
     })
   }
   return result
-}
-
-export type payoutsListItemsResponse200 = {
-  data: OffsetPaginationDisplayPayoutOutput
-  status: 200
-}
-
-export type payoutsListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type payoutsListItemsResponseSuccess = payoutsListItemsResponse200 & {
-  headers: Headers
-}
-export type payoutsListItemsResponseError = payoutsListItemsResponse422 & {
-  headers: Headers
 }
 
 export const getPayoutsListItemsUrl = (params?: PayoutsListItemsParams) => {
@@ -91,7 +79,7 @@ export const payoutsListItems = async (
   params?: PayoutsListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<payoutsListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayPayoutOutput> => {
   const res = await (fetchFn ?? fetch)(getPayoutsListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -99,12 +87,12 @@ export const payoutsListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayPayout.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as payoutsListItemsResponseSuccess
+  return data
 }
 
 export const getPayoutsListItemsQueryKey = (params?: PayoutsListItemsParams) => {
@@ -239,11 +227,13 @@ export const getPayoutsListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof payoutsListItems>>> = ({ signal }) =>
     payoutsListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof payoutsListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type PayoutsListItemsSuspenseQueryResult = NonNullable<
@@ -324,23 +314,6 @@ export function usePayoutsListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type payoutsCreateItemResponse200 = {
-  data: DisplayPayoutOutput
-  status: 200
-}
-
-export type payoutsCreateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type payoutsCreateItemResponseSuccess = payoutsCreateItemResponse200 & {
-  headers: Headers
-}
-export type payoutsCreateItemResponseError = payoutsCreateItemResponse422 & {
-  headers: Headers
-}
-
 export const getPayoutsCreateItemUrl = () => {
   return `${BitcartApiConfig.baseUrl}/payouts`
 }
@@ -352,7 +325,7 @@ export const payoutsCreateItem = async (
   createPayout: CreatePayout,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<payoutsCreateItemResponseSuccess> => {
+): Promise<DisplayPayoutOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -381,10 +354,10 @@ export const payoutsCreateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayPayout.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as payoutsCreateItemResponseSuccess
+  return data
 }
 
 export const getPayoutsCreateItemMutationKey = () => ["payoutsCreateItem"] as const
@@ -466,15 +439,6 @@ export const usePayoutsCreateItem = <
 > => {
   return useMutation(getPayoutsCreateItemMutationOptions(options), queryClient)
 }
-export type payoutsGetCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type payoutsGetCountResponseSuccess = payoutsGetCountResponse200 & {
-  headers: Headers
-}
-
 export const getPayoutsGetCountUrl = () => {
   return `${BitcartApiConfig.baseUrl}/payouts/count`
 }
@@ -485,16 +449,16 @@ export const getPayoutsGetCountUrl = () => {
 export const payoutsGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<payoutsGetCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getPayoutsGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: payoutsGetCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as payoutsGetCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPayoutsGetCountQueryKey = () => {
@@ -616,11 +580,13 @@ export const getPayoutsGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof payoutsGetCount>>> = ({ signal }) =>
     payoutsGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof payoutsGetCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type PayoutsGetCountSuspenseQueryResult = NonNullable<
@@ -697,23 +663,6 @@ export function usePayoutsGetCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type payoutsGetItemResponse200 = {
-  data: DisplayPayoutOutput
-  status: 200
-}
-
-export type payoutsGetItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type payoutsGetItemResponseSuccess = payoutsGetItemResponse200 & {
-  headers: Headers
-}
-export type payoutsGetItemResponseError = payoutsGetItemResponse422 & {
-  headers: Headers
-}
-
 export const getPayoutsGetItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/payouts/${itemId}`
 }
@@ -725,7 +674,7 @@ export const payoutsGetItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<payoutsGetItemResponseSuccess> => {
+): Promise<DisplayPayoutOutput> => {
   const res = await (fetchFn ?? fetch)(getPayoutsGetItemUrl(itemId), {
     ...options,
     method: "GET",
@@ -733,10 +682,10 @@ export const payoutsGetItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayPayout.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as payoutsGetItemResponseSuccess
+  return data
 }
 
 export const getPayoutsGetItemQueryKey = (itemId: string) => {
@@ -874,11 +823,13 @@ export const getPayoutsGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof payoutsGetItem>>> = ({ signal }) =>
     payoutsGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof payoutsGetItem>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type PayoutsGetItemSuspenseQueryResult = NonNullable<
@@ -959,23 +910,6 @@ export function usePayoutsGetItemSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type payoutsUpdateItemResponse200 = {
-  data: DisplayPayoutOutput
-  status: 200
-}
-
-export type payoutsUpdateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type payoutsUpdateItemResponseSuccess = payoutsUpdateItemResponse200 & {
-  headers: Headers
-}
-export type payoutsUpdateItemResponseError = payoutsUpdateItemResponse422 & {
-  headers: Headers
-}
-
 export const getPayoutsUpdateItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/payouts/${itemId}`
 }
@@ -988,7 +922,7 @@ export const payoutsUpdateItem = async (
   optionalUpdatePayout: OptionalUpdatePayout,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<payoutsUpdateItemResponseSuccess> => {
+): Promise<DisplayPayoutOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1017,10 +951,10 @@ export const payoutsUpdateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayPayout.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as payoutsUpdateItemResponseSuccess
+  return data
 }
 
 export const getPayoutsUpdateItemMutationKey = () => ["payoutsUpdateItem"] as const
@@ -1102,23 +1036,6 @@ export const usePayoutsUpdateItem = <
 > => {
   return useMutation(getPayoutsUpdateItemMutationOptions(options), queryClient)
 }
-export type payoutsDeleteItemResponse200 = {
-  data: DisplayPayoutOutput
-  status: 200
-}
-
-export type payoutsDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type payoutsDeleteItemResponseSuccess = payoutsDeleteItemResponse200 & {
-  headers: Headers
-}
-export type payoutsDeleteItemResponseError = payoutsDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getPayoutsDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/payouts/${itemId}`
 }
@@ -1130,7 +1047,7 @@ export const payoutsDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<payoutsDeleteItemResponseSuccess> => {
+): Promise<DisplayPayoutOutput> => {
   const res = await (fetchFn ?? fetch)(getPayoutsDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -1138,10 +1055,10 @@ export const payoutsDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayPayout.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as payoutsDeleteItemResponseSuccess
+  return data
 }
 
 export const getPayoutsDeleteItemMutationKey = () => ["payoutsDeleteItem"] as const
@@ -1223,23 +1140,6 @@ export const usePayoutsDeleteItem = <
 > => {
   return useMutation(getPayoutsDeleteItemMutationOptions(options), queryClient)
 }
-export type payoutsBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type payoutsBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type payoutsBatchActionResponseSuccess = payoutsBatchActionResponse200 & {
-  headers: Headers
-}
-export type payoutsBatchActionResponseError = payoutsBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getPayoutsBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/payouts/batch`
 }
@@ -1251,7 +1151,7 @@ export const payoutsBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<payoutsBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1279,9 +1179,9 @@ export const payoutsBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: payoutsBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as payoutsBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getPayoutsBatchActionMutationKey = () => ["payoutsBatchAction"] as const

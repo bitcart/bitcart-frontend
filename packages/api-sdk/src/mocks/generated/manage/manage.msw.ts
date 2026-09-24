@@ -25,7 +25,7 @@ export const getManageSetPoliciesResponseMock = (
   captcha_sitekey: faker.string.alpha({ length: { min: 10, max: 20 } }),
   captcha_secretkey: faker.string.alpha({ length: { min: 10, max: 20 } }),
   admin_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  captcha_type: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  captcha_type: faker.helpers.arrayElement(["cloudflare_turnstile", "hcaptcha", "none"] as const),
   use_html_templates: faker.datatype.boolean(),
   global_templates: {
     [faker.string.alphanumeric(5)]: faker.string.alpha({ length: { min: 10, max: 20 } }),

@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./updateCheckUpdates200.zod"
+export * from "./UpdateCheckUpdates200.zod"

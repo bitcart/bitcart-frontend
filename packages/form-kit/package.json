@@ -33,7 +33,6 @@
     "remeda": "catalog:dependencies"
   },
   "devDependencies": {
-    "@bitcart/api-sdk": "workspace:^",
     "@bitcart/configs": "workspace:*",
     "@lingui/babel-plugin-lingui-macro": "catalog:devDependencies",
     "@lingui/conf": "catalog:devDependencies",
@@ -50,6 +49,7 @@
     "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
-    "vitest": "catalog:devDependencies"
+    "vitest": "catalog:devDependencies",
+    "zod": "catalog:dependencies"
   }
 }

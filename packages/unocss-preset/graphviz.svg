@@ -22,7 +22,7 @@
 <!-- node_modules/unocss&#45;preset&#45;animations -->
 <g id="node1" class="node">
 <title>node_modules/unocss&#45;preset&#45;animations</title>
-<g id="a_node1"><a xlink:href="https://www.npmjs.com/package/unocss-preset-animations" xlink:title="unocss&#45;preset&#45;animations@1.3.0_@unocss+preset&#45;wind3@66.8.1_unocss@66.8.1_vite@8.2.2_@ty_3c1ee0b5b30a835056f75043c642c40e">
+<g id="a_node1"><a xlink:href="https://www.npmjs.com/package/unocss-preset-animations" xlink:title="unocss&#45;preset&#45;animations@1.3.0_@unocss+preset&#45;wind3@66.10.2_unocss@66.10.2_@devframes+h_d63e8b8c87b7fe9c44865d7e086d43d5">
 <polygon fill="#f9e6e6" stroke="black" points="393,-200 173,-200 169,-196 169,-146 389,-146 393,-150 393,-200"/>
 <polyline fill="none" stroke="black" points="389,-196 169,-196 "/>
 <polyline fill="none" stroke="black" points="389,-196 389,-146 "/>
@@ -34,7 +34,7 @@
 <!-- node_modules/unocss&#45;preset&#45;shadcn -->
 <g id="node2" class="node">
 <title>node_modules/unocss&#45;preset&#45;shadcn</title>
-<g id="a_node2"><a xlink:href="https://www.npmjs.com/package/unocss-preset-shadcn" xlink:title="unocss&#45;preset&#45;shadcn@1.0.1_unocss&#45;preset&#45;animations@1.3.0_@unocss+preset&#45;wind3@66.8.1_u_89702f5a787b9f83fb1bec5f73fafcc0">
+<g id="a_node2"><a xlink:href="https://www.npmjs.com/package/unocss-preset-shadcn" xlink:title="unocss&#45;preset&#45;shadcn@1.0.1_unocss&#45;preset&#45;animations@1.3.0_@unocss+preset&#45;wind3@66.10.2__1464dad38790db6de6932a42c171a336">
 <polygon fill="#f9e6e6" stroke="black" points="378,-135 188,-135 184,-131 184,-81 374,-81 378,-85 378,-135"/>
 <polyline fill="none" stroke="black" points="374,-131 184,-131 "/>
 <polyline fill="none" stroke="black" points="374,-131 374,-81 "/>
@@ -46,7 +46,7 @@
 <!-- node_modules/unocss -->
 <g id="node3" class="node">
 <title>node_modules/unocss</title>
-<g id="a_node3"><a xlink:href="https://www.npmjs.com/package/unocss" xlink:title="unocss@66.8.1_vite@8.2.2_@types+node@25.9.5_esbuild@0.28.2_jiti@2.7.0_tsx@4.23.12_yaml@2.9.0_">
+<g id="a_node3"><a xlink:href="https://www.npmjs.com/package/unocss" xlink:title="unocss@66.10.2_@devframes+hub@0.9.20_crossws@0.4.12_srvx@1.0.5__devframe@0.9.20_cac@7.0_90444958f7e510f406caeb138459b95b">
 <polygon fill="#f9e6e6" stroke="black" points="317.5,-70 248.5,-70 244.5,-66 244.5,-16 313.5,-16 317.5,-20 317.5,-70"/>
 <polyline fill="none" stroke="black" points="313.5,-66 244.5,-66 "/>
 <polyline fill="none" stroke="black" points="313.5,-66 313.5,-16 "/>

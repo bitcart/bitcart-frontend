@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -37,7 +42,7 @@ import type {
   OffsetPaginationDisplayNotificationOutput,
   OptionalUpdateNotification,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -54,16 +59,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type notificationsGetNotificationsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type notificationsGetNotificationsResponseSuccess =
-  notificationsGetNotificationsResponse200 & {
-    headers: Headers
-  }
-
 export const getNotificationsGetNotificationsUrl = () => {
   return `${BitcartApiConfig.baseUrl}/notifications/list`
 }
@@ -74,20 +69,16 @@ export const getNotificationsGetNotificationsUrl = () => {
 export const notificationsGetNotifications = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<notificationsGetNotificationsResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getNotificationsGetNotificationsUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: notificationsGetNotificationsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as notificationsGetNotificationsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getNotificationsGetNotificationsQueryKey = () => {
@@ -230,11 +221,13 @@ export const getNotificationsGetNotificationsSuspenseQueryOptions = <
     signal,
   }) => notificationsGetNotifications({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof notificationsGetNotifications>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type NotificationsGetNotificationsSuspenseQueryResult = NonNullable<
@@ -327,16 +320,6 @@ export function useNotificationsGetNotificationsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type notificationsGetNotificationsSchemaResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type notificationsGetNotificationsSchemaResponseSuccess =
-  notificationsGetNotificationsSchemaResponse200 & {
-    headers: Headers
-  }
-
 export const getNotificationsGetNotificationsSchemaUrl = () => {
   return `${BitcartApiConfig.baseUrl}/notifications/schema`
 }
@@ -347,22 +330,16 @@ export const getNotificationsGetNotificationsSchemaUrl = () => {
 export const notificationsGetNotificationsSchema = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<notificationsGetNotificationsSchemaResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getNotificationsGetNotificationsSchemaUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: notificationsGetNotificationsSchemaResponseSuccess["data"] = body
-    ? JSON.parse(body)
-    : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as notificationsGetNotificationsSchemaResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getNotificationsGetNotificationsSchemaQueryKey = () => {
@@ -521,11 +498,13 @@ export const getNotificationsGetNotificationsSchemaSuspenseQueryOptions = <
     signal,
   }) => notificationsGetNotificationsSchema({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof notificationsGetNotificationsSchema>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type NotificationsGetNotificationsSchemaSuspenseQueryResult = NonNullable<
@@ -618,23 +597,6 @@ export function useNotificationsGetNotificationsSchemaSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type notificationsListItemsResponse200 = {
-  data: OffsetPaginationDisplayNotificationOutput
-  status: 200
-}
-
-export type notificationsListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type notificationsListItemsResponseSuccess = notificationsListItemsResponse200 & {
-  headers: Headers
-}
-export type notificationsListItemsResponseError = notificationsListItemsResponse422 & {
-  headers: Headers
-}
-
 export const getNotificationsListItemsUrl = (params?: NotificationsListItemsParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -658,7 +620,7 @@ export const notificationsListItems = async (
   params?: NotificationsListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<notificationsListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayNotificationOutput> => {
   const res = await (fetchFn ?? fetch)(getNotificationsListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -666,12 +628,12 @@ export const notificationsListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayNotification.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as notificationsListItemsResponseSuccess
+  return data
 }
 
 export const getNotificationsListItemsQueryKey = (params?: NotificationsListItemsParams) => {
@@ -818,11 +780,13 @@ export const getNotificationsListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof notificationsListItems>>> = ({ signal }) =>
     notificationsListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof notificationsListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type NotificationsListItemsSuspenseQueryResult = NonNullable<
@@ -903,23 +867,6 @@ export function useNotificationsListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type notificationsCreateItemResponse200 = {
-  data: DisplayNotificationOutput
-  status: 200
-}
-
-export type notificationsCreateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type notificationsCreateItemResponseSuccess = notificationsCreateItemResponse200 & {
-  headers: Headers
-}
-export type notificationsCreateItemResponseError = notificationsCreateItemResponse422 & {
-  headers: Headers
-}
-
 export const getNotificationsCreateItemUrl = () => {
   return `${BitcartApiConfig.baseUrl}/notifications`
 }
@@ -931,7 +878,7 @@ export const notificationsCreateItem = async (
   createNotification: CreateNotification,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<notificationsCreateItemResponseSuccess> => {
+): Promise<DisplayNotificationOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -960,14 +907,10 @@ export const notificationsCreateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayNotification.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as notificationsCreateItemResponseSuccess
+  return data
 }
 
 export const getNotificationsCreateItemMutationKey = () => ["notificationsCreateItem"] as const
@@ -1049,15 +992,6 @@ export const useNotificationsCreateItem = <
 > => {
   return useMutation(getNotificationsCreateItemMutationOptions(options), queryClient)
 }
-export type notificationsGetCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type notificationsGetCountResponseSuccess = notificationsGetCountResponse200 & {
-  headers: Headers
-}
-
 export const getNotificationsGetCountUrl = () => {
   return `${BitcartApiConfig.baseUrl}/notifications/count`
 }
@@ -1068,16 +1002,16 @@ export const getNotificationsGetCountUrl = () => {
 export const notificationsGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<notificationsGetCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getNotificationsGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: notificationsGetCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as notificationsGetCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getNotificationsGetCountQueryKey = () => {
@@ -1209,11 +1143,13 @@ export const getNotificationsGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof notificationsGetCount>>> = ({ signal }) =>
     notificationsGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof notificationsGetCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type NotificationsGetCountSuspenseQueryResult = NonNullable<
@@ -1290,23 +1226,6 @@ export function useNotificationsGetCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type notificationsGetItemResponse200 = {
-  data: DisplayNotificationOutput
-  status: 200
-}
-
-export type notificationsGetItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type notificationsGetItemResponseSuccess = notificationsGetItemResponse200 & {
-  headers: Headers
-}
-export type notificationsGetItemResponseError = notificationsGetItemResponse422 & {
-  headers: Headers
-}
-
 export const getNotificationsGetItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/notifications/${itemId}`
 }
@@ -1318,7 +1237,7 @@ export const notificationsGetItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<notificationsGetItemResponseSuccess> => {
+): Promise<DisplayNotificationOutput> => {
   const res = await (fetchFn ?? fetch)(getNotificationsGetItemUrl(itemId), {
     ...options,
     method: "GET",
@@ -1326,10 +1245,10 @@ export const notificationsGetItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayNotification.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as notificationsGetItemResponseSuccess
+  return data
 }
 
 export const getNotificationsGetItemQueryKey = (itemId: string) => {
@@ -1479,11 +1398,13 @@ export const getNotificationsGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof notificationsGetItem>>> = ({ signal }) =>
     notificationsGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof notificationsGetItem>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type NotificationsGetItemSuspenseQueryResult = NonNullable<
@@ -1564,23 +1485,6 @@ export function useNotificationsGetItemSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type notificationsUpdateItemResponse200 = {
-  data: DisplayNotificationOutput
-  status: 200
-}
-
-export type notificationsUpdateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type notificationsUpdateItemResponseSuccess = notificationsUpdateItemResponse200 & {
-  headers: Headers
-}
-export type notificationsUpdateItemResponseError = notificationsUpdateItemResponse422 & {
-  headers: Headers
-}
-
 export const getNotificationsUpdateItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/notifications/${itemId}`
 }
@@ -1593,7 +1497,7 @@ export const notificationsUpdateItem = async (
   optionalUpdateNotification: OptionalUpdateNotification,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<notificationsUpdateItemResponseSuccess> => {
+): Promise<DisplayNotificationOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1622,14 +1526,10 @@ export const notificationsUpdateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayNotification.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as notificationsUpdateItemResponseSuccess
+  return data
 }
 
 export const getNotificationsUpdateItemMutationKey = () => ["notificationsUpdateItem"] as const
@@ -1714,23 +1614,6 @@ export const useNotificationsUpdateItem = <
 > => {
   return useMutation(getNotificationsUpdateItemMutationOptions(options), queryClient)
 }
-export type notificationsDeleteItemResponse200 = {
-  data: DisplayNotificationOutput
-  status: 200
-}
-
-export type notificationsDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type notificationsDeleteItemResponseSuccess = notificationsDeleteItemResponse200 & {
-  headers: Headers
-}
-export type notificationsDeleteItemResponseError = notificationsDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getNotificationsDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/notifications/${itemId}`
 }
@@ -1742,7 +1625,7 @@ export const notificationsDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<notificationsDeleteItemResponseSuccess> => {
+): Promise<DisplayNotificationOutput> => {
   const res = await (fetchFn ?? fetch)(getNotificationsDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -1750,14 +1633,10 @@ export const notificationsDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayNotification.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as notificationsDeleteItemResponseSuccess
+  return data
 }
 
 export const getNotificationsDeleteItemMutationKey = () => ["notificationsDeleteItem"] as const
@@ -1839,23 +1718,6 @@ export const useNotificationsDeleteItem = <
 > => {
   return useMutation(getNotificationsDeleteItemMutationOptions(options), queryClient)
 }
-export type notificationsBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type notificationsBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type notificationsBatchActionResponseSuccess = notificationsBatchActionResponse200 & {
-  headers: Headers
-}
-export type notificationsBatchActionResponseError = notificationsBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getNotificationsBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/notifications/batch`
 }
@@ -1867,7 +1729,7 @@ export const notificationsBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<notificationsBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1895,13 +1757,9 @@ export const notificationsBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: notificationsBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as notificationsBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getNotificationsBatchActionMutationKey = () => ["notificationsBatchAction"] as const

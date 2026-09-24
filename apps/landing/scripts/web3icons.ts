@@ -2,7 +2,10 @@ import { promises as fs } from "fs"
 import { dirname, join } from "path"
 import { fileURLToPath } from "url"
 
-import { bitcartClient } from "../src/common/data/bitcart"
+import { BitcartApiConfig } from "@bitcart/api-sdk/config"
+import { bitcartCryptos } from "@bitcart/api-sdk/endpoints"
+
+import { envConfig } from "../env.config.ts"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -32,8 +35,12 @@ type ${CATALOG_TYPE_NAME} = Record<
 `.trimStart()
 
 const main = async () => {
-  // FIXME: Consider implementing retry logic and error handling
-  const tokenSymbols = await bitcartClient.getSupportedFungibleTokenSymbols()
+  BitcartApiConfig.set({ baseUrl: envConfig.sharedEnvSchemas.BITCART_API_URL.parse(undefined) })
+
+  const tokenSymbols = await bitcartCryptos
+    .getPaymentMethodCatalog()
+    .then(bitcartCryptos.selectPaymentTokenSymbols)
+
   const iconDirRelativePath = "icons/tokens"
   const iconModuleDirPath = join(PACKAGE_DIST_PATH, iconDirRelativePath)
 

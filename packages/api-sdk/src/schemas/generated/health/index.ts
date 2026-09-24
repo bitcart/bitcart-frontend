@@ -6,5 +6,5 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./healthLive200.zod"
-export * from "./healthReady200.zod"
+export * from "./HealthLive200.zod"
+export * from "./HealthReady200.zod"

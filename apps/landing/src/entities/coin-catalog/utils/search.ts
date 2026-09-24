@@ -1,12 +1,11 @@
+import { bitcartCryptos } from "@bitcart/api-sdk/endpoints"
 import { normalizeSearchTerm } from "@bitcart/core/utils"
 import { evolve, filter, map, pipe } from "remeda"
-
-import { fungibleTokenCatalogEntrySearch, type AssetCatalog } from "@/common/data/bitcart"
 
 import type { CoinCatalogLookupResult } from "../types"
 
 export const coinCatalogEntrySearch = (
-  data: AssetCatalog,
+  data: bitcartCryptos.PaymentMethodCatalog,
   searchTerm: string,
 ): CoinCatalogLookupResult => {
   if (searchTerm) {
@@ -15,19 +14,19 @@ export const coinCatalogEntrySearch = (
     const entries = pipe(
       data.entries,
 
-      filter<AssetCatalog["entries"], boolean>(
-        ({ blockchain, fungibleTokens }) =>
+      filter<bitcartCryptos.PaymentMethodCatalog["entries"], boolean>(
+        ({ blockchain, tokens }) =>
           blockchain.metadata.displayName.toLowerCase().includes(normalizedSearchTerm) ||
           blockchain.intrinsicTokenSymbol.toLowerCase().includes(normalizedSearchTerm) ||
-          fungibleTokens.entries.some((tokenSymbol) =>
+          tokens.entries.some((tokenSymbol) =>
             tokenSymbol.toLowerCase().includes(normalizedSearchTerm),
           ),
       ),
 
       map(
         evolve({
-          fungibleTokens: (catalogEntries) =>
-            fungibleTokenCatalogEntrySearch(catalogEntries, searchTerm),
+          tokens: (catalogEntries) =>
+            bitcartCryptos.tokenCatalogEntrySearch(catalogEntries, searchTerm),
         }),
       ),
     )
@@ -39,10 +38,7 @@ export const coinCatalogEntrySearch = (
       searchCounts: {
         blockchains: entries.length,
 
-        fungibleTokens: entries.reduce(
-          (acc, { fungibleTokens }) => acc + fungibleTokens.entries.length,
-          0,
-        ),
+        tokens: entries.reduce((acc, { tokens }) => acc + tokens.entries.length, 0),
       },
     }
   } else {

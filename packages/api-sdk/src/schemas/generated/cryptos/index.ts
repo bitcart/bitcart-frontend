@@ -6,5 +6,5 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./cryptosGetFiatlistParams.zod"
-export * from "./cryptosRateParams.zod"
+export * from "./CryptosGetFiatlistParams.zod"
+export * from "./CryptosRateParams.zod"

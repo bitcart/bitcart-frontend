@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -34,7 +39,7 @@ import type {
   HTTPValidationError,
   OffsetPaginationDisplayFileOutput,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -49,23 +54,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
     })
   }
   return result
-}
-
-export type filesListItemsResponse200 = {
-  data: OffsetPaginationDisplayFileOutput
-  status: 200
-}
-
-export type filesListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type filesListItemsResponseSuccess = filesListItemsResponse200 & {
-  headers: Headers
-}
-export type filesListItemsResponseError = filesListItemsResponse422 & {
-  headers: Headers
 }
 
 export const getFilesListItemsUrl = (params?: FilesListItemsParams) => {
@@ -91,7 +79,7 @@ export const filesListItems = async (
   params?: FilesListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<filesListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayFileOutput> => {
   const res = await (fetchFn ?? fetch)(getFilesListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -99,12 +87,12 @@ export const filesListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayFile.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as filesListItemsResponseSuccess
+  return data
 }
 
 export const getFilesListItemsQueryKey = (params?: FilesListItemsParams) => {
@@ -239,11 +227,13 @@ export const getFilesListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof filesListItems>>> = ({ signal }) =>
     filesListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof filesListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type FilesListItemsSuspenseQueryResult = NonNullable<
@@ -324,23 +314,6 @@ export function useFilesListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type filesCreateFileResponse200 = {
-  data: DisplayFileOutput
-  status: 200
-}
-
-export type filesCreateFileResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type filesCreateFileResponseSuccess = filesCreateFileResponse200 & {
-  headers: Headers
-}
-export type filesCreateFileResponseError = filesCreateFileResponse422 & {
-  headers: Headers
-}
-
 export const getFilesCreateFileUrl = () => {
   return `${BitcartApiConfig.baseUrl}/files`
 }
@@ -352,7 +325,7 @@ export const filesCreateFile = async (
   bodyFilesCreateFile: BodyFilesCreateFile,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<filesCreateFileResponseSuccess> => {
+): Promise<DisplayFileOutput> => {
   const formData = new FormData()
   formData.append(`file`, bodyFilesCreateFile.file)
 
@@ -364,10 +337,10 @@ export const filesCreateFile = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayFile.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as filesCreateFileResponseSuccess
+  return data
 }
 
 export const getFilesCreateFileMutationKey = () => ["filesCreateFile"] as const
@@ -447,15 +420,6 @@ export const useFilesCreateFile = <
 > => {
   return useMutation(getFilesCreateFileMutationOptions(options), queryClient)
 }
-export type filesGetCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type filesGetCountResponseSuccess = filesGetCountResponse200 & {
-  headers: Headers
-}
-
 export const getFilesGetCountUrl = () => {
   return `${BitcartApiConfig.baseUrl}/files/count`
 }
@@ -466,16 +430,16 @@ export const getFilesGetCountUrl = () => {
 export const filesGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<filesGetCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getFilesGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: filesGetCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as filesGetCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getFilesGetCountQueryKey = () => {
@@ -595,11 +559,13 @@ export const getFilesGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof filesGetCount>>> = ({ signal }) =>
     filesGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof filesGetCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type FilesGetCountSuspenseQueryResult = NonNullable<
@@ -673,23 +639,6 @@ export function useFilesGetCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type filesGetItemResponse200 = {
-  data: DisplayFileOutput
-  status: 200
-}
-
-export type filesGetItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type filesGetItemResponseSuccess = filesGetItemResponse200 & {
-  headers: Headers
-}
-export type filesGetItemResponseError = filesGetItemResponse422 & {
-  headers: Headers
-}
-
 export const getFilesGetItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/files/${itemId}`
 }
@@ -701,7 +650,7 @@ export const filesGetItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<filesGetItemResponseSuccess> => {
+): Promise<DisplayFileOutput> => {
   const res = await (fetchFn ?? fetch)(getFilesGetItemUrl(itemId), {
     ...options,
     method: "GET",
@@ -709,10 +658,10 @@ export const filesGetItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayFile.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as filesGetItemResponseSuccess
+  return data
 }
 
 export const getFilesGetItemQueryKey = (itemId: string) => {
@@ -850,11 +799,13 @@ export const getFilesGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof filesGetItem>>> = ({ signal }) =>
     filesGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof filesGetItem>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type FilesGetItemSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof filesGetItem>>>
@@ -931,23 +882,6 @@ export function useFilesGetItemSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type filesDeleteItemResponse200 = {
-  data: DisplayFileOutput
-  status: 200
-}
-
-export type filesDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type filesDeleteItemResponseSuccess = filesDeleteItemResponse200 & {
-  headers: Headers
-}
-export type filesDeleteItemResponseError = filesDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getFilesDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/files/${itemId}`
 }
@@ -959,7 +893,7 @@ export const filesDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<filesDeleteItemResponseSuccess> => {
+): Promise<DisplayFileOutput> => {
   const res = await (fetchFn ?? fetch)(getFilesDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -967,10 +901,10 @@ export const filesDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayFile.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as filesDeleteItemResponseSuccess
+  return data
 }
 
 export const getFilesDeleteItemMutationKey = () => ["filesDeleteItem"] as const
@@ -1050,23 +984,6 @@ export const useFilesDeleteItem = <
 > => {
   return useMutation(getFilesDeleteItemMutationOptions(options), queryClient)
 }
-export type filesBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type filesBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type filesBatchActionResponseSuccess = filesBatchActionResponse200 & {
-  headers: Headers
-}
-export type filesBatchActionResponseError = filesBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getFilesBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/files/batch`
 }
@@ -1078,7 +995,7 @@ export const filesBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<filesBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1106,9 +1023,9 @@ export const filesBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: filesBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as filesBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getFilesBatchActionMutationKey = () => ["filesBatchAction"] as const
@@ -1190,23 +1107,6 @@ export const useFilesBatchAction = <
 > => {
   return useMutation(getFilesBatchActionMutationOptions(options), queryClient)
 }
-export type filesPatchFileResponse200 = {
-  data: DisplayFileOutput
-  status: 200
-}
-
-export type filesPatchFileResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type filesPatchFileResponseSuccess = filesPatchFileResponse200 & {
-  headers: Headers
-}
-export type filesPatchFileResponseError = filesPatchFileResponse422 & {
-  headers: Headers
-}
-
 export const getFilesPatchFileUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/files/${modelId}`
 }
@@ -1219,7 +1119,7 @@ export const filesPatchFile = async (
   bodyFilesPatchFile: BodyFilesPatchFile,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<filesPatchFileResponseSuccess> => {
+): Promise<DisplayFileOutput> => {
   const formData = new FormData()
   formData.append(`file`, bodyFilesPatchFile.file)
 
@@ -1231,10 +1131,10 @@ export const filesPatchFile = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayFile.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as filesPatchFileResponseSuccess
+  return data
 }
 
 export const getFilesPatchFileMutationKey = () => ["filesPatchFile"] as const
@@ -1314,23 +1214,6 @@ export const useFilesPatchFile = <
 > => {
   return useMutation(getFilesPatchFileMutationOptions(options), queryClient)
 }
-export type filesHandleFileResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type filesHandleFileResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type filesHandleFileResponseSuccess = filesHandleFileResponse200 & {
-  headers: Headers
-}
-export type filesHandleFileResponseError = filesHandleFileResponse422 & {
-  headers: Headers
-}
-
 export const getFilesHandleFileUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/files/handle/${modelId}`
 }
@@ -1342,16 +1225,16 @@ export const filesHandleFile = async (
   modelId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<filesHandleFileResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getFilesHandleFileUrl(modelId), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: filesHandleFileResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as filesHandleFileResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getFilesHandleFileQueryKey = (modelId: string) => {
@@ -1489,11 +1372,13 @@ export const getFilesHandleFileSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof filesHandleFile>>> = ({ signal }) =>
     filesHandleFile(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof filesHandleFile>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type FilesHandleFileSuspenseQueryResult = NonNullable<

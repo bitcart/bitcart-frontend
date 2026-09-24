@@ -12,10 +12,9 @@ import { activateSourceLocale } from "#/common/i18n"
 import { routeTree } from "./routeTree.gen"
 
 export function getRouter() {
+  BitcartApiConfig.set({ baseUrl: BITCART_API_URL })
   activateSourceLocale()
   applyZodL10n()
-
-  BitcartApiConfig.baseUrl = BITCART_API_URL
 
   const queryClient = new QueryClient()
 

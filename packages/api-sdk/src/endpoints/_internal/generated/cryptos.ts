@@ -5,7 +5,11 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -26,7 +30,7 @@ import type {
   CryptosRateParams,
   HTTPValidationError,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -43,15 +47,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type cryptosGetCryptosResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type cryptosGetCryptosResponseSuccess = cryptosGetCryptosResponse200 & {
-  headers: Headers
-}
-
 export const getCryptosGetCryptosUrl = () => {
   return `${BitcartApiConfig.baseUrl}/cryptos`
 }
@@ -62,16 +57,16 @@ export const getCryptosGetCryptosUrl = () => {
 export const cryptosGetCryptos = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<cryptosGetCryptosResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getCryptosGetCryptosUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: cryptosGetCryptosResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as cryptosGetCryptosResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getCryptosGetCryptosQueryKey = () => {
@@ -195,11 +190,13 @@ export const getCryptosGetCryptosSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetCryptos>>> = ({ signal }) =>
     cryptosGetCryptos({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosGetCryptos>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type CryptosGetCryptosSuspenseQueryResult = NonNullable<
@@ -276,15 +273,6 @@ export function useCryptosGetCryptosSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type cryptosGetSupportedCryptosResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type cryptosGetSupportedCryptosResponseSuccess = cryptosGetSupportedCryptosResponse200 & {
-  headers: Headers
-}
-
 export const getCryptosGetSupportedCryptosUrl = () => {
   return `${BitcartApiConfig.baseUrl}/cryptos/supported`
 }
@@ -295,20 +283,16 @@ export const getCryptosGetSupportedCryptosUrl = () => {
 export const cryptosGetSupportedCryptos = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<cryptosGetSupportedCryptosResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getCryptosGetSupportedCryptosUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: cryptosGetSupportedCryptosResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as cryptosGetSupportedCryptosResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getCryptosGetSupportedCryptosQueryKey = () => {
@@ -447,11 +431,13 @@ export const getCryptosGetSupportedCryptosSuspenseQueryOptions = <
     signal,
   }) => cryptosGetSupportedCryptos({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type CryptosGetSupportedCryptosSuspenseQueryResult = NonNullable<
@@ -528,23 +514,6 @@ export function useCryptosGetSupportedCryptosSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type cryptosRateResponse200 = {
-  data: number
-  status: 200
-}
-
-export type cryptosRateResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type cryptosRateResponseSuccess = cryptosRateResponse200 & {
-  headers: Headers
-}
-export type cryptosRateResponseError = cryptosRateResponse422 & {
-  headers: Headers
-}
-
 export const getCryptosRateUrl = (params?: CryptosRateParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -568,16 +537,16 @@ export const cryptosRate = async (
   params?: CryptosRateParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<cryptosRateResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getCryptosRateUrl(params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: cryptosRateResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as cryptosRateResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getCryptosRateQueryKey = (params?: CryptosRateParams) => {
@@ -710,11 +679,13 @@ export const getCryptosRateSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosRate>>> = ({ signal }) =>
     cryptosRate(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosRate>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type CryptosRateSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof cryptosRate>>>
@@ -785,23 +756,6 @@ export function useCryptosRateSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type cryptosGetFiatlistResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type cryptosGetFiatlistResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type cryptosGetFiatlistResponseSuccess = cryptosGetFiatlistResponse200 & {
-  headers: Headers
-}
-export type cryptosGetFiatlistResponseError = cryptosGetFiatlistResponse422 & {
-  headers: Headers
-}
-
 export const getCryptosGetFiatlistUrl = (params?: CryptosGetFiatlistParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -825,16 +779,16 @@ export const cryptosGetFiatlist = async (
   params?: CryptosGetFiatlistParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<cryptosGetFiatlistResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getCryptosGetFiatlistUrl(params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: cryptosGetFiatlistResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as cryptosGetFiatlistResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getCryptosGetFiatlistQueryKey = (params?: CryptosGetFiatlistParams) => {
@@ -973,11 +927,13 @@ export const getCryptosGetFiatlistSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetFiatlist>>> = ({ signal }) =>
     cryptosGetFiatlist(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosGetFiatlist>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type CryptosGetFiatlistSuspenseQueryResult = NonNullable<
@@ -1058,23 +1014,6 @@ export function useCryptosGetFiatlistSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type cryptosGetTokensResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type cryptosGetTokensResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type cryptosGetTokensResponseSuccess = cryptosGetTokensResponse200 & {
-  headers: Headers
-}
-export type cryptosGetTokensResponseError = cryptosGetTokensResponse422 & {
-  headers: Headers
-}
-
 export const getCryptosGetTokensUrl = (currency: string) => {
   return `${BitcartApiConfig.baseUrl}/cryptos/tokens/${currency}`
 }
@@ -1086,16 +1025,16 @@ export const cryptosGetTokens = async (
   currency: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<cryptosGetTokensResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getCryptosGetTokensUrl(currency), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: cryptosGetTokensResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as cryptosGetTokensResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getCryptosGetTokensQueryKey = (currency: string) => {
@@ -1233,11 +1172,13 @@ export const getCryptosGetTokensSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetTokens>>> = ({ signal }) =>
     cryptosGetTokens(currency, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosGetTokens>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type CryptosGetTokensSuspenseQueryResult = NonNullable<
@@ -1318,23 +1259,6 @@ export function useCryptosGetTokensSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type cryptosGetTokensAbiResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type cryptosGetTokensAbiResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type cryptosGetTokensAbiResponseSuccess = cryptosGetTokensAbiResponse200 & {
-  headers: Headers
-}
-export type cryptosGetTokensAbiResponseError = cryptosGetTokensAbiResponse422 & {
-  headers: Headers
-}
-
 export const getCryptosGetTokensAbiUrl = (currency: string) => {
   return `${BitcartApiConfig.baseUrl}/cryptos/tokens/${currency}/abi`
 }
@@ -1346,16 +1270,16 @@ export const cryptosGetTokensAbi = async (
   currency: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<cryptosGetTokensAbiResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getCryptosGetTokensAbiUrl(currency), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: cryptosGetTokensAbiResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as cryptosGetTokensAbiResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getCryptosGetTokensAbiQueryKey = (currency: string) => {
@@ -1499,11 +1423,13 @@ export const getCryptosGetTokensAbiSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetTokensAbi>>> = ({ signal }) =>
     cryptosGetTokensAbi(currency, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type CryptosGetTokensAbiSuspenseQueryResult = NonNullable<
@@ -1584,23 +1510,6 @@ export function useCryptosGetTokensAbiSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type cryptosGetDefaultExplorerResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type cryptosGetDefaultExplorerResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type cryptosGetDefaultExplorerResponseSuccess = cryptosGetDefaultExplorerResponse200 & {
-  headers: Headers
-}
-export type cryptosGetDefaultExplorerResponseError = cryptosGetDefaultExplorerResponse422 & {
-  headers: Headers
-}
-
 export const getCryptosGetDefaultExplorerUrl = (currency: string) => {
   return `${BitcartApiConfig.baseUrl}/cryptos/explorer/${currency}`
 }
@@ -1612,20 +1521,16 @@ export const cryptosGetDefaultExplorer = async (
   currency: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<cryptosGetDefaultExplorerResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getCryptosGetDefaultExplorerUrl(currency), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: cryptosGetDefaultExplorerResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as cryptosGetDefaultExplorerResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getCryptosGetDefaultExplorerQueryKey = (currency: string) => {
@@ -1777,11 +1682,13 @@ export const getCryptosGetDefaultExplorerSuspenseQueryOptions = <
     signal,
   }) => cryptosGetDefaultExplorer(currency, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type CryptosGetDefaultExplorerSuspenseQueryResult = NonNullable<
@@ -1862,23 +1769,6 @@ export function useCryptosGetDefaultExplorerSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type cryptosGetDefaultRpcResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type cryptosGetDefaultRpcResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type cryptosGetDefaultRpcResponseSuccess = cryptosGetDefaultRpcResponse200 & {
-  headers: Headers
-}
-export type cryptosGetDefaultRpcResponseError = cryptosGetDefaultRpcResponse422 & {
-  headers: Headers
-}
-
 export const getCryptosGetDefaultRpcUrl = (currency: string) => {
   return `${BitcartApiConfig.baseUrl}/cryptos/rpc/${currency}`
 }
@@ -1890,16 +1780,16 @@ export const cryptosGetDefaultRpc = async (
   currency: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<cryptosGetDefaultRpcResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getCryptosGetDefaultRpcUrl(currency), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: cryptosGetDefaultRpcResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as cryptosGetDefaultRpcResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getCryptosGetDefaultRpcQueryKey = (currency: string) => {
@@ -2049,11 +1939,13 @@ export const getCryptosGetDefaultRpcSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetDefaultRpc>>> = ({ signal }) =>
     cryptosGetDefaultRpc(currency, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type CryptosGetDefaultRpcSuspenseQueryResult = NonNullable<

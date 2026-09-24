@@ -88,7 +88,13 @@ export const getInvoicesListItemsResponseMock = (
         "unconfirmed",
         "unknown",
       ] as const),
-      exception_status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      exception_status: faker.helpers.arrayElement([
+        "failed_confirm",
+        "none",
+        "paid_over",
+        "paid_partial",
+        "unknown",
+      ] as const),
       currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
       tx_hashes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
         () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -182,7 +188,13 @@ export const getInvoicesCreateItemResponseMock = (
     "unconfirmed",
     "unknown",
   ] as const),
-  exception_status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  exception_status: faker.helpers.arrayElement([
+    "failed_confirm",
+    "none",
+    "paid_over",
+    "paid_partial",
+    "unknown",
+  ] as const),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   tx_hashes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -270,7 +282,13 @@ export const getInvoicesGetItemResponseMock = (
     "unconfirmed",
     "unknown",
   ] as const),
-  exception_status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  exception_status: faker.helpers.arrayElement([
+    "failed_confirm",
+    "none",
+    "paid_over",
+    "paid_partial",
+    "unknown",
+  ] as const),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   tx_hashes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -356,7 +374,13 @@ export const getInvoicesUpdateItemResponseMock = (
     "unconfirmed",
     "unknown",
   ] as const),
-  exception_status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  exception_status: faker.helpers.arrayElement([
+    "failed_confirm",
+    "none",
+    "paid_over",
+    "paid_partial",
+    "unknown",
+  ] as const),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   tx_hashes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -442,7 +466,13 @@ export const getInvoicesDeleteItemResponseMock = (
     "unconfirmed",
     "unknown",
   ] as const),
-  exception_status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  exception_status: faker.helpers.arrayElement([
+    "failed_confirm",
+    "none",
+    "paid_over",
+    "paid_partial",
+    "unknown",
+  ] as const),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   tx_hashes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -530,7 +560,13 @@ export const getInvoicesGetOrCreateInvoiceByOrderIdResponseMock = (
     "unconfirmed",
     "unknown",
   ] as const),
-  exception_status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  exception_status: faker.helpers.arrayElement([
+    "failed_confirm",
+    "none",
+    "paid_over",
+    "paid_partial",
+    "unknown",
+  ] as const),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   tx_hashes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -616,7 +652,13 @@ export const getInvoicesUpdateInvoiceResponseMock = (
     "unconfirmed",
     "unknown",
   ] as const),
-  exception_status: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  exception_status: faker.helpers.arrayElement([
+    "failed_confirm",
+    "none",
+    "paid_over",
+    "paid_partial",
+    "unknown",
+  ] as const),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   tx_hashes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),

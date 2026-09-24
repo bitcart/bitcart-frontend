@@ -6,8 +6,8 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./addLicenseRequest.zod"
-export * from "./bodyPluginsInstallPlugin.zod"
-export * from "./pluginsGetPlugins200.zod"
-export * from "./pluginsUpdatePluginSettingsBody.zod"
-export * from "./uninstallPluginData.zod"
+export * from "./AddLicenseRequest.zod"
+export * from "./BodyPluginsInstallPlugin.zod"
+export * from "./PluginsGetPlugins200.zod"
+export * from "./PluginsUpdatePluginSettingsBody.zod"
+export * from "./UninstallPluginData.zod"

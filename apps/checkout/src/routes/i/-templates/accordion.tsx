@@ -1,6 +1,6 @@
 import { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
 import type { HttpHref } from "@bitcart/core/navigation"
-import { Button } from "@bitcart/ui-kit/components"
+import { Button, SocketConnectionStatusBanner } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
 import { t } from "@lingui/core/macro"
 import {
@@ -159,14 +159,15 @@ const SectionBody = ({ isOpen, children }: { isOpen: boolean; children: React.Re
 }
 
 export const AccordionTemplate = ({
-  invoice,
-  store,
-  currentStatus,
-  selectedPaymentIndex,
-  setSelectedPaymentIndex,
+  activePaymentMethodIndex,
   countdownFormatted,
+  currentStatus,
+  invoice,
+  invoiceWsConnectionHandle,
+  onPaymentMethodSelect,
+  store,
 }: CheckoutTemplateProps) => {
-  const payment = invoice.payments[selectedPaymentIndex]
+  const payment = invoice.payments[activePaymentMethodIndex]
   const isInvoiceStatusTerminal = bitcartInvoices.isTerminalStatus(currentStatus)
 
   const [openSection, setOpenSection] = useState<SectionId>(
@@ -237,6 +238,8 @@ export const AccordionTemplate = ({
           </div>
         </div>
 
+        <SocketConnectionStatusBanner connectionHandle={invoiceWsConnectionHandle} />
+
         {/* Progress bar */}
         <div className="bg-muted h-1">
           <div
@@ -269,13 +272,13 @@ export const AccordionTemplate = ({
                     key={index}
                     type="button"
                     onClick={() => {
-                      setSelectedPaymentIndex(index)
+                      onPaymentMethodSelect(index)
                     }}
                     className={cn(`
                       gap-2 rounded-xl px-4 py-3 text-sm flex cursor-pointer items-center border
                       text-left transition-all
                       ${
-                        index === selectedPaymentIndex
+                        index === activePaymentMethodIndex
                           ? "border-primary bg-primary text-primary-foreground font-semibold"
                           : "border-border bg-card hover:bg-muted"
                       }

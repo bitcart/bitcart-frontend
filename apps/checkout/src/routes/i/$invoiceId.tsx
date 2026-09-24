@@ -1,13 +1,15 @@
 import { bitcartInvoices, bitcartStores } from "@bitcart/api-sdk/endpoints"
-import { useQueryClient, useQueryErrorResetBoundary } from "@tanstack/react-query"
+import { useCountdown } from "@bitcart/hooks"
+import { useQueryErrorResetBoundary } from "@tanstack/react-query"
 import { createFileRoute, useRouter, type ErrorComponentProps } from "@tanstack/react-router"
 import { useCallback, useEffect, useState } from "react"
-
-import { useCountdown } from "#/common/hooks"
+import { isDefined } from "remeda"
 
 import { ErrorFallback } from "./-components/error-fallback"
 import { LoadingFallback } from "./-components/loading-fallback"
 import { AccordionTemplate } from "./-templates/accordion"
+
+const INVOICE_DATA_REFETCH_INTERVAL_MS = 30_000
 
 export const Route = createFileRoute("/i/$invoiceId")({
   component: InvoicePage,
@@ -43,11 +45,20 @@ function InvoiceErrorFallback({ error, reset }: ErrorComponentProps) {
 function InvoicePage() {
   const { invoiceId } = Route.useParams()
   const { template } = Route.useSearch()
-  const queryClient = useQueryClient()
+  const [activePaymentMethodIndex, setActivePaymentMethodIndex] = useState(0)
 
-  const { data: invoice, queryKey: invoiceQueryKey } = bitcartInvoices.useInvoiceSuspense({
+  const { data: invoice, refetch: refetchInvoice } = bitcartInvoices.useInvoiceSuspense(
     invoiceId,
-  })
+
+    {
+      query: {
+        refetchInterval: ({ state: { data: invoiceData } }) =>
+          isDefined(invoiceData) && bitcartInvoices.isTerminalStatus(invoiceData.status)
+            ? false
+            : INVOICE_DATA_REFETCH_INTERVAL_MS,
+      },
+    },
+  )
 
   //* The schema allows a storeless invoice, which counts as a malformed response.
   // TODO: Drop once the API schema provides the correct type.
@@ -55,32 +66,25 @@ function InvoicePage() {
     throw new Error(`Invoice ${invoiceId} is not associated with a store`)
   }
 
-  const { data: store } = bitcartStores.useStoreSuspense({ storeId: invoice.store_id })
-
-  const [selectedPaymentIndex, setSelectedPaymentIndex] = useState(0)
+  const { data: store } = bitcartStores.useStoreSuspense(invoice.store_id)
+  const refreshInvoiceData = useCallback(() => void refetchInvoice(), [refetchInvoice])
   const { formatted: countdownFormatted } = useCountdown(invoice.time_left)
 
-  const handleWsMessage = useCallback(
-    (_message: bitcartInvoices.InvoiceWsMessage) => {
-      void queryClient.invalidateQueries({ queryKey: invoiceQueryKey })
-    },
-
-    [invoiceQueryKey, queryClient],
-  )
-
-  bitcartInvoices.useInvoiceWebsocket({
+  const invoiceWsConnectionHandle = bitcartInvoices.useInvoiceWebsocket({
     invoiceId,
     status: invoice.status,
-    onMessage: handleWsMessage,
+    onMessage: refreshInvoiceData,
+    onConnect: refreshInvoiceData,
   })
 
   const templateProps = {
-    invoice,
-    store,
-    currentStatus: invoice.status,
-    selectedPaymentIndex,
-    setSelectedPaymentIndex,
+    activePaymentMethodIndex,
     countdownFormatted,
+    currentStatus: invoice.status,
+    invoice,
+    invoiceWsConnectionHandle,
+    onPaymentMethodSelect: setActivePaymentMethodIndex,
+    store,
   }
 
   switch (template) {

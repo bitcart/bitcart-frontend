@@ -6,8 +6,8 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./bodyFilesCreateFile.zod"
-export * from "./bodyFilesPatchFile.zod"
-export * from "./displayFile.zod"
-export * from "./filesListItemsParams.zod"
-export * from "./offsetPaginationDisplayFile.zod"
+export * from "./BodyFilesCreateFile.zod"
+export * from "./BodyFilesPatchFile.zod"
+export * from "./DisplayFile.zod"
+export * from "./FilesListItemsParams.zod"
+export * from "./OffsetPaginationDisplayFile.zod"

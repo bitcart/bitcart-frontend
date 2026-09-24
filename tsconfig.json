@@ -1,11 +1,3 @@
 {
-  "extends": "@bitcart/configs/base/ts",
-
-  "compilerOptions": {
-    "plugins": [
-      {
-        "name": "@effect/language-service"
-      }
-    ]
-  }
+  "extends": "@bitcart/configs/base/ts"
 }

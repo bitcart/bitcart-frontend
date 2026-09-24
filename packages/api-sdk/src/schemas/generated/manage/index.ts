@@ -6,7 +6,7 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./backupsPolicy.zod"
-export * from "./bodyManageRestoreBackup.zod"
-export * from "./globalStorePolicy.zod"
-export * from "./policy.zod"
+export * from "./BackupsPolicy.zod"
+export * from "./BodyManageRestoreBackup.zod"
+export * from "./GlobalStorePolicy.zod"
+export * from "./Policy.zod"

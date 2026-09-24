@@ -6,11 +6,11 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./configuratorAdvancedSettings.zod"
-export * from "./configuratorCheckDnsEntryParams.zod"
-export * from "./configuratorCoinDescription.zod"
-export * from "./configuratorDeploySettings.zod"
-export * from "./configuratorDomainSettings.zod"
-export * from "./configuratorGetServerSettingsBody.zod"
-export * from "./configuratorSSHSettings.zod"
-export * from "./sSHSettings.zod"
+export * from "./ConfiguratorAdvancedSettings.zod"
+export * from "./ConfiguratorCheckDnsEntryParams.zod"
+export * from "./ConfiguratorCoinDescription.zod"
+export * from "./ConfiguratorDeploySettings.zod"
+export * from "./ConfiguratorDomainSettings.zod"
+export * from "./ConfiguratorGetServerSettingsBody.zod"
+export * from "./ConfiguratorSSHSettings.zod"
+export * from "./SSHSettings.zod"

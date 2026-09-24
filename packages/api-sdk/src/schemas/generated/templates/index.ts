@@ -6,9 +6,9 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./createTemplate.zod"
-export * from "./displayTemplate.zod"
-export * from "./offsetPaginationDisplayTemplate.zod"
-export * from "./optionalUpdateTemplate.zod"
-export * from "./templatesGetTemplateListParams.zod"
-export * from "./templatesListItemsParams.zod"
+export * from "./CreateTemplate.zod"
+export * from "./DisplayTemplate.zod"
+export * from "./OffsetPaginationDisplayTemplate.zod"
+export * from "./OptionalUpdateTemplate.zod"
+export * from "./TemplatesGetTemplateListParams.zod"
+export * from "./TemplatesListItemsParams.zod"

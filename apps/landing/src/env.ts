@@ -10,6 +10,7 @@ export const env = createEnv({
 
   runtimeEnv: {
     BITCART_ENV: import.meta.env.BITCART_ENV,
+    BITCART_API_URL: import.meta.env.BITCART_API_URL,
     BITCART_STORE: import.meta.env.BITCART_STORE,
     BITCART_MATOMO_URL: import.meta.env.BITCART_MATOMO_URL,
     BITCART_MATOMO_SCRIPT_URL: import.meta.env.BITCART_MATOMO_SCRIPT_URL,

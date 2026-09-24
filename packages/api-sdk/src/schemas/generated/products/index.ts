@@ -6,12 +6,12 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./bodyProductsCreateProductMultipart.zod"
-export * from "./bodyProductsUpdateProductMultipart.zod"
-export * from "./displayProduct.zod"
-export * from "./offsetPaginationDisplayProduct.zod"
-export * from "./productsCategoriesParams.zod"
-export * from "./productsGetMaxProductPriceParams.zod"
-export * from "./productsGetProductParams.zod"
-export * from "./productsListItemsParams.zod"
-export * from "./productsProductsCountParams.zod"
+export * from "./BodyProductsCreateProductMultipart.zod"
+export * from "./BodyProductsUpdateProductMultipart.zod"
+export * from "./DisplayProduct.zod"
+export * from "./OffsetPaginationDisplayProduct.zod"
+export * from "./ProductsCategoriesParams.zod"
+export * from "./ProductsGetMaxProductPriceParams.zod"
+export * from "./ProductsGetProductParams.zod"
+export * from "./ProductsListItemsParams.zod"
+export * from "./ProductsProductsCountParams.zod"

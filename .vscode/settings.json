@@ -39,6 +39,7 @@
   "[chatagent]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
+  "js/ts.preferences.preferTypeOnlyAutoImports": true,
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
@@ -185,6 +186,7 @@
     "Gitea",
     "Graphviz",
     "Groestlcoin",
+    "hcaptcha",
     "hellordp",
     "hrefs",
     "inlines",
@@ -274,6 +276,7 @@
     "sonner",
     "srvx",
     "stablecoins",
+    "starttls",
     "Storefriend",
     "storeless",
     "subsetted",

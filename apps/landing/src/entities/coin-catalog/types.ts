@@ -1,7 +1,7 @@
-import type { AssetCatalog } from "@/common/data/bitcart"
+import { bitcartCryptos } from "@bitcart/api-sdk/endpoints"
 
-export type CoinCatalogLookupResult = AssetCatalog & {
-  searchCounts: AssetCatalog["totalCounts"]
+export type CoinCatalogLookupResult = bitcartCryptos.PaymentMethodCatalog & {
+  searchCounts: bitcartCryptos.PaymentMethodCatalog["totalCounts"]
 }
 
 export type CoinCatalogLookup = {

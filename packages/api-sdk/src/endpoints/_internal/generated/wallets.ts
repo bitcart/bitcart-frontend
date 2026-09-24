@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -46,7 +51,7 @@ import type {
   WalletsGetWalletRateParams,
   WalletsListItemsParams,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -63,15 +68,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type walletsGetBalancesResponse200 = {
-  data: MoneyOutput
-  status: 200
-}
-
-export type walletsGetBalancesResponseSuccess = walletsGetBalancesResponse200 & {
-  headers: Headers
-}
-
 export const getWalletsGetBalancesUrl = () => {
   return `${BitcartApiConfig.baseUrl}/wallets/balance`
 }
@@ -82,7 +78,7 @@ export const getWalletsGetBalancesUrl = () => {
 export const walletsGetBalances = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsGetBalancesResponseSuccess> => {
+): Promise<MoneyOutput> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetBalancesUrl(), {
     ...options,
     method: "GET",
@@ -90,10 +86,10 @@ export const walletsGetBalances = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? Money.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as walletsGetBalancesResponseSuccess
+  return data
 }
 
 export const getWalletsGetBalancesQueryKey = () => {
@@ -219,11 +215,13 @@ export const getWalletsGetBalancesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetBalances>>> = ({ signal }) =>
     walletsGetBalances({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetBalances>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsGetBalancesSuspenseQueryResult = NonNullable<
@@ -300,15 +298,6 @@ export function useWalletsGetBalancesSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsGetWalletsSchemaResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type walletsGetWalletsSchemaResponseSuccess = walletsGetWalletsSchemaResponse200 & {
-  headers: Headers
-}
-
 export const getWalletsGetWalletsSchemaUrl = () => {
   return `${BitcartApiConfig.baseUrl}/wallets/schema`
 }
@@ -319,20 +308,16 @@ export const getWalletsGetWalletsSchemaUrl = () => {
 export const walletsGetWalletsSchema = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsGetWalletsSchemaResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetWalletsSchemaUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsGetWalletsSchemaResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as walletsGetWalletsSchemaResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsGetWalletsSchemaQueryKey = () => {
@@ -471,11 +456,13 @@ export const getWalletsGetWalletsSchemaSuspenseQueryOptions = <
     signal,
   }) => walletsGetWalletsSchema({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsGetWalletsSchemaSuspenseQueryResult = NonNullable<
@@ -552,23 +539,6 @@ export function useWalletsGetWalletsSchemaSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsCreateWalletResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type walletsCreateWalletResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsCreateWalletResponseSuccess = walletsCreateWalletResponse200 & {
-  headers: Headers
-}
-export type walletsCreateWalletResponseError = walletsCreateWalletResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsCreateWalletUrl = () => {
   return `${BitcartApiConfig.baseUrl}/wallets/create`
 }
@@ -580,7 +550,7 @@ export const walletsCreateWallet = async (
   createWalletData: CreateWalletData,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsCreateWalletResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -608,9 +578,9 @@ export const walletsCreateWallet = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsCreateWalletResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as walletsCreateWalletResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsCreateWalletMutationKey = () => ["walletsCreateWallet"] as const
@@ -692,23 +662,6 @@ export const useWalletsCreateWallet = <
 > => {
   return useMutation(getWalletsCreateWalletMutationOptions(options), queryClient)
 }
-export type walletsListItemsResponse200 = {
-  data: OffsetPaginationDisplayWalletOutput
-  status: 200
-}
-
-export type walletsListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsListItemsResponseSuccess = walletsListItemsResponse200 & {
-  headers: Headers
-}
-export type walletsListItemsResponseError = walletsListItemsResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsListItemsUrl = (params?: WalletsListItemsParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -732,7 +685,7 @@ export const walletsListItems = async (
   params?: WalletsListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayWalletOutput> => {
   const res = await (fetchFn ?? fetch)(getWalletsListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -740,12 +693,12 @@ export const walletsListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayWallet.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as walletsListItemsResponseSuccess
+  return data
 }
 
 export const getWalletsListItemsQueryKey = (params?: WalletsListItemsParams) => {
@@ -880,11 +833,13 @@ export const getWalletsListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsListItems>>> = ({ signal }) =>
     walletsListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsListItemsSuspenseQueryResult = NonNullable<
@@ -965,23 +920,6 @@ export function useWalletsListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsCreateItemResponse200 = {
-  data: DisplayWalletOutput
-  status: 200
-}
-
-export type walletsCreateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsCreateItemResponseSuccess = walletsCreateItemResponse200 & {
-  headers: Headers
-}
-export type walletsCreateItemResponseError = walletsCreateItemResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsCreateItemUrl = () => {
   return `${BitcartApiConfig.baseUrl}/wallets`
 }
@@ -993,7 +931,7 @@ export const walletsCreateItem = async (
   createWallet: CreateWallet,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsCreateItemResponseSuccess> => {
+): Promise<DisplayWalletOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1022,10 +960,10 @@ export const walletsCreateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayWallet.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as walletsCreateItemResponseSuccess
+  return data
 }
 
 export const getWalletsCreateItemMutationKey = () => ["walletsCreateItem"] as const
@@ -1107,15 +1045,6 @@ export const useWalletsCreateItem = <
 > => {
   return useMutation(getWalletsCreateItemMutationOptions(options), queryClient)
 }
-export type walletsGetCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type walletsGetCountResponseSuccess = walletsGetCountResponse200 & {
-  headers: Headers
-}
-
 export const getWalletsGetCountUrl = () => {
   return `${BitcartApiConfig.baseUrl}/wallets/count`
 }
@@ -1126,16 +1055,16 @@ export const getWalletsGetCountUrl = () => {
 export const walletsGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsGetCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsGetCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as walletsGetCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsGetCountQueryKey = () => {
@@ -1257,11 +1186,13 @@ export const getWalletsGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetCount>>> = ({ signal }) =>
     walletsGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsGetCountSuspenseQueryResult = NonNullable<
@@ -1338,23 +1269,6 @@ export function useWalletsGetCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsGetItemResponse200 = {
-  data: DisplayWalletOutput
-  status: 200
-}
-
-export type walletsGetItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsGetItemResponseSuccess = walletsGetItemResponse200 & {
-  headers: Headers
-}
-export type walletsGetItemResponseError = walletsGetItemResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsGetItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${itemId}`
 }
@@ -1366,7 +1280,7 @@ export const walletsGetItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsGetItemResponseSuccess> => {
+): Promise<DisplayWalletOutput> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetItemUrl(itemId), {
     ...options,
     method: "GET",
@@ -1374,10 +1288,10 @@ export const walletsGetItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayWallet.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as walletsGetItemResponseSuccess
+  return data
 }
 
 export const getWalletsGetItemQueryKey = (itemId: string) => {
@@ -1515,11 +1429,13 @@ export const getWalletsGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetItem>>> = ({ signal }) =>
     walletsGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetItem>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsGetItemSuspenseQueryResult = NonNullable<
@@ -1600,23 +1516,6 @@ export function useWalletsGetItemSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsUpdateItemResponse200 = {
-  data: DisplayWalletOutput
-  status: 200
-}
-
-export type walletsUpdateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsUpdateItemResponseSuccess = walletsUpdateItemResponse200 & {
-  headers: Headers
-}
-export type walletsUpdateItemResponseError = walletsUpdateItemResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsUpdateItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${itemId}`
 }
@@ -1629,7 +1528,7 @@ export const walletsUpdateItem = async (
   optionalUpdateWallet: OptionalUpdateWallet,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsUpdateItemResponseSuccess> => {
+): Promise<DisplayWalletOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1658,10 +1557,10 @@ export const walletsUpdateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayWallet.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as walletsUpdateItemResponseSuccess
+  return data
 }
 
 export const getWalletsUpdateItemMutationKey = () => ["walletsUpdateItem"] as const
@@ -1743,23 +1642,6 @@ export const useWalletsUpdateItem = <
 > => {
   return useMutation(getWalletsUpdateItemMutationOptions(options), queryClient)
 }
-export type walletsDeleteItemResponse200 = {
-  data: DisplayWalletOutput
-  status: 200
-}
-
-export type walletsDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsDeleteItemResponseSuccess = walletsDeleteItemResponse200 & {
-  headers: Headers
-}
-export type walletsDeleteItemResponseError = walletsDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${itemId}`
 }
@@ -1771,7 +1653,7 @@ export const walletsDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsDeleteItemResponseSuccess> => {
+): Promise<DisplayWalletOutput> => {
   const res = await (fetchFn ?? fetch)(getWalletsDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -1779,10 +1661,10 @@ export const walletsDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayWallet.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as walletsDeleteItemResponseSuccess
+  return data
 }
 
 export const getWalletsDeleteItemMutationKey = () => ["walletsDeleteItem"] as const
@@ -1864,23 +1746,6 @@ export const useWalletsDeleteItem = <
 > => {
   return useMutation(getWalletsDeleteItemMutationOptions(options), queryClient)
 }
-export type walletsBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type walletsBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsBatchActionResponseSuccess = walletsBatchActionResponse200 & {
-  headers: Headers
-}
-export type walletsBatchActionResponseError = walletsBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/wallets/batch`
 }
@@ -1892,7 +1757,7 @@ export const walletsBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1920,9 +1785,9 @@ export const walletsBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as walletsBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsBatchActionMutationKey = () => ["walletsBatchAction"] as const
@@ -2004,23 +1869,6 @@ export const useWalletsBatchAction = <
 > => {
   return useMutation(getWalletsBatchActionMutationOptions(options), queryClient)
 }
-export type walletsGetWalletRateResponse200 = {
-  data: number
-  status: 200
-}
-
-export type walletsGetWalletRateResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsGetWalletRateResponseSuccess = walletsGetWalletRateResponse200 & {
-  headers: Headers
-}
-export type walletsGetWalletRateResponseError = walletsGetWalletRateResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsGetWalletRateUrl = (
   modelId: string,
   params?: WalletsGetWalletRateParams,
@@ -2048,16 +1896,16 @@ export const walletsGetWalletRate = async (
   params?: WalletsGetWalletRateParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsGetWalletRateResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetWalletRateUrl(modelId, params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsGetWalletRateResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as walletsGetWalletRateResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsGetWalletRateQueryKey = (
@@ -2219,11 +2067,13 @@ export const getWalletsGetWalletRateSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetWalletRate>>> = ({ signal }) =>
     walletsGetWalletRate(modelId, params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetWalletRate>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsGetWalletRateSuspenseQueryResult = NonNullable<
@@ -2308,23 +2158,6 @@ export function useWalletsGetWalletRateSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsGetWalletBalanceResponse200 = {
-  data: BalanceResponseOutput
-  status: 200
-}
-
-export type walletsGetWalletBalanceResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsGetWalletBalanceResponseSuccess = walletsGetWalletBalanceResponse200 & {
-  headers: Headers
-}
-export type walletsGetWalletBalanceResponseError = walletsGetWalletBalanceResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsGetWalletBalanceUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${modelId}/balance`
 }
@@ -2336,7 +2169,7 @@ export const walletsGetWalletBalance = async (
   modelId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsGetWalletBalanceResponseSuccess> => {
+): Promise<BalanceResponseOutput> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetWalletBalanceUrl(modelId), {
     ...options,
     method: "GET",
@@ -2344,14 +2177,10 @@ export const walletsGetWalletBalance = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? BalanceResponse.parse(parsedBody) : parsedBody
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as walletsGetWalletBalanceResponseSuccess
+  return data
 }
 
 export const getWalletsGetWalletBalanceQueryKey = (modelId: string) => {
@@ -2503,11 +2332,13 @@ export const getWalletsGetWalletBalanceSuspenseQueryOptions = <
     signal,
   }) => walletsGetWalletBalance(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetWalletBalance>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsGetWalletBalanceSuspenseQueryResult = NonNullable<
@@ -2588,23 +2419,6 @@ export function useWalletsGetWalletBalanceSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsGetWalletSymbolResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type walletsGetWalletSymbolResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsGetWalletSymbolResponseSuccess = walletsGetWalletSymbolResponse200 & {
-  headers: Headers
-}
-export type walletsGetWalletSymbolResponseError = walletsGetWalletSymbolResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsGetWalletSymbolUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${modelId}/symbol`
 }
@@ -2616,16 +2430,16 @@ export const walletsGetWalletSymbol = async (
   modelId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsGetWalletSymbolResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetWalletSymbolUrl(modelId), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsGetWalletSymbolResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as walletsGetWalletSymbolResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsGetWalletSymbolQueryKey = (modelId: string) => {
@@ -2775,11 +2589,13 @@ export const getWalletsGetWalletSymbolSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetWalletSymbol>>> = ({ signal }) =>
     walletsGetWalletSymbol(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsGetWalletSymbolSuspenseQueryResult = NonNullable<
@@ -2860,23 +2676,6 @@ export function useWalletsGetWalletSymbolSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsCheckWalletLightningResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type walletsCheckWalletLightningResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsCheckWalletLightningResponseSuccess = walletsCheckWalletLightningResponse200 & {
-  headers: Headers
-}
-export type walletsCheckWalletLightningResponseError = walletsCheckWalletLightningResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsCheckWalletLightningUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${modelId}/checkln`
 }
@@ -2888,20 +2687,16 @@ export const walletsCheckWalletLightning = async (
   modelId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsCheckWalletLightningResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getWalletsCheckWalletLightningUrl(modelId), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsCheckWalletLightningResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as walletsCheckWalletLightningResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsCheckWalletLightningQueryKey = (modelId: string) => {
@@ -3057,11 +2852,13 @@ export const getWalletsCheckWalletLightningSuspenseQueryOptions = <
     signal,
   }) => walletsCheckWalletLightning(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsCheckWalletLightningSuspenseQueryResult = NonNullable<
@@ -3158,23 +2955,6 @@ export function useWalletsCheckWalletLightningSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsGetWalletChannelsResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type walletsGetWalletChannelsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsGetWalletChannelsResponseSuccess = walletsGetWalletChannelsResponse200 & {
-  headers: Headers
-}
-export type walletsGetWalletChannelsResponseError = walletsGetWalletChannelsResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsGetWalletChannelsUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${modelId}/channels`
 }
@@ -3186,20 +2966,16 @@ export const walletsGetWalletChannels = async (
   modelId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsGetWalletChannelsResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetWalletChannelsUrl(modelId), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsGetWalletChannelsResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as walletsGetWalletChannelsResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsGetWalletChannelsQueryKey = (modelId: string) => {
@@ -3351,11 +3127,13 @@ export const getWalletsGetWalletChannelsSuspenseQueryOptions = <
     signal,
   }) => walletsGetWalletChannels(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetWalletChannels>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type WalletsGetWalletChannelsSuspenseQueryResult = NonNullable<
@@ -3436,23 +3214,6 @@ export function useWalletsGetWalletChannelsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type walletsOpenWalletChannelResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type walletsOpenWalletChannelResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsOpenWalletChannelResponseSuccess = walletsOpenWalletChannelResponse200 & {
-  headers: Headers
-}
-export type walletsOpenWalletChannelResponseError = walletsOpenWalletChannelResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsOpenWalletChannelUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${modelId}/channels/open`
 }
@@ -3465,7 +3226,7 @@ export const walletsOpenWalletChannel = async (
   openChannelScheme: OpenChannelScheme,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsOpenWalletChannelResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -3493,13 +3254,9 @@ export const walletsOpenWalletChannel = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsOpenWalletChannelResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as walletsOpenWalletChannelResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsOpenWalletChannelMutationKey = () => ["walletsOpenWalletChannel"] as const
@@ -3581,23 +3338,6 @@ export const useWalletsOpenWalletChannel = <
 > => {
   return useMutation(getWalletsOpenWalletChannelMutationOptions(options), queryClient)
 }
-export type walletsCloseWalletChannelResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type walletsCloseWalletChannelResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsCloseWalletChannelResponseSuccess = walletsCloseWalletChannelResponse200 & {
-  headers: Headers
-}
-export type walletsCloseWalletChannelResponseError = walletsCloseWalletChannelResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsCloseWalletChannelUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${modelId}/channels/close`
 }
@@ -3610,7 +3350,7 @@ export const walletsCloseWalletChannel = async (
   closeChannelScheme: CloseChannelScheme,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsCloseWalletChannelResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -3638,13 +3378,9 @@ export const walletsCloseWalletChannel = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsCloseWalletChannelResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as walletsCloseWalletChannelResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsCloseWalletChannelMutationKey = () => ["walletsCloseWalletChannel"] as const
@@ -3729,23 +3465,6 @@ export const useWalletsCloseWalletChannel = <
 > => {
   return useMutation(getWalletsCloseWalletChannelMutationOptions(options), queryClient)
 }
-export type walletsWalletLnpayResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type walletsWalletLnpayResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type walletsWalletLnpayResponseSuccess = walletsWalletLnpayResponse200 & {
-  headers: Headers
-}
-export type walletsWalletLnpayResponseError = walletsWalletLnpayResponse422 & {
-  headers: Headers
-}
-
 export const getWalletsWalletLnpayUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/wallets/${modelId}/lnpay`
 }
@@ -3758,7 +3477,7 @@ export const walletsWalletLnpay = async (
   lNPayScheme: LNPayScheme,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<walletsWalletLnpayResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -3786,9 +3505,9 @@ export const walletsWalletLnpay = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: walletsWalletLnpayResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as walletsWalletLnpayResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getWalletsWalletLnpayMutationKey = () => ["walletsWalletLnpay"] as const

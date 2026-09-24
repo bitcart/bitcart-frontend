@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -35,7 +40,7 @@ import type {
   TemplatesGetTemplateListParams,
   TemplatesListItemsParams,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -50,23 +55,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
     })
   }
   return result
-}
-
-export type templatesGetTemplateListResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type templatesGetTemplateListResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type templatesGetTemplateListResponseSuccess = templatesGetTemplateListResponse200 & {
-  headers: Headers
-}
-export type templatesGetTemplateListResponseError = templatesGetTemplateListResponse422 & {
-  headers: Headers
 }
 
 export const getTemplatesGetTemplateListUrl = (params?: TemplatesGetTemplateListParams) => {
@@ -92,20 +80,16 @@ export const templatesGetTemplateList = async (
   params?: TemplatesGetTemplateListParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<templatesGetTemplateListResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getTemplatesGetTemplateListUrl(params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: templatesGetTemplateListResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as templatesGetTemplateListResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTemplatesGetTemplateListQueryKey = (params?: TemplatesGetTemplateListParams) => {
@@ -254,11 +238,13 @@ export const getTemplatesGetTemplateListSuspenseQueryOptions = <
     signal,
   }) => templatesGetTemplateList(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof templatesGetTemplateList>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type TemplatesGetTemplateListSuspenseQueryResult = NonNullable<
@@ -339,23 +325,6 @@ export function useTemplatesGetTemplateListSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type templatesListItemsResponse200 = {
-  data: OffsetPaginationDisplayTemplateOutput
-  status: 200
-}
-
-export type templatesListItemsResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type templatesListItemsResponseSuccess = templatesListItemsResponse200 & {
-  headers: Headers
-}
-export type templatesListItemsResponseError = templatesListItemsResponse422 & {
-  headers: Headers
-}
-
 export const getTemplatesListItemsUrl = (params?: TemplatesListItemsParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -379,7 +348,7 @@ export const templatesListItems = async (
   params?: TemplatesListItemsParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<templatesListItemsResponseSuccess> => {
+): Promise<OffsetPaginationDisplayTemplateOutput> => {
   const res = await (fetchFn ?? fetch)(getTemplatesListItemsUrl(params), {
     ...options,
     method: "GET",
@@ -387,12 +356,12 @@ export const templatesListItems = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json")
     ? OffsetPaginationDisplayTemplate.parse(parsedBody)
     : parsedBody
-  return { data, status: res.status, headers: res.headers } as templatesListItemsResponseSuccess
+  return data
 }
 
 export const getTemplatesListItemsQueryKey = (params?: TemplatesListItemsParams) => {
@@ -531,11 +500,13 @@ export const getTemplatesListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof templatesListItems>>> = ({ signal }) =>
     templatesListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof templatesListItems>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type TemplatesListItemsSuspenseQueryResult = NonNullable<
@@ -616,23 +587,6 @@ export function useTemplatesListItemsSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type templatesCreateItemResponse200 = {
-  data: DisplayTemplateOutput
-  status: 200
-}
-
-export type templatesCreateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type templatesCreateItemResponseSuccess = templatesCreateItemResponse200 & {
-  headers: Headers
-}
-export type templatesCreateItemResponseError = templatesCreateItemResponse422 & {
-  headers: Headers
-}
-
 export const getTemplatesCreateItemUrl = () => {
   return `${BitcartApiConfig.baseUrl}/templates`
 }
@@ -644,7 +598,7 @@ export const templatesCreateItem = async (
   createTemplate: CreateTemplate,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<templatesCreateItemResponseSuccess> => {
+): Promise<DisplayTemplateOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -673,10 +627,10 @@ export const templatesCreateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayTemplate.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as templatesCreateItemResponseSuccess
+  return data
 }
 
 export const getTemplatesCreateItemMutationKey = () => ["templatesCreateItem"] as const
@@ -758,15 +712,6 @@ export const useTemplatesCreateItem = <
 > => {
   return useMutation(getTemplatesCreateItemMutationOptions(options), queryClient)
 }
-export type templatesGetCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type templatesGetCountResponseSuccess = templatesGetCountResponse200 & {
-  headers: Headers
-}
-
 export const getTemplatesGetCountUrl = () => {
   return `${BitcartApiConfig.baseUrl}/templates/count`
 }
@@ -777,16 +722,16 @@ export const getTemplatesGetCountUrl = () => {
 export const templatesGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<templatesGetCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getTemplatesGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: templatesGetCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as templatesGetCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTemplatesGetCountQueryKey = () => {
@@ -910,11 +855,13 @@ export const getTemplatesGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof templatesGetCount>>> = ({ signal }) =>
     templatesGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof templatesGetCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type TemplatesGetCountSuspenseQueryResult = NonNullable<
@@ -991,23 +938,6 @@ export function useTemplatesGetCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type templatesGetItemResponse200 = {
-  data: DisplayTemplateOutput
-  status: 200
-}
-
-export type templatesGetItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type templatesGetItemResponseSuccess = templatesGetItemResponse200 & {
-  headers: Headers
-}
-export type templatesGetItemResponseError = templatesGetItemResponse422 & {
-  headers: Headers
-}
-
 export const getTemplatesGetItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/templates/${itemId}`
 }
@@ -1019,7 +949,7 @@ export const templatesGetItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<templatesGetItemResponseSuccess> => {
+): Promise<DisplayTemplateOutput> => {
   const res = await (fetchFn ?? fetch)(getTemplatesGetItemUrl(itemId), {
     ...options,
     method: "GET",
@@ -1027,10 +957,10 @@ export const templatesGetItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayTemplate.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as templatesGetItemResponseSuccess
+  return data
 }
 
 export const getTemplatesGetItemQueryKey = (itemId: string) => {
@@ -1168,11 +1098,13 @@ export const getTemplatesGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof templatesGetItem>>> = ({ signal }) =>
     templatesGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof templatesGetItem>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type TemplatesGetItemSuspenseQueryResult = NonNullable<
@@ -1253,23 +1185,6 @@ export function useTemplatesGetItemSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type templatesUpdateItemResponse200 = {
-  data: DisplayTemplateOutput
-  status: 200
-}
-
-export type templatesUpdateItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type templatesUpdateItemResponseSuccess = templatesUpdateItemResponse200 & {
-  headers: Headers
-}
-export type templatesUpdateItemResponseError = templatesUpdateItemResponse422 & {
-  headers: Headers
-}
-
 export const getTemplatesUpdateItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/templates/${itemId}`
 }
@@ -1282,7 +1197,7 @@ export const templatesUpdateItem = async (
   optionalUpdateTemplate: OptionalUpdateTemplate,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<templatesUpdateItemResponseSuccess> => {
+): Promise<DisplayTemplateOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1311,10 +1226,10 @@ export const templatesUpdateItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayTemplate.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as templatesUpdateItemResponseSuccess
+  return data
 }
 
 export const getTemplatesUpdateItemMutationKey = () => ["templatesUpdateItem"] as const
@@ -1396,23 +1311,6 @@ export const useTemplatesUpdateItem = <
 > => {
   return useMutation(getTemplatesUpdateItemMutationOptions(options), queryClient)
 }
-export type templatesDeleteItemResponse200 = {
-  data: DisplayTemplateOutput
-  status: 200
-}
-
-export type templatesDeleteItemResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type templatesDeleteItemResponseSuccess = templatesDeleteItemResponse200 & {
-  headers: Headers
-}
-export type templatesDeleteItemResponseError = templatesDeleteItemResponse422 & {
-  headers: Headers
-}
-
 export const getTemplatesDeleteItemUrl = (itemId: string) => {
   return `${BitcartApiConfig.baseUrl}/templates/${itemId}`
 }
@@ -1424,7 +1322,7 @@ export const templatesDeleteItem = async (
   itemId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<templatesDeleteItemResponseSuccess> => {
+): Promise<DisplayTemplateOutput> => {
   const res = await (fetchFn ?? fetch)(getTemplatesDeleteItemUrl(itemId), {
     ...options,
     method: "DELETE",
@@ -1432,10 +1330,10 @@ export const templatesDeleteItem = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? DisplayTemplate.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as templatesDeleteItemResponseSuccess
+  return data
 }
 
 export const getTemplatesDeleteItemMutationKey = () => ["templatesDeleteItem"] as const
@@ -1517,23 +1415,6 @@ export const useTemplatesDeleteItem = <
 > => {
   return useMutation(getTemplatesDeleteItemMutationOptions(options), queryClient)
 }
-export type templatesBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type templatesBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type templatesBatchActionResponseSuccess = templatesBatchActionResponse200 & {
-  headers: Headers
-}
-export type templatesBatchActionResponseError = templatesBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getTemplatesBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/templates/batch`
 }
@@ -1545,7 +1426,7 @@ export const templatesBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<templatesBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1573,9 +1454,9 @@ export const templatesBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: templatesBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as templatesBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTemplatesBatchActionMutationKey = () => ["templatesBatchAction"] as const

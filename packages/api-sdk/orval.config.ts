@@ -30,6 +30,11 @@ export default defineConfig({
 
       mode: "tags",
 
+      //* Orval's default `camelCase` lowercases the first letter of a leading acronym,
+      //* and `PascalCase` is the only convention that leaves acronyms intact.
+      //* Affects file names only.
+      namingConvention: "PascalCase",
+
       schemas: {
         path: "./src/schemas/generated",
         splitByTags: true,
@@ -41,9 +46,12 @@ export default defineConfig({
 
       override: {
         fetch: {
-          //* Without this a 404 resolves as `{ data, status }`, which TanStack Query caches
-          //* as a successful result. Throws `Error & { info, status }` instead.
+          //* Without this a 404 resolves as a successful result, which TanStack Query caches.
+          //* Throws `Error & { info, status }` instead.
           forceSuccessResponse: true,
+
+          //* Orval's default wraps every payload in `{ data, status, headers }`.
+          includeHttpResponseReturnType: false,
 
           runtimeValidation: true,
 

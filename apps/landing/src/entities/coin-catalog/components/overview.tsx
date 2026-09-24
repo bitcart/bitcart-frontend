@@ -1,3 +1,4 @@
+import { bitcartCryptos } from "@bitcart/api-sdk/endpoints"
 import {
   Accordion,
   AccordionContent,
@@ -10,8 +11,6 @@ import { ChevronDownIcon, Search } from "lucide-react"
 import { useMemo, useState } from "react"
 import { prop } from "remeda"
 
-import { type BlockchainId } from "@/common/data/bitcart"
-
 import type { CoinCatalogLookupResult } from "../types"
 import { CoinCatalogEntryIcon } from "./entry-icon"
 
@@ -19,26 +18,23 @@ export type CoinCatalogOverviewProps = {
   data: CoinCatalogLookupResult
 }
 
-type AccordionItemId = BlockchainId
+type AccordionItemId = bitcartCryptos.BlockchainId
 
 export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
   data: { entries: filteredEntries, totalCounts, searchCounts },
 }) => {
   const { t } = useLingui()
   const [expandedEntries, setExpandedEntries] = useState<AccordionItemId[]>([])
-  const [coinSearchResultCount, setCoinSearchResultCount] = useState(searchCounts.fungibleTokens)
+  const [coinSearchResultCount, setCoinSearchResultCount] = useState(searchCounts.tokens)
 
   const searchResultBlockchainIds = useMemo(
     () => filteredEntries.map(prop("blockchain", "id")),
     [filteredEntries],
   )
 
-  if (searchCounts.fungibleTokens !== coinSearchResultCount) {
-    setCoinSearchResultCount(searchCounts.fungibleTokens)
-
-    setExpandedEntries(
-      searchCounts.fungibleTokens === totalCounts.fungibleTokens ? [] : searchResultBlockchainIds,
-    )
+  if (searchCounts.tokens !== coinSearchResultCount) {
+    setCoinSearchResultCount(searchCounts.tokens)
+    setExpandedEntries(searchCounts.tokens === totalCounts.tokens ? [] : searchResultBlockchainIds)
   }
 
   return (
@@ -70,8 +66,8 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
             className="gap-4 sm:gap-6 lg:columns-2 space-y-4 sm:space-y-6 columns-1"
             aria-labelledby="coin-catalog-heading"
           >
-            {filteredEntries.map(({ blockchain, fungibleTokens }) => {
-              const isSearchResult = fungibleTokens.entries.length < fungibleTokens.totalCount
+            {filteredEntries.map(({ blockchain, tokens }) => {
+              const isSearchResult = tokens.entries.length < tokens.totalCount
 
               return (
                 <AccordionItem
@@ -83,7 +79,7 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                     chevronElement={
                       <span
                         className={cn(`flex h-full flex-col items-center justify-center`, {
-                          hidden: fungibleTokens.entries.length === 0,
+                          hidden: tokens.entries.length === 0,
                         })}
                       >
                         <span className="p-1 sm:p-2">
@@ -98,7 +94,7 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                       </span>
                     }
                     className={cn("p-4 sm:p-6", {
-                      "hover:bg-secondary/50 cursor-pointer": fungibleTokens.entries.length > 0,
+                      "hover:bg-secondary/50 cursor-pointer": tokens.entries.length > 0,
                     })}
                   >
                     <div className="flex w-full items-center justify-between">
@@ -128,12 +124,12 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                       </div>
 
                       <div className="space-x-2 sm:space-x-4 flex shrink-0 items-center">
-                        {fungibleTokens.entries.length > 0 && (
+                        {tokens.entries.length > 0 && (
                           <div className="text-right">
                             <div className="text-xs text-muted-foreground sm:text-sm">{t`Tokens`}</div>
 
                             <div className="text-sm text-accent-foreground font-semibold sm:text-lg">
-                              {fungibleTokens.entries.length}
+                              {tokens.entries.length}
                             </div>
                           </div>
                         )}
@@ -141,13 +137,13 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                     </div>
                   </AccordionTrigger>
 
-                  {fungibleTokens.entries.length > 0 && (
+                  {tokens.entries.length > 0 && (
                     <AccordionContent className="p-4 sm:p-6 border-t">
                       <h4 className="text-base font-semibold mb-2 sm:text-lg">
                         {isSearchResult
                           ? t`Matching Tokens on ${blockchain.metadata.displayName} (${
-                              fungibleTokens.entries.length
-                            }/${fungibleTokens.totalCount})`
+                              tokens.entries.length
+                            }/${tokens.totalCount})`
                           : t`Example Tokens on ${blockchain.metadata.displayName}`}
                       </h4>
 
@@ -159,7 +155,7 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                       </p>
 
                       <div className="gap-3 md:grid-cols-5 sm:grid-cols-4 grid grid-cols-3">
-                        {fungibleTokens.entries.map((tokenSymbol) => {
+                        {tokens.entries.map((tokenSymbol) => {
                           return (
                             <div
                               key={tokenSymbol}

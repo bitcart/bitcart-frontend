@@ -8,7 +8,7 @@ import { readdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname, join, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
-import { ENUM_FALLBACK, SCHEMA_ENUM_OVERRIDES } from "./constants"
+import { EMAIL_PATTERN, ENUM_FALLBACK, SCHEMA_ENUM_OVERRIDES } from "./constants"
 import type { OpenApiSpec } from "./types"
 
 type Flow = () => { pending: Map<string, string>; succeeded: boolean }
@@ -44,22 +44,19 @@ const report = (flow: string, failures: string[], summary: string): boolean => {
 
 //* Repairs Orval's generated Zod schemas.
 //*
-//* 1. Object-valued defaults. `.default()` hands the value straight to the caller without parsing
-//*    it, which drops every nested default the parent's default object omits. `.prefault()` takes
-//*    the input type and re-parses, matching what an OpenAPI `default` means.
-//* 2. `additionalProperties: true`. Orval emits a plain `zod.object`, which strips the undeclared
+//* 1. `additionalProperties: true`. Orval emits a plain `zod.object`, which strips the undeclared
 //*    keys the API extends such payloads with at runtime. `zod.looseObject` preserves them.
-//* 3. Enums overridden by `transform-spec.ts`. A closed list makes every value outside it a parse
+//* 2. Enums overridden by `transform-spec.ts`. A closed list makes every value outside it a parse
 //*    failure, and `runtimeValidation` propagates that failure to each page rendering the payload.
 //*    `.catch()` resolves such a value to the fallback member.
+//* 3. `format: "email"`. Orval emits a bare `zod.email()`, whose default pattern rejects addresses
+//*    accepted by the API, such as `a&b@example.com`. `EMAIL_PATTERN` accepts all of them.
 //*
-//! All three rewrites are regexes over Orval's output shape, which an upgrade can reshape silently.
+//! Every rewrite is a regex over Orval's output shape, which an upgrade can reshape silently.
 //! Each one asserts that it matched something; the flow fails otherwise.
 const postprocessSchemas: Flow = () => {
-  const OBJECT_CONST = /^export const (\w+) = \{/gm
-
-  //* An enum declaration that has no fallback yet, however oxfmt wrapped the member list.
-  const ENUM_DECLARATION = /zod\.enum\(\[[^\]]*\]\)(?!\.catch\()/g
+  const ENUM_DECLARATION = /zod\.enum\(\[[^\]]*\]\)/g
+  const EMAIL_DECLARATION = /zod\.email\(\)/g
 
   const spec = JSON.parse(readFileSync(SPEC_PATH, "utf8")) as OpenApiSpec
 
@@ -73,21 +70,16 @@ const postprocessSchemas: Flow = () => {
     Object.values(properties).filter((members) => members.includes(ENUM_FALLBACK)),
   )
 
-  const applyPrefault = (source: string) => {
-    let updated = source
-    let rewrites = 0
-
-    for (const [, name] of source.matchAll(OBJECT_CONST)) {
-      const callSite = `.default(${name})`
-
-      if (!updated.includes(callSite)) continue
-
-      updated = updated.replaceAll(callSite, `.prefault(${name})`)
-      rewrites += 1
-    }
-
-    return { rewrites, source: updated }
+  const countEmailFormats = (node: unknown): number => {
+    if (typeof node === "object" && node !== null) {
+      return Object.values(node).reduce<number>(
+        (count, child) => count + countEmailFormats(child),
+        "format" in node && node.format === "email" ? 1 : 0,
+      )
+    } else return 0
   }
+
+  const emailFormats = countEmailFormats(spec.components?.schemas)
 
   const applyLooseObjects = (source: string) => {
     let updated = source
@@ -119,40 +111,58 @@ const postprocessSchemas: Flow = () => {
     return { rewrites, source: updated }
   }
 
+  const applyEmailPattern = (source: string) => {
+    let rewrites = 0
+
+    const updated = source.replace(EMAIL_DECLARATION, () => {
+      rewrites += 1
+
+      return `zod.email({ pattern: ${String(EMAIL_PATTERN)} })`
+    })
+
+    return { rewrites, source: updated }
+  }
+
   const failures: string[] = []
   const pending = new Map<string, string>()
-  let prefaulted = 0
   let loosened = 0
   let caught = 0
+  let widened = 0
 
   for (const file of walk(SCHEMAS_ROOT, ".zod.ts")) {
     const original = readFileSync(file, "utf8")
-    const withPrefaults = applyPrefault(original)
-    const withLooseObjects = applyLooseObjects(withPrefaults.source)
+    const withLooseObjects = applyLooseObjects(original)
     const withEnumFallbacks = applyEnumFallback(withLooseObjects.source)
+    const withEmailPatterns = applyEmailPattern(withEnumFallbacks.source)
 
-    prefaulted += withPrefaults.rewrites
     loosened += withLooseObjects.rewrites
     caught += withEnumFallbacks.rewrites
+    widened += withEmailPatterns.rewrites
 
-    if (withEnumFallbacks.source !== original) {
-      pending.set(file, withEnumFallbacks.source)
+    if (withEmailPatterns.source !== original) {
+      pending.set(file, withEmailPatterns.source)
     }
-  }
-
-  if (prefaulted === 0) {
-    failures.push("no object-valued `.default(...)` call site was found")
   }
 
   if (looseSchemas.size > 0 && loosened === 0) {
     failures.push(
-      `none of the ${looseSchemas.size} \`additionalProperties: true\` schemas was declared as \`zod.object(\``,
+      `none of the ${
+        looseSchemas.size
+      } \`additionalProperties: true\` schemas was declared as \`zod.object(\``,
     )
   }
 
   if (fallbackEnums.length > 0 && caught === 0) {
     failures.push(
-      `none of the ${fallbackEnums.length} enum(s) carrying \`${ENUM_FALLBACK}\` was declared as \`zod.enum([\``,
+      `none of the ${
+        fallbackEnums.length
+      } enum(s) carrying \`${ENUM_FALLBACK}\` was declared as \`zod.enum([\``,
+    )
+  }
+
+  if (widened !== emailFormats) {
+    failures.push(
+      `${widened} of the ${emailFormats} \`format: "email"\` fields were declared as \`zod.email()\``,
     )
   }
 
@@ -162,27 +172,24 @@ const postprocessSchemas: Flow = () => {
     succeeded: report(
       "schemas",
       failures,
-      `${prefaulted} prefault(s), ${loosened} loose object(s), ${caught} enum fallback(s)`,
+      `${loosened} loose object(s), ${caught} enum fallback(s), ${widened} email pattern(s)`,
     ),
   }
 }
 
 //* Repairs Orval's generated operations.
 //*
-//* 1. The failure branch. Orval's own branch throws a message-less `Error` and runs `JSON.parse`
-//*    over the response body unconditionally, unlike the success branch next to it, which parses
-//*    only a JSON content type. A plain-text 500 or a proxy's HTML 502 therefore threw a
-//*    `SyntaxError` before `status` was assigned, and every classifier in `src/utils.ts` read that
-//*    `SyntaxError` as a foreign error. `createApiFailure` replaces it.
-//* 2. Response type imports. Each success response is typed as the `<Schema>Output` alias exported
-//*    beside its Zod schema, which Orval never adds to the file's imports.
+//* The failure branch: Orval's own branch throws a message-less `Error` and runs `JSON.parse` over
+//* the response body unconditionally, unlike the success branch next to it, which parses only a
+//* JSON content type. A plain-text 500 or a proxy's HTML 502 therefore threw a `SyntaxError`
+//* before `status` was assigned, and every classifier in `src/utils.ts` read that `SyntaxError` as
+//* a foreign error. `createApiFailureError` replaces it.
 //*
-//! Both rewrites are regexes over Orval's output shape, which an upgrade can reshape silently.
+//! The rewrite is a regex over Orval's output shape, which an upgrade can reshape silently.
 //! Every matched block is checked statement by statement, and the flow fails as soon as one block
 //! or one file fails to match.
 const postprocessEndpoints: Flow = () => {
-  const FAILURE_IMPORT = 'import { createApiFailure } from "../utils"'
-  const SCHEMAS_MODULE = "../../../schemas/generated"
+  const FAILURE_IMPORT = 'import { createApiFailureError } from "../utils"'
 
   //* The whole `if (!res.ok) { ... throw err }` branch, however oxfmt wrapped the `err` annotation.
   const FAILURE_BLOCK = /^ {2}if \(!res\.ok\) \{\n(?: {4,}.*\n)*? {4}throw err\n {2}\}$/gm
@@ -198,24 +205,6 @@ const postprocessEndpoints: Flow = () => {
 
   //* A single-line import, or the closing line of a multi-line one.
   const IMPORT_END = /^(?:import .*"|} from ".*")$/gm
-
-  //* The generated schemas imported as types. Some operation files carry no such import.
-  const SCHEMA_TYPE_IMPORT =
-    /^import type \{([^}]*)\} from "\.\.\/\.\.\/\.\.\/schemas\/generated"$/m
-
-  //* The generated schemas imported as values, emitted for every schema validated at runtime.
-  const SCHEMA_VALUE_IMPORT = /^import \{[^}]*\} from "\.\.\/\.\.\/\.\.\/schemas\/generated"$/m
-
-  //* The success response member, typed as the Zod output alias of its schema.
-  const RESPONSE_TYPE = /^ {2}data: (\w+Output)$/gm
-
-  const EXPORTED_TYPE = /^export type (\w+)/gm
-
-  const exportedTypes = new Set(
-    walk(SCHEMAS_ROOT, ".zod.ts").flatMap((file) =>
-      [...readFileSync(file, "utf8").matchAll(EXPORTED_TYPE)].map(([, name]) => name),
-    ),
-  )
 
   const failures: string[] = []
 
@@ -236,7 +225,7 @@ const postprocessEndpoints: Flow = () => {
 
       rewrites += 1
 
-      return "  if (!res.ok) throw createApiFailure(res, body)"
+      return "  if (!res.ok) throw createApiFailureError(res, body)"
     })
 
     return { rewrites, source: updated }
@@ -247,7 +236,7 @@ const postprocessEndpoints: Flow = () => {
     const lastImport = imports[imports.length - 1]
 
     if (!lastImport) {
-      failures.push(`${file}: no import to append the \`createApiFailure\` import to`)
+      failures.push(`${file}: no import to append the \`createApiFailureError\` import to`)
 
       return source
     }
@@ -257,60 +246,8 @@ const postprocessEndpoints: Flow = () => {
     return `${source.slice(0, insertAt)}\n${FAILURE_IMPORT}${source.slice(insertAt)}`
   }
 
-  const addResponseTypeImports = (source: string, file: string) => {
-    const referenced = new Set([...source.matchAll(RESPONSE_TYPE)].map(([, name]) => name))
-
-    if (referenced.size === 0) return { rewrites: 0, source }
-
-    const undeclared = [...referenced].filter((name) => !exportedTypes.has(name))
-
-    if (undeclared.length > 0) {
-      failures.push(`${file}: the generated schemas do not export ${undeclared.join(", ")}`)
-
-      return { rewrites: 0, source }
-    }
-
-    const typeImport = SCHEMA_TYPE_IMPORT.exec(source)
-
-    if (typeImport) {
-      const imported = typeImport[1]
-        .split(",")
-        .map((name) => name.trim())
-        .filter(Boolean)
-
-      const added = [...referenced].filter((name) => !imported.includes(name))
-      const names = [...imported, ...added].sort()
-
-      return {
-        rewrites: added.length,
-        source: source.replace(
-          SCHEMA_TYPE_IMPORT,
-          `import type { ${names.join(", ")} } from "${SCHEMAS_MODULE}"`,
-        ),
-      }
-    }
-
-    const valueImport = SCHEMA_VALUE_IMPORT.exec(source)
-
-    if (!valueImport) {
-      failures.push(`${file}: no import from \`${SCHEMAS_MODULE}\` to extend`)
-
-      return { rewrites: 0, source }
-    }
-
-    const names = [...referenced].sort()
-    const insertAt = valueImport.index + valueImport[0].length
-    const declaration = `import type { ${names.join(", ")} } from "${SCHEMAS_MODULE}"`
-
-    return {
-      rewrites: names.length,
-      source: `${source.slice(0, insertAt)}\n${declaration}${source.slice(insertAt)}`,
-    }
-  }
-
   const pending = new Map<string, string>()
   let rewritten = 0
-  let imported = 0
 
   for (const file of walk(ENDPOINTS_ROOT, ".ts")) {
     const original = readFileSync(file, "utf8")
@@ -322,27 +259,15 @@ const postprocessEndpoints: Flow = () => {
       continue
     }
 
-    const withFailureImport = addFailureImport(withHelper.source, file)
-    const withResponseTypes = addResponseTypeImports(withFailureImport, file)
-
     rewritten += withHelper.rewrites
-    imported += withResponseTypes.rewrites
 
-    pending.set(file, withResponseTypes.source)
-  }
-
-  if (imported === 0) {
-    failures.push("no success response was typed as a Zod output alias")
+    pending.set(file, addFailureImport(withHelper.source, file))
   }
 
   return {
     pending,
 
-    succeeded: report(
-      "endpoints",
-      failures,
-      `${rewritten} failure branch(es), ${imported} response type import(s)`,
-    ),
+    succeeded: report("endpoints", failures, `${rewritten} failure branch(es)`),
   }
 }
 

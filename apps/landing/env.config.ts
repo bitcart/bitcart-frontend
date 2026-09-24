@@ -21,6 +21,7 @@ export const envConfig = {
   },
 
   sharedEnvSchemas: {
+    BITCART_API_URL: z.string().default("https://api.bitcart.ai"),
     BITCART_ENV: runtimeEnvTagSchema,
     BRAND_UMBRELLA_NAME: z.string().default("Bitcart"),
     PRODUCTION_BASE_URL: z.string().default("https://bitcart.ai"),

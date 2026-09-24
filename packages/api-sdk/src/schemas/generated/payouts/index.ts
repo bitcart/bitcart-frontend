@@ -6,8 +6,8 @@
  * OpenAPI spec version: 0.10.3.0
  */
 
-export * from "./createPayout.zod"
-export * from "./displayPayout.zod"
-export * from "./offsetPaginationDisplayPayout.zod"
-export * from "./optionalUpdatePayout.zod"
-export * from "./payoutsListItemsParams.zod"
+export * from "./CreatePayout.zod"
+export * from "./DisplayPayout.zod"
+export * from "./OffsetPaginationDisplayPayout.zod"
+export * from "./OptionalUpdatePayout.zod"
+export * from "./PayoutsListItemsParams.zod"

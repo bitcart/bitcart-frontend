@@ -5,7 +5,12 @@
  * Read the docs at https://docs.bitcart.ai
  * OpenAPI spec version: 0.10.3.0
  */
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  queryOptions as queryOptionsBuilder,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -39,7 +44,7 @@ import type {
   TokenGetTokensParams,
   TokenOutput,
 } from "../../../schemas/generated"
-import { createApiFailure } from "../utils"
+import { createApiFailureError } from "../utils"
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K }
@@ -56,23 +61,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result
 }
 
-export type tokenCreateTokenResponse200 = {
-  data: AuthResponseOutput
-  status: 200
-}
-
-export type tokenCreateTokenResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type tokenCreateTokenResponseSuccess = tokenCreateTokenResponse200 & {
-  headers: Headers
-}
-export type tokenCreateTokenResponseError = tokenCreateTokenResponse422 & {
-  headers: Headers
-}
-
 export const getTokenCreateTokenUrl = () => {
   return `${BitcartApiConfig.baseUrl}/token`
 }
@@ -84,7 +72,7 @@ export const tokenCreateToken = async (
   hTTPCreateLoginTokenNull?: HTTPCreateLoginToken | null,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenCreateTokenResponseSuccess> => {
+): Promise<AuthResponseOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -113,10 +101,10 @@ export const tokenCreateToken = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? AuthResponse.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as tokenCreateTokenResponseSuccess
+  return data
 }
 
 export const getTokenCreateTokenMutationKey = () => ["tokenCreateToken"] as const
@@ -198,23 +186,6 @@ export const useTokenCreateToken = <
 > => {
   return useMutation(getTokenCreateTokenMutationOptions(options), queryClient)
 }
-export type tokenGetTokensResponse200 = {
-  data: OffsetPaginationTokenOutput
-  status: 200
-}
-
-export type tokenGetTokensResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type tokenGetTokensResponseSuccess = tokenGetTokensResponse200 & {
-  headers: Headers
-}
-export type tokenGetTokensResponseError = tokenGetTokensResponse422 & {
-  headers: Headers
-}
-
 export const getTokenGetTokensUrl = (params?: TokenGetTokensParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -247,7 +218,7 @@ export const tokenGetTokens = async (
   params?: TokenGetTokensParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenGetTokensResponseSuccess> => {
+): Promise<OffsetPaginationTokenOutput> => {
   const res = await (fetchFn ?? fetch)(getTokenGetTokensUrl(params), {
     ...options,
     method: "GET",
@@ -255,10 +226,10 @@ export const tokenGetTokens = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? OffsetPaginationToken.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as tokenGetTokensResponseSuccess
+  return data
 }
 
 export const getTokenGetTokensQueryKey = (params?: TokenGetTokensParams) => {
@@ -393,11 +364,13 @@ export const getTokenGetTokensSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof tokenGetTokens>>> = ({ signal }) =>
     tokenGetTokens(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof tokenGetTokens>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type TokenGetTokensSuspenseQueryResult = NonNullable<
@@ -478,23 +451,6 @@ export function useTokenGetTokensSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type tokenCreateOauth2TokenResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type tokenCreateOauth2TokenResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type tokenCreateOauth2TokenResponseSuccess = tokenCreateOauth2TokenResponse200 & {
-  headers: Headers
-}
-export type tokenCreateOauth2TokenResponseError = tokenCreateOauth2TokenResponse422 & {
-  headers: Headers
-}
-
 export const getTokenCreateOauth2TokenUrl = () => {
   return `${BitcartApiConfig.baseUrl}/token/oauth2`
 }
@@ -506,7 +462,7 @@ export const tokenCreateOauth2Token = async (
   bodyTokenCreateOauth2Token: BodyTokenCreateOauth2Token,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenCreateOauth2TokenResponseSuccess> => {
+): Promise<unknown> => {
   const formUrlEncoded = new URLSearchParams()
   if (
     bodyTokenCreateOauth2Token.grant_type !== undefined &&
@@ -562,9 +518,9 @@ export const tokenCreateOauth2Token = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: tokenCreateOauth2TokenResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as tokenCreateOauth2TokenResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTokenCreateOauth2TokenMutationKey = () => ["tokenCreateOauth2Token"] as const
@@ -646,23 +602,6 @@ export const useTokenCreateOauth2Token = <
 > => {
   return useMutation(getTokenCreateOauth2TokenMutationOptions(options), queryClient)
 }
-export type tokenCreateTokenTotpAuthResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type tokenCreateTokenTotpAuthResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type tokenCreateTokenTotpAuthResponseSuccess = tokenCreateTokenTotpAuthResponse200 & {
-  headers: Headers
-}
-export type tokenCreateTokenTotpAuthResponseError = tokenCreateTokenTotpAuthResponse422 & {
-  headers: Headers
-}
-
 export const getTokenCreateTokenTotpAuthUrl = () => {
   return `${BitcartApiConfig.baseUrl}/token/2fa/totp`
 }
@@ -674,7 +613,7 @@ export const tokenCreateTokenTotpAuth = async (
   tOTPAuth: TOTPAuth,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenCreateTokenTotpAuthResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -702,13 +641,9 @@ export const tokenCreateTokenTotpAuth = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: tokenCreateTokenTotpAuthResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as tokenCreateTokenTotpAuthResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTokenCreateTokenTotpAuthMutationKey = () => ["tokenCreateTokenTotpAuth"] as const
@@ -790,23 +725,6 @@ export const useTokenCreateTokenTotpAuth = <
 > => {
   return useMutation(getTokenCreateTokenTotpAuthMutationOptions(options), queryClient)
 }
-export type tokenCreateTokenFido2BeginResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type tokenCreateTokenFido2BeginResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type tokenCreateTokenFido2BeginResponseSuccess = tokenCreateTokenFido2BeginResponse200 & {
-  headers: Headers
-}
-export type tokenCreateTokenFido2BeginResponseError = tokenCreateTokenFido2BeginResponse422 & {
-  headers: Headers
-}
-
 export const getTokenCreateTokenFido2BeginUrl = () => {
   return `${BitcartApiConfig.baseUrl}/token/2fa/fido2/begin`
 }
@@ -818,7 +736,7 @@ export const tokenCreateTokenFido2Begin = async (
   fIDO2Auth: FIDO2Auth,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenCreateTokenFido2BeginResponseSuccess> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -846,13 +764,9 @@ export const tokenCreateTokenFido2Begin = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: tokenCreateTokenFido2BeginResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as tokenCreateTokenFido2BeginResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTokenCreateTokenFido2BeginMutationKey = () =>
@@ -935,16 +849,6 @@ export const useTokenCreateTokenFido2Begin = <
 > => {
   return useMutation(getTokenCreateTokenFido2BeginMutationOptions(options), queryClient)
 }
-export type tokenCreateTokenFido2CompleteResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type tokenCreateTokenFido2CompleteResponseSuccess =
-  tokenCreateTokenFido2CompleteResponse200 & {
-    headers: Headers
-  }
-
 export const getTokenCreateTokenFido2CompleteUrl = () => {
   return `${BitcartApiConfig.baseUrl}/token/2fa/fido2/complete`
 }
@@ -955,20 +859,16 @@ export const getTokenCreateTokenFido2CompleteUrl = () => {
 export const tokenCreateTokenFido2Complete = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenCreateTokenFido2CompleteResponseSuccess> => {
+): Promise<unknown> => {
   const res = await (fetchFn ?? fetch)(getTokenCreateTokenFido2CompleteUrl(), {
     ...options,
     method: "POST",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: tokenCreateTokenFido2CompleteResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as tokenCreateTokenFido2CompleteResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: unknown = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTokenCreateTokenFido2CompleteMutationKey = () =>
@@ -1048,23 +948,6 @@ export const useTokenCreateTokenFido2Complete = <
 > => {
   return useMutation(getTokenCreateTokenFido2CompleteMutationOptions(options), queryClient)
 }
-export type tokenDeleteTokenResponse200 = {
-  data: TokenOutput
-  status: 200
-}
-
-export type tokenDeleteTokenResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type tokenDeleteTokenResponseSuccess = tokenDeleteTokenResponse200 & {
-  headers: Headers
-}
-export type tokenDeleteTokenResponseError = tokenDeleteTokenResponse422 & {
-  headers: Headers
-}
-
 export const getTokenDeleteTokenUrl = (tokenId: string) => {
   return `${BitcartApiConfig.baseUrl}/token/${tokenId}`
 }
@@ -1076,7 +959,7 @@ export const tokenDeleteToken = async (
   tokenId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenDeleteTokenResponseSuccess> => {
+): Promise<TokenOutput> => {
   const res = await (fetchFn ?? fetch)(getTokenDeleteTokenUrl(tokenId), {
     ...options,
     method: "DELETE",
@@ -1084,10 +967,10 @@ export const tokenDeleteToken = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? Token.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as tokenDeleteTokenResponseSuccess
+  return data
 }
 
 export const getTokenDeleteTokenMutationKey = () => ["tokenDeleteToken"] as const
@@ -1169,15 +1052,6 @@ export const useTokenDeleteToken = <
 > => {
   return useMutation(getTokenDeleteTokenMutationOptions(options), queryClient)
 }
-export type tokenGetCurrentTokenResponse200 = {
-  data: TokenOutput
-  status: 200
-}
-
-export type tokenGetCurrentTokenResponseSuccess = tokenGetCurrentTokenResponse200 & {
-  headers: Headers
-}
-
 export const getTokenGetCurrentTokenUrl = () => {
   return `${BitcartApiConfig.baseUrl}/token/current`
 }
@@ -1188,7 +1062,7 @@ export const getTokenGetCurrentTokenUrl = () => {
 export const tokenGetCurrentToken = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenGetCurrentTokenResponseSuccess> => {
+): Promise<TokenOutput> => {
   const res = await (fetchFn ?? fetch)(getTokenGetCurrentTokenUrl(), {
     ...options,
     method: "GET",
@@ -1196,10 +1070,10 @@ export const tokenGetCurrentToken = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? Token.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as tokenGetCurrentTokenResponseSuccess
+  return data
 }
 
 export const getTokenGetCurrentTokenQueryKey = () => {
@@ -1331,11 +1205,13 @@ export const getTokenGetCurrentTokenSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof tokenGetCurrentToken>>> = ({ signal }) =>
     tokenGetCurrentToken({ signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof tokenGetCurrentToken>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type TokenGetCurrentTokenSuspenseQueryResult = NonNullable<
@@ -1412,23 +1288,6 @@ export function useTokenGetCurrentTokenSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type tokenGetTokenCountResponse200 = {
-  data: number
-  status: 200
-}
-
-export type tokenGetTokenCountResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type tokenGetTokenCountResponseSuccess = tokenGetTokenCountResponse200 & {
-  headers: Headers
-}
-export type tokenGetTokenCountResponseError = tokenGetTokenCountResponse422 & {
-  headers: Headers
-}
-
 export const getTokenGetTokenCountUrl = (params?: TokenGetTokenCountParams) => {
   const normalizedParams = new URLSearchParams()
 
@@ -1461,16 +1320,16 @@ export const tokenGetTokenCount = async (
   params?: TokenGetTokenCountParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenGetTokenCountResponseSuccess> => {
+): Promise<number> => {
   const res = await (fetchFn ?? fetch)(getTokenGetTokenCountUrl(params), {
     ...options,
     method: "GET",
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: tokenGetTokenCountResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as tokenGetTokenCountResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: number = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTokenGetTokenCountQueryKey = (params?: TokenGetTokenCountParams) => {
@@ -1609,11 +1468,13 @@ export const getTokenGetTokenCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof tokenGetTokenCount>>> = ({ signal }) =>
     tokenGetTokenCount(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return { queryKey, queryFn, ...queryOptions } as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof tokenGetTokenCount>>,
     TError,
     TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
 }
 
 export type TokenGetTokenCountSuspenseQueryResult = NonNullable<
@@ -1694,23 +1555,6 @@ export function useTokenGetTokenCountSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type tokenPatchTokenResponse200 = {
-  data: TokenOutput
-  status: 200
-}
-
-export type tokenPatchTokenResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type tokenPatchTokenResponseSuccess = tokenPatchTokenResponse200 & {
-  headers: Headers
-}
-export type tokenPatchTokenResponseError = tokenPatchTokenResponse422 & {
-  headers: Headers
-}
-
 export const getTokenPatchTokenUrl = (modelId: string) => {
   return `${BitcartApiConfig.baseUrl}/token/${modelId}`
 }
@@ -1723,7 +1567,7 @@ export const tokenPatchToken = async (
   editToken: EditToken,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenPatchTokenResponseSuccess> => {
+): Promise<TokenOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1752,10 +1596,10 @@ export const tokenPatchToken = async (
 
   const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
+  if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
   const data = contentType.includes("json") ? Token.parse(parsedBody) : parsedBody
-  return { data, status: res.status, headers: res.headers } as tokenPatchTokenResponseSuccess
+  return data
 }
 
 export const getTokenPatchTokenMutationKey = () => ["tokenPatchToken"] as const
@@ -1835,23 +1679,6 @@ export const useTokenPatchToken = <
 > => {
   return useMutation(getTokenPatchTokenMutationOptions(options), queryClient)
 }
-export type tokenBatchActionResponse200 = {
-  data: boolean
-  status: 200
-}
-
-export type tokenBatchActionResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type tokenBatchActionResponseSuccess = tokenBatchActionResponse200 & {
-  headers: Headers
-}
-export type tokenBatchActionResponseError = tokenBatchActionResponse422 & {
-  headers: Headers
-}
-
 export const getTokenBatchActionUrl = () => {
   return `${BitcartApiConfig.baseUrl}/token/batch`
 }
@@ -1863,7 +1690,7 @@ export const tokenBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<tokenBatchActionResponseSuccess> => {
+): Promise<boolean> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1891,9 +1718,9 @@ export const tokenBatchAction = async (
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  if (!res.ok) throw createApiFailure(res, body)
-  const data: tokenBatchActionResponseSuccess["data"] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as tokenBatchActionResponseSuccess
+  if (!res.ok) throw createApiFailureError(res, body)
+  const data: boolean = body ? JSON.parse(body) : {}
+  return data
 }
 
 export const getTokenBatchActionMutationKey = () => ["tokenBatchAction"] as const
