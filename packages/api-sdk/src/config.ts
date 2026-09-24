@@ -29,6 +29,6 @@ export class BitcartApiConfig {
    * Must be called once in the app's initialization layer.
    */
   static set({ baseUrl }: BitcartApiConfigOptions): void {
-    BitcartApiConfig.#baseUrl = baseUrl.replace(/\/+$/, "")
+    BitcartApiConfig.#baseUrl = baseUrl.replace(/\/$/, "")
   }
 }
