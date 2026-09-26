@@ -23,7 +23,8 @@ export default defineConfig({
       indexFiles: true,
 
       mock: {
-        indexMockFiles: true,
+        //* `src/mocks/index.ts` re-exports every tag module in full, per-operation handlers included.
+        indexMockFiles: false,
         generators: [{ type: "msw" }],
         path: "./src/mocks/generated",
       },

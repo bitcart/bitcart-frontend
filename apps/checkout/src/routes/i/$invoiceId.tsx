@@ -1,24 +1,53 @@
-import { bitcartInvoices, bitcartStores } from "@bitcart/api-sdk/endpoints"
-import { useCountdown } from "@bitcart/hooks"
+import { bitcartInvoices, bitcartManage, bitcartStores } from "@bitcart/api-sdk/endpoints"
 import { useQueryErrorResetBoundary } from "@tanstack/react-query"
 import { createFileRoute, useRouter, type ErrorComponentProps } from "@tanstack/react-router"
-import { useCallback, useEffect, useState } from "react"
-import { isDefined } from "remeda"
+import { useCallback, useEffect } from "react"
 
+import { useCheckoutSource } from "#/checkout/runtime/source"
+import { CheckoutView } from "#/checkout/runtime/view"
+import { checkoutTemplates } from "#/common/checkout-templates"
+import { ENV_TAG } from "#/common/constants"
+
+import { AppControls } from "./-components/app-controls"
 import { ErrorFallback } from "./-components/error-fallback"
 import { LoadingFallback } from "./-components/loading-fallback"
-import { AccordionTemplate } from "./-templates/accordion"
 
-const INVOICE_DATA_REFETCH_INTERVAL_MS = 30_000
+const CHECKOUT_APP_CONFIG = { controls: <AppControls /> }
+
+const resolveTemplateId = (requested: string | undefined) =>
+  checkoutTemplates.resolve({
+    requested,
+
+    // TODO: Read the store's checkout template once the API schema provides it.
+    stored: undefined,
+
+    allowRequested: ENV_TAG !== "production",
+  })
 
 export const Route = createFileRoute("/i/$invoiceId")({
   component: InvoicePage,
   ssr: false,
 
-  //* Picks the checkout template, the way the drafts' `?variant=` did.
+  //* The `template` search param previews another checkout template, and is ignored in production.
   validateSearch: (search: Record<string, unknown>) => ({
     template: typeof search.template === "string" ? search.template : undefined,
   }),
+
+  loaderDeps: ({ search }) => ({ template: search.template }),
+
+  //* Starts every load that depends only on the route in parallel, before the page code loads.
+  //* Nothing is awaited: the page suspends, and reports failures, where each result is used.
+  loader: ({ context: { queryClient }, params, deps }) => {
+    void queryClient
+      .query(bitcartInvoices.invoiceQueryOptions(params.invoiceId))
+      .then(({ store_id }) =>
+        store_id ? queryClient.query(bitcartStores.storeQueryOptions(store_id)) : undefined,
+      )
+      .catch(() => undefined)
+
+    void queryClient.query(bitcartManage.policiesQueryOptions()).catch(() => undefined)
+    void checkoutTemplates.load(resolveTemplateId(deps.template)).catch(() => undefined)
+  },
 
   //* Doubles as the Suspense fallback.
   pendingComponent: LoadingFallback,
@@ -29,7 +58,7 @@ function InvoiceErrorFallback({ error, reset }: ErrorComponentProps) {
   const router = useRouter()
   const { reset: resetQueryErrors } = useQueryErrorResetBoundary()
 
-  //* Suspense queries rethrow their cached error until the query cache is reset alongside the boundary.
+  //* Suspense queries rethrow their cached errors until the query cache is reset with the boundary.
   useEffect(() => {
     resetQueryErrors()
   }, [resetQueryErrors])
@@ -45,51 +74,17 @@ function InvoiceErrorFallback({ error, reset }: ErrorComponentProps) {
 function InvoicePage() {
   const { invoiceId } = Route.useParams()
   const { template } = Route.useSearch()
-  const [activePaymentMethodIndex, setActivePaymentMethodIndex] = useState(0)
+  const { source, connection } = useCheckoutSource(invoiceId)
 
-  const { data: invoice, refetch: refetchInvoice } = bitcartInvoices.useInvoiceSuspense(
-    invoiceId,
+  const templateId = resolveTemplateId(template)
 
-    {
-      query: {
-        refetchInterval: ({ state: { data: invoiceData } }) =>
-          isDefined(invoiceData) && bitcartInvoices.isTerminalStatus(invoiceData.status)
-            ? false
-            : INVOICE_DATA_REFETCH_INTERVAL_MS,
-      },
-    },
+  return (
+    <CheckoutView
+      source={source}
+      connection={connection}
+      registry={checkoutTemplates}
+      templateId={templateId}
+      appConfig={CHECKOUT_APP_CONFIG}
+    />
   )
-
-  //* The schema allows a storeless invoice, which counts as a malformed response.
-  // TODO: Drop once the API schema provides the correct type.
-  if (!invoice.store_id) {
-    throw new Error(`Invoice ${invoiceId} is not associated with a store`)
-  }
-
-  const { data: store } = bitcartStores.useStoreSuspense(invoice.store_id)
-  const refreshInvoiceData = useCallback(() => void refetchInvoice(), [refetchInvoice])
-  const { formatted: countdownFormatted } = useCountdown(invoice.time_left)
-
-  const invoiceWsConnectionHandle = bitcartInvoices.useInvoiceWebsocket({
-    invoiceId,
-    status: invoice.status,
-    onMessage: refreshInvoiceData,
-    onConnect: refreshInvoiceData,
-  })
-
-  const templateProps = {
-    activePaymentMethodIndex,
-    countdownFormatted,
-    currentStatus: invoice.status,
-    invoice,
-    invoiceWsConnectionHandle,
-    onPaymentMethodSelect: setActivePaymentMethodIndex,
-    store,
-  }
-
-  switch (template) {
-    //* Accordion is the only ported template so far; the rest get their own cases.
-    default:
-      return <AccordionTemplate {...templateProps} />
-  }
 }

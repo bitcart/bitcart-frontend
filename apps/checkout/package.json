@@ -7,6 +7,7 @@
   },
   "scripts": {
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.ts | dot -T svg -o graphviz.svg",
+    "depcruise:deps": "depcruise src --output-type err-long",
     "generate-routes": "tsr generate",
     "i18n:extract-locales": "lingui extract --clean",
     "typecheck": "tsc --noEmit -p tsconfig.json",
@@ -30,6 +31,7 @@
     "@bitcart/ui-kit": "workspace:*",
     "@lingui/core": "catalog:dependencies",
     "@lingui/react": "catalog:dependencies",
+    "@mantine/hooks": "catalog:dependencies",
     "@t3-oss/env-core": "catalog:dependencies",
     "@tanstack/react-devtools": "catalog:dependencies",
     "@tanstack/react-query": "catalog:dependencies",
@@ -55,6 +57,7 @@
     "@bitcart/configs": "workspace:*",
     "@bitcart/qa": "workspace:*",
     "@bitcart/unocss-preset": "workspace:*",
+    "@faker-js/faker": "catalog:devDependencies",
     "@lingui/babel-plugin-lingui-macro": "catalog:devDependencies",
     "@lingui/cli": "catalog:devDependencies",
     "@lingui/conf": "catalog:devDependencies",
@@ -65,6 +68,9 @@
     "@tanstack/devtools-event-client": "catalog:devDependencies",
     "@tanstack/devtools-vite": "catalog:devDependencies",
     "@tanstack/router-cli": "catalog:devDependencies",
+    "@testing-library/dom": "catalog:devDependencies",
+    "@testing-library/jest-dom": "catalog:devDependencies",
+    "@testing-library/react": "catalog:devDependencies",
     "@types/canvas-confetti": "catalog:devDependencies",
     "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
@@ -74,9 +80,12 @@
     "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
+    "jsdom": "catalog:devDependencies",
+    "msw": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
-    "vite": "catalog:devDependencies"
+    "vite": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies"
   }
 }

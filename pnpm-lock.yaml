@@ -351,6 +351,9 @@ importers:
       '@lingui/react':
         specifier: catalog:dependencies
         version: 6.7.0(@babel/core@7.29.7(supports-color@7.2.0))(@babel/types@7.29.8)(react@19.3.0)
+      '@mantine/hooks':
+        specifier: catalog:dependencies
+        version: 9.6.1(react@19.3.0)
       '@t3-oss/env-core':
         specifier: catalog:dependencies
         version: 0.13.11(typescript@6.0.3)(valibot@1.5.0(typescript@6.0.3))(zod@4.6.5)
@@ -421,6 +424,9 @@ importers:
       '@bitcart/unocss-preset':
         specifier: workspace:*
         version: link:../../packages/unocss-preset
+      '@faker-js/faker':
+        specifier: catalog:devDependencies
+        version: 10.6.0
       '@lingui/babel-plugin-lingui-macro':
         specifier: catalog:devDependencies
         version: 6.7.0(@babel/core@7.29.7(supports-color@7.2.0))(@babel/types@7.29.8)
@@ -451,6 +457,15 @@ importers:
       '@tanstack/router-cli':
         specifier: catalog:devDependencies
         version: 1.167.36(supports-color@7.2.0)
+      '@testing-library/dom':
+        specifier: catalog:devDependencies
+        version: 10.4.2
+      '@testing-library/jest-dom':
+        specifier: catalog:devDependencies
+        version: 6.9.1
+      '@testing-library/react':
+        specifier: catalog:devDependencies
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@types/canvas-confetti':
         specifier: catalog:devDependencies
         version: 1.9.0
@@ -478,6 +493,12 @@ importers:
       eslint-plugin-react-hooks:
         specifier: catalog:devDependencies
         version: 7.1.1(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)
+      jsdom:
+        specifier: catalog:devDependencies
+        version: 29.1.1
+      msw:
+        specifier: catalog:devDependencies
+        version: 2.15.0(@types/node@25.9.6)(typescript@6.0.3)
       oxlint:
         specifier: catalog:devDependencies
         version: 1.85.0(oxlint-tsgolint@7.0.2002)
@@ -490,6 +511,9 @@ importers:
       vite:
         specifier: catalog:devDependencies
         version: 8.3.0(@types/node@25.9.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.1)
+      vitest:
+        specifier: catalog:devDependencies
+        version: 4.1.11(@types/node@25.9.6)(jsdom@29.1.1)(msw@2.15.0(@types/node@25.9.6)(typescript@6.0.3))(vite@8.3.0(@types/node@25.9.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.1))
 
   apps/directory:
     dependencies:

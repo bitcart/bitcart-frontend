@@ -4,7 +4,8 @@ import { t } from "@lingui/core/macro"
 import { AlertCircleIcon } from "lucide-react"
 import type React from "react"
 
-import { CheckoutCard } from "./checkout-card"
+import { CheckoutCard } from "#/checkout"
+
 import { CheckoutHeader } from "./checkout-header"
 import { PoweredByFooter } from "./powered-by-footer"
 

@@ -1,6 +1,6 @@
 import { getDocumentHeadManifest, getPageDocumentMetadata } from "@bitcart/core/metadata"
 import { useIsClient } from "@bitcart/hooks"
-import { LayoutContainer } from "@bitcart/ui-kit/components"
+import { LayoutContainer, Toaster } from "@bitcart/ui-kit/components"
 import { LayoutContextProvider, ThemeProvider } from "@bitcart/ui-kit/providers"
 import { cn } from "@bitcart/ui-kit/utils"
 import { i18n as globalI18n } from "@lingui/core"
@@ -93,6 +93,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               {children}
             </LayoutContainer>
           </LayoutContextProvider>
+
+          <Toaster />
 
           <TanStackDevtools
             config={{ position: "bottom-right" }}

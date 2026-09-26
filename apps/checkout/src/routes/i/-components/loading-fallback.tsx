@@ -1,6 +1,7 @@
 import { Skeleton } from "@bitcart/ui-kit/components"
 
-import { CheckoutCard } from "./checkout-card"
+import { CheckoutCard } from "#/checkout"
+
 import { CheckoutHeader } from "./checkout-header"
 
 export const LoadingFallback = () => {

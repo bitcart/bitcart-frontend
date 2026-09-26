@@ -1,11 +1,17 @@
 import type { DisplayInvoiceOutput, PaymentDataOutput } from "#/schemas"
 
 /**
- * The API types a payment as just `created` and `recommended_fee`, then fills the rest in at
- * runtime, which is why the schema carries `additionalProperties: true`. These are the fields
- * checkout renders, and they stay hand-written until the backend declares them.
+ * The API populates most payment fields at runtime: its schema types a payment as only `created`
+ * and `recommended_fee`, with `additionalProperties: true`.
  */
 export type InvoicePayment = PaymentDataOutput & {
+  id: string
+  symbol: string
+  lightning: boolean
+  contract: string | null
+  chain_id?: number | null
+  label: string
+  hint: string | null
   currency: string
   amount: string
   payment_address: string
@@ -13,8 +19,8 @@ export type InvoicePayment = PaymentDataOutput & {
   rate: string
   rate_str: string
   name: string
-  already_paid: string
-  due: string
+  divisibility: number
+  confirmations: number
 }
 
 export type Invoice = Omit<DisplayInvoiceOutput, "payments"> & {
