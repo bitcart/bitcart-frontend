@@ -238,11 +238,13 @@ export const getStoresListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesListItems>>> = ({ signal }) =>
     storesListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof storesListItems>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof storesListItems>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -591,11 +593,13 @@ export const getStoresGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesGetCount>>> = ({ signal }) =>
     storesGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof storesGetCount>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof storesGetCount>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1185,11 +1189,13 @@ export const getStoresGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesGetItem>>> = ({ signal }) =>
     storesGetItem(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof storesGetItem>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof storesGetItem>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1430,11 +1436,13 @@ export const getStoresPingEmailSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesPingEmail>>> = ({ signal }) =>
     storesPingEmail(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof storesPingEmail>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof storesPingEmail>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -2349,11 +2357,13 @@ export const getStoresGetStoreRatesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof storesGetStoreRates>>> = ({ signal }) =>
     storesGetStoreRates(modelId, params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof storesGetStoreRates>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof storesGetStoreRates>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }

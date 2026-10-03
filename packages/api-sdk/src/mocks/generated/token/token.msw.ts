@@ -20,10 +20,7 @@ export const getTokenCreateTokenResponseMock = (
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
   ),
   user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  id: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
-  ]),
+  id: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   access_token: faker.helpers.arrayElement([
     faker.string.alpha({ length: { min: 10, max: 20 } }),
     null,

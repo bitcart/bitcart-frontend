@@ -364,11 +364,13 @@ export const getTokenGetTokensSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof tokenGetTokens>>> = ({ signal }) =>
     tokenGetTokens(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof tokenGetTokens>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof tokenGetTokens>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1205,11 +1207,13 @@ export const getTokenGetCurrentTokenSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof tokenGetCurrentToken>>> = ({ signal }) =>
     tokenGetCurrentToken({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof tokenGetCurrentToken>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof tokenGetCurrentToken>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1468,11 +1472,13 @@ export const getTokenGetTokenCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof tokenGetTokenCount>>> = ({ signal }) =>
     tokenGetTokenCount(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof tokenGetTokenCount>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof tokenGetTokenCount>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }

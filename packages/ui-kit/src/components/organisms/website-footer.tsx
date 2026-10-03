@@ -9,6 +9,8 @@ export type WebsiteFooterProps = {
   classNames?: { root?: string }
 }
 
+const currentYear = new Date().getFullYear()
+
 export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
   const {
     Link,
@@ -25,7 +27,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
 
   const copyrightText = `© ${
     project?.copyrightSinceYear ? `${project?.copyrightSinceYear} — ` : ""
-  }${new Date().getFullYear()} ${brand.name}. ${project?.copyrightAppendix ?? t`All rights reserved.`}`
+  }${currentYear} ${brand.name}. ${project?.copyrightAppendix ?? t`All rights reserved.`}`
 
   const iconLinks = useMemo(
     () =>

@@ -215,11 +215,13 @@ export const getWalletsGetBalancesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetBalances>>> = ({ signal }) =>
     walletsGetBalances({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof walletsGetBalances>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof walletsGetBalances>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -456,7 +458,11 @@ export const getWalletsGetWalletsSchemaSuspenseQueryOptions = <
     signal,
   }) => walletsGetWalletsSchema({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
     TError,
     TData
@@ -833,11 +839,13 @@ export const getWalletsListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsListItems>>> = ({ signal }) =>
     walletsListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof walletsListItems>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof walletsListItems>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1186,11 +1194,13 @@ export const getWalletsGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetCount>>> = ({ signal }) =>
     walletsGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof walletsGetCount>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof walletsGetCount>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1429,11 +1439,13 @@ export const getWalletsGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetItem>>> = ({ signal }) =>
     walletsGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof walletsGetItem>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof walletsGetItem>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -2067,11 +2079,13 @@ export const getWalletsGetWalletRateSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetWalletRate>>> = ({ signal }) =>
     walletsGetWalletRate(modelId, params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof walletsGetWalletRate>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof walletsGetWalletRate>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -2332,7 +2346,11 @@ export const getWalletsGetWalletBalanceSuspenseQueryOptions = <
     signal,
   }) => walletsGetWalletBalance(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetWalletBalance>>,
     TError,
     TData
@@ -2589,7 +2607,11 @@ export const getWalletsGetWalletSymbolSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof walletsGetWalletSymbol>>> = ({ signal }) =>
     walletsGetWalletSymbol(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
     TError,
     TData
@@ -2852,7 +2874,11 @@ export const getWalletsCheckWalletLightningSuspenseQueryOptions = <
     signal,
   }) => walletsCheckWalletLightning(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
     TError,
     TData
@@ -3127,7 +3153,11 @@ export const getWalletsGetWalletChannelsSuspenseQueryOptions = <
     signal,
   }) => walletsGetWalletChannels(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof walletsGetWalletChannels>>,
     TError,
     TData

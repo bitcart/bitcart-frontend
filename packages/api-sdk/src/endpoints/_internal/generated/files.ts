@@ -227,11 +227,13 @@ export const getFilesListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof filesListItems>>> = ({ signal }) =>
     filesListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof filesListItems>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof filesListItems>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -559,11 +561,13 @@ export const getFilesGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof filesGetCount>>> = ({ signal }) =>
     filesGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof filesGetCount>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof filesGetCount>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -799,11 +803,13 @@ export const getFilesGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof filesGetItem>>> = ({ signal }) =>
     filesGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof filesGetItem>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof filesGetItem>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1372,11 +1378,13 @@ export const getFilesHandleFileSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof filesHandleFile>>> = ({ signal }) =>
     filesHandleFile(modelId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof filesHandleFile>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof filesHandleFile>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }

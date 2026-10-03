@@ -238,7 +238,11 @@ export const getTemplatesGetTemplateListSuspenseQueryOptions = <
     signal,
   }) => templatesGetTemplateList(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof templatesGetTemplateList>>,
     TError,
     TData
@@ -500,11 +504,13 @@ export const getTemplatesListItemsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof templatesListItems>>> = ({ signal }) =>
     templatesListItems(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof templatesListItems>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof templatesListItems>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -855,11 +861,13 @@ export const getTemplatesGetCountSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof templatesGetCount>>> = ({ signal }) =>
     templatesGetCount({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof templatesGetCount>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof templatesGetCount>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1098,11 +1106,13 @@ export const getTemplatesGetItemSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof templatesGetItem>>> = ({ signal }) =>
     templatesGetItem(itemId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof templatesGetItem>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof templatesGetItem>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }

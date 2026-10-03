@@ -13,37 +13,42 @@ allowBuilds:
   #* through `setupServer`; run `msw init` explicitly if browser-side mocking is ever needed.
   msw: false
 
+auditConfig:
+  ignoreGhsas:
+    # TODO: Remove once braces publishes a fix (no patched release as of 3.0.3).
+    - GHSA-vfj7-8cjw-p6xm
+
 catalogMode: strict
 
 catalogs:
   dependencies:
     "@base-ui/react": 1.8.0
     "@daypicker/react": 10.0.1
-    "@fumadocs/base-ui": 16.15.10
-    "@lingui/core": 6.7.0
-    "@lingui/react": 6.7.0
-    "@mantine/hooks": 9.6.1
+    "@fumadocs/base-ui": 16.15.14
+    "@lingui/core": 6.8.0
+    "@lingui/react": 6.8.0
+    "@mantine/hooks": 9.6.3
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
-    "@tanstack/react-devtools": "0.10.12"
+    "@tanstack/react-devtools": "0.10.13"
     "@tanstack/react-form": 1.33.5
-    "@tanstack/react-query": 5.102.8
-    "@tanstack/react-query-devtools": "5.102.8"
-    "@tanstack/react-router": "1.170.36"
+    "@tanstack/react-query": 5.104.0
+    "@tanstack/react-query-devtools": "5.104.0"
+    "@tanstack/react-router": "1.170.39"
     "@tanstack/react-router-devtools": "1.167.2"
-    "@tanstack/react-router-ssr-query": "1.167.2"
-    "@tanstack/react-start": "1.168.54"
+    "@tanstack/react-router-ssr-query": "1.167.3"
+    "@tanstack/react-start": "1.168.58"
     "@tanstack/react-store": "0.11.1"
     "@tanstack/store": "0.11.1"
-    "@tanstack/start-static-server-functions": 1.167.35
-    "@web3icons/react": 4.1.21
+    "@tanstack/start-static-server-functions": 1.167.37
+    "@web3icons/react": 4.1.22
     class-variance-authority: 0.7.1
     dotenv: 17.4.2
-    fumadocs-core: 16.15.10
-    fumadocs-mdx: 15.4.0
-    fumadocs-ui: 16.15.10
+    fumadocs-core: 16.15.14
+    fumadocs-mdx: 15.4.5
+    fumadocs-ui: 16.15.14
     inter-ui: 4.1.1
-    lucide-react: 1.46.0
+    lucide-react: 1.48.0
     next-themes: 0.4.6
     qrcode.react: 4.2.0
     react: 19.3.0
@@ -53,17 +58,17 @@ catalogs:
     tailwind-merge: 3.7.0
     use-sync-external-store: 1.7.0
     vike: 0.4.266
-    vike-react: 0.6.26
+    vike-react: 0.6.29
     vike-react-query: 0.1.13
     zod: 4.6.5
     canvas-confetti: 1.9.4
   devDependencies:
     "@faker-js/faker": 10.6.0
-    "@fumadocs/story": 1.3.0
-    "@lingui/babel-plugin-lingui-macro": 6.7.0
-    "@lingui/cli": 6.7.0
-    "@lingui/conf": 6.7.0
-    "@lingui/vite-plugin": 6.7.0
+    "@fumadocs/story": 1.4.0
+    "@lingui/babel-plugin-lingui-macro": 6.8.0
+    "@lingui/cli": 6.8.0
+    "@lingui/conf": 6.8.0
+    "@lingui/vite-plugin": 6.8.0
     "@playwright/test": 1.63.0
     "@qalisa/vike-plugin-sitemap": 1.7.0
     "@rolldown/plugin-babel": 0.2.4
@@ -78,34 +83,34 @@ catalogs:
     "@testing-library/user-event": 14.6.7
     "@types/canvas-confetti": 1.9.0
     "@types/mdx": 2.0.14
-    "@types/node": 25.9.6
+    "@types/node": 25.9.8
     "@types/react": 19.3.0
     "@types/react-dom": 19.3.0
-    "@unocss/cli": 66.10.2
+    "@unocss/cli": 66.10.5
     "@vitejs/plugin-react": 6.1.1
     babel-plugin-react-compiler: 1.0.0
-    dependency-cruiser: 18.3.1
+    dependency-cruiser: 18.4.0
     eslint-plugin-better-tailwindcss: 4.7.0
     eslint-plugin-react-hooks: 7.1.1
     jsdom: 29.1.1
-    knip: 6.35.1
+    knip: 6.38.0
     msw: 2.15.0
     nitro: 3.0.260610-beta
     nx: 23.2.1
-    orval: 8.34.0
-    oxfmt: 0.70.0
-    oxlint: 1.85.0
-    oxlint-tsgolint: 7.0.2002
+    orval: 8.37.0
+    oxfmt: 0.71.0
+    oxlint: 1.86.0
+    oxlint-tsgolint: 7.0.2003
     serve: 14.2.6
     srvx: 0.12.8
     tailwindcss: 4.3.3
     tsdown: 0.23.0
-    tsx: 4.23.13
+    tsx: 4.23.15
     typescript: 6.0.3
-    unocss: 66.10.2
+    unocss: 66.10.5
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
-    vite: 8.3.0
+    vite: 8.3.1
     vite-plugin-static-copy: 4.1.1
     vite-plugin-svgr: 5.2.0
     vitest: 4.1.11
@@ -124,25 +129,24 @@ minimumReleaseAgeExclude:
   - oxlint-tsgolint
   - "@base-ui/*"
 
-  # TODO: Remove after 2026-09-25
-  - orval@8.34.0
-  - "@orval/angular@8.34.0"
-  - "@orval/axios@8.34.0"
-  - "@orval/core@8.34.0"
-  - "@orval/effect@8.34.0"
-  - "@orval/fetch@8.34.0"
-  - "@orval/hono@8.34.0"
-  - "@orval/mcp@8.34.0"
-  - "@orval/mock@8.34.0"
-  - "@orval/pinia-colada@8.34.0"
-  - "@orval/query@8.34.0"
-  - "@orval/solid-start@8.34.0"
-  - "@orval/swr@8.34.0"
-  - "@orval/zod@8.34.0"
-
 overrides:
   # TODO: Remove once nx bumps its smol-toml pin to 1.7.1.
   "nx>smol-toml": ^1.7.1
+
+  # TODO: Remove once nx bumps its axios pin to 1.20.0.
+  "nx>axios": ^1.20.0
+
+  # TODO: Remove once nx bumps its brace-expansion pin to 5.0.12.
+  "nx>brace-expansion": ^5.0.12
+
+  # TODO: Remove once minimatch bumps its brace-expansion floor to 5.0.12.
+  "minimatch@10>brace-expansion": ^5.0.12
+
+  # TODO: Remove once ajv bumps its fast-uri floor to 3.1.8.
+  "ajv>fast-uri": ^3.1.8
+
+  # TODO: Remove once orval's @scalar/json-magic bumps its undici pin to 7.29.1.
+  "@scalar/json-magic>undici": ^7.29.1
 
 peerDependencyRules:
   allowedVersions:

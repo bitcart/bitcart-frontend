@@ -352,7 +352,11 @@ export const getConfiguratorGetDeployResultSuspenseQueryOptions = <
     signal,
   }) => configuratorGetDeployResult(deployId, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof configuratorGetDeployResult>>,
     TError,
     TData
@@ -763,7 +767,11 @@ export const getConfiguratorCheckDnsEntrySuspenseQueryOptions = <
     signal,
   }) => configuratorCheckDnsEntry(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
     TError,
     TData

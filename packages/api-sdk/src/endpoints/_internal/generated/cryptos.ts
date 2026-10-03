@@ -190,11 +190,13 @@ export const getCryptosGetCryptosSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetCryptos>>> = ({ signal }) =>
     cryptosGetCryptos({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof cryptosGetCryptos>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof cryptosGetCryptos>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -431,7 +433,11 @@ export const getCryptosGetSupportedCryptosSuspenseQueryOptions = <
     signal,
   }) => cryptosGetSupportedCryptos({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
     TError,
     TData
@@ -679,11 +685,13 @@ export const getCryptosRateSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosRate>>> = ({ signal }) =>
     cryptosRate(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof cryptosRate>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof cryptosRate>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -927,11 +935,13 @@ export const getCryptosGetFiatlistSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetFiatlist>>> = ({ signal }) =>
     cryptosGetFiatlist(params, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof cryptosGetFiatlist>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof cryptosGetFiatlist>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1172,11 +1182,13 @@ export const getCryptosGetTokensSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetTokens>>> = ({ signal }) =>
     cryptosGetTokens(currency, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof cryptosGetTokens>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof cryptosGetTokens>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1423,11 +1435,13 @@ export const getCryptosGetTokensAbiSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetTokensAbi>>> = ({ signal }) =>
     cryptosGetTokensAbi(currency, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof cryptosGetTokensAbi>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -1682,7 +1696,11 @@ export const getCryptosGetDefaultExplorerSuspenseQueryOptions = <
     signal,
   }) => cryptosGetDefaultExplorer(currency, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
     TError,
     TData
@@ -1939,11 +1957,13 @@ export const getCryptosGetDefaultRpcSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof cryptosGetDefaultRpc>>> = ({ signal }) =>
     cryptosGetDefaultRpc(currency, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof cryptosGetDefaultRpc>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }

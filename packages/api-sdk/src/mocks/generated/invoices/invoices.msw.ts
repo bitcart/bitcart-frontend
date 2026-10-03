@@ -696,21 +696,18 @@ export const getInvoicesRefundInvoiceResponseMock = (
     null,
   ]),
   wallet_currency: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
   payout_id: faker.helpers.arrayElement([
     faker.string.alpha({ length: { min: 10, max: 20 } }),
     null,
   ]),
   payout_status: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
-  tx_hash: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
-  ]),
+  tx_hash: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   ...overrideResponse,
 })
 
@@ -731,21 +728,18 @@ export const getInvoicesGetRefundResponseMock = (
     null,
   ]),
   wallet_currency: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
   payout_id: faker.helpers.arrayElement([
     faker.string.alpha({ length: { min: 10, max: 20 } }),
     null,
   ]),
   payout_status: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
-  tx_hash: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
-  ]),
+  tx_hash: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   ...overrideResponse,
 })
 
@@ -766,21 +760,18 @@ export const getInvoicesSubmitRefundResponseMock = (
     null,
   ]),
   wallet_currency: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
   payout_id: faker.helpers.arrayElement([
     faker.string.alpha({ length: { min: 10, max: 20 } }),
     null,
   ]),
   payout_status: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
-  tx_hash: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
-  ]),
+  tx_hash: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   ...overrideResponse,
 })
 

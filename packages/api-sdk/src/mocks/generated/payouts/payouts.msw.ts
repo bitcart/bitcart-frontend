@@ -25,10 +25,7 @@ export const getPayoutsListItemsResponseMock = (
       destination: faker.string.alpha({ length: { min: 10, max: 20 } }),
       currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
       notification_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
-      max_fee: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
-        undefined,
-      ]),
+      max_fee: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
       id: faker.string.alpha({ length: { min: 10, max: 20 } }),
       user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
       store_id: faker.helpers.arrayElement([
@@ -78,10 +75,7 @@ export const getPayoutsCreateItemResponseMock = (
   destination: faker.string.alpha({ length: { min: 10, max: 20 } }),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   notification_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  max_fee: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
-    undefined,
-  ]),
+  max_fee: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   store_id: faker.helpers.arrayElement([
@@ -122,10 +116,7 @@ export const getPayoutsGetItemResponseMock = (
   destination: faker.string.alpha({ length: { min: 10, max: 20 } }),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   notification_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  max_fee: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
-    undefined,
-  ]),
+  max_fee: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   store_id: faker.helpers.arrayElement([
@@ -164,10 +155,7 @@ export const getPayoutsUpdateItemResponseMock = (
   destination: faker.string.alpha({ length: { min: 10, max: 20 } }),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   notification_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  max_fee: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
-    undefined,
-  ]),
+  max_fee: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   store_id: faker.helpers.arrayElement([
@@ -206,10 +194,7 @@ export const getPayoutsDeleteItemResponseMock = (
   destination: faker.string.alpha({ length: { min: 10, max: 20 } }),
   currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
   notification_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  max_fee: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
-    undefined,
-  ]),
+  max_fee: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   store_id: faker.helpers.arrayElement([

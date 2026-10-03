@@ -200,11 +200,13 @@ export const getPluginsGetPluginsSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof pluginsGetPlugins>>> = ({ signal }) =>
     pluginsGetPlugins({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof pluginsGetPlugins>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof pluginsGetPlugins>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }
@@ -663,7 +665,11 @@ export const getPluginsGetPluginsListSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof pluginsGetPluginsList>>> = ({ signal }) =>
     pluginsGetPluginsList({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof pluginsGetPluginsList>>,
     TError,
     TData
@@ -918,7 +924,11 @@ export const getPluginsGetPluginSettingsSuspenseQueryOptions = <
     signal,
   }) => pluginsGetPluginSettings(pluginName, { signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<
     Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
     TError,
     TData
@@ -1278,11 +1288,13 @@ export const getPluginsGetLicensesSuspenseQueryOptions = <
   const queryFn: QueryFunction<Awaited<ReturnType<typeof pluginsGetLicenses>>> = ({ signal }) =>
     pluginsGetLicenses({ signal, ...fetchOptions }, fetcherFn)
 
-  return queryOptionsBuilder({ queryKey, queryFn, ...queryOptions }) as UseSuspenseQueryOptions<
-    Awaited<ReturnType<typeof pluginsGetLicenses>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> } & {
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof pluginsGetLicenses>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
     throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
   }
 }

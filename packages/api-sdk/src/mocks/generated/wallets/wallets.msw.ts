@@ -38,10 +38,7 @@ export const getWalletsListItemsResponseMock = (
       hint: faker.string.alpha({ length: { min: 10, max: 20 } }),
       contract: faker.string.alpha({ length: { min: 10, max: 20 } }),
       additional_xpub_data: {},
-      transaction_speed: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.number.int(), null]),
-        undefined,
-      ]),
+      transaction_speed: faker.helpers.arrayElement([faker.number.int(), null]),
       id: faker.string.alpha({ length: { min: 10, max: 20 } }),
       user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
       user: {
@@ -90,10 +87,7 @@ export const getWalletsCreateItemResponseMock = (
   hint: faker.string.alpha({ length: { min: 10, max: 20 } }),
   contract: faker.string.alpha({ length: { min: 10, max: 20 } }),
   additional_xpub_data: {},
-  transaction_speed: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.number.int(), null]),
-    undefined,
-  ]),
+  transaction_speed: faker.helpers.arrayElement([faker.number.int(), null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user: {
@@ -136,10 +130,7 @@ export const getWalletsGetItemResponseMock = (
   hint: faker.string.alpha({ length: { min: 10, max: 20 } }),
   contract: faker.string.alpha({ length: { min: 10, max: 20 } }),
   additional_xpub_data: {},
-  transaction_speed: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.number.int(), null]),
-    undefined,
-  ]),
+  transaction_speed: faker.helpers.arrayElement([faker.number.int(), null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user: {
@@ -180,10 +171,7 @@ export const getWalletsUpdateItemResponseMock = (
   hint: faker.string.alpha({ length: { min: 10, max: 20 } }),
   contract: faker.string.alpha({ length: { min: 10, max: 20 } }),
   additional_xpub_data: {},
-  transaction_speed: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.number.int(), null]),
-    undefined,
-  ]),
+  transaction_speed: faker.helpers.arrayElement([faker.number.int(), null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user: {
@@ -224,10 +212,7 @@ export const getWalletsDeleteItemResponseMock = (
   hint: faker.string.alpha({ length: { min: 10, max: 20 } }),
   contract: faker.string.alpha({ length: { min: 10, max: 20 } }),
   additional_xpub_data: {},
-  transaction_speed: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.number.int(), null]),
-    undefined,
-  ]),
+  transaction_speed: faker.helpers.arrayElement([faker.number.int(), null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   user: {

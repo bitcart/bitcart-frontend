@@ -131,10 +131,7 @@ export const getUsersCreateUserResponseMock = (
   fido2_devices: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => ({}),
   ),
-  token: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
-  ]),
+  token: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   ...overrideResponse,
 })
 
