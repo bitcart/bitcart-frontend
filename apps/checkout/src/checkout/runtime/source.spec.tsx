@@ -3,8 +3,8 @@ import { act, renderHook, screen, waitFor } from "@testing-library/react"
 import { Component, Suspense, type ReactNode } from "react"
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest"
 
+import { makeInvoice } from "../fixtures"
 import { serveCheckoutApi, setupCheckoutApiServer } from "../testing/api-server"
-import { makeInvoice } from "../testing/fixtures"
 import { useCheckoutSource } from "./source"
 
 const INVOICE_REFETCH_INTERVAL_MS = 30_000

@@ -6,6 +6,7 @@ import {
 import { i18n } from "@lingui/core"
 
 import { messages as SOURCE_LOCALE_MESSAGES } from "./_generated/locales/en.po"
+import { createLocaleActivation } from "./activation"
 
 const AVAILABLE_LOCALE_MODULES = import.meta.glob([
   "./_generated/locales/*.po",
@@ -16,6 +17,16 @@ const AVAILABLE_LOCALE_MODULES = import.meta.glob([
 
 const loadLocale = createLocaleLoader(AVAILABLE_LOCALE_MODULES)
 
+const localeActivation = createLocaleActivation({
+  i18n,
+
+  //* The source catalog ships in the main chunk and is never fetched as a lazy one.
+  loadAppCatalog: (localeId) =>
+    localeId === SOURCE_LOCALE_ID ? Promise.resolve(SOURCE_LOCALE_MESSAGES) : loadLocale(localeId),
+})
+
+export const { registerCatalogLoader } = localeActivation
+
 //* FIXME: Decouple from deps and extract to a shared Tanstack Start kit package once it's created.
 /**
  * Activates the statically bundled source catalog on the global Lingui instance.
@@ -24,7 +35,8 @@ const loadLocale = createLocaleLoader(AVAILABLE_LOCALE_MODULES)
  * **Must be called before the router is created.**
  */
 export const activateSourceLocale = (): void => {
-  i18n.loadAndActivate({ locale: SOURCE_LOCALE_ID, messages: SOURCE_LOCALE_MESSAGES })
+  i18n.load(SOURCE_LOCALE_ID, SOURCE_LOCALE_MESSAGES)
+  i18n.activate(SOURCE_LOCALE_ID)
 }
 
 //* FIXME: Decouple from deps and extract to a shared Tanstack Start kit package once it's created.
@@ -34,10 +46,5 @@ export const activateSourceLocale = (): void => {
 export const activateLocale = async (localeId: string): Promise<void> => {
   if (i18n.locale === localeId) return void null
 
-  i18n.loadAndActivate({
-    locale: localeId,
-
-    //* The source catalog is already in the main chunk -- don't refetch it as a lazy one.
-    messages: localeId === SOURCE_LOCALE_ID ? SOURCE_LOCALE_MESSAGES : await loadLocale(localeId),
-  })
+  await localeActivation.activateLocale(localeId)
 }

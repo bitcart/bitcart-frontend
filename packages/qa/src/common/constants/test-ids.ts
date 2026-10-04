@@ -1,5 +1,15 @@
 //! Maintain alphabetical order
 
+export const CHECKOUT_AMOUNT_TESTID = "checkout-amount"
+export const CHECKOUT_COUNTDOWN_TESTID = "checkout-countdown"
+export const CHECKOUT_METHOD_SELECTOR_TESTID = "checkout-method-selector"
+export const CHECKOUT_OPEN_WALLET_TESTID = "checkout-open-wallet"
+export const CHECKOUT_PAYMENT_ADDRESS_TESTID = "checkout-payment-address"
+export const CHECKOUT_PAYMENT_QR_TESTID = "checkout-payment-qr"
+export const CHECKOUT_PAYMENT_URI_TESTID = "checkout-payment-uri"
+export const CHECKOUT_RECOMMENDED_FEE_TESTID = "checkout-recommended-fee"
+export const CHECKOUT_REQUIRED_CONTENT_GUARD_TESTID = "checkout-required-content-guard"
+export const CHECKOUT_STATUS_TESTID = "checkout-status"
 export const UI_THEME_ICON_DARK_TESTID = "ui-theme-icon-dark"
 export const UI_THEME_ICON_LIGHT_TESTID = "ui-theme-icon-light"
 export const UI_THEME_ICON_SYSTEM_TESTID = "ui-theme-icon-system"

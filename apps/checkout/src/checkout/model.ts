@@ -1,13 +1,22 @@
 import { bitcartInvoices, type bitcartManage, type bitcartStores } from "@bitcart/api-sdk/endpoints"
 import type { CustomerUpdateData } from "@bitcart/api-sdk/schemas"
 import { formatAmount, getRemainingAmount } from "@bitcart/core/utils"
-import { useCountdown } from "@bitcart/hooks"
-import { useMemo, useState } from "react"
+import type { BasicThemeMode } from "@bitcart/ui-kit/types"
+
+import type { CheckoutUiActions, CheckoutUiState } from "./runtime/control-store"
+import type { CheckoutPalette } from "./theme/palette"
+
+//* Store appearance settings not provided by the API yet. Fixtures supply them until then.
+export type CheckoutAppearance = {
+  palette?: CheckoutPalette
+  logos?: Partial<Record<BasicThemeMode, string>>
+}
 
 export type CheckoutSource = {
   invoice: bitcartInvoices.Invoice
   store: bitcartStores.Store
   policies: Pick<bitcartManage.Policies, "allow_powered_by_bitcart">
+  appearance?: CheckoutAppearance
   submitCustomerDetails: (update: CustomerUpdateData) => Promise<void>
 }
 
@@ -15,6 +24,10 @@ export type CheckoutSelectionMode = "preselect" | "explicit"
 
 export type CheckoutModelOptions = {
   selection: CheckoutSelectionMode
+}
+
+export type CheckoutDeriveContext = CheckoutModelOptions & {
+  mode: BasicThemeMode
 }
 
 export type CustomerDetailsField = "email" | "address" | "notes"
@@ -47,9 +60,15 @@ export type CheckoutPayment = CheckoutMethod & {
   partial: CheckoutPartialPayment | null
 }
 
+export type CheckoutLogo = {
+  url: string
+  backdrop: BasicThemeMode | null
+}
+
 export type CheckoutBranding = {
-  logoUrl: string | null
+  logo: CheckoutLogo | null
   showPoweredBy: boolean
+  palette: CheckoutPalette | null
 }
 
 export type CheckoutInvoiceSummary = {
@@ -58,20 +77,14 @@ export type CheckoutInvoiceSummary = {
   currency: string
   orderId: string
   redirectUrl: string | null
+  timeLeft: number
 }
 
 export type CheckoutStoreSummary = {
   name: string
 }
 
-export type CheckoutCountdown = {
-  formatted: string
-  secondsLeft: number
-  isExpired: boolean
-}
-
 type CheckoutModelBase = {
-  countdown: CheckoutCountdown
   invoice: CheckoutInvoiceSummary
   store: CheckoutStoreSummary
   branding: CheckoutBranding
@@ -224,28 +237,51 @@ const summarizeInvoice = (invoice: bitcartInvoices.Invoice): CheckoutInvoiceSumm
   currency: invoice.currency,
   orderId: invoice.order_id,
   redirectUrl: invoice.redirect_url || null,
+  timeLeft: invoice.time_left,
 })
 
-const resolveBranding = ({ store, policies }: CheckoutSource): CheckoutBranding => ({
-  logoUrl: store.checkout_settings.custom_logo_link || null,
-  showPoweredBy: policies.allow_powered_by_bitcart,
+const OTHER_MODE = { light: "dark", dark: "light" } as const
+
+const resolveLogo = (
+  { store, appearance }: CheckoutSource,
+  mode: BasicThemeMode,
+): CheckoutLogo | null => {
+  const { custom_logo_link, use_dark_mode } = store.checkout_settings
+
+  const logos = appearance?.logos ?? {
+    [use_dark_mode ? "dark" : "light"]: custom_logo_link || undefined,
+  }
+
+  const url = logos[mode]
+  const fallbackUrl = logos[OTHER_MODE[mode]]
+
+  if (url) {
+    return { url, backdrop: null }
+  } else if (fallbackUrl) {
+    return { url: fallbackUrl, backdrop: OTHER_MODE[mode] }
+  } else return null
+}
+
+const resolveBranding = (source: CheckoutSource, mode: BasicThemeMode): CheckoutBranding => ({
+  logo: resolveLogo(source, mode),
+  showPoweredBy: source.policies.allow_powered_by_bitcart,
+  palette: source.appearance?.palette ?? null,
 })
 
-export const useCheckoutModel = (
+export const deriveCheckoutModel = (
   source: CheckoutSource,
-  { selection }: CheckoutModelOptions,
+  { chosenMethodId, isChangingMethod }: CheckoutUiState,
+  actions: CheckoutUiActions,
+  { selection, mode }: CheckoutDeriveContext,
 ): CheckoutModel => {
   const { invoice } = source
-  const [chosenMethodId, setChosenMethodId] = useState<string | null>(null)
-  const [isChangingMethod, setIsChangingMethod] = useState(false)
-  const countdown = useCountdown(invoice.time_left)
   const partiallyPaidMethod = getPartiallyPaidMethod(invoice)
 
-  const methods = useMemo(
-    () => (partiallyPaidMethod ? [partiallyPaidMethod] : invoice.payments).map(toCheckoutMethod),
-    [invoice.payments, partiallyPaidMethod],
+  const methods = (partiallyPaidMethod ? [partiallyPaidMethod] : invoice.payments).map(
+    toCheckoutMethod,
   )
 
+  const hasAlternativeMethods = methods.length > 1
   const missingDetailsFields = getMissingDetailsFields(source)
 
   const chosenPayment = invoice.payments.find(
@@ -255,23 +291,14 @@ export const useCheckoutModel = (
   const selectedPayment = partiallyPaidMethod ?? chosenPayment ?? resolveDefaultMethod(invoice)
 
   const isAwaitingExplicitChoice =
-    !partiallyPaidMethod &&
-    selection === "explicit" &&
-    !chosenPayment &&
-    invoice.payments.length > 1
-
-  const selectMethod = (methodId: string) => {
-    setChosenMethodId(methodId)
-    setIsChangingMethod(false)
-  }
+    selection === "explicit" && !chosenPayment && hasAlternativeMethods
 
   const base: CheckoutModelBase = {
-    countdown,
     invoice: summarizeInvoice(invoice),
     store: { name: source.store.name },
-    branding: resolveBranding(source),
+    branding: resolveBranding(source, mode),
     methods,
-    selectMethod,
+    selectMethod: actions.selectMethod,
   }
 
   if (bitcartInvoices.isTerminalStatus(invoice.status)) {
@@ -307,8 +334,8 @@ export const useCheckoutModel = (
     }
   } else if (isAwaitingExplicitChoice) {
     return { ...base, phase: "select" }
-  } else if (isChangingMethod && !partiallyPaidMethod) {
-    return { ...base, phase: "select", cancelChange: () => setIsChangingMethod(false) }
+  } else if (isChangingMethod && hasAlternativeMethods) {
+    return { ...base, phase: "select", cancelChange: actions.cancelChange }
   } else
     return {
       ...base,
@@ -320,6 +347,6 @@ export const useCheckoutModel = (
         partiallyPaidMethod ? invoice.sent_amount : null,
       ),
 
-      changeMethod: methods.length > 1 ? () => setIsChangingMethod(true) : undefined,
+      changeMethod: hasAlternativeMethods ? actions.changeMethod : undefined,
     }
 }

@@ -8,13 +8,14 @@ export type CopyFieldProps = {
   label: string
   value: string
   className?: string
+  testId?: string
 }
 
-export const CopyField = ({ label, value, className }: CopyFieldProps) => {
+export const CopyField = ({ label, value, className, testId }: CopyFieldProps) => {
   const { copy, copied, error } = useClipboard()
 
   return (
-    <div className={className}>
+    <div className={className} data-testid={testId}>
       <div className="mb-1 text-muted-foreground font-medium tracking-wider text-[11px] uppercase">
         {label}
       </div>
@@ -30,12 +31,7 @@ export const CopyField = ({ label, value, className }: CopyFieldProps) => {
         `)}
       >
         <span className="min-w-0 flex-1 truncate" aria-live="polite">
-          {/* Success green is pinned across themes, matching the other checkout components. */}
-          {copied ? (
-            <span className="text-green-600 dark:text-green-400 font-semibold">{t`Copied!`}</span>
-          ) : (
-            value
-          )}
+          {copied ? <span className="text-success font-semibold">{t`Copied!`}</span> : value}
         </span>
 
         <CopyIcon className="size-3.5 text-muted-foreground shrink-0" />

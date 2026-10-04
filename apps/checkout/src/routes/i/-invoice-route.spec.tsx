@@ -6,9 +6,9 @@ import { http, HttpResponse } from "msw"
 import { Suspense } from "react"
 import { beforeEach, describe, expect, test, vi } from "vitest"
 
+import { makeInvoice } from "#/checkout/fixtures"
 import { useCheckoutSource } from "#/checkout/runtime/source"
 import { serveCheckoutApi, setupCheckoutApiServer } from "#/checkout/testing/api-server"
-import { makeInvoice } from "#/checkout/testing/fixtures"
 import { checkoutTemplates } from "#/common/checkout-templates"
 
 import { Route } from "./$invoiceId"
@@ -51,6 +51,7 @@ describe("invoice route loader", () => {
     const api = serveCheckoutApi(makeInvoice({ store_id: "store-1" }))
     const invoiceResponse = Promise.withResolvers<void>()
     const loadTemplate = vi.spyOn(checkoutTemplates, "load")
+    const loadTemplateCatalog = vi.spyOn(checkoutTemplates, "loadCatalog")
     const queryClient = new QueryClient()
 
     api.invoiceResponseGate = invoiceResponse.promise
@@ -60,6 +61,7 @@ describe("invoice route loader", () => {
     await waitFor(() => expect(api.invoiceRequests).toBe(1))
     await waitFor(() => expect(api.policiesRequests).toBe(1))
     expect(loadTemplate).toHaveBeenCalledWith(checkoutTemplates.defaultId)
+    expect(loadTemplateCatalog).toHaveBeenCalledWith(checkoutTemplates.defaultId, "en")
     expect(api.storeRequests).toStrictEqual([])
 
     invoiceResponse.resolve()
@@ -129,17 +131,22 @@ describe("invoice route loader", () => {
       ["development", "spotlight", "spotlight"],
       ["development", "no-such-template", checkoutTemplates.defaultId],
       ["production", "spotlight", checkoutTemplates.defaultId],
-    ] as const)("in %s, `?template=%s` loads %s", async (envTag, requested, loaded) => {
-      serveCheckoutApi(makeInvoice())
-      env.tag = envTag
-      const loadTemplate = vi.spyOn(checkoutTemplates, "load")
-      const queryClient = new QueryClient()
+    ] as const)(
+      "in %s, `?template=%s` loads %s with its catalog",
+      async (envTag, requested, loaded) => {
+        serveCheckoutApi(makeInvoice())
+        env.tag = envTag
+        const loadTemplate = vi.spyOn(checkoutTemplates, "load")
+        const loadTemplateCatalog = vi.spyOn(checkoutTemplates, "loadCatalog")
+        const queryClient = new QueryClient()
 
-      runLoader(queryClient, { template: requested })
+        runLoader(queryClient, { template: requested })
 
-      expect(loadTemplate).toHaveBeenCalledWith(loaded)
+        expect(loadTemplate).toHaveBeenCalledWith(loaded)
+        expect(loadTemplateCatalog).toHaveBeenCalledWith(loaded, "en")
 
-      await waitForPrefetches(queryClient)
-    })
+        await waitForPrefetches(queryClient)
+      },
+    )
   })
 })

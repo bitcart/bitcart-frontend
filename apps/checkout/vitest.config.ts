@@ -12,6 +12,16 @@ export default defineConfig({
   //* resolve to a `babel-plugin-macros` shim unless Babel rewrites them first. The plugin refuses
   //* to run without a config, so it gets a throwaway one.
   plugins: [
+    //* Resolves `.po` imports to empty catalogs: only the Lingui Vite plugin compiles them, and
+    //* they are generated. Macros keep their source messages under test.
+    {
+      name: "empty-lingui-catalogs",
+      enforce: "pre",
+      resolveId: (source) => (source.endsWith(".po") ? `\0empty-catalog:${source}` : null),
+
+      load: (id) => (id.startsWith("\0empty-catalog:") ? "export const messages = {}" : null),
+    },
+
     rolldownBabel({
       plugins: [
         [

@@ -1,7 +1,13 @@
 import { FieldError } from "@bitcart/ui-kit/components"
 import { t } from "@lingui/core/macro"
 
-import { CheckoutCard, CheckoutFooter, useCheckout, useCustomerDetailsForm } from ".."
+import {
+  CheckoutCard,
+  CheckoutFooter,
+  ExtensionSlot,
+  useCheckout,
+  useCustomerDetailsForm,
+} from ".."
 
 export const CheckoutCustomerDetailsScreen = () => {
   const { invoice, store } = useCheckout("details")
@@ -15,6 +21,8 @@ export const CheckoutCustomerDetailsScreen = () => {
         <div className="mt-0.5 text-muted-foreground text-[11px]">
           {invoice.price} {invoice.currency}
         </div>
+
+        <ExtensionSlot name="checkout:header-extra" className="mt-3" />
       </div>
 
       <form onSubmit={handleSubmit} noValidate className="p-5 gap-4 flex flex-col">

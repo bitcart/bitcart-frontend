@@ -1,14 +1,10 @@
 import type { SocketConnectionHandle } from "@bitcart/core/types"
-import { render, renderHook, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { describe, expect, test, vi } from "vitest"
 
-import { useCheckoutModel } from "../model"
+import { makeModel } from "../fixtures"
 import { CheckoutProvider } from "../runtime/provider"
-import { makeSource } from "../testing/fixtures"
 import { CheckoutConnectionBanner } from "./connection-banner"
-
-const model = () =>
-  renderHook(() => useCheckoutModel(makeSource(), { selection: "preselect" })).result.current
 
 const reconnecting: SocketConnectionHandle = {
   isConnected: false,
@@ -21,7 +17,7 @@ const reconnecting: SocketConnectionHandle = {
 describe("CheckoutConnectionBanner", () => {
   test("reports a lost live connection", () => {
     render(
-      <CheckoutProvider model={model()} connection={reconnecting}>
+      <CheckoutProvider model={makeModel()} connection={reconnecting}>
         <CheckoutConnectionBanner />
       </CheckoutProvider>,
     )
@@ -31,7 +27,7 @@ describe("CheckoutConnectionBanner", () => {
 
   test("stays hidden without a live connection to report on", () => {
     render(
-      <CheckoutProvider model={model()}>
+      <CheckoutProvider model={makeModel()}>
         <CheckoutConnectionBanner />
       </CheckoutProvider>,
     )

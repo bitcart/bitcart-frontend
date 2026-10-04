@@ -21,7 +21,12 @@ export default defineConfig({
       include: ["src", "../../packages/form-kit/src", "../../packages/ui-kit/src"],
 
       // Delete the following line if you encounter TS issues during extraction
-      exclude: ["src/**/*.d.ts"],
+      exclude: ["src/**/*.d.ts", "src/templates/**"],
+    },
+
+    {
+      path: "<rootDir>/src/templates/{name}/locales/{locale}",
+      include: ["src/templates/{name}"],
     },
   ],
 })

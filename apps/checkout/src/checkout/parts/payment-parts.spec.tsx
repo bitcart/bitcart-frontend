@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { describe, expect, test } from "vitest"
 
-import { makeInvoice, makePayment, makePolicies, makeStore } from "../testing/fixtures"
+import { makeInvoice, makePayment, makePolicies, makeStore } from "../fixtures"
 import { renderCheckout } from "../testing/render-checkout"
 import { PartialPaymentNotice } from "./partial-payment-notice"
 import { PaymentQr } from "./payment-qr"

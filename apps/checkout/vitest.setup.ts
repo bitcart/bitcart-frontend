@@ -4,12 +4,15 @@ import { mockMatchMedia } from "@bitcart/qa/unit"
 import { toast } from "@bitcart/ui-kit/utils"
 import { i18n } from "@lingui/core"
 import { cleanup } from "@testing-library/react"
-import { afterEach } from "vitest"
+import { afterEach, vi } from "vitest"
 
 i18n.loadAndActivate({ locale: SOURCE_LOCALE_ID, messages: {} })
 
 //* The theme provider and the toast host query media features on mount.
 mockMatchMedia()
+
+//* jsdom has no canvas to draw on: a real confetti burst crashes on its first animation frame.
+vi.mock("canvas-confetti", () => ({ default: Object.assign(vi.fn(), { reset: vi.fn() }) }))
 
 afterEach(() => {
   cleanup()

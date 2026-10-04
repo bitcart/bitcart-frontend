@@ -18,6 +18,7 @@
     "./by-view-layer/react-oxlint": "./src/by-view-layer/react-oxlint.ts",
     "./by-view-layer/react-ts": "./src/by-view-layer/react-ts.json",
     "./by-view-layer/react-vite": "./src/by-view-layer/react-vite.ts",
+    "./supplementary/theme-tokens-oxlint": "./src/supplementary/theme-tokens-oxlint.ts",
     "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts",
     "./supplementary/vike-vite": "./src/supplementary/vike-vite.ts"
   },
@@ -26,6 +27,7 @@
     "dependency-cruiser": "catalog:devDependencies",
     "knip": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies"
+    "typescript": "catalog:devDependencies",
+    "unocss": "catalog:devDependencies"
   }
 }

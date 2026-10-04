@@ -2,7 +2,7 @@ import { cn } from "@bitcart/ui-kit/utils"
 import { t } from "@lingui/core/macro"
 import { useState } from "react"
 
-import { useCheckout, useMethodSearch } from "#/checkout"
+import { CHECKOUT_METHOD_SELECTOR_TESTID, useCheckout, useMethodSearch } from "#/checkout"
 
 import { Palette } from "./palette"
 
@@ -18,6 +18,7 @@ export const SpotlightSelect = () => {
       onEscape={cancelChange}
       placeholder={t`Search currencies...`}
       listLabel={t`Payment methods`}
+      listTestId={CHECKOUT_METHOD_SELECTOR_TESTID}
       emptyMessage={t`No matching currencies`}
       options={results.map((method) => ({
         value: method.id,

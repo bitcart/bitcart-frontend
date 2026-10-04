@@ -3,10 +3,15 @@ import { CopyIcon, SearchIcon, WalletIcon } from "lucide-react"
 import { useState, type ReactNode } from "react"
 
 import {
+  CHECKOUT_AMOUNT_TESTID,
+  CHECKOUT_PAYMENT_ADDRESS_TESTID,
+  CHECKOUT_PAYMENT_URI_TESTID,
+  ExtensionSlot,
   CopyField,
   PartialPaymentNotice,
   PaymentQr,
   RecommendedFee,
+  StoreLogo,
   useCheckout,
   WalletButton,
   useCheckoutCopy,
@@ -111,11 +116,16 @@ export const SpotlightPayment = () => {
     >
       <div className="bg-muted/40 px-5 py-4 flex items-center justify-between">
         <div>
+          <StoreLogo className="mb-2 h-6" />
+
           <div className="text-muted-foreground font-medium tracking-wider text-[10px] uppercase">
             {store.name}
           </div>
 
-          <div className="mt-1 text-2xl font-bold tracking-tight">
+          <div
+            className="mt-1 text-2xl font-bold tracking-tight"
+            data-testid={CHECKOUT_AMOUNT_TESTID}
+          >
             {payment.amount}
             <span className="ml-1.5 text-muted-foreground text-sm font-medium">{payment.name}</span>
           </div>
@@ -137,11 +147,25 @@ export const SpotlightPayment = () => {
         <PaymentQr size={160} className="p-3 rounded-xl shrink-0" />
 
         <div className="min-w-0 space-y-3 w-full flex-1">
-          <CopyField label={t`Address`} value={payment.address} />
-          {paymentUrl && <CopyField label={t`Payment URI`} value={paymentUrl} />}
+          <CopyField
+            label={t`Address`}
+            value={payment.address}
+            testId={CHECKOUT_PAYMENT_ADDRESS_TESTID}
+          />
+
+          {paymentUrl && (
+            <CopyField
+              label={t`Payment URI`}
+              value={paymentUrl}
+              testId={CHECKOUT_PAYMENT_URI_TESTID}
+            />
+          )}
+
           <WalletButton className="rounded-lg w-full" />
         </div>
       </div>
+
+      <ExtensionSlot name="checkout:payment-extra" className="px-5 pb-4" />
 
       {changeMethod && (
         <p className="px-5 pb-3 text-muted-foreground text-[10px]">

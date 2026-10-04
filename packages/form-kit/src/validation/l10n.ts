@@ -45,6 +45,7 @@ export const zodL10nMessages: ZodL10nMessages = {
   invalidValue: () => t`Not one of the allowed values`,
   notMultipleOf: (divisor) => t`Must be a multiple of ${divisor}`,
   unrecognizedKey: () => t`Unrecognized field`,
+  invalidInput: () => t`Invalid input`,
 }
 
 export const applyZodL10n = (): void => {

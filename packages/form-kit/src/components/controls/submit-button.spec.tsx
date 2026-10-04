@@ -2,11 +2,11 @@ import { SOURCE_LOCALE_ID } from "@bitcart/core/i18n"
 import { i18n } from "@lingui/core"
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react"
 import { afterEach, beforeAll, describe, expect, test, vi } from "vitest"
-import * as zod from "zod"
+import * as z from "zod"
 
 import { useAppForm } from "@/hooks"
 
-const contactSchema = zod.object({ name: zod.string().min(1), city: zod.string().min(1) })
+const contactSchema = z.object({ name: z.string().min(1), city: z.string().min(1) })
 
 const ContactForm = ({
   onSubmit,

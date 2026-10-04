@@ -1,7 +1,7 @@
 import { bitcartInvoices, bitcartManage, bitcartStores } from "@bitcart/api-sdk/endpoints"
 import type { CustomerUpdateData } from "@bitcart/api-sdk/schemas"
 import type { SocketConnectionHandle } from "@bitcart/core/types"
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 import { isDefined } from "remeda"
 
 import type { CheckoutSource } from "../model"
@@ -57,5 +57,10 @@ export const useCheckoutSource = (
     onConnect: refreshInvoiceData,
   })
 
-  return { source: { invoice, store, policies, submitCustomerDetails }, connection }
+  const source = useMemo(
+    () => ({ invoice, store, policies, submitCustomerDetails }),
+    [invoice, store, policies, submitCustomerDetails],
+  )
+
+  return { source, connection }
 }

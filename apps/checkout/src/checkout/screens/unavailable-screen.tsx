@@ -1,10 +1,12 @@
 import { t } from "@lingui/core/macro"
 import { CircleSlashIcon } from "lucide-react"
 
-import { CheckoutCard, CheckoutFooter } from ".."
+import { CheckoutCard, CheckoutFooter, ExtensionSlot } from ".."
 
 export const CheckoutUnavailableScreen = () => (
   <CheckoutCard>
+    <ExtensionSlot name="checkout:header-extra" className="px-5 pt-5" />
+
     <div className="px-8 py-12 text-center">
       <CircleSlashIcon className="mb-4 size-12 text-muted-foreground mx-auto" />
       <p className="text-lg font-semibold">{t`No payment methods are available for this invoice`}</p>

@@ -10,7 +10,7 @@ import { http, HttpResponse, ws, type WebSocketHandlerConnection } from "msw"
 import { setupServer } from "msw/node"
 import { afterAll, afterEach, beforeAll } from "vitest"
 
-import { makeStore } from "./fixtures"
+import { makeStore } from "../fixtures"
 
 //! Not part of `#/checkout/testing`: templates never talk to the API, so only core and app tests
 //! import this module.

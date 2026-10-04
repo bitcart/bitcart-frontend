@@ -22,6 +22,7 @@ export type LocaleSelectorProps<TSupportedLocaleId extends LocaleId | PseudoLoca
   handleSelect: (localeId: TSupportedLocaleId, callback?: VoidFunction) => void
   triggerVariant?: ButtonProps["variant"]
   classNames?: { trigger?: string }
+  abbreviateOnSmallScreens?: boolean
 }
 
 export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocaleId>({
@@ -30,6 +31,7 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocal
   handleSelect,
   triggerVariant = "ghost",
   classNames,
+  abbreviateOnSmallScreens = false,
 }: LocaleSelectorProps<TSupportedLocaleId>) => {
   const createHandleSelect = useCallback(
     (localeId: TSupportedLocaleId) => () => handleSelect(localeId),
@@ -46,9 +48,17 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocal
       >
         <Globe />
 
-        <span className="text-sm font-medium capitalize">
+        <span
+          className={cn("text-sm font-medium capitalize", {
+            "max-sm:hidden": abbreviateOnSmallScreens,
+          })}
+        >
           {getLocaleDisplayName(activeLocaleId)}
         </span>
+
+        {abbreviateOnSmallScreens && (
+          <span className="text-sm font-medium sm:hidden uppercase">{activeLocaleId}</span>
+        )}
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-48">

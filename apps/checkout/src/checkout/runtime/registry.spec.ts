@@ -1,3 +1,4 @@
+import { setupI18n, type Messages } from "@lingui/core"
 import { describe, expect, test, vi } from "vitest"
 
 import { defineCheckoutTemplate } from "../template"
@@ -100,5 +101,109 @@ describe("createTemplateRegistry", () => {
         { defaultId: "accordion" },
       ),
     ).toThrow(/accordion/u)
+  })
+
+  describe("catalogs", () => {
+    const catalogModule = (messages: Messages) => () => Promise.resolve({ messages })
+
+    const setup = (catalogs: Record<string, () => Promise<{ messages: Messages }>>) => {
+      const i18n = setupI18n({ locale: "de", messages: { de: { "app.title": "Kasse" } } })
+
+      const registry = createTemplateRegistry(
+        { "../templates/accordion/index.ts": templateModule("Accordion") },
+        { defaultId: "accordion", catalogs, i18n },
+      )
+
+      return { i18n, registry }
+    }
+
+    test("merges the template's catalog for a locale into the app's translations", async () => {
+      const { i18n, registry } = setup({
+        "../templates/accordion/locales/de.po": catalogModule({ "accordion.pay": "Bezahlen" }),
+      })
+
+      await registry.loadCatalog("accordion", "de")
+
+      expect(i18n._("accordion.pay")).toBe("Bezahlen")
+      expect(i18n._("app.title")).toBe("Kasse")
+    })
+
+    test("degrades a catalog that fails to load to the source messages the template ships", async () => {
+      vi.spyOn(console, "error").mockImplementation(() => undefined)
+
+      const i18n = setupI18n({ locale: "de", messages: { de: {} } })
+
+      const registry = createTemplateRegistry(
+        {
+          "../templates/accordion/index.ts": () =>
+            Promise.resolve({
+              default: defineCheckoutTemplate({
+                name: { id: "Accordion" },
+                Payment: Screen,
+                sourceMessages: { "accordion.pay": "Pay" },
+              }),
+            }),
+        },
+        {
+          defaultId: "accordion",
+          i18n,
+
+          catalogs: {
+            "../templates/accordion/locales/de.po": () =>
+              Promise.reject(new Error("Failed to fetch dynamically imported module")),
+          },
+        },
+      )
+
+      await registry.settleCatalog("accordion", "de")
+
+      expect(i18n._("accordion.pay")).toBe("Pay")
+      expect(registry.isCatalogSettled("accordion", "de")).toBe(true)
+    })
+
+    test.each(["en", "ko"])(
+      "loads the source messages the template ships for %s, which has no lazy catalog",
+      async (locale) => {
+        const i18n = setupI18n({ locale: "de", messages: { de: {} } })
+
+        const registry = createTemplateRegistry(
+          {
+            "../templates/accordion/index.ts": () =>
+              Promise.resolve({
+                default: defineCheckoutTemplate({
+                  name: { id: "Accordion" },
+                  Payment: Screen,
+                  sourceMessages: { "accordion.pay": "Pay" },
+                }),
+              }),
+          },
+          { defaultId: "accordion", i18n },
+        )
+
+        await registry.loadCatalog("accordion", locale)
+        i18n.activate(locale)
+
+        expect(i18n._("accordion.pay")).toBe("Pay")
+      },
+    )
+
+    test("loads each catalog once, and again after a failed load", async () => {
+      const loadGerman = vi
+        .fn(catalogModule({ "accordion.pay": "Bezahlen" }))
+        .mockRejectedValueOnce(new Error("Failed to fetch dynamically imported module"))
+
+      const { registry } = setup({ "../templates/accordion/locales/de.po": loadGerman })
+
+      await expect(registry.loadCatalog("accordion", "de")).rejects.toThrow(/Failed to fetch/u)
+
+      const [first, second] = [
+        registry.loadCatalog("accordion", "de"),
+        registry.loadCatalog("accordion", "de"),
+      ]
+
+      expect(first).toBe(second)
+      await first
+      expect(loadGerman).toHaveBeenCalledTimes(2)
+    })
   })
 })

@@ -6,7 +6,9 @@ import {
   CheckoutAppConfigContext,
   CheckoutConnectionContext,
   CheckoutContext,
+  CheckoutCountdownContext,
   type CheckoutAppConfig,
+  type CheckoutCountdown,
 } from "./runtime/context"
 
 type CheckoutPhase = CheckoutModel["phase"]
@@ -25,6 +27,14 @@ export function useCheckout(phase?: CheckoutPhase): CheckoutModel {
   } else if (phase && model.phase !== phase) {
     throw new Error(`useCheckout("${phase}") was called while the checkout is in "${model.phase}"`)
   } else return model
+}
+
+export const useCheckoutCountdown = (): CheckoutCountdown => {
+  const countdown = use(CheckoutCountdownContext)
+
+  if (!countdown) {
+    throw new Error("useCheckoutCountdown must be called inside a CheckoutProvider")
+  } else return countdown
 }
 
 export const useCheckoutConnection = (): SocketConnectionHandle | null =>

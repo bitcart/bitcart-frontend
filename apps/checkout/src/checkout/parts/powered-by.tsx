@@ -13,10 +13,14 @@ export const PoweredBy = ({ className }: { className?: string }) => {
         href="https://bitcart.ai"
         target="_blank"
         rel="noopener noreferrer"
-        className={cn("gap-1.5 text-muted-foreground flex items-center text-[10px]", className)}
+        aria-label={t`Powered by Bitcart`}
+        className={cn(
+          "gap-1.5 text-xs text-muted-foreground flex shrink-0 items-center whitespace-nowrap",
+          className,
+        )}
       >
-        {t`Powered by`}
-        <BitcartWordmarkIcon role="img" aria-label="Bitcart" className="h-3" />
+        <span>{t`Powered by`}</span>
+        <BitcartWordmarkIcon aria-hidden className="h-4 sm:h-5 w-auto" />
       </a>
     )
   )

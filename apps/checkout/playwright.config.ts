@@ -39,8 +39,8 @@ export default defineConfig({
   webServer: {
     command: "pnpm preview",
 
-    //* For the readiness probe.
-    url: "http://localhost:3002/i/1",
+    //* The readiness probe targets the preview: it renders without the API.
+    url: "http://localhost:3002/preview/accordion",
 
     reuseExistingServer: true,
   },

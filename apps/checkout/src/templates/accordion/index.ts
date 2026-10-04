@@ -2,6 +2,7 @@ import { msg } from "@lingui/core/macro"
 
 import { defineCheckoutTemplate } from "#/checkout"
 
+import { messages as sourceMessages } from "./locales/en.po"
 import { AccordionPayment } from "./payment"
 
 /**
@@ -12,5 +13,6 @@ import { AccordionPayment } from "./payment"
  */
 export default defineCheckoutTemplate({
   name: msg`Accordion`,
+  sourceMessages,
   Payment: AccordionPayment,
 })

@@ -13,7 +13,7 @@ export const PoweredByFooter = () => {
         rel="noopener noreferrer"
         className="gap-1.5 flex items-center"
       >
-        <BitcartWordmarkIcon role="img" aria-label={BRAND_UMBRELLA_NAME} className="h-4" />
+        <BitcartWordmarkIcon role="img" aria-label={BRAND_UMBRELLA_NAME} className="h-5 w-auto" />
       </a>
     </div>
   )

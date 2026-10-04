@@ -1,15 +1,17 @@
 import { Spinner } from "@bitcart/ui-kit/components"
 import { t } from "@lingui/core/macro"
 
-import { CheckoutCard, CheckoutFooter, useCheckout } from ".."
+import { CheckoutCard, CheckoutFooter, ExtensionSlot, useCheckout } from ".."
 
 export const CheckoutConfirmingScreen = () => {
   const { confirmations, invoice, store } = useCheckout("confirming")
 
   return (
     <CheckoutCard>
+      <ExtensionSlot name="checkout:header-extra" className="px-5 pt-5" />
+
       <div className="px-8 py-12 gap-3 flex flex-col items-center text-center">
-        <Spinner className="size-12 text-primary" />
+        <Spinner className="size-12 text-pending" />
         <p className="mt-3 text-xl font-semibold">{t`Payment received`}</p>
 
         <p className="text-muted-foreground text-sm">

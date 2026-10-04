@@ -1,7 +1,13 @@
 import type { bitcartInvoices, bitcartManage, bitcartStores } from "@bitcart/api-sdk/endpoints"
 import { publicStoreCheckoutSettingsDefault } from "@bitcart/api-sdk/schemas"
 
-import type { CheckoutSource } from "../model"
+import {
+  deriveCheckoutModel,
+  type CheckoutDeriveContext,
+  type CheckoutModel,
+  type CheckoutSource,
+} from "./model"
+import { createCheckoutControl } from "./runtime/control-store"
 
 export const makePayment = (
   overrides: Partial<bitcartInvoices.InvoicePayment> = {},
@@ -97,3 +103,16 @@ export const makeSource = (overrides: Partial<CheckoutSource> = {}): CheckoutSou
   submitCustomerDetails: () => Promise.resolve(),
   ...overrides,
 })
+
+export const makeModel = (
+  source: Partial<CheckoutSource> = {},
+  context: Partial<CheckoutDeriveContext> = {},
+): CheckoutModel => {
+  const { state, actions } = createCheckoutControl()
+
+  return deriveCheckoutModel(makeSource(source), state, actions, {
+    selection: "preselect",
+    mode: "light",
+    ...context,
+  })
+}

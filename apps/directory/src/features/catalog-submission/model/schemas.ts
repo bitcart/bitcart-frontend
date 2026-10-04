@@ -1,7 +1,7 @@
 import type { FromSchema } from "@bitcart/core/types"
 import { emptyAsUndefined } from "@bitcart/core/validation"
 import { t } from "@lingui/core/macro"
-import { discriminatedUnion, literal, object, regexes, string, url, enum as zodEnum } from "zod"
+import * as z from "zod"
 
 import {
   CATALOG_ENTRY_SELFCONTAINED_CATEGORY_IDS,
@@ -24,34 +24,37 @@ const getMaxLengthErrorMessage = (maxLength: number) =>
 export const getCatalogSubmissionSchema = () => {
   const { fields: cfg } = FORM_CONFIG
 
-  return object({
-    name: string()
+  return z.object({
+    name: z
+      .string()
       .min(cfg.name.minLength, getMinLengthErrorMessage(cfg.name.minLength))
       .max(cfg.name.maxLength, getMaxLengthErrorMessage(cfg.name.maxLength)),
 
-    description: string(getRequiredFieldErrorMessage())
+    description: z
+      .string(getRequiredFieldErrorMessage())
       .min(cfg.description.minLength, getMinLengthErrorMessage(cfg.description.minLength))
       .max(cfg.description.maxLength, getMaxLengthErrorMessage(cfg.description.maxLength)),
 
-    type: discriminatedUnion("category", [
-      object({
-        category: zodEnum(CATALOG_ENTRY_SELFCONTAINED_CATEGORY_IDS),
+    type: z.discriminatedUnion("category", [
+      z.object({
+        category: z.enum(CATALOG_ENTRY_SELFCONTAINED_CATEGORY_IDS),
       }),
 
-      object({
-        category: literal(CATALOG_ENTRY_SUPERCATEGORY_ID),
-        subcategory: string(getRequiredFieldErrorMessage()),
+      z.object({
+        category: z.literal(CATALOG_ENTRY_SUPERCATEGORY_ID),
+        subcategory: z.string(getRequiredFieldErrorMessage()),
       }),
     ]),
 
-    url: url({
-      message: t`Must be a valid website URL`,
+    url: z.url({
+      error: t`Must be a valid website URL`,
       protocol: /^https?$/,
-      hostname: regexes.domain,
+      hostname: z.regexes.domain,
     }),
 
     twitter: emptyAsUndefined(
-      string()
+      z
+        .string()
         .min(cfg.twitter.minLength, getMinLengthErrorMessage(cfg.twitter.minLength))
         .max(cfg.twitter.maxLength, getMaxLengthErrorMessage(cfg.twitter.maxLength))
         .regex(cfg.twitter.regex, t`Must be a valid Twitter handle`)
@@ -59,7 +62,8 @@ export const getCatalogSubmissionSchema = () => {
     ),
 
     github: emptyAsUndefined(
-      string()
+      z
+        .string()
         .regex(cfg.github.regex, t`Must be a valid GitHub username or repo path`)
         .optional(),
     ),

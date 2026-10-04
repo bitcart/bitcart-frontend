@@ -12,7 +12,13 @@ import { t } from "@lingui/core/macro"
 import { ClockIcon } from "lucide-react"
 import { useEffect, useRef, type ReactNode } from "react"
 
-import { CheckoutConnectionBanner, CheckoutFooter, useCheckout } from "#/checkout"
+import {
+  CHECKOUT_COUNTDOWN_TESTID,
+  CheckoutConnectionBanner,
+  CheckoutFooter,
+  ExtensionSlot,
+  useCheckoutCountdown,
+} from "#/checkout"
 
 //* Base UI displays an option's `label` and identifies options by `value`.
 export type PaletteOption = {
@@ -28,6 +34,7 @@ type PaletteProps = {
   onEscape?: () => void
   placeholder: string
   listLabel: string
+  listTestId?: string
   options: PaletteOption[]
   emptyMessage?: string
   children?: ReactNode
@@ -43,11 +50,12 @@ export const Palette = ({
   onEscape,
   placeholder,
   listLabel,
+  listTestId,
   options,
   emptyMessage,
   children,
 }: PaletteProps) => {
-  const { countdown } = useCheckout()
+  const countdown = useCheckoutCountdown()
   const inputRef = useRef<HTMLInputElement>(null)
   const isListShown = options.length > 0 || Boolean(emptyMessage)
 
@@ -93,6 +101,7 @@ export const Palette = ({
           </div>
 
           <div
+            data-testid={CHECKOUT_COUNTDOWN_TESTID}
             className={cn(`
               gap-1 text-muted-foreground font-mono flex shrink-0 items-center text-[11px]
               tabular-nums
@@ -103,6 +112,7 @@ export const Palette = ({
           </div>
         </div>
 
+        <ExtensionSlot name="checkout:header-extra" className="px-5 py-3 border-border border-b" />
         <CheckoutConnectionBanner />
 
         {isListShown && (
@@ -117,7 +127,7 @@ export const Palette = ({
 
             {emptyMessage && <CommandEmpty>{emptyMessage}</CommandEmpty>}
 
-            <CommandList aria-label={listLabel} className="max-h-64">
+            <CommandList aria-label={listLabel} data-testid={listTestId} className="max-h-64">
               {(option: PaletteOption) => (
                 <CommandItem
                   key={option.value}

@@ -1,12 +1,16 @@
 import type { ComponentType } from "react"
 
 import { useCheckout } from "../hooks"
+import type { CheckoutSelectionMode } from "../model"
 import { CheckoutConfirmingScreen } from "../screens/confirming-screen"
 import { CheckoutCustomerDetailsScreen } from "../screens/details-screen"
 import { CheckoutMethodSelectScreen } from "../screens/method-select-screen"
 import { CheckoutStatusScreen } from "../screens/status-screen"
 import { CheckoutUnavailableScreen } from "../screens/unavailable-screen"
+import type { CheckoutPalette } from "../theme/palette"
 import { usePartialPaymentAnnouncement } from "./partial-payment-announcement"
+import { RequiredContentGuard } from "./required-content-guard"
+import { CheckoutThemeScope } from "./theme-scope"
 
 export type CheckoutScreens = {
   Payment: ComponentType
@@ -16,10 +20,13 @@ export type CheckoutScreens = {
   Confirming?: ComponentType
 }
 
-export const CheckoutShell = ({ screens }: { screens: CheckoutScreens }) => {
-  const { phase } = useCheckout()
+export type CheckoutShellTemplate = CheckoutScreens & {
+  selection?: CheckoutSelectionMode
+  colorScheme?: CheckoutPalette | null
+}
 
-  usePartialPaymentAnnouncement()
+const CheckoutPhaseScreen = ({ screens }: { screens: CheckoutScreens }) => {
+  const { phase } = useCheckout()
 
   const {
     Payment,
@@ -48,4 +55,29 @@ export const CheckoutShell = ({ screens }: { screens: CheckoutScreens }) => {
     case "unavailable":
       return <CheckoutUnavailableScreen />
   }
+}
+
+export const CheckoutShell = ({
+  templateId,
+  template,
+}: {
+  templateId: string
+  template: CheckoutShellTemplate
+}) => {
+  const { branding } = useCheckout()
+
+  usePartialPaymentAnnouncement()
+
+  return (
+    <CheckoutThemeScope templateId={templateId} palettes={[template.colorScheme, branding.palette]}>
+      <CheckoutPhaseScreen screens={template} />
+
+      {import.meta.env.DEV && (
+        <RequiredContentGuard
+          templateId={templateId}
+          selection={template.selection ?? "preselect"}
+        />
+      )}
+    </CheckoutThemeScope>
+  )
 }

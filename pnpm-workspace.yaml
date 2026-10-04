@@ -38,8 +38,8 @@ catalogs:
     "@tanstack/react-router-devtools": "1.167.2"
     "@tanstack/react-router-ssr-query": "1.167.3"
     "@tanstack/react-start": "1.168.58"
-    "@tanstack/react-store": "0.11.1"
-    "@tanstack/store": "0.11.1"
+    "@tanstack/react-store": "0.11.2"
+    "@tanstack/store": "0.11.2"
     "@tanstack/start-static-server-functions": 1.167.37
     "@web3icons/react": 4.1.22
     class-variance-authority: 0.7.1
@@ -82,6 +82,7 @@ catalogs:
     "@testing-library/react": 16.3.3
     "@testing-library/user-event": 14.6.7
     "@types/canvas-confetti": 1.9.0
+    "@types/culori": 4.0.1
     "@types/mdx": 2.0.14
     "@types/node": 25.9.8
     "@types/react": 19.3.0
@@ -89,6 +90,7 @@ catalogs:
     "@unocss/cli": 66.10.5
     "@vitejs/plugin-react": 6.1.1
     babel-plugin-react-compiler: 1.0.0
+    culori: 4.0.2
     dependency-cruiser: 18.4.0
     eslint-plugin-better-tailwindcss: 4.7.0
     eslint-plugin-react-hooks: 7.1.1
@@ -128,6 +130,9 @@ minimumReleaseAgeExclude:
   - oxlint
   - oxlint-tsgolint
   - "@base-ui/*"
+  # TODO: Remove after 2026-10-06
+  - "@tanstack/react-store@0.11.2"
+  - "@tanstack/store@0.11.2"
 
 overrides:
   # TODO: Remove once nx bumps its smol-toml pin to 1.7.1.

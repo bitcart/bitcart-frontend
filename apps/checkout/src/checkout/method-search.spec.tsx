@@ -2,10 +2,9 @@ import { renderHook } from "@testing-library/react"
 import type { ReactNode } from "react"
 import { describe, expect, test } from "vitest"
 
+import { makeInvoice, makeModel, makePayment } from "./fixtures"
 import { useMethodSearch } from "./method-search"
-import { useCheckoutModel } from "./model"
 import { CheckoutProvider } from "./runtime/provider"
-import { makeInvoice, makePayment, makeSource } from "./testing/fixtures"
 
 const payments = [
   makePayment({ id: "btc", name: "BTC", symbol: "btc" }),
@@ -13,13 +12,11 @@ const payments = [
   makePayment({ id: "usdt", name: "USDT (TRC20)", symbol: "usdt" }),
 ]
 
-const Wrapper = ({ children }: { children: ReactNode }) => {
-  const model = useCheckoutModel(makeSource({ invoice: makeInvoice({ payments }) }), {
-    selection: "explicit",
-  })
+const model = makeModel({ invoice: makeInvoice({ payments }) }, { selection: "explicit" })
 
-  return <CheckoutProvider model={model}>{children}</CheckoutProvider>
-}
+const Wrapper = ({ children }: { children: ReactNode }) => (
+  <CheckoutProvider model={model}>{children}</CheckoutProvider>
+)
 
 const searchIds = (query: string) =>
   renderHook(() => useMethodSearch(query), { wrapper: Wrapper }).result.current.map(({ id }) => id)

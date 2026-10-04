@@ -12,14 +12,22 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react"
 
 import {
+  CHECKOUT_AMOUNT_TESTID,
+  CHECKOUT_COUNTDOWN_TESTID,
+  CHECKOUT_METHOD_SELECTOR_TESTID,
+  CHECKOUT_PAYMENT_ADDRESS_TESTID,
+  CHECKOUT_PAYMENT_URI_TESTID,
   CheckoutConnectionBanner,
   CheckoutFooter,
+  ExtensionSlot,
   CopyField,
   PartialPaymentNotice,
   PaymentQr,
   RecommendedFee,
+  StoreLogo,
   WalletButton,
   useCheckout,
+  useCheckoutCountdown,
 } from "#/checkout"
 
 type SectionId = "currency" | "amount" | "qr" | "wallet"
@@ -27,11 +35,12 @@ type SectionId = "currency" | "amount" | "qr" | "wallet"
 const SECTION_ORDER: SectionId[] = ["currency", "amount", "qr", "wallet"]
 
 const getDotClassName = (isComplete: boolean, isOpen: boolean) => {
-  //* Success green is pinned across themes, matching the other checkout components.
-  if (isComplete) return "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
-  if (isOpen) return "bg-primary text-primary-foreground"
-
-  return "bg-muted text-muted-foreground"
+  //* A finished step marks progress, not a payment outcome: it uses the palette's `accent`.
+  if (isComplete) {
+    return "bg-accent text-accent-foreground"
+  } else if (isOpen) {
+    return "bg-primary text-primary-foreground"
+  } else return "bg-muted text-muted-foreground"
 }
 
 const SectionHeader = ({
@@ -70,7 +79,7 @@ const SectionHeader = ({
       <div
         className={cn(`
           text-sm font-semibold
-          ${isComplete ? "text-green-700 dark:text-green-400" : ""}
+          ${isComplete ? "text-accent-foreground" : ""}
         `)}
       >
         {title}
@@ -114,7 +123,8 @@ const SectionBody = ({ isOpen, children }: { isOpen: boolean; children: React.Re
 }
 
 export const AccordionPayment = () => {
-  const { countdown, invoice, methods, payment, selectMethod, store } = useCheckout("payment")
+  const { invoice, methods, payment, selectMethod, store } = useCheckout("payment")
+  const countdown = useCheckoutCountdown()
 
   const [openSection, setOpenSection] = useState<SectionId>(
     methods.length > 1 ? "currency" : "amount",
@@ -149,6 +159,8 @@ export const AccordionPayment = () => {
     >
       {/* Compact header with store name + countdown */}
       <div className="gap-3 px-5 py-4 border-border flex items-center justify-between border-b">
+        <StoreLogo />
+
         <div className="min-w-0 flex-1">
           <div className="text-base font-bold tracking-tight truncate">{store.name}</div>
 
@@ -158,6 +170,7 @@ export const AccordionPayment = () => {
         </div>
 
         <div
+          data-testid={CHECKOUT_COUNTDOWN_TESTID}
           className={cn(`
             gap-1.5 bg-muted px-3 py-1.5 text-muted-foreground font-medium flex shrink-0
             items-center rounded-full text-[11px] tabular-nums
@@ -168,6 +181,7 @@ export const AccordionPayment = () => {
         </div>
       </div>
 
+      <ExtensionSlot name="checkout:header-extra" className="px-5 py-3 border-border border-b" />
       <CheckoutConnectionBanner />
 
       {/* Progress bar */}
@@ -196,7 +210,7 @@ export const AccordionPayment = () => {
           />
 
           <SectionBody isOpen={openSection === "currency"}>
-            <div className="gap-2 grid grid-cols-2">
+            <div className="gap-2 grid grid-cols-2" data-testid={CHECKOUT_METHOD_SELECTOR_TESTID}>
               {methods.map((method) => (
                 <button
                   key={method.id}
@@ -250,7 +264,10 @@ export const AccordionPayment = () => {
                 <span className="text-muted-foreground text-sm">{t`You pay`}</span>
 
                 <div className="text-right">
-                  <div className="text-2xl font-bold tracking-tight">
+                  <div
+                    className="text-2xl font-bold tracking-tight"
+                    data-testid={CHECKOUT_AMOUNT_TESTID}
+                  >
                     {payment.amount}
 
                     <span className="ml-1.5 text-muted-foreground text-sm font-medium">
@@ -303,9 +320,18 @@ export const AccordionPayment = () => {
             </div>
 
             <div className="mt-4 space-y-3">
-              <CopyField label={t`Address`} value={payment.address} />
+              <CopyField
+                label={t`Address`}
+                value={payment.address}
+                testId={CHECKOUT_PAYMENT_ADDRESS_TESTID}
+              />
+
               {payment.paymentUrl && (
-                <CopyField label={t`Payment URI`} value={payment.paymentUrl} />
+                <CopyField
+                  label={t`Payment URI`}
+                  value={payment.paymentUrl}
+                  testId={CHECKOUT_PAYMENT_URI_TESTID}
+                />
               )}
             </div>
 
@@ -342,6 +368,7 @@ export const AccordionPayment = () => {
         </div>
       </div>
 
+      <ExtensionSlot name="checkout:payment-extra" className="px-5 py-4 border-border border-t" />
       <CheckoutFooter />
     </div>
   )

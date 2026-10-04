@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  viewBox="507.56 448.29 484.88 104.79">
+  viewBox="507.56 448.29 484.88 104.79" color="#2f0e4f">
   <defs>
     <style>
       .cls-1 {
@@ -8,7 +8,7 @@
       }
 
       .cls-2 {
-        fill: #2f0e4f;
+        fill: currentColor;
       }
 
       .cls-3 {

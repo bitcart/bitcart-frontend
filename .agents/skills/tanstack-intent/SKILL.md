@@ -58,7 +58,8 @@ Skills exist for `@tanstack/router-core`, `start-client-core`, `start-server-cor
 `react-start`, `router-plugin`, `virtual-file-routes`, `devtools`, `devtools-event-client`, and
 `devtools-vite`. `@tanstack/react-query`, `react-store`, and `store` ship **no** intent skills
 even where they're direct dependencies, so don't go hunting for one when a task is about queries
-or stores. Use context7 for those instead.
+or stores. Use context7 for those instead, and the `tanstack-store` skill for this repo's store
+conventions.
 
 Several skills cover things this repo isn't doing at all (publishing a devtools plugin to the
 marketplace, migrating off Next.js App Router, deploying to Cloudflare or Vercel). A blurb

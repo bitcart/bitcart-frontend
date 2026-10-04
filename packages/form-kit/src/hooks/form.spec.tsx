@@ -1,21 +1,21 @@
 import { act, renderHook } from "@testing-library/react"
 import { describe, expect, test } from "vitest"
-import * as zod from "zod"
+import * as z from "zod"
 
 import { useAppForm } from "./form"
 
 //* Reproduces the constructs emitted by an OpenAPI schema generator for a request payload.
-const createInvoiceSchema = zod.object({
-  store_id: zod.string(),
-  price: zod.union([zod.number(), zod.string().regex(/^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$/)]),
-  order_id: zod.string().default(""),
-  notification_url: zod.union([zod.string(), zod.null()]).default(""),
-  buyer_email: zod.union([zod.email(), zod.literal(""), zod.null()]).default(""),
-  products: zod.union([zod.array(zod.string()), zod.record(zod.string(), zod.int())]).prefault({}),
-  expiration: zod.union([zod.int(), zod.null()]).optional(),
+const createInvoiceSchema = z.object({
+  store_id: z.string(),
+  price: z.union([z.number(), z.string().regex(/^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$/)]),
+  order_id: z.string().default(""),
+  notification_url: z.union([z.string(), z.null()]).default(""),
+  buyer_email: z.union([z.email(), z.literal(""), z.null()]).default(""),
+  products: z.union([z.array(z.string()), z.record(z.string(), z.int())]).prefault({}),
+  expiration: z.union([z.int(), z.null()]).optional(),
 })
 
-type InvoiceCreationInputs = zod.input<typeof createInvoiceSchema>
+type InvoiceCreationInputs = z.input<typeof createInvoiceSchema>
 
 describe("useAppForm with a Zod object schema", () => {
   const renderInvoiceForm = (defaultValues: Partial<InvoiceCreationInputs>) =>

@@ -2,7 +2,7 @@ import { CustomerUpdateData } from "@bitcart/api-sdk/schemas"
 import { getNormalizedErrorMessage } from "@bitcart/api-sdk/utils"
 import { useAppForm } from "@bitcart/form-kit/hooks"
 import { useMemo, useState, type FormEvent } from "react"
-import * as zod from "zod"
+import * as z from "zod"
 
 import { useCheckout } from "./hooks"
 import type { CustomerDetailsField } from "./model"
@@ -12,10 +12,10 @@ const [requiredEmailSchema] = CustomerUpdateData.shape.buyer_email.unwrap().opti
 
 //* Fields not requested by the store stay in the form, but are neither validated nor submitted.
 const getCustomerDetailsSchema = (fields: CustomerDetailsField[]) =>
-  zod.object({
-    email: fields.includes("email") ? requiredEmailSchema : zod.string(),
-    address: fields.includes("address") ? zod.string().trim().min(1) : zod.string(),
-    notes: zod.string(),
+  z.object({
+    email: fields.includes("email") ? requiredEmailSchema : z.string(),
+    address: fields.includes("address") ? z.string().trim().min(1) : z.string(),
+    notes: z.string(),
   })
 
 /**

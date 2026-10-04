@@ -1,5 +1,6 @@
 import { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
 import type { HttpHref } from "@bitcart/core/navigation"
+import { CHECKOUT_STATUS_TESTID } from "@bitcart/qa"
 import { LinkButton } from "@bitcart/ui-kit/components"
 import type { IconComponent } from "@bitcart/ui-kit/types"
 import { cn } from "@bitcart/ui-kit/utils"
@@ -7,6 +8,8 @@ import { t } from "@lingui/core/macro"
 import confetti from "canvas-confetti"
 import { CheckIcon, ClockIcon, RotateCcwIcon, XIcon } from "lucide-react"
 import { useEffect } from "react"
+
+import { ExtensionSlot } from "../runtime/slot"
 
 type StatusOverlayProps = {
   status: bitcartInvoices.InvoiceStatus
@@ -26,24 +29,22 @@ type StatusDisplayParams = {
   title: () => string
 }
 
-//* Status hues are pinned per status, and each dark variant keeps theme-token text readable.
-// TODO: Replace them with success/warning semantic tokens (see #281).
 const TERMINAL_STATUS_DISPLAY_PARAMS: Record<
   bitcartInvoices.InvoiceTerminalStatus,
   StatusDisplayParams
 > = {
   complete: {
-    bg: "bg-green-50 dark:bg-green-950/40",
-    iconBg: "text-green-600 dark:text-green-400",
-    titleColor: "text-green-600 dark:text-green-400",
+    bg: "bg-success/10",
+    iconBg: "text-success",
+    titleColor: "text-success",
     Icon: CheckIcon,
     title: () => t`Payment complete`,
   },
 
   refunded: {
-    bg: "bg-amber-50 dark:bg-amber-950/40",
-    iconBg: "text-amber-600 dark:text-amber-400",
-    titleColor: "text-amber-600 dark:text-amber-400",
+    bg: "bg-warning/10",
+    iconBg: "text-warning",
+    titleColor: "text-warning",
     Icon: RotateCcwIcon,
     title: () => t`Payment refunded`,
   },
@@ -57,9 +58,9 @@ const TERMINAL_STATUS_DISPLAY_PARAMS: Record<
   },
 
   invalid: {
-    bg: "bg-red-50 dark:bg-red-950/40",
-    iconBg: "text-red-500 dark:text-red-400",
-    titleColor: "text-red-500 dark:text-red-400",
+    bg: "bg-destructive/10",
+    iconBg: "text-destructive-foreground",
+    titleColor: "text-destructive-foreground",
     Icon: XIcon,
     title: () => t`This invoice has been marked as invalid`,
   },
@@ -75,30 +76,36 @@ export const StatusOverlay = ({
   children,
 }: StatusOverlayProps) => {
   useEffect(() => {
-    if (status === "complete") {
-      const end = Date.now() + 2000
+    if (status !== "complete") return void null
 
-      const frame = () => {
-        void confetti({
-          particleCount: 3,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0, y: 0.6 },
-        })
+    const end = Date.now() + 2000
+    let frameId = 0
 
-        void confetti({
-          particleCount: 3,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1, y: 0.6 },
-        })
+    const frame = () => {
+      void confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.6 },
+      })
 
-        if (Date.now() < end) {
-          requestAnimationFrame(frame)
-        }
+      void confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.6 },
+      })
+
+      if (Date.now() < end) {
+        frameId = requestAnimationFrame(frame)
       }
+    }
 
-      frame()
+    frame()
+
+    return () => {
+      cancelAnimationFrame(frameId)
+      confetti.reset()
     }
   }, [status])
 
@@ -110,7 +117,7 @@ export const StatusOverlay = ({
   const { Icon } = config
 
   return (
-    <div className={cn(`${config.bg} px-8 py-12 text-center`)}>
+    <div data-testid={CHECKOUT_STATUS_TESTID} className={cn(`${config.bg} px-8 py-12 text-center`)}>
       <div className={cn(`size-16 mx-auto ${config.iconBg}`)}>
         <Icon className="size-full" strokeWidth={1.5} />
       </div>
@@ -138,6 +145,7 @@ export const StatusOverlay = ({
         )}
       </div>
 
+      <ExtensionSlot name="checkout:status-extra" className="mt-6" />
       {children}
     </div>
   )

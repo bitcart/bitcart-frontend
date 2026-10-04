@@ -5,8 +5,8 @@ import { AlertCircleIcon } from "lucide-react"
 import type React from "react"
 
 import { CheckoutCard } from "#/checkout"
+import { CheckoutHeader } from "#/routes/-components/checkout-header"
 
-import { CheckoutHeader } from "./checkout-header"
 import { PoweredByFooter } from "./powered-by-footer"
 
 // FIXME: Extract into a Tanstack Kit package, once it exists.

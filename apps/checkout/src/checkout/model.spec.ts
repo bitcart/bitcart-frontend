@@ -1,33 +1,40 @@
 import type { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
-import { act, renderHook } from "@testing-library/react"
 import { describe, expect, test, vi } from "vitest"
 
-import { useCheckoutModel, type CheckoutModelOptions, type CheckoutSource } from "./model"
-import { makeInvoice, makePayment, makePolicies, makeSource, makeStore } from "./testing/fixtures"
+import { makeInvoice, makePayment, makePolicies, makeSource, makeStore } from "./fixtures"
+import {
+  deriveCheckoutModel,
+  type CheckoutDeriveContext,
+  type CheckoutModel,
+  type CheckoutSource,
+} from "./model"
+import { createCheckoutControl } from "./runtime/control-store"
 
-const renderModel = (
+//* `derive` reads the control's current state, as the view does after every action.
+const setup = (
   source: Partial<CheckoutSource> = {},
-  options: CheckoutModelOptions = { selection: "preselect" },
-) =>
-  renderHook(
-    (props: { source: CheckoutSource; options: CheckoutModelOptions }) =>
-      useCheckoutModel(props.source, props.options),
-    {
-      initialProps: {
-        source: makeSource(source),
-        options,
-      },
-    },
-  )
+  context: Partial<CheckoutDeriveContext> = {},
+) => {
+  const control = createCheckoutControl()
 
-describe("useCheckoutModel", () => {
+  const derive = (current: Partial<CheckoutSource> = source) =>
+    deriveCheckoutModel(makeSource(current), control.state, control.actions, {
+      selection: "preselect",
+      mode: "light",
+      ...context,
+    })
+
+  return { control, derive }
+}
+
+describe("deriveCheckoutModel", () => {
   describe("phase", () => {
     test.each(["complete", "expired", "invalid", "refunded"] as const)(
       "is status once the invoice is %s",
       (status) => {
-        const { result } = renderModel({ invoice: makeInvoice({ status }) })
+        const { derive } = setup({ invoice: makeInvoice({ status }) })
 
-        expect(result.current).toMatchObject({ phase: "status", status })
+        expect(derive()).toMatchObject({ phase: "status", status })
       },
     )
   })
@@ -53,22 +60,22 @@ describe("useCheckoutModel", () => {
       })
 
     test("asks only for the remainder", () => {
-      const { result } = renderModel({ invoice: partialInvoice() })
+      const { derive } = setup({ invoice: partialInvoice() })
 
-      expect(result.current).toMatchObject({
+      expect(derive()).toMatchObject({
         phase: "payment",
         payment: { amount: "0.75000000", partial: { paid: "0.50000000", total: "1.25000000" } },
       })
     })
 
     test("drops the payment URI that still encodes the full amount", () => {
-      const { result } = renderModel({ invoice: partialInvoice() })
+      const { derive } = setup({ invoice: partialInvoice() })
 
-      expect(result.current).toMatchObject({
+      expect(derive()).toMatchObject({
         payment: { address: "ltc1qpartial", paymentUrl: null },
       })
 
-      expect(JSON.stringify(result.current)).not.toContain("litecoin:")
+      expect(JSON.stringify(derive())).not.toContain("litecoin:")
     })
 
     test.each([
@@ -76,28 +83,30 @@ describe("useCheckoutModel", () => {
       ["0.012345678901234567", 0.002, 18, "0.010345678901234567"],
       ["1.00000000", 1.5, 8, "0.00000000"],
     ])("subtracts %s − %s exactly at %i decimals", (amount, sentAmount, divisibility, expected) => {
-      const { result } = renderModel({
+      const { derive } = setup({
         invoice: partialInvoice({
           sent_amount: sentAmount,
           payments: [{ ...ltc, amount, divisibility }],
         }),
       })
 
-      expect(result.current).toMatchObject({ payment: { amount: expected } })
+      expect(derive()).toMatchObject({ payment: { amount: expected } })
     })
 
     test("locks the checkout to the method that received the funds", () => {
-      const { result } = renderModel({ invoice: partialInvoice() }, { selection: "explicit" })
+      const { derive } = setup({ invoice: partialInvoice() }, { selection: "explicit" })
 
-      act(() => result.current.selectMethod("method-btc"))
+      derive().selectMethod("method-btc")
 
-      expect(result.current).toMatchObject({
+      const model = derive()
+
+      expect(model).toMatchObject({
         phase: "payment",
         methods: [{ id: "method-ltc" }],
         payment: { id: "method-ltc" },
       })
 
-      expect(result.current.phase === "payment" && result.current.changeMethod).toBeUndefined()
+      expect(model.phase === "payment" && model.changeMethod).toBeUndefined()
     })
   })
 
@@ -105,7 +114,7 @@ describe("useCheckoutModel", () => {
     test.each(["paid", "unconfirmed", "confirmed"] as const)(
       "waits for confirmations once the invoice is %s, without payment details",
       (status) => {
-        const { result } = renderModel({
+        const { derive } = setup({
           invoice: makeInvoice({
             status,
             buyer_email: "",
@@ -115,21 +124,21 @@ describe("useCheckoutModel", () => {
           store: makeStore({ email_required: true, transaction_speed: 3 }),
         })
 
-        expect(result.current).toMatchObject({
+        expect(derive()).toMatchObject({
           phase: "confirming",
           confirmations: { received: 1, required: 3 },
         })
 
-        expect(JSON.stringify(result.current)).not.toContain("bc1qexampleaddress")
+        expect(JSON.stringify(derive())).not.toContain("bc1qexampleaddress")
       },
     )
   })
 
   describe("unavailable", () => {
     test("is unavailable when an open invoice has no payment methods", () => {
-      const { result } = renderModel({ invoice: makeInvoice({ payments: [] }) })
+      const { derive } = setup({ invoice: makeInvoice({ payments: [] }) })
 
-      expect(result.current.phase).toBe("unavailable")
+      expect(derive().phase).toBe("unavailable")
     })
   })
 
@@ -143,49 +152,46 @@ describe("useCheckoutModel", () => {
       [{ email_required: false, ask_address: true }, ["address", "notes"]],
       [{ email_required: true, ask_address: true }, ["email", "address", "notes"]],
     ])("asks only for the missing fields required by %o", (settings, fields) => {
-      const { result } = renderModel({
+      const { derive } = setup({
         invoice: makeInvoice({ buyer_email: "", shipping_address: "", payments }),
         store: makeStore(settings),
       })
 
-      expect(result.current).toMatchObject({ phase: "details", details: { fields } })
+      expect(derive()).toMatchObject({ phase: "details", details: { fields } })
     })
 
     test("leaves out notes the invoice already has, as they can be set only once", () => {
-      const { result } = renderModel({
+      const { derive } = setup({
         invoice: makeInvoice({ shipping_address: "", notes: "Leave at the door", payments }),
         store: makeStore({ email_required: false, ask_address: true }),
       })
 
-      expect(result.current).toMatchObject({ phase: "details", details: { fields: ["address"] } })
+      expect(derive()).toMatchObject({ phase: "details", details: { fields: ["address"] } })
     })
 
     test("advances to payment once the refetched invoice includes the details", () => {
       const store = makeStore({ email_required: true })
-      const { result, rerender } = renderModel({ invoice: makeInvoice({ buyer_email: "" }), store })
+      const { derive } = setup({ invoice: makeInvoice({ buyer_email: "" }), store })
 
-      rerender({
-        source: makeSource({ invoice: makeInvoice({ buyer_email: "a@b.co" }), store }),
-        options: { selection: "preselect" },
-      })
-
-      expect(result.current.phase).toBe("payment")
+      expect(derive({ invoice: makeInvoice({ buyer_email: "a@b.co" }), store }).phase).toBe(
+        "payment",
+      )
     })
 
     test("submits only the details the store asks for", async () => {
       const submitCustomerDetails = vi.fn(() => Promise.resolve())
 
-      const { result } = renderModel({
+      const { derive } = setup({
         invoice: makeInvoice({ buyer_email: "" }),
         store: makeStore({ email_required: true }),
         submitCustomerDetails,
       })
 
-      await act(async () => {
-        if (result.current.phase === "details") {
-          await result.current.details.submit({ email: "a@b.co", address: "Main St 1" })
-        }
-      })
+      const model = derive()
+
+      if (model.phase === "details") {
+        await model.details.submit({ email: "a@b.co", address: "Main St 1" })
+      }
 
       expect(submitCustomerDetails).toHaveBeenCalledWith({ buyer_email: "a@b.co" })
     })
@@ -193,17 +199,17 @@ describe("useCheckoutModel", () => {
     test("submits notes together with the shipping address", async () => {
       const submitCustomerDetails = vi.fn(() => Promise.resolve())
 
-      const { result } = renderModel({
+      const { derive } = setup({
         invoice: makeInvoice({ shipping_address: "", notes: "" }),
         store: makeStore({ email_required: false, ask_address: true }),
         submitCustomerDetails,
       })
 
-      await act(async () => {
-        if (result.current.phase === "details") {
-          await result.current.details.submit({ address: "Main St 1", notes: "Ring twice" })
-        }
-      })
+      const model = derive()
+
+      if (model.phase === "details") {
+        await model.details.submit({ address: "Main St 1", notes: "Ring twice" })
+      }
 
       expect(submitCustomerDetails).toHaveBeenCalledWith({
         shipping_address: "Main St 1",
@@ -212,21 +218,21 @@ describe("useCheckoutModel", () => {
     })
 
     test("is skipped for an invoice in a terminal status", () => {
-      const { result } = renderModel({
+      const { derive } = setup({
         invoice: makeInvoice({ buyer_email: "", status: "expired", payments: [] }),
         store: makeStore({ email_required: true }),
       })
 
-      expect(result.current.phase).toBe("status")
+      expect(derive().phase).toBe("status")
     })
 
     test("never exposes payment details before the gate is passed", () => {
-      const { result } = renderModel({
+      const { derive } = setup({
         invoice: makeInvoice({ buyer_email: "", payments }),
         store: makeStore({ email_required: true, ask_address: true }),
       })
 
-      const serialized = JSON.stringify(result.current)
+      const serialized = JSON.stringify(derive())
 
       expect(serialized).not.toContain(address)
       expect(serialized).not.toContain(paymentUrl)
@@ -240,9 +246,9 @@ describe("useCheckoutModel", () => {
 
     describe("preselect", () => {
       test("starts on the first payment method", () => {
-        const { result } = renderModel({ invoice: makeInvoice({ payments: [btc, ltc, eth] }) })
+        const { derive } = setup({ invoice: makeInvoice({ payments: [btc, ltc, eth] }) })
 
-        expect(result.current).toMatchObject({
+        expect(derive()).toMatchObject({
           phase: "payment",
           selectedMethodId: "method-btc",
           payment: { id: "method-btc", address: "bc1qbtc" },
@@ -250,19 +256,19 @@ describe("useCheckoutModel", () => {
       })
 
       test("starts on the method a partial payment was already made with", () => {
-        const { result } = renderModel({
+        const { derive } = setup({
           invoice: makeInvoice({ payments: [btc, ltc, eth], payment_id: "method-eth" }),
         })
 
-        expect(result.current).toMatchObject({ phase: "payment", selectedMethodId: "method-eth" })
+        expect(derive()).toMatchObject({ phase: "payment", selectedMethodId: "method-eth" })
       })
 
       test("switches the active payment in place", () => {
-        const { result } = renderModel({ invoice: makeInvoice({ payments: [btc, ltc, eth] }) })
+        const { derive } = setup({ invoice: makeInvoice({ payments: [btc, ltc, eth] }) })
 
-        act(() => result.current.selectMethod("method-ltc"))
+        derive().selectMethod("method-ltc")
 
-        expect(result.current).toMatchObject({
+        expect(derive()).toMatchObject({
           phase: "payment",
           selectedMethodId: "method-ltc",
           payment: { id: "method-ltc", address: "ltc1qltc" },
@@ -276,12 +282,12 @@ describe("useCheckoutModel", () => {
         ["select", makeStore(), "explicit"],
         ["payment", makeStore(), "preselect"],
       ] as const)("lists every method in the %s phase", (phase, store, selection) => {
-        const { result } = renderModel(
+        const { derive } = setup(
           { invoice: makeInvoice({ buyer_email: "", payments: [btc, ltc] }), store },
           { selection },
         )
 
-        expect(result.current).toMatchObject({
+        expect(derive()).toMatchObject({
           phase,
           methods: [
             { id: "method-btc", name: "BTC", amount: btc.amount },
@@ -291,12 +297,12 @@ describe("useCheckoutModel", () => {
       })
 
       test("never carries an address or payment URL", () => {
-        const { result } = renderModel(
+        const { derive } = setup(
           { invoice: makeInvoice({ payments: [btc, ltc] }) },
           { selection: "explicit" },
         )
 
-        const serialized = JSON.stringify(result.current)
+        const serialized = JSON.stringify(derive())
 
         expect(serialized).not.toContain(btc.payment_address)
         expect(serialized).not.toContain(ltc.payment_url)
@@ -304,129 +310,124 @@ describe("useCheckoutModel", () => {
     })
 
     describe("across refetches", () => {
-      const rerenderWith = (
-        rerender: (props: { source: CheckoutSource; options: CheckoutModelOptions }) => void,
-        payments: bitcartInvoices.InvoicePayment[],
-      ) =>
-        rerender({
-          source: makeSource({ invoice: makeInvoice({ payments }) }),
-          options: { selection: "preselect" },
-        })
+      const refetched = (payments: bitcartInvoices.InvoicePayment[]) => ({
+        invoice: makeInvoice({ payments }),
+      })
 
       test("keeps the chosen method when the list is reordered", () => {
-        const { result, rerender } = renderModel({
-          invoice: makeInvoice({ payments: [btc, ltc, eth] }),
-        })
+        const { derive } = setup(refetched([btc, ltc, eth]))
 
-        act(() => result.current.selectMethod("method-ltc"))
-        rerenderWith(rerender, [eth, ltc, btc])
+        derive().selectMethod("method-ltc")
 
-        expect(result.current).toMatchObject({ selectedMethodId: "method-ltc" })
+        expect(derive(refetched([eth, ltc, btc]))).toMatchObject({ selectedMethodId: "method-ltc" })
       })
 
       test("falls back to the default when the chosen method disappears", () => {
-        const { result, rerender } = renderModel({
-          invoice: makeInvoice({ payments: [btc, ltc, eth] }),
-        })
+        const { derive } = setup(refetched([btc, ltc, eth]))
 
-        act(() => result.current.selectMethod("method-ltc"))
-        rerenderWith(rerender, [eth, btc])
+        derive().selectMethod("method-ltc")
 
-        expect(result.current).toMatchObject({ selectedMethodId: "method-eth" })
+        expect(derive(refetched([eth, btc]))).toMatchObject({ selectedMethodId: "method-eth" })
       })
     })
 
     describe("explicit", () => {
       test("asks for a method before showing payment details", () => {
-        const { result } = renderModel(
+        const { derive } = setup(
           { invoice: makeInvoice({ payments: [btc, ltc, eth] }) },
           { selection: "explicit" },
         )
 
-        expect(result.current.phase).toBe("select")
+        expect(derive().phase).toBe("select")
       })
 
       test("shows payment details for the chosen method", () => {
-        const { result } = renderModel(
+        const { derive } = setup(
           { invoice: makeInvoice({ payments: [btc, ltc, eth] }) },
           { selection: "explicit" },
         )
 
-        act(() => result.current.selectMethod("method-eth"))
+        derive().selectMethod("method-eth")
 
-        expect(result.current).toMatchObject({ phase: "payment", payment: { id: "method-eth" } })
+        expect(derive()).toMatchObject({ phase: "payment", payment: { id: "method-eth" } })
       })
 
       test("offers no method change when there is a single method", () => {
-        const { result } = renderModel({ invoice: makeInvoice({ payments: [btc] }) })
+        const { derive } = setup({ invoice: makeInvoice({ payments: [btc] }) })
+        const model = derive()
 
-        expect(result.current.phase === "payment" && result.current.changeMethod).toBeUndefined()
+        expect(model.phase === "payment" && model.changeMethod).toBeUndefined()
+      })
+
+      test("ignores a method change requested by a host when there is a single method", () => {
+        const { control, derive } = setup({ invoice: makeInvoice({ payments: [btc] }) })
+
+        control.actions.changeMethod()
+
+        expect(derive()).toMatchObject({ phase: "payment", payment: { id: "method-btc" } })
       })
 
       test("skips the choice when there is a single method", () => {
-        const { result } = renderModel(
+        const { derive } = setup(
           { invoice: makeInvoice({ payments: [btc] }) },
           { selection: "explicit" },
         )
 
-        expect(result.current).toMatchObject({ phase: "payment", payment: { id: "method-btc" } })
+        expect(derive()).toMatchObject({ phase: "payment", payment: { id: "method-btc" } })
       })
 
       test("skips the choice when a partial payment was already made", () => {
-        const { result } = renderModel(
+        const { derive } = setup(
           { invoice: makeInvoice({ payments: [btc, ltc, eth], payment_id: "method-ltc" }) },
           { selection: "explicit" },
         )
 
-        expect(result.current).toMatchObject({ phase: "payment", payment: { id: "method-ltc" } })
+        expect(derive()).toMatchObject({ phase: "payment", payment: { id: "method-ltc" } })
       })
 
       describe("changing the method", () => {
-        const renderChosen = () => {
-          const rendered = renderModel(
+        const setupChosen = () => {
+          const chosen = setup(
             { invoice: makeInvoice({ payments: [btc, ltc, eth] }) },
             { selection: "explicit" },
           )
 
-          act(() => rendered.result.current.selectMethod("method-ltc"))
+          chosen.derive().selectMethod("method-ltc")
 
-          return rendered
+          return chosen
+        }
+
+        const changeMethod = (model: CheckoutModel) => {
+          if (model.phase === "payment") model.changeMethod?.()
         }
 
         test("returns to the method choice", () => {
-          const { result } = renderChosen()
+          const { derive } = setupChosen()
 
-          act(() => {
-            if (result.current.phase === "payment") result.current.changeMethod?.()
-          })
+          changeMethod(derive())
 
-          expect(result.current.phase).toBe("select")
+          expect(derive().phase).toBe("select")
         })
 
         test("can be cancelled, restoring the previous method", () => {
-          const { result } = renderChosen()
+          const { derive } = setupChosen()
 
-          act(() => {
-            if (result.current.phase === "payment") result.current.changeMethod?.()
-          })
+          changeMethod(derive())
 
-          act(() => {
-            if (result.current.phase === "select") result.current.cancelChange?.()
-          })
+          const choosing = derive()
 
-          expect(result.current).toMatchObject({ phase: "payment", payment: { id: "method-ltc" } })
+          if (choosing.phase === "select") choosing.cancelChange?.()
+
+          expect(derive()).toMatchObject({ phase: "payment", payment: { id: "method-ltc" } })
         })
 
         test("switches to the newly chosen method", () => {
-          const { result } = renderChosen()
+          const { derive } = setupChosen()
 
-          act(() => {
-            if (result.current.phase === "payment") result.current.changeMethod?.()
-          })
+          changeMethod(derive())
+          derive().selectMethod("method-btc")
 
-          act(() => result.current.selectMethod("method-btc"))
-
-          expect(result.current).toMatchObject({ phase: "payment", payment: { id: "method-btc" } })
+          expect(derive()).toMatchObject({ phase: "payment", payment: { id: "method-btc" } })
         })
       })
     })
@@ -440,36 +441,64 @@ describe("useCheckoutModel", () => {
     ])(
       "with show_recommended_fee=%s and a fee of %i the recommended fee is %s",
       (show, fee, expected) => {
-        const { result } = renderModel({
+        const { derive } = setup({
           invoice: makeInvoice({ payments: [makePayment({ recommended_fee: fee })] }),
           store: makeStore({ show_recommended_fee: show }),
         })
 
-        expect(result.current).toMatchObject({ payment: { recommendedFee: expected } })
+        expect(derive()).toMatchObject({ payment: { recommendedFee: expected } })
       },
     )
 
     test.each([true, false])("shows the powered-by badge only when the policy is %s", (allowed) => {
-      const { result } = renderModel({
+      const { derive } = setup({
         policies: makePolicies({ allow_powered_by_bitcart: allowed }),
       })
 
-      expect(result.current.branding.showPoweredBy).toBe(allowed)
+      expect(derive().branding.showPoweredBy).toBe(allowed)
     })
 
-    test.each([
-      ["https://example.com/logo.svg", "https://example.com/logo.svg"],
-      ["", null],
-    ])("resolves the custom logo %j to %j", (link, expected) => {
-      const { result } = renderModel({ store: makeStore({ custom_logo_link: link }) })
+    describe("logo", () => {
+      const LIGHT_LOGO = "https://example.com/logo-light.svg"
+      const DARK_LOGO = "https://example.com/logo-dark.svg"
 
-      expect(result.current.branding.logoUrl).toBe(expected)
+      test.each([
+        ["light", { light: LIGHT_LOGO, dark: DARK_LOGO }, { url: LIGHT_LOGO, backdrop: null }],
+        ["dark", { light: LIGHT_LOGO, dark: DARK_LOGO }, { url: DARK_LOGO, backdrop: null }],
+        ["dark", { light: LIGHT_LOGO }, { url: LIGHT_LOGO, backdrop: "light" }],
+        ["light", { dark: DARK_LOGO }, { url: DARK_LOGO, backdrop: "dark" }],
+        ["light", {}, null],
+      ] as const)("in %s mode resolves the logos %o to %o", (mode, logos, expected) => {
+        const { derive } = setup({ appearance: { logos } }, { mode })
+
+        expect(derive().branding.logo).toStrictEqual(expected)
+      })
+
+      test.each([
+        [false, { url: LIGHT_LOGO, backdrop: null }],
+        [true, { url: LIGHT_LOGO, backdrop: "dark" }],
+      ] as const)(
+        "assigns the store's custom logo to the mode set by use_dark_mode=%s",
+        (useDarkMode, expected) => {
+          const { derive } = setup({
+            store: makeStore({ custom_logo_link: LIGHT_LOGO, use_dark_mode: useDarkMode }),
+          })
+
+          expect(derive().branding.logo).toStrictEqual(expected)
+        },
+      )
+
+      test("shows no logo when the store has no custom logo", () => {
+        const { derive } = setup({ store: makeStore({ custom_logo_link: "" }) })
+
+        expect(derive().branding.logo).toBeNull()
+      })
     })
   })
 
   describe("summary", () => {
     test("describes the invoice and store without the raw invoice", () => {
-      const { result } = renderModel({
+      const { derive } = setup({
         invoice: makeInvoice({
           id: "invoice-42",
           price: "25.5",
@@ -477,32 +506,26 @@ describe("useCheckoutModel", () => {
           order_id: "order-7",
           redirect_url: "https://shop.example.com/thanks",
           buyer_email: "",
+          time_left: 125,
         }),
       })
 
-      expect(result.current.invoice).toStrictEqual({
+      expect(derive().invoice).toStrictEqual({
         id: "invoice-42",
         price: "25.5",
         currency: "EUR",
         orderId: "order-7",
         redirectUrl: "https://shop.example.com/thanks",
+        timeLeft: 125,
       })
 
-      expect(result.current.store).toStrictEqual({ name: "Example Store" })
+      expect(derive().store).toStrictEqual({ name: "Example Store" })
     })
 
     test("drops an empty redirect URL", () => {
-      const { result } = renderModel({ invoice: makeInvoice({ redirect_url: "" }) })
+      const { derive } = setup({ invoice: makeInvoice({ redirect_url: "" }) })
 
-      expect(result.current.invoice.redirectUrl).toBeNull()
-    })
-  })
-
-  describe("countdown", () => {
-    test("formats the time left on the invoice", () => {
-      const { result } = renderModel({ invoice: makeInvoice({ time_left: 125 }) })
-
-      expect(result.current.countdown).toMatchObject({ formatted: "02:05", isExpired: false })
+      expect(derive().invoice.redirectUrl).toBeNull()
     })
   })
 })

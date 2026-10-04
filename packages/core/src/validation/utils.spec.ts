@@ -1,5 +1,5 @@
 import { expect, test, describe } from "vitest"
-import { z } from "zod"
+import * as z from "zod"
 
 import { emptyAsUndefined } from "./utils"
 
@@ -46,6 +46,18 @@ describe("emptyAsUndefined", () => {
 
     test("rejects a non-empty invalid url", () => {
       expect(schema.safeParse("not-a-url").success).toBe(false)
+    })
+  })
+
+  describe("with an optional string format schema", () => {
+    const schema = emptyAsUndefined(z.email().optional())
+
+    test("coerces an empty string to undefined, bypassing format validation", () => {
+      expect(schema.parse("")).toBeUndefined()
+    })
+
+    test("rejects a non-empty value in the wrong format", () => {
+      expect(schema.safeParse("not-an-email").success).toBe(false)
     })
   })
 

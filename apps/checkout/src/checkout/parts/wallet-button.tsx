@@ -1,3 +1,4 @@
+import { CHECKOUT_OPEN_WALLET_TESTID } from "@bitcart/qa"
 import { Button } from "@bitcart/ui-kit/components"
 import { t } from "@lingui/core/macro"
 import { WalletIcon } from "lucide-react"
@@ -18,6 +19,7 @@ export const WalletButton = ({ className }: { className?: string }) => {
         size="lg"
         role="link"
         nativeButton={false}
+        data-testid={CHECKOUT_OPEN_WALLET_TESTID}
         render={<a href={payment.paymentUrl} aria-label={t`Open in Wallet`} />}
       >
         <WalletIcon className="mr-2 size-4" />

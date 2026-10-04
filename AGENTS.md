@@ -85,7 +85,11 @@ UnoCSS with a custom `@bitcart/unocss-preset`. Every app declares its own styles
 
 ### Data Fetching
 
-TanStack React Query for server/client data synchronization, integrated per framework: Landing and Directory through `vike-react-query`, Checkout through `@tanstack/react-router-ssr-query`. UI Docs has no query layer; its content is resolved at build time by `fumadocs-mdx`.
+TanStack Query for server/client data synchronization, integrated per framework: Landing and Directory through `vike-react-query`, Checkout through `@tanstack/react-router-ssr-query`. UI Docs has no query layer; its content is resolved at build time by `fumadocs-mdx`.
+
+### Client State
+
+TanStack Store (`@tanstack/store` with `@tanstack/react-store`) for client-only state that distant components share or that code outside React drives or observes. Server data stays in TanStack Query and never enters a store. Load the `tanstack-store` skill before deciding where new client state lives or changing a store.
 
 ## Conventions
 
@@ -95,6 +99,7 @@ TanStack React Query for server/client data synchronization, integrated per fram
 - **Scripts and configs:** TypeScript only — the repo has no `.js`, `.mjs` or `.cjs`. Node runs `.ts` directly (`#!/usr/bin/env node`). Fall back to JS only when a caller cannot load TypeScript, and then use `.js`. Every package's root tsconfig `include` ends with `"*.ts", ".*.ts"`. Keep the second entry: TypeScript wildcards skip dotfiles, and a bare `"*.ts"` would silently drop `.dependency-cruiser.ts`
 - **Formatting:** oxfmt, the only formatter — it handles all file types, not just JS/TS, so pass it any path. JS/TS style: no semicolons, double quotes, 100 char width
 - **Imports:** Ordered by: builtin → external → internal (`@bitcart/*`) → siblings/parent
+- **Validation:** Zod 4 with its classic API (`import * as z from "zod"`). Use Zod 4 APIs only: Zod 3 idioms, such as `[T, ...T[]]` casts for `z.enum`, are outdated ([migration guide](https://zod.dev/v4/changelog))
 - **Unused params:** Prefix with `_` (e.g., `_event`)
 - **Components:** Add new shadcn primitives via `just add-ui-kit-components <component>`
 - **Pre-commit hooks:** Run via `just pre-commit`. Checks: lint, typecheck, format, merge conflicts, private keys

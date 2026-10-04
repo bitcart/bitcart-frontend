@@ -2,6 +2,17 @@ import { FONTS_PREFLIGHT, FONTS_PRESET_CONFIG } from "@bitcart/ui-kit/fonts"
 import { presetBitcart } from "@bitcart/unocss-preset"
 import { defineConfig, presetWebFonts } from "unocss"
 
+import { CHECKOUT_STATUS_TOKENS } from "./src/checkout/theme/palette"
+import { CHECKOUT_SIGNATURE_TOKENS } from "./src/checkout/theme/signature"
+
+const pickStatusTokens = (tokens: (typeof CHECKOUT_SIGNATURE_TOKENS)["light" | "dark"]) =>
+  Object.fromEntries(CHECKOUT_STATUS_TOKENS.map((token) => [token, tokens[token]]))
+
+const toCssVariables = (tokens: Record<string, string>) =>
+  Object.entries(tokens)
+    .map(([token, value]) => `--${token}: ${value};`)
+    .join(" ")
+
 export default defineConfig({
   cli: {
     entry: {
@@ -14,21 +25,37 @@ export default defineConfig({
     presetBitcart({
       colorSchemes: {
         name: "bitcart-checkout",
-
-        light: {},
-
-        dark: {},
+        light: CHECKOUT_SIGNATURE_TOKENS.light,
+        dark: CHECKOUT_SIGNATURE_TOKENS.dark,
       },
 
-      preflights: [FONTS_PREFLIGHT],
+      preflights: [
+        FONTS_PREFLIGHT,
+
+        {
+          getCSS: () =>
+            `:root { ${toCssVariables(pickStatusTokens(CHECKOUT_SIGNATURE_TOKENS.light))} }\n` +
+            `.dark { ${toCssVariables(pickStatusTokens(CHECKOUT_SIGNATURE_TOKENS.dark))} }`,
+        },
+      ],
     }),
 
     presetWebFonts(FONTS_PRESET_CONFIG),
   ],
 
-  //* TODO: Consider replacing with identical animations from Uno animation presets
-  //* and backporting anything that makes sense to backport back to our Uno preset.
   theme: {
+    colors: {
+      success: {
+        DEFAULT: "oklch(var(--success))",
+        foreground: "oklch(var(--success-foreground))",
+      },
+
+      warning: "oklch(var(--warning))",
+      pending: "oklch(var(--pending))",
+    },
+
+    //* TODO: Consider replacing with identical animations from Uno animation presets
+    //* and backporting anything that makes sense to backport back to our Uno preset.
     animation: {
       keyframes: {
         "check-stroke": `{

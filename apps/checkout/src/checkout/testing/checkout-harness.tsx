@@ -2,32 +2,14 @@ import { Toaster } from "@bitcart/ui-kit/components"
 import { BitcartWordmarkIcon } from "@bitcart/ui-kit/icons"
 import { LayoutContextProvider, ThemeProvider } from "@bitcart/ui-kit/providers"
 import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
+import type { ReactNode } from "react"
 
-import { useCheckoutModel, type CheckoutModelOptions, type CheckoutSource } from "../model"
+import { makeSource } from "../fixtures"
+import type { CheckoutSource } from "../model"
 import type { CheckoutAppConfig } from "../runtime/context"
+import { useCheckoutControl, useCheckoutModel } from "../runtime/control"
 import { CheckoutProvider } from "../runtime/provider"
-import { CheckoutShell, type CheckoutScreens } from "../runtime/shell"
-import { makeSource } from "./fixtures"
-
-export const CheckoutHarness = ({
-  source,
-  options,
-  screens,
-  appConfig,
-}: {
-  source: CheckoutSource
-  options: CheckoutModelOptions
-  screens: CheckoutScreens
-  appConfig?: CheckoutAppConfig
-}) => {
-  const model = useCheckoutModel(source, options)
-
-  return (
-    <CheckoutProvider model={model} appConfig={appConfig}>
-      <CheckoutShell screens={screens} />
-    </CheckoutProvider>
-  )
-}
+import { CheckoutShell, type CheckoutShellTemplate } from "../runtime/shell"
 
 const getTestLayoutConfig = defineGetLayoutConfig(() => ({
   i18n: { activeLocale: "en", availableLocales: ["en"] },
@@ -35,33 +17,42 @@ const getTestLayoutConfig = defineGetLayoutConfig(() => ({
   navigation: { directory: { labeledLinks: [] } },
 }))
 
-export type CheckoutTestAppProps = {
-  source?: Partial<CheckoutSource>
-  options?: CheckoutModelOptions
-  screens: CheckoutScreens
-  appConfig?: CheckoutAppConfig
-}
-
-export const CheckoutTestApp = ({
-  source = {},
-  options = { selection: "preselect" },
-  screens,
-  appConfig,
-}: CheckoutTestAppProps) => (
+export const CheckoutTestProviders = ({ children }: { children: ReactNode }) => (
   <ThemeProvider>
     <LayoutContextProvider
-      LinkComponent={({ children, ...props }) => <a {...props}>{children}</a>}
+      LinkComponent={({ children: linkChildren, ...props }) => <a {...props}>{linkChildren}</a>}
       currentRoute={{ pathname: "/i/invoice-1", pathnameWithHash: "/i/invoice-1", hash: null }}
       layoutConfig={getTestLayoutConfig()}
     >
-      <CheckoutHarness
-        source={makeSource(source)}
-        options={options}
-        screens={screens}
-        appConfig={appConfig}
-      />
+      {children}
     </LayoutContextProvider>
 
     <Toaster />
   </ThemeProvider>
 )
+
+export type CheckoutTestAppProps = {
+  source?: Partial<CheckoutSource>
+  templateId?: string
+  screens: CheckoutShellTemplate
+  appConfig?: CheckoutAppConfig
+}
+
+export const CheckoutTestApp = ({
+  source: overrides = {},
+  templateId = "test",
+  screens,
+  appConfig,
+}: CheckoutTestAppProps) => {
+  const source = makeSource(overrides)
+  const control = useCheckoutControl(source.invoice.id)
+  const model = useCheckoutModel(source, { selection: screens.selection ?? "preselect", control })
+
+  return (
+    <CheckoutTestProviders>
+      <CheckoutProvider model={model} appConfig={appConfig}>
+        <CheckoutShell templateId={templateId} template={screens} />
+      </CheckoutProvider>
+    </CheckoutTestProviders>
+  )
+}

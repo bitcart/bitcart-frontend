@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IInvoiceIdRouteImport } from './routes/i/$invoiceId'
+import { Route as PreviewTemplateIdRouteImport } from './routes/preview/$templateId'
 
 const IInvoiceIdRoute = IInvoiceIdRouteImport.update({
   id: '/i/$invoiceId',
   path: '/i/$invoiceId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PreviewTemplateIdRoute = PreviewTemplateIdRouteImport.update({
+  id: '/preview/$templateId',
+  path: '/preview/$templateId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/i/$invoiceId': typeof IInvoiceIdRoute
+  '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
 export interface FileRoutesByTo {
   '/i/$invoiceId': typeof IInvoiceIdRoute
+  '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/i/$invoiceId': typeof IInvoiceIdRoute
+  '/preview/$templateId': typeof PreviewTemplateIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/i/$invoiceId'
+  fullPaths: '/i/$invoiceId' | '/preview/$templateId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/i/$invoiceId'
-  id: '__root__' | '/i/$invoiceId'
+  to: '/i/$invoiceId' | '/preview/$templateId'
+  id: '__root__' | '/i/$invoiceId' | '/preview/$templateId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IInvoiceIdRoute: typeof IInvoiceIdRoute
+  PreviewTemplateIdRoute: typeof PreviewTemplateIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IInvoiceIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/preview/$templateId': {
+      id: '/preview/$templateId'
+      path: '/preview/$templateId'
+      fullPath: '/preview/$templateId'
+      preLoaderRoute: typeof PreviewTemplateIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IInvoiceIdRoute: IInvoiceIdRoute,
+  PreviewTemplateIdRoute: PreviewTemplateIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

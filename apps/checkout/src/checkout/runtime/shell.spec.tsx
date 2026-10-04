@@ -1,8 +1,8 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { describe, expect, test } from "vitest"
 
+import { makeInvoice, makePayment, makePolicies, makeStore } from "../fixtures"
 import { useCheckout } from "../hooks"
-import { makeInvoice, makePayment, makePolicies, makeStore } from "../testing/fixtures"
 import { renderCheckout } from "../testing/render-checkout"
 
 const PaymentScreen = () => {
@@ -60,8 +60,7 @@ describe("CheckoutShell", () => {
     test("lets the customer pick a method from the shared list", () => {
       renderCheckout({
         source: { invoice: makeInvoice({ payments }) },
-        options: { selection: "explicit" },
-        screens: { Payment: PaymentScreen },
+        screens: { Payment: PaymentScreen, selection: "explicit" },
       })
 
       fireEvent.click(screen.getByRole("button", { name: /LTC/u }))
@@ -74,8 +73,7 @@ describe("CheckoutShell", () => {
 
       renderCheckout({
         source: { invoice: makeInvoice({ payments }) },
-        options: { selection: "explicit" },
-        screens: { Payment: PaymentScreen, Select: SelectScreen },
+        screens: { Payment: PaymentScreen, Select: SelectScreen, selection: "explicit" },
       })
 
       expect(screen.getByText("2 methods to pick from")).toBeInTheDocument()
@@ -197,8 +195,7 @@ describe("CheckoutShell", () => {
       (_screen, source, selection) => {
         renderCheckout({
           source: { ...source, policies: makePolicies({ allow_powered_by_bitcart: true }) },
-          options: { selection },
-          screens: { Payment: PaymentScreen },
+          screens: { Payment: PaymentScreen, selection },
           appConfig: { controls: <button type="button">Language</button> },
         })
 

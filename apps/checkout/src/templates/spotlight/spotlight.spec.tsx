@@ -19,7 +19,6 @@ const eth = makePayment({
 const renderSpotlight = (payments = [btc, ltc, eth]) =>
   renderCheckout({
     source: { invoice: makeInvoice({ payments }) },
-    options: { selection: spotlight.selection },
     screens: spotlight,
   })
 

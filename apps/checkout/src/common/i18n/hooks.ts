@@ -5,7 +5,7 @@ import { useEffect } from "react"
 
 import { APP_LOCALE_IDS } from "#/app.config"
 
-import { activateLocale } from "./effects"
+import { activateLocale, registerCatalogLoader } from "./effects"
 
 //* FIXME: Move to a shared Tanstack Start kit package once it's created.
 /**
@@ -23,4 +23,9 @@ export const useI18nInitialization = (): void => {
       void activateLocale(clientLocaleId).then(() => router.invalidate())
     }
   }, [clientLocaleId, i18n.locale, router])
+}
+
+//! The loader must be stable: a new one re-registers.
+export const useCatalogLoader = (loader: (localeId: string) => Promise<void>): void => {
+  useEffect(() => registerCatalogLoader(loader), [loader])
 }

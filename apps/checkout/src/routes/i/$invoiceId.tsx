@@ -1,4 +1,5 @@
 import { bitcartInvoices, bitcartManage, bitcartStores } from "@bitcart/api-sdk/endpoints"
+import { i18n } from "@lingui/core"
 import { useQueryErrorResetBoundary } from "@tanstack/react-query"
 import { createFileRoute, useRouter, type ErrorComponentProps } from "@tanstack/react-router"
 import { useCallback, useEffect } from "react"
@@ -7,12 +8,11 @@ import { useCheckoutSource } from "#/checkout/runtime/source"
 import { CheckoutView } from "#/checkout/runtime/view"
 import { checkoutTemplates } from "#/common/checkout-templates"
 import { ENV_TAG } from "#/common/constants"
+import { useCatalogLoader } from "#/common/i18n"
 
-import { AppControls } from "./-components/app-controls"
+import { CHECKOUT_APP_CONFIG } from "../-components/app-controls"
+import { LoadingFallback } from "../-components/loading-fallback"
 import { ErrorFallback } from "./-components/error-fallback"
-import { LoadingFallback } from "./-components/loading-fallback"
-
-const CHECKOUT_APP_CONFIG = { controls: <AppControls /> }
 
 const resolveTemplateId = (requested: string | undefined) =>
   checkoutTemplates.resolve({
@@ -46,7 +46,11 @@ export const Route = createFileRoute("/i/$invoiceId")({
       .catch(() => undefined)
 
     void queryClient.query(bitcartManage.policiesQueryOptions()).catch(() => undefined)
-    void checkoutTemplates.load(resolveTemplateId(deps.template)).catch(() => undefined)
+
+    const templateId = resolveTemplateId(deps.template)
+
+    void checkoutTemplates.load(templateId).catch(() => undefined)
+    void checkoutTemplates.loadCatalog(templateId, i18n.locale).catch(() => undefined)
   },
 
   //* Doubles as the Suspense fallback.
@@ -77,6 +81,13 @@ function InvoicePage() {
   const { source, connection } = useCheckoutSource(invoiceId)
 
   const templateId = resolveTemplateId(template)
+
+  useCatalogLoader(
+    useCallback(
+      (locale: string) => checkoutTemplates.loadCatalog(templateId, locale),
+      [templateId],
+    ),
+  )
 
   return (
     <CheckoutView

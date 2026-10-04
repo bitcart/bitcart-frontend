@@ -1,4 +1,4 @@
-import { z } from "zod"
+import * as z from "zod"
 
 export type ZodL10nMessages = {
   required: () => string
@@ -21,10 +21,11 @@ export type ZodL10nMessages = {
   invalidValue: () => string
   notMultipleOf: (divisor: number) => string
   unrecognizedKey: () => string
+  invalidInput: () => string
 }
 
 export const createZodErrorMap =
-  (messages: ZodL10nMessages): z.core.$ZodErrorMap<z.core.$ZodIssue> =>
+  (messages: ZodL10nMessages): z.core.$ZodErrorMap =>
   (issue) => {
     switch (issue.code) {
       case "invalid_type": {
@@ -102,7 +103,7 @@ export const createZodErrorMap =
       }
 
       default: {
-        return undefined
+        return messages.invalidInput()
       }
     }
   }

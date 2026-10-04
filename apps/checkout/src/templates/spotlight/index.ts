@@ -2,6 +2,7 @@ import { msg } from "@lingui/core/macro"
 
 import { defineCheckoutTemplate } from "#/checkout"
 
+import { messages as sourceMessages } from "./locales/en.po"
 import { SpotlightPayment } from "./payment"
 import { SpotlightSelect } from "./select"
 
@@ -13,6 +14,7 @@ import { SpotlightSelect } from "./select"
  */
 export default defineCheckoutTemplate({
   name: msg`Spotlight`,
+  sourceMessages,
   selection: "explicit",
   Select: SpotlightSelect,
   Payment: SpotlightPayment,
