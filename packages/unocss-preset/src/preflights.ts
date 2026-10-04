@@ -42,6 +42,19 @@ export const GENERAL_PREFLIGHT: PresetBitcartPreflight = {
         height: 100%;
         isolation: isolate;
       }
+
+      /*
+        Korean UI text wraps at spaces, not between syllables; overlong words still break.
+        Only elements declaring \`lang\` match, so descendants inherit and utilities still apply.
+      */
+      [lang]:lang(ko) {
+        word-break: keep-all;
+        overflow-wrap: break-word;
+      }
+
+      [lang]:not(:lang(ko)) {
+        word-break: normal;
+      }
     }
 
   `,
