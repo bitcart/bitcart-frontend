@@ -8,11 +8,6 @@ allowBuilds:
   lightningcss: true
   nx: true
 
-  #* msw's postinstall only copies the browser service worker into a public directory,
-  #* which is meaningless from inside a workspace package. Generated handlers are consumed
-  #* through `setupServer`; run `msw init` explicitly if browser-side mocking is ever needed.
-  msw: false
-
 auditConfig:
   ignoreGhsas:
     # TODO: Remove once braces publishes a fix (no patched release as of 3.0.3).
@@ -43,7 +38,7 @@ catalogs:
     "@tanstack/start-static-server-functions": 1.167.38
     "@web3icons/react": 4.1.22
     class-variance-authority: 0.7.1
-    dotenv: 17.4.2
+    dotenv: 18.0.4
     fumadocs-core: 16.15.15
     fumadocs-mdx: 15.4.5
     fumadocs-ui: 16.15.15
@@ -78,7 +73,7 @@ catalogs:
     "@tanstack/devtools-vite": "0.8.5"
     "@tanstack/router-cli": "^1.132.0"
     "@testing-library/dom": 10.4.2
-    "@testing-library/jest-dom": 6.9.1
+    "@testing-library/jest-dom": 7.0.1
     "@testing-library/react": 16.3.3
     "@testing-library/user-event": 14.6.7
     "@types/canvas-confetti": 1.9.0
@@ -94,9 +89,9 @@ catalogs:
     dependency-cruiser: 18.4.0
     eslint-plugin-better-tailwindcss: 4.7.0
     eslint-plugin-react-hooks: 7.1.1
-    jsdom: 29.1.1
+    jsdom: 30.1.1
     knip: 6.38.0
-    msw: 2.15.0
+    msw: 3.0.0
     nitro: 3.0.260610-beta
     nx: 23.2.1
     orval: 8.38.0
@@ -104,18 +99,18 @@ catalogs:
     oxlint: 1.87.0
     oxlint-tsgolint: 7.0.2003
     serve: 14.2.6
-    srvx: 0.12.8
+    srvx: 1.0.5
     tailwindcss: 4.3.3
     tsdown: 0.23.0
     tsx: 4.23.15
-    typescript: 6.0.3
+    typescript: 7.0.2
     unocss: 66.10.5
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
     vite: 8.3.1
     vite-plugin-static-copy: 4.1.1
     vite-plugin-svgr: 5.2.0
-    vitest: 4.1.11
+    vitest: 5.0.2
 
 linkWorkspacePackages: true
 
@@ -153,9 +148,22 @@ overrides:
   # TODO: Remove once orval's @scalar/json-magic bumps its undici pin to 7.29.1.
   "@scalar/json-magic>undici": ^7.29.1
 
+packageExtensions:
+  dependency-cruiser:
+    dependencies:
+      #! dependency-cruiser parses TypeScript through the compiler API that TypeScript 7 no longer
+      #! ships. Against TS 7 it cruises zero modules and still reports success.
+      # TODO: Remove once dependency-cruiser supports TypeScript 7 (https://github.com/sverweij/dependency-cruiser)
+      typescript: npm:@typescript/typescript6@6.0.2
+
 peerDependencyRules:
   allowedVersions:
     #* @qalisa/vike-plugin-sitemap@1.7.0 still declares `vite: ^6`, but its
     #* source only uses stable Vite plugin APIs and works fine on vite 8.
     # TODO: Remove once upstream widens the peer range (https://github.com/Qalisa/vike-plugin-sitemap)
     "@qalisa/vike-plugin-sitemap>vite": "8"
+
+    #* @vitest/mocker@5.0.2 still declares the optional peer `msw: ^2.4.9`, but its main branch
+    #* already accepts msw 3, and only browser mode uses it.
+    # TODO: Remove once a vitest release ships https://github.com/vitest-dev/vitest/pull/11482
+    "@vitest/mocker>msw": "3"

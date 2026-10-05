@@ -17,6 +17,7 @@
     "davidanson.vscode-markdownlint",
     "bierner.markdown-mermaid",
     "oxc.oxc-vscode",
+    "typescriptteam.native-preview",
     "tamasfe.even-better-toml",
     "unifiedjs.vscode-mdx"
   ]

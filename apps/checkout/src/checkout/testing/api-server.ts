@@ -26,7 +26,7 @@ const server = setupServer()
 export const setupCheckoutApiServer = () => {
   beforeAll(() => {
     BitcartApiConfig.set({ baseUrl: API_URL })
-    server.listen({ onUnhandledRequest: "error" })
+    server.listen({ onUnhandledFrame: "error" })
   })
 
   afterEach(() => {

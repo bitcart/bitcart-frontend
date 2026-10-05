@@ -12,14 +12,12 @@ export type EmptyAsUndefinedZodType = z.ZodType<string | undefined, string | und
 export const emptyAsUndefined = <T extends z.ZodOptional<z.ZodString | z.ZodStringFormat>>(
   schema: T,
 ): EmptyAsUndefinedZodType =>
-  z.pipe(
-    z
-      .string()
-      .optional()
-      .transform((value) => {
-        if (isEmptyish(value)) {
-          return undefined
-        } else return value
-      }),
-    schema,
-  )
+  z
+    .string()
+    .optional()
+    .transform((value) => {
+      if (isEmptyish(value)) {
+        return undefined
+      } else return value
+    })
+    .pipe(schema)
