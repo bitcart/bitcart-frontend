@@ -2,6 +2,10 @@ import { defineConfig, devices } from "@playwright/test"
 
 const isCI = !!process.env.CI
 
+//* Distinct from the dev server's port: E2E never reuses a running dev server.
+const E2E_PORT = 4002
+const E2E_BASE_URL = `http://localhost:${E2E_PORT}`
+
 //! Some headless containers (no GPU, restricted process namespace) crash chromium's
 //! zygote/GPU subprocess on launch. Set PLAYWRIGHT_CHROMIUM_NO_ZYGOTE=1 to bypass.
 const chromiumArgs = process.env.PLAYWRIGHT_CHROMIUM_NO_ZYGOTE ? ["--no-zygote"] : []
@@ -20,7 +24,7 @@ export default defineConfig({
     : [["html", { open: "never", outputFolder: "./e2e/playwright-report" }]],
 
   use: {
-    baseURL: "http://localhost:3002",
+    baseURL: E2E_BASE_URL,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
@@ -37,10 +41,10 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "pnpm preview",
+    command: `pnpm preview --port ${E2E_PORT}`,
 
     //* The readiness probe targets the preview: it renders without the API.
-    url: "http://localhost:3002/preview/accordion",
+    url: `${E2E_BASE_URL}/preview/accordion`,
 
     reuseExistingServer: true,
   },

@@ -1,3 +1,4 @@
+import { staleOutputRemovalHooks } from "@bitcart/configs/by-package-type/lib-tsdown"
 import { defineConfig } from "tsdown"
 
 export default defineConfig({
@@ -11,7 +12,7 @@ export default defineConfig({
     utils: "src/utils/index.ts",
   },
 
-  clean: !!process.env.BITCART_ENV && process.env.BITCART_ENV !== "development",
+  clean: false,
   deps: { neverBundle: true },
 
   //* The `oxc` generator and `isolatedDeclarations` are not applicable
@@ -19,6 +20,7 @@ export default defineConfig({
   dts: true,
 
   format: ["esm"],
+  hooks: staleOutputRemovalHooks,
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
   sourcemap: true,
   tsconfig: "./tsconfig.lib.json",

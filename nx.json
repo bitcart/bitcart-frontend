@@ -7,7 +7,8 @@
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "buildInputs": ["default", "!{projectRoot}/e2e/**", "!{projectRoot}/playwright.config.ts"],
     "sharedGlobals": ["{workspaceRoot}/.env", { "env": "BITCART_ENV" }],
-    "oxlintInputs": ["default", "{workspaceRoot}/oxlint.config.ts"]
+    "oxlintInputs": ["default", "{workspaceRoot}/oxlint.config.ts"],
+    "packageBuildInputs": ["{projectRoot}/**/*"]
   },
   "targetDefaults": {
     "typecheck": {
@@ -38,11 +39,25 @@
       "continuous": true
     },
 
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist"],
-      "cache": true
-    },
+    "build": [
+      {
+        "dependsOn": ["^build"],
+        "outputs": ["{projectRoot}/dist"],
+        "cache": true
+      },
+
+      {
+        "filter": { "projects": ["packages/*"] },
+        "inputs": ["packageBuildInputs", "^packageBuildInputs"]
+      }
+    ],
+
+    "build:*": [
+      {
+        "filter": { "projects": ["packages/*"] },
+        "inputs": ["packageBuildInputs", "^packageBuildInputs"]
+      }
+    ],
 
     "preview": {
       "dependsOn": ["build"],

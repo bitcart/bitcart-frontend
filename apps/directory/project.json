@@ -21,17 +21,8 @@
     },
 
     "build": {
-      "dependsOn": ["build:main"]
-    },
-
-    "build-deps": {
-      "dependsOn": ["^build"]
-    },
-
-    "watch-deps": {
-      "continuous": true,
-      "dependsOn": ["build-deps"],
-      "command": "pnpm nx watch --projects @bitcart/directory --includeDependencies -- pnpm nx build-deps @bitcart/directory"
+      "dependsOn": ["build:main"],
+      "outputs": []
     },
 
     "dev": {
@@ -41,7 +32,10 @@
         "parallel": true,
         "cwd": "apps/directory"
       },
-      "dependsOn": ["i18n:extract-locales", "watch-deps"],
+      "dependsOn": [
+        "i18n:extract-locales",
+        { "projects": ["@bitcart/workspace"], "target": "watch-packages" }
+      ],
       "continuous": true
     },
 

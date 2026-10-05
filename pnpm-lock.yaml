@@ -1042,6 +1042,9 @@ importers:
       oxlint:
         specifier: catalog:devDependencies
         version: 1.86.0(oxlint-tsgolint@7.0.2003)
+      tsdown:
+        specifier: catalog:devDependencies
+        version: 0.23.0(oxc-resolver@11.24.2)(tsx@4.23.15)(typescript@6.0.3)
       typescript:
         specifier: catalog:devDependencies
         version: 6.0.3

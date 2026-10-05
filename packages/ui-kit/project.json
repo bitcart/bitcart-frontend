@@ -15,7 +15,8 @@
     },
 
     "build": {
-      "dependsOn": ["build:main"]
+      "dependsOn": ["build:main"],
+      "outputs": []
     },
 
     "lint:check": {

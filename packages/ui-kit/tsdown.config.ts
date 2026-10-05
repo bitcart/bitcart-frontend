@@ -1,3 +1,4 @@
+import { staleOutputRemovalHooks } from "@bitcart/configs/by-package-type/lib-tsdown"
 import { defineConfig } from "tsdown"
 import svgr from "vite-plugin-svgr"
 
@@ -13,10 +14,11 @@ export default defineConfig({
     "utils/index": "src/utils/index.ts",
   },
 
-  clean: !!process.env.BITCART_ENV && process.env.BITCART_ENV !== "development",
+  clean: false,
   deps: { neverBundle: true },
   dts: true,
   format: ["esm"],
+  hooks: staleOutputRemovalHooks,
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
   plugins: [svgr()],
   sourcemap: true,

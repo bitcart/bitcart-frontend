@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/nx/schemas/project-schema.json",
+  "name": "@bitcart/workspace",
+
+  "targets": {
+    "watch-packages": {
+      "continuous": true,
+      "dependsOn": [{ "projects": ["packages/*"], "target": "build" }],
+      "command": "pnpm nx watch --projects 'packages/*' -- pnpm nx run-many --target=build --projects 'packages/*'"
+    }
+  }
+}

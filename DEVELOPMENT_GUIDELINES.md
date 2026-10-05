@@ -25,7 +25,7 @@ claude mcp add playwright pnpx -- @playwright/mcp@latest \
   --browser chromium --config /absolute/path/to/bitcart-frontend/.agents/playwright-nogpu.config.json
 ```
 
-- `local` is the default scope, so no `--scope` flag is needed.
+- `local` is the default scope and needs no `--scope` flag.
 - Use an **absolute** path for `--config` (it resolves against the MCP server's cwd).
 
 > [!NOTE]
@@ -41,9 +41,19 @@ Currently, three types of environments are supported:
 
 The environment is specified by setting the `BITCART_ENV` environment variable.
 
+Only apps may vary their build output by environment. Library packages (`packages/*`) build identical output in every environment and share one Nx cache entry across all of them (`packageBuildInputs` in `nx.json`). A test build never replaces the `dist` read by a running dev server. To make a package build depend on `BITCART_ENV`, add `sharedGlobals` back to its build inputs.
+
 Environment variables are validated with `@t3-oss/env-core` + Zod schemas. Client-side variables must be prefixed with `BITCART_`.
 
 ## Architecture
+
+### Library packages
+
+Packages under `packages/*` are compiled packages: tsdown builds each one into `dist` (JavaScript, `.d.ts` files and declaration maps), and their `exports` point there. Apps consume the same compiled output. Packages must stay usable by consumers outside Bitcart's control: apps never resolve package sources, whether through tsconfig `paths` or custom export conditions. Declaration maps (`declarationMap` in `packages/configs/src/by-package-type/lib-ts.json`) still take go-to-definition to the original source.
+
+During development, the `watch-packages` target of the root `@bitcart/workspace` project rebuilds changed packages and their dependents. Every app's `dev` target depends on it, and Nx runs a single instance of it however many apps are started, including from separate terminals. Source-based resolution and per-package watch modes (`tsc --watch`, `vite build --watch`) were both tried before and dropped.
+
+A package build never empties `dist` before it starts: a dev server or another build may be reading it. Once the build finishes, files not emitted by it are deleted (`staleOutputRemovalHooks` in `packages/configs/src/by-package-type/lib-tsdown.ts`). Each tsdown config sets `clean: false` and registers these hooks.
 
 ### Routing
 
@@ -71,10 +81,11 @@ For production builds, use `just locales-extract`.
 
 Each app has its own `playwright.config.ts` and `e2e/` directory. Tests are `*.spec.ts` files, organized by concern (`pages/`, `i18n.spec.ts`, `ui-themes.spec.ts`, etc.). Shared test utilities, templates, and testid constants live in the `@bitcart/qa` package (`packages/qa/`).
 
-- Landing: `apps/landing/e2e/` — port 3000
-- Directory: `apps/directory/e2e/` — port 3001
+- Landing: `apps/landing/e2e/` — port 4000
+- Directory: `apps/directory/e2e/` — port 4001
+- Checkout: `apps/checkout/e2e/` — port 4002
 
-The `webServer` config starts preview servers via `pnpm preview`. `reuseExistingServer` is enabled. Desktop Chrome only. CI uploads HTML report as artifact on failure.
+E2E runs alongside `just dev` and never tests a dev server: the `webServer` config starts a preview of the app's build via `pnpm preview` on a dedicated E2E port. `reuseExistingServer` is enabled, and a server already answering on the E2E port is reused. Within the workspace, only another E2E preview of the same app (e.g. one kept up by `just e2e-ui`) listens on that port. The preview binds its port strictly and fails to start when the port is taken. Desktop Chrome only. CI uploads HTML report as artifact on failure.
 
 #### Page readiness: `waitUntilHydrated`, not `networkidle`
 

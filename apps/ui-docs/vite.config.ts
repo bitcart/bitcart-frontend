@@ -13,10 +13,12 @@ const DEV_ENV_PORT = 3100
 export default defineConfig({
   server: {
     port: DEV_ENV_PORT,
+    strictPort: true,
   },
 
   preview: {
     port: DEV_ENV_PORT,
+    strictPort: true,
   },
 
   plugins: [

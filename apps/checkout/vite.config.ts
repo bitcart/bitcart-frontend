@@ -14,10 +14,12 @@ export default defineConfig({
   server: {
     allowedHosts: [".internal", ".local"],
     port: DEV_ENV_PORT,
+    strictPort: true,
   },
 
   preview: {
     port: DEV_ENV_PORT,
+    strictPort: true,
   },
 
   plugins: [

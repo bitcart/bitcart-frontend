@@ -10,6 +10,7 @@
     "./by-package-type/app-knip": "./src/by-package-type/app-knip.ts",
     "./by-package-type/app-ts": "./src/by-package-type/app-ts.json",
     "./by-package-type/lib-dependency-cruiser": "./src/by-package-type/lib-dependency-cruiser.ts",
+    "./by-package-type/lib-tsdown": "./src/by-package-type/lib-tsdown.ts",
     "./by-package-type/lib-ts": "./src/by-package-type/lib-ts.json",
     "./by-target-platform/nodejs-ts": {
       "default": "./src/by-target-platform/nodejs-ts.json"
@@ -27,6 +28,7 @@
     "dependency-cruiser": "catalog:devDependencies",
     "knip": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies"
   }
