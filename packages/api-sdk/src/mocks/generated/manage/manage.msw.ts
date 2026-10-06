@@ -9,7 +9,15 @@ import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
 import type { RequestHandlerOptions } from "msw"
 
-import type { BackupsPolicy, GlobalStorePolicy, Policy } from "../../../schemas/generated"
+import type {
+  BackupsPolicy,
+  ExchangeInfo,
+  GlobalStorePolicy,
+  HostAgentJobStatus,
+  HostAgentOverview,
+  Policy,
+  RateSourceInfo,
+} from "../../../schemas/generated"
 
 export const getManageSetPoliciesResponseMock = (
   overrideResponse: Partial<Extract<Policy, object>> = {},
@@ -63,6 +71,86 @@ export const getManageSetStorePoliciesResponseMock = (
   pos_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   ...overrideResponse,
 })
+
+export const getManageGetHostAgentResponseMock = (
+  overrideResponse: Partial<Extract<HostAgentOverview, object>> = {},
+): HostAgentOverview => ({
+  state: {
+    configured: faker.datatype.boolean(),
+    available: faker.datatype.boolean(),
+    checked_at: faker.helpers.arrayElement([faker.number.int(), null]),
+    unreachable_since: faker.helpers.arrayElement([faker.number.int(), null]),
+    error: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    capabilities: faker.helpers.arrayElement([null]),
+  },
+  jobs: {
+    [faker.string.alphanumeric(5)]: {
+      job_id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      command: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      state: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    },
+  },
+  ...overrideResponse,
+})
+
+export const getManageGetJobStatusResponseMock = (
+  overrideResponse: Partial<Extract<HostAgentJobStatus, object>> = {},
+): HostAgentJobStatus => ({
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  command: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  state: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  reason: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+  created: faker.helpers.arrayElement([faker.number.int(), null]),
+  started: faker.helpers.arrayElement([faker.number.int(), null]),
+  finished: faker.helpers.arrayElement([faker.number.int(), null]),
+  exit_code: faker.helpers.arrayElement([faker.number.int(), null]),
+  result: faker.helpers.arrayElement([null]),
+  log: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  log_complete: faker.datatype.boolean(),
+  ...overrideResponse,
+})
+
+export const getManageGetRatesinfoResponseMock = (): RateSourceInfo[] =>
+  Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    fetched_at: faker.helpers.arrayElement([
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
+    ]),
+    age: faker.helpers.arrayElement([faker.number.int(), null]),
+    last_error: faker.helpers.arrayElement([
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
+    ]),
+    last_error_at: faker.helpers.arrayElement([
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
+    ]),
+  }))
+
+export const getManageGetExchangesResponseMock = (): ExchangeInfo[] =>
+  Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    enabled: faker.datatype.boolean(),
+    api_key_types: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => faker.string.alpha({ length: { min: 10, max: 20 } })),
+    api_key_type: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    api_key_set: faker.datatype.boolean(),
+  }))
+
+export const getManageSetExchangesResponseMock = (): ExchangeInfo[] =>
+  Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    enabled: faker.datatype.boolean(),
+    api_key_types: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => faker.string.alpha({ length: { min: 10, max: 20 } })),
+    api_key_type: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    api_key_set: faker.datatype.boolean(),
+  }))
 
 export const getManageGetBackupPoliciesResponseMock = (
   overrideResponse: Partial<Extract<BackupsPolicy, object>> = {},
@@ -253,6 +341,54 @@ export const getManageCleanupImagesMockHandler = (
   )
 }
 
+export const getManageGetHostAgentMockHandler = (
+  overrideResponse?:
+    | HostAgentOverview
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<HostAgentOverview> | HostAgentOverview),
+  options?: RequestHandlerOptions,
+) => {
+  return http.get(
+    "*/manage/agent",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getManageGetHostAgentResponseMock(),
+        { status: 200 },
+      )
+    },
+    options,
+  )
+}
+
+export const getManageGetJobStatusMockHandler = (
+  overrideResponse?:
+    | HostAgentJobStatus
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<HostAgentJobStatus> | HostAgentJobStatus),
+  options?: RequestHandlerOptions,
+) => {
+  return http.get(
+    "*/manage/jobs/:jobId",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getManageGetJobStatusResponseMock(),
+        { status: 200 },
+      )
+    },
+    options,
+  )
+}
+
 export const getManageCleanupLogsMockHandler = (
   overrideResponse?:
     | unknown
@@ -362,6 +498,78 @@ export const getManageGetSyncinfoMockHandler = (
       }
 
       return new HttpResponse(null, { status: 200 })
+    },
+    options,
+  )
+}
+
+export const getManageGetRatesinfoMockHandler = (
+  overrideResponse?:
+    | RateSourceInfo[]
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<RateSourceInfo[]> | RateSourceInfo[]),
+  options?: RequestHandlerOptions,
+) => {
+  return http.get(
+    "*/manage/ratesinfo",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getManageGetRatesinfoResponseMock(),
+        { status: 200 },
+      )
+    },
+    options,
+  )
+}
+
+export const getManageGetExchangesMockHandler = (
+  overrideResponse?:
+    | ExchangeInfo[]
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ExchangeInfo[]> | ExchangeInfo[]),
+  options?: RequestHandlerOptions,
+) => {
+  return http.get(
+    "*/manage/exchanges",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getManageGetExchangesResponseMock(),
+        { status: 200 },
+      )
+    },
+    options,
+  )
+}
+
+export const getManageSetExchangesMockHandler = (
+  overrideResponse?:
+    | ExchangeInfo[]
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<ExchangeInfo[]> | ExchangeInfo[]),
+  options?: RequestHandlerOptions,
+) => {
+  return http.post(
+    "*/manage/exchanges",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getManageSetExchangesResponseMock(),
+        { status: 200 },
+      )
     },
     options,
   )
@@ -517,7 +725,7 @@ export const getManageDownloadBackupMockHandler = (
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
-    "*/manage/backups/download/:fileId",
+    "*/manage/backups/download/:jobId",
     async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
@@ -556,12 +764,17 @@ export const getManageMock = () => [
   getManagePluginReloadMockHandler(),
   getManageUpdateServerMockHandler(),
   getManageCleanupImagesMockHandler(),
+  getManageGetHostAgentMockHandler(),
+  getManageGetJobStatusMockHandler(),
   getManageCleanupLogsMockHandler(),
   getManageCleanupServerMockHandler(),
   getManageGetLogsListMockHandler(),
   getManageGetLogContentsMockHandler(),
   getManageDeleteLogMockHandler(),
   getManageGetSyncinfoMockHandler(),
+  getManageGetRatesinfoMockHandler(),
+  getManageGetExchangesMockHandler(),
+  getManageSetExchangesMockHandler(),
   getManageTestEmailPingMockHandler(),
   getManageGetDaemonsMockHandler(),
   getManageGetBackupPoliciesMockHandler(),

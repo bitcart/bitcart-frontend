@@ -27,15 +27,30 @@ import type {
   UseSuspenseQueryOptions,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query"
+import * as zod from "zod"
 
 import { BitcartApiConfig } from "../../../config"
-import { BackupsPolicy, GlobalStorePolicy, Policy } from "../../../schemas/generated"
+import {
+  BackupsPolicy,
+  ExchangeInfo,
+  GlobalStorePolicy,
+  HostAgentJobStatus,
+  HostAgentOverview,
+  Policy,
+  RateSourceInfo,
+} from "../../../schemas/generated"
 import type {
   BackupsPolicyOutput,
   BodyManageRestoreBackup,
+  ExchangeInfoOutput,
   GlobalStorePolicyOutput,
   HTTPValidationError,
+  HostAgentJobStatusOutput,
+  HostAgentOverviewOutput,
+  ManageGetJobStatusParams,
+  ManageSetExchangesBody,
   PolicyOutput,
+  RateSourceInfoOutput,
 } from "../../../schemas/generated"
 import { createApiFailureError } from "../utils"
 
@@ -1117,6 +1132,514 @@ export const useManageCleanupImages = <
 ): UseMutationResult<Awaited<ReturnType<typeof manageCleanupImages>>, TError, void, TContext> => {
   return useMutation(getManageCleanupImagesMutationOptions(options), queryClient)
 }
+export const getManageGetHostAgentUrl = () => {
+  return `${BitcartApiConfig.baseUrl}/manage/agent`
+}
+
+/**
+ * @summary Get Host Agent
+ */
+export const manageGetHostAgent = async (
+  options?: RequestInit,
+  fetchFn?: typeof globalThis.fetch,
+): Promise<HostAgentOverviewOutput> => {
+  const res = await (fetchFn ?? fetch)(getManageGetHostAgentUrl(), {
+    ...options,
+    method: "GET",
+  })
+
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+  if (!res.ok) throw createApiFailureError(res, body)
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data = contentType.includes("json") ? HostAgentOverview.parse(parsedBody) : parsedBody
+  return data
+}
+
+export const getManageGetHostAgentQueryKey = () => {
+  return [`${BitcartApiConfig.baseUrl}/manage/agent`] as const
+}
+
+export const getManageGetHostAgentQueryOptions = <
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(options?: {
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>>
+  fetch?: RequestInit
+  fetcher?: typeof globalThis.fetch
+}) => {
+  const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getManageGetHostAgentQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetHostAgent>>> = ({ signal }) =>
+    manageGetHostAgent({ signal, ...fetchOptions }, fetcherFn)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof manageGetHostAgent>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ManageGetHostAgentQueryResult = NonNullable<
+  Awaited<ReturnType<typeof manageGetHostAgent>>
+>
+export type ManageGetHostAgentQueryError = globalThis.Error & { info?: unknown; status?: number }
+
+export function useManageGetHostAgent<
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof manageGetHostAgent>>,
+          TError,
+          Awaited<ReturnType<typeof manageGetHostAgent>>
+        >,
+        "initialData"
+      >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetHostAgent<
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof manageGetHostAgent>>,
+          TError,
+          Awaited<ReturnType<typeof manageGetHostAgent>>
+        >,
+        "initialData"
+      >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetHostAgent<
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>>
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Host Agent
+ */
+
+export function useManageGetHostAgent<
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>>
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getManageGetHostAgentQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
+export const getManageGetHostAgentSuspenseQueryOptions = <
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(options?: {
+  query?: Partial<
+    UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>
+  >
+  fetch?: RequestInit
+  fetcher?: typeof globalThis.fetch
+}) => {
+  const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getManageGetHostAgentQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetHostAgent>>> = ({ signal }) =>
+    manageGetHostAgent({ signal, ...fetchOptions }, fetcherFn)
+
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
+}
+
+export type ManageGetHostAgentSuspenseQueryResult = NonNullable<
+  Awaited<ReturnType<typeof manageGetHostAgent>>
+>
+export type ManageGetHostAgentSuspenseQueryError = globalThis.Error & {
+  info?: unknown
+  status?: number
+}
+
+export function useManageGetHostAgentSuspense<
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options: {
+    query: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetHostAgentSuspense<
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetHostAgentSuspense<
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Host Agent
+ */
+
+export function useManageGetHostAgentSuspense<
+  TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetHostAgent>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getManageGetHostAgentSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
+export const getManageGetJobStatusUrl = (jobId: string, params?: ManageGetJobStatusParams) => {
+  const normalizedParams = new URLSearchParams()
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : String(value))
+    }
+  })
+
+  const stringifiedParams = normalizedParams.toString()
+
+  return stringifiedParams.length > 0
+    ? `${BitcartApiConfig.baseUrl}/manage/jobs/${jobId}?${stringifiedParams}`
+    : `${BitcartApiConfig.baseUrl}/manage/jobs/${jobId}`
+}
+
+/**
+ * @summary Get Job Status
+ */
+export const manageGetJobStatus = async (
+  jobId: string,
+  params?: ManageGetJobStatusParams,
+  options?: RequestInit,
+  fetchFn?: typeof globalThis.fetch,
+): Promise<HostAgentJobStatusOutput> => {
+  const res = await (fetchFn ?? fetch)(getManageGetJobStatusUrl(jobId, params), {
+    ...options,
+    method: "GET",
+  })
+
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+  if (!res.ok) throw createApiFailureError(res, body)
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data = contentType.includes("json") ? HostAgentJobStatus.parse(parsedBody) : parsedBody
+  return data
+}
+
+export const getManageGetJobStatusQueryKey = (jobId: string, params?: ManageGetJobStatusParams) => {
+  return [`${BitcartApiConfig.baseUrl}/manage/jobs/${jobId}`, ...(params ? [params] : [])] as const
+}
+
+export const getManageGetJobStatusQueryOptions = <
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params?: ManageGetJobStatusParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>>
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+) => {
+  const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getManageGetJobStatusQueryKey(jobId, params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetJobStatus>>> = ({ signal }) =>
+    manageGetJobStatus(jobId, params, { signal, ...fetchOptions }, fetcherFn)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: jobId !== null && jobId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
+}
+
+export type ManageGetJobStatusQueryResult = NonNullable<
+  Awaited<ReturnType<typeof manageGetJobStatus>>
+>
+export type ManageGetJobStatusQueryError = globalThis.Error & {
+  info?: HTTPValidationError
+  status?: number
+}
+
+export function useManageGetJobStatus<
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params: undefined | ManageGetJobStatusParams,
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof manageGetJobStatus>>,
+          TError,
+          Awaited<ReturnType<typeof manageGetJobStatus>>
+        >,
+        "initialData"
+      >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetJobStatus<
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params?: ManageGetJobStatusParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof manageGetJobStatus>>,
+          TError,
+          Awaited<ReturnType<typeof manageGetJobStatus>>
+        >,
+        "initialData"
+      >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetJobStatus<
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params?: ManageGetJobStatusParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>>
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Job Status
+ */
+
+export function useManageGetJobStatus<
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params?: ManageGetJobStatusParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>>
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getManageGetJobStatusQueryOptions(jobId, params, options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
+export const getManageGetJobStatusSuspenseQueryOptions = <
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params?: ManageGetJobStatusParams,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+) => {
+  const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getManageGetJobStatusQueryKey(jobId, params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetJobStatus>>> = ({ signal }) =>
+    manageGetJobStatus(jobId, params, { signal, ...fetchOptions }, fetcherFn)
+
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
+}
+
+export type ManageGetJobStatusSuspenseQueryResult = NonNullable<
+  Awaited<ReturnType<typeof manageGetJobStatus>>
+>
+export type ManageGetJobStatusSuspenseQueryError = globalThis.Error & {
+  info?: HTTPValidationError
+  status?: number
+}
+
+export function useManageGetJobStatusSuspense<
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params: undefined | ManageGetJobStatusParams,
+  options: {
+    query: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetJobStatusSuspense<
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params?: ManageGetJobStatusParams,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetJobStatusSuspense<
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params?: ManageGetJobStatusParams,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Job Status
+ */
+
+export function useManageGetJobStatusSuspense<
+  TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+>(
+  jobId: string,
+  params?: ManageGetJobStatusParams,
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetJobStatus>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getManageGetJobStatusSuspenseQueryOptions(jobId, params, options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
 export const getManageCleanupLogsUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/cleanup/logs`
 }
@@ -2102,6 +2625,597 @@ export function useManageGetSyncinfoSuspense<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
+export const getManageGetRatesinfoUrl = () => {
+  return `${BitcartApiConfig.baseUrl}/manage/ratesinfo`
+}
+
+/**
+ * @summary Get Ratesinfo
+ */
+export const manageGetRatesinfo = async (
+  options?: RequestInit,
+  fetchFn?: typeof globalThis.fetch,
+): Promise<RateSourceInfoOutput[]> => {
+  const res = await (fetchFn ?? fetch)(getManageGetRatesinfoUrl(), {
+    ...options,
+    method: "GET",
+  })
+
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+  if (!res.ok) throw createApiFailureError(res, body)
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data = contentType.includes("json")
+    ? zod.array(RateSourceInfo).parse(parsedBody)
+    : parsedBody
+  return data
+}
+
+export const getManageGetRatesinfoQueryKey = () => {
+  return [`${BitcartApiConfig.baseUrl}/manage/ratesinfo`] as const
+}
+
+export const getManageGetRatesinfoQueryOptions = <
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(options?: {
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>>
+  fetch?: RequestInit
+  fetcher?: typeof globalThis.fetch
+}) => {
+  const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getManageGetRatesinfoQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetRatesinfo>>> = ({ signal }) =>
+    manageGetRatesinfo({ signal, ...fetchOptions }, fetcherFn)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof manageGetRatesinfo>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ManageGetRatesinfoQueryResult = NonNullable<
+  Awaited<ReturnType<typeof manageGetRatesinfo>>
+>
+export type ManageGetRatesinfoQueryError = globalThis.Error & { info?: unknown; status?: number }
+
+export function useManageGetRatesinfo<
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof manageGetRatesinfo>>,
+          TError,
+          Awaited<ReturnType<typeof manageGetRatesinfo>>
+        >,
+        "initialData"
+      >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetRatesinfo<
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof manageGetRatesinfo>>,
+          TError,
+          Awaited<ReturnType<typeof manageGetRatesinfo>>
+        >,
+        "initialData"
+      >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetRatesinfo<
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>>
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Ratesinfo
+ */
+
+export function useManageGetRatesinfo<
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>>
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getManageGetRatesinfoQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
+export const getManageGetRatesinfoSuspenseQueryOptions = <
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(options?: {
+  query?: Partial<
+    UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>
+  >
+  fetch?: RequestInit
+  fetcher?: typeof globalThis.fetch
+}) => {
+  const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getManageGetRatesinfoQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetRatesinfo>>> = ({ signal }) =>
+    manageGetRatesinfo({ signal, ...fetchOptions }, fetcherFn)
+
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
+}
+
+export type ManageGetRatesinfoSuspenseQueryResult = NonNullable<
+  Awaited<ReturnType<typeof manageGetRatesinfo>>
+>
+export type ManageGetRatesinfoSuspenseQueryError = globalThis.Error & {
+  info?: unknown
+  status?: number
+}
+
+export function useManageGetRatesinfoSuspense<
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options: {
+    query: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetRatesinfoSuspense<
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetRatesinfoSuspense<
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Ratesinfo
+ */
+
+export function useManageGetRatesinfoSuspense<
+  TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetRatesinfo>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getManageGetRatesinfoSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
+export const getManageGetExchangesUrl = () => {
+  return `${BitcartApiConfig.baseUrl}/manage/exchanges`
+}
+
+/**
+ * @summary Get Exchanges
+ */
+export const manageGetExchanges = async (
+  options?: RequestInit,
+  fetchFn?: typeof globalThis.fetch,
+): Promise<ExchangeInfoOutput[]> => {
+  const res = await (fetchFn ?? fetch)(getManageGetExchangesUrl(), {
+    ...options,
+    method: "GET",
+  })
+
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+  if (!res.ok) throw createApiFailureError(res, body)
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data = contentType.includes("json") ? zod.array(ExchangeInfo).parse(parsedBody) : parsedBody
+  return data
+}
+
+export const getManageGetExchangesQueryKey = () => {
+  return [`${BitcartApiConfig.baseUrl}/manage/exchanges`] as const
+}
+
+export const getManageGetExchangesQueryOptions = <
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(options?: {
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>>
+  fetch?: RequestInit
+  fetcher?: typeof globalThis.fetch
+}) => {
+  const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getManageGetExchangesQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetExchanges>>> = ({ signal }) =>
+    manageGetExchanges({ signal, ...fetchOptions }, fetcherFn)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof manageGetExchanges>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ManageGetExchangesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof manageGetExchanges>>
+>
+export type ManageGetExchangesQueryError = globalThis.Error & { info?: unknown; status?: number }
+
+export function useManageGetExchanges<
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof manageGetExchanges>>,
+          TError,
+          Awaited<ReturnType<typeof manageGetExchanges>>
+        >,
+        "initialData"
+      >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetExchanges<
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof manageGetExchanges>>,
+          TError,
+          Awaited<ReturnType<typeof manageGetExchanges>>
+        >,
+        "initialData"
+      >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetExchanges<
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>>
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Exchanges
+ */
+
+export function useManageGetExchanges<
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>>
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getManageGetExchangesQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
+export const getManageGetExchangesSuspenseQueryOptions = <
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(options?: {
+  query?: Partial<
+    UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>
+  >
+  fetch?: RequestInit
+  fetcher?: typeof globalThis.fetch
+}) => {
+  const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getManageGetExchangesQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof manageGetExchanges>>> = ({ signal }) =>
+    manageGetExchanges({ signal, ...fetchOptions }, fetcherFn)
+
+  return queryOptionsBuilder({
+    queryKey,
+    ...queryOptions,
+    queryFn: queryOptions?.queryFn ?? queryFn,
+  }) as UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  } & {
+    throwOnError?: ((this: never, error: TError) => boolean) & { readonly __inferenceOnly: never }
+  }
+}
+
+export type ManageGetExchangesSuspenseQueryResult = NonNullable<
+  Awaited<ReturnType<typeof manageGetExchanges>>
+>
+export type ManageGetExchangesSuspenseQueryError = globalThis.Error & {
+  info?: unknown
+  status?: number
+}
+
+export function useManageGetExchangesSuspense<
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options: {
+    query: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetExchangesSuspense<
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useManageGetExchangesSuspense<
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Exchanges
+ */
+
+export function useManageGetExchangesSuspense<
+  TData = Awaited<ReturnType<typeof manageGetExchanges>>,
+  TError = globalThis.Error & { info?: unknown; status?: number },
+>(
+  options?: {
+    query?: Partial<
+      UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageGetExchanges>>, TError, TData>
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getManageGetExchangesSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
+export const getManageSetExchangesUrl = () => {
+  return `${BitcartApiConfig.baseUrl}/manage/exchanges`
+}
+
+/**
+ * @summary Set Exchanges
+ */
+export const manageSetExchanges = async (
+  manageSetExchangesBody: ManageSetExchangesBody,
+  options?: RequestInit,
+  fetchFn?: typeof globalThis.fetch,
+): Promise<ExchangeInfoOutput[]> => {
+  const getHeaders = (
+    h?: NonNullable<RequestInit["headers"]>,
+  ): Record<string, string | readonly string[]> => {
+    if (!h) return {}
+    if (h instanceof Headers) return Object.fromEntries(h.entries())
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(
+          h as Iterable<Iterable<string>>,
+          (entry) => Array.from(entry) as [string, string],
+        ),
+      )
+    }
+    const headers: Record<string, string | readonly string[]> = {}
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value
+    }
+    return headers
+  }
+  const res = await (fetchFn ?? fetch)(getManageSetExchangesUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+    body: JSON.stringify(manageSetExchangesBody),
+  })
+
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+  if (!res.ok) throw createApiFailureError(res, body)
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data = contentType.includes("json") ? zod.array(ExchangeInfo).parse(parsedBody) : parsedBody
+  return data
+}
+
+export const getManageSetExchangesMutationKey = () => ["manageSetExchanges"] as const
+
+export const getManageSetExchangesMutationOptions = <
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof manageSetExchanges>>,
+    TError,
+    ManageSetExchangesMutationVariables,
+    TContext
+  >
+  fetch?: RequestInit
+  fetcher?: typeof globalThis.fetch
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof manageSetExchanges>>,
+  TError,
+  ManageSetExchangesMutationVariables,
+  TContext
+> => {
+  const mutationKey = getManageSetExchangesMutationKey()
+  const {
+    mutation: mutationOptions,
+    fetch: fetchOptions,
+    fetcher: fetcherFn,
+  } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, fetch: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof manageSetExchanges>>,
+    ManageSetExchangesMutationVariables
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return manageSetExchanges(data, fetchOptions, fetcherFn)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type ManageSetExchangesMutationResult = NonNullable<
+  Awaited<ReturnType<typeof manageSetExchanges>>
+>
+export type ManageSetExchangesMutationBody = ManageSetExchangesBody
+export type ManageSetExchangesMutationError = globalThis.Error & {
+  info?: HTTPValidationError
+  status?: number
+}
+export type ManageSetExchangesMutationVariables = { data: ManageSetExchangesBody }
+
+/**
+ * @summary Set Exchanges
+ */
+export const useManageSetExchanges = <
+  TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof manageSetExchanges>>,
+      TError,
+      ManageSetExchangesMutationVariables,
+      TContext
+    >
+    fetch?: RequestInit
+    fetcher?: typeof globalThis.fetch
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof manageSetExchanges>>,
+  TError,
+  ManageSetExchangesMutationVariables,
+  TContext
+> => {
+  return useMutation(getManageSetExchangesMutationOptions(options), queryClient)
+}
 export const getManageTestEmailPingUrl = () => {
   return `${BitcartApiConfig.baseUrl}/manage/testping`
 }
@@ -3510,19 +4624,19 @@ export const useManagePerformBackup = <
 ): UseMutationResult<Awaited<ReturnType<typeof managePerformBackup>>, TError, void, TContext> => {
   return useMutation(getManagePerformBackupMutationOptions(options), queryClient)
 }
-export const getManageDownloadBackupUrl = (fileId: string) => {
-  return `${BitcartApiConfig.baseUrl}/manage/backups/download/${fileId}`
+export const getManageDownloadBackupUrl = (jobId: string) => {
+  return `${BitcartApiConfig.baseUrl}/manage/backups/download/${jobId}`
 }
 
 /**
  * @summary Download Backup
  */
 export const manageDownloadBackup = async (
-  fileId: string,
+  jobId: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<unknown> => {
-  const res = await (fetchFn ?? fetch)(getManageDownloadBackupUrl(fileId), {
+  const res = await (fetchFn ?? fetch)(getManageDownloadBackupUrl(jobId), {
     ...options,
     method: "GET",
   })
@@ -3533,15 +4647,15 @@ export const manageDownloadBackup = async (
   return data
 }
 
-export const getManageDownloadBackupQueryKey = (fileId: string) => {
-  return [`${BitcartApiConfig.baseUrl}/manage/backups/download/${fileId}`] as const
+export const getManageDownloadBackupQueryKey = (jobId: string) => {
+  return [`${BitcartApiConfig.baseUrl}/manage/backups/download/${jobId}`] as const
 }
 
 export const getManageDownloadBackupQueryOptions = <
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3552,15 +4666,15 @@ export const getManageDownloadBackupQueryOptions = <
 ) => {
   const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getManageDownloadBackupQueryKey(fileId)
+  const queryKey = queryOptions?.queryKey ?? getManageDownloadBackupQueryKey(jobId)
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageDownloadBackup>>> = ({ signal }) =>
-    manageDownloadBackup(fileId, { signal, ...fetchOptions }, fetcherFn)
+    manageDownloadBackup(jobId, { signal, ...fetchOptions }, fetcherFn)
 
   return {
     queryKey,
     queryFn,
-    enabled: fileId !== null && fileId !== undefined,
+    enabled: jobId !== null && jobId !== undefined,
     ...queryOptions,
   } as UseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData> & {
     queryKey: DataTag<QueryKey, TData, TError>
@@ -3579,7 +4693,7 @@ export function useManageDownloadBackup<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options: {
     query: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3601,7 +4715,7 @@ export function useManageDownloadBackup<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3623,7 +4737,7 @@ export function useManageDownloadBackup<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3641,7 +4755,7 @@ export function useManageDownloadBackup<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options?: {
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3651,7 +4765,7 @@ export function useManageDownloadBackup<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getManageDownloadBackupQueryOptions(fileId, options)
+  const queryOptions = getManageDownloadBackupQueryOptions(jobId, options)
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>
@@ -3664,7 +4778,7 @@ export const getManageDownloadBackupSuspenseQueryOptions = <
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options?: {
     query?: Partial<
       UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3675,10 +4789,10 @@ export const getManageDownloadBackupSuspenseQueryOptions = <
 ) => {
   const { query: queryOptions, fetch: fetchOptions, fetcher: fetcherFn } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getManageDownloadBackupQueryKey(fileId)
+  const queryKey = queryOptions?.queryKey ?? getManageDownloadBackupQueryKey(jobId)
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof manageDownloadBackup>>> = ({ signal }) =>
-    manageDownloadBackup(fileId, { signal, ...fetchOptions }, fetcherFn)
+    manageDownloadBackup(jobId, { signal, ...fetchOptions }, fetcherFn)
 
   return queryOptionsBuilder({
     queryKey,
@@ -3703,7 +4817,7 @@ export function useManageDownloadBackupSuspense<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options: {
     query: Partial<
       UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3717,7 +4831,7 @@ export function useManageDownloadBackupSuspense<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options?: {
     query?: Partial<
       UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3731,7 +4845,7 @@ export function useManageDownloadBackupSuspense<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options?: {
     query?: Partial<
       UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3749,7 +4863,7 @@ export function useManageDownloadBackupSuspense<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
 >(
-  fileId: string,
+  jobId: string,
   options?: {
     query?: Partial<
       UseSuspenseQueryOptions<Awaited<ReturnType<typeof manageDownloadBackup>>, TError, TData>
@@ -3759,7 +4873,7 @@ export function useManageDownloadBackupSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getManageDownloadBackupSuspenseQueryOptions(fileId, options)
+  const queryOptions = getManageDownloadBackupSuspenseQueryOptions(jobId, options)
 
   const query = useSuspenseQuery(queryOptions, queryClient) as UseSuspenseQueryResult<
     TData,

@@ -32,6 +32,7 @@ import { BitcartApiConfig } from "../../../config"
 import {
   DisplayStore,
   OffsetPaginationDisplayStore,
+  RateRulesResponse,
   RatesResponse,
 } from "../../../schemas/generated"
 import type {
@@ -43,6 +44,7 @@ import type {
   OffsetPaginationDisplayStoreOutput,
   OptionalUpdateStore,
   PublicStore,
+  RateRulesResponseOutput,
   RatesResponseOutput,
   StoreCheckoutSettings,
   StorePluginSettings,
@@ -2054,7 +2056,7 @@ export const storesSetStoreRateRules = async (
   storesSetStoreRateRulesBody?: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<unknown> => {
+): Promise<RateRulesResponseOutput> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -2081,9 +2083,11 @@ export const storesSetStoreRateRules = async (
     body: JSON.stringify(storesSetStoreRateRulesBody),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: unknown = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data = contentType.includes("json") ? RateRulesResponse.parse(parsedBody) : parsedBody
   return data
 }
 

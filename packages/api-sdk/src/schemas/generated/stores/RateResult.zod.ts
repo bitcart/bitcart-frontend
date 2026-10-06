@@ -7,9 +7,23 @@
  */
 import * as zod from "zod"
 
+import { RateSourceResult } from "./RateSourceResult.zod"
+import { RateStepResult } from "./RateStepResult.zod"
+
+export const rateResultDegradedDefault = false
+export const rateResultStepsDefault = []
+export const rateResultSourcesDefault = []
+
 export const RateResult = zod.object({
+  pair: zod.string(),
   rate: zod.union([zod.number(), zod.null()]),
   message: zod.string(),
+  rule: zod.union([zod.string(), zod.null()]).optional(),
+  degraded: zod.boolean().default(rateResultDegradedDefault),
+  age: zod.union([zod.int(), zod.null()]).optional(),
+  error: zod.union([zod.string(), zod.null()]).optional(),
+  steps: zod.array(RateStepResult).default(rateResultStepsDefault),
+  sources: zod.array(RateSourceResult).default(rateResultSourcesDefault),
 })
 
 export type RateResult = zod.input<typeof RateResult>

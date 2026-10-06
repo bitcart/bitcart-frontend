@@ -32,8 +32,8 @@ import { BitcartApiConfig } from "../../../config"
 import {
   BalanceResponse,
   DisplayWallet,
-  Money,
   OffsetPaginationDisplayWallet,
+  WalletsBalance,
 } from "../../../schemas/generated"
 import type {
   BalanceResponseOutput,
@@ -44,10 +44,10 @@ import type {
   DisplayWalletOutput,
   HTTPValidationError,
   LNPayScheme,
-  MoneyOutput,
   OffsetPaginationDisplayWalletOutput,
   OpenChannelScheme,
   OptionalUpdateWallet,
+  WalletsBalanceOutput,
   WalletsGetWalletRateParams,
   WalletsListItemsParams,
 } from "../../../schemas/generated"
@@ -78,7 +78,7 @@ export const getWalletsGetBalancesUrl = () => {
 export const walletsGetBalances = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<MoneyOutput> => {
+): Promise<WalletsBalanceOutput> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetBalancesUrl(), {
     ...options,
     method: "GET",
@@ -88,7 +88,7 @@ export const walletsGetBalances = async (
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
   const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
-  const data = contentType.includes("json") ? Money.parse(parsedBody) : parsedBody
+  const data = contentType.includes("json") ? WalletsBalance.parse(parsedBody) : parsedBody
   return data
 }
 

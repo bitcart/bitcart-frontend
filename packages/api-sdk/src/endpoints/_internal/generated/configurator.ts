@@ -32,8 +32,8 @@ import { BitcartApiConfig } from "../../../config"
 import type {
   ConfiguratorCheckDnsEntryParams,
   ConfiguratorDeploySettings,
+  ConfiguratorSSHSettings,
   HTTPValidationError,
-  SSHSettings,
 } from "../../../schemas/generated"
 import { createApiFailureError } from "../utils"
 
@@ -467,7 +467,7 @@ export const getConfiguratorGetServerSettingsUrl = () => {
  * @summary Get Server Settings
  */
 export const configuratorGetServerSettings = async (
-  sSHSettingsNull?: SSHSettings | null,
+  configuratorSSHSettingsNull?: ConfiguratorSSHSettings | null,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
 ): Promise<unknown> => {
@@ -494,7 +494,7 @@ export const configuratorGetServerSettings = async (
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
-    body: JSON.stringify(sSHSettingsNull),
+    body: JSON.stringify(configuratorSSHSettingsNull),
   })
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
@@ -550,12 +550,14 @@ export const getConfiguratorGetServerSettingsMutationOptions = <
 export type ConfiguratorGetServerSettingsMutationResult = NonNullable<
   Awaited<ReturnType<typeof configuratorGetServerSettings>>
 >
-export type ConfiguratorGetServerSettingsMutationBody = SSHSettings | null | undefined
+export type ConfiguratorGetServerSettingsMutationBody = ConfiguratorSSHSettings | null | undefined
 export type ConfiguratorGetServerSettingsMutationError = globalThis.Error & {
   info?: HTTPValidationError
   status?: number
 }
-export type ConfiguratorGetServerSettingsMutationVariables = { data?: SSHSettings | null }
+export type ConfiguratorGetServerSettingsMutationVariables = {
+  data?: ConfiguratorSSHSettings | null
+}
 
 /**
  * @summary Get Server Settings

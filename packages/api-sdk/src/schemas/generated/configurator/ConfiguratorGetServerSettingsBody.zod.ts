@@ -7,9 +7,9 @@
  */
 import * as zod from "zod"
 
-import { SSHSettings } from "./SSHSettings.zod"
+import { ConfiguratorSSHSettings } from "./ConfiguratorSSHSettings.zod"
 
-export const ConfiguratorGetServerSettingsBody = zod.union([SSHSettings, zod.null()])
+export const ConfiguratorGetServerSettingsBody = zod.union([ConfiguratorSSHSettings, zod.null()])
 
 export type ConfiguratorGetServerSettingsBody = zod.input<typeof ConfiguratorGetServerSettingsBody>
 export type ConfiguratorGetServerSettingsBodyOutput = zod.output<

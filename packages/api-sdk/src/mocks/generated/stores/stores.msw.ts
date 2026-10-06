@@ -13,6 +13,7 @@ import type {
   DisplayStore,
   OffsetPaginationDisplayStore,
   PublicStore,
+  RateRulesResponse,
   RatesResponse,
 } from "../../../schemas/generated"
 
@@ -603,12 +604,51 @@ export const getStoresSetStorePluginSettingsResponseMock = (
   ...overrideResponse,
 })
 
+export const getStoresSetStoreRateRulesResponseMock = (
+  overrideResponse: Partial<Extract<RateRulesResponse, object>> = {},
+): RateRulesResponse => ({
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  warnings: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() =>
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ),
+  ...overrideResponse,
+})
+
 export const getStoresGetStoreRatesResponseMock = (
   overrideResponse: Partial<Extract<RatesResponse, object>> = {},
 ): RatesResponse => ({
   rates: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    pair: faker.string.alpha({ length: { min: 10, max: 20 } }),
     rate: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
     message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    rule: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    degraded: faker.datatype.boolean(),
+    age: faker.helpers.arrayElement([faker.number.int(), null]),
+    error: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    steps: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
+      () => ({
+        rule: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        rate: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
+        age: faker.helpers.arrayElement([faker.number.int(), null]),
+        error: faker.helpers.arrayElement([
+          faker.string.alpha({ length: { min: 10, max: 20 } }),
+          null,
+        ]),
+        used: faker.datatype.boolean(),
+      }),
+    ),
+    sources: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
+      () => ({
+        exchange: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        pair: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        rate: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
+        age: faker.helpers.arrayElement([faker.number.int(), null]),
+        error: faker.helpers.arrayElement([
+          faker.string.alpha({ length: { min: 10, max: 20 } }),
+          null,
+        ]),
+      }),
+    ),
   })),
   ...overrideResponse,
 })
@@ -895,18 +935,23 @@ export const getStoresSetStorePluginSettingsMockHandler = (
 
 export const getStoresSetStoreRateRulesMockHandler = (
   overrideResponse?:
-    | unknown
-    | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<unknown> | unknown),
+    | RateRulesResponse
+    | ((
+        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+      ) => Promise<RateRulesResponse> | RateRulesResponse),
   options?: RequestHandlerOptions,
 ) => {
   return http.patch(
     "*/stores/:modelId/rate_rules",
     async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-      if (typeof overrideResponse === "function") {
-        await overrideResponse(info)
-      }
-
-      return new HttpResponse(null, { status: 200 })
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getStoresSetStoreRateRulesResponseMock(),
+        { status: 200 },
+      )
     },
     options,
   )

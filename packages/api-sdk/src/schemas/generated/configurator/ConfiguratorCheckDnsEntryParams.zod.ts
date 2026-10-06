@@ -7,8 +7,10 @@
  */
 import * as zod from "zod"
 
+export const configuratorCheckDnsEntryParamsNameMax = 253
+
 export const ConfiguratorCheckDnsEntryParams = zod.object({
-  name: zod.string(),
+  name: zod.string().max(configuratorCheckDnsEntryParamsNameMax),
 })
 
 export type ConfiguratorCheckDnsEntryParams = zod.input<typeof ConfiguratorCheckDnsEntryParams>

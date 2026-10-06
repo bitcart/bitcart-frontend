@@ -996,7 +996,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Money"
+                  "$ref": "#/components/schemas/WalletsBalance"
                 }
               }
             }
@@ -3504,7 +3504,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Stores Set Store Rate Rules"
+                  "$ref": "#/components/schemas/RateRulesResponse"
                 }
               }
             }
@@ -3529,6 +3529,13 @@
         ],
         "summary": "Get Store Rates",
         "operationId": "stores_get_store_rates",
+        "security": [
+          {
+            "Bearer": [
+              "store_management"
+            ]
+          }
+        ],
         "parameters": [
           {
             "name": "model_id",
@@ -6211,6 +6218,94 @@
         ]
       }
     },
+    "/manage/agent": {
+      "get": {
+        "tags": [
+          "manage"
+        ],
+        "summary": "Get Host Agent",
+        "operationId": "manage_get_host_agent",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HostAgentOverview"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "server_management"
+            ]
+          }
+        ]
+      }
+    },
+    "/manage/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "manage"
+        ],
+        "summary": "Get Job Status",
+        "operationId": "manage_get_job_status",
+        "security": [
+          {
+            "Bearer": [
+              "server_management"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "log_lines",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^([0-9]+|all)$",
+              "default": "50",
+              "title": "Log Lines"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HostAgentJobStatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/manage/cleanup/logs": {
       "post": {
         "tags": [
@@ -6405,6 +6500,124 @@
               "application/json": {
                 "schema": {
                   "title": "Response Manage Get Syncinfo"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "server_management"
+            ]
+          }
+        ]
+      }
+    },
+    "/manage/ratesinfo": {
+      "get": {
+        "tags": [
+          "manage"
+        ],
+        "summary": "Get Ratesinfo",
+        "operationId": "manage_get_ratesinfo",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RateSourceInfo"
+                  },
+                  "type": "array",
+                  "title": "Response Manage Get Ratesinfo"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "server_management"
+            ]
+          }
+        ]
+      }
+    },
+    "/manage/exchanges": {
+      "get": {
+        "tags": [
+          "manage"
+        ],
+        "summary": "Get Exchanges",
+        "operationId": "manage_get_exchanges",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ExchangeInfo"
+                  },
+                  "type": "array",
+                  "title": "Response Manage Get Exchanges"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "server_management"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "manage"
+        ],
+        "summary": "Set Exchanges",
+        "operationId": "manage_set_exchanges",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/ExchangeSettings"
+                },
+                "type": "object",
+                "title": "Settings"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ExchangeInfo"
+                  },
+                  "type": "array",
+                  "title": "Response Manage Set Exchanges"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -6619,7 +6832,7 @@
         ]
       }
     },
-    "/manage/backups/download/{file_id}": {
+    "/manage/backups/download/{job_id}": {
       "get": {
         "tags": [
           "manage"
@@ -6635,12 +6848,12 @@
         ],
         "parameters": [
           {
-            "name": "file_id",
+            "name": "job_id",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string",
-              "title": "File Id"
+              "title": "Job Id"
             }
           }
         ],
@@ -7610,7 +7823,7 @@
               "schema": {
                 "anyOf": [
                   {
-                    "$ref": "#/components/schemas/SSHSettings"
+                    "$ref": "#/components/schemas/ConfiguratorSSHSettings"
                   },
                   {
                     "type": "null"
@@ -7666,6 +7879,7 @@
             "required": true,
             "schema": {
               "type": "string",
+              "maxLength": 253,
               "title": "Name"
             }
           }
@@ -11264,6 +11478,63 @@
         ],
         "title": "EmailVerifyResponse"
       },
+      "ExchangeInfo": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "api_key_types": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Api Key Types"
+          },
+          "api_key_type": {
+            "type": "string",
+            "title": "Api Key Type"
+          },
+          "api_key_set": {
+            "type": "boolean",
+            "title": "Api Key Set"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "enabled",
+          "api_key_types",
+          "api_key_type",
+          "api_key_set"
+        ],
+        "title": "ExchangeInfo"
+      },
+      "ExchangeSettings": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "api_key": {
+            "type": "string",
+            "title": "Api Key",
+            "default": ""
+          },
+          "api_key_type": {
+            "type": "string",
+            "title": "Api Key Type",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "ExchangeSettings"
+      },
       "FIDO2Auth": {
         "properties": {
           "token": {
@@ -11350,6 +11621,210 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "HostAgentJob": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "command": {
+            "type": "string",
+            "title": "Command"
+          },
+          "state": {
+            "type": "string",
+            "title": "State",
+            "default": "running"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "command"
+        ],
+        "title": "HostAgentJob"
+      },
+      "HostAgentJobStatus": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "command": {
+            "type": "string",
+            "title": "Command"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "created": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created"
+          },
+          "started": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started"
+          },
+          "finished": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished"
+          },
+          "exit_code": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exit Code"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          },
+          "log": {
+            "type": "string",
+            "title": "Log"
+          },
+          "log_complete": {
+            "type": "boolean",
+            "title": "Log Complete"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "command",
+          "state",
+          "log",
+          "log_complete"
+        ],
+        "title": "HostAgentJobStatus"
+      },
+      "HostAgentOverview": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/HostAgentState"
+          },
+          "jobs": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/HostAgentJob"
+            },
+            "type": "object",
+            "title": "Jobs"
+          }
+        },
+        "type": "object",
+        "required": [
+          "state",
+          "jobs"
+        ],
+        "title": "HostAgentOverview"
+      },
+      "HostAgentState": {
+        "properties": {
+          "configured": {
+            "type": "boolean",
+            "title": "Configured",
+            "default": false
+          },
+          "available": {
+            "type": "boolean",
+            "title": "Available",
+            "default": false
+          },
+          "checked_at": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked At"
+          },
+          "unreachable_since": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unreachable Since"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "capabilities": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capabilities"
+          }
+        },
+        "type": "object",
+        "title": "HostAgentState"
       },
       "InfoUser": {
         "properties": {
@@ -12777,6 +13252,10 @@
       },
       "RateResult": {
         "properties": {
+          "pair": {
+            "type": "string",
+            "title": "Pair"
+          },
           "rate": {
             "anyOf": [
               {
@@ -12791,14 +13270,261 @@
           "message": {
             "type": "string",
             "title": "Message"
+          },
+          "rule": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rule"
+          },
+          "degraded": {
+            "type": "boolean",
+            "title": "Degraded",
+            "default": false
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/RateStepResult"
+            },
+            "type": "array",
+            "title": "Steps",
+            "default": []
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/RateSourceResult"
+            },
+            "type": "array",
+            "title": "Sources",
+            "default": []
           }
         },
         "type": "object",
         "required": [
+          "pair",
           "rate",
           "message"
         ],
         "title": "RateResult"
+      },
+      "RateRulesResponse": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "warnings"
+        ],
+        "title": "RateRulesResponse"
+      },
+      "RateSourceInfo": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fetched At"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "last_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Error"
+          },
+          "last_error_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Error At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "fetched_at",
+          "age",
+          "last_error",
+          "last_error_at"
+        ],
+        "title": "RateSourceInfo"
+      },
+      "RateSourceResult": {
+        "properties": {
+          "exchange": {
+            "type": "string",
+            "title": "Exchange"
+          },
+          "pair": {
+            "type": "string",
+            "title": "Pair"
+          },
+          "rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rate"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "exchange",
+          "pair",
+          "rate",
+          "age",
+          "error"
+        ],
+        "title": "RateSourceResult"
+      },
+      "RateStepResult": {
+        "properties": {
+          "rule": {
+            "type": "string",
+            "title": "Rule"
+          },
+          "rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rate"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "used": {
+            "type": "boolean",
+            "title": "Used"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rule",
+          "rate",
+          "age",
+          "error",
+          "used"
+        ],
+        "title": "RateStepResult"
       },
       "RatesResponse": {
         "properties": {
@@ -12893,52 +13619,6 @@
           "password"
         ],
         "title": "ResetPasswordFinalize"
-      },
-      "SSHSettings": {
-        "properties": {
-          "host": {
-            "type": "string",
-            "title": "Host",
-            "default": ""
-          },
-          "port": {
-            "type": "integer",
-            "title": "Port",
-            "default": 22
-          },
-          "username": {
-            "type": "string",
-            "title": "Username",
-            "default": ""
-          },
-          "password": {
-            "type": "string",
-            "title": "Password",
-            "default": ""
-          },
-          "key_file": {
-            "type": "string",
-            "title": "Key File",
-            "default": ""
-          },
-          "key_file_password": {
-            "type": "string",
-            "title": "Key File Password",
-            "default": ""
-          },
-          "authorized_keys_file": {
-            "type": "string",
-            "title": "Authorized Keys File",
-            "default": ""
-          },
-          "bash_profile_script": {
-            "type": "string",
-            "title": "Bash Profile Script",
-            "default": ""
-          }
-        },
-        "type": "object",
-        "title": "SSHSettings"
       },
       "StoreCheckoutSettings": {
         "properties": {
@@ -13265,6 +13945,31 @@
           "code"
         ],
         "title": "VerifyTOTP"
+      },
+      "WalletsBalance": {
+        "properties": {
+          "balance": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency"
+          },
+          "missing_rates": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Rates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "balance",
+          "currency",
+          "missing_rates"
+        ],
+        "title": "WalletsBalance"
       }
     },
     "securitySchemes": {

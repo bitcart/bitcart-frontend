@@ -12,12 +12,20 @@ import type { RequestHandlerOptions } from "msw"
 import type {
   BalanceResponse,
   DisplayWallet,
-  Money,
   OffsetPaginationDisplayWallet,
+  WalletsBalance,
 } from "../../../schemas/generated"
 
-export const getWalletsGetBalancesResponseMock = (): Money =>
-  faker.string.alpha({ length: { min: 10, max: 20 } })
+export const getWalletsGetBalancesResponseMock = (
+  overrideResponse: Partial<Extract<WalletsBalance, object>> = {},
+): WalletsBalance => ({
+  balance: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  currency: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  missing_rates: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
+    () => faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ),
+  ...overrideResponse,
+})
 
 export const getWalletsListItemsResponseMock = (
   overrideResponse: Partial<Extract<OffsetPaginationDisplayWallet, object>> = {},
@@ -255,8 +263,10 @@ export const getWalletsGetWalletBalanceResponseMock = (
 
 export const getWalletsGetBalancesMockHandler = (
   overrideResponse?:
-    | Money
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<Money> | Money),
+    | WalletsBalance
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<WalletsBalance> | WalletsBalance),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
