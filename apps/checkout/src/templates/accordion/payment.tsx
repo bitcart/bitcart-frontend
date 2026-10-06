@@ -1,6 +1,6 @@
 import { Button } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import {
   CheckCircle2Icon,
   ChevronDownIcon,
@@ -123,6 +123,7 @@ const SectionBody = ({ isOpen, children }: { isOpen: boolean; children: React.Re
 }
 
 export const AccordionPayment = () => {
+  const { t } = useLingui()
   const { invoice, methods, payment, selectMethod, store } = useCheckout("payment")
   const countdown = useCheckoutCountdown()
 

@@ -8,7 +8,17 @@
     "buildInputs": ["default", "!{projectRoot}/e2e/**", "!{projectRoot}/playwright.config.ts"],
     "sharedGlobals": ["{workspaceRoot}/.env", { "env": "BITCART_ENV" }],
     "oxlintInputs": ["default", "{workspaceRoot}/oxlint.config.ts"],
-    "packageBuildInputs": ["{projectRoot}/**/*"]
+    "packageBuildInputs": ["{projectRoot}/**/*"],
+
+    "appCatalogs": [
+      {
+        "runtime": "cat apps/*/src/common/i18n/_generated/locales/*.po apps/*/src/templates/*/locales/*.po templates/*/src/common/i18n/_generated/locales/*.po 2>/dev/null | cksum"
+      }
+    ],
+
+    "packageCatalogs": [
+      { "runtime": "cat packages/*/src/i18n/_generated/locales/*.po 2>/dev/null | cksum" }
+    ]
   },
   "targetDefaults": {
     "typecheck": {
@@ -67,7 +77,7 @@
 
     "i18n:extract-locales": {
       "dependsOn": ["^build"],
-      "inputs": ["buildInputs", "^default"],
+      "inputs": ["buildInputs", "^default", "appCatalogs", "packageCatalogs"],
       "outputs": ["{projectRoot}/src/common/i18n/_generated"],
       "cache": true
     },

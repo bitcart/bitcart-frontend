@@ -1,0 +1,14 @@
+{
+  "name": "@bitcart/form-kit",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "i18n:extract-locales": {
+      "outputs": ["{projectRoot}/src/i18n/_generated"]
+    },
+
+    "build": {
+      "dependsOn": ["i18n:extract-locales", "^build"],
+      "inputs": ["packageBuildInputs", "^packageBuildInputs", "packageCatalogs"]
+    }
+  }
+}

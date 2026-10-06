@@ -1,6 +1,5 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/i18n"
 import { i18n, type Messages } from "@lingui/core"
-import { t } from "@lingui/core/macro"
 import { I18nProvider, useLingui } from "@lingui/react"
 import { act, fireEvent, render, screen } from "@testing-library/react"
 import { Suspense, type ComponentProps } from "react"
@@ -166,7 +165,7 @@ describe("CheckoutView state", () => {
 })
 
 describe("CheckoutView translations", () => {
-  const TranslatedPayment = () => <p>{t({ id: "test.pay", message: "Pay now" })}</p>
+  const TranslatedPayment = () => <p>{useLingui()._({ id: "test.pay", message: "Pay now" })}</p>
 
   const translatedRegistry = (catalogs: Record<string, () => Promise<{ messages: Messages }>>) =>
     createTemplateRegistry(

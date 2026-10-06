@@ -1,6 +1,5 @@
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { AlertCircle, Home, Lock, RefreshCw, ShieldAlert } from "lucide-react"
-import { useMemo } from "react"
 
 import type { ErrorDisplayAttributes } from "@/types"
 import { cn } from "@/utils"
@@ -22,7 +21,9 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
   children,
   ...props
 }) => {
-  const { title, icon, message }: ErrorDisplayAttributes = useMemo(() => {
+  const { t } = useLingui()
+
+  const getDisplayAttributes = (): ErrorDisplayAttributes => {
     switch (statusCode) {
       case 401: {
         return {
@@ -67,7 +68,9 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
         }
       }
     }
-  }, [props.icon, props.message, statusCode])
+  }
+
+  const { title, icon, message } = getDisplayAttributes()
 
   return (
     <div className={cn("bg-background flex min-h-screen items-center justify-center", className)}>

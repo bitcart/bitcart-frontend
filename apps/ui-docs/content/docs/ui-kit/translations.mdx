@@ -1,0 +1,31 @@
+---
+title: Translations
+---
+
+The UI Kit ships its own translations: a compiled [Lingui](https://lingui.dev) catalog for every
+supported locale, exported from `@bitcart/ui-kit/i18n`. The application owns the `I18nProvider`
+and the active locale, so it merges the UI Kit's catalog into its own whenever it loads a locale.
+Without that step, UI Kit components render their English source messages.
+
+## Loading the catalog
+
+`loadUiKitMessages` resolves the UI Kit's catalog for a locale. Pass the application's own loader
+last: on a message both catalogs translate, the application's translation wins.
+
+```ts
+import { combineLocaleLoaders, createLocaleLoader } from "@bitcart/core/i18n"
+import { loadUiKitMessages } from "@bitcart/ui-kit/i18n"
+
+export const loadLocale = combineLocaleLoaders(
+  loadUiKitMessages,
+  createLocaleLoader(import.meta.glob("./locales/*.po")),
+)
+```
+
+An application that bundles its source-locale catalog statically, instead of loading it on
+demand, merges `UI_KIT_SOURCE_LOCALE_MESSAGES` the same way.
+
+## Translating
+
+The UI Kit's messages are extracted and translated once, in the UI Kit itself, rather than by every
+application using it. Applications never include the UI Kit's sources in their Lingui config.

@@ -1,7 +1,7 @@
 import { BitcartLogoIcon } from "@bitcart/ui-kit/icons"
 import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
-import { i18n } from "@lingui/core"
-import { t } from "@lingui/core/macro"
+import type { I18n } from "@lingui/core"
+import { msg } from "@lingui/core/macro"
 import { GithubLogoIcon } from "@phosphor-icons/react/dist/csr/GithubLogo"
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/csr/InstagramLogo"
 import { LinkedinLogoIcon } from "@phosphor-icons/react/dist/csr/LinkedinLogo"
@@ -10,7 +10,7 @@ import { RedditLogoIcon } from "@phosphor-icons/react/dist/csr/RedditLogo"
 import { APP_LOCALE_IDS } from "@/app.config"
 import { BRAND_UMBRELLA_NAME, PROJECT_CANONICAL_NAME } from "@/common/constants"
 
-export const getLayoutConfig = defineGetLayoutConfig(() => ({
+export const getLayoutConfig = defineGetLayoutConfig((i18n: I18n) => ({
   i18n: {
     activeLocale: i18n.locale,
     availableLocales: APP_LOCALE_IDS,
@@ -26,7 +26,9 @@ export const getLayoutConfig = defineGetLayoutConfig(() => ({
     canonicalName: PROJECT_CANONICAL_NAME,
     copyrightSinceYear: 2018,
 
-    description: t`Discover businesses that accept cryptocurrency payments through Bitcart. Find merchants, restaurants, and services that support crypto transactions.`,
+    description: i18n.t(
+      msg`Discover businesses that accept cryptocurrency payments through Bitcart. Find merchants, restaurants, and services that support crypto transactions.`,
+    ),
   },
 
   navigation: {
@@ -35,14 +37,14 @@ export const getLayoutConfig = defineGetLayoutConfig(() => ({
     directory: {
       labeledLinks: [
         {
-          groupTitle: t`Navigation`,
+          groupTitle: i18n.t(msg`Navigation`),
 
           items: [
-            { label: t`Directory`, href: "/" },
-            { label: t`Submit Entry`, href: "/submit" },
+            { label: i18n.t(msg`Directory`), href: "/" },
+            { label: i18n.t(msg`Submit Entry`), href: "/submit" },
 
             {
-              label: `${t`About`} ${BRAND_UMBRELLA_NAME}`,
+              label: `${i18n.t(msg`About`)} ${BRAND_UMBRELLA_NAME}`,
               href: "https://bitcart.ai",
               isExternal: true,
             },
@@ -50,30 +52,34 @@ export const getLayoutConfig = defineGetLayoutConfig(() => ({
         },
 
         {
-          groupTitle: t`Resources`,
+          groupTitle: i18n.t(msg`Resources`),
           footerOnly: true,
 
           items: [
             {
-              label: `${t`About`} ${BRAND_UMBRELLA_NAME}`,
+              label: `${i18n.t(msg`About`)} ${BRAND_UMBRELLA_NAME}`,
               href: "https://bitcart.ai",
               isExternal: true,
             },
 
-            { label: t`Documentation`, href: "https://docs.bitcart.ai", isExternal: true },
+            {
+              label: i18n.t(msg`Documentation`),
+              href: "https://docs.bitcart.ai",
+              isExternal: true,
+            },
           ],
         },
       ],
 
       iconLinks: [
         {
-          groupTitle: t`Project links`,
+          groupTitle: i18n.t(msg`Project links`),
           menuOnly: true,
 
           items: [
             {
               icon: GithubLogoIcon,
-              hint: t`Visit our GitHub repository`,
+              hint: i18n.t(msg`Visit our GitHub repository`),
               href: "https://github.com/bitcart/bitcart-directory",
               isExternal: true,
             },
@@ -81,7 +87,7 @@ export const getLayoutConfig = defineGetLayoutConfig(() => ({
         },
 
         {
-          groupTitle: t`Social links`,
+          groupTitle: i18n.t(msg`Social links`),
           footerOnly: true,
 
           items: [
@@ -105,7 +111,7 @@ export const getLayoutConfig = defineGetLayoutConfig(() => ({
             },
             {
               icon: RedditLogoIcon,
-              hint: t`Join our Reddit community`,
+              hint: i18n.t(msg`Join our Reddit community`),
               href: "https://www.reddit.com/r/Bitcart",
               isExternal: true,
             },

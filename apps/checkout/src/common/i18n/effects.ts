@@ -1,11 +1,14 @@
 import {
   SOURCE_LOCALE_ID,
+  combineLocaleLoaders,
   createLocaleLoader,
   type LazyLocaleModuleCatalog,
 } from "@bitcart/core/i18n"
+import { FORM_KIT_SOURCE_LOCALE_MESSAGES, loadFormKitMessages } from "@bitcart/form-kit/i18n"
+import { UI_KIT_SOURCE_LOCALE_MESSAGES, loadUiKitMessages } from "@bitcart/ui-kit/i18n"
 import { i18n } from "@lingui/core"
 
-import { messages as SOURCE_LOCALE_MESSAGES } from "./_generated/locales/en.po"
+import { messages as APP_SOURCE_LOCALE_MESSAGES } from "./_generated/locales/en.po"
 import { createLocaleActivation } from "./activation"
 
 const AVAILABLE_LOCALE_MODULES = import.meta.glob([
@@ -15,7 +18,18 @@ const AVAILABLE_LOCALE_MODULES = import.meta.glob([
   "!./_generated/locales/en.po",
 ]) as LazyLocaleModuleCatalog
 
-const loadLocale = createLocaleLoader(AVAILABLE_LOCALE_MODULES)
+//* The app's own catalog comes last: its translations override the packages' ones.
+const SOURCE_LOCALE_MESSAGES = {
+  ...UI_KIT_SOURCE_LOCALE_MESSAGES,
+  ...FORM_KIT_SOURCE_LOCALE_MESSAGES,
+  ...APP_SOURCE_LOCALE_MESSAGES,
+}
+
+const loadLocale = combineLocaleLoaders(
+  loadUiKitMessages,
+  loadFormKitMessages,
+  createLocaleLoader(AVAILABLE_LOCALE_MODULES),
+)
 
 const localeActivation = createLocaleActivation({
   i18n,

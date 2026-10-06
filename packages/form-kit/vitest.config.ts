@@ -1,6 +1,6 @@
-import { SOURCE_LOCALE_ID } from "@bitcart/core/i18n"
-import { makeConfig } from "@lingui/conf"
-import rolldownBabel from "@rolldown/plugin-babel"
+import { linguiMacrosPlugin } from "@bitcart/configs/supplementary/lingui-macros"
+import { getConfig } from "@lingui/conf"
+import react from "@vitejs/plugin-react"
 import { defineConfig } from "vitest/config"
 
 export default defineConfig({
@@ -8,18 +8,11 @@ export default defineConfig({
     tsconfigPaths: true,
   },
 
-  //* The ui-kit components this package wraps ship built output that carries `@lingui/core/macro`
-  //* imports, which resolve to a `babel-plugin-macros` shim unless Babel rewrites them first. The
-  //* plugin refuses to run without a config, so it gets a throwaway one.
+  //* Compiled as the apps compile this package. Lingui macros must expand first: React Compiler also
+  //* runs in Vite's "pre" stage and would otherwise hoist JSX out of `<Trans>`.
   plugins: [
-    rolldownBabel({
-      plugins: [
-        [
-          "@lingui/babel-plugin-lingui-macro",
-          { linguiConfig: makeConfig({ locales: [SOURCE_LOCALE_ID] }, { skipValidation: true }) },
-        ],
-      ],
-    }),
+    { ...linguiMacrosPlugin(getConfig({ cwd: import.meta.dirname })), enforce: "pre" },
+    react({ compiler: true }),
   ],
 
   test: {

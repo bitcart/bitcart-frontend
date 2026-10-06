@@ -1,6 +1,5 @@
-import { SOURCE_LOCALE_ID } from "@bitcart/core/i18n"
-import { makeConfig } from "@lingui/conf"
-import rolldownBabel from "@rolldown/plugin-babel"
+import { lingui } from "@lingui/vite-plugin"
+import viteReact from "@vitejs/plugin-react"
 import { defineConfig } from "vitest/config"
 
 export default defineConfig({
@@ -8,28 +7,24 @@ export default defineConfig({
     tsconfigPaths: true,
   },
 
-  //* Both the checkout sources and the built ui-kit output carry `@lingui/core/macro` imports, which
-  //* resolve to a `babel-plugin-macros` shim unless Babel rewrites them first. The plugin refuses
-  //* to run without a config, so it gets a throwaway one.
+  //* Compiles Lingui macros and React Compiler as the app does, macros first. Vitest runs from the
+  //* workspace root, so the Lingui config is looked up from here.
   plugins: [
-    //* Resolves `.po` imports to empty catalogs: only the Lingui Vite plugin compiles them, and
-    //* they are generated. Macros keep their source messages under test.
+    //* Resolves `.po` imports to empty catalogs: they are generated and gitignored, so tests can't
+    //* rely on them existing. Macros keep their source messages under test.
     {
       name: "empty-lingui-catalogs",
       enforce: "pre",
-      resolveId: (source) => (source.endsWith(".po") ? `\0empty-catalog:${source}` : null),
+
+      //! The id must not end in `.po`, or the Lingui plugin below tries to compile it from disk.
+      resolveId: (source) =>
+        source.endsWith(".po") ? `\0empty-catalog:${source.slice(0, -".po".length)}` : null,
 
       load: (id) => (id.startsWith("\0empty-catalog:") ? "export const messages = {}" : null),
     },
 
-    rolldownBabel({
-      plugins: [
-        [
-          "@lingui/babel-plugin-lingui-macro",
-          { linguiConfig: makeConfig({ locales: [SOURCE_LOCALE_ID] }, { skipValidation: true }) },
-        ],
-      ],
-    }),
+    lingui({ cwd: import.meta.dirname, macroTransform: true }),
+    viteReact({ compiler: true }),
   ],
 
   test: {

@@ -1,11 +1,12 @@
 import { CHECKOUT_OPEN_WALLET_TESTID } from "@bitcart/qa"
 import { Button } from "@bitcart/ui-kit/components"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { WalletIcon } from "lucide-react"
 
 import { useCheckout } from "../hooks"
 
 export const WalletButton = ({ className }: { className?: string }) => {
+  const { t } = useLingui()
   const { payment } = useCheckout("payment")
 
   if (!payment.paymentUrl) {

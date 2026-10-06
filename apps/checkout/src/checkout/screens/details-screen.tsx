@@ -1,5 +1,5 @@
 import { FieldError } from "@bitcart/ui-kit/components"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 
 import {
   CheckoutCard,
@@ -10,6 +10,7 @@ import {
 } from ".."
 
 export const CheckoutCustomerDetailsScreen = () => {
+  const { t } = useLingui()
   const { invoice, store } = useCheckout("details")
   const { form, fields, handleSubmit, submitError } = useCustomerDetailsForm()
 

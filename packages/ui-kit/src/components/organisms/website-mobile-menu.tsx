@@ -4,7 +4,7 @@ import {
   MOBILE_MENU_TOGGLE_TESTID,
   UI_THEME_MOBILE_TOGGLE_TESTID,
 } from "@bitcart/qa"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { Loader, Menu } from "lucide-react"
 import React, { useCallback, useMemo, useRef, useState } from "react"
 import { isEmptyish } from "remeda"
@@ -40,6 +40,8 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
   triggerRender = DEFAULT_TRIGGER_RENDER,
   classNames,
 }) => {
+  const { t } = useLingui()
+
   const {
     Link,
     currentRoute,

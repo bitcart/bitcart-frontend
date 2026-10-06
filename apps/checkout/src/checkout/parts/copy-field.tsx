@@ -1,6 +1,6 @@
 import { FieldError, Input } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { useClipboard } from "@mantine/hooks"
 import { CopyIcon } from "lucide-react"
 
@@ -12,6 +12,7 @@ export type CopyFieldProps = {
 }
 
 export const CopyField = ({ label, value, className, testId }: CopyFieldProps) => {
+  const { t } = useLingui()
   const { copy, copied, error } = useClipboard()
 
   return (

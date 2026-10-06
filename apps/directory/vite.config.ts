@@ -2,10 +2,9 @@ import process from "process"
 
 import { reactViteCodeSplittingGroups } from "@bitcart/configs/by-view-layer/react-vite"
 import { vikeViteDedupedPackages } from "@bitcart/configs/supplementary/vike-vite"
-import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin"
+import { lingui } from "@lingui/vite-plugin"
 import vikeSitemap from "@qalisa/vike-plugin-sitemap"
 import type { SitemapEntry } from "@qalisa/vike-plugin-sitemap/types"
-import babel from "@rolldown/plugin-babel"
 import react from "@vitejs/plugin-react"
 import vike from "vike/plugin"
 import { defineConfig } from "vite"
@@ -32,13 +31,10 @@ export default defineConfig({
   },
 
   plugins: [
-    react(),
-    lingui(),
-
-    babel({
-      presets: [linguiTransformerBabelPreset()],
-      plugins: [/*"babel-plugin-react-compiler"*/],
-    }),
+    //! Both run in Vite's "pre" stage in this order: Lingui macros must expand before React
+    //! Compiler hoists JSX out of `<Trans>`, or the message ids stop matching the catalogs.
+    lingui({ macroTransform: true }),
+    react({ compiler: true }),
 
     vike(),
 

@@ -15,6 +15,7 @@
     "workspace": "pnpm -w",
     "packages": "pnpm --filter './packages/*'",
     "api-sdk": "pnpm -C packages/api-sdk",
+    "configs": "pnpm -C packages/configs",
     "core": "pnpm -C packages/core",
     "form-kit": "pnpm -C packages/form-kit",
     "hooks": "pnpm -C packages/hooks",

@@ -296,25 +296,25 @@ preview *nx-args:
 ## INTERNATIONALIZATION AND LOCALIZATION
 
 [doc("
-Extract i18n catalogs for a specific workspace member or a group of workspace members.
-If no scope is specified, all workspace applications are targeted.
+Extract i18n catalogs for specific workspace members or groups of workspace members.
+If no scope is specified, all workspace applications and packages are targeted.
 Translation is not performed.
 ")]
 [env("BITCART_ENV", "production")]
 [group("Internationalization and localization")]
-locales-extract +scope="apps":
-    pnpm {{ scope }} i18n:extract-locales
+locales-extract +scopes="apps packages":
+    for scope in {{ scopes }}; do pnpm "$scope" i18n:extract-locales || exit 1; done
     echo "🌐 Locales extracted without pseudo locale ✅"
 
 [doc("
-Extract i18n catalogs for a specific workspace member or a group of workspace members with pseudo locale included.
-If no scope is specified, all workspace applications are targeted.
+Extract i18n catalogs for specific workspace members or groups of workspace members with pseudo locale included.
+If no scope is specified, all workspace applications and packages are targeted.
 Translation is not performed.
 ")]
 [env("BITCART_ENV", "development")]
 [group("Internationalization and localization")]
-locales-extract-dev +scope="apps":
-    pnpm {{ scope }} i18n:extract-locales
+locales-extract-dev +scopes="apps packages":
+    for scope in {{ scopes }}; do pnpm "$scope" i18n:extract-locales || exit 1; done
     echo "🌐 Locales extracted with pseudo locale included ✅"
 
 ## TESTING

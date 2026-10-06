@@ -1,5 +1,5 @@
 import { cn } from "@bitcart/ui-kit/utils"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { useState } from "react"
 
 import { CHECKOUT_METHOD_SELECTOR_TESTID, useCheckout, useMethodSearch } from "#/checkout"
@@ -7,6 +7,7 @@ import { CHECKOUT_METHOD_SELECTOR_TESTID, useCheckout, useMethodSearch } from "#
 import { Palette } from "./palette"
 
 export const SpotlightSelect = () => {
+  const { t } = useLingui()
   const { selectMethod, cancelChange } = useCheckout("select")
   const [query, setQuery] = useState("")
   const results = useMethodSearch(query)

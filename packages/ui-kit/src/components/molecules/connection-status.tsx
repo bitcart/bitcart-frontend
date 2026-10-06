@@ -1,5 +1,5 @@
 import type { SocketConnectionHandle } from "@bitcart/core/types"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { Loader2Icon, RefreshCwIcon, WifiOffIcon } from "lucide-react"
 import type React from "react"
 
@@ -17,31 +17,35 @@ const SocketConnectionStatusBannerContent: React.FC<SocketConnectionStatusBanner
   icon,
   message,
   onRetry,
-}) => (
-  <div
-    role="status"
-    className={cn(`
-      gap-3 px-5 py-3 border-border bg-muted/40 text-muted-foreground text-xs flex flex-wrap
-      items-center justify-between border-b
-    `)}
-  >
-    <div className="gap-4 flex flex-1 flex-col">
-      {(Array.isArray(message) ? message : [message]).map((line, index) => (
-        <div key={index} className="gap-2 flex items-start">
-          {index === 0 && icon}
-          <span>{line}</span>
-        </div>
-      ))}
-    </div>
+}) => {
+  const { t } = useLingui()
 
-    {onRetry && (
-      <Button variant="outline" size="sm" onClick={onRetry}>
-        <RefreshCwIcon />
-        {t`Reconnect`}
-      </Button>
-    )}
-  </div>
-)
+  return (
+    <div
+      role="status"
+      className={cn(`
+        gap-3 px-5 py-3 border-border bg-muted/40 text-muted-foreground text-xs flex flex-wrap
+        items-center justify-between border-b
+      `)}
+    >
+      <div className="gap-4 flex flex-1 flex-col">
+        {(Array.isArray(message) ? message : [message]).map((line, index) => (
+          <div key={index} className="gap-2 flex items-start">
+            {index === 0 && icon}
+            <span>{line}</span>
+          </div>
+        ))}
+      </div>
+
+      {onRetry && (
+        <Button variant="outline" size="sm" onClick={onRetry}>
+          <RefreshCwIcon />
+          {t`Reconnect`}
+        </Button>
+      )}
+    </div>
+  )
+}
 
 export type SocketConnectionStatusBannerProps = {
   connectionHandle: SocketConnectionHandle
@@ -56,6 +60,8 @@ export const SocketConnectionStatusBanner: React.FC<SocketConnectionStatusBanner
     reconnect,
   },
 }) => {
+  const { t } = useLingui()
+
   if (isConnected) {
     return null
   } else if (isReconnecting) {

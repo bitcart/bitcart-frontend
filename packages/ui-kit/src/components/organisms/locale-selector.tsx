@@ -1,6 +1,6 @@
 import { getLocaleDisplayName, type LocaleId, type PseudoLocaleId } from "@bitcart/core/i18n"
 import { LOCALE_SELECTOR_TRIGGER_TESTID } from "@bitcart/qa"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { Globe } from "lucide-react"
 import { useCallback } from "react"
 
@@ -33,6 +33,8 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocal
   classNames,
   abbreviateOnSmallScreens = false,
 }: LocaleSelectorProps<TSupportedLocaleId>) => {
+  const { t } = useLingui()
+
   const createHandleSelect = useCallback(
     (localeId: TSupportedLocaleId) => () => handleSelect(localeId),
     [handleSelect],

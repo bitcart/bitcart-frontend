@@ -8,7 +8,7 @@ import {
   type CommandInputProps,
 } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { ClockIcon } from "lucide-react"
 import { useEffect, useRef, type ReactNode } from "react"
 
@@ -55,6 +55,7 @@ export const Palette = ({
   emptyMessage,
   children,
 }: PaletteProps) => {
+  const { t } = useLingui()
   const countdown = useCheckoutCountdown()
   const inputRef = useRef<HTMLInputElement>(null)
   const isListShown = options.length > 0 || Boolean(emptyMessage)

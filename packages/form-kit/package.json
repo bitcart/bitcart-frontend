@@ -11,6 +11,10 @@
       "import": "./dist/hooks/index.js",
       "types": "./dist/hooks/index.d.ts"
     },
+    "./i18n": {
+      "import": "./dist/i18n/index.js",
+      "types": "./dist/i18n/index.d.ts"
+    },
     "./validation": {
       "import": "./dist/validation/index.js",
       "types": "./dist/validation/index.d.ts"
@@ -22,6 +26,7 @@
     "lint": "oxlint . --fix",
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.ts | dot -T svg -o graphviz.svg",
     "depcruise:deps": "depcruise dist --output-type err-long",
+    "i18n:extract-locales": "lingui extract --clean",
     "build": "tsdown"
   },
   "dependencies": {
@@ -34,17 +39,19 @@
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
-    "@lingui/babel-plugin-lingui-macro": "catalog:devDependencies",
+    "@lingui/cli": "catalog:devDependencies",
     "@lingui/conf": "catalog:devDependencies",
-    "@rolldown/plugin-babel": "catalog:devDependencies",
+    "@lingui/react": "catalog:dependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@testing-library/dom": "catalog:devDependencies",
     "@testing-library/react": "catalog:devDependencies",
     "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
+    "@vitejs/plugin-react": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
     "jsdom": "catalog:devDependencies",
+    "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",

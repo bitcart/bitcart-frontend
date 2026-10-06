@@ -3,8 +3,9 @@ import type { WithChildren } from "@bitcart/ui-kit/types"
 import { useHandleLocaleChange, useI18nInitialization } from "@bitcart/vike-kit/i18n"
 import { Link, useClientRoute } from "@bitcart/vike-kit/navigation"
 import { createUseMatomoTracking } from "@bitcart/vike-kit/telemetry"
-import { i18n } from "@lingui/core"
-import { I18nProvider } from "@lingui/react"
+import { i18n as globalI18n } from "@lingui/core"
+import { I18nProvider, useLingui } from "@lingui/react"
+import { useMemo } from "react"
 import { useHydrated } from "vike-react/useHydrated"
 
 import { APP_LOCALE_IDS } from "@/app.config"
@@ -24,15 +25,17 @@ const useMatomoTracking = createUseMatomoTracking({
 })
 
 const PageShell: React.FC<WithChildren> = ({ children }) => {
+  const { i18n } = useLingui()
   const route = useClientRoute()
   const hydrated = useHydrated()
   const handleLocaleChange = useHandleLocaleChange({ supportedLocaleIds: APP_LOCALE_IDS })
+  const layoutConfig = useMemo(() => getLayoutConfig(i18n), [i18n])
 
   return (
     <WebsiteLayout
       LinkComponent={Link}
       currentRoute={route}
-      config={getLayoutConfig()}
+      config={layoutConfig}
       isHydrated={hydrated}
       localeChangeHandler={handleLocaleChange}
     >
@@ -46,7 +49,7 @@ const Layout: React.FC<WithChildren> = ({ children }) => {
   useMatomoTracking()
 
   return (
-    <I18nProvider i18n={i18n}>
+    <I18nProvider i18n={globalI18n}>
       <PageShell>{children}</PageShell>
     </I18nProvider>
   )

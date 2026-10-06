@@ -32,3 +32,10 @@ export const createLocaleLoader = (
     return messages
   }
 }
+
+export const combineLocaleLoaders =
+  (
+    ...localeLoaders: ((locale: string) => Promise<LocaleMessages>)[]
+  ): ((locale: string) => Promise<LocaleMessages>) =>
+  async (locale) =>
+    Object.assign({}, ...(await Promise.all(localeLoaders.map((loadLocale) => loadLocale(locale)))))

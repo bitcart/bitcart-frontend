@@ -1,4 +1,4 @@
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { SearchIcon, X } from "lucide-react"
 import { useCallback } from "react"
 
@@ -24,6 +24,8 @@ export const SearchField: React.FC<SearchFieldProps> = ({
   placeholder,
   className,
 }) => {
+  const { t } = useLingui()
+
   const handleChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLInputElement>) => setValue(target.value),
     [setValue],

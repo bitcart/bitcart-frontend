@@ -1,5 +1,6 @@
 import { SOURCE_LOCALE_ID } from "@bitcart/core/i18n"
 import { i18n } from "@lingui/core"
+import { I18nProvider } from "@lingui/react"
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react"
 import { afterEach, beforeAll, describe, expect, test, vi } from "vitest"
 import * as z from "zod"
@@ -47,6 +48,13 @@ const ContactForm = ({
   )
 }
 
+const renderContactForm = (props: React.ComponentProps<typeof ContactForm>) =>
+  render(
+    <I18nProvider i18n={i18n}>
+      <ContactForm {...props} />
+    </I18nProvider>,
+  )
+
 const fill = (label: string, value: string) =>
   fireEvent.change(screen.getByRole("textbox", { name: label }), { target: { value } })
 
@@ -67,7 +75,7 @@ afterEach(() => {
 describe("SubmitButton", () => {
   test("submits an untouched form so validation can flag its required fields", async () => {
     const onSubmit = vi.fn(() => Promise.resolve())
-    render(<ContactForm onSubmit={onSubmit} />)
+    renderContactForm({ onSubmit })
 
     await submit()
 
@@ -77,7 +85,7 @@ describe("SubmitButton", () => {
   })
 
   test("moves focus to the first invalid field after a rejected submit", async () => {
-    render(<ContactForm onSubmit={() => Promise.resolve()} />)
+    renderContactForm({ onSubmit: () => Promise.resolve() })
 
     await submit()
 
@@ -91,7 +99,7 @@ describe("SubmitButton", () => {
 
   test("moves focus when a form invalid on change rejects the submit up front", async () => {
     const onSubmit = vi.fn(() => Promise.resolve())
-    render(<ContactForm onSubmit={onSubmit} validatesOnChange />)
+    renderContactForm({ onSubmit, validatesOnChange: true })
 
     fill("Name", "Alice")
     await submit()
@@ -102,7 +110,7 @@ describe("SubmitButton", () => {
 
   test("leaves focus alone when the form submits", async () => {
     const onSubmit = vi.fn(() => Promise.resolve())
-    render(<ContactForm onSubmit={onSubmit} />)
+    renderContactForm({ onSubmit })
 
     fill("Name", "Alice")
     fill("City", "Berlin")
@@ -115,7 +123,7 @@ describe("SubmitButton", () => {
 
   test("blocks resubmission and shows progress while the form submits", async () => {
     const submission = Promise.withResolvers<void>()
-    render(<ContactForm onSubmit={() => submission.promise} />)
+    renderContactForm({ onSubmit: () => submission.promise })
 
     fill("Name", "Alice")
     fill("City", "Berlin")

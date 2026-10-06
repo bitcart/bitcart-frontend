@@ -1,7 +1,7 @@
 //* Originally ported from: https://coss.com/ui
 
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { XIcon } from "lucide-react"
 import { useContext } from "react"
 
@@ -30,6 +30,7 @@ export const DrawerPopup: React.FC<DrawerPopupProps> = ({
   variant = "default",
   ...props
 }) => {
+  const { t } = useLingui()
   const { position: contextPosition } = useContext(DrawerContext)
   const position = positionProp ?? contextPosition
 

@@ -1,13 +1,10 @@
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 
 import { LayoutContext, type LayoutContextValue } from "@/contexts/layout"
 import type { LayoutConfig, NavigationCatalog } from "@/types"
 import { extractNavigationCatalog, getLayoutRegionNavigationDirectory } from "@/utils"
 
-export type LayoutContextProviderProps = Omit<
-  LayoutContextValue,
-  "Link" | "currentRoute" | "isHydrated" | "layoutConfig" | "primaryNavCatalog"
-> & {
+export type LayoutContextProviderProps = {
   /**
    * The link component used by some of the UI Kit components internally to render
    * navigable links without depending on any particular routing library on their own.
@@ -38,7 +35,8 @@ export type LayoutContextProviderProps = Omit<
    * The application's declarative layout configuration: brand identity,
    * basic localization metadata, and the navigation link groups.
    *
-   * **Must be the result of `getLayoutConfig()`.**
+   * **Must be the result of `getLayoutConfig()`**, memoized on the factory's arguments, e.g.
+   * `useMemo(() => getLayoutConfig(i18n), [i18n])`: every new object rerenders the layout.
    */
   layoutConfig: LayoutConfig
 
@@ -47,13 +45,11 @@ export type LayoutContextProviderProps = Omit<
 
 export const LayoutContextProvider: React.FC<LayoutContextProviderProps> = ({
   LinkComponent,
+  currentRoute,
   isHydrated = true,
-  layoutConfig: nonMemoizedLayoutConfig,
+  layoutConfig,
   children,
-  ...props
 }) => {
-  const [layoutConfig, setMemoizedConfig] = useState(nonMemoizedLayoutConfig)
-
   /**
    * Links from all primary navigation groups merged into a single array
    * and ordered by global priority.
@@ -69,8 +65,8 @@ export const LayoutContextProvider: React.FC<LayoutContextProviderProps> = ({
 
   const contextValue: LayoutContextValue = useMemo(
     () => ({
-      ...props,
       Link: LinkComponent,
+      currentRoute,
       isHydrated,
 
       layoutConfig: {
@@ -85,16 +81,8 @@ export const LayoutContextProvider: React.FC<LayoutContextProviderProps> = ({
       primaryNavCatalog,
     }),
 
-    [LinkComponent, isHydrated, layoutConfig, primaryNavCatalog, props],
+    [LinkComponent, currentRoute, isHydrated, layoutConfig, primaryNavCatalog],
   )
-
-  useEffect(() => {
-    //! Make sure to preserve this condition as it prevents rerender loops
-    if (layoutConfig.i18n.activeLocale !== nonMemoizedLayoutConfig.i18n.activeLocale) {
-      // oxlint-disable-next-line react-hooks-js/set-state-in-effect
-      setMemoizedConfig(nonMemoizedLayoutConfig)
-    }
-  }, [layoutConfig.i18n.activeLocale, nonMemoizedLayoutConfig])
 
   return <LayoutContext.Provider value={contextValue}>{children}</LayoutContext.Provider>
 }

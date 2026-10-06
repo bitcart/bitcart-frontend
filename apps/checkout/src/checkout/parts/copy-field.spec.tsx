@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, test, vi } from "vitest"
 
+import { CheckoutTestProviders } from "../testing"
 import { CopyField } from "./copy-field"
 
 describe("CopyField", () => {
@@ -8,7 +9,7 @@ describe("CopyField", () => {
     const writeText = vi.fn(() => Promise.resolve())
     Object.defineProperty(navigator, "clipboard", { value: { writeText }, configurable: true })
 
-    render(<CopyField label="Address" value="bc1qaddress" />)
+    render(<CopyField label="Address" value="bc1qaddress" />, { wrapper: CheckoutTestProviders })
 
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /Address/u }))
@@ -24,7 +25,7 @@ describe("CopyField", () => {
     const writeText = vi.fn(() => Promise.reject(new Error("denied")))
     Object.defineProperty(navigator, "clipboard", { value: { writeText }, configurable: true })
 
-    render(<CopyField label="Address" value={address} />)
+    render(<CopyField label="Address" value={address} />, { wrapper: CheckoutTestProviders })
 
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /Address/u }))

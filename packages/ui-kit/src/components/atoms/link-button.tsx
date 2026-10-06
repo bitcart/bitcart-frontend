@@ -4,6 +4,7 @@ import {
   type InternalHref,
   type MailtoHref,
 } from "@bitcart/core/navigation"
+import { useLingui } from "@lingui/react"
 import { type VariantProps } from "class-variance-authority"
 import { createElement } from "react"
 
@@ -37,6 +38,7 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
   ...props
 }) => {
   const { Link } = useLayoutContext()
+  const { i18n } = useLingui()
 
   const linkProps = {
     ...getDestinationTypeAwareLinkProps({ href, isOriginAware }),
@@ -44,7 +46,7 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
   }
 
   const a11yAwareLinkProps = isExternalLink
-    ? { href: href as HttpHref, a11yHint: getTargetBlankA11yHint() }
+    ? { href: href as HttpHref, a11yHint: getTargetBlankA11yHint(i18n) }
     : { href: href as InternalHref | MailtoHref }
 
   const disabledProps = disabled ? { "aria-disabled": true, tabIndex: -1 } : {}

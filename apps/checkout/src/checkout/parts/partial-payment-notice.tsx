@@ -1,10 +1,11 @@
 import { cn } from "@bitcart/ui-kit/utils"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { InfoIcon } from "lucide-react"
 
 import { useCheckout } from "../hooks"
 
 export const PartialPaymentNotice = ({ className }: { className?: string }) => {
+  const { t } = useLingui()
   const { payment } = useCheckout("payment")
 
   if (!payment.partial) {

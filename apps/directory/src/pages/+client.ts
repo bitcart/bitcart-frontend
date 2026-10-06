@@ -1,3 +1,4 @@
+import { applyZodL10n } from "@bitcart/form-kit/validation"
 import { configureMatomo } from "@bitcart/vike-kit/telemetry"
 
 import { IS_MATOMO_ENABLED } from "@/common/constants"
@@ -10,3 +11,6 @@ configureMatomo({
   siteId: env.BITCART_MATOMO_ID,
   actions: env.BITCART_MATOMO_ACTIONS,
 })
+
+//* Forms validate only in the browser, so the server never needs Zod's localized messages.
+applyZodL10n()

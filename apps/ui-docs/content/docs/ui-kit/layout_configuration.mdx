@@ -11,14 +11,16 @@ the brand and navigation settings and encapsulates the basic internationalizatio
 
 The UI Kit uses [Lingui](https://lingui.dev) for internationalization, and the layout config
 is expected to have translatable strings. This makes the active locale ID, along with every
-user-facing string, to be valid only for the duration of a single render. Building the config
-as a static object would result in capturing a frozen state only once, rendering the key parts
-of the layout irresponsive to locale changes.
+user-facing string, valid only for the locale active when the config is built. Building the
+config as a static object would capture that state only once, leaving the key parts of the
+layout unresponsive to locale changes.
 
-Lingui's `t` macro compiles to a lookup against a mutable global catalog, which makes expressions
-like `` t`Features` `` yield strings only for the locale active at the instant the call runs,
-and reading `i18n.locale` follows the same behavior. Wrapping the object in a function defers all
-of that to render time, making each call produce a config already resolved for the current locale.
+The config is therefore built by a factory that takes the `i18n` instance from `useLingui()`
+and translates every string through it with ``i18n.t(msg`…`)``. That instance changes on every
+locale switch and catalog load, so calling the factory with it, memoized on it, yields a config
+resolved for the current locale. Avoid the global `i18n` and the `t` macro from
+`@lingui/core/macro` here: they are hidden inputs, and React Compiler caches a call on its
+arguments, so a factory reading them would keep the first locale forever.
 
 ### Example
 
@@ -26,87 +28,81 @@ of that to render time, making each call produce a config already resolved for t
 // src/pages/layout.config.ts
 
 import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
-import { i18n } from "@lingui/core"
-import { t } from "@lingui/core/macro"
+import type { I18n } from "@lingui/core"
+import { msg } from "@lingui/core/macro"
 
 import { GenericCompanyLogoIcon, RepositoryIcon } from "./icons"
 
 const AVAILABLE_LOCALES = ["en", "de", "fr"]
 
-// 💡 `defineGetLayoutConfig` enforces lazy format and config schema at the definition site
-export const getLayoutConfig = defineGetLayoutConfig(() =>
-  // ⚠️ The returned object must not be a constant, otherwise
-  //    the consuming provider will not be able to track changes.
-  ({
-    i18n: {
-      // 💡 The consuming provider tracks this value, which can change between layout renders
-      activeLocale: i18n.locale,
+// 💡 `defineGetLayoutConfig` enforces the config schema at the definition site
+//    and keeps the factory's parameters.
+export const getLayoutConfig = defineGetLayoutConfig((i18n: I18n) => ({
+  i18n: {
+    activeLocale: i18n.locale,
+    availableLocales: AVAILABLE_LOCALES,
+  },
 
-      availableLocales: AVAILABLE_LOCALES,
+  brand: {
+    name: "Generic Company",
+    tagline: i18n.t(msg`Everything a small business needs`),
+    logoIcon: GenericCompanyLogoIcon,
+    logoImageSrc: "/logo.svg",
+  },
+
+  project: {
+    canonicalName: "Storefriend",
+    copyrightSinceYear: 2019,
+    description: i18n.t(msg`User-friendly storefront constructor`),
+  },
+
+  navigation: {
+    navBarDisplayCapacity: { md: 2, lg: 4, xl: 5, "2xl": 6, "3xl": 6 },
+
+    directory: {
+      labeledLinks: [
+        {
+          groupTitle: i18n.t(msg`Product`),
+
+          items: [
+            { label: i18n.t(msg`Features`), href: "/#features", globalPriority: 1 },
+            { label: i18n.t(msg`Pricing`), href: "/pricing", globalPriority: 2 },
+          ],
+        },
+
+        {
+          groupTitle: i18n.t(msg`Resources`),
+
+          items: [
+            {
+              label: i18n.t(msg`Documentation`),
+              shortLabel: i18n.t(msg`Docs`),
+              href: "https://docs.example.com",
+              isExternal: true,
+              globalPriority: 3,
+            },
+          ],
+        },
+      ],
+
+      iconLinks: [
+        {
+          groupTitle: i18n.t(msg`Project links`),
+          footerOnly: true,
+
+          items: [
+            {
+              icon: RepositoryIcon,
+              hint: i18n.t(msg`Browse the source code`),
+              href: "https://example.com/source",
+              isExternal: true,
+            },
+          ],
+        },
+      ],
     },
-
-    brand: {
-      name: "Generic Company",
-      tagline: t`Everything a small business needs`,
-      logoIcon: GenericCompanyLogoIcon,
-      logoImageSrc: "/logo.svg",
-      logoImageAltText: `Generic Company ${t`logo`}`,
-    },
-
-    project {
-      canonicalName: "Storefriend",
-      copyrightSinceYear: 2019,
-      description: t`User-friendly storefront constructor`,
-    },
-
-    navigation: {
-      navBarDisplayCapacity: { md: 2, lg: 4, xl: 5, "2xl": 6, "3xl": 6 },
-
-      directory: {
-        labeledLinks: [
-          {
-            groupTitle: t`Product`,
-
-            items: [
-              { label: t`Features`, href: "/#features", globalPriority: 1 },
-              { label: t`Pricing`, href: "/pricing", globalPriority: 2 },
-            ],
-          },
-
-          {
-            groupTitle: t`Resources`,
-
-            items: [
-              {
-                label: t`Documentation`,
-                shortLabel: t`Docs`,
-                href: "https://docs.example.com",
-                isExternal: true,
-                globalPriority: 3,
-              },
-            ],
-          },
-        ],
-
-        iconLinks: [
-          {
-            groupTitle: t`Project links`,
-            footerOnly: true,
-
-            items: [
-              {
-                icon: RepositoryIcon,
-                hint: t`Browse the source code`,
-                href: "https://example.com/source",
-                isExternal: true,
-              },
-            ],
-          },
-        ],
-      },
-    },
-  }),
-)
+  },
+}))
 ```
 
 ## Layout context
@@ -128,13 +124,19 @@ that renders UI Kit components:
 ```tsx
 import { Link, useClientRoute } from "@bitcart/vike-kit/navigation"
 import { LayoutContextProvider } from "@bitcart/ui-kit/providers"
+import { useLingui } from "@lingui/react"
+import { useMemo } from "react"
 import { useHydrated } from "vike-react/useHydrated"
 
 import { getLayoutConfig } from "./layout.config"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { i18n } = useLingui()
   const route = useClientRoute()
   const hydrated = useHydrated()
+
+  // 💡 Every new config object rerenders the layout: build it once per locale.
+  const layoutConfig = useMemo(() => getLayoutConfig(i18n), [i18n])
 
   return (
     // 💡 Provider's props have built-in documentation, which should be available
@@ -143,10 +145,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       LinkComponent={Link}
       currentRoute={route}
       isHydrated={hydrated}
-      // 💡 The state change deduplication is handled internally, making it safe
-      //    to call `getLayoutConfig` on every render: the updates are registered
-      //    only when the active locale changes.
-      layoutConfig={getLayoutConfig()}
+      layoutConfig={layoutConfig}
     >
       {children}
     </LayoutContextProvider>

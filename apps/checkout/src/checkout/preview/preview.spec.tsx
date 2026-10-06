@@ -1,5 +1,3 @@
-import { i18n } from "@lingui/core"
-import { I18nProvider } from "@lingui/react"
 import { act, fireEvent, render, screen } from "@testing-library/react"
 import { Suspense, type ComponentProps } from "react"
 import { describe, expect, test, vi } from "vitest"
@@ -31,13 +29,11 @@ const registry = createTemplateRegistry(
 )
 
 const preview = (props: Partial<ComponentProps<typeof CheckoutPreview>> = {}) => (
-  <I18nProvider i18n={i18n}>
-    <CheckoutTestProviders>
-      <Suspense fallback={<p>Loading</p>}>
-        <CheckoutPreview registry={registry} templateId="receipt" status="new" {...props} />
-      </Suspense>
-    </CheckoutTestProviders>
-  </I18nProvider>
+  <CheckoutTestProviders>
+    <Suspense fallback={<p>Loading</p>}>
+      <CheckoutPreview registry={registry} templateId="receipt" status="new" {...props} />
+    </Suspense>
+  </CheckoutTestProviders>
 )
 
 const renderPreview = async (props: Partial<ComponentProps<typeof CheckoutPreview>> = {}) => {

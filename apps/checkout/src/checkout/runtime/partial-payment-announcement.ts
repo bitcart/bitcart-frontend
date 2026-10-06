@@ -1,5 +1,5 @@
 import { toast } from "@bitcart/ui-kit/utils"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { useEffect, useRef } from "react"
 
 import { useCheckout } from "../hooks"
@@ -8,6 +8,7 @@ import { useCheckout } from "../hooks"
  * Announces each partial payment that arrives while the checkout is open.
  */
 export const usePartialPaymentAnnouncement = (): void => {
+  const { t } = useLingui()
   const model = useCheckout()
   const payment = model.phase === "payment" ? model.payment : null
   const paidAmount = payment?.partial?.paid ?? null

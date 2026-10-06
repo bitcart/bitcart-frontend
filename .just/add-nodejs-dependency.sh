@@ -20,7 +20,7 @@ if [ "$member" = "root" ]; then
   pkg_json="${WORKSPACE_ROOT}/package.json"
 else
   pkg_json=""
-  for dir in "${WORKSPACE_ROOT}/apps/${member}" "${WORKSPACE_ROOT}/packages/${member}"; do
+  for dir in "${WORKSPACE_ROOT}/apps/${member}" "${WORKSPACE_ROOT}/packages/${member}" "${WORKSPACE_ROOT}/templates/${member}"; do
     if [ -f "${dir}/package.json" ]; then
       pkg_json="${dir}/package.json"
       break

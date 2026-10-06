@@ -51,6 +51,7 @@ node_modules
 apps/*/src/common/i18n/_generated/
 apps/*/src/templates/*/locales/
 templates/*/src/common/i18n/_generated/
+packages/*/src/i18n/_generated/
 
 ## Generated issue diagrams
 scripts/output/

@@ -76,9 +76,9 @@ const config: KnipConfig = {
       project: ["src/**/*.ts"],
     },
 
-    "packages/form-kit": {
-      ignoreDependencies: ["@lingui/babel-plugin-lingui-macro"],
-    },
+    //* Read by the Lingui CLI and the package's tsdown config.
+    "packages/form-kit": { entry: ["lingui.config.ts"] },
+    "packages/ui-kit": { entry: ["lingui.config.ts"] },
 
     "templates/vike-app": appKnipConfig,
   },

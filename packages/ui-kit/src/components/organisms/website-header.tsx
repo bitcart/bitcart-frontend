@@ -1,5 +1,5 @@
 import { useIsClient } from "@bitcart/hooks"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { useMemo } from "react"
 
 import { useCssRuntimeFeatureSupport, useLayoutContext, useWindowScrollThreshold } from "@/hooks"
@@ -11,6 +11,8 @@ export type WebsiteHeaderProps = WithChildren & {
 }
 
 export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, children }) => {
+  const { t } = useLingui()
+
   const {
     Link,
 

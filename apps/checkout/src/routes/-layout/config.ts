@@ -1,11 +1,11 @@
 import { BitcartWordmarkIcon } from "@bitcart/ui-kit/icons"
 import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
-import { i18n } from "@lingui/core"
+import type { I18n } from "@lingui/core"
 
 import { APP_LOCALE_IDS } from "#/app.config"
 import { BRAND_UMBRELLA_NAME, PROJECT_CANONICAL_NAME } from "#/common/constants"
 
-export const getLayoutConfig = defineGetLayoutConfig(() => ({
+export const getLayoutConfig = defineGetLayoutConfig((i18n: I18n) => ({
   i18n: {
     activeLocale: i18n.locale,
     availableLocales: APP_LOCALE_IDS,

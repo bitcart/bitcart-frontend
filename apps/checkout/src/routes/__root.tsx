@@ -9,6 +9,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools"
 import type { QueryClient } from "@tanstack/react-query"
 import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
+import { useMemo } from "react"
 
 import { APP_POSIX_LOCALE_ID_MAP, getAppDocumentMetadata, SUPPORTED_LOCALE_IDS } from "#/app.config"
 import { BRAND_X_HANDLE, PRODUCTION_BASE_URL, PROJECT_CANONICAL_NAME } from "#/common/constants"
@@ -64,6 +65,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const { i18n } = useLingui()
   const currentRoute = useClientRoute()
   const isClient = useIsClient()
+  const layoutConfig = useMemo(() => getLayoutConfig(i18n), [i18n])
 
   useI18nInitialization()
 
@@ -85,7 +87,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             LinkComponent={Link}
             currentRoute={currentRoute}
             isHydrated={isClient}
-            layoutConfig={getLayoutConfig()}
+            layoutConfig={layoutConfig}
           >
             <LayoutContainer
               className={cn(`bg-muted/40 p-4 flex min-h-screen items-center justify-center`)}

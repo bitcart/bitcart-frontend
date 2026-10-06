@@ -1,6 +1,6 @@
 //* Originally ported from: https://ui.shadcn.com
 
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { type VariantProps } from "class-variance-authority"
 import { useMemo } from "react"
 
@@ -107,6 +107,8 @@ export const FieldLabel: React.FC<FieldLabelProps> = ({
   children,
   ...props
 }) => {
+  const { t } = useLingui()
+
   return (
     <Label
       data-slot="field-label"

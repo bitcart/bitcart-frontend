@@ -1,9 +1,10 @@
 import { Spinner } from "@bitcart/ui-kit/components"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 
 import { CheckoutCard, CheckoutFooter, ExtensionSlot, useCheckout } from ".."
 
 export const CheckoutConfirmingScreen = () => {
+  const { t } = useLingui()
   const { confirmations, invoice, store } = useCheckout("confirming")
 
   return (

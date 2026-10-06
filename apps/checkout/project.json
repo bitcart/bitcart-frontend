@@ -3,6 +3,13 @@
   "name": "@bitcart/checkout",
 
   "targets": {
+    "i18n:extract-locales": {
+      "outputs": [
+        "{projectRoot}/src/common/i18n/_generated",
+        "{projectRoot}/src/templates/*/locales"
+      ]
+    },
+
     "build:styles": {
       "dependsOn": ["^build"],
       "inputs": ["buildInputs", "^default"],
@@ -16,6 +23,8 @@
       "inputs": [
         "buildInputs",
         "^default",
+        "appCatalogs",
+        "packageCatalogs",
         { "runtime": "grep '^BITCART_' .env 2>/dev/null | sort" }
       ],
 

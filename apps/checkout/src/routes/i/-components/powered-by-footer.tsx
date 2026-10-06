@@ -1,9 +1,11 @@
 import { BitcartWordmarkIcon } from "@bitcart/ui-kit/icons"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 
 import { BRAND_UMBRELLA_NAME } from "#/common/constants"
 
 export const PoweredByFooter = () => {
+  const { t } = useLingui()
+
   return (
     <div className="py-4 gap-2 flex items-center justify-center">
       <span className="text-muted-foreground text-sm">{t`Powered by`}</span>

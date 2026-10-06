@@ -1,5 +1,4 @@
-import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin"
-import rolldownBabel from "@rolldown/plugin-babel"
+import { lingui } from "@lingui/vite-plugin"
 import { devtools } from "@tanstack/devtools-vite"
 import { tanstackStart } from "@tanstack/react-start/plugin/vite"
 import viteReact from "@vitejs/plugin-react"
@@ -36,12 +35,10 @@ export default defineConfig({
       },
     }),
 
-    viteReact(),
-    lingui(),
-
-    rolldownBabel({
-      presets: [linguiTransformerBabelPreset()],
-    }),
+    //! Both run in Vite's "pre" stage in this order: Lingui macros must expand before React
+    //! Compiler hoists JSX out of `<Trans>`, or the message ids stop matching the catalogs.
+    lingui({ macroTransform: true }),
+    viteReact({ compiler: true }),
   ],
 
   resolve: {

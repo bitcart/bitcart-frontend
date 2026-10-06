@@ -1,6 +1,6 @@
 import type { LocaleId, PseudoLocaleId } from "@bitcart/core/i18n"
 import { useIsClient } from "@bitcart/hooks"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 
 import { useCurrentBreakpoint, useSoftKeyboardTracker } from "@/hooks"
 import { LayoutContextProvider, ThemeProvider, type LayoutContextProviderProps } from "@/providers"
@@ -25,7 +25,8 @@ export type WebsiteLayoutProps<TSupportedLocaleId extends LocaleId | PseudoLocal
    * The application's declarative layout configuration: brand identity,
    * basic localization metadata, and the navigation link groups.
    *
-   * **Must be the result of `getLayoutConfig()`.**
+   * **Must be the result of `getLayoutConfig()`**, memoized on the factory's arguments, e.g.
+   * `useMemo(() => getLayoutConfig(i18n), [i18n])`: every new object rerenders the layout.
    */
   config: LayoutContextProviderProps["layoutConfig"]
 
@@ -44,6 +45,7 @@ export const WebsiteLayout = <TSupportedLocaleId extends LocaleId | PseudoLocale
   children,
   ...props
 }: WebsiteLayoutProps<TSupportedLocaleId>) => {
+  const { t } = useLingui()
   const isClient = useIsClient()
   const currentBreakpoint = useCurrentBreakpoint()
 

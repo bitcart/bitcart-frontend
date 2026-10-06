@@ -44,9 +44,9 @@ jobs:
 
       - name: Push source locales to Transifex
         run: |
-          for app in apps/*/; do
-            if [ -d "$app.tx" ]; then
-              cd "$app" && tx push -s && cd ../..
+          for member in apps/*/ packages/*/; do
+            if [ -d "$member.tx" ]; then
+              cd "$member" && tx push -s && cd ../..
             fi
           done
         env:

@@ -6,6 +6,7 @@ import {
   type LocaleModuleCatalog,
   type PseudoLocaleId,
 } from "@bitcart/core/i18n"
+import { loadUiKitMessages } from "@bitcart/ui-kit/i18n"
 import { i18n } from "@lingui/core"
 
 const AVAILABLE_LOCALE_MODULES = import.meta.glob("./_generated/locales/*.po", {
@@ -20,7 +21,10 @@ const getLocaleId = (catalogModulePath: string) =>
 export const AVAILABLE_LOCALE_IDS = Object.keys(AVAILABLE_LOCALE_MODULES).map(getLocaleId)
 
 for (const [modulePath, { messages }] of Object.entries(AVAILABLE_LOCALE_MODULES)) {
-  i18n.load(getLocaleId(modulePath), messages)
+  const localeId = getLocaleId(modulePath)
+
+  //* The app's own catalog comes last: its translations override the UI Kit's ones.
+  i18n.load(localeId, { ...(await loadUiKitMessages(localeId)), ...messages })
 }
 
 i18n.activate(SOURCE_LOCALE_ID)

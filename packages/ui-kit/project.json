@@ -2,6 +2,10 @@
   "name": "@bitcart/ui-kit",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "targets": {
+    "i18n:extract-locales": {
+      "outputs": ["{projectRoot}/src/i18n/_generated"]
+    },
+
     "build:styles": {
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/src/styles/uno.generated.css"],
@@ -9,7 +13,8 @@
     },
 
     "build:main": {
-      "dependsOn": ["build:styles", "^build"],
+      "dependsOn": ["build:styles", "i18n:extract-locales", "^build"],
+      "inputs": ["packageBuildInputs", "^packageBuildInputs", "packageCatalogs"],
       "outputs": ["{projectRoot}/dist"],
       "cache": true
     },

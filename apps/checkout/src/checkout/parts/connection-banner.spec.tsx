@@ -4,6 +4,7 @@ import { describe, expect, test, vi } from "vitest"
 
 import { makeModel } from "../fixtures"
 import { CheckoutProvider } from "../runtime/provider"
+import { CheckoutTestProviders } from "../testing"
 import { CheckoutConnectionBanner } from "./connection-banner"
 
 const reconnecting: SocketConnectionHandle = {
@@ -20,6 +21,7 @@ describe("CheckoutConnectionBanner", () => {
       <CheckoutProvider model={makeModel()} connection={reconnecting}>
         <CheckoutConnectionBanner />
       </CheckoutProvider>,
+      { wrapper: CheckoutTestProviders },
     )
 
     expect(screen.getByRole("status")).toHaveTextContent("Connection lost, reconnecting...")
@@ -30,6 +32,7 @@ describe("CheckoutConnectionBanner", () => {
       <CheckoutProvider model={makeModel()}>
         <CheckoutConnectionBanner />
       </CheckoutProvider>,
+      { wrapper: CheckoutTestProviders },
     )
 
     expect(screen.queryByRole("status")).not.toBeInTheDocument()

@@ -1,6 +1,5 @@
 import story from "@fumadocs/story/vite"
-import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin"
-import babel from "@rolldown/plugin-babel"
+import { lingui } from "@lingui/vite-plugin"
 import tailwindcss from "@tailwindcss/vite"
 import { tanstackStart } from "@tanstack/react-start/plugin/vite"
 import react from "@vitejs/plugin-react"
@@ -51,12 +50,10 @@ export default defineConfig({
       ],
     }),
 
-    react(),
-    lingui(),
-
-    babel({
-      presets: [linguiTransformerBabelPreset()],
-    }),
+    //! Both run in Vite's "pre" stage in this order: Lingui macros must expand before React
+    //! Compiler hoists JSX out of `<Trans>`, or the message ids stop matching the catalogs.
+    lingui({ macroTransform: true }),
+    react({ compiler: true }),
 
     //* Nitro's dev middleware routes each request either to Vite or to SSR based on the
     //* sec-fetch-dest header, falling back to an extension allowlist that doesn't know

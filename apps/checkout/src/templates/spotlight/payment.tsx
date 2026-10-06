@@ -1,4 +1,4 @@
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { CopyIcon, SearchIcon, WalletIcon } from "lucide-react"
 import { useState, type ReactNode } from "react"
 
@@ -28,6 +28,7 @@ type Command = {
 }
 
 export const SpotlightPayment = () => {
+  const { t } = useLingui()
   const { invoice, payment, store, changeMethod } = useCheckout("payment")
   const copy = useCheckoutCopy()
   const [query, setQuery] = useState("")

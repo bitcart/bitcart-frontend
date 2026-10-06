@@ -70,11 +70,13 @@ More information about routing in Vike can be found in the [Vike documentation](
 ### i18n (Lingui)
 
 Source locale: `en`.
-The list of supported locales is available as `SUPPORTED_LOCALE_IDS` in `apps/<app>/constants.ts`.
+The list of supported locales is available as `SUPPORTED_LOCALE_IDS` in `apps/<app>/constants.ts`, re-exported from `@bitcart/core/i18n`, which every package catalog covers.
 Uses `useLingui()` hook with tagged template literals: `` t`text` ``.
-Catalogs live in `src/common/i18n/_generated/locales/`.
+Catalogs live in `src/common/i18n/_generated/locales/` in apps and in `src/i18n/_generated/locales/` in packages with translatable text (UI Kit, Form Kit). A package's catalog is extracted and translated once, in the package, and apps merge it into their own at runtime. All catalogs are gitignored: Transifex holds the translations.
 
-Make sure to run `just locales-extract-dev` after adding/changing translatable strings.
+Which form to use depends on where the text is translated: a component, a function called during render, a module-level constant, or code outside render. Load the `lingui` skill before adding or changing translatable text: the wrong form keeps the old language after a locale switch under React Compiler.
+
+Make sure to run `just locales-extract-dev` after adding/changing translatable strings: it covers apps and packages.
 For production builds, use `just locales-extract`.
 
 ### E2E Testing (Playwright)

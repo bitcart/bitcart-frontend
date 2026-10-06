@@ -4,7 +4,9 @@ import { CHECKOUT_STATUS_TESTID } from "@bitcart/qa"
 import { LinkButton } from "@bitcart/ui-kit/components"
 import type { IconComponent } from "@bitcart/ui-kit/types"
 import { cn } from "@bitcart/ui-kit/utils"
-import { t } from "@lingui/core/macro"
+import type { MessageDescriptor } from "@lingui/core"
+import { msg } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import confetti from "canvas-confetti"
 import { CheckIcon, ClockIcon, RotateCcwIcon, XIcon } from "lucide-react"
 import { useEffect } from "react"
@@ -26,7 +28,7 @@ type StatusDisplayParams = {
   iconBg: string
   titleColor: string
   Icon: IconComponent
-  title: () => string
+  title: MessageDescriptor
 }
 
 const TERMINAL_STATUS_DISPLAY_PARAMS: Record<
@@ -38,7 +40,7 @@ const TERMINAL_STATUS_DISPLAY_PARAMS: Record<
     iconBg: "text-success",
     titleColor: "text-success",
     Icon: CheckIcon,
-    title: () => t`Payment complete`,
+    title: msg`Payment complete`,
   },
 
   refunded: {
@@ -46,7 +48,7 @@ const TERMINAL_STATUS_DISPLAY_PARAMS: Record<
     iconBg: "text-warning",
     titleColor: "text-warning",
     Icon: RotateCcwIcon,
-    title: () => t`Payment refunded`,
+    title: msg`Payment refunded`,
   },
 
   expired: {
@@ -54,7 +56,7 @@ const TERMINAL_STATUS_DISPLAY_PARAMS: Record<
     iconBg: "text-muted-foreground",
     titleColor: "text-muted-foreground",
     Icon: ClockIcon,
-    title: () => t`Invoice expired`,
+    title: msg`Invoice expired`,
   },
 
   invalid: {
@@ -62,7 +64,7 @@ const TERMINAL_STATUS_DISPLAY_PARAMS: Record<
     iconBg: "text-destructive-foreground",
     titleColor: "text-destructive-foreground",
     Icon: XIcon,
-    title: () => t`This invoice has been marked as invalid`,
+    title: msg`This invoice has been marked as invalid`,
   },
 }
 
@@ -75,6 +77,8 @@ export const StatusOverlay = ({
   redirectUrl,
   children,
 }: StatusOverlayProps) => {
+  const { t } = useLingui()
+
   useEffect(() => {
     if (status !== "complete") return void null
 
@@ -122,7 +126,7 @@ export const StatusOverlay = ({
         <Icon className="size-full" strokeWidth={1.5} />
       </div>
 
-      <p className={cn(`mt-6 text-xl font-semibold ${config.titleColor}`)}>{config.title()}</p>
+      <p className={cn(`mt-6 text-xl font-semibold ${config.titleColor}`)}>{t(config.title)}</p>
       <p className="mt-4 text-sm font-medium">{storeName}</p>
 
       <p className="mt-1 text-muted-foreground text-sm">

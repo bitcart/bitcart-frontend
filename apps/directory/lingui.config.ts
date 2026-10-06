@@ -1,5 +1,6 @@
 import { PSEUDO_LOCALE_ID, SOURCE_LOCALE_ID } from "@bitcart/core/i18n"
 import { defineConfig } from "@lingui/conf"
+import { createSwcExtractor } from "@lingui/native-tools"
 
 import { SUPPORTED_LOCALE_IDS } from "./constants.ts"
 import { nodeEnv } from "./node-env.ts"
@@ -9,19 +10,20 @@ export default defineConfig({
 
   locales:
     nodeEnv.BITCART_ENV === "production"
-      ? SUPPORTED_LOCALE_IDS
+      ? [...SUPPORTED_LOCALE_IDS]
       : [...SUPPORTED_LOCALE_IDS, PSEUDO_LOCALE_ID],
 
-  pseudoLocale: nodeEnv.BITCART_ENV === "production" ? undefined : PSEUDO_LOCALE_ID,
+  pseudoLocale: nodeEnv.BITCART_ENV === "production" ? undefined : { locale: PSEUDO_LOCALE_ID },
   compileNamespace: "es",
+  extractors: [createSwcExtractor()],
 
   catalogs: [
     {
       path: "<rootDir>/src/common/i18n/_generated/locales/{locale}",
-      include: ["src", "../../packages/form-kit/src", "../../packages/ui-kit/src"],
+      include: ["src"],
 
       // Delete the following line if you encounter TS issues during extraction
-      exclude: ["src/**/*.d.ts"],
+      exclude: ["src/**/*.d.ts", "src/**/*.spec.{ts,tsx}"],
     },
   ],
 })

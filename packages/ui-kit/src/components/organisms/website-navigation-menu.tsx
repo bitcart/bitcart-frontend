@@ -1,5 +1,5 @@
 import { NAVBAR_TESTID, NAV_DROPDOWN_CONTENT_TESTID, NAV_DROPDOWN_TOGGLE_TESTID } from "@bitcart/qa"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { MoreHorizontal } from "lucide-react"
 import { useCallback, useMemo } from "react"
 
@@ -31,6 +31,8 @@ export const WebsiteNavigationMenu: React.FC<WebsiteNavigationMenuProps> = ({
   className: rowClassName,
   inert,
 }) => {
+  const { t, i18n } = useLingui()
+
   const {
     Link,
     currentRoute,
@@ -104,7 +106,7 @@ export const WebsiteNavigationMenu: React.FC<WebsiteNavigationMenuProps> = ({
       <NavigationMenuList>
         {labeledLinks.map((link, idx) => {
           const a11yAwareLinkProps = link.isExternal
-            ? { href: link.href, a11yHint: getTargetBlankA11yHint() }
+            ? { href: link.href, a11yHint: getTargetBlankA11yHint(i18n) }
             : { href: link.href }
 
           const isActive = !link.isExternal && link.href === currentRoute.pathnameWithHash
@@ -168,7 +170,7 @@ export const WebsiteNavigationMenu: React.FC<WebsiteNavigationMenuProps> = ({
               const a11yAwareLinkProps = link.isExternal
                 ? {
                     href: link.href,
-                    a11yHint: getTargetBlankA11yHint(),
+                    a11yHint: getTargetBlankA11yHint(i18n),
                     isExternalLink: true as const,
                   }
                 : { href: link.href, isExternalLink: false as const }

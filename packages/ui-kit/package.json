@@ -19,6 +19,10 @@
       "import": "./dist/hooks/index.js",
       "types": "./dist/hooks/index.d.ts"
     },
+    "./i18n": {
+      "import": "./dist/i18n/index.js",
+      "types": "./dist/i18n/index.d.ts"
+    },
     "./icons": {
       "import": "./dist/icons.js",
       "types": "./dist/icons.d.ts"
@@ -43,6 +47,7 @@
     "add:components": "pnpm shadcn-ui add -p ./src/components/tmp",
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.ts | dot -T svg -o graphviz.svg",
     "depcruise:deps": "depcruise dist --output-type err-long",
+    "i18n:extract-locales": "lingui extract --clean",
     "build:styles": "unocss",
     "build:main": "tsdown"
   },
@@ -52,6 +57,7 @@
     "@bitcart/hooks": "workspace:*",
     "@daypicker/react": "catalog:dependencies",
     "@lingui/core": "catalog:dependencies",
+    "@lingui/react": "catalog:dependencies",
     "@phosphor-icons/react": "catalog:dependencies",
     "class-variance-authority": "catalog:dependencies",
     "lucide-react": "catalog:dependencies",
@@ -65,18 +71,26 @@
     "@bitcart/configs": "workspace:*",
     "@bitcart/qa": "workspace:*",
     "@bitcart/unocss-preset": "workspace:*",
+    "@lingui/cli": "catalog:devDependencies",
+    "@lingui/conf": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@testing-library/dom": "catalog:devDependencies",
+    "@testing-library/react": "catalog:devDependencies",
     "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "@unocss/cli": "catalog:devDependencies",
+    "@vitejs/plugin-react": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
     "eslint-plugin-react-hooks": "catalog:devDependencies",
+    "jsdom": "catalog:devDependencies",
+    "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
-    "vite-plugin-svgr": "catalog:devDependencies"
+    "vite-plugin-svgr": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies"
   }
 }

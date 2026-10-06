@@ -1,10 +1,11 @@
 import { BitcartWordmarkIcon } from "@bitcart/ui-kit/icons"
 import { cn } from "@bitcart/ui-kit/utils"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 
 import { useCheckout } from "../hooks"
 
 export const PoweredBy = ({ className }: { className?: string }) => {
+  const { t } = useLingui()
   const { branding } = useCheckout()
 
   return (

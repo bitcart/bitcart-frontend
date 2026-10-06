@@ -2,6 +2,8 @@ import { Toaster } from "@bitcart/ui-kit/components"
 import { BitcartWordmarkIcon } from "@bitcart/ui-kit/icons"
 import { LayoutContextProvider, ThemeProvider } from "@bitcart/ui-kit/providers"
 import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
+import { i18n } from "@lingui/core"
+import { I18nProvider } from "@lingui/react"
 import type { ReactNode } from "react"
 
 import { makeSource } from "../fixtures"
@@ -18,17 +20,19 @@ const getTestLayoutConfig = defineGetLayoutConfig(() => ({
 }))
 
 export const CheckoutTestProviders = ({ children }: { children: ReactNode }) => (
-  <ThemeProvider>
-    <LayoutContextProvider
-      LinkComponent={({ children: linkChildren, ...props }) => <a {...props}>{linkChildren}</a>}
-      currentRoute={{ pathname: "/i/invoice-1", pathnameWithHash: "/i/invoice-1", hash: null }}
-      layoutConfig={getTestLayoutConfig()}
-    >
-      {children}
-    </LayoutContextProvider>
+  <I18nProvider i18n={i18n}>
+    <ThemeProvider>
+      <LayoutContextProvider
+        LinkComponent={({ children: linkChildren, ...props }) => <a {...props}>{linkChildren}</a>}
+        currentRoute={{ pathname: "/i/invoice-1", pathnameWithHash: "/i/invoice-1", hash: null }}
+        layoutConfig={getTestLayoutConfig()}
+      >
+        {children}
+      </LayoutContextProvider>
 
-    <Toaster />
-  </ThemeProvider>
+      <Toaster />
+    </ThemeProvider>
+  </I18nProvider>
 )
 
 export type CheckoutTestAppProps = {

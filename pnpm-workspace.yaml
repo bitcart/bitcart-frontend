@@ -10,7 +10,7 @@ allowBuilds:
 
 auditConfig:
   ignoreGhsas:
-    # TODO: Remove once braces publishes a fix (no patched release as of 3.0.3).
+    # TODO: Remove when braces CVE is dismissed
     - GHSA-vfj7-8cjw-p6xm
 
 catalogMode: strict
@@ -20,8 +20,8 @@ catalogs:
     "@base-ui/react": 1.8.0
     "@daypicker/react": 10.0.1
     "@fumadocs/base-ui": 16.15.15
-    "@lingui/core": 6.8.0
-    "@lingui/react": 6.8.0
+    "@lingui/core": 6.9.0
+    "@lingui/react": 6.9.0
     "@mantine/hooks": 9.6.3
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
@@ -60,13 +60,12 @@ catalogs:
   devDependencies:
     "@faker-js/faker": 10.6.0
     "@fumadocs/story": 1.4.0
-    "@lingui/babel-plugin-lingui-macro": 6.8.0
-    "@lingui/cli": 6.8.0
-    "@lingui/conf": 6.8.0
-    "@lingui/vite-plugin": 6.8.0
+    "@lingui/cli": 6.9.0
+    "@lingui/conf": 6.9.0
+    "@lingui/native-tools": 0.1.5
+    "@lingui/vite-plugin": 6.9.0
     "@playwright/test": 1.63.0
     "@qalisa/vike-plugin-sitemap": 1.7.0
-    "@rolldown/plugin-babel": 0.2.4
     "@stylistic/eslint-plugin": 5.10.0
     "@tailwindcss/vite": 4.3.3
     "@tanstack/devtools-event-client": "0.5.0"
@@ -84,7 +83,6 @@ catalogs:
     "@types/react-dom": 19.3.0
     "@unocss/cli": 66.10.5
     "@vitejs/plugin-react": 6.1.1
-    babel-plugin-react-compiler: 1.0.0
     culori: 4.0.2
     dependency-cruiser: 18.4.0
     eslint-plugin-better-tailwindcss: 4.7.0
@@ -95,6 +93,7 @@ catalogs:
     nitro: 3.0.260610-beta
     nx: 23.2.1
     orval: 8.38.0
+    oxc-transform-react: 0.145.0
     oxfmt: 0.72.0
     oxlint: 1.87.0
     oxlint-tsgolint: 7.0.2003
@@ -127,6 +126,8 @@ minimumReleaseAgeExclude:
   - "@base-ui/*"
   # TODO: Remove after 2026-10-07
   - source-map-js@1.2.2
+  # TODO: Remove after 2026-10-08
+  - "@lingui/*"
 
 overrides:
   # TODO: Remove once nx bumps its smol-toml pin to 1.7.1.
@@ -158,6 +159,9 @@ overrides:
 
   # TODO: Remove once solid-js bumps its seroval-plugins floor to 1.6.3.
   "solid-js>seroval-plugins": ^1.6.3
+
+  # TODO: Remove once launch-editor bumps its shell-quote floor to 1.11.0.
+  "launch-editor>shell-quote": ^1.11.0
 
 packageExtensions:
   dependency-cruiser:

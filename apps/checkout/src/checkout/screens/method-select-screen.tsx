@@ -1,5 +1,5 @@
 import { Button } from "@bitcart/ui-kit/components"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 
 import {
   CHECKOUT_METHOD_SELECTOR_TESTID,
@@ -10,6 +10,7 @@ import {
 } from ".."
 
 export const CheckoutMethodSelectScreen = () => {
+  const { t } = useLingui()
   const { methods, selectMethod, cancelChange } = useCheckout("select")
 
   return (

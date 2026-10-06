@@ -4,7 +4,7 @@ import {
   UI_THEME_ICON_LIGHT_TESTID,
   UI_THEME_ICON_SYSTEM_TESTID,
 } from "@bitcart/qa"
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { Loader, Monitor, Moon, Sun } from "lucide-react"
 import { useCallback, useMemo } from "react"
 
@@ -37,13 +37,14 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   showLabel = false,
   testId = UI_THEME_TOGGLE_TESTID,
 }) => {
+  const { t } = useLingui()
   const { theme, setTheme } = useTheme()
 
   //* Mitigates unrecoverable state caused by an invalid cached setting.
   const themeMode = isThemeMode(theme) ? theme : DEFAULT_THEME_MODE
   const toggleTheme = useCallback(() => setTheme(NEXT_THEME_MODE[themeMode]), [setTheme, themeMode])
 
-  const getThemeLabel = useCallback(() => {
+  const getThemeLabel = () => {
     switch (themeMode) {
       case "light": {
         return t`Light`
@@ -57,12 +58,9 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         return t`System`
       }
     }
-  }, [themeMode])
+  }
 
-  const getButtonHint = useCallback(
-    () => t`Current theme: ${getThemeLabel()}. Click to cycle through themes.`,
-    [getThemeLabel],
-  )
+  const getButtonHint = () => t`Current theme: ${getThemeLabel()}. Click to cycle through themes.`
 
   const icon = useMemo(() => {
     const elementClassName = "text-foreground"

@@ -1,4 +1,4 @@
-import { t } from "@lingui/core/macro"
+import { useLingui } from "@lingui/react/macro"
 import { useMemo } from "react"
 import { prop, sortBy } from "remeda"
 
@@ -12,6 +12,8 @@ export type WebsiteFooterProps = {
 const currentYear = new Date().getFullYear()
 
 export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
+  const { t, i18n } = useLingui()
+
   const {
     Link,
     layoutConfig: { brand, project, navigation },
@@ -36,7 +38,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
         "globalPriority" in link ? link.globalPriority : Number.POSITIVE_INFINITY,
       ).map(({ icon: Icon, ...link }) => {
         const a11yAwareProps = link.isExternal
-          ? { href: link.href, a11yHint: getTargetBlankA11yHint() }
+          ? { href: link.href, a11yHint: getTargetBlankA11yHint(i18n) }
           : { href: link.href }
 
         return (
@@ -52,7 +54,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
         )
       }),
 
-    [Link, navDirectory.iconLinks],
+    [Link, i18n, navDirectory.iconLinks],
   )
 
   return (
@@ -91,7 +93,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
                     "globalPriority" in link ? link.globalPriority : Number.POSITIVE_INFINITY,
                   ).map((link) => {
                     const a11yAwareProps = link.isExternal
-                      ? { href: link.href, a11yHint: getTargetBlankA11yHint() }
+                      ? { href: link.href, a11yHint: getTargetBlankA11yHint(i18n) }
                       : { href: link.href }
 
                     return (
