@@ -14,6 +14,18 @@ mockMatchMedia()
 //* jsdom has no canvas to draw on: a real confetti burst crashes on its first animation frame.
 vi.mock("canvas-confetti", () => ({ default: Object.assign(vi.fn(), { reset: vi.fn() }) }))
 
+//! The theme provider's inline script, rendered by next-themes, makes React warn on every client
+//! render, which is how tests render it.
+// TODO: Remove once next-themes stops rendering it on the client (https://github.com/pacocoursey/next-themes/issues/385).
+const NEXT_THEMES_SCRIPT_WARNING = "Encountered a script tag while rendering React component."
+const consoleError = console.error.bind(console)
+
+console.error = (...args: Parameters<typeof console.error>) => {
+  if (!(typeof args[0] === "string" && args[0].startsWith(NEXT_THEMES_SCRIPT_WARNING))) {
+    consoleError(...args)
+  }
+}
+
 afterEach(() => {
   cleanup()
 
