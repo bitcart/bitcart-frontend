@@ -24,7 +24,7 @@ const config: KnipConfig = {
       tailwind: false,
       entry: ["scripts/**/*.ts"],
       project: ["scripts/**/*.ts"],
-      ignoreDependencies: ["@playwright/test", "@stylistic/eslint-plugin", "tailwindcss"],
+      ignoreDependencies: ["@playwright/test", "tailwindcss"],
     },
 
     "apps/checkout": appKnipConfig,
@@ -77,19 +77,7 @@ const config: KnipConfig = {
     },
 
     "packages/form-kit": {
-      ignoreDependencies: ["@lingui/babel-plugin-lingui-macro", "eslint-plugin-react-hooks"],
-    },
-
-    "packages/hooks": {
-      ignoreDependencies: ["eslint-plugin-react-hooks"],
-    },
-
-    "packages/ui-kit": {
-      ignoreDependencies: ["eslint-plugin-better-tailwindcss", "eslint-plugin-react-hooks"],
-    },
-
-    "packages/vike-kit": {
-      ignoreDependencies: ["eslint-plugin-react-hooks"],
+      ignoreDependencies: ["@lingui/babel-plugin-lingui-macro"],
     },
 
     "templates/vike-app": appKnipConfig,

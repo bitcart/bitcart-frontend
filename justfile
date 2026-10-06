@@ -228,7 +228,7 @@ Run dependency checks.
 ")]
 [group("Code quality")]
 depcheck *args:
-    @pnpm knip --no-progress {{ args }}
+    @pnpm knip --no-progress --treat-config-hints-as-errors {{ args }}
 
 [doc("
 Validate that emitted dist code never references a devDependency.

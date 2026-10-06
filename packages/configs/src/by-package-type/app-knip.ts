@@ -17,12 +17,7 @@ export const appKnipConfig: AppKnipConfig = {
 
   project: ["src/**/*.{ts,tsx}", "e2e/**/*.{ts,tsx}"],
 
-  ignoreDependencies: [
-    "@stylistic/eslint-plugin",
-    "eslint-plugin-better-tailwindcss",
-    "eslint-plugin-react-hooks",
-    "inter-ui",
-  ],
+  ignoreDependencies: ["inter-ui"],
 
   vite: false,
 }
