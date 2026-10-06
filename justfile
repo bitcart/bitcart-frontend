@@ -18,7 +18,8 @@ Install and setup essential tools and dependencies.
 ")]
 [group("General")]
 get-started:
-    fnm install && fnm use && corepack enable pnpm && pnpm i
+    pnpm runtime set node "$(cat .nvmrc)" -g
+    pnpm i
     prek install
     pnpx @sentry/dotagents install
     just format .mcp.json

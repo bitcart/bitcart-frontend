@@ -103,7 +103,7 @@ TanStack Store (`@tanstack/store` with `@tanstack/react-store`) for client-only 
 - **Unused params:** Prefix with `_` (e.g., `_event`)
 - **Components:** Add new shadcn primitives via `just add-ui-kit-components <component>`
 - **Pre-commit hooks:** Run via `just pre-commit`. Checks: lint, typecheck, format, merge conflicts, private keys
-- **Node version:** Managed via `.nvmrc` (use `fnm`)
+- **Node and pnpm versions:** Node.js is pinned in `.nvmrc` and run through pnpm's global `node` shim, which `just get-started` installs. pnpm is pinned in `devEngines.packageManager` and switches to that version on its own. Don't use Corepack or fnm
 
 <!-- nx configuration start-->
 <!-- Leave the start & end comments to automatically receive updates. -->

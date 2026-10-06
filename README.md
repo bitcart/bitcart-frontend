@@ -26,9 +26,9 @@ Assuming you have already cloned this repository and are in its root directory, 
    - [for just](https://just.systems/man/en/shell-completion-scripts.html)
    - [for prek](https://prek.j178.dev/installation/#shell-completion)
 
-3. Once it's done, [install fnm](https://github.com/Schniz/fnm?tab=readme-ov-file#installation) Node.js version manager or make sure it's already present in your system.
+3. Once it's done, [install pnpm](https://pnpm.io/installation) unless it's already present in your system. Avoid installing it through Corepack: pnpm installs the version this repository pins on its own.
 
-4. Now, install pre-commit hooks, as well as the required version of [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io) along with all NPM dependencies:
+4. Now, install pre-commit hooks, as well as the [Node.js](https://nodejs.org) version from `.nvmrc` along with all NPM dependencies:
 
    ```bash
    just get-started
