@@ -348,7 +348,7 @@ Run Playwright E2E tests for all apps.
 [env("BITCART_ENV", "testing")]
 [group("Testing")]
 e2e *nx-args:
-    @pnpm nx run-many {{ _ci_parallel }} --target=e2e --projects='apps/*' $(just _nx-args {{ nx-args }})
+    @pnpm nx run-many {{ _ci_parallel }} --target=e2e --exclude='templates/*' $(just _nx-args {{ nx-args }})
 
 [doc("
 Run E2E tests for a specific app.
