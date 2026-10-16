@@ -44,7 +44,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   const themeMode = isThemeMode(theme) ? theme : DEFAULT_THEME_MODE
   const toggleTheme = useCallback(() => setTheme(NEXT_THEME_MODE[themeMode]), [setTheme, themeMode])
 
-  const getThemeLabel = () => {
+  const getThemeLabel = useCallback(() => {
     switch (themeMode) {
       case "light": {
         return t`Light`
@@ -58,9 +58,12 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         return t`System`
       }
     }
-  }
+  }, [t, themeMode])
 
-  const getButtonHint = () => t`Current theme: ${getThemeLabel()}. Click to cycle through themes.`
+  const getButtonHint = useCallback(
+    () => t`Current theme: ${getThemeLabel()}. Click to cycle through themes.`,
+    [getThemeLabel, t],
+  )
 
   const icon = useMemo(() => {
     const elementClassName = "text-foreground"

@@ -141,12 +141,6 @@ overrides:
   # TODO: Remove once serve bumps its compression pin to 1.8.2.
   "serve>compression": ^1.8.2
 
-  # TODO: Remove once solid-js bumps its seroval floor to 1.6.3.
-  "solid-js>seroval": ^1.6.3
-
-  # TODO: Remove once solid-js bumps its seroval-plugins floor to 1.6.3.
-  "solid-js>seroval-plugins": ^1.6.3
-
   # TODO: Remove once launch-editor bumps its shell-quote floor to 1.11.0.
   "launch-editor>shell-quote": ^1.11.0
 

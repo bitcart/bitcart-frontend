@@ -17,15 +17,13 @@ export function Page() {
     }
   }, [abortReason, abortStatusCode, is404])
 
-  const getErrorMeta = (): Partial<ErrorDisplayAttributes> => {
+  const errorMeta: Partial<ErrorDisplayAttributes> = useMemo(() => {
     if (typeof abortReason === "object" && abortReason?.notAdmin) {
       return { message: t`You cannot access this page because you are not an administrator.` }
     } else {
       return { message: typeof abortReason === "string" ? abortReason : undefined }
     }
-  }
-
-  const errorMeta = getErrorMeta()
+  }, [abortReason, t])
 
   return (
     <ErrorPageTemplate

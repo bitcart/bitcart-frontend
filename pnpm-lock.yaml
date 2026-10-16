@@ -448,8 +448,6 @@ overrides:
   ajv>fast-uri: ^3.1.8
   source-map-js: ^1.2.2
   serve>compression: ^1.8.2
-  solid-js>seroval: ^1.6.3
-  solid-js>seroval-plugins: ^1.6.3
   launch-editor>shell-quote: ^1.11.0
 
 packageExtensionsChecksum: sha256-yO3rUISp2Y4ah1jg/R+Tkn/ZrTP8tMj6B0BkRdDGQqQ=
