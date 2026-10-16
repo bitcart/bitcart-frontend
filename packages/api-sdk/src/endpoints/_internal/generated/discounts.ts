@@ -29,10 +29,17 @@ import type {
 } from "@tanstack/react-query"
 
 import { BitcartApiConfig } from "../../../config"
-import { DisplayDiscount, OffsetPaginationDisplayDiscount } from "../../../schemas/generated"
+import {
+  DiscountsBatchAction200,
+  DiscountsGetCount200,
+  DisplayDiscount,
+  OffsetPaginationDisplayDiscount,
+} from "../../../schemas/generated"
 import type {
   BatchAction,
   CreateDiscount,
+  DiscountsBatchAction200Output,
+  DiscountsGetCount200Output,
   DiscountsListItemsParams,
   DisplayDiscountOutput,
   HTTPValidationError,
@@ -455,15 +462,18 @@ export const getDiscountsGetCountUrl = () => {
 export const discountsGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<DiscountsGetCount200Output> => {
   const res = await (fetchFn ?? fetch)(getDiscountsGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? DiscountsGetCount200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -1163,7 +1173,7 @@ export const discountsBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<boolean> => {
+): Promise<DiscountsBatchAction200Output> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1190,9 +1200,12 @@ export const discountsBatchAction = async (
     body: JSON.stringify(batchAction),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: boolean = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? DiscountsBatchAction200.parse(parsedBody) : parsedBody
   return data
 }
 

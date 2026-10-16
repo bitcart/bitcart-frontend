@@ -29,7 +29,12 @@ import type {
 } from "@tanstack/react-query"
 
 import { BitcartApiConfig } from "../../../config"
-import { DisplayTemplate, OffsetPaginationDisplayTemplate } from "../../../schemas/generated"
+import {
+  DisplayTemplate,
+  OffsetPaginationDisplayTemplate,
+  TemplatesBatchAction200,
+  TemplatesGetCount200,
+} from "../../../schemas/generated"
 import type {
   BatchAction,
   CreateTemplate,
@@ -37,6 +42,8 @@ import type {
   HTTPValidationError,
   OffsetPaginationDisplayTemplateOutput,
   OptionalUpdateTemplate,
+  TemplatesBatchAction200Output,
+  TemplatesGetCount200Output,
   TemplatesGetTemplateListParams,
   TemplatesListItemsParams,
 } from "../../../schemas/generated"
@@ -728,15 +735,18 @@ export const getTemplatesGetCountUrl = () => {
 export const templatesGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<TemplatesGetCount200Output> => {
   const res = await (fetchFn ?? fetch)(getTemplatesGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? TemplatesGetCount200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -1436,7 +1446,7 @@ export const templatesBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<boolean> => {
+): Promise<TemplatesBatchAction200Output> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1463,9 +1473,12 @@ export const templatesBatchAction = async (
     body: JSON.stringify(batchAction),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: boolean = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? TemplatesBatchAction200.parse(parsedBody) : parsedBody
   return data
 }
 

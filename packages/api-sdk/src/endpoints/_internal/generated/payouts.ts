@@ -29,7 +29,12 @@ import type {
 } from "@tanstack/react-query"
 
 import { BitcartApiConfig } from "../../../config"
-import { DisplayPayout, OffsetPaginationDisplayPayout } from "../../../schemas/generated"
+import {
+  DisplayPayout,
+  OffsetPaginationDisplayPayout,
+  PayoutsBatchAction200,
+  PayoutsGetCount200,
+} from "../../../schemas/generated"
 import type {
   BatchAction,
   CreatePayout,
@@ -37,6 +42,8 @@ import type {
   HTTPValidationError,
   OffsetPaginationDisplayPayoutOutput,
   OptionalUpdatePayout,
+  PayoutsBatchAction200Output,
+  PayoutsGetCount200Output,
   PayoutsListItemsParams,
 } from "../../../schemas/generated"
 import { createApiFailureError } from "../utils"
@@ -451,15 +458,18 @@ export const getPayoutsGetCountUrl = () => {
 export const payoutsGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<PayoutsGetCount200Output> => {
   const res = await (fetchFn ?? fetch)(getPayoutsGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? PayoutsGetCount200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -1157,7 +1167,7 @@ export const payoutsBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<boolean> => {
+): Promise<PayoutsBatchAction200Output> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1184,9 +1194,12 @@ export const payoutsBatchAction = async (
     body: JSON.stringify(batchAction),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: boolean = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? PayoutsBatchAction200.parse(parsedBody) : parsedBody
   return data
 }
 

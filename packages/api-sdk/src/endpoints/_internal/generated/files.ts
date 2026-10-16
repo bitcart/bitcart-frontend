@@ -29,12 +29,19 @@ import type {
 } from "@tanstack/react-query"
 
 import { BitcartApiConfig } from "../../../config"
-import { DisplayFile, OffsetPaginationDisplayFile } from "../../../schemas/generated"
+import {
+  DisplayFile,
+  FilesBatchAction200,
+  FilesGetCount200,
+  OffsetPaginationDisplayFile,
+} from "../../../schemas/generated"
 import type {
   BatchAction,
   BodyFilesCreateFile,
   BodyFilesPatchFile,
   DisplayFileOutput,
+  FilesBatchAction200Output,
+  FilesGetCount200Output,
   FilesListItemsParams,
   HTTPValidationError,
   OffsetPaginationDisplayFileOutput,
@@ -432,15 +439,18 @@ export const getFilesGetCountUrl = () => {
 export const filesGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<FilesGetCount200Output> => {
   const res = await (fetchFn ?? fetch)(getFilesGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? FilesGetCount200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -1001,7 +1011,7 @@ export const filesBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<boolean> => {
+): Promise<FilesBatchAction200Output> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1028,9 +1038,12 @@ export const filesBatchAction = async (
     body: JSON.stringify(batchAction),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: boolean = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? FilesBatchAction200.parse(parsedBody) : parsedBody
   return data
 }
 

@@ -29,7 +29,13 @@ import type {
 } from "@tanstack/react-query"
 
 import { BitcartApiConfig } from "../../../config"
-import { DisplayProduct, OffsetPaginationDisplayProduct } from "../../../schemas/generated"
+import {
+  DisplayProduct,
+  OffsetPaginationDisplayProduct,
+  ProductsBatchAction200,
+  ProductsGetMaxProductPrice200,
+  ProductsProductsCount200,
+} from "../../../schemas/generated"
 import type {
   BatchAction,
   BodyProductsCreateProductMultipart,
@@ -37,10 +43,13 @@ import type {
   DisplayProductOutput,
   HTTPValidationError,
   OffsetPaginationDisplayProductOutput,
+  ProductsBatchAction200Output,
   ProductsCategoriesParams,
+  ProductsGetMaxProductPrice200Output,
   ProductsGetMaxProductPriceParams,
   ProductsGetProductParams,
   ProductsListItemsParams,
+  ProductsProductsCount200Output,
   ProductsProductsCountParams,
 } from "../../../schemas/generated"
 import { createApiFailureError } from "../utils"
@@ -343,15 +352,20 @@ export const productsGetMaxProductPrice = async (
   params: ProductsGetMaxProductPriceParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<ProductsGetMaxProductPrice200Output> => {
   const res = await (fetchFn ?? fetch)(getProductsGetMaxProductPriceUrl(params), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json")
+      ? ProductsGetMaxProductPrice200.parse(parsedBody)
+      : parsedBody
   return data
 }
 
@@ -825,7 +839,7 @@ export const productsBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<boolean> => {
+): Promise<ProductsBatchAction200Output> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -852,9 +866,12 @@ export const productsBatchAction = async (
     body: JSON.stringify(batchAction),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: boolean = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? ProductsBatchAction200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -1336,15 +1353,18 @@ export const productsProductsCount = async (
   params?: ProductsProductsCountParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<ProductsProductsCount200Output> => {
   const res = await (fetchFn ?? fetch)(getProductsProductsCountUrl(params), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? ProductsProductsCount200.parse(parsedBody) : parsedBody
   return data
 }
 

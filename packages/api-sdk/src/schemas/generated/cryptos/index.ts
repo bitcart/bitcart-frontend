@@ -7,4 +7,5 @@
  */
 
 export * from "./CryptosGetFiatlistParams.zod"
+export * from "./CryptosRate200.zod"
 export * from "./CryptosRateParams.zod"

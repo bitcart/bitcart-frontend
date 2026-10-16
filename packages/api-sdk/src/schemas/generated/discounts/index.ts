@@ -7,6 +7,8 @@
  */
 
 export * from "./CreateDiscount.zod"
+export * from "./DiscountsBatchAction200.zod"
+export * from "./DiscountsGetCount200.zod"
 export * from "./DiscountsListItemsParams.zod"
 export * from "./DisplayDiscount.zod"
 export * from "./OffsetPaginationDisplayDiscount.zod"

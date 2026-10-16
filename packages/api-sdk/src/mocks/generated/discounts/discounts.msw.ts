@@ -9,7 +9,12 @@ import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
 import type { RequestHandlerOptions } from "msw"
 
-import type { DisplayDiscount, OffsetPaginationDisplayDiscount } from "../../../schemas/generated"
+import type {
+  DiscountsBatchAction200,
+  DiscountsGetCount200,
+  DisplayDiscount,
+  OffsetPaginationDisplayDiscount,
+} from "../../../schemas/generated"
 
 export const getDiscountsListItemsResponseMock = (
   overrideResponse: Partial<Extract<OffsetPaginationDisplayDiscount, object>> = {},
@@ -58,7 +63,7 @@ export const getDiscountsCreateItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getDiscountsGetCountResponseMock = (): number => faker.number.int()
+export const getDiscountsGetCountResponseMock = (): DiscountsGetCount200 => faker.number.int()
 
 export const getDiscountsGetItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayDiscount, object>> = {},
@@ -111,7 +116,8 @@ export const getDiscountsDeleteItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getDiscountsBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getDiscountsBatchActionResponseMock = (): DiscountsBatchAction200 =>
+  faker.datatype.boolean()
 
 export const getDiscountsListItemsMockHandler = (
   overrideResponse?:
@@ -163,8 +169,10 @@ export const getDiscountsCreateItemMockHandler = (
 
 export const getDiscountsGetCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | DiscountsGetCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<DiscountsGetCount200> | DiscountsGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -257,8 +265,10 @@ export const getDiscountsDeleteItemMockHandler = (
 
 export const getDiscountsBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | DiscountsBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<DiscountsBatchAction200> | DiscountsBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(

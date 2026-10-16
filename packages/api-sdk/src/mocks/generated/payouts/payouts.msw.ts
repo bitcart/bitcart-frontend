@@ -9,7 +9,12 @@ import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
 import type { RequestHandlerOptions } from "msw"
 
-import type { DisplayPayout, OffsetPaginationDisplayPayout } from "../../../schemas/generated"
+import type {
+  DisplayPayout,
+  OffsetPaginationDisplayPayout,
+  PayoutsBatchAction200,
+  PayoutsGetCount200,
+} from "../../../schemas/generated"
 
 export const getPayoutsListItemsResponseMock = (
   overrideResponse: Partial<Extract<OffsetPaginationDisplayPayout, object>> = {},
@@ -105,7 +110,7 @@ export const getPayoutsCreateItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getPayoutsGetCountResponseMock = (): number => faker.number.int()
+export const getPayoutsGetCountResponseMock = (): PayoutsGetCount200 => faker.number.int()
 
 export const getPayoutsGetItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayPayout, object>> = {},
@@ -224,7 +229,8 @@ export const getPayoutsDeleteItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getPayoutsBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getPayoutsBatchActionResponseMock = (): PayoutsBatchAction200 =>
+  faker.datatype.boolean()
 
 export const getPayoutsListItemsMockHandler = (
   overrideResponse?:
@@ -276,8 +282,10 @@ export const getPayoutsCreateItemMockHandler = (
 
 export const getPayoutsGetCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | PayoutsGetCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PayoutsGetCount200> | PayoutsGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -370,8 +378,10 @@ export const getPayoutsDeleteItemMockHandler = (
 
 export const getPayoutsBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | PayoutsBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<PayoutsBatchAction200> | PayoutsBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(

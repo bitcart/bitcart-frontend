@@ -3504,7 +3504,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RateRulesResponse"
+                  "title": "Response Stores Set Store Rate Rules"
                 }
               }
             }
@@ -3529,13 +3529,6 @@
         ],
         "summary": "Get Store Rates",
         "operationId": "stores_get_store_rates",
-        "security": [
-          {
-            "Bearer": [
-              "store_management"
-            ]
-          }
-        ],
         "parameters": [
           {
             "name": "model_id",
@@ -6532,92 +6525,6 @@
                   },
                   "type": "array",
                   "title": "Response Manage Get Ratesinfo"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": [
-              "server_management"
-            ]
-          }
-        ]
-      }
-    },
-    "/manage/exchanges": {
-      "get": {
-        "tags": [
-          "manage"
-        ],
-        "summary": "Get Exchanges",
-        "operationId": "manage_get_exchanges",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/ExchangeInfo"
-                  },
-                  "type": "array",
-                  "title": "Response Manage Get Exchanges"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": [
-              "server_management"
-            ]
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "manage"
-        ],
-        "summary": "Set Exchanges",
-        "operationId": "manage_set_exchanges",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "additionalProperties": {
-                  "$ref": "#/components/schemas/ExchangeSettings"
-                },
-                "type": "object",
-                "title": "Settings"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/ExchangeInfo"
-                  },
-                  "type": "array",
-                  "title": "Response Manage Set Exchanges"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -9821,7 +9728,9 @@
               "allow_anonymous_invoice_creation": true,
               "include_network_fee": false,
               "rate_rules": "",
-              "pos_screen_enabled": true
+              "pos_screen_enabled": true,
+              "support_email": "",
+              "support_url": ""
             }
           },
           "theme_settings": {
@@ -10953,7 +10862,9 @@
               "allow_anonymous_invoice_creation": true,
               "include_network_fee": false,
               "rate_rules": "",
-              "pos_screen_enabled": true
+              "pos_screen_enabled": true,
+              "support_email": "",
+              "support_url": ""
             }
           },
           "theme_settings": {
@@ -11477,63 +11388,6 @@
           "token"
         ],
         "title": "EmailVerifyResponse"
-      },
-      "ExchangeInfo": {
-        "properties": {
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "enabled": {
-            "type": "boolean",
-            "title": "Enabled"
-          },
-          "api_key_types": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Api Key Types"
-          },
-          "api_key_type": {
-            "type": "string",
-            "title": "Api Key Type"
-          },
-          "api_key_set": {
-            "type": "boolean",
-            "title": "Api Key Set"
-          }
-        },
-        "type": "object",
-        "required": [
-          "name",
-          "enabled",
-          "api_key_types",
-          "api_key_type",
-          "api_key_set"
-        ],
-        "title": "ExchangeInfo"
-      },
-      "ExchangeSettings": {
-        "properties": {
-          "enabled": {
-            "type": "boolean",
-            "title": "Enabled",
-            "default": true
-          },
-          "api_key": {
-            "type": "string",
-            "title": "Api Key",
-            "default": ""
-          },
-          "api_key_type": {
-            "type": "string",
-            "title": "Api Key Type",
-            "default": ""
-          }
-        },
-        "type": "object",
-        "title": "ExchangeSettings"
       },
       "FIDO2Auth": {
         "properties": {
@@ -12777,7 +12631,9 @@
               "allow_anonymous_invoice_creation": true,
               "include_network_fee": false,
               "rate_rules": "",
-              "pos_screen_enabled": true
+              "pos_screen_enabled": true,
+              "support_email": "",
+              "support_url": ""
             }
           },
           "theme_settings": {
@@ -13215,7 +13071,9 @@
               "allow_anonymous_invoice_creation": true,
               "include_network_fee": false,
               "rate_rules": "",
-              "pos_screen_enabled": true
+              "pos_screen_enabled": true,
+              "support_email": "",
+              "support_url": ""
             }
           },
           "theme_settings": {
@@ -13252,10 +13110,6 @@
       },
       "RateResult": {
         "properties": {
-          "pair": {
-            "type": "string",
-            "title": "Pair"
-          },
           "rate": {
             "anyOf": [
               {
@@ -13270,90 +13124,14 @@
           "message": {
             "type": "string",
             "title": "Message"
-          },
-          "rule": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Rule"
-          },
-          "degraded": {
-            "type": "boolean",
-            "title": "Degraded",
-            "default": false
-          },
-          "age": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Age"
-          },
-          "error": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Error"
-          },
-          "steps": {
-            "items": {
-              "$ref": "#/components/schemas/RateStepResult"
-            },
-            "type": "array",
-            "title": "Steps",
-            "default": []
-          },
-          "sources": {
-            "items": {
-              "$ref": "#/components/schemas/RateSourceResult"
-            },
-            "type": "array",
-            "title": "Sources",
-            "default": []
           }
         },
         "type": "object",
         "required": [
-          "pair",
           "rate",
           "message"
         ],
         "title": "RateResult"
-      },
-      "RateRulesResponse": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "title": "Message"
-          },
-          "warnings": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Warnings"
-          }
-        },
-        "type": "object",
-        "required": [
-          "message",
-          "warnings"
-        ],
-        "title": "RateRulesResponse"
       },
       "RateSourceInfo": {
         "properties": {
@@ -13417,114 +13195,6 @@
           "last_error_at"
         ],
         "title": "RateSourceInfo"
-      },
-      "RateSourceResult": {
-        "properties": {
-          "exchange": {
-            "type": "string",
-            "title": "Exchange"
-          },
-          "pair": {
-            "type": "string",
-            "title": "Pair"
-          },
-          "rate": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Rate"
-          },
-          "age": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Age"
-          },
-          "error": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Error"
-          }
-        },
-        "type": "object",
-        "required": [
-          "exchange",
-          "pair",
-          "rate",
-          "age",
-          "error"
-        ],
-        "title": "RateSourceResult"
-      },
-      "RateStepResult": {
-        "properties": {
-          "rule": {
-            "type": "string",
-            "title": "Rule"
-          },
-          "rate": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Rate"
-          },
-          "age": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Age"
-          },
-          "error": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Error"
-          },
-          "used": {
-            "type": "boolean",
-            "title": "Used"
-          }
-        },
-        "type": "object",
-        "required": [
-          "rule",
-          "rate",
-          "age",
-          "error",
-          "used"
-        ],
-        "title": "RateStepResult"
       },
       "RatesResponse": {
         "properties": {
@@ -13696,6 +13366,25 @@
             "type": "boolean",
             "title": "Pos Screen Enabled",
             "default": true
+          },
+          "support_email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "string",
+                "const": ""
+              }
+            ],
+            "title": "Support Email",
+            "default": ""
+          },
+          "support_url": {
+            "type": "string",
+            "title": "Support Url",
+            "default": ""
           }
         },
         "type": "object",

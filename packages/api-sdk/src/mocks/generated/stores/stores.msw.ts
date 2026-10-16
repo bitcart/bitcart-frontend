@@ -13,8 +13,9 @@ import type {
   DisplayStore,
   OffsetPaginationDisplayStore,
   PublicStore,
-  RateRulesResponse,
   RatesResponse,
+  StoresBatchAction200,
+  StoresGetCount200,
 } from "../../../schemas/generated"
 
 export const getStoresListItemsResponseMock = (
@@ -46,6 +47,8 @@ export const getStoresListItemsResponseMock = (
         include_network_fee: faker.datatype.boolean(),
         rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
         pos_screen_enabled: faker.datatype.boolean(),
+        support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+        support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
       },
       theme_settings: {
         store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -114,6 +117,8 @@ export const getStoresCreateItemResponseMock = (
     include_network_fee: faker.datatype.boolean(),
     rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
     pos_screen_enabled: faker.datatype.boolean(),
+    support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+    support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
   theme_settings: {
     store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -149,7 +154,7 @@ export const getStoresCreateItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getStoresGetCountResponseMock = (): number => faker.number.int()
+export const getStoresGetCountResponseMock = (): StoresGetCount200 => faker.number.int()
 
 export const getStoresUpdateItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayStore, object>> = {},
@@ -175,6 +180,8 @@ export const getStoresUpdateItemResponseMock = (
     include_network_fee: faker.datatype.boolean(),
     rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
     pos_screen_enabled: faker.datatype.boolean(),
+    support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+    support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
   theme_settings: {
     store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -234,6 +241,8 @@ export const getStoresDeleteItemResponseMock = (
     include_network_fee: faker.datatype.boolean(),
     rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
     pos_screen_enabled: faker.datatype.boolean(),
+    support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+    support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
   theme_settings: {
     store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -269,7 +278,7 @@ export const getStoresDeleteItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getStoresBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getStoresBatchActionResponseMock = (): StoresBatchAction200 => faker.datatype.boolean()
 
 export const getStoresGetItemResponseMock = (): DisplayStore | PublicStore =>
   faker.helpers.arrayElement([
@@ -298,6 +307,8 @@ export const getStoresGetItemResponseMock = (): DisplayStore | PublicStore =>
         include_network_fee: faker.datatype.boolean(),
         rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
         pos_screen_enabled: faker.datatype.boolean(),
+        support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+        support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
       },
       theme_settings: {
         store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -357,6 +368,8 @@ export const getStoresGetItemResponseMock = (): DisplayStore | PublicStore =>
         include_network_fee: faker.datatype.boolean(),
         rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
         pos_screen_enabled: faker.datatype.boolean(),
+        support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+        support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
       },
       theme_settings: {
         store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -392,6 +405,8 @@ export const getStoresSetStoreCheckoutSettingsResponseMock = (
     include_network_fee: faker.datatype.boolean(),
     rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
     pos_screen_enabled: faker.datatype.boolean(),
+    support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+    support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
   theme_settings: {
     store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -451,6 +466,8 @@ export const getStoresSetStoreEmailSettingsResponseMock = (
     include_network_fee: faker.datatype.boolean(),
     rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
     pos_screen_enabled: faker.datatype.boolean(),
+    support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+    support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
   theme_settings: {
     store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -510,6 +527,8 @@ export const getStoresSetStoreThemeSettingsResponseMock = (
     include_network_fee: faker.datatype.boolean(),
     rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
     pos_screen_enabled: faker.datatype.boolean(),
+    support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+    support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
   theme_settings: {
     store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -569,6 +588,8 @@ export const getStoresSetStorePluginSettingsResponseMock = (
     include_network_fee: faker.datatype.boolean(),
     rate_rules: faker.string.alpha({ length: { min: 10, max: 20 } }),
     pos_screen_enabled: faker.datatype.boolean(),
+    support_email: faker.helpers.arrayElement([faker.internet.email(), ""]),
+    support_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
   theme_settings: {
     store_theme_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -604,51 +625,12 @@ export const getStoresSetStorePluginSettingsResponseMock = (
   ...overrideResponse,
 })
 
-export const getStoresSetStoreRateRulesResponseMock = (
-  overrideResponse: Partial<Extract<RateRulesResponse, object>> = {},
-): RateRulesResponse => ({
-  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  warnings: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() =>
-    faker.string.alpha({ length: { min: 10, max: 20 } }),
-  ),
-  ...overrideResponse,
-})
-
 export const getStoresGetStoreRatesResponseMock = (
   overrideResponse: Partial<Extract<RatesResponse, object>> = {},
 ): RatesResponse => ({
   rates: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
-    pair: faker.string.alpha({ length: { min: 10, max: 20 } }),
     rate: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
     message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    rule: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    degraded: faker.datatype.boolean(),
-    age: faker.helpers.arrayElement([faker.number.int(), null]),
-    error: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    steps: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
-      () => ({
-        rule: faker.string.alpha({ length: { min: 10, max: 20 } }),
-        rate: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
-        age: faker.helpers.arrayElement([faker.number.int(), null]),
-        error: faker.helpers.arrayElement([
-          faker.string.alpha({ length: { min: 10, max: 20 } }),
-          null,
-        ]),
-        used: faker.datatype.boolean(),
-      }),
-    ),
-    sources: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
-      () => ({
-        exchange: faker.string.alpha({ length: { min: 10, max: 20 } }),
-        pair: faker.string.alpha({ length: { min: 10, max: 20 } }),
-        rate: faker.helpers.arrayElement([faker.number.float({ fractionDigits: 2 }), null]),
-        age: faker.helpers.arrayElement([faker.number.int(), null]),
-        error: faker.helpers.arrayElement([
-          faker.string.alpha({ length: { min: 10, max: 20 } }),
-          null,
-        ]),
-      }),
-    ),
   })),
   ...overrideResponse,
 })
@@ -703,8 +685,10 @@ export const getStoresCreateItemMockHandler = (
 
 export const getStoresGetCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | StoresGetCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<StoresGetCount200> | StoresGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -773,8 +757,10 @@ export const getStoresDeleteItemMockHandler = (
 
 export const getStoresBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | StoresBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<StoresBatchAction200> | StoresBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
@@ -935,23 +921,18 @@ export const getStoresSetStorePluginSettingsMockHandler = (
 
 export const getStoresSetStoreRateRulesMockHandler = (
   overrideResponse?:
-    | RateRulesResponse
-    | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
-      ) => Promise<RateRulesResponse> | RateRulesResponse),
+    | unknown
+    | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.patch(
     "*/stores/:modelId/rate_rules",
     async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-      return HttpResponse.json(
-        overrideResponse !== undefined
-          ? typeof overrideResponse === "function"
-            ? await overrideResponse(info)
-            : overrideResponse
-          : getStoresSetStoreRateRulesResponseMock(),
-        { status: 200 },
-      )
+      if (typeof overrideResponse === "function") {
+        await overrideResponse(info)
+      }
+
+      return new HttpResponse(null, { status: 200 })
     },
     options,
   )

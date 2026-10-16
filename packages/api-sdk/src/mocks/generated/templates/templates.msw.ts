@@ -9,7 +9,12 @@ import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
 import type { RequestHandlerOptions } from "msw"
 
-import type { DisplayTemplate, OffsetPaginationDisplayTemplate } from "../../../schemas/generated"
+import type {
+  DisplayTemplate,
+  OffsetPaginationDisplayTemplate,
+  TemplatesBatchAction200,
+  TemplatesGetCount200,
+} from "../../../schemas/generated"
 
 export const getTemplatesListItemsResponseMock = (
   overrideResponse: Partial<Extract<OffsetPaginationDisplayTemplate, object>> = {},
@@ -50,7 +55,7 @@ export const getTemplatesCreateItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getTemplatesGetCountResponseMock = (): number => faker.number.int()
+export const getTemplatesGetCountResponseMock = (): TemplatesGetCount200 => faker.number.int()
 
 export const getTemplatesGetItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayTemplate, object>> = {},
@@ -91,7 +96,8 @@ export const getTemplatesDeleteItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getTemplatesBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getTemplatesBatchActionResponseMock = (): TemplatesBatchAction200 =>
+  faker.datatype.boolean()
 
 export const getTemplatesGetTemplateListMockHandler = (
   overrideResponse?:
@@ -162,8 +168,10 @@ export const getTemplatesCreateItemMockHandler = (
 
 export const getTemplatesGetCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | TemplatesGetCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<TemplatesGetCount200> | TemplatesGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -256,8 +264,10 @@ export const getTemplatesDeleteItemMockHandler = (
 
 export const getTemplatesBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | TemplatesBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<TemplatesBatchAction200> | TemplatesBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(

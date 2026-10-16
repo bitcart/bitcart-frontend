@@ -11,7 +11,6 @@ import type { RequestHandlerOptions } from "msw"
 
 import type {
   BackupsPolicy,
-  ExchangeInfo,
   GlobalStorePolicy,
   HostAgentJobStatus,
   HostAgentOverview,
@@ -126,30 +125,6 @@ export const getManageGetRatesinfoResponseMock = (): RateSourceInfo[] =>
       faker.date.past().toISOString().slice(0, 19) + "Z",
       null,
     ]),
-  }))
-
-export const getManageGetExchangesResponseMock = (): ExchangeInfo[] =>
-  Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
-    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    enabled: faker.datatype.boolean(),
-    api_key_types: Array.from(
-      { length: faker.number.int({ min: 1, max: 10 }) },
-      (_, i) => i + 1,
-    ).map(() => faker.string.alpha({ length: { min: 10, max: 20 } })),
-    api_key_type: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    api_key_set: faker.datatype.boolean(),
-  }))
-
-export const getManageSetExchangesResponseMock = (): ExchangeInfo[] =>
-  Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
-    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    enabled: faker.datatype.boolean(),
-    api_key_types: Array.from(
-      { length: faker.number.int({ min: 1, max: 10 }) },
-      (_, i) => i + 1,
-    ).map(() => faker.string.alpha({ length: { min: 10, max: 20 } })),
-    api_key_type: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    api_key_set: faker.datatype.boolean(),
   }))
 
 export const getManageGetBackupPoliciesResponseMock = (
@@ -527,54 +502,6 @@ export const getManageGetRatesinfoMockHandler = (
   )
 }
 
-export const getManageGetExchangesMockHandler = (
-  overrideResponse?:
-    | ExchangeInfo[]
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<ExchangeInfo[]> | ExchangeInfo[]),
-  options?: RequestHandlerOptions,
-) => {
-  return http.get(
-    "*/manage/exchanges",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-      return HttpResponse.json(
-        overrideResponse !== undefined
-          ? typeof overrideResponse === "function"
-            ? await overrideResponse(info)
-            : overrideResponse
-          : getManageGetExchangesResponseMock(),
-        { status: 200 },
-      )
-    },
-    options,
-  )
-}
-
-export const getManageSetExchangesMockHandler = (
-  overrideResponse?:
-    | ExchangeInfo[]
-    | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
-      ) => Promise<ExchangeInfo[]> | ExchangeInfo[]),
-  options?: RequestHandlerOptions,
-) => {
-  return http.post(
-    "*/manage/exchanges",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-      return HttpResponse.json(
-        overrideResponse !== undefined
-          ? typeof overrideResponse === "function"
-            ? await overrideResponse(info)
-            : overrideResponse
-          : getManageSetExchangesResponseMock(),
-        { status: 200 },
-      )
-    },
-    options,
-  )
-}
-
 export const getManageTestEmailPingMockHandler = (
   overrideResponse?:
     | unknown
@@ -773,8 +700,6 @@ export const getManageMock = () => [
   getManageDeleteLogMockHandler(),
   getManageGetSyncinfoMockHandler(),
   getManageGetRatesinfoMockHandler(),
-  getManageGetExchangesMockHandler(),
-  getManageSetExchangesMockHandler(),
   getManageTestEmailPingMockHandler(),
   getManageGetDaemonsMockHandler(),
   getManageGetBackupPoliciesMockHandler(),

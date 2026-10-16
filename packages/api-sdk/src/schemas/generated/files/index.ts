@@ -9,5 +9,7 @@
 export * from "./BodyFilesCreateFile.zod"
 export * from "./BodyFilesPatchFile.zod"
 export * from "./DisplayFile.zod"
+export * from "./FilesBatchAction200.zod"
+export * from "./FilesGetCount200.zod"
 export * from "./FilesListItemsParams.zod"
 export * from "./OffsetPaginationDisplayFile.zod"

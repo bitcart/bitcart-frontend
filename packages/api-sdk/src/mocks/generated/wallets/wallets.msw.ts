@@ -14,6 +14,9 @@ import type {
   DisplayWallet,
   OffsetPaginationDisplayWallet,
   WalletsBalance,
+  WalletsBatchAction200,
+  WalletsGetCount200,
+  WalletsGetWalletRate200,
 } from "../../../schemas/generated"
 
 export const getWalletsGetBalancesResponseMock = (
@@ -122,7 +125,7 @@ export const getWalletsCreateItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getWalletsGetCountResponseMock = (): number => faker.number.int()
+export const getWalletsGetCountResponseMock = (): WalletsGetCount200 => faker.number.int()
 
 export const getWalletsGetItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayWallet, object>> = {},
@@ -247,9 +250,11 @@ export const getWalletsDeleteItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getWalletsBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getWalletsBatchActionResponseMock = (): WalletsBatchAction200 =>
+  faker.datatype.boolean()
 
-export const getWalletsGetWalletRateResponseMock = (): number => faker.number.int()
+export const getWalletsGetWalletRateResponseMock = (): WalletsGetWalletRate200 =>
+  faker.number.float({ fractionDigits: 2 })
 
 export const getWalletsGetWalletBalanceResponseMock = (
   overrideResponse: Partial<Extract<BalanceResponse, object>> = {},
@@ -373,8 +378,10 @@ export const getWalletsCreateItemMockHandler = (
 
 export const getWalletsGetCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | WalletsGetCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<WalletsGetCount200> | WalletsGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -467,8 +474,10 @@ export const getWalletsDeleteItemMockHandler = (
 
 export const getWalletsBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | WalletsBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<WalletsBatchAction200> | WalletsBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
@@ -489,8 +498,10 @@ export const getWalletsBatchActionMockHandler = (
 
 export const getWalletsGetWalletRateMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | WalletsGetWalletRate200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<WalletsGetWalletRate200> | WalletsGetWalletRate200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(

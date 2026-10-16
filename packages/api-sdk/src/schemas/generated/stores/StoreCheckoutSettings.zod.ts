@@ -22,6 +22,8 @@ export const storeCheckoutSettingsAllowAnonymousInvoiceCreationDefault = true
 export const storeCheckoutSettingsIncludeNetworkFeeDefault = false
 export const storeCheckoutSettingsRateRulesDefault = ``
 export const storeCheckoutSettingsPosScreenEnabledDefault = true
+export const storeCheckoutSettingsSupportEmailDefault = ``
+export const storeCheckoutSettingsSupportUrlDefault = ``
 
 export const StoreCheckoutSettings = zod.object({
   expiration: zod.int().default(storeCheckoutSettingsExpirationDefault),
@@ -45,6 +47,10 @@ export const StoreCheckoutSettings = zod.object({
   include_network_fee: zod.boolean().default(storeCheckoutSettingsIncludeNetworkFeeDefault),
   rate_rules: zod.string().default(storeCheckoutSettingsRateRulesDefault),
   pos_screen_enabled: zod.boolean().default(storeCheckoutSettingsPosScreenEnabledDefault),
+  support_email: zod
+    .union([zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }), zod.literal("")])
+    .default(storeCheckoutSettingsSupportEmailDefault),
+  support_url: zod.string().default(storeCheckoutSettingsSupportUrlDefault),
 })
 
 export type StoreCheckoutSettings = zod.input<typeof StoreCheckoutSettings>

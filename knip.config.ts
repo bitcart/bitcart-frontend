@@ -44,6 +44,7 @@ const config: KnipConfig = {
         //* Imported from content/docs MDX files, which Knip does not parse.
         "src/views/**/examples/*.{ts,tsx}",
 
+        "vite.config.ts",
         "lingui.config.ts",
         "env.config.ts",
         "node-env.ts",

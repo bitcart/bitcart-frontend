@@ -34,6 +34,9 @@ import {
   DisplayWallet,
   OffsetPaginationDisplayWallet,
   WalletsBalance,
+  WalletsBatchAction200,
+  WalletsGetCount200,
+  WalletsGetWalletRate200,
 } from "../../../schemas/generated"
 import type {
   BalanceResponseOutput,
@@ -48,6 +51,9 @@ import type {
   OpenChannelScheme,
   OptionalUpdateWallet,
   WalletsBalanceOutput,
+  WalletsBatchAction200Output,
+  WalletsGetCount200Output,
+  WalletsGetWalletRate200Output,
   WalletsGetWalletRateParams,
   WalletsListItemsParams,
 } from "../../../schemas/generated"
@@ -1063,15 +1069,18 @@ export const getWalletsGetCountUrl = () => {
 export const walletsGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<WalletsGetCount200Output> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? WalletsGetCount200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -1769,7 +1778,7 @@ export const walletsBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<boolean> => {
+): Promise<WalletsBatchAction200Output> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1796,9 +1805,12 @@ export const walletsBatchAction = async (
     body: JSON.stringify(batchAction),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: boolean = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? WalletsBatchAction200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -1908,15 +1920,18 @@ export const walletsGetWalletRate = async (
   params?: WalletsGetWalletRateParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<WalletsGetWalletRate200Output> => {
   const res = await (fetchFn ?? fetch)(getWalletsGetWalletRateUrl(modelId, params), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? WalletsGetWalletRate200.parse(parsedBody) : parsedBody
   return data
 }
 

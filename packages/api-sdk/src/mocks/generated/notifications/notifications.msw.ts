@@ -11,6 +11,8 @@ import type { RequestHandlerOptions } from "msw"
 
 import type {
   DisplayNotification,
+  NotificationsBatchAction200,
+  NotificationsGetCount200,
   OffsetPaginationDisplayNotification,
 } from "../../../schemas/generated"
 
@@ -57,7 +59,8 @@ export const getNotificationsCreateItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getNotificationsGetCountResponseMock = (): number => faker.number.int()
+export const getNotificationsGetCountResponseMock = (): NotificationsGetCount200 =>
+  faker.number.int()
 
 export const getNotificationsGetItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayNotification, object>> = {},
@@ -104,7 +107,8 @@ export const getNotificationsDeleteItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getNotificationsBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getNotificationsBatchActionResponseMock = (): NotificationsBatchAction200 =>
+  faker.datatype.boolean()
 
 export const getNotificationsGetNotificationsMockHandler = (
   overrideResponse?:
@@ -194,8 +198,10 @@ export const getNotificationsCreateItemMockHandler = (
 
 export const getNotificationsGetCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | NotificationsGetCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<NotificationsGetCount200> | NotificationsGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -288,8 +294,10 @@ export const getNotificationsDeleteItemMockHandler = (
 
 export const getNotificationsBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | NotificationsBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<NotificationsBatchAction200> | NotificationsBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(

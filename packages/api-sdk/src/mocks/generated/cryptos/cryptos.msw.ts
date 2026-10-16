@@ -9,7 +9,10 @@ import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
 import type { RequestHandlerOptions } from "msw"
 
-export const getCryptosRateResponseMock = (): number => faker.number.int()
+import type { CryptosRate200 } from "../../../schemas/generated"
+
+export const getCryptosRateResponseMock = (): CryptosRate200 =>
+  faker.number.float({ fractionDigits: 2 })
 
 export const getCryptosGetCryptosMockHandler = (
   overrideResponse?:
@@ -51,8 +54,10 @@ export const getCryptosGetSupportedCryptosMockHandler = (
 
 export const getCryptosRateMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | CryptosRate200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<CryptosRate200> | CryptosRate200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(

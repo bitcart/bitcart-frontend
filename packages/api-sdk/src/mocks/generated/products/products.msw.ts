@@ -9,12 +9,19 @@ import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
 import type { RequestHandlerOptions } from "msw"
 
-import type { DisplayProduct, OffsetPaginationDisplayProduct } from "../../../schemas/generated"
+import type {
+  DisplayProduct,
+  OffsetPaginationDisplayProduct,
+  ProductsBatchAction200,
+  ProductsGetMaxProductPrice200,
+  ProductsProductsCount200,
+} from "../../../schemas/generated"
 
 export const getProductsCategoriesResponseMock = (): string[] =>
   Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, () => faker.word.sample())
 
-export const getProductsGetMaxProductPriceResponseMock = (): number => faker.number.int()
+export const getProductsGetMaxProductPriceResponseMock = (): ProductsGetMaxProductPrice200 =>
+  faker.number.float({ fractionDigits: 2 })
 
 export const getProductsDeleteItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayProduct, object>> = {},
@@ -74,7 +81,8 @@ export const getProductsUpdateProductMultipartResponseMock = (
   ...overrideResponse,
 })
 
-export const getProductsBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getProductsBatchActionResponseMock = (): ProductsBatchAction200 =>
+  faker.datatype.boolean()
 
 export const getProductsCreateProductMultipartResponseMock = (
   overrideResponse: Partial<Extract<DisplayProduct, object>> = {},
@@ -147,7 +155,8 @@ export const getProductsListItemsResponseMock = (
   ...overrideResponse,
 })
 
-export const getProductsProductsCountResponseMock = (): number => faker.number.int()
+export const getProductsProductsCountResponseMock = (): ProductsProductsCount200 =>
+  faker.number.int()
 
 export const getProductsGetProductResponseMock = (
   overrideResponse: Partial<Extract<DisplayProduct, object>> = {},
@@ -202,8 +211,10 @@ export const getProductsCategoriesMockHandler = (
 
 export const getProductsGetMaxProductPriceMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | ProductsGetMaxProductPrice200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ProductsGetMaxProductPrice200> | ProductsGetMaxProductPrice200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -272,8 +283,10 @@ export const getProductsUpdateProductMultipartMockHandler = (
 
 export const getProductsBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | ProductsBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<ProductsBatchAction200> | ProductsBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
@@ -342,8 +355,10 @@ export const getProductsListItemsMockHandler = (
 
 export const getProductsProductsCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | ProductsProductsCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ProductsProductsCount200> | ProductsProductsCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(

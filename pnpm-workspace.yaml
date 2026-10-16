@@ -17,18 +17,18 @@ catalogMode: strict
 
 catalogs:
   dependencies:
-    "@base-ui/react": 1.8.0
-    "@daypicker/react": 10.0.1
-    "@fumadocs/base-ui": 16.15.15
-    "@lingui/core": 6.9.0
-    "@lingui/react": 6.9.0
-    "@mantine/hooks": 9.6.3
+    "@base-ui/react": 1.9.0
+    "@daypicker/react": 10.0.2
+    "@fumadocs/base-ui": 16.17.1
+    "@lingui/core": 6.9.1
+    "@lingui/react": 6.9.1
+    "@mantine/hooks": 9.7.1
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
     "@tanstack/react-devtools": "0.10.13"
     "@tanstack/react-form": 1.33.5
-    "@tanstack/react-query": 5.104.0
-    "@tanstack/react-query-devtools": "5.104.0"
+    "@tanstack/react-query": 5.104.1
+    "@tanstack/react-query-devtools": "5.104.1"
     "@tanstack/react-router": "1.170.41"
     "@tanstack/react-router-devtools": "1.167.2"
     "@tanstack/react-router-ssr-query": "1.167.3"
@@ -36,19 +36,19 @@ catalogs:
     "@tanstack/react-store": "0.11.2"
     "@tanstack/store": "0.11.2"
     "@tanstack/start-static-server-functions": 1.167.39
-    "@web3icons/react": 4.1.22
+    "@web3icons/react": 4.1.24
     class-variance-authority: 0.7.1
-    dotenv: 18.0.4
-    fumadocs-core: 16.15.15
-    fumadocs-mdx: 15.4.5
-    fumadocs-ui: 16.15.15
+    dotenv: 18.0.7
+    fumadocs-core: 16.17.1
+    fumadocs-mdx: 15.4.7
+    fumadocs-ui: 16.17.1
     inter-ui: 4.1.1
-    lucide-react: 1.48.0
+    lucide-react: 1.54.0
     next-themes: 0.4.6
     qrcode.react: 4.2.0
     react: 19.3.0
     react-dom: 19.3.0
-    remeda: 2.50.0
+    remeda: 2.51.0
     sonner: 2.0.8
     tailwind-merge: 3.7.0
     use-sync-external-store: 1.7.0
@@ -60,11 +60,11 @@ catalogs:
   devDependencies:
     "@faker-js/faker": 10.6.0
     "@fumadocs/story": 1.4.0
-    "@lingui/cli": 6.9.0
-    "@lingui/conf": 6.9.0
-    "@lingui/native-tools": 0.1.5
-    "@lingui/vite-plugin": 6.9.0
-    "@playwright/test": 1.63.0
+    "@lingui/cli": 6.9.1
+    "@lingui/conf": 6.9.1
+    "@lingui/native-tools": 0.1.6
+    "@lingui/vite-plugin": 6.9.1
+    "@playwright/test": 1.64.0
     "@qalisa/vike-plugin-sitemap": 1.7.0
     "@stylistic/eslint-plugin": 5.10.0
     "@tailwindcss/vite": 4.3.3
@@ -78,25 +78,25 @@ catalogs:
     "@types/canvas-confetti": 1.9.0
     "@types/culori": 4.0.1
     "@types/mdx": 2.0.14
-    "@types/node": 25.9.8
+    "@types/node": 25.9.9
     "@types/react": 19.3.0
     "@types/react-dom": 19.3.0
     "@unocss/cli": 66.10.5
-    "@vitejs/plugin-react": 6.1.1
+    "@vitejs/plugin-react": 6.1.2
     culori: 4.0.2
-    dependency-cruiser: 18.4.0
-    eslint-plugin-better-tailwindcss: 4.7.0
+    dependency-cruiser: 18.5.0
+    eslint-plugin-better-tailwindcss: 4.9.0
     eslint-plugin-react-hooks: 7.1.1
-    jsdom: 30.1.1
-    knip: 6.38.0
-    msw: 3.0.0
+    jsdom: 30.1.2
+    knip: 6.41.0
+    msw: 3.0.2
     nitro: 3.0.260610-beta
-    nx: 23.2.1
-    orval: 8.38.0
-    oxc-transform-react: 0.145.0
-    oxfmt: 0.72.0
-    oxlint: 1.87.0
-    oxlint-tsgolint: 7.0.2003
+    nx: 23.3.0
+    orval: 8.41.0
+    oxc-transform-react: 0.152.0
+    oxfmt: 0.73.0
+    oxlint: 1.88.0
+    oxlint-tsgolint: 7.0.2004
     serve: 14.2.6
     srvx: 1.0.5
     tailwindcss: 4.3.3
@@ -106,10 +106,10 @@ catalogs:
     unocss: 66.10.5
     unocss-preset-animations: 1.3.0
     unocss-preset-shadcn: 1.0.1
-    vite: 8.3.1
+    vite: 8.3.4
     vite-plugin-static-copy: 4.1.1
     vite-plugin-svgr: 5.2.0
-    vitest: 5.0.2
+    vitest: 5.0.3
 
 linkWorkspacePackages: true
 
@@ -124,22 +124,10 @@ minimumReleaseAgeExclude:
   - oxlint
   - oxlint-tsgolint
   - "@base-ui/*"
-  # TODO: Remove after 2026-10-07
-  - source-map-js@1.2.2
-  # TODO: Remove after 2026-10-08
-  - "@lingui/*"
-  # Renovate security update: @tanstack/react-start@1.168.60
-  - "@tanstack/react-start@1.168.60"
 
 overrides:
-  # TODO: Remove once nx bumps its smol-toml pin to 1.7.1.
-  "nx>smol-toml": ^1.7.1
-
-  # TODO: Remove once nx bumps its axios pin to 1.20.0.
-  "nx>axios": ^1.20.0
-
-  # TODO: Remove once nx bumps its brace-expansion pin to 5.0.12.
-  "nx>brace-expansion": ^5.0.12
+  # TODO: Remove once nx bumps its undici pin to 7.29.1.
+  "nx>undici": ^7.29.1
 
   # TODO: Remove once minimatch bumps its brace-expansion floor to 5.0.12.
   "minimatch@10>brace-expansion": ^5.0.12
@@ -147,10 +135,7 @@ overrides:
   # TODO: Remove once ajv bumps its fast-uri floor to 3.1.8.
   "ajv>fast-uri": ^3.1.8
 
-  # TODO: Remove once orval's @scalar/json-magic bumps its undici pin to 7.29.1.
-  "@scalar/json-magic>undici": ^7.29.1
-
-  # TODO: Remove once postcss, css-tree, @eslint/css-tree and @tailwindcss/node bump their source-map-js floor to 1.2.2.
+  # TODO: Remove once css-tree, @eslint/css-tree and @tailwindcss/node bump their source-map-js floor to 1.2.2.
   source-map-js: ^1.2.2
 
   # TODO: Remove once serve bumps its compression pin to 1.8.2.

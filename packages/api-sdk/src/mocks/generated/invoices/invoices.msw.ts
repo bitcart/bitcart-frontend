@@ -12,6 +12,8 @@ import type { RequestHandlerOptions } from "msw"
 import type {
   DisplayInvoice,
   DisplayRefund,
+  InvoicesBatchAction200,
+  InvoicesGetCount200,
   OffsetPaginationDisplayInvoice,
 } from "../../../schemas/generated"
 
@@ -215,7 +217,7 @@ export const getInvoicesCreateItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getInvoicesGetCountResponseMock = (): number => faker.number.int()
+export const getInvoicesGetCountResponseMock = (): InvoicesGetCount200 => faker.number.int()
 
 export const getInvoicesGetItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayInvoice, object>> = {},
@@ -493,7 +495,8 @@ export const getInvoicesDeleteItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getInvoicesBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getInvoicesBatchActionResponseMock = (): InvoicesBatchAction200 =>
+  faker.datatype.boolean()
 
 export const getInvoicesGetOrCreateInvoiceByOrderIdResponseMock = (
   overrideResponse: Partial<Extract<DisplayInvoice, object>> = {},
@@ -844,8 +847,10 @@ export const getInvoicesCreateItemMockHandler = (
 
 export const getInvoicesGetCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | InvoicesGetCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<InvoicesGetCount200> | InvoicesGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -938,8 +943,10 @@ export const getInvoicesDeleteItemMockHandler = (
 
 export const getInvoicesBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | InvoicesBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<InvoicesBatchAction200> | InvoicesBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(

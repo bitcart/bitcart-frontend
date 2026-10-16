@@ -29,7 +29,13 @@ import type {
 } from "@tanstack/react-query"
 
 import { BitcartApiConfig } from "../../../config"
-import { AuthResponse, OffsetPaginationToken, Token } from "../../../schemas/generated"
+import {
+  AuthResponse,
+  OffsetPaginationToken,
+  Token,
+  TokenBatchAction200,
+  TokenGetTokenCount200,
+} from "../../../schemas/generated"
 import type {
   AuthResponseOutput,
   BatchAction,
@@ -40,6 +46,8 @@ import type {
   HTTPValidationError,
   OffsetPaginationTokenOutput,
   TOTPAuth,
+  TokenBatchAction200Output,
+  TokenGetTokenCount200Output,
   TokenGetTokenCountParams,
   TokenGetTokensParams,
   TokenOutput,
@@ -1324,15 +1332,18 @@ export const tokenGetTokenCount = async (
   params?: TokenGetTokenCountParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<TokenGetTokenCount200Output> => {
   const res = await (fetchFn ?? fetch)(getTokenGetTokenCountUrl(params), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? TokenGetTokenCount200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -1696,7 +1707,7 @@ export const tokenBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<boolean> => {
+): Promise<TokenBatchAction200Output> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1723,9 +1734,12 @@ export const tokenBatchAction = async (
     body: JSON.stringify(batchAction),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: boolean = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? TokenBatchAction200.parse(parsedBody) : parsedBody
   return data
 }
 

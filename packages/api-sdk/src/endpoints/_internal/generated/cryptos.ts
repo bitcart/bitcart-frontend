@@ -25,8 +25,10 @@ import type {
 } from "@tanstack/react-query"
 
 import { BitcartApiConfig } from "../../../config"
+import { CryptosRate200 } from "../../../schemas/generated"
 import type {
   CryptosGetFiatlistParams,
+  CryptosRate200Output,
   CryptosRateParams,
   HTTPValidationError,
 } from "../../../schemas/generated"
@@ -543,15 +545,18 @@ export const cryptosRate = async (
   params?: CryptosRateParams,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<CryptosRate200Output> => {
   const res = await (fetchFn ?? fetch)(getCryptosRateUrl(params), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? CryptosRate200.parse(parsedBody) : parsedBody
   return data
 }
 

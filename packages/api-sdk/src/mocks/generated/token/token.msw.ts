@@ -9,7 +9,13 @@ import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
 import type { RequestHandlerOptions } from "msw"
 
-import type { AuthResponse, OffsetPaginationToken, Token } from "../../../schemas/generated"
+import type {
+  AuthResponse,
+  OffsetPaginationToken,
+  Token,
+  TokenBatchAction200,
+  TokenGetTokenCount200,
+} from "../../../schemas/generated"
 
 export const getTokenCreateTokenResponseMock = (
   overrideResponse: Partial<Extract<AuthResponse, object>> = {},
@@ -96,7 +102,7 @@ export const getTokenGetCurrentTokenResponseMock = (
   ...overrideResponse,
 })
 
-export const getTokenGetTokenCountResponseMock = (): number => faker.number.int()
+export const getTokenGetTokenCountResponseMock = (): TokenGetTokenCount200 => faker.number.int()
 
 export const getTokenPatchTokenResponseMock = (
   overrideResponse: Partial<Extract<Token, object>> = {},
@@ -113,7 +119,7 @@ export const getTokenPatchTokenResponseMock = (
   ...overrideResponse,
 })
 
-export const getTokenBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getTokenBatchActionResponseMock = (): TokenBatchAction200 => faker.datatype.boolean()
 
 export const getTokenCreateTokenMockHandler = (
   overrideResponse?:
@@ -285,8 +291,10 @@ export const getTokenGetCurrentTokenMockHandler = (
 
 export const getTokenGetTokenCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | TokenGetTokenCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<TokenGetTokenCount200> | TokenGetTokenCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -329,8 +337,10 @@ export const getTokenPatchTokenMockHandler = (
 
 export const getTokenBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | TokenBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<TokenBatchAction200> | TokenBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(

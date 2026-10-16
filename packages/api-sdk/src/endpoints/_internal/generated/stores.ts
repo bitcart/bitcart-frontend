@@ -32,8 +32,9 @@ import { BitcartApiConfig } from "../../../config"
 import {
   DisplayStore,
   OffsetPaginationDisplayStore,
-  RateRulesResponse,
   RatesResponse,
+  StoresBatchAction200,
+  StoresGetCount200,
 } from "../../../schemas/generated"
 import type {
   BatchAction,
@@ -44,11 +45,12 @@ import type {
   OffsetPaginationDisplayStoreOutput,
   OptionalUpdateStore,
   PublicStore,
-  RateRulesResponseOutput,
   RatesResponseOutput,
   StoreCheckoutSettings,
   StorePluginSettings,
   StoreThemeSettings,
+  StoresBatchAction200Output,
+  StoresGetCount200Output,
   StoresGetStoreRatesParams,
   StoresListItemsParams,
 } from "../../../schemas/generated"
@@ -464,15 +466,18 @@ export const getStoresGetCountUrl = () => {
 export const storesGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<StoresGetCount200Output> => {
   const res = await (fetchFn ?? fetch)(getStoresGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? StoresGetCount200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -921,7 +926,7 @@ export const storesBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<boolean> => {
+): Promise<StoresBatchAction200Output> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -948,9 +953,12 @@ export const storesBatchAction = async (
     body: JSON.stringify(batchAction),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: boolean = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? StoresBatchAction200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -2056,7 +2064,7 @@ export const storesSetStoreRateRules = async (
   storesSetStoreRateRulesBody?: string,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<RateRulesResponseOutput> => {
+): Promise<unknown> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -2083,11 +2091,9 @@ export const storesSetStoreRateRules = async (
     body: JSON.stringify(storesSetStoreRateRulesBody),
   })
 
-  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
-  const data = contentType.includes("json") ? RateRulesResponse.parse(parsedBody) : parsedBody
+  const data: unknown = body ? JSON.parse(body) : {}
   return data
 }
 

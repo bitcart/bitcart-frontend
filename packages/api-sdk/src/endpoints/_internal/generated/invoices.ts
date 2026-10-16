@@ -32,6 +32,8 @@ import { BitcartApiConfig } from "../../../config"
 import {
   DisplayInvoice,
   DisplayRefund,
+  InvoicesBatchAction200,
+  InvoicesGetCount200,
   OffsetPaginationDisplayInvoice,
 } from "../../../schemas/generated"
 import type {
@@ -41,7 +43,9 @@ import type {
   DisplayInvoiceOutput,
   DisplayRefundOutput,
   HTTPValidationError,
+  InvoicesBatchAction200Output,
   InvoicesExportInvoicesParams,
+  InvoicesGetCount200Output,
   InvoicesListItemsParams,
   MethodUpdateData,
   OffsetPaginationDisplayInvoiceOutput,
@@ -733,15 +737,18 @@ export const getInvoicesGetCountUrl = () => {
 export const invoicesGetCount = async (
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<number> => {
+): Promise<InvoicesGetCount200Output> => {
   const res = await (fetchFn ?? fetch)(getInvoicesGetCountUrl(), {
     ...options,
     method: "GET",
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: number = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? InvoicesGetCount200.parse(parsedBody) : parsedBody
   return data
 }
 
@@ -1439,7 +1446,7 @@ export const invoicesBatchAction = async (
   batchAction: BatchAction,
   options?: RequestInit,
   fetchFn?: typeof globalThis.fetch,
-): Promise<boolean> => {
+): Promise<InvoicesBatchAction200Output> => {
   const getHeaders = (
     h?: NonNullable<RequestInit["headers"]>,
   ): Record<string, string | readonly string[]> => {
@@ -1466,9 +1473,12 @@ export const invoicesBatchAction = async (
     body: JSON.stringify(batchAction),
   })
 
+  const contentType = (res.headers.get("content-type") ?? "").toLowerCase()
   const body = [204, 205, 304].includes(res.status) ? null : await res.text()
   if (!res.ok) throw createApiFailureError(res, body)
-  const data: boolean = body ? JSON.parse(body) : {}
+  const parsedBody = body ? (contentType.includes("json") ? JSON.parse(body) : body) : {}
+  const data =
+    res.ok && contentType.includes("json") ? InvoicesBatchAction200.parse(parsedBody) : parsedBody
   return data
 }
 

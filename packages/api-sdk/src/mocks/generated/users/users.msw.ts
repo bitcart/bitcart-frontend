@@ -14,6 +14,8 @@ import type {
   DisplayUserWithToken,
   EmailVerifyResponse,
   OffsetPaginationDisplayUser,
+  UsersBatchAction200,
+  UsersGetCount200,
 } from "../../../schemas/generated"
 
 export const getUsersMeResponseMock = (
@@ -135,7 +137,7 @@ export const getUsersCreateUserResponseMock = (
   ...overrideResponse,
 })
 
-export const getUsersGetCountResponseMock = (): number => faker.number.int()
+export const getUsersGetCountResponseMock = (): UsersGetCount200 => faker.number.int()
 
 export const getUsersGetItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayUser, object>> = {},
@@ -209,7 +211,7 @@ export const getUsersDeleteItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getUsersBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getUsersBatchActionResponseMock = (): UsersBatchAction200 => faker.datatype.boolean()
 
 export const getUsersMeMockHandler = (
   overrideResponse?:
@@ -521,8 +523,10 @@ export const getUsersCreateUserMockHandler = (
 
 export const getUsersGetCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | UsersGetCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<UsersGetCount200> | UsersGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -613,8 +617,10 @@ export const getUsersDeleteItemMockHandler = (
 
 export const getUsersBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | UsersBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<UsersBatchAction200> | UsersBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(

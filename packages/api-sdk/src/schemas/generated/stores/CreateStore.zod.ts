@@ -29,6 +29,8 @@ export const createStoreCheckoutSettingsDefault = {
   include_network_fee: false,
   rate_rules: "",
   pos_screen_enabled: true,
+  support_email: "",
+  support_url: "",
 }
 export const createStoreThemeSettingsDefault = { store_theme_url: "", checkout_theme_url: "" }
 export const createStoreEmailSettingsDefault = {

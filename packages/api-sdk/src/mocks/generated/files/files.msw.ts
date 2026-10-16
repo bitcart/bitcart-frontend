@@ -9,7 +9,12 @@ import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
 import type { RequestHandlerOptions } from "msw"
 
-import type { DisplayFile, OffsetPaginationDisplayFile } from "../../../schemas/generated"
+import type {
+  DisplayFile,
+  FilesBatchAction200,
+  FilesGetCount200,
+  OffsetPaginationDisplayFile,
+} from "../../../schemas/generated"
 
 export const getFilesListItemsResponseMock = (
   overrideResponse: Partial<Extract<OffsetPaginationDisplayFile, object>> = {},
@@ -48,7 +53,7 @@ export const getFilesCreateFileResponseMock = (
   ...overrideResponse,
 })
 
-export const getFilesGetCountResponseMock = (): number => faker.number.int()
+export const getFilesGetCountResponseMock = (): FilesGetCount200 => faker.number.int()
 
 export const getFilesGetItemResponseMock = (
   overrideResponse: Partial<Extract<DisplayFile, object>> = {},
@@ -74,7 +79,7 @@ export const getFilesDeleteItemResponseMock = (
   ...overrideResponse,
 })
 
-export const getFilesBatchActionResponseMock = (): boolean => faker.datatype.boolean()
+export const getFilesBatchActionResponseMock = (): FilesBatchAction200 => faker.datatype.boolean()
 
 export const getFilesPatchFileResponseMock = (
   overrideResponse: Partial<Extract<DisplayFile, object>> = {},
@@ -138,8 +143,10 @@ export const getFilesCreateFileMockHandler = (
 
 export const getFilesGetCountMockHandler = (
   overrideResponse?:
-    | number
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<number> | number),
+    | FilesGetCount200
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<FilesGetCount200> | FilesGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
@@ -206,8 +213,10 @@ export const getFilesDeleteItemMockHandler = (
 
 export const getFilesBatchActionMockHandler = (
   overrideResponse?:
-    | boolean
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<boolean> | boolean),
+    | FilesBatchAction200
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<FilesBatchAction200> | FilesBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
