@@ -29,13 +29,13 @@ catalogs:
     "@tanstack/react-form": 1.33.5
     "@tanstack/react-query": 5.104.0
     "@tanstack/react-query-devtools": "5.104.0"
-    "@tanstack/react-router": "1.170.40"
+    "@tanstack/react-router": "1.170.41"
     "@tanstack/react-router-devtools": "1.167.2"
     "@tanstack/react-router-ssr-query": "1.167.3"
-    "@tanstack/react-start": "1.168.59"
+    "@tanstack/react-start": "1.168.60"
     "@tanstack/react-store": "0.11.2"
     "@tanstack/store": "0.11.2"
-    "@tanstack/start-static-server-functions": 1.167.38
+    "@tanstack/start-static-server-functions": 1.167.39
     "@web3icons/react": 4.1.22
     class-variance-authority: 0.7.1
     dotenv: 18.0.4
@@ -128,6 +128,8 @@ minimumReleaseAgeExclude:
   - source-map-js@1.2.2
   # TODO: Remove after 2026-10-08
   - "@lingui/*"
+  # Renovate security update: @tanstack/react-start@1.168.60
+  - "@tanstack/react-start@1.168.60"
 
 overrides:
   # TODO: Remove once nx bumps its smol-toml pin to 1.7.1.
