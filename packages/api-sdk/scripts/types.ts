@@ -6,7 +6,6 @@ export type OpenApiSpec = {
     schemas?: Record<
       string,
       {
-        additionalProperties?: unknown
         properties?: Record<string, { enum?: string[] }>
       }
     >

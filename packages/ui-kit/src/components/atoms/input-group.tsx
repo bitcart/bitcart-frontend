@@ -21,10 +21,10 @@ export const InputGroup: React.FC<InputGroupProps> = ({ className, ...props }) =
         `
           group/input-group border-input rounded-md shadow-xs h-11 min-w-0 bg-white
           dark:bg-input/30
-          has-[>[data-align=inline-start]]:[&>input]:pl-2
-          has-[>[data-align=inline-end]]:[&>input]:pr-2
-          has-[>[data-align=block-start]]:[&>input]:pb-3
-          has-[>[data-align=block-end]]:[&>input]:pt-3
+          [&>[data-slot=input-control]>input]:has-[>[data-align=inline-start]]:pl-2
+          [&>[data-slot=input-control]>input]:has-[>[data-align=inline-end]]:pr-2
+          [&>[data-slot=input-control]>input]:has-[>[data-align=block-start]]:pb-3
+          [&>[data-slot=input-control]>input]:has-[>[data-align=block-end]]:pt-3
           has-[[data-slot=input-group-control]:focus-visible]:border-ring
           has-[[data-slot=input-group-control]:focus-visible]:ring-ring
           has-[[data-slot][aria-invalid=true]]:ring-destructive/20

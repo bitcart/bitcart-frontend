@@ -87,19 +87,19 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
         className={cn(
           startAddon &&
             `
-              sm:data-[size=sm]:*:data-[slot=autocomplete-input]:ps-[calc(var(--spacing)*7-1px)]
+              sm:[&>[data-slot=autocomplete-input]]:data-[size=sm]:ps-[calc(var(--spacing)*7-1px)]
               sm:*:data-[slot=autocomplete-input]:ps-[calc(var(--spacing)*8-1px)]
               *:data-[slot=autocomplete-input]:ps-[calc(var(--spacing)*8.5-1px)]
-              data-[size=sm]:*:data-[slot=autocomplete-input]:ps-[calc(var(--spacing)*7.5-1px)]
+              [&>[data-slot=autocomplete-input]]:data-[size=sm]:ps-[calc(var(--spacing)*7.5-1px)]
             `,
 
           {
             [`
-              has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:*:data-[slot=autocomplete-input]:pe-6.5
+              [&>[data-slot=autocomplete-input]]:has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:pe-6.5
             `]: sizeValue === "sm",
 
             [`
-              has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:*:data-[slot=autocomplete-input]:pe-7
+              [&>[data-slot=autocomplete-input]]:has-[+[data-slot=autocomplete-trigger],+[data-slot=autocomplete-clear]]:pe-7
             `]: sizeValue !== "sm",
           },
           className,

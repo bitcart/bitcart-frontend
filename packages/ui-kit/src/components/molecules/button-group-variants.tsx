@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority"
 
 export const buttonGroupVariants = cva(
   `
-    has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-md
+    [&>[data-slot=select-trigger]:last-of-type]:has-[>input[aria-hidden=true]:last-child]:rounded-r-md
     has-[>[data-slot=button-group]]:gap-2
     flex w-fit items-stretch
     *:focus-visible:relative *:focus-visible:z-10

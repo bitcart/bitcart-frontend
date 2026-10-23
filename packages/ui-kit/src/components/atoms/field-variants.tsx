@@ -14,7 +14,7 @@ export const fieldVariants = cva(
 
           `
             has-[>[data-slot=field-content]]:items-start
-            has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px
+            [&>[role=checkbox],&>[role=radio]]:has-[>[data-slot=field-content]]:mt-px
           `,
         ],
 
@@ -31,7 +31,7 @@ export const fieldVariants = cva(
 
           `
             @md/field-group:has-[>[data-slot=field-content]]:items-start
-            @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px
+            @md/field-group:[&>[role=checkbox],&>[role=radio]]:has-[>[data-slot=field-content]]:mt-px
           `,
         ],
       },

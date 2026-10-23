@@ -44,12 +44,10 @@ const report = (flow: string, failures: string[], summary: string): boolean => {
 
 //* Repairs Orval's generated Zod schemas.
 //*
-//* 1. `additionalProperties: true`. Orval emits a plain `zod.object`, which strips the undeclared
-//*    keys the API extends such payloads with at runtime. `zod.looseObject` preserves them.
-//* 2. Enums overridden by `transform-spec.ts`. A closed list makes every value outside it a parse
+//* 1. Enums overridden by `transform-spec.ts`. A closed list makes every value outside it a parse
 //*    failure, and `runtimeValidation` propagates that failure to each page rendering the payload.
 //*    `.catch()` resolves such a value to the fallback member.
-//* 3. `format: "email"`. Orval emits a bare `zod.email()`, whose default pattern rejects addresses
+//* 2. `format: "email"`. Orval emits a bare `zod.email()`, whose default pattern rejects addresses
 //*    accepted by the API, such as `a&b@example.com`. `EMAIL_PATTERN` accepts all of them.
 //*
 //! Every rewrite is a regex over Orval's output shape, which an upgrade can reshape silently.
@@ -59,12 +57,6 @@ const postprocessSchemas: Flow = () => {
   const EMAIL_DECLARATION = /zod\.email\(\)/g
 
   const spec = JSON.parse(readFileSync(SPEC_PATH, "utf8")) as OpenApiSpec
-
-  const looseSchemas = new Set(
-    Object.entries(spec.components?.schemas ?? {})
-      .filter(([, schema]) => schema.additionalProperties === true)
-      .map(([name]) => name),
-  )
 
   const fallbackEnums = Object.values(SCHEMA_ENUM_OVERRIDES).flatMap((properties) =>
     Object.values(properties).filter((members) => members.includes(ENUM_FALLBACK)),
@@ -80,22 +72,6 @@ const postprocessSchemas: Flow = () => {
   }
 
   const emailFormats = countEmailFormats(spec.components?.schemas)
-
-  const applyLooseObjects = (source: string) => {
-    let updated = source
-    let rewrites = 0
-
-    for (const name of looseSchemas) {
-      const declaration = new RegExp(`^export const ${name} = zod\\.object\\(`, "m")
-
-      if (!declaration.test(updated)) continue
-
-      updated = updated.replace(declaration, `export const ${name} = zod.looseObject(`)
-      rewrites += 1
-    }
-
-    return { rewrites, source: updated }
-  }
 
   const applyEnumFallback = (source: string) => {
     let rewrites = 0
@@ -125,31 +101,20 @@ const postprocessSchemas: Flow = () => {
 
   const failures: string[] = []
   const pending = new Map<string, string>()
-  let loosened = 0
   let caught = 0
   let widened = 0
 
   for (const file of walk(SCHEMAS_ROOT, ".zod.ts")) {
     const original = readFileSync(file, "utf8")
-    const withLooseObjects = applyLooseObjects(original)
-    const withEnumFallbacks = applyEnumFallback(withLooseObjects.source)
+    const withEnumFallbacks = applyEnumFallback(original)
     const withEmailPatterns = applyEmailPattern(withEnumFallbacks.source)
 
-    loosened += withLooseObjects.rewrites
     caught += withEnumFallbacks.rewrites
     widened += withEmailPatterns.rewrites
 
     if (withEmailPatterns.source !== original) {
       pending.set(file, withEmailPatterns.source)
     }
-  }
-
-  if (looseSchemas.size > 0 && loosened === 0) {
-    failures.push(
-      `none of the ${
-        looseSchemas.size
-      } \`additionalProperties: true\` schemas was declared as \`zod.object(\``,
-    )
   }
 
   if (fallbackEnums.length > 0 && caught === 0) {
@@ -172,7 +137,7 @@ const postprocessSchemas: Flow = () => {
     succeeded: report(
       "schemas",
       failures,
-      `${loosened} loose object(s), ${caught} enum fallback(s), ${widened} email pattern(s)`,
+      `${caught} enum fallback(s), ${widened} email pattern(s)`,
     ),
   }
 }
