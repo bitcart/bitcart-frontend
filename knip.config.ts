@@ -68,8 +68,12 @@ const config: KnipConfig = {
     },
 
     "packages/api-sdk": {
-      // TODO: Remove once each endpoint gets at least one exported wrapper.
-      ignore: ["src/endpoints/_internal/generated/**"],
+      ignore: [
+        // TODO: Remove once each endpoint gets at least one exported wrapper.
+        "src/endpoints/_internal/generated/**",
+
+        "scripts/**/*.ts",
+      ],
     },
 
     "packages/configs": {
