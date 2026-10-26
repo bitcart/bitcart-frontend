@@ -54,6 +54,7 @@ export default defineConfig({
   },
 
   build: {
+    assetsDir: "checkout/assets",
     sourcemap: true,
   },
 })

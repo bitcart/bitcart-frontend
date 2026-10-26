@@ -48,6 +48,7 @@ export const Route = createRootRouteWithContext<CheckoutRouterContext>()({
     })
 
     const manifest = getDocumentHeadManifest({
+      favicon: { href: "/checkout/favicon.ico", type: "image/x-icon" },
       isCharsetSetElsewhere: false,
       isOgTitleSetElsewhere: false,
       isRoutingLocaleDependent: false,
@@ -66,6 +67,7 @@ export const Route = createRootRouteWithContext<CheckoutRouterContext>()({
       ],
 
       links: [{ rel: "stylesheet", href: unoCss }, ...manifest.links],
+      scripts: [{ src: "/checkout/config.js" }],
     }
   },
 

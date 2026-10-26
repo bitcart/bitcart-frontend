@@ -13,7 +13,7 @@ export const getLayoutConfig = defineGetLayoutConfig((i18n: I18n) => ({
 
   brand: {
     name: "Bitcart",
-    logoImageSrc: "/logo.png",
+    logoImageSrc: "/checkout/logo.png",
     logoIcon: BitcartWordmarkIcon,
   },
 

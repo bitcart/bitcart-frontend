@@ -14,6 +14,7 @@
 
       "inputs": [
         "{projectRoot}/scripts/generate-coin-icons.ts",
+        "{projectRoot}/src/coin-icons/shards.ts",
         { "externalDependencies": ["@web3icons/common", "@web3icons/react", "oxfmt", "tsx"] }
       ],
 

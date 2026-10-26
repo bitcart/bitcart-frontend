@@ -1,0 +1,28 @@
+server {
+    listen 80;
+    root /usr/share/nginx/html;
+
+    gzip on;
+    gzip_types text/css text/javascript application/javascript application/json image/svg+xml;
+
+    location = /checkout/config.js {
+        default_type text/javascript;
+        add_header Cache-Control "no-store";
+        return 200 'window.BITCART_CONFIG = { BITCART_API_URL: "${BITCART_API_URL}" }\n';
+    }
+
+    location /checkout/assets/ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        try_files $uri =404;
+    }
+
+    location ~ ^/(embed|modal)/ {
+        add_header Cache-Control "no-cache";
+        try_files $uri =404;
+    }
+
+    location / {
+        add_header Cache-Control "no-cache";
+        try_files $uri /_shell.html;
+    }
+}

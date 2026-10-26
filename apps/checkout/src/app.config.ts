@@ -31,7 +31,7 @@ export const getAppDocumentMetadata = (): StaticDocumentMetadata => ({
   description: t`Pay your invoice securely with cryptocurrency via Bitcart`,
 
   image: {
-    src: "/logo.png",
+    src: "/checkout/logo.png",
     alt: "Bitcart Checkout",
     type: "image/png",
     width: "600",

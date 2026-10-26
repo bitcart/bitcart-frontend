@@ -15,7 +15,7 @@ import { CheckoutShell, type CheckoutShellTemplate } from "../runtime/shell"
 
 const getTestLayoutConfig = defineGetLayoutConfig(() => ({
   i18n: { activeLocale: "en", availableLocales: ["en"] },
-  brand: { name: "Bitcart", logoImageSrc: "/logo.png", logoIcon: BitcartWordmarkIcon },
+  brand: { name: "Bitcart", logoImageSrc: "/checkout/logo.png", logoIcon: BitcartWordmarkIcon },
   navigation: { directory: { labeledLinks: [] } },
 }))
 

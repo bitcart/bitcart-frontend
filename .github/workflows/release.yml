@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    name: prepare
+    runs-on: ubuntu-latest
+    outputs:
+      app: ${{ steps.parse.outputs.app }}
+      version: ${{ steps.parse.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Parse the release tag
+        id: parse
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          app=${TAG%-v*}
+          version=${TAG##*-v}
+          if [[ $TAG != "$app-v$version" || ! -f apps/$app/Dockerfile ]]; then
+            echo "::error::Expected a tag like <app>-v<version> for an app with a Dockerfile, got $TAG"
+            exit 1
+          fi
+          package_version=$(jq -r .version "apps/$app/package.json")
+          if [[ $version != "$package_version" ]]; then
+            echo "::error::$TAG doesn't match apps/$app/package.json version $package_version"
+            exit 1
+          fi
+          {
+            echo "app=$app"
+            echo "version=$version"
+          } >> "$GITHUB_OUTPUT"
+
+  publish:
+    name: publish
+    needs: prepare
+    uses: bitcart/bitcart-actions/.github/workflows/build-docker-image.yml@master
+    permissions:
+      contents: read
+      packages: write # to publish to GHCR
+      id-token: write # for Docker Hub OIDC login and provenance signing
+      attestations: write # to publish build attestations
+      artifact-metadata: write # to record artifact storage metadata for attestations
+    with:
+      dockerfile: apps/${{ needs.prepare.outputs.app }}/Dockerfile
+      image-name: ${{ vars.DOCKERHUB_USER }}/bitcart-${{ needs.prepare.outputs.app }}
+      tags: |
+        type=raw,value=${{ needs.prepare.outputs.version }}
+        type=raw,value=stable
+      dockerhub-user: ${{ vars.DOCKERHUB_USER }}
+      dockerhub-oidc-connection-id: ${{ vars.DOCKERHUB_OIDC_CONNECTIONID }}
