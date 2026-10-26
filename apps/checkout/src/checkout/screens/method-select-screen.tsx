@@ -6,6 +6,7 @@ import {
   CheckoutCard,
   CheckoutFooter,
   ExtensionSlot,
+  StoreBrandRow,
   useCheckout,
 } from ".."
 
@@ -15,6 +16,7 @@ export const CheckoutMethodSelectScreen = () => {
 
   return (
     <CheckoutCard>
+      <StoreBrandRow className="px-5 py-4 border-border border-b" />
       <ExtensionSlot name="checkout:header-extra" className="px-5 pt-5" />
 
       <div className="p-5 gap-4 flex flex-col">

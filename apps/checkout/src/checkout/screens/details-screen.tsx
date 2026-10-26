@@ -4,27 +4,19 @@ import { useLingui } from "@lingui/react/macro"
 import {
   CheckoutCard,
   CheckoutFooter,
+  CheckoutHeader,
   ExtensionSlot,
-  useCheckout,
   useCustomerDetailsForm,
 } from ".."
 
 export const CheckoutCustomerDetailsScreen = () => {
   const { t } = useLingui()
-  const { invoice, store } = useCheckout("details")
   const { form, fields, handleSubmit, submitError } = useCustomerDetailsForm()
 
   return (
     <CheckoutCard>
-      <div className="px-5 py-4 border-border border-b">
-        <div className="text-base font-bold tracking-tight truncate">{store.name}</div>
-
-        <div className="mt-0.5 text-muted-foreground text-[11px]">
-          {invoice.price} {invoice.currency}
-        </div>
-
-        <ExtensionSlot name="checkout:header-extra" className="mt-3" />
-      </div>
+      <CheckoutHeader className="border-border border-b" />
+      <ExtensionSlot name="checkout:header-extra" className="px-5 py-3 border-border border-b" />
 
       <form onSubmit={handleSubmit} noValidate className="p-5 gap-4 flex flex-col">
         <p className="text-muted-foreground text-sm">

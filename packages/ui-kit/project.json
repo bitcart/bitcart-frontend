@@ -2,6 +2,25 @@
   "name": "@bitcart/ui-kit",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "targets": {
+    "generate:coin-icons": {
+      "executor": "nx:run-commands",
+
+      "options": {
+        "commands": ["tsx ./scripts/generate-coin-icons.ts", "oxfmt src/coin-icons/generated"],
+
+        "parallel": false,
+        "cwd": "packages/ui-kit"
+      },
+
+      "inputs": [
+        "{projectRoot}/scripts/generate-coin-icons.ts",
+        { "externalDependencies": ["@web3icons/common", "@web3icons/react", "oxfmt", "tsx"] }
+      ],
+
+      "outputs": ["{projectRoot}/src/coin-icons/generated"],
+      "cache": true
+    },
+
     "i18n:extract-locales": {
       "outputs": ["{projectRoot}/src/i18n/_generated"]
     },
@@ -13,7 +32,7 @@
     },
 
     "build:main": {
-      "dependsOn": ["build:styles", "i18n:extract-locales", "^build"],
+      "dependsOn": ["generate:coin-icons", "build:styles", "i18n:extract-locales", "^build"],
       "inputs": ["packageBuildInputs", "^packageBuildInputs", "packageCatalogs"],
       "outputs": ["{projectRoot}/dist"],
       "cache": true

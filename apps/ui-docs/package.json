@@ -20,6 +20,7 @@
   "dependencies": {
     "@bitcart/core": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",
+    "@fontsource-variable/geist-mono": "catalog:dependencies",
     "@fumadocs/base-ui": "catalog:dependencies",
     "@lingui/core": "catalog:dependencies",
     "@lingui/react": "catalog:dependencies",

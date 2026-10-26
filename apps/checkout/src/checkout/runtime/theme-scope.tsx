@@ -29,30 +29,32 @@ const toRule = (selector: string, tokens: TokenValues) => {
 }
 
 /**
- * Scopes the theme tokens of a template to its wrapper.
+ * Themes the whole page while its wrapper is mounted: a template's screens, or the receipt. The
+ * tokens go on `:root`, so the page around the card and portaled overlays such as dialogs follow
+ * them too.
  *
- * Layers the template colors, then the merchant palette, token by token over the base theme on
- * `:root`. The generated CSS carries no free input: every value is a parsed OKLCH triplet and the
- * id a kebab-case folder name.
+ * Layers the given palettes in order, token by token over the base theme on `:root`: a template's
+ * colors, then the merchant palette. The generated CSS carries no free input: every value is a
+ * parsed OKLCH triplet and the id a kebab-case template folder name or a fixed app id.
  */
 export const CheckoutThemeScope = ({
-  templateId,
+  scopeId,
   palettes,
   children,
 }: {
-  templateId: string
+  scopeId: string
   palettes: (CheckoutPalette | null | undefined)[]
   children: ReactNode
 }) => {
   const { light, dark } = mergePalettes(palettes)
-  const scope = `[data-checkout-template="${templateId}"]`
+  const scope = `:has([data-checkout-theme="${scopeId}"])`
 
-  const css = [toRule(`:root:not(.dark) ${scope}`, light), toRule(`:root.dark ${scope}`, dark)]
+  const css = [toRule(`:root:not(.dark)${scope}`, light), toRule(`:root.dark${scope}`, dark)]
     .filter(Boolean)
     .join("\n")
 
   return (
-    <div data-checkout-template={templateId} className="contents">
+    <div data-checkout-theme={scopeId} className="contents">
       {css && <style>{css}</style>}
       {children}
     </div>

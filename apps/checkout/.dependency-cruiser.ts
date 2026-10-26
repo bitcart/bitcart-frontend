@@ -31,7 +31,7 @@ export default {
       comment: "Checkout templates read the checkout model, never the raw API or the router.",
       severity: "error",
       from: { path: "^src/templates/" },
-      to: { path: [APP_INTERNALS, "@bitcart/api-sdk", ROUTER] },
+      to: { path: [APP_INTERNALS, "@bitcart/client-sdk", ROUTER] },
     },
 
     {
@@ -53,6 +53,26 @@ export default {
       severity: "error",
       from: { path: "^src/checkout/" },
       to: { path: [APP_INTERNALS, "^src/templates/", ROUTER] },
+    },
+
+    {
+      name: "embed-scripts-isolation",
+      comment:
+        "The embed scripts run on merchant pages: from the app, they import the embed protocol only.",
+      severity: "error",
+      from: { path: "^src/embed/" },
+      to: {
+        path: "^src/",
+        pathNot: ["^src/embed/", "^src/common/integrations/embed/protocol\\.ts$"],
+      },
+    },
+
+    {
+      name: "embed-scripts-standalone",
+      comment: "The app never imports the embed scripts: Vite bundles them on their own.",
+      severity: "error",
+      from: { pathNot: "^src/embed/" },
+      to: { path: "^src/embed/" },
     },
   ],
 } satisfies IConfiguration

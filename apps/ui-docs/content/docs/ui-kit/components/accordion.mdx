@@ -4,9 +4,11 @@ title: Accordion
 
 import {
   DefaultAccordionExample,
+  DividedAccordionExample,
   MultipleAccordionExample,
 } from "@/views/ui-kit/accordion/examples"
 import defaultCode from "@/views/ui-kit/accordion/examples/default.tsx?raw"
+import dividedCode from "@/views/ui-kit/accordion/examples/divided.tsx?raw"
 import multipleCode from "@/views/ui-kit/accordion/examples/multiple.tsx?raw"
 
 <ComponentShowcase
@@ -23,4 +25,12 @@ import multipleCode from "@/views/ui-kit/accordion/examples/multiple.tsx?raw"
   code={multipleCode}
 >
   <MultipleAccordionExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Divided"
+  description="Items separated by a single line instead of cards, for longer lists and quieter surfaces"
+  code={dividedCode}
+>
+  <DividedAccordionExample />
 </ComponentShowcase>

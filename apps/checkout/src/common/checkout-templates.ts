@@ -3,7 +3,7 @@ import type { Messages } from "@lingui/core"
 import type { CheckoutTemplate } from "#/checkout"
 import { createTemplateRegistry } from "#/checkout/runtime/registry"
 
-export const DEFAULT_CHECKOUT_TEMPLATE_ID = "accordion"
+export const DEFAULT_CHECKOUT_TEMPLATE_ID = "flow"
 
 export const checkoutTemplates = createTemplateRegistry(
   import.meta.glob<{ default: CheckoutTemplate }>("../templates/*/index.ts"),

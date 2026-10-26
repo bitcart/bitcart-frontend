@@ -1,11 +1,12 @@
 import { BitcartWordmarkIcon } from "@bitcart/ui-kit/icons"
 
-import { BRAND_UMBRELLA_NAME } from "#/common/constants"
+import { CheckoutCloseButton } from "#/checkout"
 
 export const CheckoutHeader = () => {
   return (
-    <div className="py-4 flex items-center justify-center">
-      <BitcartWordmarkIcon role="img" aria-label={BRAND_UMBRELLA_NAME} className="h-8" />
+    <div className="py-4 relative flex items-center justify-center">
+      <BitcartWordmarkIcon className="h-8" />
+      <CheckoutCloseButton className="end-3 absolute" />
     </div>
   )
 }

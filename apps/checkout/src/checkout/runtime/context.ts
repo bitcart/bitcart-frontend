@@ -1,3 +1,4 @@
+import type { HttpHref, InternalHref } from "@bitcart/core/navigation"
 import type { SocketConnectionHandle } from "@bitcart/core/types"
 import { createContext, type ReactNode } from "react"
 
@@ -10,6 +11,8 @@ export type CheckoutCountdown = {
   formatted: string
   secondsLeft: number
   isExpired: boolean
+  progress: number
+  isExpiringSoon: boolean
 }
 
 //* Kept out of the model: a tick re-renders only the components that show the countdown.
@@ -24,6 +27,10 @@ export type CheckoutAppConfig = {
 
   //! Contributions load once per object: they must be defined once and never recreated on render.
   slots?: readonly ExtensionSlotContribution[]
+
+  openPage?: (href: InternalHref) => void
+  redirect?: (url: HttpHref) => void
+  close?: () => void
 }
 
 export const CheckoutAppConfigContext = createContext<CheckoutAppConfig>({})

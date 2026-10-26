@@ -10,7 +10,7 @@ Bitcart frontend monorepo containing web applications, shared packages and app t
 - **apps/directory** — Merchants directory website (Vike)
 - **apps/landing** — Bitcart.ai landing website (Vike)
 - **apps/ui-docs** — UI Kit documentation site built on Fumadocs (TanStack Start)
-- **packages/api-sdk** — TypeScript SDK for the Bitcart Merchants API. orval generates the raw client, Zod schemas and MSW mocks from a pinned OpenAPI schema into the three `generated/` directories; everything else is authored, including the per-tag `endpoints/` wrappers and hooks, `auth/`, `utils/` and the SDK configuration. Only the `generated/` trees are safe to overwrite
+- **packages/client-sdk** — TypeScript SDK for the Bitcart Merchants API. orval generates the raw client, Zod schemas and MSW mocks from a pinned OpenAPI schema into the three `generated/` directories; everything else is authored, including the per-tag `endpoints/` wrappers and hooks, `auth/`, `utils/` and the SDK configuration. Only the `generated/` trees are safe to overwrite
 - **packages/configs** — Shared configurations (TypeScript, oxlint, dependency-cruiser, etc.)
 - **packages/core** — Foundational utilities, types, Zod schemas, i18n utilities
 - **packages/form-kit** — Form utilities using TanStack React Form
@@ -38,7 +38,9 @@ just lint-check             # Verify linting without fixing
 just typecheck              # Type checking
 just depcheck               # Detect unused dependencies, files, and exports (knip)
 just depcruise              # Verify emitted dist code never references a devDependency
+just unocss-check <classes> # Print the CSS UnoCSS generates per class, with Tailwind v4 differences
 just check                  # All checks: api-check, format-check, lint-check, typecheck, depcheck, depcruise
+just check unit             # check, then unit tests: the gate before calling work done; its exit code is the verdict
 just unit                   # Run unit tests (vitest)
 just unit-dev               # Run unit tests in watch mode
 just test                   # Run all tests: unit + e2e
@@ -53,7 +55,7 @@ just e2e-setup              # Install Playwright browsers (Chromium)
 just list-members           # List all workspace members
 ```
 
-The API SDK's `generated/` trees are committed to the repository, and these recipes rewrite them. Authored SDK code is untouched by all three:
+The Client SDK's `generated/` trees are committed to the repository, and these recipes rewrite them. Authored SDK code is untouched by all three:
 
 ```bash
 just api-generate           # Regenerate the SDK from the pinned OpenAPI schema
@@ -82,6 +84,8 @@ just add-dev <ws-member> <package>   # Add dev dependency to a workspace package
 ### Styling
 
 UnoCSS with a custom `@bitcart/unocss-preset`. Every app declares its own stylesheet destination under `cli.entry.outFile` in `apps/<app>/uno.config.ts`: the Vike apps emit `src/pages/uno.generated.css`, the TanStack Start apps `src/routes/-layout/uno.generated.css` (auto-generated, do not edit). UI Docs also runs Tailwind through `@tailwindcss/vite`, which backs the Fumadocs stylesheets imported in `apps/ui-docs/src/routes/-layout/app.css`. The UI Kit uses shadcn/ui patterns with Base UI primitives and Class Variance Authority (CVA) for variants.
+
+Classes copied from shadcn/ui, coss or the Tailwind docs can compile differently under UnoCSS's `presetWind4`: run them through `just unocss-check "<classes>"` (adding `--app <name>` for colors and tokens only that app defines), read the CSS it prints, and act on its warnings.
 
 ### Data Fetching
 

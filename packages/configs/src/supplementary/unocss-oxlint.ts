@@ -15,10 +15,10 @@ export const unocssOxlintConfig = defineConfig({
     "better-tailwindcss/enforce-canonical-classes": "off",
     "better-tailwindcss/enforce-consistent-class-order": "error",
 
-    "better-tailwindcss/enforce-consistent-line-wrapping": [
-      "warn",
-      { preferSingleLine: true, printWidth: 100, strictness: "loose" },
-    ],
+    // TODO: file an upstream issue to fix, then re-enable
+    //! In "loose" strictness it indents wrapped classes from the attribute's current line, not
+    //! from where the formatter moves the attribute, so `just fix` needs a second run to settle.
+    "better-tailwindcss/enforce-consistent-line-wrapping": "off",
 
     "better-tailwindcss/no-conflicting-classes": "error",
     "better-tailwindcss/no-deprecated-classes": "error",

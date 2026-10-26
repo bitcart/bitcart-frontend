@@ -1,5 +1,6 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { describe, expect, test } from "vitest"
+import { useEffect, useRef } from "react"
+import { describe, expect, test, vi } from "vitest"
 
 import { makeInvoice, makePayment, makePolicies, makeStore } from "../fixtures"
 import { useCheckout } from "../hooks"
@@ -78,6 +79,41 @@ describe("CheckoutShell", () => {
 
       expect(screen.getByText("2 methods to pick from")).toBeInTheDocument()
     })
+
+    test("moves focus to the payment view once a method is picked", () => {
+      renderCheckout({
+        source: { invoice: makeInvoice({ payments }) },
+        screens: { Payment: PaymentScreen, selection: "explicit" },
+      })
+
+      fireEvent.click(screen.getByRole("button", { name: /LTC/u }))
+
+      expect(screen.getByText("Pay to ltc1qltc")).toHaveFocus()
+    })
+
+    test("leaves focus where the new view put it", () => {
+      const FocusingPayment = () => {
+        const searchRef = useRef<HTMLInputElement>(null)
+
+        useEffect(() => searchRef.current?.focus(), [])
+
+        return (
+          <div>
+            <p>Pay</p>
+            <input ref={searchRef} aria-label="Search" />
+          </div>
+        )
+      }
+
+      renderCheckout({
+        source: { invoice: makeInvoice({ payments }) },
+        screens: { Payment: FocusingPayment, selection: "explicit" },
+      })
+
+      fireEvent.click(screen.getByRole("button", { name: /LTC/u }))
+
+      expect(screen.getByRole("textbox", { name: "Search" })).toHaveFocus()
+    })
   })
 
   test("renders the template's own customer details screen", () => {
@@ -92,6 +128,38 @@ describe("CheckoutShell", () => {
     })
 
     expect(screen.getByText("Asking for email, address, notes")).toBeInTheDocument()
+  })
+
+  describe("address", () => {
+    const eth = makePayment({
+      id: "method-eth",
+      name: "ETH",
+      wallet: { network: "eip155:1", sender_address_required: true, links: [] },
+    })
+
+    test("renders the template's own sender address screen", () => {
+      const AddressScreen = () => <p>Address for {useCheckout("address").method.name}</p>
+
+      renderCheckout({
+        source: { invoice: makeInvoice({ payments: [eth] }) },
+        screens: { Payment: PaymentScreen, Address: AddressScreen },
+      })
+
+      expect(screen.getByText("Address for ETH")).toBeInTheDocument()
+    })
+
+    test("moves focus to the address view once a method is picked", () => {
+      const AddressScreen = () => <p>Address for {useCheckout("address").method.name}</p>
+
+      renderCheckout({
+        source: { invoice: makeInvoice({ payments: [makePayment({ name: "BTC" }), eth] }) },
+        screens: { Payment: PaymentScreen, Address: AddressScreen, selection: "explicit" },
+      })
+
+      fireEvent.click(screen.getByRole("button", { name: /ETH/u }))
+
+      expect(screen.getByText("Address for ETH")).toHaveFocus()
+    })
   })
 
   describe("confirming", () => {
@@ -112,6 +180,20 @@ describe("CheckoutShell", () => {
       expect(screen.queryByText(/Pay to/u)).not.toBeInTheDocument()
     })
 
+    test("lets the customer return to the store while the payment confirms", () => {
+      const redirect = vi.fn()
+
+      renderCheckout({
+        source: { invoice: { ...paidInvoice, redirect_url: "https://shop.example.com/thanks" } },
+        screens: { Payment: PaymentScreen },
+        appConfig: { redirect },
+      })
+
+      fireEvent.click(screen.getByRole("button", { name: "Return to Store" }))
+
+      expect(redirect).toHaveBeenCalledExactlyOnceWith("https://shop.example.com/thanks")
+    })
+
     test("renders the template's own confirming screen", () => {
       const ConfirmingScreen = () => <p>Confirming {useCheckout("confirming").status}</p>
 
@@ -127,9 +209,9 @@ describe("CheckoutShell", () => {
   describe("partial payment arriving", () => {
     const method = makePayment({ id: "method-btc", amount: "0.00150000" })
 
-    const partiallyPaid = (sentAmount: number) =>
+    const partiallyPaid = (sentAmount: string, due: string) =>
       makeInvoice({
-        payments: [method],
+        payments: [{ ...method, due }],
         payment_id: "method-btc",
         exception_status: "paid_partial",
         sent_amount: sentAmount,
@@ -141,7 +223,7 @@ describe("CheckoutShell", () => {
         screens: { Payment: PaymentScreen },
       })
 
-      refetch({ invoice: partiallyPaid(0.0005) })
+      refetch({ invoice: partiallyPaid("0.00050000", "0.00100000") })
 
       expect(
         await screen.findByText(
@@ -152,11 +234,11 @@ describe("CheckoutShell", () => {
 
     test("announces every further partial payment", async () => {
       const { refetch } = renderCheckout({
-        source: { invoice: partiallyPaid(0.0005) },
+        source: { invoice: partiallyPaid("0.00050000", "0.00100000") },
         screens: { Payment: PaymentScreen },
       })
 
-      refetch({ invoice: partiallyPaid(0.001) })
+      refetch({ invoice: partiallyPaid("0.00100000", "0.00050000") })
 
       expect(
         await screen.findByText(
@@ -167,7 +249,7 @@ describe("CheckoutShell", () => {
 
     test("doesn't announce when the page opens on an already partially paid invoice", async () => {
       renderCheckout({
-        source: { invoice: partiallyPaid(0.0005) },
+        source: { invoice: partiallyPaid("0.00050000", "0.00100000") },
         screens: { Payment: PaymentScreen },
       })
 

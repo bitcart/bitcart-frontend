@@ -3,6 +3,7 @@ import { cn } from "@bitcart/ui-kit/utils"
 import { useLingui } from "@lingui/react/macro"
 
 import { useCheckout } from "../hooks"
+import { ExternalLink } from "./external-link"
 
 export const PoweredBy = ({ className }: { className?: string }) => {
   const { t } = useLingui()
@@ -10,10 +11,8 @@ export const PoweredBy = ({ className }: { className?: string }) => {
 
   return (
     branding.showPoweredBy && (
-      <a
+      <ExternalLink
         href="https://bitcart.ai"
-        target="_blank"
-        rel="noopener noreferrer"
         aria-label={t`Powered by Bitcart`}
         className={cn(
           "gap-1.5 text-xs text-muted-foreground flex shrink-0 items-center whitespace-nowrap",
@@ -21,8 +20,8 @@ export const PoweredBy = ({ className }: { className?: string }) => {
         )}
       >
         <span>{t`Powered by`}</span>
-        <BitcartWordmarkIcon aria-hidden className="h-4 sm:h-5 w-auto" />
-      </a>
+        <BitcartWordmarkIcon className="h-4 sm:h-5 w-auto" />
+      </ExternalLink>
     )
   )
 }

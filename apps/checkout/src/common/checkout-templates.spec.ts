@@ -1,8 +1,8 @@
-import { CHECKOUT_PREVIEW_STATUSES, CHECKOUT_REQUIRED_CONTENT_GUARD_TESTID } from "@bitcart/qa"
+import { CHECKOUT_PREVIEW_CASES, CHECKOUT_REQUIRED_CONTENT_GUARD_TESTID } from "@bitcart/qa"
 import { screen, waitFor } from "@testing-library/react"
 import { describe, expect, test } from "vitest"
 
-import { CHECKOUT_PREVIEW_SCENARIOS } from "#/checkout/preview/scenarios"
+import { buildPreviewScenario } from "#/checkout/preview/build"
 import { makeInvoice, makePayment, renderCheckout } from "#/checkout/testing"
 
 import { checkoutTemplates, DEFAULT_CHECKOUT_TEMPLATE_ID } from "./checkout-templates"
@@ -100,14 +100,14 @@ describe("checkoutTemplates", () => {
       TEMPLATE_IMPORT_TIMEOUT_MS,
     )
 
-    test.each(CHECKOUT_PREVIEW_STATUSES)(
-      "shows all required content for the %s preview scenario",
-      async (status) => {
+    test.each(Object.entries(CHECKOUT_PREVIEW_CASES))(
+      "shows all required content for the %s preview case",
+      async (_id, previewCase) => {
         const template = await checkoutTemplates.load(id)
 
         renderCheckout({
           templateId: id,
-          source: CHECKOUT_PREVIEW_SCENARIOS[status],
+          source: buildPreviewScenario(previewCase),
           screens: template,
         })
 

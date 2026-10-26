@@ -1,4 +1,4 @@
-import { FONTS_PREFLIGHT, FONTS_PRESET_CONFIG } from "@bitcart/ui-kit/fonts"
+import { FONTS_PREFLIGHT, FONTS_PRESET_CONFIG, GEIST_MONO_PREFLIGHT } from "@bitcart/ui-kit/fonts"
 import { presetBitcart } from "@bitcart/unocss-preset"
 import { defineConfig, presetWebFonts } from "unocss"
 
@@ -16,7 +16,7 @@ const toCssVariables = (tokens: Record<string, string>) =>
 export default defineConfig({
   cli: {
     entry: {
-      patterns: ["src/**/*.tsx", "../../packages/ui-kit/src/**/*.tsx"],
+      patterns: ["src/**/*.{ts,tsx}", "../../packages/ui-kit/src/**/*.{ts,tsx}"],
       outFile: "src/routes/-layout/uno.generated.css",
     },
   },
@@ -31,6 +31,7 @@ export default defineConfig({
 
       preflights: [
         FONTS_PREFLIGHT,
+        GEIST_MONO_PREFLIGHT,
 
         {
           getCSS: () =>

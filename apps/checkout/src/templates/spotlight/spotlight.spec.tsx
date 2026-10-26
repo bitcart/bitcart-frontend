@@ -1,7 +1,8 @@
+import { CHECKOUT_AMOUNT_TESTID, CHECKOUT_PAYMENT_ADDRESS_TESTID } from "@bitcart/qa"
 import { act, fireEvent, screen } from "@testing-library/react"
-import { describe, expect, test, vi } from "vitest"
+import { describe, expect, onTestFinished, test, vi } from "vitest"
 
-import { makeInvoice, makePayment, renderCheckout } from "#/checkout/testing"
+import { installFakeTerminal, makeInvoice, makePayment, renderCheckout } from "#/checkout/testing"
 
 import spotlight from "."
 
@@ -27,6 +28,42 @@ const searchBox = () => screen.getByRole("combobox")
 const press = (key: string) => fireEvent.keyDown(searchBox(), { key })
 
 describe("spotlight template", () => {
+  test.each([
+    ["focuses the search with a mouse", true],
+    ["leaves the on-screen keyboard closed on a touchscreen", false],
+  ])("%s", (_case, hasFinePointer) => {
+    const matchMedia = window.matchMedia
+
+    vi.spyOn(window, "matchMedia").mockImplementation((query) =>
+      Object.assign(matchMedia(query), { matches: query === "(pointer: fine)" && hasFinePointer }),
+    )
+
+    renderSpotlight()
+
+    expect(searchBox() === document.activeElement).toBe(hasFinePointer)
+  })
+
+  test.each([
+    ["the Bitcart wordmark", {}, "Pay Example Store", "Pay Example Store"],
+    [
+      "a logo spelling the name",
+      { logos: { light: "https://example.com/logo.svg" }, useLogoInsteadOfIcon: true },
+      "Payment methods",
+      "Send exactly",
+    ],
+  ])("names the store once with %s", (_brand, appearance, listLabel, amountLabel) => {
+    renderCheckout({
+      source: { invoice: makeInvoice({ payments: [btc, ltc, eth] }), appearance },
+      screens: spotlight,
+    })
+
+    expect(screen.getByText(listLabel)).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole("option", { name: /BTC/u }))
+
+    expect(screen.getByText(amountLabel)).toBeInTheDocument()
+  })
+
   test("asks for a currency before showing payment details", () => {
     renderSpotlight()
 
@@ -90,6 +127,35 @@ describe("spotlight template", () => {
     expect(screen.getByRole("button", { name: "Copy Address" })).toHaveTextContent("ltc1qltc")
   })
 
+  test("offers to close the modal it's shown in, which the Escapes it handles leave open", () => {
+    const close = vi.fn()
+
+    renderCheckout({
+      source: { invoice: makeInvoice({ payments: [btc, ltc, eth] }) },
+      screens: spotlight,
+      appConfig: { close },
+    })
+
+    fireEvent.click(screen.getByRole("option", { name: /LTC/u }))
+
+    expect(press("Escape")).toBe(false)
+
+    fireEvent.click(screen.getByRole("button", { name: "Close" }))
+
+    expect(close).toHaveBeenCalledOnce()
+  })
+
+  test("clears the search on Escape, and leaves an empty one's Escape to the page", () => {
+    renderSpotlight()
+
+    fireEvent.change(searchBox(), { target: { value: "lt" } })
+
+    expect(press("Escape")).toBe(false)
+    expect(searchBox()).toHaveValue("")
+    expect(screen.getAllByRole("option")).toHaveLength(3)
+    expect(press("Escape")).toBe(true)
+  })
+
   test("runs a typed command against the active payment", async () => {
     const writeText = vi.fn(() => Promise.resolve())
     Object.defineProperty(navigator, "clipboard", { value: { writeText }, configurable: true })
@@ -106,6 +172,56 @@ describe("spotlight template", () => {
     expect(writeText).toHaveBeenCalledWith("bc1qbtc")
     expect(await screen.findByText("Address copied")).toBeInTheDocument()
     expect(searchBox()).toHaveValue("")
+  })
+
+  test("copies the amount to send as a bare number", async () => {
+    const writeText = vi.fn(() => Promise.resolve())
+    Object.defineProperty(navigator, "clipboard", { value: { writeText }, configurable: true })
+    renderSpotlight()
+
+    fireEvent.click(screen.getByRole("option", { name: /BTC/u }))
+    fireEvent.change(searchBox(), { target: { value: "copy amount" } })
+
+    await act(async () => {
+      press("Enter")
+      await Promise.resolve()
+    })
+
+    expect(writeText).toHaveBeenCalledWith("0.00150000")
+  })
+
+  test("offers no search, wallet link or copy action on a terminal, where the buyer scans the QR code", () => {
+    onTestFinished(installFakeTerminal())
+    renderSpotlight()
+
+    fireEvent.click(screen.getByRole("option", { name: /ETH/u }))
+
+    expect(screen.getByTestId(CHECKOUT_PAYMENT_ADDRESS_TESTID)).toHaveTextContent("0xeth")
+    expect(screen.queryByRole("combobox")).not.toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: /^Copy/u })).not.toBeInTheDocument()
+    expect(screen.queryByRole("link", { name: "Pay with wallet" })).not.toBeInTheDocument()
+    expect(screen.queryByText(/Press Esc/u)).not.toBeInTheDocument()
+  })
+
+  test("asks for any amount on a zero-price invoice, keeping the rate", () => {
+    renderCheckout({
+      source: {
+        invoice: makeInvoice({
+          price: "0.00",
+          payments: [btc, ltc].map((payment) => ({ ...payment, amount: "0.00000000" })),
+        }),
+      },
+
+      screens: spotlight,
+    })
+
+    expect(screen.getByRole("option", { name: /BTC/u })).not.toHaveTextContent("0.00000000")
+
+    fireEvent.click(screen.getByRole("option", { name: /BTC/u }))
+
+    expect(screen.getByTestId(CHECKOUT_AMOUNT_TESTID)).toHaveTextContent("Send any amount")
+    expect(screen.queryByRole("button", { name: /Copy amount/u })).not.toBeInTheDocument()
+    expect(screen.getByText("1 BTC = $66,666.67")).toBeInTheDocument()
   })
 
   test("offers no currency switch when there is only one", () => {

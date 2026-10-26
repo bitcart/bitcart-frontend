@@ -1,6 +1,9 @@
 import { appKnipConfig } from "@bitcart/configs/by-package-type/app-knip"
 import type { KnipConfig } from "knip"
 
+//* Referenced only from `GEIST_MONO_PREFLIGHT`'s CSS, which Knip does not read.
+const GEIST_MONO = "@fontsource-variable/geist-mono"
+
 const config: KnipConfig = {
   //* dependency-cruiser resolves a `.ts` config, but Knip's plugin only looks for the `.js`,
   //* `.cjs`, `.mjs` and `.json` forms.
@@ -27,7 +30,11 @@ const config: KnipConfig = {
       ignoreDependencies: ["@playwright/test", "tailwindcss"],
     },
 
-    "apps/checkout": appKnipConfig,
+    "apps/checkout": {
+      ...appKnipConfig,
+      entry: [...appKnipConfig.entry, "src/embed/v1.ts", "src/embed/modal.ts"],
+      ignoreDependencies: [...(appKnipConfig.ignoreDependencies ?? []), GEIST_MONO],
+    },
     "apps/directory": appKnipConfig,
 
     "apps/landing": {
@@ -54,6 +61,7 @@ const config: KnipConfig = {
 
       ignoreDependencies: [
         ...(appKnipConfig.ignoreDependencies ?? []),
+        GEIST_MONO,
 
         //* Kept installed for easy opt-in router debugging.
         "@tanstack/react-router-devtools",
@@ -67,7 +75,7 @@ const config: KnipConfig = {
       ],
     },
 
-    "packages/api-sdk": {
+    "packages/client-sdk": {
       ignore: [
         // TODO: Remove once each endpoint gets at least one exported wrapper.
         "src/endpoints/_internal/generated/**",
@@ -83,7 +91,10 @@ const config: KnipConfig = {
 
     //* Read by the Lingui CLI and the package's tsdown config.
     "packages/form-kit": { entry: ["lingui.config.ts"] },
-    "packages/ui-kit": { entry: ["lingui.config.ts"] },
+    "packages/ui-kit": {
+      entry: ["lingui.config.ts", "scripts/**/*.ts"],
+      project: ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
+    },
 
     "templates/vike-app": appKnipConfig,
   },

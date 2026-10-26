@@ -2,8 +2,8 @@ import {
   Select,
   SelectContent,
   SelectGroup,
+  SelectGroupLabel,
   SelectItem,
-  SelectLabel,
   SelectSeparator,
   SelectTrigger,
   SelectValue,
@@ -25,7 +25,7 @@ export const SmallSelectExample: React.FC = () => (
 
     <SelectContent>
       <SelectGroup>
-        <SelectLabel>Native</SelectLabel>
+        <SelectGroupLabel>Native</SelectGroupLabel>
 
         {CURRENCIES.filter(({ group }) => group === "Native").map(({ value, label }) => (
           <SelectItem key={value} value={value}>
@@ -37,7 +37,7 @@ export const SmallSelectExample: React.FC = () => (
       <SelectSeparator />
 
       <SelectGroup>
-        <SelectLabel>Tokens</SelectLabel>
+        <SelectGroupLabel>Tokens</SelectGroupLabel>
 
         {CURRENCIES.filter(({ group }) => group === "Tokens").map(({ value, label }) => (
           <SelectItem key={value} value={value}>

@@ -1,20 +1,26 @@
+import { cn } from "@bitcart/ui-kit/utils"
 import { useLingui } from "@lingui/react/macro"
 import { CopyIcon, SearchIcon, WalletIcon } from "lucide-react"
 import { useState, type ReactNode } from "react"
 
 import {
-  CHECKOUT_AMOUNT_TESTID,
-  CHECKOUT_PAYMENT_ADDRESS_TESTID,
-  CHECKOUT_PAYMENT_URI_TESTID,
+  AmountBreakdown,
   ExtensionSlot,
-  CopyField,
-  PartialPaymentNotice,
+  LightningNodeInfo,
+  ManualPaymentDivider,
+  MethodHint,
+  PartialPaymentProgress,
+  PayingWith,
+  PaymentAddress,
+  PaymentAmountHeading,
+  PaymentDeadline,
   PaymentQr,
   RecommendedFee,
-  StoreLogo,
-  useCheckout,
+  SenderAddress,
   WalletButton,
-  useCheckoutCopy,
+  useCheckout,
+  useCheckoutCopyStatus,
+  useWalletAction,
 } from "#/checkout"
 
 import { Palette } from "./palette"
@@ -29,39 +35,49 @@ type Command = {
 
 export const SpotlightPayment = () => {
   const { t } = useLingui()
-  const { invoice, payment, store, changeMethod } = useCheckout("payment")
-  const copy = useCheckoutCopy()
+  const { invoice, payment, changeMethod, environment } = useCheckout("payment")
+  const copy = useCheckoutCopyStatus()
   const [query, setQuery] = useState("")
-  const { paymentUrl } = payment
+  const unit = payment.symbol.toUpperCase()
+  const openWallet = useWalletAction()
 
-  const commands: Command[] = [
+  //* Copy commands confirm on the copied value itself, which shares `copy` with them.
+  const payCommands: Command[] = [
     {
       id: "copy-address",
-      label: t`Copy Address`,
+      label: payment.lightning ? t`Copy Lightning Invoice` : t`Copy Address`,
       description: payment.address,
       icon: <CopyIcon className="size-4" />,
-      run: () => copy(payment.address, t`Address`),
+      run: () => copy.copy("address", payment.address),
     },
 
-    ...(paymentUrl
+    ...(!payment.lightning && !invoice.isAnyAmount
       ? [
           {
-            id: "copy-uri",
-            label: t`Copy Payment URI`,
-            description: paymentUrl,
+            id: "copy-amount",
+            label: t`Copy Amount`,
+            description: `${payment.amount} ${unit}`,
             icon: <CopyIcon className="size-4" />,
-            run: () => copy(paymentUrl, t`Payment URI`),
-          },
-
-          {
-            id: "open-wallet",
-            label: t`Open in Wallet`,
-            description: t`Launch wallet application`,
-            icon: <WalletIcon className="size-4" />,
-            run: () => window.location.assign(paymentUrl),
+            run: () => copy.copy("amount", payment.amount),
           },
         ]
       : []),
+
+    ...(openWallet
+      ? [
+          {
+            id: "open-wallet",
+            label: t`Pay with wallet`,
+            description: t`Launch wallet application`,
+            icon: <WalletIcon className="size-4" />,
+            run: openWallet,
+          },
+        ]
+      : []),
+  ]
+
+  const commands: Command[] = [
+    ...(environment.terminal ? [] : payCommands),
 
     ...(changeMethod
       ? [
@@ -89,7 +105,7 @@ export const SpotlightPayment = () => {
       query={query}
       onQueryChange={setQuery}
       onEscape={changeMethod}
-      placeholder={t`Type a command...`}
+      searchLabel={t`Type a command...`}
       listLabel={t`Actions`}
       options={matchingCommands.map((command) => ({
         value: command.id,
@@ -115,60 +131,76 @@ export const SpotlightPayment = () => {
         ),
       }))}
     >
-      <div className="bg-muted/40 px-5 py-4 flex items-center justify-between">
-        <div>
-          <StoreLogo className="mb-2 h-6" />
+      <PayingWith copy={copy} className="border-border border-b" />
+      <PartialPaymentProgress showAmountDue={false} className="mx-5 mt-4" />
+      <AmountBreakdown className="mx-5 mt-4" />
 
-          <div className="text-muted-foreground font-medium tracking-wider text-[10px] uppercase">
-            {store.name}
-          </div>
-
-          <div
-            className="mt-1 text-2xl font-bold tracking-tight"
-            data-testid={CHECKOUT_AMOUNT_TESTID}
-          >
-            {payment.amount}
-            <span className="ml-1.5 text-muted-foreground text-sm font-medium">{payment.name}</span>
-          </div>
-        </div>
-
-        <div className="text-xs text-muted-foreground font-mono text-right">
-          <div>
-            {invoice.price} {invoice.currency}
-          </div>
-
-          <div className="mt-0.5">{payment.rateStr}</div>
-          <RecommendedFee className="mt-0.5" />
-        </div>
+      <div className="px-5 pt-4">
+        <PaymentAmountHeading copy={copy} showsPrice namesStore />
+        <PaymentDeadline className="mt-1 text-xs" />
+        <SenderAddress className="mt-4" />
       </div>
 
-      <PartialPaymentNotice className="mx-5 mt-5" />
+      <div
+        className={cn(
+          "gap-5 p-5 flex flex-col items-center",
 
-      <div className="gap-5 p-5 sm:flex-row sm:items-start flex flex-col items-center">
-        <PaymentQr size={160} className="p-3 rounded-xl shrink-0" />
+          //! A terminal's QR fills the card, so it stacks above the details at every width.
+          !environment.terminal && "sm:flex-row sm:items-stretch",
+        )}
+      >
+        {!environment.terminal && (
+          <div className="sm:hidden w-full">
+            <WalletButton className="rounded-lg w-full" />
+            <ManualPaymentDivider className="mt-4" />
+          </div>
+        )}
 
-        <div className="min-w-0 space-y-3 w-full flex-1">
-          <CopyField
-            label={t`Address`}
-            value={payment.address}
-            testId={CHECKOUT_PAYMENT_ADDRESS_TESTID}
-          />
-
-          {paymentUrl && (
-            <CopyField
-              label={t`Payment URI`}
-              value={paymentUrl}
-              testId={CHECKOUT_PAYMENT_URI_TESTID}
-            />
+        <PaymentQr
+          className={cn(
+            "p-3 rounded-xl shrink-0",
+            !environment.terminal && "max-sm:hidden sm:self-start",
           )}
+        />
 
-          <WalletButton className="rounded-lg w-full" />
+        {/* On desktop the column is as tall as the QR: its three blocks spread evenly, and Pay with wallet ends at the QR's bottom. */}
+        <div className="min-w-0 sm:flex sm:flex-col sm:justify-between w-full flex-1">
+          <div>
+            {!environment.terminal && (
+              <span className="mb-1 text-muted-foreground font-medium tracking-wider max-sm:hidden block text-[11px] uppercase">
+                {payment.lightning ? t`Lightning invoice` : t`Address`}
+              </span>
+            )}
+
+            <PaymentAddress copy={copy} isStartAlignedFromSm={!environment.terminal} />
+
+            <RecommendedFee
+              className={cn(
+                "mt-1 text-xs text-muted-foreground text-center",
+                !environment.terminal && "sm:text-left",
+              )}
+            />
+
+            <LightningNodeInfo
+              copy={copy}
+              isStartAlignedFromSm={!environment.terminal}
+              className="mt-2"
+            />
+          </div>
+
+          <div className="mt-3">
+            <MethodHint />
+          </div>
+
+          <div className="pt-3 max-sm:hidden">
+            <WalletButton className="rounded-lg w-full" />
+          </div>
         </div>
       </div>
 
       <ExtensionSlot name="checkout:payment-extra" className="px-5 pb-4" />
 
-      {changeMethod && (
+      {changeMethod && !environment.terminal && (
         <p className="px-5 pb-3 text-muted-foreground text-[10px]">
           {t`Press Esc or type "switch" to pay with another currency`}
         </p>

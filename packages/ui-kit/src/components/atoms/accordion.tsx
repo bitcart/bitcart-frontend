@@ -1,24 +1,47 @@
 //* Originally ported from: https://ui.shadcn.com
 
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
+import { cva } from "class-variance-authority"
+import { createContext, useContext } from "react"
 
 import { cn } from "@/utils"
 
-export type AccordionProps = AccordionPrimitive.Root.Props & {}
+const accordionItemVariants = cva("break-inside-avoid", {
+  variants: {
+    variant: {
+      cards: "rounded-lg overflow-hidden border last:border-b",
+      divided: "border-b last:border-b-0",
+    },
+  },
+})
 
-export const Accordion: React.FC<AccordionProps> = (props) => (
-  <AccordionPrimitive.Root data-slot="accordion" {...props} />
+type AccordionVariant = "cards" | "divided"
+
+const AccordionContext = createContext<{ variant: AccordionVariant }>({ variant: "cards" })
+
+export type AccordionProps = AccordionPrimitive.Root.Props & {
+  variant?: AccordionVariant
+}
+
+export const Accordion: React.FC<AccordionProps> = ({ variant = "cards", ...props }) => (
+  <AccordionContext.Provider value={{ variant }}>
+    <AccordionPrimitive.Root data-slot="accordion" data-variant={variant} {...props} />
+  </AccordionContext.Provider>
 )
 
 export type AccordionItemProps = AccordionPrimitive.Item.Props & {}
 
-export const AccordionItem: React.FC<AccordionItemProps> = ({ className, ...props }) => (
-  <AccordionPrimitive.Item
-    data-slot="accordion-item"
-    className={cn("rounded-lg break-inside-avoid overflow-hidden border last:border-b", className)}
-    {...props}
-  />
-)
+export const AccordionItem: React.FC<AccordionItemProps> = ({ className, ...props }) => {
+  const { variant } = useContext(AccordionContext)
+
+  return (
+    <AccordionPrimitive.Item
+      data-slot="accordion-item"
+      className={cn(accordionItemVariants({ variant }), className)}
+      {...props}
+    />
+  )
+}
 
 export type AccordionContentProps = AccordionPrimitive.Panel.Props & {}
 

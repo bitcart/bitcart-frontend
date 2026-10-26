@@ -5,9 +5,9 @@ import { QRCodeSVG } from "qrcode.react"
 
 import { useCheckout } from "../hooks"
 
-export const PaymentQr = ({ size = 200, className }: { size?: number; className?: string }) => {
+export const PaymentQr = ({ className }: { className?: string }) => {
   const { t } = useLingui()
-  const { payment } = useCheckout("payment")
+  const { payment, environment } = useCheckout("payment")
 
   return (
     <div
@@ -16,9 +16,18 @@ export const PaymentQr = ({ size = 200, className }: { size?: number; className?
       data-testid={CHECKOUT_PAYMENT_QR_TESTID}
 
       //! The QR quiet zone must stay white in both themes: scanners need the contrast.
-      className={cn("rounded-2xl border-border bg-white p-4 shadow-sm w-fit border", className)}
+      className={cn(
+        "rounded-2xl border-border bg-white p-4 shadow-sm border",
+        environment.terminal ? "w-full" : "w-fit",
+        className,
+      )}
     >
-      <QRCodeSVG value={payment.paymentUrl ?? payment.address} size={size} level="M" aria-hidden />
+      <QRCodeSVG
+        value={payment.qrValue}
+        level="M"
+        aria-hidden
+        className={environment.terminal ? "h-auto w-full" : "sm:size-[200px] size-[150px]"}
+      />
     </div>
   )
 }

@@ -2,8 +2,8 @@ import { promises as fs } from "fs"
 import { dirname, join } from "path"
 import { fileURLToPath } from "url"
 
-import { BitcartApiConfig } from "@bitcart/api-sdk/config"
-import { bitcartCryptos } from "@bitcart/api-sdk/endpoints"
+import { BitcartApiConfig } from "@bitcart/client-sdk/config"
+import { bitcartCryptos } from "@bitcart/client-sdk/endpoints"
 
 import { envConfig } from "../env.config.ts"
 

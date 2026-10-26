@@ -1,16 +1,18 @@
-import { BitcartApiConfig } from "@bitcart/api-sdk/config"
-import type { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
+import { BitcartApiConfig } from "@bitcart/client-sdk/config"
+import type { bitcartInvoices } from "@bitcart/client-sdk/endpoints"
 import {
   getInvoicesGetItemMockHandler,
+  getInvoicesGetRefundMockHandler,
   getInvoicesUpdateInvoiceMockHandler,
-  getManageSetPoliciesResponseMock,
+  getManageGetPoliciesMockHandler,
+  getManageGetPoliciesResponseMock,
   getStoresGetItemMockHandler,
-} from "@bitcart/api-sdk/mocks"
+} from "@bitcart/client-sdk/mocks"
 import { http, HttpResponse, ws, type WebSocketHandlerConnection } from "msw"
 import { setupServer } from "msw/node"
 import { afterAll, afterEach, beforeAll } from "vitest"
 
-import { makeStore } from "../fixtures"
+import { makeRefund, makeStore } from "../fixtures"
 
 //! Not part of `#/checkout/testing`: templates never talk to the API, so only core and app tests
 //! import this module.
@@ -18,6 +20,9 @@ import { makeStore } from "../fixtures"
 const API_URL = "http://api.test"
 
 const server = setupServer()
+
+//! Created once: every link adds a listener to a channel MSW shares across links and never frees.
+const invoiceSocket = ws.link(`${API_URL.replace(/^http/u, "ws")}/ws/invoices/:invoiceId`)
 
 /**
  * Points the SDK at a mock API for the calling test file, and fails every request it does not
@@ -41,24 +46,36 @@ export const setupCheckoutApiServer = () => {
 }
 
 /**
- * Serves one invoice with its store and the server policies. Customer updates write to the
- * invoice, a test may replace it or hold its responses back, and the returned object records every
- * request and websocket client.
+ * Serves one invoice with its store, its refund and the server policies. Customer updates write to
+ * the invoice, a test may replace it, delete it or hold its responses back, and the returned
+ * object records every request and websocket client.
  */
 export const serveCheckoutApi = (initialInvoice: bitcartInvoices.Invoice) => {
   const api = {
     invoice: initialInvoice,
+    isInvoiceNotFound: false,
     invoiceResponseGate: null as Promise<void> | null,
     invoiceRequests: 0,
     storeRequests: [] as string[],
+    refundRequests: [] as string[],
     policiesRequests: 0,
     customerUpdates: [] as unknown[],
     sockets: [] as WebSocketHandlerConnection["client"][],
   }
 
-  const invoiceSocket = ws.link(`${API_URL.replace(/^http/u, "ws")}/ws/invoices/:invoiceId`)
+  //* Registered ahead of the generated handler, which only answers 200.
+  const notFoundInvoiceHandler = http.get("*/invoices/:itemId", async () => {
+    if (!api.isInvoiceNotFound) return undefined
+
+    api.invoiceRequests += 1
+    await api.invoiceResponseGate
+
+    return HttpResponse.json({ detail: "Invoice does not exist!" }, { status: 404 })
+  })
 
   server.use(
+    notFoundInvoiceHandler,
+
     getInvoicesGetItemMockHandler(async () => {
       api.invoiceRequests += 1
       await api.invoiceResponseGate
@@ -72,11 +89,16 @@ export const serveCheckoutApi = (initialInvoice: bitcartInvoices.Invoice) => {
       return makeStore({ email_required: true })
     }),
 
-    //* The schema types this response as `unknown`, so the generated handler always sends no body.
-    http.get("*/manage/policies", () => {
+    getInvoicesGetRefundMockHandler(({ params }) => {
+      api.refundRequests.push(String(params.refundId))
+
+      return makeRefund({ id: String(params.refundId) })
+    }),
+
+    getManageGetPoliciesMockHandler(() => {
       api.policiesRequests += 1
 
-      return HttpResponse.json(getManageSetPoliciesResponseMock({ allow_powered_by_bitcart: true }))
+      return { ...getManageGetPoliciesResponseMock(), allow_powered_by_bitcart: true }
     }),
 
     getInvoicesUpdateInvoiceMockHandler(async ({ request }) => {

@@ -1,14 +1,27 @@
 import { Spinner } from "@bitcart/ui-kit/components"
 import { useLingui } from "@lingui/react/macro"
 
-import { CheckoutCard, CheckoutFooter, ExtensionSlot, useCheckout } from ".."
+import {
+  CheckoutCard,
+  CheckoutFooter,
+  ExtensionSlot,
+  ReturnToStoreButton,
+  StoreBrandRow,
+  useAmountFormat,
+  useCanOpenExternalLinks,
+  useCheckout,
+} from ".."
 
 export const CheckoutConfirmingScreen = () => {
   const { t } = useLingui()
   const { confirmations, invoice, store } = useCheckout("confirming")
+  const storeName = store.name
+  const format = useAmountFormat()
+  const canOpenExternalLinks = useCanOpenExternalLinks()
 
   return (
     <CheckoutCard>
+      <StoreBrandRow className="px-5 py-4 border-border border-b" />
       <ExtensionSlot name="checkout:header-extra" className="px-5 pt-5" />
 
       <div className="px-8 py-12 gap-3 flex flex-col items-center text-center">
@@ -26,8 +39,13 @@ export const CheckoutConfirmingScreen = () => {
         )}
 
         <p className="mt-2 text-muted-foreground text-sm">
-          {store.name} · {invoice.price} {invoice.currency}
+          {t`Paid to ${storeName}`}
+          {!invoice.isAnyAmount && ` · ${format.fiat(invoice.effectivePrice)}`}
         </p>
+
+        {invoice.redirectUrl && canOpenExternalLinks && (
+          <ReturnToStoreButton url={invoice.redirectUrl} className="mt-3" />
+        )}
       </div>
 
       <CheckoutFooter />

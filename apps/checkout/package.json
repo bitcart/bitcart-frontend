@@ -24,11 +24,12 @@
     "release": "../../scripts/release-static-site.sh checkout"
   },
   "dependencies": {
-    "@bitcart/api-sdk": "workspace:*",
+    "@bitcart/client-sdk": "workspace:*",
     "@bitcart/core": "workspace:*",
     "@bitcart/form-kit": "workspace:*",
     "@bitcart/hooks": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",
+    "@fontsource-variable/geist-mono": "catalog:dependencies",
     "@lingui/core": "catalog:dependencies",
     "@lingui/react": "catalog:dependencies",
     "@mantine/hooks": "catalog:dependencies",
@@ -51,6 +52,7 @@
     "react": "catalog:dependencies",
     "react-dom": "catalog:dependencies",
     "remeda": "catalog:dependencies",
+    "viem": "catalog:dependencies",
     "zod": "catalog:dependencies"
   },
   "devDependencies": {

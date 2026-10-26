@@ -1,18 +1,17 @@
-import { bitcartInvoices, bitcartManage, bitcartStores } from "@bitcart/api-sdk/endpoints"
 import { i18n } from "@lingui/core"
-import { useQueryErrorResetBoundary } from "@tanstack/react-query"
-import { createFileRoute, useRouter, type ErrorComponentProps } from "@tanstack/react-router"
-import { useCallback, useEffect } from "react"
+import { createFileRoute } from "@tanstack/react-router"
+import { useCallback } from "react"
 
-import { useCheckoutSource } from "#/checkout/runtime/source"
+import { preloadCheckoutSource, useCheckoutSource } from "#/checkout/runtime/source"
 import { CheckoutView } from "#/checkout/runtime/view"
 import { checkoutTemplates } from "#/common/checkout-templates"
 import { ENV_TAG } from "#/common/constants"
 import { useCatalogLoader } from "#/common/i18n"
+import { EMBED_APP_CONFIG, getEmbedHost, isEmbeddedByLoader } from "#/common/integrations/embed"
 
 import { CHECKOUT_APP_CONFIG } from "../-components/app-controls"
+import { InvoiceErrorFallback } from "../-components/error-fallback"
 import { LoadingFallback } from "../-components/loading-fallback"
-import { ErrorFallback } from "./-components/error-fallback"
 
 const resolveTemplateId = (requested: string | undefined) =>
   checkoutTemplates.resolve({
@@ -29,8 +28,10 @@ export const Route = createFileRoute("/i/$invoiceId")({
   ssr: false,
 
   //* The `template` search param previews another checkout template, and is ignored in production.
-  validateSearch: (search: Record<string, unknown>) => ({
+  //* `embed=v1` is set by the embed loader.
+  validateSearch: (search: Record<string, unknown>): { template?: string; embed?: "v1" } => ({
     template: typeof search.template === "string" ? search.template : undefined,
+    embed: search.embed === "v1" ? "v1" : undefined,
   }),
 
   loaderDeps: ({ search }) => ({ template: search.template }),
@@ -38,14 +39,7 @@ export const Route = createFileRoute("/i/$invoiceId")({
   //* Starts every load that depends only on the route in parallel, before the page code loads.
   //* Nothing is awaited: the page suspends, and reports failures, where each result is used.
   loader: ({ context: { queryClient }, params, deps }) => {
-    void queryClient
-      .query(bitcartInvoices.invoiceQueryOptions(params.invoiceId))
-      .then(({ store_id }) =>
-        store_id ? queryClient.query(bitcartStores.storeQueryOptions(store_id)) : undefined,
-      )
-      .catch(() => undefined)
-
-    void queryClient.query(bitcartManage.policiesQueryOptions()).catch(() => undefined)
+    preloadCheckoutSource(queryClient, params.invoiceId)
 
     const templateId = resolveTemplateId(deps.template)
 
@@ -58,29 +52,17 @@ export const Route = createFileRoute("/i/$invoiceId")({
   errorComponent: InvoiceErrorFallback,
 })
 
-function InvoiceErrorFallback({ error, reset }: ErrorComponentProps) {
-  const router = useRouter()
-  const { reset: resetQueryErrors } = useQueryErrorResetBoundary()
-
-  //* Suspense queries rethrow their cached errors until the query cache is reset with the boundary.
-  useEffect(() => {
-    resetQueryErrors()
-  }, [resetQueryErrors])
-
-  const handleRetry = useCallback(() => {
-    reset()
-    void router.invalidate()
-  }, [reset, router])
-
-  return <ErrorFallback error={error} retry={handleRetry} />
-}
-
 function InvoicePage() {
   const { invoiceId } = Route.useParams()
-  const { template } = Route.useSearch()
+  const { template, embed } = Route.useSearch()
   const { source, connection } = useCheckoutSource(invoiceId)
+  const isEmbeddedCheckout = isEmbeddedByLoader({ embed })
 
   const templateId = resolveTemplateId(template)
+
+  const appConfig = isEmbeddedCheckout
+    ? { ...CHECKOUT_APP_CONFIG, ...EMBED_APP_CONFIG }
+    : CHECKOUT_APP_CONFIG
 
   useCatalogLoader(
     useCallback(
@@ -95,7 +77,10 @@ function InvoicePage() {
       connection={connection}
       registry={checkoutTemplates}
       templateId={templateId}
-      appConfig={CHECKOUT_APP_CONFIG}
+      appConfig={appConfig}
+      onModelChange={
+        isEmbeddedCheckout ? (_model, { invoice }) => getEmbedHost().report(invoice) : undefined
+      }
     />
   )
 }

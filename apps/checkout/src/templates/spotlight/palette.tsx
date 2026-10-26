@@ -1,4 +1,5 @@
 import {
+  Button,
   Command,
   CommandEmpty,
   CommandInput,
@@ -9,15 +10,22 @@ import {
 } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
 import { useLingui } from "@lingui/react/macro"
-import { ClockIcon } from "lucide-react"
+import { CircleHelpIcon } from "lucide-react"
 import { useEffect, useRef, type ReactNode } from "react"
 
 import {
   CHECKOUT_COUNTDOWN_TESTID,
+  CheckoutCloseButton,
   CheckoutConnectionBanner,
   CheckoutFooter,
+  CheckoutHelp,
+  ExpiringSoonNotice,
+  ExpiryProgress,
   ExtensionSlot,
+  StoreBrand,
+  useCheckout,
   useCheckoutCountdown,
+  useRemainingTime,
 } from "#/checkout"
 
 //* Base UI displays an option's `label` and identifies options by `value`.
@@ -32,12 +40,60 @@ type PaletteProps = {
   query: string
   onQueryChange: (query: string) => void
   onEscape?: () => void
-  placeholder: string
+  searchLabel: string
   listLabel: string
   listTestId?: string
   options: PaletteOption[]
   emptyMessage?: string
   children?: ReactNode
+}
+
+const StoreChip = () => (
+  <span
+    className={cn(`
+      px-2 py-1 bg-accent text-accent-foreground ms-4 rounded-md min-w-0 inline-flex max-w-1/2
+      shrink-0 items-center
+    `)}
+  >
+    <StoreBrand size="sm" className="max-w-full" />
+  </span>
+)
+
+const RemainingTime = () => {
+  const { isExpiringSoon } = useCheckoutCountdown()
+  const { text } = useRemainingTime()
+
+  return (
+    <div
+      aria-hidden
+      data-testid={CHECKOUT_COUNTDOWN_TESTID}
+      className={cn(
+        "font-mono shrink-0 text-[11px] tabular-nums",
+        isExpiringSoon ? "text-destructive" : "text-muted-foreground",
+      )}
+    >
+      {text}
+    </div>
+  )
+}
+
+const HelpRow = () => {
+  const { t } = useLingui()
+  const { environment } = useCheckout()
+
+  if (environment.terminal) {
+    return null
+  } else
+    return (
+      <div className="px-3 py-1 border-border border-t">
+        <CheckoutHelp
+          trigger={<Button variant="ghost" size="sm" className="text-muted-foreground" />}
+        >
+          <CircleHelpIcon />
+          {t`Help with this payment`}
+        </CheckoutHelp>
+      </div>
+    )
 }
 
 /**
@@ -48,7 +104,7 @@ export const Palette = ({
   query,
   onQueryChange,
   onEscape,
-  placeholder,
+  searchLabel,
   listLabel,
   listTestId,
   options,
@@ -56,19 +112,24 @@ export const Palette = ({
   children,
 }: PaletteProps) => {
   const { t } = useLingui()
-  const countdown = useCheckoutCountdown()
+  const { environment } = useCheckout()
   const inputRef = useRef<HTMLInputElement>(null)
   const isListShown = options.length > 0 || Boolean(emptyMessage)
 
-  //* The palette opens with the search bar focused, the way command palettes do.
+  //* The palette opens with the search bar focused, the way command palettes do, but only with a
+  //* mouse or trackpad: on a touchscreen, focusing it pops the on-screen keyboard over the checkout.
   useEffect(() => {
-    inputRef.current?.focus()
+    if (window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus()
   }, [])
 
   const handleKeyDown: CommandInputProps["onKeyDown"] = (event) => {
-    if (event.key === "Escape" && onEscape) {
+    if (event.key === "Escape" && (query || onEscape)) {
+      event.preventDefault()
       event.preventBaseUIHandler()
-      onEscape()
+
+      if (query) {
+        onQueryChange("")
+      } else onEscape?.()
     }
   }
 
@@ -90,31 +151,36 @@ export const Palette = ({
           overflow-hidden border
         `)}
       >
-        <div className="pe-5 border-border flex items-center border-b">
+        <div
+          className={cn(
+            "pe-5 border-border flex items-center border-b",
+            environment.terminal && "py-2.5",
+          )}
+        >
+          <StoreChip />
+
           <div className="min-w-0 flex-1">
-            <CommandInput
-              ref={inputRef}
-              showClear
-              aria-label={placeholder}
-              placeholder={placeholder}
-              onKeyDown={handleKeyDown}
-            />
+            {!environment.terminal && (
+              <CommandInput
+                ref={inputRef}
+                startAddon={null}
+                showClear
+                aria-label={searchLabel}
+                placeholder={t`Search…`}
+                onKeyDown={handleKeyDown}
+              />
+            )}
           </div>
 
-          <div
-            data-testid={CHECKOUT_COUNTDOWN_TESTID}
-            className={cn(`
-              gap-1 text-muted-foreground font-mono flex shrink-0 items-center text-[11px]
-              tabular-nums
-            `)}
-          >
-            <ClockIcon className="size-3" />
-            {countdown.formatted}
-          </div>
+          <RemainingTime />
+          <CheckoutCloseButton className="ms-2 -me-3" />
         </div>
+
+        <ExpiryProgress className="h-0.5" />
 
         <ExtensionSlot name="checkout:header-extra" className="px-5 py-3 border-border border-b" />
         <CheckoutConnectionBanner />
+        <ExpiringSoonNotice className="px-5 py-2" />
 
         {isListShown && (
           <div>
@@ -157,6 +223,7 @@ export const Palette = ({
 
         {children}
 
+        <HelpRow />
         <CheckoutFooter />
       </div>
     </Command>

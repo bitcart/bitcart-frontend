@@ -1,0 +1,26 @@
+---
+title: Toggle Group
+---
+
+import {
+  MultipleToggleGroupExample,
+  OutlineToggleGroupExample,
+} from "@/views/ui-kit/toggle-group/examples"
+import multipleCode from "@/views/ui-kit/toggle-group/examples/multiple.tsx?raw"
+import outlineCode from "@/views/ui-kit/toggle-group/examples/outline.tsx?raw"
+
+<ComponentShowcase
+  title="Outline"
+  description="One choice from a few options, joined into a segmented control"
+  code={outlineCode}
+>
+  <OutlineToggleGroupExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Multiple"
+  description="Independent on/off options, any number of which can stay pressed"
+  code={multipleCode}
+>
+  <MultipleToggleGroupExample />
+</ComponentShowcase>

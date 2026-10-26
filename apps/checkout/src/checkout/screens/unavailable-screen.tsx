@@ -1,13 +1,14 @@
 import { useLingui } from "@lingui/react/macro"
 import { CircleSlashIcon } from "lucide-react"
 
-import { CheckoutCard, CheckoutFooter, ExtensionSlot } from ".."
+import { CheckoutCard, CheckoutFooter, ExtensionSlot, StoreBrandRow } from ".."
 
 export const CheckoutUnavailableScreen = () => {
   const { t } = useLingui()
 
   return (
     <CheckoutCard>
+      <StoreBrandRow className="px-5 py-4 border-border border-b" />
       <ExtensionSlot name="checkout:header-extra" className="px-5 pt-5" />
 
       <div className="px-8 py-12 text-center">

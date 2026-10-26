@@ -7,5 +7,11 @@ export const env = createEnv({
   emptyStringAsUndefined: true,
   client: envConfig.clientEnvSchemas,
   shared: envConfig.sharedEnvSchemas,
-  runtimeEnv: import.meta.env,
+
+  runtimeEnv: {
+    BITCART_ENV: import.meta.env.BITCART_ENV,
+    BITCART_API_URL: import.meta.env.BITCART_API_URL,
+    PRODUCTION_BASE_URL: import.meta.env.PRODUCTION_BASE_URL,
+    PROJECT_CANONICAL_NAME: import.meta.env.PROJECT_CANONICAL_NAME,
+  },
 })

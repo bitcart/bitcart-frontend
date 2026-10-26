@@ -77,4 +77,28 @@ describe("preview route", () => {
   ])("reads the search %o as the %s palette preset", (search, palette) => {
     expect(parseSearch(search).palette).toBe(palette)
   })
+
+  test.each([
+    [{ brand: "icon" }, "icon"],
+    [{ brand: "no-such-brand" }, undefined],
+    [{}, undefined],
+  ])("reads the search %o as the %s brand sample", (search, brand) => {
+    expect(parseSearch(search).brand).toBe(brand)
+  })
+
+  test.each([
+    [{ expiration: "2h" }, "2h"],
+    [{ expiration: "no-such-expiration" }, undefined],
+    [{}, undefined],
+  ])("reads the search %o as the %s expiration", (search, expiration) => {
+    expect(parseSearch(search).expiration).toBe(expiration)
+  })
+
+  test.each([
+    [{ speed: "10x" }, "10x"],
+    [{ speed: "7x" }, undefined],
+    [{}, undefined],
+  ])("reads the search %o as the %s speed", (search, speed) => {
+    expect(parseSearch(search).speed).toBe(speed)
+  })
 })

@@ -44,6 +44,12 @@ export const VARIANT_PRESET_MAP: StoryComponentVariantPresetMap<typeof ScrollAre
     description: "Reserves room for the scrollbar so it never overlaps the content",
     initial: { ...DEFAULT_PROPS, scrollbarGutter: true },
   },
+
+  maxHeight: {
+    variant: "Maximum height",
+    description: "Grows with short content and scrolls once it reaches the maximum",
+    initial: { ...DEFAULT_PROPS, className: "border-border rounded-md max-h-64 w-72 border" },
+  },
 }
 
 const mainStoryVariantPresets: StoryComponentVariantPresets<typeof ScrollArea> =

@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["**/*.gen.*", "packages/api-sdk/openapi.json"],
+  "ignorePatterns": ["**/*.gen.*", "packages/client-sdk/openapi.json"],
   "jsxSingleQuote": false,
   "printWidth": 100,
   "semi": false,

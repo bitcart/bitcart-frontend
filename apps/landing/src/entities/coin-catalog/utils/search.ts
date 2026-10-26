@@ -1,4 +1,4 @@
-import { bitcartCryptos } from "@bitcart/api-sdk/endpoints"
+import { bitcartCryptos } from "@bitcart/client-sdk/endpoints"
 import { normalizeSearchTerm } from "@bitcart/core/utils"
 import { evolve, filter, map, pipe } from "remeda"
 

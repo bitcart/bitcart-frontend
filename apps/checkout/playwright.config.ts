@@ -44,7 +44,7 @@ export default defineConfig({
     command: `pnpm preview --port ${E2E_PORT}`,
 
     //* The readiness probe targets the preview: it renders without the API.
-    url: `${E2E_BASE_URL}/preview/accordion`,
+    url: `${E2E_BASE_URL}/preview/flow`,
 
     reuseExistingServer: true,
   },

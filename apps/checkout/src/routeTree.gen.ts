@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IInvoiceIdRouteImport } from './routes/i/$invoiceId'
 import { Route as PreviewTemplateIdRouteImport } from './routes/preview/$templateId'
+import { Route as RefundsRefundIdRouteImport } from './routes/refunds/$refundId'
+import { Route as IInvoiceIdReceiptRouteImport } from './routes/i/$invoiceId_.receipt'
 
 const IInvoiceIdRoute = IInvoiceIdRouteImport.update({
   id: '/i/$invoiceId',
@@ -22,31 +24,62 @@ const PreviewTemplateIdRoute = PreviewTemplateIdRouteImport.update({
   path: '/preview/$templateId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RefundsRefundIdRoute = RefundsRefundIdRouteImport.update({
+  id: '/refunds/$refundId',
+  path: '/refunds/$refundId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IInvoiceIdReceiptRoute = IInvoiceIdReceiptRouteImport.update({
+  id: '/i/$invoiceId_/receipt',
+  path: '/i/$invoiceId/receipt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/i/$invoiceId': typeof IInvoiceIdRoute
   '/preview/$templateId': typeof PreviewTemplateIdRoute
+  '/refunds/$refundId': typeof RefundsRefundIdRoute
+  '/i/$invoiceId/receipt': typeof IInvoiceIdReceiptRoute
 }
 export interface FileRoutesByTo {
   '/i/$invoiceId': typeof IInvoiceIdRoute
   '/preview/$templateId': typeof PreviewTemplateIdRoute
+  '/refunds/$refundId': typeof RefundsRefundIdRoute
+  '/i/$invoiceId/receipt': typeof IInvoiceIdReceiptRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/i/$invoiceId': typeof IInvoiceIdRoute
   '/preview/$templateId': typeof PreviewTemplateIdRoute
+  '/refunds/$refundId': typeof RefundsRefundIdRoute
+  '/i/$invoiceId_/receipt': typeof IInvoiceIdReceiptRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/i/$invoiceId' | '/preview/$templateId'
+  fullPaths:
+    | '/i/$invoiceId'
+    | '/preview/$templateId'
+    | '/refunds/$refundId'
+    | '/i/$invoiceId/receipt'
   fileRoutesByTo: FileRoutesByTo
-  to: '/i/$invoiceId' | '/preview/$templateId'
-  id: '__root__' | '/i/$invoiceId' | '/preview/$templateId'
+  to:
+    | '/i/$invoiceId'
+    | '/preview/$templateId'
+    | '/refunds/$refundId'
+    | '/i/$invoiceId/receipt'
+  id:
+    | '__root__'
+    | '/i/$invoiceId'
+    | '/preview/$templateId'
+    | '/refunds/$refundId'
+    | '/i/$invoiceId_/receipt'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IInvoiceIdRoute: typeof IInvoiceIdRoute
   PreviewTemplateIdRoute: typeof PreviewTemplateIdRoute
+  RefundsRefundIdRoute: typeof RefundsRefundIdRoute
+  IInvoiceIdReceiptRoute: typeof IInvoiceIdReceiptRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +98,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PreviewTemplateIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/refunds/$refundId': {
+      id: '/refunds/$refundId'
+      path: '/refunds/$refundId'
+      fullPath: '/refunds/$refundId'
+      preLoaderRoute: typeof RefundsRefundIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/i/$invoiceId_/receipt': {
+      id: '/i/$invoiceId_/receipt'
+      path: '/i/$invoiceId/receipt'
+      fullPath: '/i/$invoiceId/receipt'
+      preLoaderRoute: typeof IInvoiceIdReceiptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IInvoiceIdRoute: IInvoiceIdRoute,
   PreviewTemplateIdRoute: PreviewTemplateIdRoute,
+  RefundsRefundIdRoute: RefundsRefundIdRoute,
+  IInvoiceIdReceiptRoute: IInvoiceIdReceiptRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

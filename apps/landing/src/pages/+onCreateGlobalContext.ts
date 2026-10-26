@@ -1,4 +1,4 @@
-import { BitcartApiConfig } from "@bitcart/api-sdk/config"
+import { BitcartApiConfig } from "@bitcart/client-sdk/config"
 
 import { BITCART_API_URL } from "@/common/constants"
 

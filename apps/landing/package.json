@@ -22,7 +22,7 @@
     "release": "../../scripts/release-static-site.sh landing"
   },
   "dependencies": {
-    "@bitcart/api-sdk": "workspace:*",
+    "@bitcart/client-sdk": "workspace:*",
     "@bitcart/core": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",
     "@bitcart/vike-kit": "workspace:*",

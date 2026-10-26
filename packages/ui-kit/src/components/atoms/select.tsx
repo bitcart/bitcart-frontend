@@ -40,12 +40,27 @@ export const SelectValue: React.FC<SelectValueProps> = ({ className, ...props })
   )
 }
 
-export type SelectLabelProps = SelectPrimitive.GroupLabel.Props & {}
+export type SelectLabelProps = SelectPrimitive.Label.Props & {}
 
 export const SelectLabel: React.FC<SelectLabelProps> = ({ className, ...props }) => {
   return (
-    <SelectPrimitive.GroupLabel
+    <SelectPrimitive.Label
       data-slot="select-label"
+      className={cn(
+        "gap-2 text-sm font-medium inline-flex cursor-default items-center leading-none select-none",
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
+export type SelectGroupLabelProps = SelectPrimitive.GroupLabel.Props & {}
+
+export const SelectGroupLabel: React.FC<SelectGroupLabelProps> = ({ className, ...props }) => {
+  return (
+    <SelectPrimitive.GroupLabel
+      data-slot="select-group-label"
       className={cn("text-muted-foreground px-2 py-1.5 text-xs", className)}
       {...props}
     />

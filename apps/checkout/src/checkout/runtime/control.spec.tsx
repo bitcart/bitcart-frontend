@@ -1,8 +1,9 @@
 import { act, renderHook } from "@testing-library/react"
-import { afterEach, describe, expect, test } from "vitest"
+import { afterEach, describe, expect, onTestFinished, test } from "vitest"
 
 import { makeInvoice, makePayment, makeSource } from "../fixtures"
 import type { CheckoutSource } from "../model"
+import { installFakeTerminal } from "../terminal"
 import { useCheckoutControl, useCheckoutModel } from "./control"
 import { createCheckoutControl, INITIAL_CHECKOUT_UI_STATE } from "./control-store"
 
@@ -94,6 +95,36 @@ describe("useCheckoutModel", () => {
       await Promise.resolve()
     })
 
-    expect(result.current.branding.logo).toStrictEqual({ url: DARK_LOGO, backdrop: null })
+    expect(result.current.branding.brand).toMatchObject({
+      logo: { url: DARK_LOGO, backdrop: null },
+    })
+  })
+
+  test("counts down to the store only for a completion seen live", () => {
+    const redirect_url = "https://shop.example.com/thanks"
+    const pending = makeSource({ invoice: makeInvoice({ id: "invoice-1", redirect_url }) })
+
+    const completed = (id: string) =>
+      makeSource({ invoice: makeInvoice({ id, status: "complete", redirect_url }) })
+
+    const { result, rerender } = renderModel(pending)
+
+    rerender({ source: completed("invoice-1") })
+
+    expect(result.current).toMatchObject({ phase: "status", cancelRedirect: expect.any(Function) })
+
+    rerender({ source: completed("invoice-2") })
+
+    expect(result.current).toMatchObject({ phase: "status", cancelRedirect: undefined })
+  })
+
+  test("tells templates when the checkout runs on a terminal", () => {
+    const { result } = renderModel(makeSource())
+
+    expect(result.current.environment.terminal).toBe(false)
+
+    act(() => onTestFinished(installFakeTerminal()))
+
+    expect(result.current.environment.terminal).toBe(true)
   })
 })

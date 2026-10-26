@@ -3,17 +3,24 @@ import { createStore, shallow } from "@tanstack/store"
 export type CheckoutUiState = {
   chosenMethodId: string | null
   isChangingMethod: boolean
+  isRedirectCancelled: boolean
+  isShowingEthPluginOffer: boolean
 }
 
 export const INITIAL_CHECKOUT_UI_STATE: CheckoutUiState = {
   chosenMethodId: null,
   isChangingMethod: false,
+  isRedirectCancelled: false,
+  isShowingEthPluginOffer: false,
 }
 
 export type CheckoutUiActions = {
   selectMethod: (methodId: string) => void
   changeMethod: () => void
   cancelChange: () => void
+  cancelRedirect: () => void
+  showEthPluginOffer: () => void
+  hideEthPluginOffer: () => void
   reset: () => void
 }
 
@@ -32,9 +39,18 @@ export const createCheckoutControl = () =>
       })
 
     return {
-      selectMethod: (methodId) => update({ chosenMethodId: methodId, isChangingMethod: false }),
-      changeMethod: () => update({ isChangingMethod: true }),
+      selectMethod: (methodId) =>
+        update({
+          chosenMethodId: methodId,
+          isChangingMethod: false,
+          isShowingEthPluginOffer: false,
+        }),
+
+      changeMethod: () => update({ isChangingMethod: true, isShowingEthPluginOffer: false }),
       cancelChange: () => update({ isChangingMethod: false }),
+      cancelRedirect: () => update({ isRedirectCancelled: true }),
+      showEthPluginOffer: () => update({ isShowingEthPluginOffer: true }),
+      hideEthPluginOffer: () => update({ isShowingEthPluginOffer: false }),
       reset: () => update(INITIAL_CHECKOUT_UI_STATE),
     }
   })

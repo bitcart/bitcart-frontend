@@ -68,6 +68,7 @@ export {
 } from "./atoms/card"
 
 export { Checkbox, type CheckboxProps } from "./atoms/checkbox"
+export { CoinIcon, type CoinIconProps } from "./atoms/coin-icon"
 
 export {
   Collapsible,
@@ -240,6 +241,8 @@ export {
   type FieldTitleProps,
 } from "./atoms/field"
 
+export { FittedText, type FittedTextProps, type FittedTextStep } from "./atoms/fitted-text"
+
 export {
   FloatingActionButton,
   type FloatingActionButtonProps,
@@ -294,11 +297,13 @@ export {
 export {
   Select,
   SelectGroup,
+  SelectGroupLabel,
   SelectLabel,
   SelectScrollDownButton,
   SelectScrollUpButton,
   SelectSeparator,
   SelectValue,
+  type SelectGroupLabelProps,
   type SelectGroupProps,
   type SelectLabelProps,
   type SelectProps,
@@ -312,6 +317,8 @@ export { Separator, type SeparatorProps } from "./atoms/separator"
 export { Skeleton, type SkeletonProps } from "./atoms/skeleton"
 export { Spinner } from "./atoms/spinner"
 export { Textarea, type TextareaProps } from "./atoms/textarea"
+export { TimerRing, type TimerRingProps } from "./atoms/timer-ring"
+export { WalletLogo, type WalletLogoProps } from "./atoms/wallet-logo"
 
 /**
  ** MOLECULES
@@ -324,6 +331,7 @@ export { AutocompletePopup, type AutocompletePopupProps } from "./molecules/auto
 
 export {
   ButtonGroup,
+  ButtonGroupText,
   type ButtonGroupProps,
   type ButtonGroupSeparatorProps,
   type ButtonGroupTextProps,
@@ -367,6 +375,25 @@ export { navigationMenuTriggerStyle } from "./molecules/navigation-menu-styles"
 export { PopoverContent, type PopoverContentProps } from "./molecules/popover"
 
 export {
+  ResponsiveDialog,
+  ResponsiveDialogClose,
+  ResponsiveDialogDescription,
+  ResponsiveDialogHeader,
+  ResponsiveDialogPanel,
+  ResponsiveDialogPopup,
+  ResponsiveDialogTitle,
+  ResponsiveDialogTrigger,
+  type ResponsiveDialogCloseProps,
+  type ResponsiveDialogDescriptionProps,
+  type ResponsiveDialogHeaderProps,
+  type ResponsiveDialogPanelProps,
+  type ResponsiveDialogPopupProps,
+  type ResponsiveDialogProps,
+  type ResponsiveDialogTitleProps,
+  type ResponsiveDialogTriggerProps,
+} from "./molecules/responsive-dialog"
+
+export {
   ScrollArea,
   ScrollBar,
   type ScrollAreaProps,
@@ -386,6 +413,13 @@ export {
 
 export { ThemeToggle, type ThemeToggleProps, ThemeToggleFallback } from "./molecules/theme-toggle"
 export { Toaster, type ToasterProps } from "./molecules/toaster"
+
+export {
+  ToggleGroup,
+  ToggleGroupItem,
+  type ToggleGroupItemProps,
+  type ToggleGroupProps,
+} from "./molecules/toggle-group"
 
 /**
  ** ORGANISMS

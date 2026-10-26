@@ -13,7 +13,10 @@ describe("createCheckoutControl", () => {
     control.actions.changeMethod()
     control.actions.selectMethod("method-ltc")
 
-    expect(control.state).toStrictEqual({ chosenMethodId: "method-ltc", isChangingMethod: false })
+    expect(control.state).toStrictEqual({
+      ...INITIAL_CHECKOUT_UI_STATE,
+      chosenMethodId: "method-ltc",
+    })
   })
 
   test("keeps the chosen method when a change is cancelled", () => {
@@ -23,7 +26,42 @@ describe("createCheckoutControl", () => {
     control.actions.changeMethod()
     control.actions.cancelChange()
 
-    expect(control.state).toStrictEqual({ chosenMethodId: "method-ltc", isChangingMethod: false })
+    expect(control.state).toStrictEqual({
+      ...INITIAL_CHECKOUT_UI_STATE,
+      chosenMethodId: "method-ltc",
+    })
+  })
+
+  test("cancels the redirect", () => {
+    const control = createCheckoutControl()
+
+    control.actions.cancelRedirect()
+
+    expect(control.state.isRedirectCancelled).toBe(true)
+  })
+
+  test("shows and hides the ETH plugin offer", () => {
+    const control = createCheckoutControl()
+
+    control.actions.showEthPluginOffer()
+
+    expect(control.state.isShowingEthPluginOffer).toBe(true)
+
+    control.actions.hideEthPluginOffer()
+
+    expect(control.state.isShowingEthPluginOffer).toBe(false)
+  })
+
+  test.each([
+    ["a method is chosen", "selectMethod"],
+    ["the method changes", "changeMethod"],
+  ] as const)("hides the ETH plugin offer when %s", (_case, action) => {
+    const control = createCheckoutControl()
+
+    control.actions.showEthPluginOffer()
+    control.actions[action]("method-ltc")
+
+    expect(control.state.isShowingEthPluginOffer).toBe(false)
   })
 
   test("resets to no choice", () => {
@@ -31,6 +69,8 @@ describe("createCheckoutControl", () => {
 
     control.actions.selectMethod("method-ltc")
     control.actions.changeMethod()
+    control.actions.cancelRedirect()
+    control.actions.showEthPluginOffer()
     control.actions.reset()
 
     expect(control.state).toStrictEqual(INITIAL_CHECKOUT_UI_STATE)

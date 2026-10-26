@@ -3,7 +3,7 @@ import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
 import type { I18n } from "@lingui/core"
 
 import { APP_LOCALE_IDS } from "#/app.config"
-import { BRAND_UMBRELLA_NAME, PROJECT_CANONICAL_NAME } from "#/common/constants"
+import { PROJECT_CANONICAL_NAME } from "#/common/constants"
 
 export const getLayoutConfig = defineGetLayoutConfig((i18n: I18n) => ({
   i18n: {
@@ -12,7 +12,7 @@ export const getLayoutConfig = defineGetLayoutConfig((i18n: I18n) => ({
   },
 
   brand: {
-    name: BRAND_UMBRELLA_NAME,
+    name: "Bitcart",
     logoImageSrc: "/logo.png",
     logoIcon: BitcartWordmarkIcon,
   },

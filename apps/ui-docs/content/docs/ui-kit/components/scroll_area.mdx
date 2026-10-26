@@ -6,10 +6,12 @@ import {
   DefaultScrollAreaExample,
   FadeScrollAreaExample,
   GutterScrollAreaExample,
+  MaxHeightScrollAreaExample,
 } from "@/views/ui-kit/scroll-area/examples"
 import defaultCode from "@/views/ui-kit/scroll-area/examples/default.tsx?raw"
 import fadeCode from "@/views/ui-kit/scroll-area/examples/fade.tsx?raw"
 import gutterCode from "@/views/ui-kit/scroll-area/examples/gutter.tsx?raw"
+import maxHeightCode from "@/views/ui-kit/scroll-area/examples/max-height.tsx?raw"
 import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/scroll-area/stories"
 
 <mainStory.WithControl />
@@ -36,4 +38,12 @@ import { mainStory, VARIANT_PRESET_MAP } from "@/views/ui-kit/scroll-area/storie
   code={gutterCode}
 >
   <GutterScrollAreaExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title={VARIANT_PRESET_MAP.maxHeight.variant}
+  description={VARIANT_PRESET_MAP.maxHeight.description}
+  code={maxHeightCode}
+>
+  <MaxHeightScrollAreaExample />
 </ComponentShowcase>

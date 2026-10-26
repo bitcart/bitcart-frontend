@@ -12,7 +12,7 @@ Round 3 — reviewed `7437c683`. `just check` passes. Items tracked in #270 are 
 
 ## Should fix
 
-- [ ] **`TData` is unchecked when no `select` is passed.** `packages/api-sdk/src/endpoints/_internal/utils.ts:15` returns `data as unknown as TData`, so `useInvoice<string>({ invoiceId })` compiles clean and types `data` as `string`. Fix: admit `TData` only when `select` is present.
+- [ ] **`TData` is unchecked when no `select` is passed.** `packages/client-sdk/src/endpoints/_internal/utils.ts:15` returns `data as unknown as TData`, so `useInvoice<string>({ invoiceId })` compiles clean and types `data` as `string`. Fix: admit `TData` only when `select` is present.
   - [ ] Not a real problem
 
 ## Nits

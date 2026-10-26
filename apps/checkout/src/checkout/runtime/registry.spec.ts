@@ -11,19 +11,19 @@ const templateModule = (name: string) => () =>
 
 describe("createTemplateRegistry", () => {
   test("lists template ids from their folder names without loading them", () => {
-    const loadAccordion = vi.fn(templateModule("Accordion"))
+    const loadFlow = vi.fn(templateModule("Flow"))
     const loadSpotlight = vi.fn(templateModule("Spotlight"))
 
     const registry = createTemplateRegistry(
       {
-        "../templates/accordion/index.ts": loadAccordion,
+        "../templates/flow/index.ts": loadFlow,
         "../templates/spotlight/index.ts": loadSpotlight,
       },
-      { defaultId: "accordion" },
+      { defaultId: "flow" },
     )
 
-    expect(registry.ids).toStrictEqual(["accordion", "spotlight"])
-    expect(loadAccordion).not.toHaveBeenCalled()
+    expect(registry.ids).toStrictEqual(["flow", "spotlight"])
+    expect(loadFlow).not.toHaveBeenCalled()
     expect(loadSpotlight).not.toHaveBeenCalled()
   })
 
@@ -61,7 +61,7 @@ describe("createTemplateRegistry", () => {
     await expect(registry.load("spotlight")).resolves.toMatchObject({ name: { id: "Spotlight" } })
   })
 
-  test.each(["Accordion", "spot_light", "spot--light", "-spotlight"])(
+  test.each(["Flow", "spot_light", "spot--light", "-spotlight"])(
     "rejects the folder name %j",
     (folder) => {
       expect(() =>
@@ -76,19 +76,19 @@ describe("createTemplateRegistry", () => {
   describe("resolve", () => {
     const registry = createTemplateRegistry(
       {
-        "../templates/accordion/index.ts": templateModule("Accordion"),
+        "../templates/flow/index.ts": templateModule("Flow"),
         "../templates/spotlight/index.ts": templateModule("Spotlight"),
         "../templates/receipt/index.ts": templateModule("Receipt"),
       },
-      { defaultId: "accordion" },
+      { defaultId: "flow" },
     )
 
     test.each([
       [{ requested: "spotlight", stored: "receipt", allowRequested: true }, "spotlight"],
       [{ requested: "spotlight", stored: "receipt", allowRequested: false }, "receipt"],
       [{ requested: "unknown", stored: "receipt", allowRequested: true }, "receipt"],
-      [{ requested: undefined, stored: "unknown", allowRequested: true }, "accordion"],
-      [{ requested: undefined, stored: null, allowRequested: false }, "accordion"],
+      [{ requested: undefined, stored: "unknown", allowRequested: true }, "flow"],
+      [{ requested: undefined, stored: null, allowRequested: false }, "flow"],
     ])("resolves %o to %j", (params, expected) => {
       expect(registry.resolve(params)).toBe(expected)
     })
@@ -98,9 +98,9 @@ describe("createTemplateRegistry", () => {
     expect(() =>
       createTemplateRegistry(
         { "../templates/spotlight/index.ts": templateModule("Spotlight") },
-        { defaultId: "accordion" },
+        { defaultId: "flow" },
       ),
-    ).toThrow(/accordion/u)
+    ).toThrow(/flow/u)
   })
 
   describe("catalogs", () => {
@@ -110,8 +110,8 @@ describe("createTemplateRegistry", () => {
       const i18n = setupI18n({ locale: "de", messages: { de: { "app.title": "Kasse" } } })
 
       const registry = createTemplateRegistry(
-        { "../templates/accordion/index.ts": templateModule("Accordion") },
-        { defaultId: "accordion", catalogs, i18n },
+        { "../templates/flow/index.ts": templateModule("Flow") },
+        { defaultId: "flow", catalogs, i18n },
       )
 
       return { i18n, registry }
@@ -119,12 +119,12 @@ describe("createTemplateRegistry", () => {
 
     test("merges the template's catalog for a locale into the app's translations", async () => {
       const { i18n, registry } = setup({
-        "../templates/accordion/locales/de.po": catalogModule({ "accordion.pay": "Bezahlen" }),
+        "../templates/flow/locales/de.po": catalogModule({ "flow.pay": "Bezahlen" }),
       })
 
-      await registry.loadCatalog("accordion", "de")
+      await registry.loadCatalog("flow", "de")
 
-      expect(i18n._("accordion.pay")).toBe("Bezahlen")
+      expect(i18n._("flow.pay")).toBe("Bezahlen")
       expect(i18n._("app.title")).toBe("Kasse")
     })
 
@@ -135,30 +135,30 @@ describe("createTemplateRegistry", () => {
 
       const registry = createTemplateRegistry(
         {
-          "../templates/accordion/index.ts": () =>
+          "../templates/flow/index.ts": () =>
             Promise.resolve({
               default: defineCheckoutTemplate({
-                name: { id: "Accordion" },
+                name: { id: "Flow" },
                 Payment: Screen,
-                sourceMessages: { "accordion.pay": "Pay" },
+                sourceMessages: { "flow.pay": "Pay" },
               }),
             }),
         },
         {
-          defaultId: "accordion",
+          defaultId: "flow",
           i18n,
 
           catalogs: {
-            "../templates/accordion/locales/de.po": () =>
+            "../templates/flow/locales/de.po": () =>
               Promise.reject(new Error("Failed to fetch dynamically imported module")),
           },
         },
       )
 
-      await registry.settleCatalog("accordion", "de")
+      await registry.settleCatalog("flow", "de")
 
-      expect(i18n._("accordion.pay")).toBe("Pay")
-      expect(registry.isCatalogSettled("accordion", "de")).toBe(true)
+      expect(i18n._("flow.pay")).toBe("Pay")
+      expect(registry.isCatalogSettled("flow", "de")).toBe(true)
     })
 
     test.each(["en", "ko"])(
@@ -168,37 +168,37 @@ describe("createTemplateRegistry", () => {
 
         const registry = createTemplateRegistry(
           {
-            "../templates/accordion/index.ts": () =>
+            "../templates/flow/index.ts": () =>
               Promise.resolve({
                 default: defineCheckoutTemplate({
-                  name: { id: "Accordion" },
+                  name: { id: "Flow" },
                   Payment: Screen,
-                  sourceMessages: { "accordion.pay": "Pay" },
+                  sourceMessages: { "flow.pay": "Pay" },
                 }),
               }),
           },
-          { defaultId: "accordion", i18n },
+          { defaultId: "flow", i18n },
         )
 
-        await registry.loadCatalog("accordion", locale)
+        await registry.loadCatalog("flow", locale)
         i18n.activate(locale)
 
-        expect(i18n._("accordion.pay")).toBe("Pay")
+        expect(i18n._("flow.pay")).toBe("Pay")
       },
     )
 
     test("loads each catalog once, and again after a failed load", async () => {
       const loadGerman = vi
-        .fn(catalogModule({ "accordion.pay": "Bezahlen" }))
+        .fn(catalogModule({ "flow.pay": "Bezahlen" }))
         .mockRejectedValueOnce(new Error("Failed to fetch dynamically imported module"))
 
-      const { registry } = setup({ "../templates/accordion/locales/de.po": loadGerman })
+      const { registry } = setup({ "../templates/flow/locales/de.po": loadGerman })
 
-      await expect(registry.loadCatalog("accordion", "de")).rejects.toThrow(/Failed to fetch/u)
+      await expect(registry.loadCatalog("flow", "de")).rejects.toThrow(/Failed to fetch/u)
 
       const [first, second] = [
-        registry.loadCatalog("accordion", "de"),
-        registry.loadCatalog("accordion", "de"),
+        registry.loadCatalog("flow", "de"),
+        registry.loadCatalog("flow", "de"),
       ]
 
       expect(first).toBe(second)

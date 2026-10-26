@@ -1,4 +1,4 @@
-import { bitcartCryptos } from "@bitcart/api-sdk/endpoints"
+import { bitcartCryptos } from "@bitcart/client-sdk/endpoints"
 import { useMemo, useState } from "react"
 
 import type { CoinCatalogLookup } from "../types"

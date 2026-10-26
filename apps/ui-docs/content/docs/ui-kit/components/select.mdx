@@ -2,8 +2,13 @@
 title: Select
 ---
 
-import { DefaultSelectExample, SmallSelectExample } from "@/views/ui-kit/select/examples"
+import {
+  DefaultSelectExample,
+  LabelledSelectExample,
+  SmallSelectExample,
+} from "@/views/ui-kit/select/examples"
 import defaultCode from "@/views/ui-kit/select/examples/default.tsx?raw"
+import labelledCode from "@/views/ui-kit/select/examples/labelled.tsx?raw"
 import smallCode from "@/views/ui-kit/select/examples/small.tsx?raw"
 
 <ComponentShowcase
@@ -12,6 +17,14 @@ import smallCode from "@/views/ui-kit/select/examples/small.tsx?raw"
   code={defaultCode}
 >
   <DefaultSelectExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Labelled"
+  description="A visible label that also names the trigger for screen readers, with no id to wire up"
+  code={labelledCode}
+>
+  <LabelledSelectExample />
 </ComponentShowcase>
 
 <ComponentShowcase

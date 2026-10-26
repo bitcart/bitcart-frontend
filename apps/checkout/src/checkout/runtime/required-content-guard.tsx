@@ -1,19 +1,24 @@
 import {
+  CHECKOUT_AMOUNT_BREAKDOWN_TESTID,
   CHECKOUT_AMOUNT_TESTID,
+  CHECKOUT_CLOSE_TESTID,
   CHECKOUT_COUNTDOWN_TESTID,
+  CHECKOUT_METHOD_HINT_TESTID,
   CHECKOUT_METHOD_SELECTOR_TESTID,
   CHECKOUT_OPEN_WALLET_TESTID,
   CHECKOUT_PAYMENT_ADDRESS_TESTID,
   CHECKOUT_PAYMENT_QR_TESTID,
-  CHECKOUT_PAYMENT_URI_TESTID,
   CHECKOUT_RECOMMENDED_FEE_TESTID,
   CHECKOUT_REQUIRED_CONTENT_GUARD_TESTID,
+  CHECKOUT_SENDER_ADDRESS_TESTID,
   CHECKOUT_STATUS_TESTID,
+  CHECKOUT_WALLET_SENT_TESTID,
 } from "@bitcart/qa"
 import { useEffect, useRef } from "react"
 
-import { useCheckout } from "../hooks"
+import { useCheckout, useCheckoutAppConfig } from "../hooks"
 import type { CheckoutModel, CheckoutSelectionMode } from "../model"
+import { SENDER_ADDRESS_FIELD } from "../sender-address-form"
 import type { ExtensionSlotName } from "./slot-contributions"
 
 const SETTLE_DELAY_MS = 100
@@ -22,6 +27,7 @@ const SLOTS_BY_PHASE: Record<CheckoutModel["phase"], ExtensionSlotName[]> = {
   payment: ["checkout:header-extra", "checkout:payment-extra", "checkout:footer-extra"],
   status: ["checkout:header-extra", "checkout:status-extra", "checkout:footer-extra"],
   select: ["checkout:header-extra", "checkout:footer-extra"],
+  address: ["checkout:header-extra", "checkout:address-extra", "checkout:footer-extra"],
   details: ["checkout:header-extra", "checkout:footer-extra"],
   confirming: ["checkout:header-extra", "checkout:footer-extra"],
   unavailable: ["checkout:header-extra", "checkout:footer-extra"],
@@ -37,40 +43,67 @@ const requirement = (label: string, isMet: Requirement["isMet"]): Requirement =>
 const getContentRequirements = (
   model: CheckoutModel,
   selection: CheckoutSelectionMode,
+  displayedAmount: string,
 ): Requirement[] => {
   if (model.phase === "payment") {
-    const { payment, methods } = model
+    const { payment, methods, invoice, environment } = model
+    const { breakdown } = payment
 
     return [
-      requirement("amount", (root) =>
-        Boolean(
-          root
-            .querySelector(`[data-testid="${CHECKOUT_AMOUNT_TESTID}"]`)
-            ?.textContent?.includes(payment.amount),
-        ),
-      ),
+      invoice.isAnyAmount
+        ? requirement("amount", byTestId(CHECKOUT_AMOUNT_TESTID))
+        : requirement("amount", (root) =>
+            Boolean(
+              root
+                .querySelector(`[data-testid="${CHECKOUT_AMOUNT_TESTID}"]`)
+                ?.textContent?.includes(displayedAmount),
+            ),
+          ),
 
       requirement("countdown", byTestId(CHECKOUT_COUNTDOWN_TESTID)),
       requirement("payment address", byTestId(CHECKOUT_PAYMENT_ADDRESS_TESTID)),
 
-      requirement(
-        "payment URI or QR code",
-        (root) =>
-          byTestId(CHECKOUT_PAYMENT_QR_TESTID)(root) || byTestId(CHECKOUT_PAYMENT_URI_TESTID)(root),
-      ),
+      requirement("QR code", byTestId(CHECKOUT_PAYMENT_QR_TESTID)),
+
+      ...(payment.senderAddress === null
+        ? []
+        : [requirement("sender address", byTestId(CHECKOUT_SENDER_ADDRESS_TESTID))]),
 
       ...(payment.recommendedFee === null
         ? []
         : [requirement("recommended fee", byTestId(CHECKOUT_RECOMMENDED_FEE_TESTID))]),
 
-      ...(payment.paymentUrl === null
+      ...(breakdown?.discount || breakdown?.networkCost
+        ? [requirement("amount breakdown", byTestId(CHECKOUT_AMOUNT_BREAKDOWN_TESTID))]
+        : []),
+
+      ...(payment.hint === null
         ? []
-        : [requirement("open-wallet action", byTestId(CHECKOUT_OPEN_WALLET_TESTID))]),
+        : [requirement("method hint", byTestId(CHECKOUT_METHOD_HINT_TESTID))]),
+
+      //* A terminal's customer pays from their own phone, so the QR code is the wallet link.
+      ...(environment.terminal
+        ? []
+        : [
+            requirement(
+              "open-wallet action",
+              (root) =>
+                byTestId(CHECKOUT_OPEN_WALLET_TESTID)(root) ||
+                byTestId(CHECKOUT_WALLET_SENT_TESTID)(root),
+            ),
+          ]),
 
       //* An explicit-selection template offers method switching in its select phase.
       ...(selection === "preselect" && methods.length > 1
         ? [requirement("method selector", byTestId(CHECKOUT_METHOD_SELECTOR_TESTID))]
         : []),
+    ]
+  } else if (model.phase === "address" && !model.ethPluginOffer?.isShown) {
+    return [
+      requirement(
+        "sender address input",
+        (root) => root.querySelector(`[name="${SENDER_ADDRESS_FIELD}"]`) !== null,
+      ),
     ]
   } else if (model.phase === "select") {
     return [requirement("method selector", byTestId(CHECKOUT_METHOD_SELECTOR_TESTID))]
@@ -86,19 +119,29 @@ const getContentRequirements = (
   } else return []
 }
 
+const getModalRequirements = (isInModal: boolean): Requirement[] =>
+  isInModal ? [requirement("close button", byTestId(CHECKOUT_CLOSE_TESTID))] : []
+
 const findMissingContent = (
   root: Element,
   model: CheckoutModel,
   selection: CheckoutSelectionMode,
-): string[] => [
-  ...getContentRequirements(model, selection)
-    .filter(({ isMet }) => !isMet(root))
-    .map(({ label }) => label),
+  displayedAmount: string,
+  isInModal: boolean,
+): string[] => {
+  const requirements = [
+    ...getContentRequirements(model, selection, displayedAmount),
+    ...getModalRequirements(isInModal),
+  ]
 
-  ...SLOTS_BY_PHASE[model.phase]
-    .filter((slot) => !root.querySelector(`[data-extension-slot="${slot}"]`))
-    .map((slot) => `slot "${slot}"`),
-]
+  return [
+    ...requirements.filter(({ isMet }) => !isMet(root)).map(({ label }) => label),
+
+    ...SLOTS_BY_PHASE[model.phase]
+      .filter((slot) => !root.querySelector(`[data-extension-slot="${slot}"]`))
+      .map((slot) => `slot "${slot}"`),
+  ]
+}
 
 export const RequiredContentGuard = ({
   templateId,
@@ -108,6 +151,8 @@ export const RequiredContentGuard = ({
   selection: CheckoutSelectionMode
 }) => {
   const model = useCheckout()
+  const isInModal = useCheckoutAppConfig().close !== undefined
+  const displayedAmount = model.phase === "payment" ? model.payment.amount : ""
   const markerRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
@@ -119,7 +164,9 @@ export const RequiredContentGuard = ({
     let timeout: ReturnType<typeof setTimeout> | undefined
 
     const check = () => {
-      const missing = findMissingContent(root, model, selection).join(", ")
+      const missing = findMissingContent(root, model, selection, displayedAmount, isInModal).join(
+        ", ",
+      )
 
       if (missing && missing !== marker.dataset.missing) {
         console.warn(
@@ -144,7 +191,7 @@ export const RequiredContentGuard = ({
       observer.disconnect()
       clearTimeout(timeout)
     }
-  }, [model, selection, templateId])
+  }, [displayedAmount, isInModal, model, selection, templateId])
 
   return <span ref={markerRef} hidden data-testid={CHECKOUT_REQUIRED_CONTENT_GUARD_TESTID} />
 }

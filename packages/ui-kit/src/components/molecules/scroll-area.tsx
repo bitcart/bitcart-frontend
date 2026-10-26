@@ -52,11 +52,12 @@ export const ScrollArea: React.FC<ScrollAreaProps> = ({
 }) => {
   return (
     <ScrollAreaPrimitive.Root className={cn("min-h-0 size-full", className)} {...props}>
+      {/* `h-full` can't resolve against a max-height, so the viewport takes the root's own. */}
       <ScrollAreaPrimitive.Viewport
         className={cn(
           `
             focus-visible:ring-ring focus-visible:ring-offset-background
-            h-full rounded-[inherit] transition-shadow outline-none
+            h-full max-h-[inherit] rounded-[inherit] transition-shadow outline-none
             focus-visible:ring-2 focus-visible:ring-offset-1
             data-has-overflow-x:overscroll-x-contain
             data-has-overflow-y:overscroll-y-contain

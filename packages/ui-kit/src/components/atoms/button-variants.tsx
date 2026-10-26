@@ -18,22 +18,22 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80 focus:bg-primary/80",
-        white: "bg-white text-primary hover:bg-gray-100 focus:bg-gray-100",
+        default:
+          "bg-primary text-primary-foreground hover:bg-primary/80 focus-visible:bg-primary/80",
+        white: "bg-white text-primary hover:bg-gray-100 focus-visible:bg-gray-100",
 
         secondary: `
           bg-secondary text-secondary-foreground
           hover:bg-secondary/80
-          focus:bg-secondary/80
+          focus-visible:bg-secondary/80
         `,
 
-        accent: "bg-accent text-accent-foreground hover:bg-accent/80 focus:bg-accent/80",
+        accent: "bg-accent text-accent-foreground hover:bg-accent/80 focus-visible:bg-accent/80",
 
         destructive: `
           bg-destructive text-white
           hover:bg-destructive/90
-          focus:bg-destructive/90
-          focus-visible:ring-destructive/20
+          focus-visible:bg-destructive/90 focus-visible:ring-destructive/20
           dark:focus-visible:ring-destructive/40
           dark:bg-destructive/60
         `,
@@ -41,31 +41,29 @@ export const buttonVariants = cva(
         outline: `
           shadow-xs border-input
           hover:text-accent-foreground
-          focus:text-accent-foreground
+          focus-visible:text-accent-foreground
           text-muted-foreground
           hover:border-ring hover:bg-accent/40
-          focus-visible:border-ring
-          focus:bg-accent/40
+          focus-visible:border-ring focus-visible:bg-accent/40
           border-2 bg-transparent
         `,
 
         ghost: `
           hover:bg-muted/25 hover:text-accent-foreground
-          focus:text-accent-foreground
           focus-visible:text-accent-foreground
           [&_svg:not-[class*='hover:text-']]:hover:text-accent-foreground
-          focus:bg-muted/25
+          focus-visible:bg-muted/25
         `,
 
         link: `
           font-semibold text-accent-foreground
           dark:hover:filter-brightness-130
-          dark:focus:filter-brightness-130
+          dark:focus-visible:filter-brightness-130
           hover:filter-brightness-70
-          focus:filter-brightness-70
+          focus-visible:filter-brightness-70
           underline-offset-3
           hover:underline
-          focus:underline
+          focus-visible:underline
         `,
       },
 

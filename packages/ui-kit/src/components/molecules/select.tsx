@@ -52,7 +52,9 @@ export const SelectTrigger: React.FC<SelectTriggerProps> = ({
     >
       {children}
 
-      <SelectPrimitive.Icon render={<ChevronDownIcon className="size-4 opacity-50" />} />
+      <SelectPrimitive.Icon>
+        <ChevronDownIcon className="size-4 opacity-50" />
+      </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
 }
@@ -99,7 +101,7 @@ export const SelectContent: React.FC<SelectContentProps> = ({
               rounded-md shadow-md
               data-open:animate-in
               data-closed:animate-out
-              relative z-50 max-h-[--available-height] w-[--anchor-width] min-w-[8rem]
+              relative z-50 max-h-[--available-height] min-w-[max(var(--anchor-width),8rem)]
               origin-[--transform-origin] overflow-x-hidden overflow-y-auto border-2 bg-clip-padding
             `,
 

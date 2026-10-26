@@ -1,4 +1,4 @@
-import { act, fireEvent, screen } from "@testing-library/react"
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import { describe, expect, test, vi } from "vitest"
 
 import { makeInvoice, makeStore, renderCheckout } from "../testing"
@@ -21,11 +21,38 @@ const renderDetails = (
   return { submitCustomerDetails }
 }
 
-const submit = () =>
-  act(async () => {
-    fireEvent.click(screen.getByRole("button", { name: "Continue to payment" }))
+const typeEmail = (value: string) =>
+  fireEvent.change(screen.getByRole("textbox", { name: /Email/u }), { target: { value } })
+
+const rejection = Object.assign(new Error("Unprocessable Entity"), {
+  status: 422,
+
+  info: {
+    detail: [
+      {
+        loc: ["body", "buyer_email", "function-after[_validate(), str]"],
+        msg: "value is not a valid email address: An email address cannot end with a period.",
+        type: "value_error",
+      },
+      {
+        loc: ["body", "buyer_email", "literal['']"],
+        msg: "Input should be ''",
+        type: "literal_error",
+      },
+    ],
+  },
+})
+
+const submit = async () => {
+  const button = screen.getByRole("button", { name: "Continue to payment" })
+
+  await act(async () => {
+    fireEvent.click(button)
     await Promise.resolve()
   })
+
+  await waitFor(() => expect(button).not.toHaveAttribute("aria-busy", "true"))
+}
 
 describe("customer details screen", () => {
   test("asks for the email before any payment details", () => {
@@ -125,18 +152,38 @@ describe("customer details screen", () => {
     })
   })
 
-  test("explains why the details could not be saved", async () => {
+  test("explains a failed save without the API's wording", async () => {
     renderDetails(
       { email_required: true, ask_address: false },
       vi.fn(() => Promise.reject(new Error("Network down"))),
     )
 
-    fireEvent.change(screen.getByRole("textbox", { name: /Email/u }), {
-      target: { value: "buyer@example.com" },
-    })
-
+    typeEmail("buyer@example.com")
     await submit()
 
-    expect(screen.getByText("Request failed")).toBeInTheDocument()
+    expect(screen.getByText("Couldn't save your details. Please try again.")).toBeInTheDocument()
+
+    typeEmail("buyer@example.org")
+
+    expect(
+      screen.queryByText("Couldn't save your details. Please try again."),
+    ).not.toBeInTheDocument()
+  })
+
+  test("marks the email the API rejects, in plain words, until it's edited", async () => {
+    renderDetails(
+      { email_required: true, ask_address: false },
+      vi.fn(() => Promise.reject(rejection)),
+    )
+
+    typeEmail("dw@example.")
+    await submit()
+
+    expect(screen.getByText("Enter a valid email address.")).toBeInTheDocument()
+    expect(screen.queryByText(/function-after/u)).not.toBeInTheDocument()
+
+    typeEmail("dw@example.com")
+
+    expect(screen.queryByText("Enter a valid email address.")).not.toBeInTheDocument()
   })
 })

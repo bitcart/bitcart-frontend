@@ -18,12 +18,12 @@ describe("createLocaleActivation", () => {
   test("activates a locale with the app's catalog, keeping catalogs merged into it earlier", async () => {
     const { i18n, activateLocale } = setup()
 
-    i18n.load("de", { "accordion.pay": "Bezahlen" })
+    i18n.load("de", { "flow.pay": "Bezahlen" })
     await activateLocale("de")
 
     expect(i18n.locale).toBe("de")
     expect(i18n._("app.title")).toBe("Checkout (de)")
-    expect(i18n._("accordion.pay")).toBe("Bezahlen")
+    expect(i18n._("flow.pay")).toBe("Bezahlen")
   })
 
   test("switches only once every registered catalog for the locale has loaded", async () => {
@@ -31,7 +31,7 @@ describe("createLocaleActivation", () => {
     const templateCatalog = Promise.withResolvers<void>()
 
     registerCatalogLoader((locale) =>
-      templateCatalog.promise.then(() => i18n.load(locale, { "accordion.pay": "Bezahlen" })),
+      templateCatalog.promise.then(() => i18n.load(locale, { "flow.pay": "Bezahlen" })),
     )
 
     const activation = activateLocale("de")
@@ -43,7 +43,7 @@ describe("createLocaleActivation", () => {
     await activation
 
     expect(i18n.locale).toBe("de")
-    expect(i18n._("accordion.pay")).toBe("Bezahlen")
+    expect(i18n._("flow.pay")).toBe("Bezahlen")
   })
 
   test("stops waiting for a catalog loader once it is unregistered", async () => {

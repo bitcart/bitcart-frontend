@@ -87,7 +87,7 @@ Each app has its own `playwright.config.ts` and `e2e/` directory. Tests are `*.s
 - Directory: `apps/directory/e2e/` — port 4001
 - Checkout: `apps/checkout/e2e/` — port 4002
 
-E2E runs alongside `just dev` and never tests a dev server: the `webServer` config starts a preview of the app's build via `pnpm preview` on a dedicated E2E port. `reuseExistingServer` is enabled, and a server already answering on the E2E port is reused. Within the workspace, only another E2E preview of the same app (e.g. one kept up by `just e2e-ui`) listens on that port. The preview binds its port strictly and fails to start when the port is taken. Desktop Chrome only. CI uploads HTML report as artifact on failure.
+E2E runs alongside `just dev` and never tests a dev server: the `webServer` config starts a preview of the app's build via `pnpm preview` on a dedicated E2E port. E2E rebuilds the same `dist` that `just preview` serves, and a running SSR preview keeps its build's asset names in memory, so its pages 404 their scripts until it restarts. Before running E2E, check with the user whether a `just preview` is up. `reuseExistingServer` is enabled, and a server already answering on the E2E port is reused. Within the workspace, only another E2E preview of the same app (e.g. one kept up by `just e2e-ui`) listens on that port. The preview binds its port strictly and fails to start when the port is taken. Desktop Chrome only. CI uploads HTML report as artifact on failure.
 
 #### Page readiness: `waitUntilHydrated`, not `networkidle`
 
@@ -96,6 +96,8 @@ When a template needs the page to be interactive before asserting, navigate with
 ## Code conventions
 
 ### Comments
+
+Code explains itself through naming. Write a comment only for what the code cannot say: a non-obvious constraint, a workaround and its cause, or logic too intricate to follow from names alone. Most changes need none.
 
 Single-line prose comments should always carry a semantic tag supported by the [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) VSCode extension. The tag makes the intent of the comment visible at a glance and lets the editor color-code it. The workspace configures the tag set under `better-comments.tags` in [.vscode/settings.json](.vscode/settings.json):
 
@@ -213,6 +215,25 @@ If you need a utility that isn't safelisted, either add it to the safelist or mo
 // ✅ correct — `sr-only` is safelisted in presetBitcart
 <span className="sr-only">{" (opens in new tab)"}</span>
 ```
+
+### UI Kit first
+
+Build UI from `@bitcart/ui-kit`. The UI Kit is meant to provide nearly every component apps and packages render, and it exports a component only once something uses it, so a missing component, variant or export is the expected state rather than a gap to route around.
+
+When the UI Kit lacks what you need, flag it to the user first, naming what is missing and where you need it. Once agreed, add or export it in `packages/ui-kit`, with an example in `apps/ui-docs`. App code then stays free of one-off component copies, each of which the UI Kit would otherwise have to absorb later.
+
+UI Kit components are ported from [shadcn/ui](https://github.com/shadcn-ui/ui) or [coss ui](https://github.com/cosscom/ui), so consult both upstreams before building or fixing one:
+
+- **A missing component**: find the ready-made one in each upstream, compare them, and let the user pick before writing anything from scratch. Download the pick with `just add-ui-kit-components`, which writes it to `packages/ui-kit/src/components/tmp`, and port it from there, checking its classes as described under Styling in `AGENTS.md`.
+- **A bug or rough edge in an existing component**: check how each upstream handles it, their issues included, and propose the fix with that comparison.
+
+coss follows Base UI's parts, names and states more closely, so it is usually the better source, but the choice is the user's.
+
+### Shared helpers
+
+Look in the packages before writing a generic helper in an app: `@bitcart/core/utils` for functions, `@bitcart/hooks` for React hooks. When one is missing, add it there, as you would a UI Kit component.
+
+In review, a new generic component or helper outside `packages/` needs a stated reason why the UI Kit, `@bitcart/core` or `@bitcart/hooks` cannot cover it.
 
 ### UI Kit imports
 

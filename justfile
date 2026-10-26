@@ -129,29 +129,29 @@ Example: `just add-ui-kit-components @coss/command accordion`
 add-ui-kit-components +component-names:
     pnpm ui-kit add:components {{ component-names }}
 
-## API SDK
+## CLIENT SDK
 
 [doc("
-Regenerate the API SDK from the pinned OpenAPI schema.
+Regenerate the Client SDK from the pinned OpenAPI schema.
 ")]
-[group("API SDK")]
+[group("Client SDK")]
 api-generate:
-    @pnpm nx run @bitcart/api-sdk:generate:api
+    @pnpm nx run @bitcart/client-sdk:generate:api
 
 [doc("
-Pin a fresh OpenAPI schema, then regenerate the API SDK.
+Pin a fresh OpenAPI schema, then regenerate the Client SDK.
 The source is a running backend's base URL, or a path to a schema exported by the backend's `just openapi` command.
 Review the resulting diff: it is the API surface changing.
 
 Example: `just api-sync http://localhost:8000`
 Example: `just api-sync ../bitcart/openapi.json`
 ")]
-[group("API SDK")]
+[group("Client SDK")]
 api-sync source="https://api.bitcart.ai":
     #!/usr/bin/env sh
     set -eu
     source='{{ source }}'
-    destination=packages/api-sdk/openapi.json
+    destination=packages/client-sdk/openapi.json
     case "$source" in
         http://*|https://*)
             case "$source" in
@@ -167,15 +167,38 @@ api-sync source="https://api.bitcart.ai":
     just api-generate
 
 [doc("
-Verify the committed API SDK still matches the pinned schema.
+Verify the committed Client SDK still matches the pinned schema.
 ")]
-[group("API SDK")]
+[group("Client SDK")]
 api-check: api-generate
     #!/usr/bin/env sh
-    drift=$(git status --porcelain -- 'packages/api-sdk/src/*/generated/*')
+    drift=$(git status --porcelain -- 'packages/client-sdk/src/*/generated/*')
     if [ -n "$drift" ]; then
-        echo "The generated API SDK does not match openapi.json." >&2
+        echo "The generated Client SDK does not match openapi.json." >&2
         echo "Run 'just api-generate' and commit the result." >&2
+        echo "$drift" >&2
+        exit 1
+    fi
+
+## UI KIT
+
+[doc("
+Regenerate the UI Kit's coin icon indexes from the installed web3icons package.
+")]
+[group("UI Kit")]
+coin-icons-generate:
+    @pnpm nx run @bitcart/ui-kit:generate:coin-icons
+
+[doc("
+Verify the committed coin icon indexes still match the installed web3icons package.
+")]
+[group("UI Kit")]
+coin-icons-check: coin-icons-generate
+    #!/usr/bin/env sh
+    drift=$(git status --porcelain -- 'packages/ui-kit/src/coin-icons/generated')
+    if [ -n "$drift" ]; then
+        echo "The coin icon indexes do not match the installed web3icons package." >&2
+        echo "Run 'just coin-icons-generate' and commit the result." >&2
         echo "$drift" >&2
         exit 1
     fi
@@ -239,10 +262,23 @@ depcruise *nx-args:
     @pnpm nx run-many --outputStyle=stream --target=depcruise:deps $(just _nx-args {{ nx-args }})
 
 [doc("
+Print the CSS our UnoCSS preset generates for each class, warning where it differs from Tailwind v4.
+`--app <name>` uses that app's `uno.config.ts`, for the colors and tokens only it defines.
+Builds the preset first.
+
+Example: `just unocss-check 'not-dark:bg-muted after:absolute [&:disabled]:opacity-50'`
+Example: `just unocss-check --app checkout 'bg-success text-warning'`
+")]
+[group("Code quality")]
+[positional-arguments]
+unocss-check +args: (build "-p" "@bitcart/unocss-preset")
+    @pnpm --reporter=silent -C packages/unocss-preset check:classes "$@"
+
+[doc("
 Run all checks without fixing.
 ")]
 [group("Code quality")]
-check: api-check format-check lint-check typecheck depcheck depcruise
+check: api-check coin-icons-check format-check lint-check typecheck depcheck depcruise
 
 [doc("
 Run tests.

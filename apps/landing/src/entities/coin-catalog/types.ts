@@ -1,4 +1,4 @@
-import { bitcartCryptos } from "@bitcart/api-sdk/endpoints"
+import { bitcartCryptos } from "@bitcart/client-sdk/endpoints"
 
 export type CoinCatalogLookupResult = bitcartCryptos.PaymentMethodCatalog & {
   searchCounts: bitcartCryptos.PaymentMethodCatalog["totalCounts"]

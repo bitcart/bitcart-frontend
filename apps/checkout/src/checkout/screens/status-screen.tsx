@@ -1,24 +1,71 @@
-import type { HttpHref } from "@bitcart/core/navigation"
-
-import { CheckoutFooter, ExtensionSlot, StatusOverlay, useCheckout } from ".."
+import {
+  CheckoutCard,
+  CheckoutFooter,
+  ExtensionSlot,
+  StatusOverlay,
+  useAmountFormat,
+  useCheckout,
+  StoreBrandRow,
+  useReceiptPrinter,
+} from ".."
 
 export const CheckoutStatusScreen = () => {
-  const { status, store, invoice } = useCheckout("status")
+  const {
+    status,
+    exception,
+    store,
+    invoice,
+    received,
+    receipt,
+    environment,
+    isCompletedLive,
+    cancelRedirect,
+  } = useCheckout("status")
+
+  const format = useAmountFormat()
+  const receiptPrinter = useReceiptPrinter()
+
+  const getPrice = (): string | null => {
+    if (!invoice.isAnyAmount) {
+      return format.fiat(invoice.effectivePrice)
+    } else if (received) {
+      return format.fiat(received.price)
+    } else return null
+  }
+
+  const receivedAmount =
+    invoice.isAnyAmount && received ? format.crypto(received.amount, received.symbol) : undefined
+
+  const refund =
+    receipt?.refund && !environment.terminal
+      ? {
+          href: `/refunds/${receipt.refund.id}` as const,
+          isUnclaimed: receipt.refund.status === "unclaimed",
+        }
+      : undefined
 
   return (
-    <div className="max-w-md rounded-2xl bg-card text-card-foreground shadow-xl w-full overflow-hidden">
+    <CheckoutCard>
+      <StoreBrandRow className="px-5 py-4 border-border border-b" />
       <ExtensionSlot name="checkout:header-extra" className="px-5 py-3" />
 
       <StatusOverlay
         status={status}
+        exception={exception}
         storeName={store.name}
+        storeSupport={store.support}
         invoiceId={invoice.id}
-        orderAmount={invoice.price}
-        orderCurrency={invoice.currency}
-        redirectUrl={(invoice.redirectUrl ?? "") as HttpHref}
+        price={getPrice()}
+        receivedAmount={receivedAmount}
+        celebrates={isCompletedLive}
+        receiptHref={receipt ? `/i/${invoice.id}/receipt` : undefined}
+        receiptPrinter={receiptPrinter}
+        refund={refund}
+        redirectUrl={invoice.redirectUrl ?? ""}
+        cancelRedirect={cancelRedirect}
       />
 
       <CheckoutFooter />
-    </div>
+    </CheckoutCard>
   )
 }

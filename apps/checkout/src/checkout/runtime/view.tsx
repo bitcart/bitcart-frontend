@@ -3,6 +3,7 @@ import { useLingui } from "@lingui/react"
 import { use, useEffect, useEffectEvent } from "react"
 
 import type { CheckoutModel, CheckoutSource } from "../model"
+import { useWalletPayKit, type WalletPayKit } from "../wallet-pay/kit"
 import type { CheckoutAppConfig } from "./context"
 import { useCheckoutControl, useCheckoutModel } from "./control"
 import type { CheckoutControl } from "./control-store"
@@ -17,12 +18,14 @@ type CheckoutViewProps = {
   registry: CheckoutTemplateRegistry
   templateId: string
   appConfig?: CheckoutAppConfig
+  countdownSpeed?: number
   control?: CheckoutControl
-  onModelChange?: (model: CheckoutModel) => void
+  onModelChange?: (model: CheckoutModel, source: CheckoutSource) => void
 }
 
 type CheckoutTemplateViewProps = Omit<CheckoutViewProps, "control"> & {
   control: CheckoutControl
+  walletPay: WalletPayKit
 }
 
 const CheckoutTemplateView = ({
@@ -31,7 +34,9 @@ const CheckoutTemplateView = ({
   registry,
   templateId,
   appConfig,
+  countdownSpeed,
   control,
+  walletPay,
   onModelChange,
 }: CheckoutTemplateViewProps) => {
   const { i18n } = useLingui()
@@ -44,14 +49,23 @@ const CheckoutTemplateView = ({
   }
 
   const model = useCheckoutModel(source, { selection: template.selection, control })
-  const emitModelChange = useEffectEvent((changed: CheckoutModel) => onModelChange?.(changed))
+
+  const emitModelChange = useEffectEvent((changed: CheckoutModel) =>
+    onModelChange?.(changed, source),
+  )
 
   useEffect(() => {
     emitModelChange(model)
   }, [model])
 
   return (
-    <CheckoutProvider model={model} connection={connection} appConfig={appConfig}>
+    <CheckoutProvider
+      model={model}
+      connection={connection}
+      appConfig={appConfig}
+      countdownSpeed={countdownSpeed}
+      walletPay={walletPay}
+    >
       <CheckoutShell templateId={templateId} template={template} />
     </CheckoutProvider>
   )
@@ -60,7 +74,8 @@ const CheckoutTemplateView = ({
 //! The UI state lives above the error boundary, so a fallback or a template switch keeps it.
 export const CheckoutView = ({ control, ...props }: CheckoutViewProps) => {
   const ownControl = useCheckoutControl(props.source.invoice.id)
-  const viewProps = { ...props, control: control ?? ownControl }
+  const walletPay = useWalletPayKit(props.source.invoice.id)
+  const viewProps = { ...props, control: control ?? ownControl, walletPay }
   const { registry, templateId } = props
 
   if (templateId === registry.defaultId) {

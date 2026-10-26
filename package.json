@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
-  "license": "ISC",
+  "license": "MIT",
   "author": "",
   "type": "module",
   "scripts": {
@@ -14,7 +14,7 @@
     "vitest": "vitest",
     "workspace": "pnpm -w",
     "packages": "pnpm --filter './packages/*'",
-    "api-sdk": "pnpm -C packages/api-sdk",
+    "client-sdk": "pnpm -C packages/client-sdk",
     "configs": "pnpm -C packages/configs",
     "core": "pnpm -C packages/core",
     "form-kit": "pnpm -C packages/form-kit",

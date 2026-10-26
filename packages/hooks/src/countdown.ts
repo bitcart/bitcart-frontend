@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useEffectEvent, useState } from "react"
 
 const COUNTDOWN_TICK_INTERVAL_MS = 1_000
 
@@ -7,7 +7,6 @@ const toWholeSeconds = (seconds: number): number => Math.max(0, Math.floor(secon
 /**
  * Counts a number of seconds down to zero, formatted as `mm:ss`.
  *
- * A change to the starting value restarts the count from it.
  *
  * @example
  * ```tsx
@@ -16,6 +15,7 @@ const toWholeSeconds = (seconds: number): number => Math.max(0, Math.floor(secon
  */
 export const useCountdown = (
   initialValueSeconds: number,
+  { speed = 1 }: { speed?: number } = {},
 ): { secondsLeft: number; formatted: string; isExpired: boolean } => {
   const [secondsLeft, setSecondsLeft] = useState(() => toWholeSeconds(initialValueSeconds))
   const [lastInitialValue, setLastInitialValue] = useState(initialValueSeconds)
@@ -27,24 +27,26 @@ export const useCountdown = (
   }
 
   const isActive = secondsLeft > 0
+  const readSecondsLeft = useEffectEvent(() => secondsLeft)
 
   useEffect(() => {
     if (!isActive) return void null
 
+    const startedAt = Date.now()
+    const startSecondsLeft = readSecondsLeft()
+
     const interval = setInterval(() => {
-      setSecondsLeft((previous) => {
-        if (previous <= 1) {
-          clearInterval(interval)
+      //* Rounded so a tick firing a few milliseconds early or late still counts a whole second.
+      const elapsedSeconds = Math.round((Date.now() - startedAt) / COUNTDOWN_TICK_INTERVAL_MS)
+      const next = toWholeSeconds(startSecondsLeft - elapsedSeconds * speed)
 
-          return 0
-        }
+      setSecondsLeft(next)
 
-        return previous - 1
-      })
+      if (next === 0) clearInterval(interval)
     }, COUNTDOWN_TICK_INTERVAL_MS)
 
     return () => clearInterval(interval)
-  }, [isActive])
+  }, [isActive, speed, lastInitialValue])
 
   const minutes = Math.floor(secondsLeft / 60)
   const seconds = secondsLeft % 60

@@ -1,6 +1,11 @@
 import { describe, expect, test } from "vitest"
 
-import { getDestinationTypeAwareLinkProps, isExternalHref, isInternalHref } from "./utils"
+import {
+  getDestinationTypeAwareLinkProps,
+  isExternalHref,
+  isHttpHref,
+  isInternalHref,
+} from "./utils"
 
 describe("isInternalHref", () => {
   test.each(["/", "/about", "/about/#features"])("accepts the absolute path %s", (href) => {
@@ -40,10 +45,25 @@ describe("isExternalHref", () => {
   })
 })
 
+describe("isHttpHref", () => {
+  test.each(["//cdn.example.com/app.js", "http://example.com", "https://example.com"])(
+    "accepts %s",
+
+    (href) => {
+      expect(isHttpHref(href)).toBe(true)
+    },
+  )
+
+  test.each(["mailto:a@b.c", "tel:+123", "/about", "#features"])("rejects %s", (href) => {
+    expect(isHttpHref(href)).toBe(false)
+  })
+})
+
 describe("href classification", () => {
   test.each(["docs/intro", "", "javascript:void 0"])("leaves %s unclassified", (href) => {
     expect(isInternalHref(href)).toBe(false)
     expect(isExternalHref(href)).toBe(false)
+    expect(isHttpHref(href)).toBe(false)
   })
 })
 

@@ -36,9 +36,16 @@ export const AccordionTrigger: React.FC<AccordionTriggerProps> = ({
             focus-visible:border-ring focus-visible:ring-ring/50
             gap-4 rounded-lg py-4 text-sm font-medium flex flex-1 items-start justify-between
             text-left transition-all outline-none
-            focus-visible:ring-[3px] focus-visible:ring-inset
+            focus-visible:ring-[3px]
             disabled:pointer-events-none disabled:opacity-50
             [&[aria-expanded=true]_svg.chevron]:rotate-180
+          `,
+
+          `
+            in-[[data-variant=divided]]:rounded-md
+            in-[[data-variant=divided]]:px-3
+            in-[[data-variant=divided]]:-mx-3
+            in-[[data-variant=cards]]:focus-visible:ring-inset
           `,
 
           { "hover:underline": underlineOnHover },

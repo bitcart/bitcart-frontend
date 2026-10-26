@@ -2,12 +2,19 @@ import { useMemo } from "react"
 
 import { useCheckout } from "./hooks"
 import type { CheckoutMethod } from "./model"
+import { getMethodNetwork, getNetworkLabels } from "./networks"
 
-const matchesQuery = ({ name, symbol }: CheckoutMethod, normalizedQuery: string) =>
-  [name, symbol].some((field) => field.toLowerCase().includes(normalizedQuery))
+const matchesQuery = (method: CheckoutMethod, normalizedQuery: string) => {
+  const networkLabels = getNetworkLabels(getMethodNetwork(method))
+
+  return [method.name, method.symbol, networkLabels?.badge, networkLabels?.name].some((field) =>
+    field?.toLowerCase().includes(normalizedQuery),
+  )
+}
 
 /**
- * The payment methods matching a free-text query by name or symbol, in their original order.
+ * The payment methods matching a free-text query by name, symbol or network, in their original
+ * order.
  */
 export const useMethodSearch = (query: string): CheckoutMethod[] => {
   const { methods } = useCheckout()

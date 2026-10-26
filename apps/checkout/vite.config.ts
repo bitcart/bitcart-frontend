@@ -4,6 +4,8 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite"
 import viteReact from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 
+import { embedScripts } from "./vite-embed-scripts.ts"
+
 const DEV_ENV_PORT = 3002
 
 //* https://vitejs.dev/config/
@@ -22,7 +24,7 @@ export default defineConfig({
   },
 
   plugins: [
-    devtools(),
+    devtools({ consolePiping: { enabled: false } }),
 
     tanstackStart({
       spa: {
@@ -39,6 +41,7 @@ export default defineConfig({
     //! Compiler hoists JSX out of `<Trans>`, or the message ids stop matching the catalogs.
     lingui({ macroTransform: true }),
     viteReact({ compiler: true }),
+    embedScripts(),
   ],
 
   resolve: {

@@ -7,13 +7,19 @@ import { i18n as globalI18n } from "@lingui/core"
 import { useLingui } from "@lingui/react"
 import { TanStackDevtools } from "@tanstack/react-devtools"
 import type { QueryClient } from "@tanstack/react-query"
-import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router"
+import {
+  HeadContent,
+  Scripts,
+  createRootRouteWithContext,
+  useRouterState,
+} from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import { useMemo } from "react"
 
 import { APP_POSIX_LOCALE_ID_MAP, getAppDocumentMetadata, SUPPORTED_LOCALE_IDS } from "#/app.config"
 import { BRAND_X_HANDLE, PRODUCTION_BASE_URL, PROJECT_CANONICAL_NAME } from "#/common/constants"
 import { useI18nInitialization } from "#/common/i18n"
+import { isEmbeddedByLoader, useEmbedEscapeClose } from "#/common/integrations/embed"
 import { TanStackQueryDevtools } from "#/common/integrations/tanstack-query"
 import { Link, useClientRoute } from "#/common/navigation"
 
@@ -53,7 +59,12 @@ export const Route = createRootRouteWithContext<CheckoutRouterContext>()({
     })
 
     return {
-      meta: [{ title: metadata.title }, ...manifest.meta],
+      meta: [
+        { title: metadata.title },
+        { name: "robots", content: "noindex, nofollow" },
+        ...manifest.meta,
+      ],
+
       links: [{ rel: "stylesheet", href: unoCss }, ...manifest.links],
     }
   },
@@ -65,6 +76,19 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const { i18n } = useLingui()
   const currentRoute = useClientRoute()
   const isClient = useIsClient()
+
+  const isSheetFrame = useRouterState({
+    select: ({ location }) => location.search.sheetFrame === true,
+  })
+
+  const isEmbedRequested = useRouterState({
+    select: ({ location }) => isEmbeddedByLoader(location.search),
+  })
+
+  const isEmbeddedCheckout = isClient && isEmbedRequested
+
+  useEmbedEscapeClose(isEmbeddedCheckout)
+
   const layoutConfig = useMemo(() => getLayoutConfig(i18n), [i18n])
 
   useI18nInitialization()
@@ -76,11 +100,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
 
       <body
-        className={cn(`
-          font-sans bg-background text-foreground
-          selection:bg-primary/25
-          wrap-anywhere antialiased
-        `)}
+        className={cn(
+          `
+            font-sans text-foreground
+            selection:bg-primary/25
+            wrap-anywhere antialiased
+          `,
+          isEmbeddedCheckout ? "bg-transparent" : "bg-background",
+        )}
       >
         <ThemeProvider>
           <LayoutContextProvider
@@ -90,7 +117,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             layoutConfig={layoutConfig}
           >
             <LayoutContainer
-              className={cn(`bg-muted/40 p-4 flex min-h-screen items-center justify-center`)}
+              className={cn(
+                `
+                  p-4
+                  print:p-0
+                  flex min-h-screen items-center justify-center
+                  print:items-start
+                `,
+                !isEmbeddedCheckout && "bg-muted/40",
+              )}
             >
               {children}
             </LayoutContainer>
@@ -98,13 +133,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
           <Toaster />
 
-          <TanStackDevtools
-            config={{ position: "bottom-right" }}
-            plugins={[
-              { name: "Tanstack Router", render: <TanStackRouterDevtoolsPanel /> },
-              TanStackQueryDevtools,
-            ]}
-          />
+          {!isSheetFrame && !isEmbeddedCheckout && (
+            <TanStackDevtools
+              config={{ position: "bottom-right" }}
+              plugins={[
+                { name: "Tanstack Router", render: <TanStackRouterDevtoolsPanel /> },
+                TanStackQueryDevtools,
+              ]}
+            />
+          )}
         </ThemeProvider>
 
         <Scripts />

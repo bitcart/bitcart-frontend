@@ -24,6 +24,7 @@ export type CheckoutTemplateDefinition = {
   Status?: ComponentType
   Select?: ComponentType
   Details?: ComponentType
+  Address?: ComponentType
   Confirming?: ComponentType
 }
 

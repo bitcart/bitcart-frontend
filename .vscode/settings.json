@@ -56,7 +56,7 @@
   },
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true,
-    "packages/api-sdk/openapi.json": true
+    "packages/client-sdk/openapi.json": true
   },
   "git.autofetch": true,
   "gitlens.remotes": [
@@ -261,6 +261,7 @@
     "ranksep",
     "recatalogize",
     "refetched",
+    "refetches",
     "remeda",
     "retarget",
     "RLENGTH",

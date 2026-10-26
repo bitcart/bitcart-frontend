@@ -1,6 +1,9 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, test, vi } from "vitest"
 
+import { makeInvoice, makePayment } from "../fixtures"
+import { CheckoutFooter } from "../parts/footer"
+import { SenderAddressForm } from "../parts/sender-address-form"
 import { renderCheckout } from "../testing/render-checkout"
 import { ExtensionSlot } from "./slot"
 import {
@@ -58,6 +61,84 @@ describe("ExtensionSlot", () => {
     })
 
     expect(await screen.findByText("Earn points paying with BTC")).toBeInTheDocument()
+  })
+
+  describe("method context", () => {
+    const eth = makePayment({
+      id: "method-eth",
+      name: "ETH",
+      wallet: { network: "eip155:1", sender_address_required: true, links: [] },
+    })
+
+    const btc = makePayment({ id: "method-btc", name: "BTC" })
+
+    const FooterScreen = () => <CheckoutFooter />
+
+    const AddressScreen = () => (
+      <>
+        <SenderAddressForm />
+        <ExtensionSlot name="checkout:address-extra" />
+      </>
+    )
+
+    const footerContribution = defineExtensionSlotContribution<"checkout:footer-extra">({
+      pluginId: "eth-plugin",
+      slot: "checkout:footer-extra",
+      load: () =>
+        Promise.resolve({
+          default: ({ context }) => <p>Footer method: {context.method?.name ?? "none"}</p>,
+        }),
+    })
+
+    const addressContribution = defineExtensionSlotContribution<"checkout:address-extra">({
+      pluginId: "eth-plugin",
+      slot: "checkout:address-extra",
+      load: () =>
+        Promise.resolve({
+          default: ({ context }) => (
+            <p>
+              {context.method.name} address, {context.view} view
+            </p>
+          ),
+        }),
+    })
+
+    test.each([
+      ["pays with", [btc], "BTC"],
+      ["is addressing", [eth], "ETH"],
+    ])("gives the footer the method the buyer %s", async (_case, payments, name) => {
+      renderCheckout({
+        source: { invoice: makeInvoice({ payments }) },
+        screens: { Payment: FooterScreen, Address: FooterScreen },
+        appConfig: { slots: [footerContribution] },
+      })
+
+      expect(await screen.findByText(`Footer method: ${name}`)).toBeInTheDocument()
+    })
+
+    test("gives the footer no method while the buyer chooses one", async () => {
+      renderCheckout({
+        source: { invoice: makeInvoice({ payments: [btc, eth] }) },
+        screens: { Payment: FooterScreen, Select: FooterScreen, selection: "explicit" },
+        appConfig: { slots: [footerContribution] },
+      })
+
+      expect(await screen.findByText("Footer method: none")).toBeInTheDocument()
+    })
+
+    test("tells the address slot whether the ETH plugin offer is shown", async () => {
+      renderCheckout({
+        source: { invoice: makeInvoice({ payments: [eth] }) },
+        screens: { Payment: FooterScreen, Address: AddressScreen },
+        appConfig: { slots: [addressContribution] },
+      })
+
+      expect(await screen.findByText("ETH address, form view")).toBeInTheDocument()
+
+      fireEvent.click(screen.getByRole("button", { name: "Skip" }))
+
+      expect(await screen.findByText("ETH address, upsell view")).toBeInTheDocument()
+    })
   })
 
   test("orders contributions by their order, then by plugin id", async () => {

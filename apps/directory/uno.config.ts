@@ -35,7 +35,7 @@ export const COLOR_SCHEME_INPUTS: ThemeColorSchemeParams = {
 export default defineConfig({
   cli: {
     entry: {
-      patterns: ["src/**/*.tsx", "../../packages/ui-kit/src/**/*.tsx"],
+      patterns: ["src/**/*.{ts,tsx}", "../../packages/ui-kit/src/**/*.{ts,tsx}"],
       outFile: "src/pages/uno.generated.css",
     },
   },

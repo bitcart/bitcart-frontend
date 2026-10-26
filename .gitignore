@@ -73,3 +73,4 @@ agents.lock
 .claude/worktrees
 .claude/reviews
 .claude/settings.local.json
+.claude/launch.json

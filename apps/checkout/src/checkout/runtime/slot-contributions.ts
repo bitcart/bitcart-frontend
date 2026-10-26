@@ -1,10 +1,12 @@
-import type { bitcartInvoices } from "@bitcart/api-sdk/endpoints"
 import type { ComponentType } from "react"
 
 import type {
+  CheckoutFinalStatus,
   CheckoutInvoiceSummary,
+  CheckoutMethod,
   CheckoutModel,
   CheckoutPayment,
+  CheckoutStatusException,
   CheckoutStoreSummary,
 } from "../model"
 
@@ -18,9 +20,16 @@ export type SlotContextMap = {
   "checkout:header-extra": ExtensionSlotBaseContext
   "checkout:payment-extra": ExtensionSlotBaseContext & { payment: CheckoutPayment }
   "checkout:status-extra": ExtensionSlotBaseContext & {
-    status: bitcartInvoices.InvoiceTerminalStatus
+    status: CheckoutFinalStatus
+    exception: CheckoutStatusException | null
   }
-  "checkout:footer-extra": ExtensionSlotBaseContext
+  "checkout:address-extra": ExtensionSlotBaseContext & {
+    method: CheckoutMethod
+    view: "form" | "upsell"
+  }
+  "checkout:footer-extra": ExtensionSlotBaseContext & {
+    method: CheckoutMethod | null
+  }
 }
 
 export type ExtensionSlotName = keyof SlotContextMap
@@ -49,6 +58,14 @@ const compareIds = (a: string, b: string) => (a < b ? -1 : Number(a > b))
 export const compareContributions = (a: ExtensionSlotContribution, b: ExtensionSlotContribution) =>
   (a.order ?? 0) - (b.order ?? 0) || compareIds(a.pluginId, b.pluginId)
 
+const getActiveMethod = (model: CheckoutModel): CheckoutMethod | null => {
+  if (model.phase === "address") {
+    return model.method
+  } else if (model.phase === "payment") {
+    return model.methods.find(({ id }) => id === model.selectedMethodId) ?? null
+  } else return null
+}
+
 export const getSlotContext = <TName extends ExtensionSlotName>(
   name: TName,
   model: CheckoutModel,
@@ -65,7 +82,25 @@ export const getSlotContext = <TName extends ExtensionSlotName>(
   } else if (name === "checkout:status-extra") {
     if (model.phase !== "status") {
       throw misplaced()
-    } else return { ...base, status: model.status } as SlotContextMap[TName]
+    } else {
+      return {
+        ...base,
+        status: model.status,
+        exception: model.exception,
+      } as SlotContextMap[TName]
+    }
+  } else if (name === "checkout:address-extra") {
+    if (model.phase !== "address") {
+      throw misplaced()
+    } else {
+      return {
+        ...base,
+        method: model.method,
+        view: model.ethPluginOffer?.isShown ? "upsell" : "form",
+      } as SlotContextMap[TName]
+    }
+  } else if (name === "checkout:footer-extra") {
+    return { ...base, method: getActiveMethod(model) } as SlotContextMap[TName]
   } else return base as SlotContextMap[TName]
 }
 

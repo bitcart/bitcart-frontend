@@ -66,10 +66,51 @@ describe("useCountdown", () => {
       expect(result.current).toMatchObject({ secondsLeft: 0, isExpired: true })
     })
 
+    test("follows the clock when ticks arrive late", async () => {
+      const { result } = renderHook(() => useCountdown(900))
+
+      //* A background tab's timers are throttled: a minute passes before the next tick fires.
+      vi.setSystemTime(Date.now() + 60_000)
+      await advanceSeconds(1)
+
+      expect(result.current.secondsLeft).toBe(839)
+    })
+
     test("reports an active count as unexpired", () => {
       const { result } = renderHook(() => useCountdown(1))
 
       expect(result.current.isExpired).toBe(false)
+    })
+  })
+
+  describe("speed", () => {
+    test("counts `speed` seconds per real second", async () => {
+      const { result } = renderHook(() => useCountdown(900, { speed: 10 }))
+
+      await advanceSeconds(3)
+
+      expect(result.current.secondsLeft).toBe(870)
+    })
+
+    test("keeps the seconds left when the speed changes", async () => {
+      const { result, rerender } = renderHook(({ speed }) => useCountdown(900, { speed }), {
+        initialProps: { speed: 1 },
+      })
+
+      await advanceSeconds(4)
+      rerender({ speed: 5 })
+      await advanceSeconds(2)
+
+      expect(result.current.secondsLeft).toBe(886)
+    })
+
+    test("follows the clock at speed when ticks arrive late", async () => {
+      const { result } = renderHook(() => useCountdown(900, { speed: 10 }))
+
+      vi.setSystemTime(Date.now() + 10_000)
+      await advanceSeconds(1)
+
+      expect(result.current.secondsLeft).toBe(790)
     })
   })
 

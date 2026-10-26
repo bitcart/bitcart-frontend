@@ -33,8 +33,8 @@ const TestPayment = ({ templateName }: { templateName: string }) => {
 
 const registry = createTemplateRegistry(
   {
-    "../templates/accordion/index.ts": templateModule({
-      Payment: () => <TestPayment templateName="Accordion" />,
+    "../templates/flow/index.ts": templateModule({
+      Payment: () => <TestPayment templateName="Flow" />,
     }),
 
     "../templates/broken/index.ts": templateModule({
@@ -48,7 +48,7 @@ const registry = createTemplateRegistry(
       Payment: () => <TestPayment templateName="Spotlight" />,
     }),
   },
-  { defaultId: "accordion" },
+  { defaultId: "flow" },
 )
 
 const makeTwoMethodSource = (invoiceId = "invoice-1") =>
@@ -70,7 +70,7 @@ const viewElement = (props: ViewProps) => (
         source={twoMethodSource}
         connection={null}
         registry={registry}
-        templateId="accordion"
+        templateId="flow"
         {...props}
       />
     </Suspense>
@@ -99,9 +99,9 @@ const renderView = (templateId: string, viewRegistry = registry) =>
 
 describe("CheckoutView", () => {
   test("renders the requested template", async () => {
-    await renderView("accordion")
+    await renderView("flow")
 
-    expect(await screen.findByText("Accordion pays BTC")).toBeInTheDocument()
+    expect(await screen.findByText("Flow pays BTC")).toBeInTheDocument()
   })
 
   test("applies the template's selection mode", async () => {
@@ -115,7 +115,7 @@ describe("CheckoutView", () => {
 
     await renderView("broken")
 
-    expect(screen.getByText("Accordion pays BTC")).toBeInTheDocument()
+    expect(screen.getByText("Flow pays BTC")).toBeInTheDocument()
   })
 })
 
@@ -123,7 +123,7 @@ describe("CheckoutView state", () => {
   const payWithLtc = () => fireEvent.click(screen.getByRole("button", { name: "Pay with LTC" }))
 
   test("keeps the chosen method across a template switch", async () => {
-    const { rerender } = await renderViewWith({ templateId: "accordion" })
+    const { rerender } = await renderViewWith({ templateId: "flow" })
 
     payWithLtc()
     await rerender({ templateId: "spotlight" })
@@ -137,7 +137,7 @@ describe("CheckoutView state", () => {
     payWithLtc()
     await rerender({ source: makeTwoMethodSource("invoice-2") })
 
-    expect(screen.getByText("Accordion pays BTC")).toBeInTheDocument()
+    expect(screen.getByText("Flow pays BTC")).toBeInTheDocument()
   })
 
   test("follows a control held by the host", async () => {
@@ -147,19 +147,20 @@ describe("CheckoutView state", () => {
 
     act(() => control.actions.selectMethod("ltc"))
 
-    expect(screen.getByText("Accordion pays LTC")).toBeInTheDocument()
+    expect(screen.getByText("Flow pays LTC")).toBeInTheDocument()
   })
 
-  test("reports each new model to the host", async () => {
+  test("reports each new model to the host, with the source it was derived from", async () => {
     const onModelChange = vi.fn()
     const { rerender } = await renderViewWith({ onModelChange })
+    const withSource = { invoice: expect.objectContaining({ id: expect.any(String) }) }
 
     payWithLtc()
     await rerender({})
 
     expect(onModelChange.mock.calls).toMatchObject([
-      [{ phase: "payment", selectedMethodId: "btc" }],
-      [{ phase: "payment", selectedMethodId: "ltc" }],
+      [{ phase: "payment", selectedMethodId: "btc" }, withSource],
+      [{ phase: "payment", selectedMethodId: "ltc" }, withSource],
     ])
   })
 })
@@ -169,8 +170,8 @@ describe("CheckoutView translations", () => {
 
   const translatedRegistry = (catalogs: Record<string, () => Promise<{ messages: Messages }>>) =>
     createTemplateRegistry(
-      { "../templates/accordion/index.ts": templateModule({ Payment: TranslatedPayment }) },
-      { defaultId: "accordion", catalogs },
+      { "../templates/flow/index.ts": templateModule({ Payment: TranslatedPayment }) },
+      { defaultId: "flow", catalogs },
     )
 
   const catalogModule = (messages: Messages) => () => Promise.resolve({ messages })
@@ -190,8 +191,8 @@ describe("CheckoutView translations", () => {
     activate("de")
 
     await renderView(
-      "accordion",
-      translatedRegistry({ "../templates/accordion/locales/de.po": () => catalog.promise }),
+      "flow",
+      translatedRegistry({ "../templates/flow/locales/de.po": () => catalog.promise }),
     )
 
     expect(screen.getByText("Loading")).toBeInTheDocument()
@@ -207,14 +208,14 @@ describe("CheckoutView translations", () => {
 
   test("switches to a newly activated locale whose catalog is loaded, without a loading state", async () => {
     const viewRegistry = translatedRegistry({
-      "../templates/accordion/locales/en.po": catalogModule({ "test.pay": "Pay now" }),
-      "../templates/accordion/locales/fr.po": catalogModule({ "test.pay": "Payer" }),
+      "../templates/flow/locales/en.po": catalogModule({ "test.pay": "Pay now" }),
+      "../templates/flow/locales/fr.po": catalogModule({ "test.pay": "Payer" }),
     })
 
-    await renderView("accordion", viewRegistry)
+    await renderView("flow", viewRegistry)
     expect(await screen.findByText("Pay now")).toBeInTheDocument()
 
-    await viewRegistry.loadCatalog("accordion", "fr")
+    await viewRegistry.loadCatalog("flow", "fr")
 
     act(() => {
       i18n.activate("fr")
@@ -236,25 +237,25 @@ describe("CheckoutView translations", () => {
 
     const viewRegistry = createTemplateRegistry(
       {
-        "../templates/accordion/index.ts": templateModule({
+        "../templates/flow/index.ts": templateModule({
           Payment: StrippedPayment,
           sourceMessages: { "test.pay": "Pay now" },
         }),
       },
-      { defaultId: "accordion", catalogs: { "../templates/accordion/locales/de.po": loadGerman } },
+      { defaultId: "flow", catalogs: { "../templates/flow/locales/de.po": loadGerman } },
     )
 
     activate("de")
 
     //* The route's preload fails first, then the render's own attempt.
-    await expect(viewRegistry.loadCatalog("accordion", "de")).rejects.toThrow(/Failed to fetch/u)
-    await renderView("accordion", viewRegistry)
+    await expect(viewRegistry.loadCatalog("flow", "de")).rejects.toThrow(/Failed to fetch/u)
+    await renderView("flow", viewRegistry)
 
     expect(await screen.findByText("Pay now")).toBeInTheDocument()
     expect(loadGerman).toHaveBeenCalledTimes(2)
 
     expect(consoleError).toHaveBeenCalledWith(
-      expect.stringContaining('Checkout template "accordion"'),
+      expect.stringContaining('Checkout template "flow"'),
       expect.any(Error),
     )
   })

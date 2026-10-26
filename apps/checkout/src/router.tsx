@@ -1,4 +1,4 @@
-import { BitcartApiConfig } from "@bitcart/api-sdk/config"
+import { BitcartApiConfig } from "@bitcart/client-sdk/config"
 import { applyZodL10n } from "@bitcart/form-kit/validation"
 import { i18n } from "@lingui/core"
 import { I18nProvider } from "@lingui/react"

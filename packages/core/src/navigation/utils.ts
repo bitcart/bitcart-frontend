@@ -2,11 +2,13 @@ import type {
   DestinationTypeAwareLinkInputs,
   DestinationTypeAwareLinkProps,
   ExternalHref,
+  HttpHref,
   InternalHref,
 } from "./types"
 
+const HTTP_HREF_PREFIXES = ["//", "http://", "https://"] as const
 const APP_HANDOFF_HREF_PREFIXES = ["mailto:", "tel:"] as const
-const EXTERNAL_HREF_PREFIXES = ["//", "http://", "https://", "mailto:", "tel:"] as const
+const EXTERNAL_HREF_PREFIXES = [...HTTP_HREF_PREFIXES, ...APP_HANDOFF_HREF_PREFIXES] as const
 
 export const isAppHandoffHref = (href: string): boolean =>
   APP_HANDOFF_HREF_PREFIXES.some((prefix) => href.startsWith(prefix))
@@ -21,6 +23,12 @@ export const isInternalHref = (href: string): href is InternalHref => {
     return false
   } else return href.startsWith("/") || href.startsWith("#") || href.startsWith("?")
 }
+
+/**
+ * Narrows an href to the web shapes {@link HttpHref} admits.
+ */
+export const isHttpHref = (href: string): href is HttpHref =>
+  HTTP_HREF_PREFIXES.some((prefix) => href.startsWith(prefix))
 
 /**
  * Narrows an href to the cross-origin shapes {@link ExternalHref} admits.

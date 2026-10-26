@@ -38,9 +38,9 @@ export const ButtonGroupText: React.FC<ButtonGroupTextProps> = ({
       {
         className: cn(
           `
-            bg-muted gap-2 rounded-md px-4 text-sm font-medium shadow-xs
+            bg-muted gap-2 rounded-md px-4 text-sm font-medium shadow-xs border-input
             [&_svg:not-[class*='size-']]:size-4
-            flex items-center border
+            flex items-center border-2 whitespace-nowrap
             [&_svg]:pointer-events-none
           `,
 
