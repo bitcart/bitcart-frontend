@@ -1,4 +1,4 @@
-import { afterEach, beforeAll, describe, expect, test, vi } from "vitest"
+import { afterEach, beforeAll, describe, expect, onTestFinished, test, vi } from "vitest"
 
 import type { EmbedFrameMessage, EmbedInvoiceState } from "#/common/integrations/embed/protocol"
 
@@ -6,9 +6,10 @@ import type { BitcartCheckoutElement, CheckoutEventMap } from "./element"
 import type { startFrameSession } from "./frame-session"
 import { registerBitcartCheckout } from "./register"
 
-const { sessions, navigateTo } = vi.hoisted(() => ({
+const { sessions, navigateTo, injected } = vi.hoisted(() => ({
   sessions: [] as { options: Parameters<typeof startFrameSession>[0]; stop: () => void }[],
   navigateTo: vi.fn<(url: string) => void>(),
+  injected: { checkoutUrl: null as string | null },
 }))
 
 vi.mock("./frame-session", () => ({
@@ -22,6 +23,12 @@ vi.mock("./frame-session", () => ({
 }))
 
 vi.mock("./navigation", () => ({ navigateTo }))
+
+vi.mock("./injected-checkout-url", () => ({
+  get injectedCheckoutUrl() {
+    return injected.checkoutUrl
+  },
+}))
 
 const CHECKOUT_URL = "https://pay.example.com"
 
@@ -120,7 +127,7 @@ describe("Bitcart.open", () => {
     expect(checkout.isConnected).toBe(true)
     expect(dialog.open).toBe(true)
     expect(frame()?.src).toBe(`${CHECKOUT_URL}/i/inv%2F1%20%3F?embed=v1`)
-    expect(currentSession().options.origin).toBe(CHECKOUT_URL)
+    expect(currentSession().options.origins).toEqual([CHECKOUT_URL])
   })
 
   test("frames a transparent checkout allowed to copy", () => {
@@ -136,7 +143,24 @@ describe("Bitcart.open", () => {
     })
 
     expect(parts(checkout).frame()?.src).toBe("https://other.example.com/pay/i/inv-1?embed=v1")
-    expect(currentSession().options.origin).toBe("https://other.example.com")
+    expect(currentSession().options.origins).toEqual(["https://other.example.com"])
+  })
+
+  test("also trusts the injected checkout, where a redirected checkout URL lands", () => {
+    injected.checkoutUrl = "https://checkout.example.com"
+
+    onTestFinished(() => {
+      injected.checkoutUrl = null
+    })
+
+    const checkout = window.Bitcart!.open("inv-1", { checkoutUrl: "https://admin.example.com" })
+
+    expect(parts(checkout).frame()?.src).toBe("https://admin.example.com/i/inv-1?embed=v1")
+
+    expect(currentSession().options.origins).toEqual([
+      "https://admin.example.com",
+      "https://checkout.example.com",
+    ])
   })
 
   test("removes the checkout it made once closed", () => {

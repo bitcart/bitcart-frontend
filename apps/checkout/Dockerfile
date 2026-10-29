@@ -18,6 +18,6 @@ COPY apps/checkout/nginx.conf.template /etc/nginx/templates/default.conf.templat
 COPY --from=build /src/apps/checkout/dist/client /usr/share/nginx/html
 
 LABEL org.bitcart.image=checkout
-ENV BITCART_API_URL=""
+ENV BITCART_API_URL="" BITCART_CHECKOUT_URL=""
 
 EXPOSE 80

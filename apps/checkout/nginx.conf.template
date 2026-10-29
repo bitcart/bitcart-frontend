@@ -1,3 +1,8 @@
+map $host $embed_checkout_url {
+    default "${BITCART_CHECKOUT_URL}";
+    ~*\.onion$ "";
+}
+
 server {
     listen 80;
     root /usr/share/nginx/html;
@@ -17,6 +22,9 @@ server {
     }
 
     location ~ ^/(embed|modal)/ {
+        sub_filter_types text/javascript application/javascript;
+        sub_filter "__BITCART_CHECKOUT_URL__" $embed_checkout_url;
+        etag off;
         add_header Cache-Control "no-cache";
         try_files $uri =404;
     }

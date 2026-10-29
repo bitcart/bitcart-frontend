@@ -2,11 +2,13 @@ import { CHECKOUT_CLOSE_TESTID } from "@bitcart/qa"
 import { expect, test, type BrowserContext, type Page, type WebSocketRoute } from "@playwright/test"
 
 import { makeInvoice, makePolicies, makeStore } from "#/checkout/fixtures"
+import { CHECKOUT_URL_PLACEHOLDER } from "#/embed/injected-checkout-url"
 
 const INVOICE_ID = "e2e-embed"
 const CHECKOUT_ORIGIN = "http://localhost:4002"
 const MERCHANT_ORIGIN = "http://127.0.0.1:4002"
 const REDIRECT_URL = `${MERCHANT_ORIGIN}/thanks`
+const LEGACY_ADMIN_ORIGIN = "http://admin.bitcart.test"
 
 type HostEvent = [type: string, detail: unknown]
 
@@ -51,9 +53,27 @@ const mockCheckoutApi = async (context: BrowserContext) => {
   }
 }
 
+const moveCheckoutOffAdminHost = async (context: BrowserContext) => {
+  await context.route(`${LEGACY_ADMIN_ORIGIN}/**`, async (route) => {
+    const { pathname, search } = new URL(route.request().url())
+    const checkoutUrl = `${CHECKOUT_ORIGIN}${pathname}${search}`
+
+    if (pathname === "/modal/bitcart.js") {
+      const response = await route.fetch({ url: checkoutUrl })
+      const body = (await response.text()).replace(CHECKOUT_URL_PLACEHOLDER, CHECKOUT_ORIGIN)
+
+      await route.fulfill({ response, body })
+    } else await route.fulfill({ status: 302, headers: { location: checkoutUrl } })
+  })
+}
+
 //! A document fulfilled by `page.route` never finishes loading a script from the preview, so the
 //! merchant page is written into a document the preview serves on a second loopback origin.
-const openMerchantPage = async (page: Page, script: "embed/v1.js" | "modal/bitcart.js") => {
+const openMerchantPage = async (
+  page: Page,
+  script: "embed/v1.js" | "modal/bitcart.js",
+  scriptOrigin = CHECKOUT_ORIGIN,
+) => {
   await page.goto(`${MERCHANT_ORIGIN}/${script}`)
 
   await page.setContent(`
@@ -63,7 +83,7 @@ const openMerchantPage = async (page: Page, script: "embed/v1.js" | "modal/bitca
       <body>
         <h1>Merchant</h1>
         <script>window.hostEvents = []</script>
-        <script src="${CHECKOUT_ORIGIN}/${script}"></script>
+        <script src="${scriptOrigin}/${script}"></script>
       </body>
     </html>
   `)
@@ -257,5 +277,52 @@ test.describe("Checkout: Legacy modal shim", () => {
     api.pay()
 
     await expect.poll(() => hostEventTypes(page)).toEqual(["complete"])
+  })
+
+  test("follows a script loaded from the admin host to the checkout's own host", async ({
+    page,
+    context,
+  }) => {
+    await mockCheckoutApi(context)
+    await moveCheckoutOffAdminHost(context)
+    await openMerchantPage(page, "modal/bitcart.js", LEGACY_ADMIN_ORIGIN)
+
+    await page.evaluate((invoiceId) => {
+      window.bitcart!.onModalReceiveMessage(({ data, origin }) => {
+        window.hostEvents.push(["message", { data, origin }])
+      })
+
+      window.bitcart!.showInvoice(invoiceId)
+    }, INVOICE_ID)
+
+    await expect
+      .poll(() => hostEvents(page))
+      .toEqual([["message", { data: "loaded", origin: CHECKOUT_ORIGIN }]])
+
+    await expect(page.locator("bitcart-checkout iframe")).toHaveAttribute(
+      "src",
+      `${CHECKOUT_ORIGIN}/i/${INVOICE_ID}?embed=v1`,
+    )
+  })
+
+  test("connects when an integration still sets the admin URL", async ({ page, context }) => {
+    await mockCheckoutApi(context)
+    await moveCheckoutOffAdminHost(context)
+    await openMerchantPage(page, "modal/bitcart.js", LEGACY_ADMIN_ORIGIN)
+
+    await page.evaluate(
+      ({ invoiceId, adminOrigin }) => {
+        window.bitcart!.onModalReceiveMessage(({ data }) => {
+          window.hostEvents.push(["message", data])
+        })
+
+        window.bitcart!.setAdminUrlPrefix(adminOrigin)
+        window.bitcart!.showInvoice(invoiceId)
+      },
+      { invoiceId: INVOICE_ID, adminOrigin: LEGACY_ADMIN_ORIGIN },
+    )
+
+    await expect(checkoutDialog(page)).toHaveAttribute("data-state", "shown")
+    expect(await hostEvents(page)).toEqual([["message", "loaded"]])
   })
 })

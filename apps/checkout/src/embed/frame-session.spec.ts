@@ -5,6 +5,7 @@ import type { EmbedFrameMessage } from "#/common/integrations/embed/protocol"
 import { startFrameSession } from "./frame-session"
 
 const ORIGIN = "https://pay.example.com"
+const REDIRECTED_ORIGIN = "https://checkout.example.com"
 const STALL_DELAY_MS = 8000
 
 const READY: EmbedFrameMessage = {
@@ -35,7 +36,7 @@ const setup = () => {
   const session = startFrameSession({
     host,
     frame,
-    origin: ORIGIN,
+    origins: [ORIGIN, REDIRECTED_ORIGIN],
     stallDelayMs: STALL_DELAY_MS,
     onMessage: (message) => received.push(message),
     onStall,
@@ -71,6 +72,18 @@ describe("startFrameSession", () => {
     expect(frameWindow.postMessage).toHaveBeenCalledExactlyOnceWith(
       { v: 1, type: "connect" },
       ORIGIN,
+      [expect.any(MessagePort)],
+    )
+  })
+
+  test("answers a hello from another trusted origin at that origin", () => {
+    const { frameWindow, sayHello } = setup()
+
+    sayHello({ origin: REDIRECTED_ORIGIN })
+
+    expect(frameWindow.postMessage).toHaveBeenCalledExactlyOnceWith(
+      { v: 1, type: "connect" },
+      REDIRECTED_ORIGIN,
       [expect.any(MessagePort)],
     )
   })

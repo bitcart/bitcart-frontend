@@ -3,6 +3,8 @@ import { resolve } from "node:path"
 
 import { build, type Connect, type Plugin } from "vite"
 
+import { CHECKOUT_URL_PLACEHOLDER } from "./src/embed/injected-checkout-url"
+
 const EMBED_SCRIPTS: Record<string, string> = {
   "embed/v1.js": "src/embed/v1.ts",
   "modal/bitcart.js": "src/embed/modal.ts",
@@ -38,6 +40,8 @@ const bundleScript = async (root: string, entry: string, { minify }: { minify: b
     throw new Error(`Bundling ${entry} produced no output`)
   } else if (NON_ASCII_PATTERN.test(output.output[0].code)) {
     throw new Error(`${entry} bundles non-ASCII characters: escape them in the source`)
+  } else if (output.output[0].code.split(CHECKOUT_URL_PLACEHOLDER).length !== 2) {
+    throw new Error(`${entry} must contain ${CHECKOUT_URL_PLACEHOLDER} exactly once for nginx`)
   } else return output.output[0].code
 }
 

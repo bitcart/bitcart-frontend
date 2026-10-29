@@ -12,13 +12,13 @@ export default function Page() {
 
   useEffect(() => {
     const script = document.createElement("script")
-    script.src = "https://admin.bitcart.ai/modal/bitcart.js"
+    script.src = "https://checkout.bitcart.ai/embed/v1.js"
     script.async = true
     document.head.appendChild(script)
 
     return () => {
       const existingScript = document.querySelector(
-        'script[src="https://admin.bitcart.ai/modal/bitcart.js"]',
+        'script[src="https://checkout.bitcart.ai/embed/v1.js"]',
       )
 
       if (existingScript) {

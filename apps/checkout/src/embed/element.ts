@@ -7,6 +7,7 @@ import type {
 } from "#/common/integrations/embed/protocol"
 
 import { startFrameSession, type FrameSession } from "./frame-session"
+import { injectedCheckoutUrl } from "./injected-checkout-url"
 import { navigateTo } from "./navigation"
 import { stripTrailingSlashes } from "./script-base"
 import { CHECKOUT_DIALOG_STYLES } from "./styles"
@@ -91,6 +92,12 @@ const lockPageScroll = (): (() => void) => {
   }
 }
 
+const getTrustedOrigins = (invoiceUrl: string): string[] => {
+  const { origin } = new URL(invoiceUrl)
+
+  return injectedCheckoutUrl ? [origin, new URL(injectedCheckoutUrl).origin] : [origin]
+}
+
 let defaultCheckoutUrl: string | null = null
 
 export const setDefaultCheckoutUrl = (url: string | null): void => {
@@ -156,7 +163,6 @@ export class BitcartCheckoutElement extends HTMLElement {
     }
 
     const invoiceUrl = `${stripTrailingSlashes(checkoutUrl)}/i/${encodeURIComponent(invoiceId)}`
-    const { origin } = new URL(invoiceUrl)
     const frame = createFrame(`${invoiceUrl}?embed=v1`)
 
     this.#fallbackLink.href = invoiceUrl
@@ -170,7 +176,7 @@ export class BitcartCheckoutElement extends HTMLElement {
 
       session: startFrameSession({
         frame,
-        origin,
+        origins: getTrustedOrigins(invoiceUrl),
         stallDelayMs: FALLBACK_DELAY_MS,
         onMessage: (message) => this.#handleMessage(message),
         onStall: () => {

@@ -33,14 +33,14 @@ export type FrameSession = { stop: () => void }
 export const startFrameSession = ({
   host = window,
   frame,
-  origin,
+  origins,
   stallDelayMs,
   onMessage,
   onStall,
 }: {
   host?: Window
   frame: Pick<HTMLIFrameElement, "contentWindow">
-  origin: string
+  origins: readonly string[]
   stallDelayMs: number
   onMessage: (message: EmbedFrameMessage) => void
   onStall: () => void
@@ -59,7 +59,12 @@ export const startFrameSession = ({
   const handleHello = ({ source, origin: senderOrigin, data }: MessageEvent<unknown>) => {
     const frameWindow = frame.contentWindow
 
-    if (frameWindow && source === frameWindow && senderOrigin === origin && isHelloMessage(data)) {
+    if (
+      frameWindow &&
+      source === frameWindow &&
+      origins.includes(senderOrigin) &&
+      isHelloMessage(data)
+    ) {
       const channel = new MessageChannel()
 
       host.removeEventListener("message", handleHello)
@@ -68,7 +73,7 @@ export const startFrameSession = ({
 
       frameWindow.postMessage(
         { v: EMBED_PROTOCOL_VERSION, type: "connect" } satisfies EmbedConnectMessage,
-        origin,
+        senderOrigin,
         [channel.port2],
       )
     }

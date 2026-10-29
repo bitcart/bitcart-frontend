@@ -36,7 +36,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
     const data = (await response.json()) as { id: string }
     setDonationLoading(false)
 
-    window?.bitcart?.showInvoice(data.id)
+    window.Bitcart?.open(data.id)
   }, [])
 
   return (
