@@ -965,6 +965,16 @@ describe("deriveCheckoutModel", () => {
         expect(derive()).toMatchObject({ phase: "payment", selectedMethodId: "method-eth" })
       })
 
+      test("ignores a chosen method the invoice doesn't have", () => {
+        const { derive } = setup({
+          invoice: makeInvoice({ payments: [btc, ltc, eth], payment_id: "method-eth" }),
+        })
+
+        derive().selectMethod("method-unknown")
+
+        expect(derive()).toMatchObject({ phase: "payment", selectedMethodId: "method-eth" })
+      })
+
       test("switches the active payment in place", () => {
         const { derive } = setup({ invoice: makeInvoice({ payments: [btc, ltc, eth] }) })
 

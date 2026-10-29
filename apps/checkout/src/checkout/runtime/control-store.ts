@@ -28,8 +28,8 @@ export type CheckoutUiActions = {
  * The checkout's own UI state, held outside React so a host can drive it from anywhere, such as a
  * terminal event handler. Server data never enters it.
  */
-export const createCheckoutControl = () =>
-  createStore(INITIAL_CHECKOUT_UI_STATE, ({ setState }): CheckoutUiActions => {
+export const createCheckoutControl = (initial: Partial<CheckoutUiState> = {}) =>
+  createStore({ ...INITIAL_CHECKOUT_UI_STATE, ...initial }, ({ setState }): CheckoutUiActions => {
     //* Keeps the current state object when nothing changes, so no subscriber hears a no-op.
     const update = (patch: Partial<CheckoutUiState>) =>
       setState((state) => {

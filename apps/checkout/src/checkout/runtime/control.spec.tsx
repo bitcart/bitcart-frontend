@@ -22,6 +22,12 @@ describe("useCheckoutControl", () => {
     expect(result.current).toBe(control)
   })
 
+  test("starts on the method the page was opened with", () => {
+    const { result } = renderHook(() => useCheckoutControl("invoice-1", "method-ltc"))
+
+    expect(result.current.state.chosenMethodId).toBe("method-ltc")
+  })
+
   test("starts a fresh control for another invoice", () => {
     const { result, rerender } = renderControl("invoice-1")
 

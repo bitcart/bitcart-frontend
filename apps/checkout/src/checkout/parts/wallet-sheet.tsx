@@ -231,7 +231,7 @@ const InjectedWalletButton = ({
 
   return (
     <Button size="lg" className="rounded-xl" onClick={() => onPay(wallet)}>
-      <WalletLogo src={wallet.icon} size={20} className="mr-2" />
+      <WalletLogo src={wallet.icon} id={wallet.logoId} size={20} className="mr-2" />
       {t`Pay with ${walletName}`}
     </Button>
   )
@@ -312,7 +312,7 @@ const WalletChooser = ({ method }: { method: SheetMethod }) => {
         {wallets.map((wallet) => (
           <WalletRow
             key={wallet.id}
-            logo={<WalletLogo src={wallet.icon} size={36} />}
+            logo={<WalletLogo src={wallet.icon} id={wallet.logoId} size={36} />}
             title={names.asTitle(wallet)}
             badge={<Badge variant="accent">{t`Installed`}</Badge>}
             onClick={() => pay(wallet)}
@@ -365,7 +365,7 @@ const AttemptLayout = ({
         />
       )}
 
-      <WalletLogo src={wallet.icon} size={48} />
+      <WalletLogo src={wallet.icon} id={wallet.logoId} size={48} />
     </div>
 
     <h3 className="font-medium">{title}</h3>

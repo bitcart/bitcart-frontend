@@ -20,10 +20,11 @@ type CheckoutViewProps = {
   appConfig?: CheckoutAppConfig
   countdownSpeed?: number
   control?: CheckoutControl
+  initialMethodId?: string
   onModelChange?: (model: CheckoutModel, source: CheckoutSource) => void
 }
 
-type CheckoutTemplateViewProps = Omit<CheckoutViewProps, "control"> & {
+type CheckoutTemplateViewProps = Omit<CheckoutViewProps, "control" | "initialMethodId"> & {
   control: CheckoutControl
   walletPay: WalletPayKit
 }
@@ -72,8 +73,8 @@ const CheckoutTemplateView = ({
 }
 
 //! The UI state lives above the error boundary, so a fallback or a template switch keeps it.
-export const CheckoutView = ({ control, ...props }: CheckoutViewProps) => {
-  const ownControl = useCheckoutControl(props.source.invoice.id)
+export const CheckoutView = ({ control, initialMethodId, ...props }: CheckoutViewProps) => {
+  const ownControl = useCheckoutControl(props.source.invoice.id, initialMethodId)
   const walletPay = useWalletPayKit(props.source.invoice.id)
   const viewProps = { ...props, control: control ?? ownControl, walletPay }
   const { registry, templateId } = props

@@ -28,10 +28,14 @@ export const Route = createFileRoute("/i/$invoiceId")({
   ssr: false,
 
   //* The `template` search param previews another checkout template, and is ignored in production.
-  //* `embed=v1` is set by the embed loader.
-  validateSearch: (search: Record<string, unknown>): { template?: string; embed?: "v1" } => ({
+  //* `embed=v1` is set by the embed loader. `method` preselects a payment method, as in the links
+  //* that open the checkout in a wallet app.
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { template?: string; embed?: "v1"; method?: string } => ({
     template: typeof search.template === "string" ? search.template : undefined,
     embed: search.embed === "v1" ? "v1" : undefined,
+    method: typeof search.method === "string" ? search.method : undefined,
   }),
 
   loaderDeps: ({ search }) => ({ template: search.template }),
@@ -54,7 +58,7 @@ export const Route = createFileRoute("/i/$invoiceId")({
 
 function InvoicePage() {
   const { invoiceId } = Route.useParams()
-  const { template, embed } = Route.useSearch()
+  const { template, embed, method } = Route.useSearch()
   const { source, connection } = useCheckoutSource(invoiceId)
   const isEmbeddedCheckout = isEmbeddedByLoader({ embed })
 
@@ -78,6 +82,7 @@ function InvoicePage() {
       registry={checkoutTemplates}
       templateId={templateId}
       appConfig={appConfig}
+      initialMethodId={method}
       onModelChange={
         isEmbeddedCheckout ? (_model, { invoice }) => getEmbedHost().report(invoice) : undefined
       }

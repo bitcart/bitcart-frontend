@@ -716,9 +716,9 @@ export const deriveCheckoutModel = (
   const hasAlternativeMethods = methods.length > 1
   const missingDetailsFields = getMissingDetailsFields(source)
 
-  const chosenPayment = invoice.payments.find(
-    ({ id }) => id === (chosenMethodId ?? invoice.payment_id),
-  )
+  const chosenPayment =
+    invoice.payments.find(({ id }) => id === chosenMethodId) ??
+    invoice.payments.find(({ id }) => id === invoice.payment_id)
 
   const selectedPayment = partiallyPaidMethod ?? chosenPayment ?? resolveDefaultMethod(invoice)
 

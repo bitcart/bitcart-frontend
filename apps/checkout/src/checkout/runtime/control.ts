@@ -12,15 +12,22 @@ import {
 import { useTerminalEnv } from "../terminal"
 import { createCheckoutControl, type CheckoutControl } from "./control-store"
 
-/** A control bound to one invoice: switching to another invoice starts from a fresh one. */
-export const useCheckoutControl = (invoiceId: string): CheckoutControl => {
-  const [control, setControl] = useState(createCheckoutControl)
+/**
+ * A control bound to one invoice: switching to another invoice starts from a fresh one, with
+ * `initialMethodId` chosen.
+ */
+export const useCheckoutControl = (
+  invoiceId: string,
+  initialMethodId?: string,
+): CheckoutControl => {
+  const createControl = () => createCheckoutControl({ chosenMethodId: initialMethodId ?? null })
+  const [control, setControl] = useState(createControl)
   const [lastInvoiceId, setLastInvoiceId] = useState(invoiceId)
 
   //* Adjusted at render time to prevent a render with the previous invoice's choice.
   if (lastInvoiceId !== invoiceId) {
     setLastInvoiceId(invoiceId)
-    setControl(createCheckoutControl())
+    setControl(createControl())
   }
 
   return control

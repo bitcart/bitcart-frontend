@@ -74,9 +74,9 @@ export const createWalletPayRunner = (control: WalletPayControl) => {
       attemptCount += 1
 
       const attemptId = String(attemptCount)
-      const { id, name, icon } = wallet
+      const { id, name, icon, logoId } = wallet
 
-      begin({ id: attemptId, methodId: target.methodId, wallet: { id, name, icon } })
+      begin({ id: attemptId, methodId: target.methodId, wallet: { id, name, icon, logoId } })
 
       void run(attemptId, async () => {
         if (options.reselectAccount) await reselectAccount(wallet)

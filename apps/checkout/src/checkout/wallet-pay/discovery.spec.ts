@@ -161,4 +161,41 @@ describe("findLegacyWallets", () => {
 
     expect(wallet?.family === "tron" && wallet.provider.protocol).toBe("bare")
   })
+
+  describe("Trust Wallet", () => {
+    const tronWeb = { trx: {} }
+
+    test("names the provider Trust's app also injects as TronLink, once", () => {
+      const trustTron = { isTronLink: true, request: vi.fn(), tronWeb }
+
+      const wallets = findLegacyWallets({
+        tron: {},
+        tronLink: trustTron,
+        tronWeb,
+        trustwallet: { tron: trustTron },
+      })
+
+      expect(wallets).toStrictEqual([
+        expect.objectContaining({ family: "tron", name: "Trust Wallet", logoId: "trust" }),
+      ])
+
+      expect(wallets[0]?.family === "tron" && wallets[0].provider.protocol).toBe("legacy")
+    })
+
+    test("pays through the TronWeb of an app version whose provider has no request", () => {
+      const wallets = findLegacyWallets({ tronWeb, trustwallet: { tron: { tronWeb } } })
+
+      expect(wallets).toStrictEqual([expect.objectContaining({ name: "Trust Wallet" })])
+      expect(wallets[0]?.family === "tron" && wallets[0].provider.protocol).toBe("bare")
+    })
+
+    test("lists the browser extension next to TronLink", () => {
+      const wallets = findLegacyWallets({
+        tron: { isTronLink: true, request: vi.fn() },
+        trustwallet: { tronLink: { request: vi.fn(), tronWeb } },
+      })
+
+      expect(wallets.map(({ name }) => name)).toStrictEqual(["Trust Wallet", "TronLink"])
+    })
+  })
 })

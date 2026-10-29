@@ -150,3 +150,21 @@ describe("invoice route loader", () => {
     )
   })
 })
+
+describe("invoice route search", () => {
+  const validateSearch = (search: Record<string, unknown>) => {
+    const validate = Route.options.validateSearch
+
+    if (typeof validate !== "function") {
+      throw new Error("The invoice route no longer declares validateSearch as a function")
+    } else return validate(search)
+  }
+
+  test("keeps the payment method a wallet app link opens the page with", () => {
+    expect(validateSearch({ method: "method-ltc" })).toMatchObject({ method: "method-ltc" })
+  })
+
+  test("drops a payment method that isn't a string", () => {
+    expect(validateSearch({ method: 42 })).toMatchObject({ method: undefined })
+  })
+})

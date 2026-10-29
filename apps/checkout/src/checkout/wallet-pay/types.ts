@@ -33,15 +33,16 @@ export type TronProvider = {
   getTronWeb: () => InjectedTronWeb | null
 }
 
+type InjectedWalletInfo = {
+  id: string
+  name: string | null
+  icon: string | null
+  logoId?: string
+}
+
 export type InjectedWallet =
-  | {
-      family: "eip155"
-      id: string
-      name: string | null
-      icon: string | null
-      provider: Eip1193Provider
-    }
-  | { family: "tron"; id: string; name: string | null; icon: string | null; provider: TronProvider }
+  | (InjectedWalletInfo & { family: "eip155"; provider: Eip1193Provider })
+  | (InjectedWalletInfo & { family: "tron"; provider: TronProvider })
 
 export type WalletTransfer = {
   network: WalletNetwork

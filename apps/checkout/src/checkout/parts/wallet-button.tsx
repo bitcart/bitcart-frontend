@@ -30,7 +30,7 @@ export const WalletButton = ({ className }: { className?: string }) => {
           data-testid={CHECKOUT_OPEN_WALLET_TESTID}
           onClick={() => runner.start(wallet, target)}
         >
-          <WalletLogo src={wallet.icon} size={20} className="mr-2" />
+          <WalletLogo src={wallet.icon} id={wallet.logoId} size={20} className="mr-2" />
           {t`Pay with ${name}`}
         </Button>
       )

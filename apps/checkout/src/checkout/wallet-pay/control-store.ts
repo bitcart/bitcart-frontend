@@ -1,12 +1,8 @@
 import { createStore } from "@tanstack/store"
 
-import type { WalletPayFailure } from "./types"
+import type { InjectedWallet, WalletPayFailure } from "./types"
 
-export type WalletChoice = {
-  id: string
-  name: string | null
-  icon: string | null
-}
+export type WalletChoice = Pick<InjectedWallet, "id" | "name" | "icon" | "logoId">
 
 export type WalletPayStep =
   | { kind: "connecting" }

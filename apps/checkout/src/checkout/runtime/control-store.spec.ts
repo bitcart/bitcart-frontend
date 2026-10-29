@@ -7,6 +7,13 @@ describe("createCheckoutControl", () => {
     expect(createCheckoutControl().state).toStrictEqual(INITIAL_CHECKOUT_UI_STATE)
   })
 
+  test("starts with the given choice", () => {
+    expect(createCheckoutControl({ chosenMethodId: "method-ltc" }).state).toStrictEqual({
+      ...INITIAL_CHECKOUT_UI_STATE,
+      chosenMethodId: "method-ltc",
+    })
+  })
+
   test("ends a method change once a method is chosen", () => {
     const control = createCheckoutControl()
 

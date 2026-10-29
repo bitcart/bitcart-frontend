@@ -97,32 +97,68 @@ const toAnnouncedWallet = (family: WalletFamily, detail: unknown): InjectedWalle
   }
 }
 
+type InjectedTronLink = { isTronLink?: unknown; request?: unknown; tronWeb?: unknown }
+
 type InjectedGlobals = {
   ethereum?: { request?: unknown }
-  tron?: { isTronLink?: unknown; request?: unknown; tronWeb?: unknown }
-  tronLink?: { request?: unknown; tronWeb?: unknown }
+  tron?: InjectedTronLink
+  tronLink?: InjectedTronLink
   tronWeb?: unknown
+  trustwallet?: { tron?: InjectedTronLink; tronLink?: InjectedTronLink }
 }
 
-const findLegacyTron = (globals: InjectedGlobals): TronProvider | null => {
+type FoundTron = { source: object; provider: TronProvider }
+
+const toTronLinkProvider = (source: InjectedTronLink): FoundTron | null => {
+  if (isRequest(source.request)) {
+    const request = source.request.bind(source) as Eip1193Request
+
+    return {
+      source,
+      provider: { protocol: "legacy", request, getTronWeb: () => asTronWeb(source.tronWeb) },
+    }
+  } else if (asTronWeb(source.tronWeb)) {
+    return { source, provider: { protocol: "bare", getTronWeb: () => asTronWeb(source.tronWeb) } }
+  } else return null
+}
+
+const findLegacyTron = (globals: InjectedGlobals): FoundTron | null => {
   const { tron, tronLink } = globals
 
   if (tron?.isTronLink && isRequest(tron.request)) {
     const request = tron.request.bind(tron) as Eip1193Request
 
-    return { protocol: "tip1193", request, getTronWeb: () => asTronWeb(tron.tronWeb) }
+    return {
+      source: tron,
+      provider: { protocol: "tip1193", request, getTronWeb: () => asTronWeb(tron.tronWeb) },
+    }
   } else if (tronLink && isRequest(tronLink.request)) {
-    const request = tronLink.request.bind(tronLink) as Eip1193Request
-
-    return { protocol: "legacy", request, getTronWeb: () => asTronWeb(tronLink.tronWeb) }
+    return toTronLinkProvider(tronLink)
   } else if (asTronWeb(globals.tronWeb)) {
-    return { protocol: "bare", getTronWeb: () => asTronWeb(globals.tronWeb) }
+    const tronWeb = globals.tronWeb as object
+
+    return { source: tronWeb, provider: { protocol: "bare", getTronWeb: () => asTronWeb(tronWeb) } }
   } else return null
 }
 
+const findTrustTron = ({ trustwallet }: InjectedGlobals): FoundTron | null => {
+  const source = trustwallet?.tron ?? trustwallet?.tronLink
+
+  return source ? toTronLinkProvider(source) : null
+}
+
+const isSameTron = (found: FoundTron, other: FoundTron) =>
+  found.source === other.source ||
+  found.source === (other.source as InjectedTronLink).tronWeb ||
+  (found.source as InjectedTronLink).tronWeb === other.source
+
 export const findLegacyWallets = (globals: InjectedGlobals): InjectedWallet[] => {
   const { ethereum, tron } = globals
-  const tronProvider = findLegacyTron(globals)
+  const trustTron = findTrustTron(globals)
+  const legacyTron = findLegacyTron(globals)
+
+  const otherTron =
+    legacyTron && !(trustTron && isSameTron(legacyTron, trustTron)) ? legacyTron : null
 
   return [
     ...(ethereum && isRequest(ethereum.request)
@@ -137,14 +173,27 @@ export const findLegacyWallets = (globals: InjectedGlobals): InjectedWallet[] =>
         ]
       : []),
 
-    ...(tronProvider
+    ...(trustTron
       ? [
           {
             family: "tron" as const,
-            id: `legacy:tron:${tronProvider.protocol}`,
+            id: "legacy:tron:trust",
+            name: "Trust Wallet",
+            icon: null,
+            logoId: "trust",
+            provider: trustTron.provider,
+          },
+        ]
+      : []),
+
+    ...(otherTron
+      ? [
+          {
+            family: "tron" as const,
+            id: `legacy:tron:${otherTron.provider.protocol}`,
             name: tron?.isTronLink ? "TronLink" : null,
             icon: null,
-            provider: tronProvider,
+            provider: otherTron.provider,
           },
         ]
       : []),
