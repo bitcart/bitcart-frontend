@@ -31,6 +31,6 @@ server {
 
     location / {
         add_header Cache-Control "no-cache";
-        try_files $uri /_shell.html;
+        try_files $uri /checkout$uri /_shell.html;
     }
 }
