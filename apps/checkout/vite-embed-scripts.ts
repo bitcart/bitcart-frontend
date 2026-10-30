@@ -3,7 +3,7 @@ import { resolve } from "node:path"
 
 import { build, type Connect, type Plugin } from "vite"
 
-import { CHECKOUT_URL_PLACEHOLDER } from "./src/embed/injected-checkout-url"
+import { CHECKOUT_URL_PLACEHOLDER } from "./src/embed/injected-checkout-url.ts"
 
 const EMBED_SCRIPTS: Record<string, string> = {
   "embed/v1.js": "src/embed/v1.ts",

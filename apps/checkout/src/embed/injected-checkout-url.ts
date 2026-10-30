@@ -1,4 +1,4 @@
-import { stripTrailingSlashes } from "./script-base"
+import { stripTrailingSlashes } from "./script-base.ts"
 
 export const CHECKOUT_URL_PLACEHOLDER = "__BITCART_CHECKOUT_URL__"
 
