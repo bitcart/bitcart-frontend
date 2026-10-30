@@ -5,7 +5,13 @@ export const EMBED_PROTOCOL_VERSION = 1
 
 export type EmbedInvoiceState = Pick<
   bitcartInvoices.Invoice,
-  "status" | "exception_status" | "sent_amount" | "paid_currency" | "payment_id"
+  | "status"
+  | "exception_status"
+  | "sent_amount"
+  | "sent_price"
+  | "currency"
+  | "paid_currency"
+  | "payment_id"
 > & { invoice_id: string }
 
 export type EmbedError = { invoice_id: string; reason: "not_found" | "load_failed" }

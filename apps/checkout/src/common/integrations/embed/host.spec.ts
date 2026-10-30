@@ -84,7 +84,13 @@ describe("createEmbedHost", () => {
     connect()
     host.report(invoice)
     host.report(invoice)
-    host.report({ ...invoice, exception_status: "paid_partial", sent_amount: "0.0005" })
+
+    host.report({
+      ...invoice,
+      exception_status: "paid_partial",
+      sent_amount: "0.0005",
+      sent_price: "25.00",
+    })
 
     await vi.waitFor(() => expect(received).toHaveLength(2))
 
@@ -98,6 +104,8 @@ describe("createEmbedHost", () => {
           status: "pending",
           exception_status: invoice.exception_status,
           sent_amount: invoice.sent_amount,
+          sent_price: invoice.sent_price,
+          currency: invoice.currency,
           paid_currency: invoice.paid_currency,
           payment_id: "method-btc",
         },
@@ -111,6 +119,7 @@ describe("createEmbedHost", () => {
           status: "pending",
           exception_status: "paid_partial",
           sent_amount: "0.0005",
+          sent_price: "25.00",
         }),
       },
     ])

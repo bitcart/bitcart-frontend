@@ -1,10 +1,33 @@
 import { Button, LinkButton } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
+import { trackEvent } from "@bitcart/vike-kit/telemetry"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { Heart, Loader } from "lucide-react"
 import { useCallback, useState } from "react"
 
 import { env } from "@/env"
+
+const DONATION_PRICE = 5
+const PAID_INVOICE_STATUSES = new Set(["paid", "confirmed", "complete"])
+
+type CheckoutStatus = {
+  status: string
+  sent_price: string
+  currency: string
+}
+
+const trackDonationPayment = (checkout: HTMLElement): void => {
+  const handleStatus = (event: Event) => {
+    const { status, sent_price, currency } = (event as CustomEvent<CheckoutStatus>).detail
+
+    if (PAID_INVOICE_STATUSES.has(status)) {
+      checkout.removeEventListener("bitcart:status", handleStatus)
+      trackEvent("Donation Paid", { revenue: { amount: sent_price, currency } })
+    }
+  }
+
+  checkout.addEventListener("bitcart:status", handleStatus)
+}
 
 export type AboutSectionProps = {
   className?: string
@@ -15,28 +38,32 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
   const [donationLoading, setDonationLoading] = useState(false)
 
   const showDonation = useCallback(async () => {
-    const price = 5 // $5
+    trackEvent("Donate Click")
     setDonationLoading(true)
 
-    const response = await fetch("https://api.bitcart.ai/invoices", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        store_id: env.BITCART_STORE,
-        price: price,
-      }),
-    })
+    try {
+      const response = await fetch("https://api.bitcart.ai/invoices", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          store_id: env.BITCART_STORE,
+          price: DONATION_PRICE,
+        }),
+      })
 
-    if (!response.ok) {
-      throw new Error("Failed to create invoice")
+      if (!response.ok) {
+        throw new Error("Failed to create invoice")
+      }
+
+      const { id } = (await response.json()) as { id: string }
+      const checkout = window.Bitcart?.open(id)
+
+      if (checkout) trackDonationPayment(checkout)
+    } finally {
+      setDonationLoading(false)
     }
-
-    const data = (await response.json()) as { id: string }
-    setDonationLoading(false)
-
-    window.Bitcart?.open(data.id)
   }, [])
 
   return (

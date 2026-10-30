@@ -141,6 +141,8 @@ test.describe("Checkout: Embed loader", () => {
           status: "pending",
           exception_status: "none",
           sent_amount: "0",
+          sent_price: "0",
+          currency: "USD",
           paid_currency: null,
           payment_id: null,
         },

@@ -29,6 +29,8 @@ const toInvoiceState = ({
   status,
   exception_status,
   sent_amount,
+  sent_price,
+  currency,
   paid_currency,
   payment_id,
 }: bitcartInvoices.Invoice): EmbedInvoiceState => ({
@@ -36,6 +38,8 @@ const toInvoiceState = ({
   status,
   exception_status,
   sent_amount,
+  sent_price,
+  currency,
   paid_currency,
   payment_id,
 })
