@@ -1,5 +1,6 @@
 import { ErrorPageTemplate } from "@bitcart/ui-kit/components"
 import type { ErrorDisplayAttributes } from "@bitcart/ui-kit/types"
+import { useNotFoundTracking } from "@bitcart/vike-kit/telemetry"
 import { useLingui } from "@lingui/react/macro"
 import { useMemo } from "react"
 import { usePageContext } from "vike-react/usePageContext"
@@ -8,6 +9,8 @@ import { reload } from "vike/client/router"
 export function Page() {
   const { t } = useLingui()
   const { abortReason, abortStatusCode, is404 } = usePageContext()
+
+  useNotFoundTracking()
 
   const errorStatusCode = useMemo(() => {
     if (typeof abortReason === "object" && abortReason?.notAdmin) {
