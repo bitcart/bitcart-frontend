@@ -11,4 +11,4 @@ export const {
 
 export const BRAND_X_HANDLE: AccountHandle = "@BitcartCC"
 
-export const IS_MATOMO_ENABLED = ENV_TAG === "production" && env.BITCART_MATOMO_URL.length > 0
+export const IS_PLAUSIBLE_ENABLED = ENV_TAG === "production" && env.BITCART_PLAUSIBLE_ENABLED

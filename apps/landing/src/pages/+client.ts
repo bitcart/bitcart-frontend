@@ -1,12 +1,10 @@
-import { configureMatomo } from "@bitcart/vike-kit/telemetry"
+import { configurePlausible } from "@bitcart/vike-kit/telemetry"
 
-import { IS_MATOMO_ENABLED } from "@/common/constants"
+import { IS_PLAUSIBLE_ENABLED, PRODUCTION_BASE_URL } from "@/common/constants"
 import { env } from "@/env"
 
-configureMatomo({
-  enabled: IS_MATOMO_ENABLED,
-  url: env.BITCART_MATOMO_URL,
-  scriptUrl: env.BITCART_MATOMO_SCRIPT_URL,
-  siteId: env.BITCART_MATOMO_ID,
-  actions: env.BITCART_MATOMO_ACTIONS,
+configurePlausible({
+  enabled: IS_PLAUSIBLE_ENABLED,
+  domain: new URL(PRODUCTION_BASE_URL).hostname,
+  endpoint: env.BITCART_PLAUSIBLE_ENDPOINT,
 })

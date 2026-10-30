@@ -1,11 +1,5 @@
-export interface MatomoConfig {
-  enabled: boolean
-  url: string
-  scriptUrl: string
-  siteId: number
-  actions: unknown[][]
-}
+import type { PlausibleConfig } from "@plausible-analytics/tracker"
 
-export interface TrackingConfig {
-  matomo: MatomoConfig
+export type TrackingConfig = Pick<PlausibleConfig, "domain" | "endpoint"> & {
+  enabled: boolean
 }

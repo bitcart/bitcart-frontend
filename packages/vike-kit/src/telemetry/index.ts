@@ -1,3 +1,2 @@
-export { configureMatomo } from "./effects"
-export * from "./hooks"
+export { configurePlausible, trackEvent } from "./effects"
 export * from "./types"

@@ -49,6 +49,7 @@
     "@bitcart/hooks": "workspace:*",
     "@lingui/core": "catalog:dependencies",
     "@lingui/react": "catalog:dependencies",
+    "@plausible-analytics/tracker": "catalog:dependencies",
     "react": "catalog:dependencies",
     "remeda": "catalog:dependencies"
   },

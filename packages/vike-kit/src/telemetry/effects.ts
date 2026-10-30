@@ -1,22 +1,16 @@
-import type { MatomoConfig } from "./types"
+import { init, track, type PlausibleEventOptions } from "@plausible-analytics/tracker"
 
-export const configureMatomo = (config: MatomoConfig): void => {
-  if (config.enabled) {
-    const _paq = (window._paq = window._paq || [])
+import type { TrackingConfig } from "./types"
 
-    _paq.push(["setTrackerUrl", config.url])
-    _paq.push(["setSiteId", config.siteId])
-    _paq.push(["enableLinkTracking"])
-    _paq.push(["enableHeartBeatTimer", 15])
-    config.actions.forEach((action) => _paq.push(action))
+let isTrackingEnabled = false
 
-    // FIXME: Consider returning the script element and passing it to `createHead` instead
-    const script = document.createElement("script")
-    const head = document.head || document.getElementsByTagName("head")[0]
-
-    script.async = true
-    script.defer = true
-    script.src = config.scriptUrl
-    head.appendChild(script)
+export const configurePlausible = ({ enabled, ...config }: TrackingConfig): void => {
+  if (enabled) {
+    init({ ...config, outboundLinks: true, fileDownloads: true })
+    isTrackingEnabled = true
   }
+}
+
+export const trackEvent = (name: string, options: PlausibleEventOptions = {}): void => {
+  if (isTrackingEnabled) track(name, options)
 }

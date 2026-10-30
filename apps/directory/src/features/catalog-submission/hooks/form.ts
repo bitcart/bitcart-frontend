@@ -1,5 +1,6 @@
 import { useAppForm } from "@bitcart/form-kit/hooks"
 import { toast } from "@bitcart/ui-kit/utils"
+import { trackEvent } from "@bitcart/vike-kit/telemetry"
 import { t } from "@lingui/core/macro"
 import { useMemo } from "react"
 import { capitalize, isNonNull } from "remeda"
@@ -41,6 +42,13 @@ export const useCatalogSubmissionForm = () => {
 
       const githubIssueUrlParams = new URLSearchParams({ title, body })
       const githubIssueUrl = `${baseUrl}?${githubIssueUrlParams.toString()}`
+
+      trackEvent("Directory Submission", {
+        props: {
+          category: fieldValues.type.category,
+          ...("subcategory" in fieldValues.type && { subcategory: fieldValues.type.subcategory }),
+        },
+      })
 
       return new Promise((resolve) => {
         const toastId = toast.loading(t`Opening GitHub...`)

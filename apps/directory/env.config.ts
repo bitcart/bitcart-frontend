@@ -4,20 +4,8 @@ import * as z from "zod"
 export const envConfig = {
   clientEnvSchemas: {
     BITCART_STORE: z.string().default("1"),
-    BITCART_MATOMO_URL: z.string().default(""),
-    BITCART_MATOMO_SCRIPT_URL: z.string().default(""),
-
-    BITCART_MATOMO_ACTIONS: z
-      .string()
-      .default("")
-      .transform((actions) =>
-        actions
-          .split(";")
-          .filter((x) => x.trim() !== "")
-          .map((x) => [x]),
-      ),
-
-    BITCART_MATOMO_ID: z.coerce.number().int().default(1),
+    BITCART_PLAUSIBLE_ENABLED: z.stringbool().default(false),
+    BITCART_PLAUSIBLE_ENDPOINT: z.url().optional(),
   },
 
   sharedEnvSchemas: {
