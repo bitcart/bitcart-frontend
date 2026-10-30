@@ -75,7 +75,7 @@ catalogs:
     "@types/canvas-confetti": 1.9.0
     "@types/culori": 4.0.1
     "@types/mdx": 2.0.14
-    "@types/node": 25.9.9
+    "@types/node": 26.6.5
     "@types/react": 19.3.0
     "@types/react-dom": 19.3.0
     "@unocss/cli": 66.11.0
