@@ -6,5 +6,12 @@
     "declaration": true,
     "declarationMap": true,
     "noEmit": false
-  }
+  },
+
+  "exclude": [
+    "${configDir}/dist",
+    "${configDir}/node_modules",
+    "${configDir}/src/**/*.spec.ts",
+    "${configDir}/src/**/*.spec.tsx"
+  ]
 }

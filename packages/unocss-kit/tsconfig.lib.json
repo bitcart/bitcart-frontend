@@ -8,6 +8,5 @@
     "paths": { "#/*": ["./src/*"] }
   },
 
-  "exclude": ["dist", "node_modules", "src/**/*.spec.ts"],
   "include": ["src"]
 }
