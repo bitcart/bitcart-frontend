@@ -6,7 +6,7 @@
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "buildInputs": ["default", "!{projectRoot}/e2e/**", "!{projectRoot}/playwright.config.ts"],
-    "sharedGlobals": ["{workspaceRoot}/.env", { "env": "BITCART_ENV" }],
+    "sharedGlobals": [{ "env": "BITCART_ENV" }],
     "oxlintInputs": ["default", "{workspaceRoot}/oxlint.config.ts"],
     "packageBuildInputs": ["{projectRoot}/**/*"],
 

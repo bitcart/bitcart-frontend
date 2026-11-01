@@ -31,7 +31,6 @@
     "@tanstack/react-router-devtools": "catalog:dependencies",
     "@tanstack/react-start": "catalog:dependencies",
     "@tanstack/start-static-server-functions": "catalog:dependencies",
-    "dotenv": "catalog:dependencies",
     "fumadocs-core": "catalog:dependencies",
     "fumadocs-mdx": "catalog:dependencies",
     "fumadocs-ui": "catalog:dependencies",

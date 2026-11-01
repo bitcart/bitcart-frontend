@@ -13,7 +13,8 @@ pnpm nx run @bitcart/vike-app-template:build # production build
 
 1. Copy `templates/vike-app` to `apps/<your-app>` and register `apps/<your-app>` in `knip.config.ts`.
 2. Rename the package in [package.json](package.json) and [project.json](project.json), drop
-   `"private": true`, and pick a free port in `vite.config.ts` and `playwright.config.ts`.
+   `"private": true`, and pick a free port in `vite.config.ts` and `playwright.config.ts`. In
+   `project.json`, point the build's `runtime` input at `apps/<your-app>/.env`.
 3. Update `PRODUCTION_BASE_URL` / `PROJECT_CANONICAL_NAME` defaults in
    [env.config.ts](env.config.ts), and add any client-side (`BITCART_`-prefixed) variables to
    `clientEnvSchemas`.

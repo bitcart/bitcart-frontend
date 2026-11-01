@@ -1,9 +1,10 @@
+import { existsSync } from "node:fs"
+
 import { createEnv } from "@t3-oss/env-core"
-import dotenv from "dotenv"
 
 import { envConfig } from "./env.config.ts"
 
-dotenv.config({ path: "../../.env", quiet: true })
+for (const file of [".env", "../../.env"]) if (existsSync(file)) process.loadEnvFile(file)
 
 export const nodeEnv = createEnv({
   clientPrefix: "BITCART_",

@@ -27,7 +27,6 @@
     "@lingui/react": "catalog:dependencies",
     "@phosphor-icons/react": "catalog:dependencies",
     "@t3-oss/env-core": "catalog:dependencies",
-    "dotenv": "catalog:dependencies",
     "inter-ui": "catalog:dependencies",
     "react": "catalog:dependencies",
     "react-dom": "catalog:dependencies",

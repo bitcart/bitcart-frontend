@@ -16,7 +16,7 @@
         "^default",
         "appCatalogs",
         "packageCatalogs",
-        { "runtime": "grep '^BITCART_' .env 2>/dev/null | sort" }
+        { "runtime": "grep '^BITCART_' .env apps/landing/.env 2>/dev/null | sort" }
       ],
       "outputs": ["{projectRoot}/dist"],
       "cache": true

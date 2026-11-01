@@ -38,7 +38,6 @@ catalogs:
     "@tanstack/start-static-server-functions": 1.167.43
     "@web3icons/react": 4.1.24
     class-variance-authority: 0.7.1
-    dotenv: 18.0.8
     fumadocs-core: 16.17.5
     fumadocs-mdx: 15.4.7
     fumadocs-ui: 16.17.5

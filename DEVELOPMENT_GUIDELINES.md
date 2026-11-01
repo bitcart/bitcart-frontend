@@ -45,6 +45,8 @@ Only apps may vary their build output by environment. Library packages (`package
 
 Environment variables are validated with `@t3-oss/env-core` + Zod schemas. Client-side variables must be prefixed with `BITCART_`.
 
+Values come from `.env` files. The workspace root's `.env` holds what every app and tool shares, and an app's own `apps/<app>/.env` overrides it for that app; a variable already set in the shell overrides both. Nx loads both files for its tasks (along with `.env.local` and target-specific files such as `.env.build`), and each app's `node-env.ts` loads them for commands run outside Nx. Being gitignored, the files are invisible to Nx's file hashing, so a build only notices changes to their `BITCART_` lines, through the `runtime` input of each app's `build:main` target.
+
 ## Architecture
 
 ### Library packages

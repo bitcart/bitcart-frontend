@@ -31,7 +31,6 @@
     "@t3-oss/env-core": "catalog:dependencies",
     "@tanstack/react-query": "catalog:dependencies",
     "class-variance-authority": "catalog:dependencies",
-    "dotenv": "catalog:dependencies",
     "inter-ui": "catalog:dependencies",
     "lucide-react": "catalog:dependencies",
     "react": "catalog:dependencies",

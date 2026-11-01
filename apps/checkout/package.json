@@ -47,7 +47,6 @@
     "@tanstack/store": "catalog:dependencies",
     "canvas-confetti": "catalog:dependencies",
     "class-variance-authority": "catalog:dependencies",
-    "dotenv": "catalog:dependencies",
     "inter-ui": "catalog:dependencies",
     "lucide-react": "catalog:dependencies",
     "qrcode.react": "catalog:dependencies",
