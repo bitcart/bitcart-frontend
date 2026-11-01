@@ -1,7 +1,7 @@
 import { type WithLocaleId, getLocaleDisplayName } from "@bitcart/core/i18n"
 import { expect } from "@playwright/test"
 
-import { LOCALE_SELECTOR_TRIGGER_TESTID, type WithPageCatalog, type WithTestRoute } from "@/common"
+import { LOCALE_SELECTOR_TRIGGER_TESTID, type WithPageCatalog, type WithRoute } from "@/common"
 
 import type { GenericE2ETestTemplate } from "../types"
 import {
@@ -17,11 +17,11 @@ import {
  * The locale selector must be visible and the default locale must be English.
  */
 export const createLocaleSelectorVisibilityWithDefaultLocaleTest: GenericE2ETestTemplate<
-  WithTestRoute
+  WithRoute
 > =
-  ({ testRoute = "/" } = {}) =>
+  ({ route = "/" } = {}) =>
   async ({ page }) => {
-    await page.goto(testRoute)
+    await page.goto(route)
     await waitUntilHydrated(page)
 
     const localeSelectorTrigger = page.getByTestId(LOCALE_SELECTOR_TRIGGER_TESTID)
@@ -67,7 +67,7 @@ export const createLocalePersistenceTest: GenericE2ETestTemplate<WithLocaleId & 
     await page.getByRole("menuitem", { name: targetLocaleDisplayName }).click()
     await page.waitForURL(`**/${localeId}*`, { waitUntil: "commit" })
 
-    const nextPagePath = nonHomepagePath({ from: pageCatalog })
+    const nextPagePath = nonHomepagePath({ fromCatalog: pageCatalog })
 
     await clickNavLinkByHref(page, `/${localeId}${nextPagePath}`)
     await page.waitForURL(`**/${localeId}${nextPagePath}*`, { waitUntil: "commit" })

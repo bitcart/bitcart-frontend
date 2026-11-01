@@ -1,7 +1,7 @@
 import { defineConfig } from "oxlint"
 
 export const baseOxlintConfig = defineConfig({
-  plugins: ["eslint", "typescript", "oxc", "import", "promise"],
+  plugins: ["eslint", "typescript", "oxc", "import", "promise", "unicorn"],
 
   options: {
     typeAware: true,
@@ -97,5 +97,10 @@ export const baseOxlintConfig = defineConfig({
     "typescript/only-throw-error": "error",
     "typescript/prefer-promise-reject-errors": "error",
     "typescript/require-await": "error",
+
+    "unicorn/import-style": [
+      "error",
+      { extendDefaultStyles: false, styles: { zod: { named: true } } },
+    ],
   },
 })

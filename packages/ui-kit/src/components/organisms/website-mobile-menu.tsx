@@ -108,8 +108,8 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
             className={cn(`
               focus-visible:outline-ring/90
               gap-3 rounded-lg p-1 px-2
-              focus-visible:text-accent-foreground
-              hover:text-accent-foreground
+              focus-visible:text-primary-text
+              hover:text-primary-text
               flex w-fit items-center
               focus-visible:outline-3
             `)}
@@ -133,10 +133,6 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
             aria-label={t`Navigation`}
           >
             {labeledLinks.map((link) => {
-              const a11yAwareLinkProps = link.isExternal
-                ? { href: link.href, isExternalLink: true as const }
-                : { href: link.href, isExternalLink: false as const }
-
               const isActive = !link.isExternal && link.href === currentRoute.pathnameWithHash
 
               return (
@@ -149,7 +145,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
                   })}
                   aria-current={isActive ? "page" : undefined}
                   aria-label={link.hint ?? link.label}
-                  {...a11yAwareLinkProps}
+                  href={link.href}
                 >
                   {link.label}
                 </LinkButton>
@@ -172,10 +168,6 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
             {!isEmptyish(iconLinks) && (
               <nav ref={iconNavRef} className="gap-4 flex" aria-label={t`Other links`}>
                 {iconLinks?.map(({ icon: Icon, ...link }) => {
-                  const a11yAwareLinkProps = link.isExternal
-                    ? { href: link.href, isExternalLink: true as const }
-                    : { href: link.href, isExternalLink: false as const }
-
                   return (
                     <LinkButton
                       key={link.hint + link.href}
@@ -183,9 +175,9 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
                       title={link.hint}
                       size="icon-lg"
                       variant="ghost"
-                      className="hover:text-accent-foreground bg-muted/25 dark:hover:bg-accent/30"
+                      className="hover:text-primary-text bg-muted/25 dark:hover:bg-accent/30"
                       aria-label={link.hint}
-                      {...a11yAwareLinkProps}
+                      href={link.href}
                     >
                       <Icon aria-hidden="true" />
                     </LinkButton>
@@ -198,9 +190,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
 
             <ThemeToggle
               testId={UI_THEME_MOBILE_TOGGLE_TESTID}
-              className={cn(
-                `size-10 hover:text-accent-foreground bg-muted/25 dark:hover:bg-accent/30`,
-              )}
+              className={cn(`size-10 hover:text-primary-text bg-muted/25 dark:hover:bg-accent/30`)}
             />
           </div>
         </DrawerFooter>

@@ -74,7 +74,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
     >
       <h2 id="about-heading" className="text-4xl font-bold">
         <Trans>
-          What is <span className="text-accent-foreground">Bitcart</span>
+          What is <span className="text-primary-text">Bitcart</span>
         </Trans>
       </h2>
 
@@ -104,7 +104,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
       </div>
 
       <div className="sm:flex-row gap-4 pt-4 sm:flex-wrap flex flex-col">
-        <LinkButton isExternalLink href="https://admin.bitcart.ai" size="lg">
+        <LinkButton href="https://admin.bitcart.ai" size="lg">
           {t`Live Demo`}
         </LinkButton>
 

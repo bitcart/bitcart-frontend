@@ -3,7 +3,7 @@ import { i18n } from "@lingui/core"
 import { I18nProvider } from "@lingui/react"
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react"
 import { afterEach, beforeAll, describe, expect, test, vi } from "vitest"
-import * as z from "zod"
+import { z } from "zod"
 
 import { useAppForm } from "@/hooks"
 

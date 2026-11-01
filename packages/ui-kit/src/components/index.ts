@@ -347,6 +347,7 @@ export {
   type SocketConnectionStatusBannerProps,
 } from "./molecules/connection-status"
 
+export { CtaButton, type CtaButtonProps } from "./molecules/cta-button"
 export { DialogContent, type DialogContentProps } from "./molecules/dialog-content"
 export { DrawerPanel, type DrawerPanelProps } from "./molecules/drawer-panel"
 export { DrawerPopup, type DrawerPopupProps } from "./molecules/drawer-popup"
@@ -424,6 +425,8 @@ export {
 /**
  ** ORGANISMS
  */
+
+export { CtaSection, type CtaSectionProps } from "./organisms/cta-section"
 
 export {
   FeatureGallery,

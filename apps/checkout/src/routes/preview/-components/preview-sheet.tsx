@@ -1,6 +1,6 @@
 import { Link, useRouter } from "@tanstack/react-router"
 import { useEffect, useRef, useState } from "react"
-import * as z from "zod"
+import { z } from "zod"
 
 import { getSheetFrames, type SheetFrame, type SheetSearch, type PreviewSheetAxis } from "./sheet"
 

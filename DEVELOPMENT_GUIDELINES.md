@@ -125,7 +125,7 @@ The `stylistic-js/lines-around-comment` rule in [packages/configs/src/base/oxlin
 
 ### Blank lines around multiline blocks
 
-Surround any multiline block with blank lines: one before it when anything comes before, and one after it when anything comes after. This applies to every construct with some approximation of a "block": statements (`if`/loops/function declarations), multiline object or array members, `switch` cases, sibling JSX elements, and so on. Single-line siblings may stay clustered together; the padding is only required around constructs that span multiple lines. See [packages/unocss-preset/src/index.ts](packages/unocss-preset/src/index.ts) for a representative real-world example.
+Surround any multiline block with blank lines: one before it when anything comes before, and one after it when anything comes after. This applies to every construct with some approximation of a "block": statements (`if`/loops/function declarations), multiline object or array members, `switch` cases, sibling JSX elements, and so on. Single-line siblings may stay clustered together; the padding is only required around constructs that span multiple lines. See [packages/unocss-kit/src/preset/definition.ts](packages/unocss-kit/src/preset/definition.ts) for a representative real-world example.
 
 ```ts
 // ✅ correct — multiline members padded on both sides, single-line ones clustered
@@ -178,7 +178,7 @@ const syncOptions = {
 
 ### Theme-aware colors
 
-Don't hardcode color values (e.g. `bg-white`, `text-purple-700`, `border-gray-200`, raw hex/rgb/oklch) in application and shared UI components. Use semantic tokens from the active theme instead — either from the app's UnoCSS config at `apps/<app>/uno.config.ts` (which can extend/override `colorScheme`) or from the preset's built-in default scheme declared in [packages/unocss-preset/src/color-scheme.ts](packages/unocss-preset/src/color-scheme.ts).
+Don't hardcode color values (e.g. `bg-white`, `text-purple-700`, `border-gray-200`, raw hex/rgb/oklch) in application and shared UI components. Use semantic tokens from the active theme instead. The preset declares their default values in [packages/unocss-kit/src/preset/brand-theme.ts](packages/unocss-kit/src/preset/brand-theme.ts). To change them for an app, pass `themeOverrides` to `presetBitcart` in `apps/<app>/uno.config.ts`.
 
 Typical semantic classes:
 
@@ -198,11 +198,13 @@ Typical semantic classes:
 
 The only time hardcoded colors are justified is when a one-off component is _designed_ to look the same regardless of the current app theme (e.g. a branded badge reproduced from an external asset, a print-only section, a marketing ribbon that must match a specific partner palette). In those cases, add a short comment explaining why the color is pinned.
 
+Lint enforces this rule and flags raw colors such as `bg-purple-500`, `text-white` or `text-[#F59E0B]`. For a justified exception, disable `better-tailwindcss/no-restricted-classes` around those classes and give the reason in the disable comment.
+
 ### Utility classes in non-UnoCSS packages
 
 Library packages that don't have their own UnoCSS config (e.g. `packages/vike-kit`, `packages/core`, `packages/form-kit`) are **not scanned** by any app's UnoCSS pipeline. Apps only scan their own `src/**` and `packages/ui-kit/src/**` (see `apps/<app>/uno.config.ts`).
 
-Do **not** use Tailwind / UnoCSS utility classes inside such packages unless every class used is present in `presetBitcart`'s `safelist` (see [packages/unocss-preset/src/index.ts](packages/unocss-preset/src/index.ts)). Otherwise those classes won't be generated and the markup will render unstyled — which, for utilities like `sr-only` or visibility clips, can silently break accessibility or layout (e.g. unclipped screen-reader text causing horizontal overflow).
+Do **not** use Tailwind / UnoCSS utility classes inside such packages unless every class used is present in `presetBitcart`'s `safelist` (see [packages/unocss-kit/src/preset/definition.ts](packages/unocss-kit/src/preset/definition.ts)). Otherwise those classes won't be generated and the markup will render unstyled — which, for utilities like `sr-only` or visibility clips, can silently break accessibility or layout (e.g. unclipped screen-reader text causing horizontal overflow).
 
 If you need a utility that isn't safelisted, either add it to the safelist or move the component into `packages/ui-kit` (which is scanned).
 
@@ -259,6 +261,22 @@ export type DrawerTriggerProps = DrawerPrimitive.Trigger.Props & {}
 
 // ❌ avoid — plain alias blocks future extension and is less explicit
 export type DrawerTriggerProps = DrawerPrimitive.Trigger.Props
+```
+
+### `With…` interfaces
+
+A `With…` interface that exists only to wrap one property names that property verbatim in PascalCase.
+
+```ts
+// ✅ correct
+export interface WithStartRoute {
+  startRoute?: InternalHref
+}
+
+// ❌ avoid — the name promises `testRoute`, the field is `route`
+export interface WithTestRoute {
+  route?: InternalHref
+}
 ```
 
 ### Early returns

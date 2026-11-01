@@ -30,7 +30,7 @@ export const LocaleSelector: React.FC = () => {
         optionLocaleIds={AVAILABLE_LOCALE_IDS}
         handleSelect={handleSelectLocale}
         triggerVariant="outline"
-        classNames={{ trigger: "w-full" }}
+        classNames={{ trigger: "flex-1" }}
       />
     )
   }

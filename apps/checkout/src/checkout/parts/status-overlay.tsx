@@ -232,18 +232,7 @@ export const StatusOverlay = ({
           </PageAction>
         )}
 
-        {contactSupport?.kind === "url" && (
-          <LinkButton
-            isExternalLink
-            href={contactSupport.href}
-            variant="outline"
-            className={ACTION_CLASS_NAME}
-          >
-            {t`Contact store`}
-          </LinkButton>
-        )}
-
-        {contactSupport?.kind === "email" && (
+        {contactSupport && (
           <LinkButton href={contactSupport.href} variant="outline" className={ACTION_CLASS_NAME}>
             {t`Contact store`}
           </LinkButton>

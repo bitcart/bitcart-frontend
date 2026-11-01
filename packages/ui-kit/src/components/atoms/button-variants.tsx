@@ -20,7 +20,14 @@ export const buttonVariants = cva(
       variant: {
         default:
           "bg-primary text-primary-foreground hover:bg-primary/80 focus-visible:bg-primary/80",
-        white: "bg-white text-primary hover:bg-gray-100 focus-visible:bg-gray-100",
+
+        // oxlint-disable better-tailwindcss/no-restricted-classes -- text on its own `primary-foreground` fill
+        white: `
+          bg-primary-foreground text-primary
+          hover:bg-primary-foreground/90
+          focus-visible:bg-primary-foreground/90
+        `,
+        // oxlint-enable better-tailwindcss/no-restricted-classes
 
         secondary: `
           bg-secondary text-secondary-foreground
@@ -30,6 +37,7 @@ export const buttonVariants = cva(
 
         accent: "bg-accent text-accent-foreground hover:bg-accent/80 focus-visible:bg-accent/80",
 
+        // oxlint-disable better-tailwindcss/no-restricted-classes -- `destructive-foreground` is red text, not text for this fill
         destructive: `
           bg-destructive text-white
           hover:bg-destructive/90
@@ -37,11 +45,12 @@ export const buttonVariants = cva(
           dark:focus-visible:ring-destructive/40
           dark:bg-destructive/60
         `,
+        // oxlint-enable better-tailwindcss/no-restricted-classes
 
         outline: `
           shadow-xs border-input
-          hover:text-accent-foreground
-          focus-visible:text-accent-foreground
+          hover:text-primary-text
+          focus-visible:text-primary-text
           text-muted-foreground
           hover:border-ring hover:bg-accent/40
           focus-visible:border-ring focus-visible:bg-accent/40
@@ -49,14 +58,15 @@ export const buttonVariants = cva(
         `,
 
         ghost: `
-          hover:bg-muted/25 hover:text-accent-foreground
-          focus-visible:text-accent-foreground
-          [&_svg:not-[class*='hover:text-']]:hover:text-accent-foreground
-          focus-visible:bg-muted/25
+          hover:bg-muted hover:text-primary-text
+          focus:text-primary-text
+          focus-visible:text-primary-text
+          [&_svg:not-[class*='hover:text-']]:hover:text-primary-text
+          focus-visible:bg-muted
         `,
 
         link: `
-          font-semibold text-accent-foreground
+          font-semibold text-primary-text
           dark:hover:filter-brightness-130
           dark:focus-visible:filter-brightness-130
           hover:filter-brightness-70

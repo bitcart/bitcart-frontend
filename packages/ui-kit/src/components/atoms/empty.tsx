@@ -97,7 +97,7 @@ export const EmptyDescription: React.FC<EmptyDescriptionProps> = ({ className, .
       className={cn(
         `
           text-muted-foreground text-sm/relaxed
-          [&>a:hover]:text-primary
+          [&>a:hover]:text-primary-text
           [&>a]:underline [&>a]:underline-offset-4
         `,
 

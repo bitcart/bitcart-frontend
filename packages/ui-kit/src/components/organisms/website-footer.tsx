@@ -45,7 +45,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
           <Link
             key={link.hint + link.href}
             title={link.hint}
-            className="text-muted-foreground hover:text-accent-foreground transition-colors"
+            className="text-muted-foreground hover:text-primary-text transition-colors"
             aria-label={link.hint}
             {...a11yAwareProps}
           >
@@ -99,11 +99,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
                     return (
                       <li key={link.label + link.href}>
                         <Link
-                          className={cn(`
-                            text-muted-foreground
-                            hover:text-accent-foreground
-                            transition-colors
-                          `)}
+                          className="text-muted-foreground hover:text-primary-text transition-colors"
                           aria-label={link.hint ?? link.label}
                           {...a11yAwareProps}
                         >

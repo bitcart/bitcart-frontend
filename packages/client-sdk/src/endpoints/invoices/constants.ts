@@ -1,13 +1,10 @@
-import type { UnionAsArray } from "@bitcart/core/types"
+import type { IsUnionMemberList } from "@bitcart/core/types"
 
 import type { InvoiceTerminalStatus } from "./types"
 
-export const TERMINAL_STATUSES: UnionAsArray<InvoiceTerminalStatus> = [
-  "complete",
-  "expired",
-  "invalid",
-  "refunded",
-] as const
+export const TERMINAL_STATUSES = ["complete", "expired", "invalid", "refunded"] as const
+
+true satisfies IsUnionMemberList<InvoiceTerminalStatus, typeof TERMINAL_STATUSES>
 
 export const MAX_WS_RECONNECT_DELAY_MS = 30_000
 

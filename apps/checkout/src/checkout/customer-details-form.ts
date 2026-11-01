@@ -6,7 +6,7 @@ import { t } from "@lingui/core/macro"
 import { useSelector } from "@tanstack/react-store"
 import { useMemo, type SubmitEvent } from "react"
 import { pick } from "remeda"
-import * as z from "zod"
+import { z } from "zod"
 
 import { useCheckout } from "./hooks"
 import { CUSTOMER_DETAILS_UPDATE_KEYS, type CustomerDetailsField } from "./model"

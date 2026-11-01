@@ -183,7 +183,7 @@ const SubmittedRefund = ({
             {refund.transaction.explorerUrl ? (
               <ExternalLink
                 href={refund.transaction.explorerUrl}
-                linkClassName="hover:text-primary underline underline-offset-2"
+                linkClassName="hover:text-primary-text underline underline-offset-2"
               >
                 {refund.transaction.hash}
               </ExternalLink>
@@ -194,13 +194,7 @@ const SubmittedRefund = ({
         </div>
       )}
 
-      {status === "failed" && contactSupport?.kind === "url" && (
-        <LinkButton isExternalLink href={contactSupport.href} variant="outline" className="mt-6">
-          {t`Contact store`}
-        </LinkButton>
-      )}
-
-      {status === "failed" && contactSupport?.kind === "email" && (
+      {status === "failed" && contactSupport && (
         <LinkButton href={contactSupport.href} variant="outline" className="mt-6">
           {t`Contact store`}
         </LinkButton>

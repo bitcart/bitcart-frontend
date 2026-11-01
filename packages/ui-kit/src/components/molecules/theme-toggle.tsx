@@ -12,7 +12,7 @@ import { useTheme } from "@/hooks"
 import type { ThemeMode } from "@/types"
 import { cn, isThemeMode } from "@/utils"
 
-import { Button } from "../atoms/button"
+import { Button, type ButtonProps } from "../atoms/button"
 
 const DEFAULT_THEME_MODE: ThemeMode = "system"
 
@@ -30,12 +30,15 @@ export type ThemeToggleProps = {
    * @default UI_THEME_TOGGLE_TESTID
    */
   testId?: string
+
+  triggerProps?: Pick<ButtonProps, "variant" | "size">
 }
 
 export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   className,
   showLabel = false,
   testId = UI_THEME_TOGGLE_TESTID,
+  triggerProps = { variant: "ghost", size: "icon" },
 }) => {
   const { t } = useLingui()
   const { theme, setTheme } = useTheme()
@@ -86,12 +89,11 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   return (
     <Button
       onClick={toggleTheme}
-      size="icon"
-      variant="ghost"
       title={getButtonHint()}
       className={className}
       aria-label={getButtonHint()}
       data-testid={testId}
+      {...triggerProps}
     >
       {icon}
       {showLabel && <span className="text-sm font-medium">{getThemeLabel()}</span>}

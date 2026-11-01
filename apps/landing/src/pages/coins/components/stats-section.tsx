@@ -15,7 +15,7 @@ export const StatsSection: React.FC<StatsSectionProps> = () => {
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
         <div className="sm:grid-cols-3 gap-6 sm:gap-8 grid grid-cols-1 text-center">
           <div className="space-y-2">
-            <div className="text-2xl sm:text-3xl font-bold text-accent-foreground">
+            <div className="text-2xl sm:text-3xl font-bold text-primary-text">
               {totalCounts.blockchains}
             </div>
 
@@ -25,7 +25,7 @@ export const StatsSection: React.FC<StatsSectionProps> = () => {
           </div>
 
           <div className="space-y-2">
-            <div className="text-2xl sm:text-3xl font-bold text-accent-foreground">
+            <div className="text-2xl sm:text-3xl font-bold text-primary-text">
               {totalCounts.tokens}+
             </div>
 
@@ -33,7 +33,7 @@ export const StatsSection: React.FC<StatsSectionProps> = () => {
           </div>
 
           <div className="space-y-2">
-            <div className="text-2xl sm:text-3xl font-bold text-accent-foreground">0%</div>
+            <div className="text-2xl sm:text-3xl font-bold text-primary-text">0%</div>
             <div className="text-muted-foreground text-sm sm:text-base">{t`Transaction Fees`}</div>
           </div>
         </div>

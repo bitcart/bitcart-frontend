@@ -35,9 +35,7 @@ export default function Page() {
 
       description: t`Bitcart is using electrum wallet you know and love. Your private key never leaves your PC.`,
 
-      actions: [
-        { label: t`Try Out The Live Demo`, href: "https://admin.bitcart.ai", isExternalLink: true },
-      ],
+      actions: [{ label: t`Try Out The Live Demo`, href: "https://admin.bitcart.ai" }],
     },
 
     {
@@ -61,9 +59,9 @@ export default function Page() {
       description: t`Bitcart provides optional, but easy to install and use admin panel for full management of your products and checkout and ready store. Just fill in your products in admin panel and start getting your first customers!`,
 
       actions: [
-        { label: t`Bitcart Admin Demo`, href: "https://admin.bitcart.ai", isExternalLink: true },
-        { label: t`Bitcart Store Demo`, href: "https://store.bitcart.ai", isExternalLink: true },
-        { label: t`Merchant API Demo`, href: "https://api.bitcart.ai", isExternalLink: true },
+        { label: t`Bitcart Admin Demo`, href: "https://admin.bitcart.ai" },
+        { label: t`Bitcart Store Demo`, href: "https://store.bitcart.ai" },
+        { label: t`Merchant API Demo`, href: "https://api.bitcart.ai" },
       ],
     },
 
@@ -73,9 +71,7 @@ export default function Page() {
 
       description: t`You're free to improve and view source code of Bitcart. Your are your own bank, as you host Bitcart yourself.`,
 
-      actions: [
-        { label: `GitHub`, href: "https://github.com/bitcart/bitcart", isExternalLink: true },
-      ],
+      actions: [{ label: `GitHub`, href: "https://github.com/bitcart/bitcart" }],
     },
 
     {
@@ -87,12 +83,10 @@ export default function Page() {
         {
           label: t`What is Lightning Network?`,
           href: "https://lightning.network/",
-          isExternalLink: true,
         },
         {
           label: t`Lightning Network Guide`,
           href: "https://docs.bitcart.ai/guides/lightning",
-          isExternalLink: true,
         },
       ],
     },
@@ -107,12 +101,10 @@ export default function Page() {
         {
           label: t`Bitcart Configurator`,
           href: "https://configurator.bitcart.ai",
-          isExternalLink: true,
         },
         {
           label: t`Deployment Guides`,
           href: "https://docs.bitcart.ai/deployment/deployment",
-          isExternalLink: true,
         },
       ],
     },
@@ -133,17 +125,15 @@ export default function Page() {
       description: t`Powerful python SDK is available. Or just connect to Bitcart daemon from any programming language You can even create a blockchain explorer, atomic swaps bot, or a wallet with it!`,
 
       actions: [
-        { label: t`Python SDK`, href: "https://sdk.bitcart.ai", isExternalLink: true },
+        { label: t`Python SDK`, href: "https://sdk.bitcart.ai" },
 
         {
           label: t`Atomic Tipbot`,
           href: "https://github.com/bitcart/bitcart-sdk/tree/master/examples/atomic_tipbot",
-          isExternalLink: true,
         },
         {
           label: t`Examples of Usage`,
           href: "https://github.com/bitcart/bitcart-sdk/tree/master/examples",
-          isExternalLink: true,
         },
       ],
     },
@@ -157,12 +147,10 @@ export default function Page() {
         {
           label: t`Bitcart Components Diagram`,
           href: "https://raw.githubusercontent.com/bitcart/bitcart-docs/master/.gitbook/assets/bitcart_structure.png",
-          isExternalLink: true,
         },
         {
           label: t`Architecture`,
           href: "https://docs.bitcart.ai/development/architecture",
-          isExternalLink: true,
         },
       ],
     },
@@ -181,7 +169,11 @@ export default function Page() {
         </div>
       </div>
 
-      <section id="features" aria-labelledby="features-heading" className="py-20 bg-secondary">
+      <section
+        id="features"
+        aria-labelledby="features-heading"
+        className="py-20 bg-secondary dark:bg-background dark:border-y"
+      >
         <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
           <h2 id="features-heading" className="text-4xl font-bold mb-16 text-center">
             {t`Features`}

@@ -17,8 +17,9 @@ export const Hero: React.FC<HeroProps> = ({ searchTerm, setSearchTerm }) => {
       className={cn(`
         py-12
         sm:py-20
-        from-purple-50 via-white to-purple-100
-        dark:from-gray-900 dark:via-gray-900 dark:to-gray-800
+        md:pt-36 md:mt--16
+        from-accent/50 via-card to-accent
+        dark:from-background dark:via-background dark:to-card
         bg-linear-to-br
       `)}
     >
@@ -35,7 +36,7 @@ export const Hero: React.FC<HeroProps> = ({ searchTerm, setSearchTerm }) => {
         >
           <Trans>
             Supported <br className="sm:hidden" />
-            <span className="text-accent-foreground wrap-break-word">Cryptocurrencies</span>
+            <span className="text-primary-text wrap-break-word">Cryptocurrencies</span>
           </Trans>
         </h1>
 

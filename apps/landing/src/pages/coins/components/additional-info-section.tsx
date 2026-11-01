@@ -13,9 +13,8 @@ export const AdditionalInfoSection: React.FC = () => {
       <div className="max-w-4xl px-4 md:px-6 lg:px-8 mx-auto text-center">
         <div
           className={cn(`
-            from-blue-50 to-indigo-50 rounded-lg p-6
+            from-accent/40 to-accent/70 rounded-lg p-6
             sm:p-8
-            dark:from-blue-900/20 dark:to-indigo-900/20
             bg-linear-to-r
           `)}
         >

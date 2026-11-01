@@ -74,8 +74,8 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, childre
             href={rootRoutePathname}
             className={cn(`
               rounded-lg p-1 px-2 text-foreground
-              hover:text-accent-foreground
-              focus-visible:text-accent-foreground
+              hover:text-primary-text
+              focus-visible:text-primary-text
               transition-scale gap-3
               focus-visible:outline-ring/90
               flex items-center duration-200

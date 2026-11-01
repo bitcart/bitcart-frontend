@@ -17,7 +17,7 @@ Bitcart frontend monorepo containing web applications, shared packages and app t
 - **packages/hooks** — Framework- and presentation-agnostic, SSR-safe React hooks
 - **packages/qa** — Shared Playwright E2E utilities, test templates, testid constants, and unit test mocks
 - **packages/ui-kit** — Reusable React component library (atomic design: atoms/molecules/organisms/templates) with shadcn/ui + UnoCSS
-- **packages/unocss-preset** — Custom UnoCSS styling preset
+- **packages/unocss-kit** — UnoCSS tooling, including the custom styling preset
 - **packages/vike-kit** — Shared Vike configuration, i18n, navigation, telemetry, metadata
 - **templates/vike-app** — Minimal Vike application boilerplate
 
@@ -70,7 +70,7 @@ pnpm nx run landing:dev     # Dev server for landing only
 pnpm nx run directory:build # Build directory only
 ```
 
-**Installing dependencies:** Never run `pnpm add` or `pnpm install` directly. Use these `just` commands instead:
+**Installing dependencies:** Never run `pnpm add` or `pnpm install <package>` directly. A bare `pnpm i` reconciles workspace links and the lockfile, and is allowed. To add a dependency, use these `just` commands:
 
 ```bash
 just root-add <package>              # Add dependency to workspace root
@@ -83,7 +83,7 @@ just add-dev <ws-member> <package>   # Add dev dependency to a workspace package
 
 ### Styling
 
-UnoCSS with a custom `@bitcart/unocss-preset`. Every app declares its own stylesheet destination under `cli.entry.outFile` in `apps/<app>/uno.config.ts`: the Vike apps emit `src/pages/uno.generated.css`, the TanStack Start apps `src/routes/-layout/uno.generated.css` (auto-generated, do not edit). UI Docs also runs Tailwind through `@tailwindcss/vite`, which backs the Fumadocs stylesheets imported in `apps/ui-docs/src/routes/-layout/app.css`. The UI Kit uses shadcn/ui patterns with Base UI primitives and Class Variance Authority (CVA) for variants.
+UnoCSS with a custom preset from `@bitcart/unocss-kit/preset`. Every app declares its own stylesheet destination under `cli.entry.outFile` in `apps/<app>/uno.config.ts`: the Vike apps emit `src/pages/uno.generated.css`, the TanStack Start apps `src/routes/-layout/uno.generated.css` (auto-generated, do not edit). UI Docs also runs Tailwind through `@tailwindcss/vite`, which backs the Fumadocs stylesheets imported in `apps/ui-docs/src/routes/-layout/app.css`. The UI Kit uses shadcn/ui patterns with Base UI primitives and Class Variance Authority (CVA) for variants.
 
 Classes copied from shadcn/ui, coss or the Tailwind docs can compile differently under UnoCSS's `presetWind4`: run them through `just unocss-check "<classes>"` (adding `--app <name>` for colors and tokens only that app defines), read the CSS it prints, and act on its warnings.
 
@@ -103,7 +103,7 @@ TanStack Store (`@tanstack/store` with `@tanstack/react-store`) for client-only 
 - **Scripts and configs:** TypeScript only — the repo has no `.js`, `.mjs` or `.cjs`. Node runs `.ts` directly (`#!/usr/bin/env node`). Fall back to JS only when a caller cannot load TypeScript, and then use `.js`. Every package's root tsconfig `include` ends with `"*.ts", ".*.ts"`. Keep the second entry: TypeScript wildcards skip dotfiles, and a bare `"*.ts"` would silently drop `.dependency-cruiser.ts`
 - **Formatting:** oxfmt, the only formatter — it handles all file types, not just JS/TS, so pass it any path. JS/TS style: no semicolons, double quotes, 100 char width
 - **Imports:** Ordered by: builtin → external → internal (`@bitcart/*`) → siblings/parent
-- **Validation:** Zod 4 with its classic API (`import * as z from "zod"`). Use Zod 4 APIs only: Zod 3 idioms, such as `[T, ...T[]]` casts for `z.enum`, are outdated ([migration guide](https://zod.dev/v4/changelog))
+- **Validation:** Zod 4 with its classic API (`import { z } from "zod"`). Use Zod 4 APIs only: Zod 3 idioms, such as `[T, ...T[]]` casts for `z.enum`, are outdated ([migration guide](https://zod.dev/v4/changelog))
 - **Unused params:** Prefix with `_` (e.g., `_event`)
 - **Components:** Add new shadcn primitives via `just add-ui-kit-components <component>`
 - **Pre-commit hooks:** Run via `just pre-commit`. Checks: lint, typecheck, format, merge conflicts, private keys

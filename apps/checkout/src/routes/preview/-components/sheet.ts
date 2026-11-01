@@ -2,7 +2,7 @@ import { CHECKOUT_PREVIEW_METHODS, CHECKOUT_PREVIEW_STATUSES } from "@bitcart/qa
 
 import { getPreviewAxisOptions } from "#/checkout/preview/axes"
 import { CHECKOUT_PREVIEW_BRAND_IDS } from "#/checkout/preview/brands"
-import { CHECKOUT_PALETTE_PRESET_IDS } from "#/checkout/theme/palette"
+import { CHECKOUT_THEME_PRESET_IDS } from "#/checkout/theme/presets"
 
 import type { Route } from "../$templateId"
 
@@ -10,7 +10,7 @@ export const PREVIEW_SHEET_AXES = [
   "status",
   "received",
   "method",
-  "palette",
+  "theme",
   "brand",
   "width",
 ] as const
@@ -42,10 +42,10 @@ const AXIS_VARIANTS: Record<PreviewSheetAxis, (search: SheetSearch) => FrameVari
 
   method: () => CHECKOUT_PREVIEW_METHODS.map((method) => ({ label: method, search: { method } })),
 
-  palette: () =>
-    [undefined, ...CHECKOUT_PALETTE_PRESET_IDS].map((palette) => ({
-      label: palette ?? "default",
-      search: { palette },
+  theme: () =>
+    [undefined, ...CHECKOUT_THEME_PRESET_IDS].map((theme) => ({
+      label: theme ?? "default",
+      search: { theme },
     })),
 
   brand: () =>

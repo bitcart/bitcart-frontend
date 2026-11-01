@@ -1,4 +1,4 @@
-import { appKnipConfig } from "@bitcart/configs/by-package-type/app-knip"
+import { appKnipConfig, vikeAppKnipConfig } from "@bitcart/configs/by-package-type/app-knip"
 import type { KnipConfig } from "knip"
 
 //* Referenced only from `GEIST_MONO_PREFLIGHT`'s CSS, which Knip does not read.
@@ -35,12 +35,13 @@ const config: KnipConfig = {
       entry: [...appKnipConfig.entry, "src/embed/v1.ts", "src/embed/modal.ts"],
       ignoreDependencies: [...(appKnipConfig.ignoreDependencies ?? []), GEIST_MONO],
     },
-    "apps/directory": appKnipConfig,
+
+    "apps/directory": vikeAppKnipConfig,
 
     "apps/landing": {
-      ...appKnipConfig,
-      entry: [...appKnipConfig.entry, "scripts/**/*.ts"],
-      project: [...appKnipConfig.project, "scripts/**/*.ts"],
+      ...vikeAppKnipConfig,
+      entry: [...vikeAppKnipConfig.entry, "scripts/**/*.ts"],
+      project: [...vikeAppKnipConfig.project, "scripts/**/*.ts"],
     },
 
     "apps/ui-docs": {
@@ -96,7 +97,7 @@ const config: KnipConfig = {
       project: ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
     },
 
-    "templates/vike-app": appKnipConfig,
+    "templates/vike-app": vikeAppKnipConfig,
   },
 }
 

@@ -54,13 +54,7 @@ export const WaysToSupportSection: React.FC<WaysToSupportSectionProps> = ({ data
                       key={exampleIndex}
                       className="text-muted-foreground text-sm sm:text-base flex items-center"
                     >
-                      <div
-                        className={cn(`
-                          size-2 bg-primary mr-3
-                          dark:bg-accent-foreground
-                          shrink-0 rounded-full
-                        `)}
-                      />
+                      <div className="size-2 bg-primary mr-3 shrink-0 rounded-full" />
 
                       {example}
                     </li>

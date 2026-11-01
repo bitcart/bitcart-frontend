@@ -6,6 +6,6 @@ test.describe("Checkout: Internationalization", () => {
   //* TODO: Come up with a reliable way to test this.
   // test(
   //   "locale selector is visible and shows English by default",
-  //   createLocaleSelectorVisibilityWithDefaultLocaleTest({ testRoute: "/i/1" }),
+  //   createLocaleSelectorVisibilityWithDefaultLocaleTest({ route: "/i/1" }),
   // )
 })

@@ -42,10 +42,6 @@ Assuming you have already cloned this repository and are in its root directory, 
 
    If you see an error message about missing system dependencies, follow the resolution instructions it provides.
 
-#### Optional
-
-You'll need to install [Graphviz](https://www.graphviz.org/download) to keep dependency graph visualizations up to date.
-
 ### Commands
 
 Show list of available commands:

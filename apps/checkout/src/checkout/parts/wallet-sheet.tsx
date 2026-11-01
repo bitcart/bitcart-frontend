@@ -163,6 +163,8 @@ const WalletLinkQr = ({
           role="img"
           aria-label={t`QR code that opens this invoice in ${appName}`}
 
+          //! The QR quiet zone must stay white in both themes: scanners need the contrast.
+          // oxlint-disable-next-line better-tailwindcss/no-restricted-classes -- see above
           className="rounded-xl border-border bg-white p-3 relative border"
         >
           <QRCodeSVG

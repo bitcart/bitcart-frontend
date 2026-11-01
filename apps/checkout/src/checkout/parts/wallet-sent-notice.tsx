@@ -29,7 +29,7 @@ export const WalletSentNotice = ({ hash, className }: { hash: string; className?
         {transactionUrl ? (
           <ExternalLink
             href={transactionUrl}
-            className="text-primary font-medium underline-offset-4 hover:underline"
+            className="text-primary-text font-medium underline-offset-4 hover:underline"
           >
             {t`View transaction`}
           </ExternalLink>

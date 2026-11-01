@@ -40,13 +40,20 @@ export const CalendarDayButton = ({
       className={cn(
         `
           data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground
+          data-[selected-single=true]:hover:bg-primary/80
+          data-[selected-single=true]:hover:text-primary-foreground
           data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground
+          data-[range-middle=true]:hover:bg-accent/80
+          data-[range-middle=true]:hover:text-accent-foreground
           data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground
+          data-[range-start=true]:hover:bg-primary/80
+          data-[range-start=true]:hover:text-primary-foreground
           data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md
           data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground
+          data-[range-end=true]:hover:bg-primary/80
+          data-[range-end=true]:hover:text-primary-foreground
           data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md
           group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50
-          dark:hover:text-accent-foreground
           gap-1 font-normal
           [&>span]:text-xs
           flex aspect-square size-auto w-full min-w-[--cell-size] flex-col leading-none

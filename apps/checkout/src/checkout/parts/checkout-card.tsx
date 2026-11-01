@@ -10,7 +10,7 @@ export const CheckoutCard = ({ className, children }: CheckoutCardProps) => {
   return (
     <Card
       className={cn(
-        "max-w-md rounded-2xl py-0 gap-0 shadow-2xl relative w-full overflow-hidden border-0",
+        "max-w-md rounded-2xl py-0 gap-0 shadow-2xl relative w-full overflow-hidden border-0 dark:border",
         className,
       )}
     >

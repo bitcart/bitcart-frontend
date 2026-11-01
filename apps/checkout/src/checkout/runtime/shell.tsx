@@ -1,4 +1,5 @@
-import { useEffect, useRef, type ComponentType } from "react"
+import { GlobalThemeOverride } from "@bitcart/ui-kit/styles"
+import { useEffect, useMemo, useRef, type ComponentType } from "react"
 
 import { useCheckout } from "../hooks"
 import type { CheckoutModel, CheckoutSelectionMode } from "../model"
@@ -8,11 +9,10 @@ import { CheckoutCustomerDetailsScreen } from "../screens/details-screen"
 import { CheckoutMethodSelectScreen } from "../screens/method-select-screen"
 import { CheckoutStatusScreen } from "../screens/status-screen"
 import { CheckoutUnavailableScreen } from "../screens/unavailable-screen"
-import type { CheckoutPalette } from "../theme/palette"
+import type { CheckoutTheme } from "../theme/schemas"
 import { WalletPayRuntime } from "../wallet-pay/runtime"
 import { usePartialPaymentAnnouncement } from "./partial-payment-announcement"
 import { RequiredContentGuard } from "./required-content-guard"
-import { CheckoutThemeScope } from "./theme-scope"
 
 export type CheckoutScreens = {
   Payment: ComponentType
@@ -25,7 +25,7 @@ export type CheckoutScreens = {
 
 export type CheckoutShellTemplate = CheckoutScreens & {
   selection?: CheckoutSelectionMode
-  colorScheme?: CheckoutPalette | null
+  theme: CheckoutTheme
 }
 
 const CheckoutPhaseScreen = ({ screens }: { screens: CheckoutScreens }) => {
@@ -111,10 +111,17 @@ export const CheckoutShell = ({
   const { branding } = useCheckout()
   const rootRef = useViewFocusOnStepChange()
 
+  const themeOverrideLayers = useMemo(
+    () => [template.theme, branding.theme],
+    [template.theme, branding.theme],
+  )
+
   usePartialPaymentAnnouncement()
 
   return (
-    <CheckoutThemeScope scopeId={templateId} palettes={[template.colorScheme, branding.palette]}>
+    <>
+      <GlobalThemeOverride themeTweaks={themeOverrideLayers} />
+
       <div ref={rootRef} data-checkout-template={templateId} className="contents">
         <CheckoutPhaseScreen screens={template} />
 
@@ -124,9 +131,9 @@ export const CheckoutShell = ({
             selection={template.selection ?? "preselect"}
           />
         )}
-      </div>
 
-      <WalletPayRuntime />
-    </CheckoutThemeScope>
+        <WalletPayRuntime />
+      </div>
+    </>
   )
 }

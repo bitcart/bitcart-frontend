@@ -19,6 +19,10 @@ export const baseDependencyCruiserConfig = {
 
           graph: {
             compound: true,
+
+            //! Replaces dependency-cruiser's default "Helvetica-bold", which the WASM Graphviz in
+            //! `scripts/generate-graphviz.ts` has no metrics for. That script bolds cluster labels.
+            fontname: "Helvetica",
             fontsize: 16,
             newrank: true,
             nodesep: 0.15,

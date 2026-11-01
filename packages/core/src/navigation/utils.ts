@@ -14,7 +14,7 @@ export const isAppHandoffHref = (href: string): boolean =>
   APP_HANDOFF_HREF_PREFIXES.some((prefix) => href.startsWith(prefix))
 
 /**
- * Narrows an href to the same-origin shapes {@link InternalHref} admits:
+ * Narrows an href to the same-origin shapes covered by {@link InternalHref}:
  * an absolute path, a bare fragment, or a bare query string.
  */
 export const isInternalHref = (href: string): href is InternalHref => {
@@ -25,22 +25,23 @@ export const isInternalHref = (href: string): href is InternalHref => {
 }
 
 /**
- * Narrows an href to the web shapes {@link HttpHref} admits.
- */
-export const isHttpHref = (href: string): href is HttpHref =>
-  HTTP_HREF_PREFIXES.some((prefix) => href.startsWith(prefix))
-
-/**
- * Narrows an href to the cross-origin shapes {@link ExternalHref} admits.
+ * Narrows an href to the cross-origin shapes covered by {@link ExternalHref}.
  */
 export const isExternalHref = (href: string): href is ExternalHref =>
   EXTERNAL_HREF_PREFIXES.some((prefix) => href.startsWith(prefix))
+
+/**
+ * Narrows an href to the cross-origin shapes covered by {@link HttpHref}:
+ * {@link isExternalHref} without the app handoffs.
+ */
+export const isHttpHref = (href: string): href is HttpHref =>
+  HTTP_HREF_PREFIXES.some((prefix) => href.startsWith(prefix))
 
 export const getDestinationTypeAwareLinkProps = ({
   href,
   isOriginAware = true,
 }: DestinationTypeAwareLinkInputs): DestinationTypeAwareLinkProps => {
-  if (isExternalHref(href) && !isAppHandoffHref(href)) {
+  if (isHttpHref(href)) {
     return {
       target: "_blank",
       rel: isOriginAware ? "noopener" : "noopener noreferrer",

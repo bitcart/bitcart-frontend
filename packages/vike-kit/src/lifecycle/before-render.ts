@@ -1,3 +1,4 @@
+import type { RuntimeEnvTag } from "@bitcart/core/env"
 import {
   type BCP47LanguageSubtag,
   type LocaleMessages,
@@ -9,7 +10,6 @@ import {
   type DocumentMetadata,
   type StaticDocumentMetadata,
 } from "@bitcart/core/metadata"
-import type { RuntimeEnvTag } from "@bitcart/core/types"
 import type { PageContext } from "vike/types"
 
 import { activateLocaleMessages } from "@/i18n"

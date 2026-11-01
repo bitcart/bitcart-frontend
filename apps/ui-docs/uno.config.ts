@@ -1,9 +1,6 @@
 import { FONTS_PREFLIGHT, FONTS_PRESET_CONFIG, GEIST_MONO_PREFLIGHT } from "@bitcart/ui-kit/fonts"
-import { presetBitcart } from "@bitcart/unocss-preset"
+import { presetBitcart } from "@bitcart/unocss-kit/preset"
 import { defineConfig, presetWebFonts } from "unocss"
-
-import { COLOR_SCHEME_INPUTS as DIRECTORY_COLOR_SCHEME_INPUTS } from "../directory/uno.config"
-import { COLOR_SCHEME_INPUTS as LANDING_COLOR_SCHEME_INPUTS } from "../landing/uno.config"
 
 export default defineConfig({
   cli: {
@@ -17,10 +14,9 @@ export default defineConfig({
 
   presets: [
     presetBitcart({
-      colorSchemes: [
-        { name: "landing", ...LANDING_COLOR_SCHEME_INPUTS },
-        { name: "directory", ...DIRECTORY_COLOR_SCHEME_INPUTS },
-      ],
+      themeOverrides: {
+        name: "bitcart-ui-docs",
+      },
 
       preflights: [FONTS_PREFLIGHT, GEIST_MONO_PREFLIGHT],
     }),

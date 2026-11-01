@@ -22,7 +22,6 @@
     "./by-view-layer/react-vite": "./src/by-view-layer/react-vite.ts",
     "./supplementary/lingui-catalogs": "./src/supplementary/lingui-catalogs.ts",
     "./supplementary/lingui-macros": "./src/supplementary/lingui-macros.ts",
-    "./supplementary/theme-tokens-oxlint": "./src/supplementary/theme-tokens-oxlint.ts",
     "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts",
     "./supplementary/vike-vite": "./src/supplementary/vike-vite.ts"
   },
@@ -38,6 +37,7 @@
     "@stylistic/eslint-plugin": "catalog:devDependencies",
     "@types/node": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
+    "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
     "knip": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "oxlint-tsgolint": "catalog:devDependencies",

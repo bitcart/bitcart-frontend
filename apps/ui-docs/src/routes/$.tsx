@@ -1,4 +1,5 @@
-import { Button } from "@bitcart/ui-kit/components"
+import { useIsClient } from "@bitcart/hooks"
+import { Button, ThemeToggle, ThemeToggleFallback } from "@bitcart/ui-kit/components"
 import { DocsLayout } from "@fumadocs/base-ui/layouts/docs"
 import {
   DocsBody,
@@ -20,7 +21,7 @@ import {
   APP_SOURCE_PUBLIC_REPO_CONTENT_DIRECTORY,
   APP_SOURCE_PUBLIC_REPO_DIRECTORY,
 } from "@/common/constants"
-import { LocaleSelector, ThemeSelector } from "@/common/ui/components"
+import { LocaleSelector } from "@/common/ui/components"
 import { slugsToMarkdownPath } from "@/common/utils"
 import { contentSource } from "@/content"
 import { getBaseLayoutProps } from "@/routes/-layout/config"
@@ -93,14 +94,19 @@ const clientLoader = browserCollections.docs.createClientLoader({
 
 function Page() {
   const { pageTree, path, markdownUrl } = useFumadocsLoader(Route.useLoaderData())
+  const isClient = useIsClient()
 
   return (
     <DocsLayout
       sidebar={{
         banner: (
-          <div className="gap-3 flex flex-col">
+          <div className="gap-3 flex">
             <LocaleSelector />
-            <ThemeSelector />
+            {isClient ? (
+              <ThemeToggle triggerProps={{ variant: "outline" }} />
+            ) : (
+              <ThemeToggleFallback />
+            )}
           </div>
         ),
 
@@ -118,7 +124,7 @@ function Page() {
               nativeButton={false}
               size="icon-lg"
               variant="ghost"
-              className="hover:text-accent-foreground bg-muted/25 dark:hover:bg-accent/30"
+              className="hover:text-primary-text bg-muted/25 dark:hover:bg-accent/30"
             >
               <GithubLogoIcon aria-hidden="true" />
             </Button>

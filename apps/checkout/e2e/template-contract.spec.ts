@@ -1,6 +1,3 @@
-import { readdirSync } from "node:fs"
-import { resolve } from "node:path"
-
 import {
   CHECKOUT_AMOUNT_BREAKDOWN_TESTID,
   CHECKOUT_AMOUNT_TESTID,
@@ -25,11 +22,7 @@ import {
 } from "@bitcart/qa/e2e"
 import { expect, test, type Page } from "@playwright/test"
 
-import { E2E_DIRNAME } from "./constants"
-
-const TEMPLATE_IDS = readdirSync(resolve(E2E_DIRNAME, "../src/templates"), { withFileTypes: true })
-  .filter((entry) => entry.isDirectory())
-  .map((entry) => entry.name)
+import { TEMPLATE_IDS } from "./constants"
 
 const SCENARIO_AMOUNT = "0.00043210"
 const SCENARIO_REMAINDER = "0.00023210"

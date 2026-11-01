@@ -1,4 +1,4 @@
-import type { HttpHref, InternalHref } from "@bitcart/core/navigation"
+import type { ActionDescriptor } from "@/types"
 
 import { Button } from "../atoms/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../atoms/card"
@@ -8,13 +8,7 @@ export type FeatureGalleryItem = {
   title: string
   icon: React.ReactNode
   description: string
-
-  actions?: ({
-    label: string
-  } & (
-    | ({ href: InternalHref; isExternalLink?: false } | { href: HttpHref; isExternalLink: true })
-    | { callback: VoidFunction }
-  ))[]
+  actions?: ActionDescriptor[]
 }
 
 export type FeatureGalleryProps = {
@@ -38,22 +32,26 @@ export const FeatureGallery: React.FC<FeatureGalleryProps> = ({ items }) => {
 
             <CardFooter className="px-8 pt-4">
               <div className="gap-3 flex w-full flex-col">
-                {actions?.map((action) => {
-                  if ("callback" in action) {
+                {actions?.map(({ label, icons, ...action }) => {
+                  const content = (
+                    <>
+                      {icons?.left && <icons.left />}
+                      <span>{label}</span>
+                      {icons?.right && <icons.right />}
+                    </>
+                  )
+
+                  if ("href" in action) {
                     return (
-                      <Button key={action.label} onClick={action.callback}>
-                        {action.label}
-                      </Button>
+                      <LinkButton key={label} href={action.href}>
+                        {content}
+                      </LinkButton>
                     )
                   } else {
-                    const a11yAwareLinkProps = action.isExternalLink
-                      ? { href: action.href, isExternalLink: true as const }
-                      : { href: action.href, isExternalLink: false as const }
-
                     return (
-                      <LinkButton key={action.label} {...a11yAwareLinkProps}>
-                        {action.label}
-                      </LinkButton>
+                      <Button key={label} onClick={action.callback}>
+                        {content}
+                      </Button>
                     )
                   }
                 })}

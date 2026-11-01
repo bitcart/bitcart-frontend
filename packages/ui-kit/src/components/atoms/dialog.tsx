@@ -35,12 +35,14 @@ export const DialogOverlay: React.FC<DialogOverlayProps> = ({ className, ...prop
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
       className={cn(
+        // oxlint-disable better-tailwindcss/no-restricted-classes -- a scrim dims the page the same way in every theme
         `
           data-open:animate-in
           data-closed:animate-out data-closed:fade-out-0
           data-open:fade-in-0
           inset-0 bg-black/50 absolute z-50
         `,
+        // oxlint-enable better-tailwindcss/no-restricted-classes
         className,
       )}
       {...props}

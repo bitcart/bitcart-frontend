@@ -4,7 +4,7 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
-    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.ts | dot -T svg -o graphviz.svg",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
     "i18n:extract-locales": "lingui extract --clean",
     "typecheck": "fumadocs-mdx && tsc --noEmit -p tsconfig.json",
     "lint:check": "oxlint .",
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",
+    "@bitcart/hooks": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",
     "@fontsource-variable/geist-mono": "catalog:dependencies",
     "@fumadocs/base-ui": "catalog:dependencies",
@@ -44,7 +45,7 @@
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
-    "@bitcart/unocss-preset": "workspace:*",
+    "@bitcart/unocss-kit": "workspace:*",
     "@fumadocs/story": "catalog:devDependencies",
     "@lingui/cli": "catalog:devDependencies",
     "@lingui/conf": "catalog:devDependencies",

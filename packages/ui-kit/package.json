@@ -6,6 +6,7 @@
     "dist"
   ],
   "type": "module",
+  "sideEffects": false,
   "exports": {
     "./components": {
       "import": "./dist/components/index.js",
@@ -31,6 +32,10 @@
       "import": "./dist/providers/index.js",
       "types": "./dist/providers/index.d.ts"
     },
+    "./styles": {
+      "import": "./dist/styles/index.js",
+      "types": "./dist/styles/index.d.ts"
+    },
     "./types": {
       "types": "./dist/types.d.ts"
     },
@@ -45,7 +50,7 @@
     "lint": "oxlint . --fix",
     "shadcn-ui": "pnpm dlx shadcn@latest",
     "add:components": "pnpm shadcn-ui add -p ./src/components/tmp",
-    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.ts | dot -T svg -o graphviz.svg",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
     "depcruise:deps": "depcruise dist --output-type err-long",
     "i18n:extract-locales": "lingui extract --clean",
     "build:styles": "unocss",
@@ -71,7 +76,7 @@
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
     "@bitcart/qa": "workspace:*",
-    "@bitcart/unocss-preset": "workspace:*",
+    "@bitcart/unocss-kit": "workspace:*",
     "@lingui/cli": "catalog:devDependencies",
     "@lingui/conf": "catalog:devDependencies",
     "@stylistic/eslint-plugin": "catalog:devDependencies",

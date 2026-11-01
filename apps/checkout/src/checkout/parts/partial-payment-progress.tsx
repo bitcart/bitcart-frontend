@@ -50,7 +50,7 @@ export const PartialPaymentProgress = ({
             />
 
             <div className="gap-2.5 flex items-center">
-              <CircleDashedIcon aria-hidden className="size-4 text-primary shrink-0" />
+              <CircleDashedIcon aria-hidden className="size-4 text-primary-text shrink-0" />
               <span className="text-sm font-medium whitespace-nowrap">{t`Send now`}</span>
 
               <FittedText steps={CHECKOUT_FIT_STEPS.amount} className="flex-1">

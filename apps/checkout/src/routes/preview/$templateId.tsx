@@ -11,16 +11,17 @@ import {
 } from "@bitcart/qa"
 import { useCurrentBreakpoint } from "@bitcart/ui-kit/hooks"
 import { cn, toast } from "@bitcart/ui-kit/utils"
-import type { BreakpointKey } from "@bitcart/unocss-preset"
+import type { BreakpointKey } from "@bitcart/unocss-kit/types"
 import { i18n } from "@lingui/core"
 import { createFileRoute, notFound } from "@tanstack/react-router"
 import { useCallback, useMemo, useState } from "react"
-import * as z from "zod"
+import { z } from "zod"
 
 import { CHECKOUT_PREVIEW_BRAND_IDS } from "#/checkout/preview/brands"
 import { CHECKOUT_PREVIEW_SPEED_IDS } from "#/checkout/preview/expiration"
 import { CheckoutPreview } from "#/checkout/preview/preview"
-import { CHECKOUT_PALETTE_PRESET_IDS, checkoutPaletteSchema } from "#/checkout/theme/palette"
+import { CHECKOUT_THEME_PRESET_IDS } from "#/checkout/theme/presets"
+import { checkoutThemeSchema } from "#/checkout/theme/schemas"
 import { checkoutTemplates } from "#/common/checkout-templates"
 import { ENV_TAG } from "#/common/constants"
 import { useCatalogLoader } from "#/common/i18n"
@@ -60,7 +61,7 @@ export const Route = createFileRoute("/preview/$templateId")({
     wallet: z.enum(CHECKOUT_PREVIEW_WALLETS).optional().catch(undefined),
     expiration: z.enum(CHECKOUT_PREVIEW_EXPIRATIONS).optional().catch(undefined),
     speed: z.enum(CHECKOUT_PREVIEW_SPEED_IDS).optional().catch(undefined),
-    palette: z.enum(CHECKOUT_PALETTE_PRESET_IDS).optional().catch(undefined),
+    theme: z.enum(CHECKOUT_THEME_PRESET_IDS).optional().catch(undefined),
     brand: z.enum(CHECKOUT_PREVIEW_BRAND_IDS).optional().catch(undefined),
     sheet: z.enum(PREVIEW_SHEET_AXES).optional().catch(undefined),
     sheetFrame: previewFlag,
@@ -102,7 +103,7 @@ function PreviewPage() {
     wallet,
     expiration,
     speed,
-    palette: preset,
+    theme: preset,
     brand,
     sheet,
     sheetFrame,
@@ -114,7 +115,7 @@ function PreviewPage() {
 
   const isWide = WIDE_BREAKPOINTS.has(useCurrentBreakpoint())
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false)
-  const palette = useMemo(() => (preset ? checkoutPaletteSchema.parse({ preset }) : null), [preset])
+  const theme = useMemo(() => (preset ? checkoutThemeSchema.parse({ preset }) : null), [preset])
 
   const appConfig = useMemo(
     () => ({
@@ -146,7 +147,7 @@ function PreviewPage() {
       wallet={wallet}
       expiration={expiration}
       speed={speed}
-      palette={palette}
+      theme={theme}
       brand={brand}
       appConfig={appConfig}
       showsSimulator={!sheetFrame}

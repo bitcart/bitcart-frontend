@@ -6,12 +6,10 @@
 /*
  * shadcn.css rewires every `--color-fd-*` token to raw shadcn variables that this app
  * doesn't define. Map the tokens straight to the oklch component variables emitted by
- * uno.generated.css (linked in __root.tsx) instead, so the docs chrome follows the
- * active brand and mode. Declared on `body` rather than `:root`: the brand variables
- * are scoped under the `.theme-<brand>` class on <body>, and `var()` inside a custom
- * property resolves where the property is declared, so a `:root`-level mapping would
- * see them as undefined. Being element-own declarations, these also win over the
- * `:root`-level tokens from shadcn.css for everything inside <body>.
+ * uno.generated.css (linked in __root.tsx) instead, letting the docs chrome follow the
+ * theme. Declared on `body` rather than `:root`: shadcn.css declares the same tokens on
+ * `:root, .dark`, and `.dark` lands on <html> as the higher-specificity match. An
+ * element-own declaration on <body> wins over both for the whole body subtree.
  */
 body {
   --color-fd-background: oklch(var(--background));
@@ -23,14 +21,19 @@ body {
   --color-fd-card: oklch(var(--card));
   --color-fd-card-foreground: oklch(var(--card-foreground));
   --color-fd-border: oklch(var(--border));
-  --color-fd-primary: oklch(var(--primary));
-  --color-fd-primary-foreground: oklch(var(--primary-foreground));
+
+  /*
+   * Mapped by role, not by name: Fumadocs uses `fd-primary` mostly as a text color, which
+   * `--primary-text` keeps legible in dark mode. Its few `fd-primary` fills then need text
+   * that contrasts with `--primary-text` in both modes, which `--background` does.
+   */
+  --color-fd-primary: oklch(var(--primary-text));
+  --color-fd-primary-foreground: oklch(var(--background));
 
   /*
    * Mapped by role, not by name: Fumadocs uses `fd-secondary` as a subtle control
-   * surface (search field, story playground inputs), while the brand `--secondary`
-   * is a filled secondary-action color (mid-tone slate in the directory brand).
-   * The brands' `muted` token is the closest match for that surface role.
+   * surface (search field, story playground inputs), while `--secondary` is a filled
+   * secondary-action color. `--muted` is the closest match for that surface role.
    */
   --color-fd-secondary: oklch(var(--muted));
 

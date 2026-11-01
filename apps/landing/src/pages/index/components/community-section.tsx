@@ -49,7 +49,7 @@ export const CommunitySection: React.FC<CommunitySectionProps> = ({ className })
     >
       <h2 id="community-heading" className="text-4xl font-bold">
         <Trans>
-          Join the <span className="text-accent-foreground">Community</span>
+          Join the <span className="text-primary-text">Community</span>
         </Trans>
       </h2>
 
@@ -66,7 +66,6 @@ export const CommunitySection: React.FC<CommunitySectionProps> = ({ className })
           <LinkButton
             key={href}
             href={href}
-            isExternalLink
             variant="outline"
             size="xl"
             className={cn({

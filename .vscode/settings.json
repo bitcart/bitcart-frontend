@@ -39,6 +39,21 @@
   "[chatagent]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
+  "colorize.languages": [
+    "javascript",
+    "typescript",
+    "markdown",
+    "json",
+    "yaml",
+    "html",
+    "css",
+    "scss",
+    "javascriptreact",
+    "typescriptreact",
+    "mdx",
+    "jsonc"
+  ],
+  "colorize.colorized_colors": ["ARGB", "HEXA", "HSL", "OKLAB", "OKLCH", "RGB"],
   "js/ts.preferences.preferTypeOnlyAutoImports": true,
   "files.watcherExclude": {
     "**/.git/objects/**": true,
@@ -49,7 +64,8 @@
     "**/.vscode/**": true,
     "**/.nx/**": true,
     "**/dist/**": true,
-    "**/routeTree.gen.ts": true
+    "**/routeTree.gen.ts": true,
+    "**/pnpm-lock.yaml": true
   },
   "search.exclude": {
     "**/routeTree.gen.ts": true
@@ -148,6 +164,7 @@
     "aleksejdix",
     "Anson",
     "anthropics",
+    "ARGB",
     "arrowsize",
     "autofetch",
     "axios",
@@ -159,6 +176,7 @@
     "cmdk",
     "codegen",
     "combinators",
+    "culori",
     "currentcolor",
     "custodially",
     "daypicker",
@@ -189,6 +207,7 @@
     "Groestlcoin",
     "hcaptcha",
     "hellordp",
+    "HEXA",
     "hrefs",
     "inlines",
     "inlinesvg",
@@ -229,6 +248,7 @@
     "ntvs",
     "nums",
     "Occitan",
+    "OKLAB",
     "oklch",
     "onig",
     "orama",

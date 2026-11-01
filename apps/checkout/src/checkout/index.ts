@@ -115,4 +115,4 @@ export type {
 } from "./runtime/slot-contributions"
 
 export type { CheckoutTemplate, CheckoutTemplateDefinition } from "./template"
-export type { CheckoutPaletteInput, CheckoutThemeToken } from "./theme/palette"
+export type { CheckoutThemeInput } from "./theme/schemas"

@@ -1,5 +1,5 @@
 import { FONTS_PREFLIGHT, FONTS_PRESET_CONFIG } from "@bitcart/ui-kit/fonts"
-import { presetBitcart } from "@bitcart/unocss-preset"
+import { presetBitcart } from "@bitcart/unocss-kit/preset"
 import { defineConfig, presetWebFonts } from "unocss"
 
 export default defineConfig({
@@ -12,7 +12,7 @@ export default defineConfig({
 
   presets: [
     presetBitcart({
-      colorSchemes: {
+      themeOverrides: {
         name: "bitcart-vike-app-template",
 
         light: {},

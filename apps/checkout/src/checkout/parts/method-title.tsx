@@ -6,6 +6,7 @@ import { useCheckout } from "../hooks"
 import type { CheckoutMethod } from "../model"
 import { getMethodNetwork, getNetworkLabels } from "../networks"
 
+// oxlint-disable-next-line better-tailwindcss/no-restricted-classes -- Lightning's brand amber, kept in every theme like coin icon colors
 const LIGHTNING_ICON_CLASS_NAME = "size-2.5 fill-[#F59E0B] text-[#F59E0B]"
 
 const MethodBadge = ({ children }: { children: React.ReactNode }) => (

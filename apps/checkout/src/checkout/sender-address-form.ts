@@ -3,7 +3,7 @@ import type { SubmitErrors } from "@bitcart/form-kit/validation"
 import { useLingui } from "@lingui/react/macro"
 import { useSelector } from "@tanstack/react-store"
 import type { SubmitEvent } from "react"
-import * as z from "zod"
+import { z } from "zod"
 
 import { useCheckout } from "./hooks"
 

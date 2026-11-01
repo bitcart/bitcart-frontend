@@ -32,7 +32,7 @@ export const EthPluginOffer = ({ className }: { className?: string }) => {
             Try it on{" "}
             <ExternalLink
               href={ETH_PLUGIN_DEMO_URL}
-              linkClassName="text-primary underline-offset-2 hover:underline"
+              linkClassName="text-primary-text underline-offset-2 hover:underline"
             >
               testnet.bitcart.ai
             </ExternalLink>
@@ -45,12 +45,10 @@ export const EthPluginOffer = ({ className }: { className?: string }) => {
           </Button>
 
           {ethPluginOffer.buyUrl && (
-            <LinkButton isExternalLink href={ethPluginOffer.buyUrl}>
-              {t`Buy plugin`}
-            </LinkButton>
+            <LinkButton href={ethPluginOffer.buyUrl}>{t`Buy plugin`}</LinkButton>
           )}
 
-          <LinkButton isExternalLink href={ETH_PLUGIN_DOCS_URL} variant="outline">
+          <LinkButton href={ETH_PLUGIN_DOCS_URL} variant="outline">
             {t`Docs`}
           </LinkButton>
         </div>

@@ -2,7 +2,7 @@ import { cn } from "@bitcart/ui-kit/utils"
 import type { IconComponentProps } from "@web3icons/react"
 import { Suspense } from "react"
 
-import { web3icons } from "@/common/ui/components"
+import { web3icons, web3iconsWithBackgroundVariant } from "@/common/ui/components"
 
 const DEFAULT_ICON_SIZE_PX = 40
 
@@ -21,8 +21,8 @@ const CoinCatalogEntryIconFallback: React.FC<CoinCatalogEntryIconFallbackProps> 
 }) => (
   <div
     className={cn(`
-      from-gray-200 to-gray-300 px-2
-      dark:from-gray-500 dark:to-gray-600
+      from-muted-foreground/20 to-muted-foreground/30 px-2
+      dark:from-muted-foreground/40 dark:to-muted-foreground/25
       flex w-fit items-center justify-center rounded-full bg-linear-to-r
     `)}
     style={{ height: size }}
@@ -35,9 +35,17 @@ const CoinCatalogEntryIconFallback: React.FC<CoinCatalogEntryIconFallbackProps> 
 export const CoinCatalogEntryIcon: React.FC<CoinCatalogEntryIconProps> = ({
   size = DEFAULT_ICON_SIZE_PX,
   symbol,
+  variant,
+  className,
   ...props
 }) => {
-  const Component = web3icons[`Token${symbol}`] === undefined ? null : web3icons[`Token${symbol}`]
+  const componentName = `Token${symbol}`
+  const Component = web3icons[componentName] === undefined ? null : web3icons[componentName]
+
+  const resolvedVariant =
+    variant === "background" && !web3iconsWithBackgroundVariant.has(componentName)
+      ? undefined
+      : variant
 
   return Component === null ? (
     <CoinCatalogEntryIconFallback size={size} name={symbol} />
@@ -47,7 +55,12 @@ export const CoinCatalogEntryIcon: React.FC<CoinCatalogEntryIconProps> = ({
         width={size}
         height={size}
         aria-hidden="true"
-        className="text-foreground"
+        variant={resolvedVariant}
+        className={cn(
+          "text-foreground",
+          { "rounded-full": resolvedVariant === "background" },
+          className,
+        )}
         {...props}
       >
         <CoinCatalogEntryIconFallback name={symbol} size={size} />

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "i18n:extract-locales": "lingui extract --clean",
-    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/graphviz-postprocess.ts | dot -T svg -o graphviz.svg",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
     "web3icons:recatalogize": "tsx ./scripts/web3icons.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint:check": "oxlint .",
@@ -46,7 +46,7 @@
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
     "@bitcart/qa": "workspace:*",
-    "@bitcart/unocss-preset": "workspace:*",
+    "@bitcart/unocss-kit": "workspace:*",
     "@lingui/cli": "catalog:devDependencies",
     "@lingui/conf": "catalog:devDependencies",
     "@lingui/native-tools": "catalog:devDependencies",

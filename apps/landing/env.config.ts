@@ -1,5 +1,5 @@
 import { runtimeEnvTagSchema } from "@bitcart/core/env"
-import * as z from "zod"
+import { z } from "zod"
 
 export const envConfig = {
   clientEnvSchemas: {

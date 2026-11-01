@@ -1,0 +1,77 @@
+{
+  "name": "@bitcart/unocss-kit",
+  "version": "1.0.0",
+  "description": "UnoCSS toolkit for applications and websites under the Bitcart umbrella",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "exports": {
+    "./constants": {
+      "import": "./dist/constants.js",
+      "types": "./dist/constants.d.ts"
+    },
+    "./preset": {
+      "import": "./dist/preset/index.js",
+      "types": "./dist/preset/index.d.ts"
+    },
+    "./schemas": {
+      "import": "./dist/schemas.js",
+      "types": "./dist/schemas.d.ts"
+    },
+    "./test-templates": {
+      "import": "./dist/test-templates/index.js",
+      "types": "./dist/test-templates/index.d.ts"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.lib.json",
+    "lint:check": "oxlint .",
+    "lint": "oxlint . --fix",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
+    "generate:dist-graphviz": "depcruise dist --output-type dot | dot -T svg -o dist-graphviz.svg",
+    "depcruise:deps": "depcruise dist --output-type err-long",
+    "build": "tsdown",
+    "check:classes": "node scripts/check-classes.ts"
+  },
+  "dependencies": {
+    "@bitcart/core": "workspace:*",
+    "remeda": "catalog:dependencies",
+    "unocss-preset-animations": "catalog:devDependencies"
+  },
+  "devDependencies": {
+    "@bitcart/configs": "workspace:*",
+    "@bitcart/qa": "workspace:*",
+    "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@types/node": "catalog:devDependencies",
+    "@unocss/config": "catalog:devDependencies",
+    "dependency-cruiser": "catalog:devDependencies",
+    "oxlint": "catalog:devDependencies",
+    "oxlint-tsgolint": "catalog:devDependencies",
+    "tsdown": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies",
+    "unocss": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies",
+    "zod": "catalog:dependencies"
+  },
+  "peerDependencies": {
+    "unocss": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies",
+    "zod": "catalog:dependencies"
+  },
+  "peerDependenciesMeta": {
+    "vitest": {
+      "optional": true
+    }
+  }
+}

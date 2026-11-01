@@ -28,7 +28,7 @@ export const PREVIEW_BRANDS = {
   "logo-named": { logos: LOGOS, icons: { light: ICON }, useLogoInsteadOfIcon: true },
   icon: { logos: LOGOS, icons: { light: ICON } },
   "dark-logo": { logos: { dark: LOGOS.dark } },
-} satisfies Record<string, Omit<CheckoutAppearance, "palette">>
+} satisfies Record<string, Omit<CheckoutAppearance, "theme">>
 
 export type CheckoutPreviewBrand = keyof typeof PREVIEW_BRANDS
 

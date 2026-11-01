@@ -1,11 +1,6 @@
 import { FONTS_PREFLIGHT, FONTS_PRESET_CONFIG } from "@bitcart/ui-kit/fonts"
-import { presetBitcart, type ThemeColorSchemeParams } from "@bitcart/unocss-preset"
+import { presetBitcart } from "@bitcart/unocss-kit/preset"
 import { defineConfig, presetWebFonts } from "unocss"
-
-export const COLOR_SCHEME_INPUTS: ThemeColorSchemeParams = {
-  light: {},
-  dark: {},
-}
 
 export default defineConfig({
   cli: {
@@ -17,9 +12,8 @@ export default defineConfig({
 
   presets: [
     presetBitcart({
-      colorSchemes: {
+      themeOverrides: {
         name: "bitcart-landing",
-        ...COLOR_SCHEME_INPUTS,
       },
 
       preflights: [FONTS_PREFLIGHT],

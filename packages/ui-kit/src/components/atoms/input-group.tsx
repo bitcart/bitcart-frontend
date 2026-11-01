@@ -19,7 +19,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({ className, ...props }) =
       role="group"
       className={cn(
         `
-          group/input-group border-input rounded-md shadow-xs h-11 min-w-0 bg-white
+          group/input-group border-input rounded-md shadow-xs h-11 min-w-0 bg-background
           dark:bg-input/30
           [&>[data-slot=input-control]>input]:has-[>[data-align=inline-start]]:pl-2
           [&>[data-slot=input-control]>input]:has-[>[data-align=inline-end]]:pr-2

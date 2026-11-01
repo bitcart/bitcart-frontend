@@ -3,7 +3,6 @@ import { fileURLToPath } from "node:url"
 
 import { baseOxlintConfig } from "@bitcart/configs/base/oxlint"
 import { reactOxlintConfig } from "@bitcart/configs/by-view-layer/react-oxlint"
-import { themeTokensOxlintRules } from "@bitcart/configs/supplementary/theme-tokens-oxlint"
 import { unocssOxlintConfig } from "@bitcart/configs/supplementary/unocss-oxlint"
 import { defineConfig } from "oxlint"
 
@@ -33,11 +32,6 @@ export default defineConfig({
       rules: {
         "react/only-export-components": "off",
       },
-    },
-
-    {
-      files: ["src/templates/**"],
-      rules: themeTokensOxlintRules,
     },
   ],
 })

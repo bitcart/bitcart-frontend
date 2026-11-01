@@ -35,12 +35,17 @@ export const CatalogFilterOption: React.FC<CatalogFilterOptionProps> = ({
       {label}
     </span>
 
-    <Badge
-      variant={isActive ? "default" : "secondary"}
-      className={cn("ml-auto", { "bg-primary/70": isActive })}
-      aria-hidden="true"
-    >
-      {badgeLabel}
-    </Badge>
+    {isActive ? (
+      <Badge className="min-w-6 ml-auto tabular-nums" aria-hidden="true">
+        {badgeLabel}
+      </Badge>
+    ) : (
+      <span
+        className="px-2 text-sm font-medium text-muted-foreground min-w-6 ml-auto text-center tabular-nums"
+        aria-hidden="true"
+      >
+        {badgeLabel}
+      </span>
+    )}
   </Button>
 )

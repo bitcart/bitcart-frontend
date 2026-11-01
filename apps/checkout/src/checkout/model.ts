@@ -7,13 +7,14 @@ import type { CustomerUpdateData } from "@bitcart/client-sdk/schemas"
 import { isHttpHref, type HttpHref, type MailtoHref } from "@bitcart/core/navigation"
 import { compareAmounts } from "@bitcart/core/utils"
 import type { BasicThemeMode } from "@bitcart/ui-kit/types"
+import { NEUTRAL_THEME_TWEAK } from "@bitcart/unocss-kit/constants"
 
 import type { CheckoutUiActions, CheckoutUiState } from "./runtime/control-store"
-import type { CheckoutPalette } from "./theme/palette"
+import type { CheckoutTheme } from "./theme/schemas"
 
 //* Store appearance settings not provided by the API yet. Fixtures supply them until then.
 export type CheckoutAppearance = {
-  palette?: CheckoutPalette
+  theme?: CheckoutTheme
   logos?: Partial<Record<BasicThemeMode, string>>
   icons?: Partial<Record<BasicThemeMode, string>>
   useLogoInsteadOfIcon?: boolean
@@ -123,7 +124,7 @@ export type CheckoutBrand =
 export type CheckoutBranding = {
   brand: CheckoutBrand
   showPoweredBy: boolean
-  palette: CheckoutPalette | null
+  theme: CheckoutTheme
 }
 
 export type CheckoutInvoiceSummary = {
@@ -692,7 +693,7 @@ const resolveBrand = (source: CheckoutSource, mode: BasicThemeMode): CheckoutBra
 const resolveBranding = (source: CheckoutSource, mode: BasicThemeMode): CheckoutBranding => ({
   brand: resolveBrand(source, mode),
   showPoweredBy: source.policies.allow_powered_by_bitcart,
-  palette: source.appearance?.palette ?? null,
+  theme: source.appearance?.theme ?? NEUTRAL_THEME_TWEAK,
 })
 
 export const deriveCheckoutModel = (

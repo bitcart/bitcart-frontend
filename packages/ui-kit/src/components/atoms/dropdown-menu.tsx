@@ -25,12 +25,14 @@ export const DropdownMenuBackdrop: React.FC<DropdownMenuBackdropProps> = ({
   return (
     <MenuPrimitive.Backdrop
       className={cn(
+        // oxlint-disable better-tailwindcss/no-restricted-classes -- a scrim dims the page the same way in every theme
         `
           inset-0 bg-black/32 absolute z-50 transition-opacity duration-450
           ease-[cubic-bezier(0.32,0.72,0,1)]
           data-[ending-style]:opacity-0
           data-[starting-style]:opacity-0
         `,
+        // oxlint-enable better-tailwindcss/no-restricted-classes
 
         className,
       )}
@@ -75,7 +77,7 @@ export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({
       nativeButton={isNativeButton}
       className={cn(
         `
-          focus:bg-muted/25 focus:text-accent-foreground
+          focus:bg-muted focus:text-primary-text
           font-medium
           data-[variant=destructive]:text-destructive-foreground
           data-[variant=destructive]:focus:bg-destructive/10

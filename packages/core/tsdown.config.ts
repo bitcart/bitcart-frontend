@@ -3,6 +3,7 @@ import { defineConfig } from "tsdown"
 
 export default defineConfig({
   entry: {
+    "colors/index": "src/colors/index.ts",
     "env/index": "src/env/index.ts",
     "i18n/index": "src/i18n/index.ts",
     "metadata/index": "src/metadata/index.ts",

@@ -1,10 +1,11 @@
+import { GlobalThemeOverride } from "@bitcart/ui-kit/styles"
+
 import type { CheckoutSource } from "../model"
 import type { CheckoutRefundPage } from "../refund/page"
 import { CheckoutRefundScreen } from "../refund/screen"
 import type { CheckoutAppConfig } from "./context"
 import { useCheckoutControl, useCheckoutModel } from "./control"
 import { CheckoutProvider } from "./provider"
-import { CheckoutThemeScope } from "./theme-scope"
 
 type CheckoutRefundViewProps = {
   source: CheckoutSource
@@ -18,9 +19,8 @@ export const CheckoutRefundView = ({ source, page, appConfig }: CheckoutRefundVi
 
   return (
     <CheckoutProvider model={model} appConfig={appConfig}>
-      <CheckoutThemeScope scopeId="refund" palettes={[model.branding.palette]}>
-        <CheckoutRefundScreen page={page} />
-      </CheckoutThemeScope>
+      <GlobalThemeOverride themeTweaks={[model.branding.theme]} />
+      <CheckoutRefundScreen page={page} />
     </CheckoutProvider>
   )
 }

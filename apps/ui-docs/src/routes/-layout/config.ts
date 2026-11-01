@@ -9,8 +9,7 @@ export const getBaseLayoutProps = (): BaseLayoutProps => {
       title: APP_CANONICAL_NAME,
     },
 
-    //* Replaced by ThemeSelector: the built-in switch only cycles light/dark/system
-    //* and would write theme keys the brand-aware theming can't interpret.
+    //* Replaced by the UI Kit's `ThemeToggle`, rendered in the sidebar banner.
     themeSwitch: { enabled: false },
   }
 }

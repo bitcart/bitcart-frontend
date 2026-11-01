@@ -11,9 +11,7 @@ const FEATURES: FeatureGalleryItem[] = [
     description:
       "Bitcart is using electrum wallet you know and love. Your private key never leaves your PC.",
 
-    actions: [
-      { label: "Try Out The Live Demo", href: "https://admin.bitcart.ai", isExternalLink: true },
-    ],
+    actions: [{ label: "Try Out The Live Demo", href: "https://admin.bitcart.ai" }],
   },
 
   {
@@ -31,9 +29,7 @@ const FEATURES: FeatureGalleryItem[] = [
     description:
       "You're free to improve and view source code of Bitcart. Your are your own bank, as you host Bitcart yourself.",
 
-    actions: [
-      { label: "GitHub", href: "https://github.com/bitcart/bitcart", isExternalLink: true },
-    ],
+    actions: [{ label: "GitHub", href: "https://github.com/bitcart/bitcart" }],
   },
 
   {
@@ -45,13 +41,11 @@ const FEATURES: FeatureGalleryItem[] = [
       {
         label: "What is Lightning Network?",
         href: "https://lightning.network/",
-        isExternalLink: true,
       },
 
       {
         label: "Lightning Network Guide",
         href: "https://docs.bitcart.ai/guides/lightning",
-        isExternalLink: true,
       },
     ],
   },

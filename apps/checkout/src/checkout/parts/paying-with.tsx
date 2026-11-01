@@ -107,7 +107,7 @@ export const PayingWith = ({ copy, className }: { copy?: CheckoutCopy; className
           aria-label={t`Change payment method`}
           onClick={changeMethod}
           className={cn(`
-            text-primary font-medium after:inset-0 after:ring-ring shrink-0
+            text-primary-text font-medium after:inset-0 after:ring-ring shrink-0
             cursor-pointer whitespace-nowrap
             after:absolute
             after:ring-inset hover:underline

@@ -5,6 +5,7 @@ import { describe, expect, test, vi } from "vitest"
 import { makeInvoice, makePayment, makePolicies, makeStore } from "../fixtures"
 import { useCheckout } from "../hooks"
 import { renderCheckout } from "../testing/render-checkout"
+import { checkoutThemeSchema } from "../theme/schemas"
 
 const PaymentScreen = () => {
   const { payment } = useCheckout("payment")
@@ -83,6 +84,21 @@ describe("CheckoutShell", () => {
     test("moves focus to the payment view once a method is picked", () => {
       renderCheckout({
         source: { invoice: makeInvoice({ payments }) },
+        screens: { Payment: PaymentScreen, selection: "explicit" },
+      })
+
+      fireEvent.click(screen.getByRole("button", { name: /LTC/u }))
+
+      expect(screen.getByText("Pay to ltc1qltc")).toHaveFocus()
+    })
+
+    test("moves focus to the payment view under a merchant theme", () => {
+      renderCheckout({
+        source: {
+          invoice: makeInvoice({ payments }),
+          appearance: { theme: checkoutThemeSchema.parse({ preset: "harbor" }) },
+        },
+
         screens: { Payment: PaymentScreen, selection: "explicit" },
       })
 

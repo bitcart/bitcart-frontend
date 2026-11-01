@@ -55,8 +55,7 @@ import {
   type CheckoutPreviewSpeed,
 } from "#/checkout/preview/expiration"
 import { PreviewToggleGroup } from "#/checkout/preview/toolbar"
-import { CHECKOUT_PALETTE_PRESET_IDS } from "#/checkout/theme/palette"
-import type { CheckoutPalettePresetId } from "#/checkout/theme/presets"
+import { CHECKOUT_THEME_PRESET_IDS, type CheckoutThemePresetId } from "#/checkout/theme/presets"
 
 import { PREVIEW_SHEET_AXES, type PreviewSheetAxis } from "./sheet"
 
@@ -68,7 +67,7 @@ type PreviewSearch = CheckoutPreviewAxes & {
   wallet?: CheckoutPreviewWallet
   expiration?: CheckoutPreviewExpiration
   speed?: CheckoutPreviewSpeed
-  palette?: CheckoutPalettePresetId
+  theme?: CheckoutThemePresetId
   brand?: CheckoutPreviewBrand
   sheet?: PreviewSheetAxis
 }
@@ -99,7 +98,7 @@ const CUSTOM_CASE = "custom"
 const BROWSER = "browser"
 const DEFAULT_EXPIRATION = "15m-default"
 const REAL_TIME = "1x"
-const DEFAULT_PALETTE = "default"
+const DEFAULT_THEME = "default"
 const NO_BRAND = "bitcart"
 const NO_SHEET = "off"
 const NO_WALLET = "none"
@@ -291,12 +290,12 @@ export const PreviewOptions = () => {
 
   const applyCase = (id: CheckoutPreviewCaseId) =>
     void navigate({
-      search: ({ view, environment, wallet, speed, palette, brand }) => ({
+      search: ({ view, environment, wallet, speed, theme, brand }) => ({
         view,
         environment,
         wallet,
         speed,
-        palette,
+        theme,
         brand,
         ...CHECKOUT_PREVIEW_CASES[id],
       }),
@@ -424,12 +423,10 @@ export const PreviewOptions = () => {
         />
 
         <ToolbarSelect
-          label="Palette"
-          value={search.palette ?? DEFAULT_PALETTE}
-          groups={[{ options: [DEFAULT_PALETTE, ...CHECKOUT_PALETTE_PRESET_IDS] }]}
-          onChange={(palette) =>
-            update({ palette: palette === DEFAULT_PALETTE ? undefined : palette })
-          }
+          label="Theme"
+          value={search.theme ?? DEFAULT_THEME}
+          groups={[{ options: [DEFAULT_THEME, ...CHECKOUT_THEME_PRESET_IDS] }]}
+          onChange={(theme) => update({ theme: theme === DEFAULT_THEME ? undefined : theme })}
         />
 
         <ToolbarSelect
@@ -519,7 +516,7 @@ const getSummary = (search: PreviewSearch) => {
     search.environment,
     search.expiration,
     search.speed,
-    search.palette,
+    search.theme,
     search.brand,
     search.sheet && `sheet: ${search.sheet}`,
   ]

@@ -11,7 +11,10 @@ export type BenefitsSectionProps = {
 
 export const BenefitsSection: React.FC<BenefitsSectionProps> = ({ data }) => {
   return (
-    <section aria-labelledby="benefits-heading" className="py-12 sm:py-20 bg-secondary">
+    <section
+      aria-labelledby="benefits-heading"
+      className="py-12 sm:py-20 bg-secondary dark:bg-background dark:border-y"
+    >
       <div className="max-w-7xl px-4 md:px-6 lg:px-8 mx-auto">
         <div className="mb-12 sm:mb-16 text-center">
           <h2 id="benefits-heading" className="text-3xl sm:text-4xl font-bold mb-4">

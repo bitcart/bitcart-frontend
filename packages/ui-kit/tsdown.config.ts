@@ -16,6 +16,7 @@ export default defineConfig({
     "i18n/index": "src/i18n/index.ts",
     icons: "src/icons/index.ts",
     "providers/index": "src/providers/index.ts",
+    "styles/index": "src/styles/index.ts",
     types: "src/types.ts",
     "utils/index": "src/utils/index.ts",
   },

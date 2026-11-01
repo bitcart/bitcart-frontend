@@ -31,6 +31,7 @@ export const badgeVariants = cva(
 
         accent: `bg-accent text-accent-foreground [a&]:hover:bg-accent/80 border-transparent`,
 
+        // oxlint-disable better-tailwindcss/no-restricted-classes -- `destructive-foreground` is red text, not text for this fill
         destructive: `
           bg-destructive text-white
           [a&]:hover:bg-destructive/90
@@ -39,6 +40,7 @@ export const badgeVariants = cva(
           dark:bg-destructive/60
           border-transparent
         `,
+        // oxlint-enable better-tailwindcss/no-restricted-classes
 
         outline: "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
       },

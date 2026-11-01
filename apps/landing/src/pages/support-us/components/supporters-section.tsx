@@ -7,7 +7,6 @@ export type SupportersSectionProps = {
   data: {
     name: string
     logo: string
-    logoClass?: string
     description: string
     website: string
     contribution: string
@@ -49,14 +48,18 @@ export const SupportersSection: React.FC<SupportersSectionProps> = ({ data }) =>
             >
               <div className="space-y-4 sm:space-y-6 flex grow flex-col text-center">
                 <div
-                  className={cn(`
-                    w-32 h-16 rounded-md p-2 bg-border mx-auto flex items-center justify-center
-                  `)}
+                  className={cn(
+                    // oxlint-disable better-tailwindcss/no-restricted-classes -- sponsor logos are made for white backgrounds, so the plate stays white in every theme
+                    `
+                      w-32 h-16 rounded-md p-2 bg-white mx-auto flex items-center justify-center border
+                    `,
+                    // oxlint-enable better-tailwindcss/no-restricted-classes
+                  )}
                 >
                   <img
                     src={company.logo}
                     alt={`${company.name} logo`}
-                    className={cn("max-h-full max-w-full object-contain", company.logoClass)}
+                    className="max-h-full max-w-full object-contain"
                   />
                 </div>
 
@@ -76,7 +79,6 @@ export const SupportersSection: React.FC<SupportersSectionProps> = ({ data }) =>
 
                 <div className="pt-4 sm:pt-6 gap-3 mt-auto flex flex-col">
                   <LinkButton
-                    isExternalLink
                     href={company.website as HttpHref}
                     size="lg"
                     className="w-full text-center uppercase"

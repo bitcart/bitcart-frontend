@@ -1,5 +1,5 @@
 import { isEmptyish } from "remeda"
-import * as z from "zod"
+import { z } from "zod"
 
 /**
  * Return type widened to the ZodType boundary: `isolatedDeclarations` can't infer the ZodPipe,

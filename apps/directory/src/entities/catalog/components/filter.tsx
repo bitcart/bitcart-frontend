@@ -37,7 +37,7 @@ export const CatalogFilter: React.FC<CatalogFilterProps> = ({ controls, state })
     case "sm": {
       return (
         <Drawer open={open} onOpenChange={setOpen}>
-          <DrawerTrigger render={<Button size="lg" variant="secondary" />}>
+          <DrawerTrigger render={<Button size="lg" variant="outline" />}>
             <Filter />
             <span>{t`Filters`}</span>
           </DrawerTrigger>
@@ -56,7 +56,7 @@ export const CatalogFilter: React.FC<CatalogFilterProps> = ({ controls, state })
     default: {
       return (
         <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger render={<Button size="lg" variant="secondary" />}>
+          <PopoverTrigger render={<Button size="lg" variant="outline" />}>
             <Filter />
             <span>{t`Filters`}</span>
           </PopoverTrigger>

@@ -10,6 +10,7 @@ export const BitcartWordmarkIcon: CustomIconComponent = ({ className, ...props }
   <BitcartWordmarkSvg
     role="img"
     aria-label="Bitcart"
+    // oxlint-disable-next-line better-tailwindcss/no-restricted-classes -- media kit lockup, see above
     className={cn("dark:text-white", className)}
     {...props}
   />

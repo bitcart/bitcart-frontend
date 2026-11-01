@@ -15,7 +15,7 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
     <div className={className}>
       <div
         className={cn(`
-          gap-3 from-purple-500 to-primary text-primary-foreground px-4
+          gap-3 from-primary/80 to-primary text-primary-foreground px-4
           md:px-6
           py-2 elevation-3 mb-4 inline-flex transform cursor-default items-center rounded-full
           bg-linear-to-r transition-transform duration-200
@@ -27,6 +27,7 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
 
           <span className="font-bold text-sm md:text-base">{t`ETH Payments Plugin Released!`}</span>
 
+          {/* oxlint-disable better-tailwindcss/no-restricted-classes -- text on a `primary-foreground` fill */}
           <span
             className={cn(`
               px-1.5
@@ -38,6 +39,7 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
           >
             {t`NEW`}
           </span>
+          {/* oxlint-enable better-tailwindcss/no-restricted-classes */}
         </div>
       </div>
 
@@ -45,15 +47,15 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
         <p className="text-sm md:text-base mb-3 md:mb-4 leading-relaxed text-muted-foreground">
           <Trans>
             <span>Accept payments in </span>
-            <strong className="text-accent-foreground">ETH, TRX, BNB, MATIC</strong>
+            <strong className="text-primary-text">ETH, TRX, BNB, MATIC</strong>
             <span> and stablecoins like </span>
-            <strong className="text-accent-foreground">USDT, USDC</strong>
+            <strong className="text-primary-text">USDT, USDC</strong>
             <span> - without address prompt, non-custodially and saving on fees!</span>
           </Trans>
         </p>
 
         <div className="md:flex-row gap-2 md:gap-3 flex flex-col items-center justify-center">
-          <span className="text-xs md:text-sm text-accent-foreground font-medium">
+          <span className="text-xs md:text-sm text-primary-text font-medium">
             {t`Available in Admin Panel → Plugins`}
           </span>
 
@@ -71,7 +73,6 @@ export const Announcement: React.FC<AnnouncementProps> = ({ className }) => {
               <LinkButton
                 key={href}
                 href={href}
-                isExternalLink
                 expandOnHover
                 size="sm"
                 className="font-semibold transform duration-200"

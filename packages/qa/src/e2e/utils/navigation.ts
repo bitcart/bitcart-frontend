@@ -12,6 +12,7 @@ import {
   type PageRegistryParams,
   type PageRegistry,
   type PageRegistryEntry,
+  type PageRoutePath,
   type PageCatalog,
 } from "@/common"
 
@@ -158,12 +159,25 @@ export const createPageRegistry = (params: PageRegistryParams): PageRegistry => 
 export const isNotHomepage = ({ path }: PageRegistryEntry) => path !== "/"
 
 /**
+ * Returns the path of the first catalog page other than `skip`.
+ *
+ * When no alternatives found in the catalog, returns `"/404"`.
+ */
+export const alternatePagePath = ({
+  fromCatalog: pageCatalog,
+  skip,
+}: {
+  fromCatalog: PageCatalog
+  skip: PageRoutePath
+}): string => pageCatalog.find(({ path }) => path !== skip)?.path ?? "/404"
+
+/**
  * Returns the path of the first non-index page in the catalog.
  *
  * If no non-index pages are found, returns `"/404"`.
  */
-export const nonHomepagePath = ({ from: pageCatalog }: { from: PageCatalog }): string =>
-  pageCatalog.find(isNotHomepage)?.path ?? "/404"
+export const nonHomepagePath = ({ fromCatalog }: { fromCatalog: PageCatalog }): string =>
+  alternatePagePath({ fromCatalog, skip: "/" })
 
 /**
  * Clicks a link by its `href`, preferring nav UI for the current viewport

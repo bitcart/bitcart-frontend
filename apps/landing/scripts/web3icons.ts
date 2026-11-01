@@ -12,7 +12,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const PACKAGE_NAME = "@web3icons/react"
 const OUTPUT_CATALOG_RELATIVE_MODULE_PATH = "src/common/ui/components/web3icons.generated.ts"
 
-const PACKAGE_DIST_PATH = join(__dirname, `../node_modules/${PACKAGE_NAME}/dist`)
 const OUTPUT_CATALOG_MODULE_PATH = join(__dirname, "..", OUTPUT_CATALOG_RELATIVE_MODULE_PATH)
 const OUTPUT_TAG = "🪙 web3icons"
 
@@ -22,6 +21,11 @@ import { lazy } from "react"
 `.trimStart()
 
 const CATALOG_TYPE_NAME = "LazyIconCatalog"
+
+type IconModule = {
+  componentName: string
+  hasBackgroundVariant: boolean
+}
 
 const CATALOG_TYPE = /* typescript */ `
 type ${CATALOG_TYPE_NAME} = Record<
@@ -42,7 +46,6 @@ const main = async () => {
     .then(bitcartCryptos.selectPaymentTokenSymbols)
 
   const iconDirRelativePath = "icons/tokens"
-  const iconModuleDirPath = join(PACKAGE_DIST_PATH, iconDirRelativePath)
 
   if (tokenSymbols.length === 0) {
     console.error(`${OUTPUT_TAG}: ⚠️ No token symbols found, aborting.\n`)
@@ -52,19 +55,31 @@ const main = async () => {
     return Promise.allSettled(
       tokenSymbols.map((tokenSymbol) => {
         const componentName = `Token${tokenSymbol}`
-        const moduleFilePath = join(iconModuleDirPath, `${componentName}.js`)
 
-        return fs.access(moduleFilePath).then(() => componentName)
+        return import(`${PACKAGE_NAME}/${iconDirRelativePath}/${componentName}`).then(
+          ({ __iconNode }: { __iconNode: Record<string, unknown> }) => ({
+            componentName,
+            hasBackgroundVariant: Object.hasOwn(__iconNode, "background"),
+          }),
+        )
       }),
     )
       .then((results) =>
         results.reduce(
           (acc, result) => [...acc, ...(result.status === "fulfilled" ? [result.value] : [])],
-          [] as string[],
+          [] as IconModule[],
         ),
       )
-      .then((componentNames) => {
+      .then((iconModules) => {
+        const componentNames = iconModules.map(({ componentName }) => componentName)
+
         if (componentNames.length > 0) {
+          const backgroundVariantSet = `export const web3iconsWithBackgroundVariant: ReadonlySet<string> = new Set([\n${iconModules
+            .filter(({ hasBackgroundVariant }) => hasBackgroundVariant)
+            .map(({ componentName }) => `  "${componentName}",`)
+            .sort()
+            .join("\n")}\n])`
+
           const lazyCatalog = `export const web3icons: ${CATALOG_TYPE_NAME} = {\n${componentNames
             .map(
               (componentName) =>
@@ -78,7 +93,7 @@ const main = async () => {
           return fs
             .writeFile(
               OUTPUT_CATALOG_MODULE_PATH,
-              `${CATALOG_IMPORTS}\n${CATALOG_TYPE}\n${lazyCatalog}\n`,
+              `${CATALOG_IMPORTS}\n${CATALOG_TYPE}\n${lazyCatalog}\n\n${backgroundVariantSet}\n`,
             )
             .then(() => {
               console.info(`${OUTPUT_TAG}: 📝 Catalog written to ${OUTPUT_CATALOG_MODULE_PATH}\n`)

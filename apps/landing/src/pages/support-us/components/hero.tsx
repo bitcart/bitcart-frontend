@@ -12,8 +12,9 @@ export const Hero: React.FC = () => {
       className={cn(`
         py-12
         sm:py-20
-        from-purple-50 via-white to-purple-100
-        dark:from-gray-900 dark:via-gray-900 dark:to-gray-800
+        md:pt-36 md:mt--16
+        from-accent/50 via-card to-accent
+        dark:from-background dark:via-background dark:to-card
         bg-linear-to-br
       `)}
     >
@@ -23,7 +24,7 @@ export const Hero: React.FC = () => {
           className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6"
         >
           <Trans>
-            Support <span className="text-accent-foreground">Bitcart</span> as a Company
+            Support <span className="text-primary-text">Bitcart</span> as a Company
           </Trans>
         </h1>
 
@@ -56,15 +57,10 @@ export const Hero: React.FC = () => {
 
           <LinkButton
             href="https://docs.bitcart.ai/support-and-community/support#paid-support"
-            isExternalLink
             expandOnHover
             size="xl"
             variant="outline"
-            className={cn(`
-              group
-              sm:w-auto
-              text-accent-foreground bg-background border-accent-foreground w-full
-            `)}
+            className={cn(`group sm:w-auto text-primary-text bg-background border-primary w-full`)}
           >
             <span>{t`Learn More`}</span>
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />

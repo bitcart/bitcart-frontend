@@ -54,7 +54,11 @@ describe("isHttpHref", () => {
     },
   )
 
-  test.each(["mailto:a@b.c", "tel:+123", "/about", "#features"])("rejects %s", (href) => {
+  test.each(["mailto:a@b.c", "tel:+123"])("rejects the app handoff %s", (href) => {
+    expect(isHttpHref(href)).toBe(false)
+  })
+
+  test.each(["/about", "#features", "?tab=fees"])("rejects the internal href %s", (href) => {
     expect(isHttpHref(href)).toBe(false)
   })
 })

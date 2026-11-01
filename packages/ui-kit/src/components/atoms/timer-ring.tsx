@@ -25,7 +25,10 @@ export const TimerRing: React.FC<TimerRingProps> = ({
   return (
     <div
       data-slot="timer-ring"
-      className={cn("size-16 text-primary relative grid shrink-0 place-items-center", className)}
+      className={cn(
+        "size-16 text-primary-text relative grid shrink-0 place-items-center",
+        className,
+      )}
       {...props}
     >
       <svg viewBox="0 0 56 56" className="inset-0 absolute size-full -rotate-90" aria-hidden>

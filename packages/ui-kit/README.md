@@ -6,7 +6,7 @@ UI development kit for applications and websites under the Bitcart umbrella.
 
 ### Styling
 
-For the styling layer, this package relies on a combination of [UnoCSS](https://github.com/unocss/unocss) with a custom UnoCSS preset, packaged as `@bitcart/unocss-preset`. Consequentially, any consumer app must adhere to the same configuration baseline. If required, alternative styling solutions can be used alongside it, as long as they don't collide with the Tailwind CSS scope, which is already handled by the aforementioned preset.
+For the styling layer, this package relies on a combination of [UnoCSS](https://github.com/unocss/unocss) with a custom UnoCSS preset, exported from `@bitcart/unocss-kit/preset`. Consequentially, any consumer app must adhere to the same configuration baseline. If required, alternative styling solutions can be used alongside it, as long as they don't collide with the Tailwind CSS scope, which is already handled by the aforementioned preset.
 
 When using this package as an app dependency within the original monorepo, make sure to configure UnoCSS to scan its source files by listing them in the `cli.entry.patterns` array:
 

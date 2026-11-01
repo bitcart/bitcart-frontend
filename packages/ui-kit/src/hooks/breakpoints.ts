@@ -1,4 +1,4 @@
-import type { BreakpointKey } from "@bitcart/unocss-preset"
+import type { BreakpointKey } from "@bitcart/unocss-kit/types"
 import { useCallback, useSyncExternalStore } from "react"
 
 export const useCurrentBreakpoint = (): BreakpointKey => {

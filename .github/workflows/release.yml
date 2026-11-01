@@ -50,10 +50,10 @@ jobs:
     uses: bitcart/bitcart-actions/.github/workflows/build-docker-image.yml@master
     permissions:
       contents: read
-      packages: write # to publish to GHCR
-      id-token: write # for Docker Hub OIDC login and provenance signing
-      attestations: write # to publish build attestations
-      artifact-metadata: write # to record artifact storage metadata for attestations
+      packages: write # publishing to GHCR
+      id-token: write # OIDC for provenance
+      attestations: write # github attestations
+      artifact-metadata: write # artifact storage metadata (recommended by actions/attest)
     with:
       dockerfile: apps/${{ needs.prepare.outputs.app }}/Dockerfile
       image-name: ${{ vars.DOCKERHUB_USER }}/bitcart-${{ needs.prepare.outputs.app }}

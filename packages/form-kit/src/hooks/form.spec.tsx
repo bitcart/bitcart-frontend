@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react"
 import { describe, expect, test } from "vitest"
-import * as z from "zod"
+import { z } from "zod"
 
 import { useAppForm } from "./form"
 

@@ -17,6 +17,7 @@ export const PaymentQr = ({ className }: { className?: string }) => {
 
       //! The QR quiet zone must stay white in both themes: scanners need the contrast.
       className={cn(
+        // oxlint-disable-next-line better-tailwindcss/no-restricted-classes -- see above
         "rounded-2xl border-border bg-white p-4 shadow-sm border",
         environment.terminal ? "w-full" : "w-fit",
         className,

@@ -1,5 +1,5 @@
 import { bitcartInvoices, bitcartManage, bitcartStores } from "@bitcart/client-sdk/endpoints"
-import type { RuntimeEnvTag } from "@bitcart/core/types"
+import type { RuntimeEnvTag } from "@bitcart/core/env"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { renderHook, waitFor } from "@testing-library/react"
 import { http, HttpResponse } from "msw"

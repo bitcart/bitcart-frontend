@@ -23,7 +23,6 @@
   {
     "name": "Rackoona",
     "logo": "/supporters/rackoona.svg",
-    "logoClass": "dark:brightness-0 dark:invert",
     "description": "Helps with hosting our failover infrastructure",
     "website": "https://rackoona.com",
     "contribution": "Failover Infrastructure"

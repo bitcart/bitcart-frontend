@@ -1,5 +1,5 @@
 import { expect, test, describe } from "vitest"
-import * as z from "zod"
+import { z } from "zod"
 
 import { emptyAsUndefined } from "./utils"
 

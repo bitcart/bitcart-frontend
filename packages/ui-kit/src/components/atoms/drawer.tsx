@@ -96,6 +96,7 @@ export const DrawerBackdrop: React.FC<DrawerBackdropProps> = ({ className, ...pr
   return (
     <DrawerPrimitive.Backdrop
       className={cn(
+        // oxlint-disable better-tailwindcss/no-restricted-classes -- a scrim dims the page the same way in every theme
         `
           inset-0 bg-black/32 backdrop-blur-sm absolute z-50
           opacity-[calc(1-var(--drawer-swipe-progress))] transition-opacity duration-450
@@ -105,6 +106,7 @@ export const DrawerBackdrop: React.FC<DrawerBackdropProps> = ({ className, ...pr
           data-starting-style:opacity-0
           data-swiping:duration-0
         `,
+        // oxlint-enable better-tailwindcss/no-restricted-classes
 
         className,
       )}

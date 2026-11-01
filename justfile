@@ -271,8 +271,8 @@ Example: `just unocss-check --app checkout 'bg-success text-warning'`
 ")]
 [group("Code quality")]
 [positional-arguments]
-unocss-check +args: (build "-p" "@bitcart/unocss-preset")
-    @pnpm --reporter=silent -C packages/unocss-preset check:classes "$@"
+unocss-check +args: (build "-p" "@bitcart/unocss-kit")
+    @pnpm --reporter=silent -C packages/unocss-kit check:classes "$@"
 
 [doc("
 Run all checks without fixing.

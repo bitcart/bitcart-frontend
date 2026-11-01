@@ -1,4 +1,4 @@
-import { presetBitcart } from "@bitcart/unocss-preset"
+import { presetBitcart } from "@bitcart/unocss-kit/preset"
 import { defineConfig } from "unocss"
 
 //* The Uno's output within this package is only intended for consumption by Oxlint
@@ -10,8 +10,7 @@ export default defineConfig({
     },
   },
 
-  //! Do not define any color scheme values in this config,
-  //! as they are defined in the preset
-  //! and redefined at the app level if needed.
+  //! Do not define any color scheme values in this config, as they are defined in the preset
+  //! and redefined at the app level on demand.
   presets: [presetBitcart()],
 })

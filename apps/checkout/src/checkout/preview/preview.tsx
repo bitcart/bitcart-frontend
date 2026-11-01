@@ -14,7 +14,7 @@ import { CheckoutReceiptView } from "../runtime/receipt-view"
 import type { CheckoutTemplateRegistry } from "../runtime/registry"
 import { CheckoutView } from "../runtime/view"
 import { installFakeTerminal, type FakeTerminalOptions } from "../terminal"
-import type { CheckoutPalette } from "../theme/palette"
+import type { CheckoutTheme } from "../theme/schemas"
 import { normalizePreviewAxes } from "./axes"
 import { PREVIEW_BRANDS, type CheckoutPreviewBrand } from "./brands"
 import { buildPreviewScenario } from "./build"
@@ -50,7 +50,7 @@ type CheckoutPreviewProps = {
   wallet?: CheckoutPreviewWallet
   expiration?: CheckoutPreviewExpiration
   speed?: CheckoutPreviewSpeed
-  palette?: CheckoutPalette | null
+  theme?: CheckoutTheme | null
   brand?: CheckoutPreviewBrand
   appConfig?: CheckoutAppConfig
   showsSimulator?: boolean
@@ -64,7 +64,7 @@ const ScenarioView = ({
   view = "checkout",
   expiration,
   speed,
-  palette,
+  theme,
   brand,
   appConfig,
   showsSimulator = true,
@@ -115,7 +115,7 @@ const ScenarioView = ({
       invoice,
       appearance: {
         ...(brand ? PREVIEW_BRANDS[brand] : {}),
-        ...(palette ? { palette } : {}),
+        ...(theme ? { theme } : {}),
       },
 
       submitCustomerDetails: (update) => {
@@ -136,7 +136,7 @@ const ScenarioView = ({
         return Promise.resolve("accepted")
       },
     }),
-    [scenario, invoice, palette, brand],
+    [scenario, invoice, theme, brand],
   )
 
   const simulator = showsSimulator && (

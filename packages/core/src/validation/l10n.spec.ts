@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest"
-import * as z from "zod"
+import { z } from "zod"
 
 import { createZodErrorMap, type ZodL10nMessages } from "./l10n"
 

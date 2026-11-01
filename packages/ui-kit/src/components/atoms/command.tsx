@@ -52,11 +52,13 @@ export const CommandDialogBackdrop: React.FC<CommandDialogBackdropProps> = ({
   return (
     <CommandDialogPrimitive.Backdrop
       className={cn(
+        // oxlint-disable better-tailwindcss/no-restricted-classes -- a scrim dims the page the same way in every theme
         `
           inset-0 bg-black/32 backdrop-blur-sm fixed z-50 transition-all duration-200
           data-ending-style:opacity-0
           data-starting-style:opacity-0
         `,
+        // oxlint-enable better-tailwindcss/no-restricted-classes
 
         className,
       )}

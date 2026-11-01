@@ -1,3 +1,4 @@
+import { GlobalThemeOverride } from "@bitcart/ui-kit/styles"
 import type { ReactNode } from "react"
 
 import type { CheckoutSource } from "../model"
@@ -5,7 +6,6 @@ import { CheckoutReceiptScreen } from "../screens/receipt-screen"
 import type { CheckoutAppConfig } from "./context"
 import { useCheckoutControl, useCheckoutModel } from "./control"
 import { CheckoutProvider } from "./provider"
-import { CheckoutThemeScope } from "./theme-scope"
 
 type CheckoutReceiptViewProps = {
   source: CheckoutSource
@@ -24,9 +24,8 @@ export const CheckoutReceiptView = ({
   if (model.phase === "status" && model.receipt) {
     return (
       <CheckoutProvider model={model} appConfig={appConfig}>
-        <CheckoutThemeScope scopeId="receipt" palettes={[model.branding.palette]}>
-          <CheckoutReceiptScreen receipt={model.receipt} />
-        </CheckoutThemeScope>
+        <GlobalThemeOverride themeTweaks={[model.branding.theme]} />
+        <CheckoutReceiptScreen receipt={model.receipt} />
       </CheckoutProvider>
     )
   } else return unavailable

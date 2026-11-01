@@ -42,9 +42,10 @@ export interface WithPageRegistry {
   pageRegistry: PageRegistry
 }
 
-export interface WithTestRoute {
-  /**
-   * Route the test navigates to. Defaults to the homepage.
-   */
-  testRoute?: InternalHref
+export interface WithRoute {
+  route?: InternalHref
+}
+
+export interface WithStartRoute {
+  startRoute?: InternalHref
 }

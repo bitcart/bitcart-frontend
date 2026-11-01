@@ -77,7 +77,6 @@ export const VARIANT_PRESET_MAP: StoryComponentVariantPresetMap<typeof LinkButto
       ...DEFAULT_PROPS,
       variant: "outline",
       href: "https://bitcart.ai",
-      isExternalLink: true,
       children: "Visit bitcart.ai",
     },
   },

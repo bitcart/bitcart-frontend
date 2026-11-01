@@ -2,7 +2,7 @@ import type { bitcartInvoices } from "@bitcart/client-sdk/endpoints"
 import { isNotFoundError } from "@bitcart/client-sdk/utils"
 import type { HttpHref } from "@bitcart/core/navigation"
 import { isDeepEqual } from "remeda"
-import * as z from "zod"
+import { z } from "zod"
 
 import {
   EMBED_PROTOCOL_VERSION,

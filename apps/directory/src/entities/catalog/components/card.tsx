@@ -68,7 +68,6 @@ export const CatalogEntryCard: React.FC<CatalogEntryCardProps> = ({
             {social_links.github && (
               <LinkButton
                 href={social_links.github}
-                isExternalLink
                 variant="outline"
                 aria-label={t`${entry.name} GitHub`}
               >
@@ -84,7 +83,6 @@ export const CatalogEntryCard: React.FC<CatalogEntryCardProps> = ({
                     ? `https://twitter.com/${social_links.twitter.slice(1)}`
                     : social_links.twitter
                 }
-                isExternalLink
                 variant="outline"
                 aria-label={t`${entry.name} on Twitter`}
               >
@@ -95,12 +93,7 @@ export const CatalogEntryCard: React.FC<CatalogEntryCardProps> = ({
           </div>
         )}
 
-        <LinkButton
-          isExternalLink
-          href={entry.url}
-          className="w-full"
-          aria-label={t`Visit ${entry.name}`}
-        >
+        <LinkButton href={entry.url} className="w-full" aria-label={t`Visit ${entry.name}`}>
           <ExternalLink aria-hidden="true" />
           <span>{t`Visit Site`}</span>
         </LinkButton>

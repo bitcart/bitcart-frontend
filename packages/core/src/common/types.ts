@@ -1,14 +1,19 @@
 export { type infer as FromSchema } from "zod"
 
-export type RuntimeEnvTag = "testing" | "development" | "production"
-
-export type UnionAsArray<Union, Member = Union> = [Union] extends [never]
-  ? readonly []
-  : Member extends Member
-    ? readonly [Member, ...UnionAsArray<Exclude<Union, Member>>]
-    : never
-
 export type IsEqual<TOne, TAnother> = [TOne, TAnother] extends [TAnother, TOne] ? true : false
+
+/**
+ * Resolves to `true` when the `as const` tuple `List` holds every member of `Union` exactly once.
+ */
+export type IsUnionMemberList<
+  Union,
+  List extends readonly unknown[],
+  Listed = never,
+> = List extends readonly [infer Head, ...infer Tail]
+  ? [Head] extends [Listed]
+    ? false
+    : IsUnionMemberList<Union, Tail, Listed | Head>
+  : IsEqual<Union, Listed>
 
 export type TrailingParams<TParams extends unknown[]> = TParams extends [unknown, ...infer TRest]
   ? TRest

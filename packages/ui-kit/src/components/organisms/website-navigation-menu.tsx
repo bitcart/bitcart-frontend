@@ -129,10 +129,6 @@ export const WebsiteNavigationMenu: React.FC<WebsiteNavigationMenuProps> = ({
 
       <NavigationMenuList className="gap-4 lg:gap-4 xl:gap-4">
         {iconLinks?.map(({ icon: Icon, ...link }) => {
-          const a11yAwareLinkProps = link.isExternal
-            ? { href: link.href, isExternalLink: true as const }
-            : { href: link.href, isExternalLink: false as const }
-
           const isActive = !link.isExternal && link.href === currentRoute.pathnameWithHash
 
           return (
@@ -140,7 +136,7 @@ export const WebsiteNavigationMenu: React.FC<WebsiteNavigationMenuProps> = ({
               <NavigationMenuLink
                 active={isActive}
                 title={link.hint}
-                render={<LinkButton size="icon" variant="ghost" {...a11yAwareLinkProps} />}
+                render={<LinkButton size="icon" variant="ghost" href={link.href} />}
               >
                 <Icon className="size-5" aria-hidden="true" />
               </NavigationMenuLink>
@@ -167,23 +163,13 @@ export const WebsiteNavigationMenu: React.FC<WebsiteNavigationMenuProps> = ({
         >
           <DropdownMenuGroup render={<nav />}>
             {labeledLinks.map((link, idx) => {
-              const a11yAwareLinkProps = link.isExternal
-                ? {
-                    href: link.href,
-                    a11yHint: getTargetBlankA11yHint(i18n),
-                    isExternalLink: true as const,
-                  }
-                : { href: link.href, isExternalLink: false as const }
-
               const isActive = !link.isExternal && link.href === currentRoute.pathnameWithHash
 
               return (
                 <DropdownMenuItem
                   key={link.label + link.href}
                   nativeButton={false}
-                  render={
-                    <LinkButton variant={isActive ? "accent" : "ghost"} {...a11yAwareLinkProps} />
-                  }
+                  render={<LinkButton variant={isActive ? "accent" : "ghost"} href={link.href} />}
                   className={cn("w-full justify-start text-left", getDropdownLinkClass(idx + 1), {
                     "bg-accent text-accent-foreground": isActive,
                   })}

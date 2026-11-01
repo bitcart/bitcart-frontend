@@ -1,1 +1,1 @@
-export { web3icons } from "./web3icons.generated"
+export { web3icons, web3iconsWithBackgroundVariant } from "./web3icons.generated"

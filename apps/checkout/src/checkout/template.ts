@@ -1,19 +1,16 @@
+import { NEUTRAL_THEME_TWEAK } from "@bitcart/unocss-kit/constants"
 import type { MessageDescriptor, Messages } from "@lingui/core"
 import type { ComponentType } from "react"
 
 import type { CheckoutSelectionMode } from "./model"
-import {
-  checkoutPaletteSchema,
-  type CheckoutPalette,
-  type CheckoutPaletteInput,
-} from "./theme/palette"
+import { checkoutThemeSchema, type CheckoutTheme, type CheckoutThemeInput } from "./theme/schemas"
 
 export type CheckoutTemplateDefinition = {
   name: MessageDescriptor
   selection?: CheckoutSelectionMode
 
-  //* Token overrides applied beneath the merchant palette, which wins token by token.
-  colorScheme?: CheckoutPaletteInput
+  //* Token overrides applied beneath the merchant theme, which wins token by token.
+  theme?: CheckoutThemeInput
 
   //! The source-locale catalog, imported statically into the template's chunk. Production builds
   //! strip message text from the code: after a failed catalog load, these messages are the only
@@ -28,17 +25,17 @@ export type CheckoutTemplateDefinition = {
   Confirming?: ComponentType
 }
 
-export type CheckoutTemplate = Omit<CheckoutTemplateDefinition, "selection" | "colorScheme"> & {
+export type CheckoutTemplate = Omit<CheckoutTemplateDefinition, "selection" | "theme"> & {
   selection: CheckoutSelectionMode
-  colorScheme: CheckoutPalette | null
+  theme: CheckoutTheme
 }
 
 export const defineCheckoutTemplate = ({
   selection = "preselect",
-  colorScheme,
+  theme,
   ...definition
 }: CheckoutTemplateDefinition): CheckoutTemplate => ({
   selection,
-  colorScheme: colorScheme ? checkoutPaletteSchema.parse(colorScheme) : null,
+  theme: theme ? checkoutThemeSchema.parse(theme) : NEUTRAL_THEME_TWEAK,
   ...definition,
 })

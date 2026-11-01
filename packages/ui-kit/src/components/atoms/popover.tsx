@@ -22,12 +22,14 @@ export const PopoverBackdrop: React.FC<PopoverBackdropProps> = ({ className, ...
   return (
     <PopoverPrimitive.Backdrop
       className={cn(
+        // oxlint-disable better-tailwindcss/no-restricted-classes -- a scrim dims the page the same way in every theme
         `
           inset-0 bg-black/32 absolute z-50 transition-opacity duration-450
           ease-[cubic-bezier(0.32,0.72,0,1)]
           data-[ending-style]:opacity-0
           data-[starting-style]:opacity-0
         `,
+        // oxlint-enable better-tailwindcss/no-restricted-classes
 
         className,
       )}

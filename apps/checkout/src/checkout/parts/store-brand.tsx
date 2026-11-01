@@ -6,10 +6,12 @@ import type { CheckoutLogo } from "../model"
 
 //! Backdrop colors ignore the theme and the merchant palette: each one reproduces the neutral
 //! background of the image's original mode.
+// oxlint-disable better-tailwindcss/no-restricted-classes -- see above
 const BACKDROP_CLASS_NAMES = {
   light: "bg-white",
   dark: "bg-neutral-900",
 }
+// oxlint-enable better-tailwindcss/no-restricted-classes
 
 export const StoreImage = ({
   image,

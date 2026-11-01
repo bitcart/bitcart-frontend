@@ -1,4 +1,4 @@
-import type { PresetBitcartPreflight } from "@bitcart/unocss-preset"
+import type { PresetBitcartPreflight } from "@bitcart/unocss-kit/preset"
 import type { WebFontsOptions } from "unocss/preset-web-fonts"
 
 export const FONTS_PREFLIGHT: PresetBitcartPreflight = {

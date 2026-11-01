@@ -1,5 +1,6 @@
 import {
   getDestinationTypeAwareLinkProps,
+  isHttpHref,
   type HttpHref,
   type InternalHref,
   type MailtoHref,
@@ -14,21 +15,16 @@ import { cn, getTargetBlankA11yHint } from "@/utils"
 import { buttonVariants } from "./button-variants"
 
 export type LinkButtonProps = VariantProps<typeof buttonVariants> &
-  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> &
-  (
-    | { href: InternalHref | MailtoHref; isExternalLink?: false }
-    | { href: HttpHref; isExternalLink: true }
-  ) & {
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+    href: InternalHref | HttpHref | MailtoHref
     disabled?: boolean
     expandOnHover?: boolean
-    isExternalLink?: boolean
     isOriginAware?: boolean
   }
 
 export const LinkButton: React.FC<LinkButtonProps> = ({
   disabled = false,
   expandOnHover = false,
-  isExternalLink = false,
   isOriginAware = true,
   size,
   variant,
@@ -45,9 +41,9 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
     ...props,
   }
 
-  const a11yAwareLinkProps = isExternalLink
-    ? { href: href as HttpHref, a11yHint: getTargetBlankA11yHint(i18n) }
-    : { href: href as InternalHref | MailtoHref }
+  const a11yAwareLinkProps = isHttpHref(href)
+    ? { href, a11yHint: getTargetBlankA11yHint(i18n) }
+    : { href }
 
   const disabledProps = disabled ? { "aria-disabled": true, tabIndex: -1 } : {}
 

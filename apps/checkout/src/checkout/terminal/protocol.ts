@@ -1,4 +1,4 @@
-import * as z from "zod"
+import { z } from "zod"
 
 import { asTerminalErrorCode, type TerminalErrorCode } from "./errors"
 

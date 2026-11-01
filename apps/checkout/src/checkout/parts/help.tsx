@@ -33,7 +33,7 @@ const StoreContact = ({
       href={support.href}
       newTab={support.kind === "url"}
       className="font-medium text-foreground"
-      linkClassName="underline underline-offset-2 hover:text-primary"
+      linkClassName="underline underline-offset-2 hover:text-primary-text"
     >
       {children}
     </ExternalLink>

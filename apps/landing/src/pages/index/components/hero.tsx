@@ -18,24 +18,24 @@ export const Hero: React.FC = () => {
     <section
       aria-labelledby="hero-heading"
       className={cn(`
-        from-purple-50 via-white to-purple-100 pb-8
+        from-accent/50 via-card to-accent pb-8
         md:py-16 md:mt--16
         max-md:pt-4
-        dark:from-gray-900 dark:via-gray-900 dark:to-gray-800
+        dark:from-background dark:via-background dark:to-card
         relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br
       `)}
     >
       <div aria-hidden="true" className="inset-0 absolute overflow-hidden">
         <div
           className={cn(`
-            -top-40 -right-40 w-80 h-80 from-purple-400/20 to-purple-500/20 blur-3xl absolute
+            -top-40 -right-40 w-80 h-80 from-primary/15 to-primary/20 blur-3xl absolute
             rounded-full bg-linear-to-r
           `)}
         ></div>
 
         <div
           className={cn(`
-            -bottom-40 -left-40 w-80 h-80 from-purple-500/20 to-purple-400/20 blur-3xl absolute
+            -bottom-40 -left-40 w-80 h-80 from-primary/20 to-primary/15 blur-3xl absolute
             rounded-full bg-linear-to-r
           `)}
         ></div>
@@ -47,8 +47,8 @@ export const Hero: React.FC = () => {
         <h1 id="hero-heading" className="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-7">
           <span
             className={cn(`
-              from-gray-900 via-purple-800 to-primary/80
-              dark:from-white dark:via-purple-400 dark:to-purple-300
+              from-foreground via-accent-foreground to-primary/80
+              dark:via-primary-text dark:to-accent-foreground
               bg-linear-to-r bg-clip-text text-transparent
             `)}
           >
@@ -68,8 +68,8 @@ export const Hero: React.FC = () => {
         >
           <Trans>
             Start Accepting Crypto Payments With{" "}
-            <span className="font-semibold text-accent-foreground text-nowrap">0% Fees</span> &{" "}
-            <span className="font-semibold text-accent-foreground text-nowrap">No Third-party</span>
+            <span className="font-semibold text-primary-text text-nowrap">0% Fees</span> &{" "}
+            <span className="font-semibold text-primary-text text-nowrap">No Third-party</span>
           </Trans>
         </p>
 
@@ -84,8 +84,7 @@ export const Hero: React.FC = () => {
               <Link
                 href="/coins"
                 className={cn(`
-                  font-bold decoration-primary/50 px-1 py-0.5 rounded-xs -mx-1 -my-0.5
-                  text-accent-foreground
+                  font-bold decoration-primary/50 px-1 py-0.5 rounded-xs -mx-1 -my-0.5 text-primary-text
                   hover:text-accent-foreground hover:decoration-primary hover:shadow-lg
                   hover:bg-accent
                   dark:hover:text-foreground
@@ -111,12 +110,11 @@ export const Hero: React.FC = () => {
         >
           <LinkButton
             href="https://admin.bitcart.ai"
-            isExternalLink
             expandOnHover
             size="xl"
             className={cn(`
               group elevation-3 bg-initial from-primary to-primary/80
-              hover:bg-initial hover:from-primary/80 hover:to-purple-800
+              hover:bg-initial hover:from-primary/80 hover:to-primary/100
               max-sm:w-full
               bg-linear-to-r
             `)}
@@ -128,15 +126,10 @@ export const Hero: React.FC = () => {
 
           <LinkButton
             href="https://docs.bitcart.ai"
-            isExternalLink
             expandOnHover
             size="xl"
             variant="outline"
-            className={cn(`
-              group
-              max-sm:w-full
-              text-accent-foreground bg-background border-accent-foreground
-            `)}
+            className={cn(`group max-sm:w-full text-primary-text bg-background border-primary`)}
           >
             <span>{t`View User Guide`}</span>
 
@@ -163,7 +156,7 @@ export const Hero: React.FC = () => {
             { id: 3, Icon: Rocket, title: t`Self-hosted` },
           ].map(({ id, Icon, title }) => (
             <div key={id} className={FEATURE_HIGHLIGHT_CONTAINER_CLASS}>
-              <Icon className="size-5 md:size-8 text-accent-foreground shrink-0" />
+              <Icon className="size-5 md:size-8 text-primary-text shrink-0" />
 
               <span
                 className={cn(
@@ -178,11 +171,7 @@ export const Hero: React.FC = () => {
           <Link
             href="/coins"
             className={cn(
-              `
-                group
-                hover:bg-secondary/80 hover:border-accent-foreground
-                transition-all duration-200
-              `,
+              `group hover:bg-secondary/80 hover:border-primary transition-all duration-200`,
 
               FEATURE_HIGHLIGHT_CONTAINER_CLASS,
             )}
@@ -191,7 +180,7 @@ export const Hero: React.FC = () => {
               className={cn(`
                 size-5
                 md:size-8
-                text-accent-foreground shrink-0 transition-transform
+                text-primary-text shrink-0 transition-transform
                 group-hover:scale-110
               `)}
             />
@@ -201,7 +190,7 @@ export const Hero: React.FC = () => {
                 font-medium text-secondary-foreground text-xs
                 sm:text-sm
                 md:text-base
-                group-hover:text-accent-foreground
+                group-hover:text-primary-text
                 transition-colors
               `)}
             >

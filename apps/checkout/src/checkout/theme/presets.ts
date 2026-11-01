@@ -1,7 +1,6 @@
-import type { CheckoutPaletteTokensInput } from "./palette"
+import type { ThemeTweakInput } from "@bitcart/unocss-kit/schemas"
 
-export const CHECKOUT_PALETTE_PRESETS = {
-  //* Slate neutrals under a sky-blue brand: cool paper in light mode, deep navy in dark mode.
+export const CHECKOUT_THEME_PRESETS = {
   ocean: {
     light: {
       background: "oklch(0.981 0.005 247.9)",
@@ -30,8 +29,9 @@ export const CHECKOUT_PALETTE_PRESETS = {
       "card-foreground": "oklch(0.968 0.007 247.896)",
       popover: "oklch(0.226 0.039 261)",
       "popover-foreground": "oklch(0.968 0.007 247.896)",
-      primary: "oklch(0.685 0.169 237.323)",
-      "primary-foreground": "oklch(0.293 0.066 243.157)",
+      primary: "oklch(0.5 0.134 242.749)",
+      "primary-foreground": "oklch(1 0 0)",
+      "primary-text": "oklch(0.685 0.169 237.323)",
       secondary: "oklch(0.279 0.041 260.031)",
       "secondary-foreground": "oklch(0.929 0.013 255.508)",
       muted: "oklch(0.279 0.041 260.031)",
@@ -74,8 +74,9 @@ export const CHECKOUT_PALETTE_PRESETS = {
       "card-foreground": "oklch(0.965 0.008 165)",
       popover: "oklch(0.221 0.025 171)",
       "popover-foreground": "oklch(0.965 0.008 165)",
-      primary: "oklch(0.696 0.17 162.48)",
-      "primary-foreground": "oklch(0.262 0.051 172.552)",
+      primary: "oklch(0.508 0.118 165.612)",
+      "primary-foreground": "oklch(1 0 0)",
+      "primary-text": "oklch(0.696 0.17 162.48)",
       secondary: "oklch(0.276 0.029 170)",
       "secondary-foreground": "oklch(0.92 0.014 166)",
       muted: "oklch(0.276 0.029 170)",
@@ -117,8 +118,9 @@ export const CHECKOUT_PALETTE_PRESETS = {
       "card-foreground": "oklch(0.965 0.009 75)",
       popover: "oklch(0.226 0.019 45)",
       "popover-foreground": "oklch(0.965 0.009 75)",
-      primary: "oklch(0.705 0.213 47.604)",
-      "primary-foreground": "oklch(0.266 0.079 36.259)",
+      primary: "oklch(0.553 0.195 38.402)",
+      "primary-foreground": "oklch(1 0 0)",
+      "primary-text": "oklch(0.705 0.213 47.604)",
       secondary: "oklch(0.281 0.022 47)",
       "secondary-foreground": "oklch(0.92 0.013 65)",
       muted: "oklch(0.281 0.022 47)",
@@ -131,7 +133,8 @@ export const CHECKOUT_PALETTE_PRESETS = {
     },
   },
 
-  //* Pure greys, no hue: white paper and near-black ink in light mode, inverted in dark mode.
+  //* Pure greys, no hue: white paper and near-black ink in light mode, inverted in dark mode. Being
+  //* neutral, its near-white dark fill doubles as text, so `primary-text` follows `primary`.
   graphite: {
     light: {
       background: "oklch(0.985 0 0)",
@@ -184,7 +187,7 @@ export const CHECKOUT_PALETTE_PRESETS = {
       "card-foreground": "oklch(0.225 0.011 73.349)",
       popover: "oklch(0.994 0.006 84.566)",
       "popover-foreground": "oklch(0.225 0.011 73.349)",
-      primary: "oklch(0.511 0.086 186.391)",
+      primary: "oklch(0.5 0.086 186.391)",
       "primary-foreground": "oklch(1 0 0)",
       secondary: "oklch(0.948 0.014 78.262)",
       "secondary-foreground": "oklch(0.33 0.017 70.907)",
@@ -204,8 +207,9 @@ export const CHECKOUT_PALETTE_PRESETS = {
       "card-foreground": "oklch(0.945 0.007 219.562)",
       popover: "oklch(0.221 0.013 233.195)",
       "popover-foreground": "oklch(0.945 0.007 219.562)",
-      primary: "oklch(0.785 0.133 181.912)",
-      "primary-foreground": "oklch(0.277 0.045 192.524)",
+      primary: "oklch(0.5 0.086 186.391)",
+      "primary-foreground": "oklch(1 0 0)",
+      "primary-text": "oklch(0.785 0.133 181.912)",
       secondary: "oklch(0.257 0.017 229.845)",
       "secondary-foreground": "oklch(0.894 0.012 217.551)",
       muted: "oklch(0.277 0.018 227.402)",
@@ -217,6 +221,10 @@ export const CHECKOUT_PALETTE_PRESETS = {
       ring: "oklch(0.855 0.125 181.071)",
     },
   },
-} as const satisfies Record<string, CheckoutPaletteTokensInput>
+} as const satisfies Record<string, ThemeTweakInput>
 
-export type CheckoutPalettePresetId = keyof typeof CHECKOUT_PALETTE_PRESETS
+export type CheckoutThemePresetId = keyof typeof CHECKOUT_THEME_PRESETS
+
+export const CHECKOUT_THEME_PRESET_IDS = Object.keys(
+  CHECKOUT_THEME_PRESETS,
+) as CheckoutThemePresetId[]

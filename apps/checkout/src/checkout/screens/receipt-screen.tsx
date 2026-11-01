@@ -23,6 +23,7 @@ import type { CheckoutReceipt, CheckoutReceiptTransaction } from "../model"
 
 //! Pinned to black: browsers drop backgrounds when printing, which leaves dark mode's light text on
 //! white paper.
+// oxlint-disable-next-line better-tailwindcss/no-restricted-classes -- see above
 const PRINT_TEXT_CLASS_NAME = "print:**:text-black"
 
 const Row = ({
@@ -56,7 +57,7 @@ const TransactionRow = ({
       {explorerUrl ? (
         <ExternalLink
           href={explorerUrl}
-          linkClassName="hover:text-primary underline underline-offset-2"
+          linkClassName="hover:text-primary-text underline underline-offset-2"
         >
           {hash}
         </ExternalLink>
@@ -207,7 +208,7 @@ export const CheckoutReceiptScreen = ({ receipt }: { receipt: CheckoutReceipt })
               href={store.support.href}
               newTab={store.support.kind === "url"}
               className="text-foreground"
-              linkClassName="hover:text-primary underline underline-offset-2"
+              linkClassName="hover:text-primary-text underline underline-offset-2"
             >
               {store.support.kind === "url" ? store.support.href : store.support.address}
             </ExternalLink>

@@ -1,13 +1,9 @@
-import { cn } from "@bitcart/ui-kit/utils"
 import { RootProvider } from "@fumadocs/base-ui/provider/tanstack"
 import { I18nProvider } from "@lingui/react"
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router"
 
-import { DEFAULT_BRAND } from "@/common/constants"
 import { i18n } from "@/common/i18n"
-import { BrandProvider, SearchDialog, ThemeSync } from "@/common/ui/components"
-
-import { THEME_INIT_SCRIPT } from "./-layout/constants"
+import { SearchDialog } from "@/common/ui/components"
 
 import appCss from "./-layout/app.css?url"
 import unoCss from "./-layout/uno.generated.css?url"
@@ -19,23 +15,10 @@ function RootComponent() {
         <HeadContent />
       </head>
 
-      {/*! The SSR'd default brand class is corrected pre-paint by THEME_INIT_SCRIPT below,
-          hence the suppressed hydration warning. */}
-      <body
-        suppressHydrationWarning
-        className={cn(`theme-${DEFAULT_BRAND}`, "flex min-h-screen flex-col")}
-      >
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-
+      <body className="flex min-h-screen flex-col">
         <I18nProvider i18n={i18n}>
-          {/*! Fumadocs already defaults the mode to light/dark/system on the `class`
-              attribute; `color-scheme` is applied alongside the brand instead. */}
-          <RootProvider search={{ SearchDialog }} theme={{ enableColorScheme: false }}>
-            <BrandProvider>
-              <ThemeSync />
-
-              <Outlet />
-            </BrandProvider>
+          <RootProvider search={{ SearchDialog }}>
+            <Outlet />
           </RootProvider>
         </I18nProvider>
 

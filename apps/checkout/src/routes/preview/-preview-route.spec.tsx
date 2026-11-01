@@ -1,4 +1,4 @@
-import type { RuntimeEnvTag } from "@bitcart/core/types"
+import type { RuntimeEnvTag } from "@bitcart/core/env"
 import { isNotFound } from "@tanstack/react-router"
 import { beforeEach, describe, expect, test, vi } from "vitest"
 
@@ -71,11 +71,11 @@ describe("preview route", () => {
   })
 
   test.each([
-    [{ palette: "harbor" }, "harbor"],
-    [{ palette: "no-such-palette" }, undefined],
+    [{ theme: "harbor" }, "harbor"],
+    [{ theme: "no-such-theme" }, undefined],
     [{}, undefined],
-  ])("reads the search %o as the %s palette preset", (search, palette) => {
-    expect(parseSearch(search).palette).toBe(palette)
+  ])("reads the search %o as the %s theme preset", (search, theme) => {
+    expect(parseSearch(search).theme).toBe(theme)
   })
 
   test.each([

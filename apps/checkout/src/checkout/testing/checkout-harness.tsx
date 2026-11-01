@@ -2,6 +2,7 @@ import { Toaster } from "@bitcart/ui-kit/components"
 import { BitcartWordmarkIcon } from "@bitcart/ui-kit/icons"
 import { LayoutContextProvider, ThemeProvider } from "@bitcart/ui-kit/providers"
 import { defineGetLayoutConfig } from "@bitcart/ui-kit/utils"
+import { NEUTRAL_THEME_TWEAK } from "@bitcart/unocss-kit/constants"
 import { i18n } from "@lingui/core"
 import { I18nProvider } from "@lingui/react"
 import type { ReactNode } from "react"
@@ -38,7 +39,7 @@ export const CheckoutTestProviders = ({ children }: { children: ReactNode }) => 
 export type CheckoutTestAppProps = {
   source?: Partial<CheckoutSource>
   templateId?: string
-  screens: CheckoutShellTemplate
+  screens: Omit<CheckoutShellTemplate, "theme"> & Partial<Pick<CheckoutShellTemplate, "theme">>
   appConfig?: CheckoutAppConfig
 }
 
@@ -55,7 +56,10 @@ export const CheckoutTestApp = ({
   return (
     <CheckoutTestProviders>
       <CheckoutProvider model={model} appConfig={appConfig}>
-        <CheckoutShell templateId={templateId} template={screens} />
+        <CheckoutShell
+          templateId={templateId}
+          template={{ ...screens, theme: screens.theme ?? NEUTRAL_THEME_TWEAK }}
+        />
       </CheckoutProvider>
     </CheckoutTestProviders>
   )

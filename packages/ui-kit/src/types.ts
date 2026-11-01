@@ -1,6 +1,11 @@
 import type { LocaleId, PseudoLocaleId } from "@bitcart/core/i18n"
-import type { A11yAwareLinkProps, HttpHref, InternalHref } from "@bitcart/core/navigation"
-import type { BreakpointKey } from "@bitcart/unocss-preset"
+import type {
+  A11yAwareLinkProps,
+  HttpHref,
+  InternalHref,
+  MailtoHref,
+} from "@bitcart/core/navigation"
+import type { BreakpointKey } from "@bitcart/unocss-kit/types"
 import type { Icon as PhosphorIconComponent } from "@phosphor-icons/react"
 import type { LucideProps } from "lucide-react"
 import type { MouseEventHandler } from "react"
@@ -37,6 +42,19 @@ export type CustomIconComponent = React.FC<CustomIconProps>
 export type LucideIconProps = React.ComponentProps<LucideIconComponent>
 
 export type IconComponent = LucideIconComponent | PhosphorIconComponent | CustomIconComponent
+
+/**
+ * A user action primitive meant to be rendered as a button. Maps to either a browser navigation
+ * flow or an arbitrary function call, and unifies the two interaction patterns under one shape.
+ */
+export type ActionDescriptor = {
+  label: string
+
+  icons?: {
+    left?: IconComponent
+    right?: IconComponent
+  }
+} & ({ href: InternalHref | HttpHref | MailtoHref } | { callback: VoidFunction })
 
 export type BasicLinkComponent = React.ComponentType<
   A11yAwareLinkProps & {

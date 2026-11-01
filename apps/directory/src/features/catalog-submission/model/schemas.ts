@@ -1,7 +1,7 @@
 import type { FromSchema } from "@bitcart/core/types"
 import { emptyAsUndefined } from "@bitcart/core/validation"
 import { t } from "@lingui/core/macro"
-import * as z from "zod"
+import { z } from "zod"
 
 import {
   CATALOG_ENTRY_SELFCONTAINED_CATEGORY_IDS,

@@ -29,7 +29,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
       case 401: {
         return {
           title: t`Authentication Required`,
-          icon: props.icon ?? <Lock className="size-16 text-yellow-500" />,
+          icon: props.icon ?? <Lock className="size-16 text-warning" />,
 
           message:
             props.message ??
@@ -48,7 +48,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
       case 404: {
         return {
           title: t`Page Not Found`,
-          icon: <AlertCircle className="size-16 text-orange-500" />,
+          icon: <AlertCircle className="size-16 text-warning" />,
           message: t`This page does not exist.`,
         }
       }
@@ -75,13 +75,11 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
     <div className={cn("bg-background flex min-h-screen items-center justify-center", className)}>
       <div className="max-w-lg px-4 md:px-6 text-center">
         <div className="mb-6 flex justify-center">
-          <div className="p-4 bg-secondary rounded-full">{icon}</div>
+          <div className="p-4 bg-muted rounded-full">{icon}</div>
         </div>
 
         <div className="mb-4">
-          <span className="text-6xl sm:text-7xl font-bold text-accent-foreground">
-            {statusCode}
-          </span>
+          <span className="text-6xl sm:text-7xl font-bold text-primary-text">{statusCode}</span>
         </div>
 
         <h1 className="text-2xl sm:text-3xl font-bold mb-4">{title}</h1>
@@ -94,7 +92,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
           </LinkButton>
 
           {statusCode !== 500 && (
-            <Button size="lg" variant="secondary" onClick={handleRetry}>
+            <Button size="lg" variant="outline" onClick={handleRetry}>
               <RefreshCw className="size-5" />
               <span>{t`Try Again`}</span>
             </Button>

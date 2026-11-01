@@ -134,13 +134,13 @@ export const NavigationMenuLink: React.FC<NavigationMenuLinkProps> = ({ classNam
       data-slot="navigation-menu-link"
       className={cn(
         `
-          hover:text-accent-foreground
-          focus-visible:text-accent-foreground
+          hover:text-primary-text
+          focus-visible:text-primary-text
           font-medium gap-1 rounded-md p-2
           focus-visible:ring-ring/90
           [&_svg:not-[class*='text-']]:text-muted-foreground
           [&_svg:not-[class*='size-']]:size-4
-          data-active:text-accent-foreground/90
+          data-active:text-primary-text/90
           focus-visible:outline-ring
           flex h-full flex-col transition-all duration-200 outline-none
           hover:scale-105

@@ -38,7 +38,10 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
   }
 
   return (
-    <section aria-labelledby="coin-catalog-heading" className="py-12 bg-secondary sm:py-20">
+    <section
+      aria-labelledby="coin-catalog-heading"
+      className="py-12 bg-secondary sm:py-20 dark:bg-background dark:border-y"
+    >
       <div className="px-4 max-w-7xl lg:px-8 md:px-6 mx-auto">
         <h2 id="coin-catalog-heading" className="sr-only">{t`Supported Blockchains`}</h2>
 
@@ -128,7 +131,7 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                           <div className="text-right">
                             <div className="text-xs text-muted-foreground sm:text-sm">{t`Tokens`}</div>
 
-                            <div className="text-sm text-accent-foreground font-semibold sm:text-lg">
+                            <div className="text-sm text-primary-text font-semibold sm:text-lg">
                               {tokens.entries.length}
                             </div>
                           </div>
@@ -167,17 +170,22 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
 
                                 {
                                   [`
-                                    border-accent-foreground/20
-                                    hover:border-accent-foreground/80
-                                    bg-primary/10 border-2
+                                    border-ring bg-accent
+                                    hover:border-primary
+                                    border-2
                                   `]: isSearchResult,
 
-                                  "bg-secondary hover:bg-accent": !isSearchResult,
+                                  "bg-secondary hover:bg-accent dark:hover:border-ring border":
+                                    !isSearchResult,
                                 },
                               )}
                             >
                               <div className="size-8 flex items-center justify-center">
-                                <CoinCatalogEntryIcon symbol={tokenSymbol} size={24} />
+                                <CoinCatalogEntryIcon
+                                  symbol={tokenSymbol}
+                                  size={24}
+                                  variant="background"
+                                />
                               </div>
 
                               <span
@@ -185,10 +193,8 @@ export const CoinCatalogOverview: React.FC<CoinCatalogOverviewProps> = ({
                                   "text-xs font-medium leading-tight break-all",
 
                                   {
-                                    [`
-                                      font-semibold text-accent-foreground
-                                      group-hover:text-foreground
-                                    `]: isSearchResult,
+                                    [`font-semibold text-primary-text group-hover:text-foreground`]:
+                                      isSearchResult,
 
                                     "group-hover:text-accent-foreground text-muted-foreground":
                                       !isSearchResult,

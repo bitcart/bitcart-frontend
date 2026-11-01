@@ -60,12 +60,17 @@ export const DrawerPopup: React.FC<DrawerPopupProps> = ({
               data-ending-style:shadow-transparent
               data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)]
               data-nested-drawer-open:overflow-hidden
-              data-nested-drawer-open:bg-[color-mix(in_srgb,var(--popover),var(--color-black)_calc(2%*(var(--nested-drawers)-var(--stack-progress))))]
               data-starting-style:shadow-transparent
               data-swiping:select-none
               dark:before:shadow-[0_-1px_white/6%]
+            `,
+
+            // oxlint-disable better-tailwindcss/no-restricted-classes -- an open nested drawer darkens its parent the same way in every theme
+            `
+              data-nested-drawer-open:bg-[color-mix(in_srgb,var(--popover),var(--color-black)_calc(2%*(var(--nested-drawers)-var(--stack-progress))))]
               dark:data-nested-drawer-open:bg-[color-mix(in_srgb,var(--popover),var(--color-black)_calc(6%*(var(--nested-drawers)-var(--stack-progress))))]
             `,
+            // oxlint-enable better-tailwindcss/no-restricted-classes
 
             {
               [`
