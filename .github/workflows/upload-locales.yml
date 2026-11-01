@@ -17,6 +17,7 @@ jobs:
     name: upload-locales
     runs-on: ubuntu-latest
     environment: transifex
+
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -43,11 +44,11 @@ jobs:
         run: scripts/install-tx-client.sh
 
       - name: Push source locales to Transifex
+        env:
+          TX_TOKEN: ${{ secrets.TX_TOKEN }}
         run: |
           for member in apps/*/ packages/*/; do
             if [ -d "$member.tx" ]; then
               cd "$member" && tx push -s && cd ../..
             fi
           done
-        env:
-          TX_TOKEN: ${{ secrets.TX_TOKEN }}
