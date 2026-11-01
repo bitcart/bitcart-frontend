@@ -2,7 +2,10 @@
 //* Screenshots production beside the local previews. Usage:
 //*   node capture.ts apps --out <dir> [--mode light|dark] [--only pages|states]
 //*   node capture.ts checkout --out <dir> --invoice <id> --phase email|payment [--mode light|dark]
+//*   node capture.ts colors [--mode light|dark] [--invoice <id>]
 //*   node capture.ts submit-email --invoice <id> --email <address>
+//* `colors` prints every theme token's color on production and local, as hex, probing checkout only
+//* when given an invoice id.
 //! Every request other than GET, HEAD and OPTIONS is aborted, except under `submit-email`.
 
 import { mkdirSync } from "node:fs"
@@ -216,6 +219,104 @@ const captureCheckout = async (out: string, mode: Mode, invoice: string, phase: 
   }
 }
 
+//* Reads the custom properties holding bare oklch triplets (`--primary: 0.54 0.28 300.7`), the format
+//* both sides store their palette in, and converts each to hex through a canvas.
+const readTokens = async (mode: Mode, url: string) => {
+  const { context, page } = await openPage(mode, VIEWPORTS.desktop)
+  await page.goto(url, { waitUntil: "load", timeout: 90_000 })
+  await settle(page, VIEWPORTS.desktop.height)
+
+  const tokens = await page.evaluate(() => {
+    const names = new Set<string>()
+
+    const collect = (rules: CSSRuleList) => {
+      for (const rule of rules) {
+        if (rule instanceof CSSStyleRule) {
+          for (const property of rule.style) if (property.startsWith("--")) names.add(property)
+        }
+
+        if ("cssRules" in rule) collect(rule.cssRules as CSSRuleList)
+      }
+    }
+
+    for (const sheet of document.styleSheets) {
+      try {
+        collect(sheet.cssRules)
+      } catch {
+        //* A cross-origin stylesheet refuses to list its rules; the tokens live in same-origin ones.
+      }
+    }
+
+    const computed = getComputedStyle(document.body)
+    const canvas = new OffscreenCanvas(1, 1).getContext("2d", { willReadFrequently: true })!
+    const triplet = /^-?[\d.]+%?\s+-?[\d.]+\s+-?[\d.]+(?:deg)?$/
+
+    return Object.fromEntries(
+      [...names]
+        .map((name) => [name, computed.getPropertyValue(name).trim()] as const)
+        .filter(([, value]) => triplet.test(value))
+        .map(([name, value]) => {
+          canvas.clearRect(0, 0, 1, 1)
+          canvas.fillStyle = `oklch(${value})`
+          canvas.fillRect(0, 0, 1, 1)
+          const [r, g, b] = canvas.getImageData(0, 0, 1, 1).data
+
+          return [
+            name,
+            `#${[r, g, b]
+              .map((channel) => channel.toString(16).padStart(2, "0"))
+              .join("")
+              .toUpperCase()}`,
+          ]
+        }),
+    )
+  })
+
+  await context.close()
+
+  return tokens
+}
+
+const describeChange = (prod: string | undefined, local: string | undefined) => {
+  if (prod === local) {
+    return ""
+  } else if (prod && local) {
+    return "  changed"
+  } else return "  only one side"
+}
+
+const printColors = async (invoice?: string) => {
+  const targets = Object.values(APPS).map(({ title, prod, local }) => ({
+    title,
+    urls: { prod: `${prod}/`, local: `${local}/` },
+  }))
+
+  if (invoice) {
+    targets.push({
+      title: "Checkout",
+      urls: { prod: CHECKOUT.prod + invoice, local: CHECKOUT.local + invoice },
+    })
+  }
+
+  for (const mode of modes) {
+    for (const { title, urls } of targets) {
+      const [prod, local] = [await readTokens(mode, urls.prod), await readTokens(mode, urls.local)]
+      const names = [...new Set([...Object.keys(prod), ...Object.keys(local)])].sort()
+
+      console.log(`\n${title} · ${mode}`)
+      console.log(`  ${"token".padEnd(30)} ${"production".padEnd(10)} local`)
+
+      for (const name of names) {
+        const marker = describeChange(prod[name], local[name])
+
+        console.log(
+          `  ${name.padEnd(30)} ${(prod[name] ?? "–").padEnd(10)} ${local[name] ?? "–"}${marker}`,
+        )
+      }
+    }
+  }
+}
+
 const submitEmail = async (invoice: string, email: string) => {
   const { context, page } = await openPage("light", VIEWPORTS.desktop, true)
   await page.goto(CHECKOUT.prod + invoice, { waitUntil: "load", timeout: 90_000 })
@@ -237,6 +338,8 @@ if (command === "apps" && out) {
   (values.phase === "email" || values.phase === "payment")
 ) {
   for (const mode of modes) await captureCheckout(out, mode, values.invoice, values.phase)
+} else if (command === "colors") {
+  await printColors(values.invoice)
 } else if (command === "submit-email" && values.invoice && values.email) {
   await submitEmail(values.invoice, values.email)
 } else {

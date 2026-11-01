@@ -48,7 +48,7 @@ Moving an invoice past the email step is a real write to testnet: run `capture.t
 ## 4. Compose the pairs
 
 ```bash
-node .agents/skills/prod-compare/scripts/compose.ts --out <dir>
+node .agents/skills/prod-compare/scripts/compose.ts report --out <dir>
 ```
 
 It writes `<dir>/report/` (an `index.html`, an `img/` folder of side-by-side WebP images and a
@@ -62,18 +62,32 @@ only the shared height, so a taller section can inflate the numbers for everythi
 Look at every composite in `<dir>/report/img/`, in both modes. Done when you can attribute every
 visible difference to one of three causes:
 
-- **Deliberate**: a change the branch intends, such as a new token or a restyled component.
+- **Deliberate**: a change in the branch's diff, such as a new token or a restyled component.
 - **Regression**: something the branch broke, such as lost contrast, a missing hover state or shifted
   layout. Report it to the user with the pair's image.
-- **Data**: content that differs between the two backends, such as entry counts or exchange rates.
+- **Data**: content that differs between the two backends. The local builds read the testnet API and
+  production reads mainnet, so counts, lists and rates differ: `/coins` shows fewer tokens locally
+  because testnet fails to return some chains' token lists.
+
+Two helpers sharpen the look:
+
+- `capture.ts colors [--invoice <id>]` prints every theme token's hex value on both sides, flagging the
+  ones that changed. Quote these rather than colors sampled from the images.
+- `compose.ts zoom --out <dir> --pair <mode>/<group>/<name>-<viewport> --region <x>,<y>,<width>,<height>`
+  crops the same region from both full-size shots into `<dir>/zoom/`, for details like badges and focus
+  rings that the composites shrink.
+
+A state that looks wrong on one side only (a popover caught closed, a hover missed) is a capture miss
+until a re-take with `capture.ts apps --out <dir> --only states` shows it again.
 
 Then replace the placeholder between the `FINDINGS:START` and `FINDINGS:END` markers in `index.html`
 with one `.verdict` block per mode, app or gap. Give each block a `chip ok`, `chip warn` or `chip call`
 label, a bold one-line verdict and a paragraph of specifics: hex values, visible percentages, page names.
 End with a gaps block naming what wasn't captured (and why), plus the invoice ids used. Re-running
-`compose.ts` keeps whatever sits between the markers.
+`compose.ts report` keeps whatever sits between the markers.
 
 ## 6. Publish
 
-Publish `<dir>/report/index.html` with the Artifact tool, passing `files.json` as its `files` map so every
-image ships beside the page. To update the same report later, publish from the same path again.
+Publish `<dir>/report/index.html` with the Artifact tool, with `root` set to `<dir>/report` and `files`
+listing every path in `files.json`, so each image ships beside the page. To update the same report
+later, publish from the same path again.

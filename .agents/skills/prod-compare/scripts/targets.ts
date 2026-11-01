@@ -90,13 +90,34 @@ const settle = (page: Page, ms = 400) => page.waitForTimeout(ms)
 const filtersButton = (page: Page) => page.getByRole("button", { name: "Filters", exact: true })
 const ethereumRow = (page: Page) => page.getByRole("button", { name: /Ethereum/ }).first()
 
+//* Clicks until the UI it opens is visible: a click that lands while the page is still settling can
+//* be lost, which once captured the Filters popover closed.
+const openUntilVisible = async (page: Page, trigger: Locator, opened: Locator) => {
+  for (let attempt = 0; attempt < 3 && !(await opened.isVisible()); attempt++) {
+    await trigger.click()
+    await opened.waitFor({ state: "visible", timeout: 3000 }).catch(() => null)
+  }
+
+  await opened.waitFor({ state: "visible", timeout: 1000 })
+  await settle(page, 500)
+}
+
+const openFilters = (page: Page) =>
+  openUntilVisible(
+    page,
+    filtersButton(page),
+    page.getByRole("heading", { name: /Categories/i }).first(),
+  )
+
 const expandEthereum = async (page: Page) => {
   const row = ethereumRow(page)
-  await row.click()
-  await settle(page, 900)
+  const panel = page.locator(`[role="region"][aria-labelledby="${await row.getAttribute("id")}"]`)
+  await openUntilVisible(page, row, panel)
   await row.evaluate((element) => element.scrollIntoView({ block: "start" }))
   await page.evaluate(() => window.scrollBy(0, -90))
   await settle(page, 500)
+
+  return panel
 }
 
 export const STATES: InteractiveState[] = [
@@ -135,8 +156,7 @@ export const STATES: InteractiveState[] = [
     title: "Filters popover and mobile drawer",
 
     run: async (page) => {
-      await filtersButton(page).click()
-      await settle(page, 900)
+      await openFilters(page)
 
       return undefined
     },
@@ -150,8 +170,7 @@ export const STATES: InteractiveState[] = [
     viewports: ["desktop"],
 
     run: async (page) => {
-      await filtersButton(page).click()
-      await settle(page, 900)
+      await openFilters(page)
 
       await page
         .getByRole("button", { name: /^Hosts\b/ })
@@ -229,11 +248,9 @@ export const STATES: InteractiveState[] = [
     viewports: ["desktop"],
 
     run: async (page) => {
-      await expandEthereum(page)
+      const panel = await expandEthereum(page)
 
-      await page
-        .locator('[role="region"]')
-        .first()
+      await panel
         .locator("a, button, [class*='rounded']")
         .filter({ hasText: /USDT|USDC/ })
         .first()

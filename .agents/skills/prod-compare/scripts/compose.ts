@@ -1,8 +1,13 @@
 #!/usr/bin/env node
-//* Pairs every production screenshot with its local twin, measures how far they differ and writes
-//* the report. Usage: node compose.ts --out <dir>
-//* Reads <dir>/shots, writes <dir>/report/{index.html,files.json,img/*.webp}. Re-running keeps the
-//* findings already written between the FINDINGS markers of an existing index.html.
+//* Pairs production screenshots with their local twins and measures how far they differ. Usage:
+//*   node compose.ts report --out <dir>
+//*   node compose.ts zoom --out <dir> --pair <mode>/<group>/<name>-<viewport> --region <x>,<y>,<width>,<height> [--scale 2]
+//* `report` reads <dir>/shots and writes <dir>/report: index.html, img/*.webp, and files.json listing
+//* the image paths to publish beside index.html. Re-running keeps the findings already written
+//* between the FINDINGS markers of an existing index.html.
+//* `zoom` crops the same region out of one pair's full-size shots into <dir>/zoom/, for details the
+//* report's scaled-down images blur. <group> is an app, `states` or `checkout`, as laid out in
+//* <dir>/shots, e.g. `dark/directory/index-mobile`.
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { createRequire } from "node:module"
@@ -16,24 +21,39 @@ import {
   STATES,
   VIEWPORTS,
   pageSlug,
+  type Clip,
   type Mode,
 } from "./targets.ts"
 
 const require = createRequire(resolve(import.meta.dirname, "../../../../package.json"))
 const { chromium } = require("@playwright/test") as typeof import("@playwright/test")
 
+const FINDINGS = /<!-- FINDINGS:START -->[\s\S]*?<!-- FINDINGS:END -->/
+const CHECKOUT_CARD_WIDTH = 700
+
 //! Pixels count as visibly different past 24 of 255 luminance levels (about 10%), and as shifted
 //! in shade past 4. Canvas limits keep a composite under 16,000px tall.
 const VISIBLE_THRESHOLD = 24
 const SHADE_THRESHOLD = 4
 const MAX_HEIGHT = 16_000
-const FINDINGS = /<!-- FINDINGS:START -->[\s\S]*?<!-- FINDINGS:END -->/
 
-type Crop = { x: number; y: number; width: number; height: number }
-type PairOptions = { labels: [string, string]; scale: number; crop?: "checkout-card" }
-type Stats = { visible: number; shade: number; sameSize: boolean; prod: string; local: string }
+type PairOptions = {
+  labels: [string, string]
+  scale: number
+  crop?: Clip
+  format?: "image/webp" | "image/png"
+}
+
+type PairStats = {
+  visible: number
+  shade: number
+  sameSize: boolean
+  prod: string
+  local: string
+}
 
 type Item = { title: string; subtitle?: string; key: string; viewports: string[] }
+
 type Group = {
   title: string
   layout: "closeups" | "pages"
@@ -41,26 +61,27 @@ type Group = {
   items: Item[]
 }
 
-const { values } = parseArgs({ options: { out: { type: "string" } } })
+const { positionals, values } = parseArgs({
+  allowPositionals: true,
 
-if (!values.out) {
-  console.error("Usage: node compose.ts --out <dir>")
-  process.exit(2)
-}
+  options: {
+    out: { type: "string" },
+    pair: { type: "string" },
+    region: { type: "string" },
+    scale: { type: "string", default: "2" },
+  },
+})
 
-const shots = resolve(values.out, "shots")
-const reportDir = resolve(values.out, "report")
-const imgDir = join(reportDir, "img")
-mkdirSync(imgDir, { recursive: true })
-
-const modes = (["light", "dark"] as Mode[]).filter((mode) => existsSync(join(shots, mode)))
+const command = positionals[0]
 const host = (url: string) => new URL(url).host
+const pngWidth = (png: Buffer) => png.readUInt32BE(16)
+const productionLabels: [string, string] = ["production", "localhost"]
 const browser = await chromium.launch()
 const page = await browser.newPage()
 
-const composePair = (prodPng: Buffer, localPng: Buffer, options: PairOptions) =>
-  page.evaluate(
-    async ({ prodSrc, localSrc, labels, scale, crop, limits }) => {
+const composePair = async (prodPng: Buffer, localPng: Buffer, options: PairOptions) => {
+  const { encoded, stats } = await page.evaluate(
+    async ({ prodSrc, localSrc, labels, scale, crop, format, limits }) => {
       const load = async (src: string) => {
         const image = new Image()
         image.src = `data:image/png;base64,${src}`
@@ -124,15 +145,17 @@ const composePair = (prodPng: Buffer, localPng: Buffer, options: PairOptions) =>
 
       const percent = (count: number) => Math.round((count / (a.width * height)) * 1000) / 10
 
-      const area = (image: HTMLImageElement): Crop =>
-        crop === "checkout-card"
-          ? {
-              x: Math.max(0, (image.width - 700) / 2),
-              y: 0,
-              width: Math.min(700, image.width),
-              height: Math.min(900, image.height),
-            }
-          : { x: 0, y: 0, width: image.width, height: image.height }
+      const area = (image: HTMLImageElement) => {
+        const x = Math.min(Math.max(0, crop?.x ?? 0), image.width)
+        const y = Math.min(Math.max(0, crop?.y ?? 0), image.height)
+
+        return {
+          x,
+          y,
+          width: Math.min(crop?.width ?? image.width, image.width - x),
+          height: Math.min(crop?.height ?? image.height, image.height - y),
+        }
+      }
 
       const [areaA, areaB] = [area(prod), area(local)]
       const head = 32
@@ -145,6 +168,7 @@ const composePair = (prodPng: Buffer, localPng: Buffer, options: PairOptions) =>
       )
 
       const context = canvas.getContext("2d")!
+      context.imageSmoothingQuality = "high"
       context.fillStyle = "#786e82"
       context.fillRect(0, 0, canvas.width, canvas.height)
       context.fillStyle = "#1f0938"
@@ -173,7 +197,7 @@ const composePair = (prodPng: Buffer, localPng: Buffer, options: PairOptions) =>
       }
 
       const bytes = new Uint8Array(
-        await (await canvas.convertToBlob({ type: "image/webp", quality: 0.8 })).arrayBuffer(),
+        await (await canvas.convertToBlob({ type: format, quality: 0.8 })).arrayBuffer(),
       )
 
       let binary = ""
@@ -183,7 +207,7 @@ const composePair = (prodPng: Buffer, localPng: Buffer, options: PairOptions) =>
       }
 
       return {
-        webp: btoa(binary),
+        encoded: btoa(binary),
 
         stats: {
           visible: percent(visible),
@@ -201,152 +225,200 @@ const composePair = (prodPng: Buffer, localPng: Buffer, options: PairOptions) =>
       labels: options.labels,
       scale: options.scale,
       crop: options.crop,
+      format: options.format ?? "image/webp",
       limits: { visible: VISIBLE_THRESHOLD, shade: SHADE_THRESHOLD, maxHeight: MAX_HEIGHT },
     },
   )
 
-const stats: Record<string, Stats> = {}
-const files: Record<string, string> = {}
+  return { image: Buffer.from(encoded, "base64"), stats: stats as PairStats }
+}
 
-//* Adds every viewport whose production and local shots both exist, in any captured mode.
-const pairUp = async (
-  shotBase: (mode: Mode) => string,
-  key: string,
-  options: (viewport: string) => PairOptions,
-) => {
-  const viewports: string[] = []
+const writeReport = async (out: string) => {
+  const shots = resolve(out, "shots")
+  const reportDir = resolve(out, "report")
+  mkdirSync(join(reportDir, "img"), { recursive: true })
 
-  for (const viewport of Object.keys(VIEWPORTS)) {
-    for (const mode of modes) {
-      const [prodFile, localFile] = ["prod", "local"].map(
-        (site) => `${shotBase(mode)}-${viewport}-${site}.png`,
-      )
+  const modes = (["light", "dark"] as Mode[]).filter((mode) => existsSync(join(shots, mode)))
+  const stats: Record<string, PairStats> = {}
+  const files: string[] = []
+  const groups: Group[] = []
 
-      if (existsSync(prodFile) && existsSync(localFile)) {
-        const { webp, stats: pairStats } = await composePair(
-          readFileSync(prodFile),
-          readFileSync(localFile),
-          options(viewport),
+  //* Adds every viewport whose production and local shots both exist, in any captured mode.
+  const pairUp = async (
+    shotBase: (mode: Mode) => string,
+    key: string,
+    options: (viewport: string, prodPng: Buffer) => PairOptions,
+  ) => {
+    const viewports: string[] = []
+
+    for (const viewport of Object.keys(VIEWPORTS)) {
+      for (const mode of modes) {
+        const [prodFile, localFile] = ["prod", "local"].map(
+          (site) => `${shotBase(mode)}-${viewport}-${site}.png`,
         )
 
-        const published = `img/${mode}-${key}-${viewport}.webp`
-        writeFileSync(join(reportDir, published), Buffer.from(webp, "base64"))
-        files[published] = join(reportDir, published)
-        stats[`${mode}/${key}-${viewport}`] = pairStats
-        if (!viewports.includes(viewport)) viewports.push(viewport)
+        if (existsSync(prodFile) && existsSync(localFile)) {
+          const prodPng = readFileSync(prodFile)
+
+          const { image, stats: pairStats } = await composePair(
+            prodPng,
+            readFileSync(localFile),
+            options(viewport, prodPng),
+          )
+
+          const published = `img/${mode}-${key}-${viewport}.webp`
+          writeFileSync(join(reportDir, published), image)
+          files.push(published)
+          stats[`${mode}/${key}-${viewport}`] = pairStats
+          if (!viewports.includes(viewport)) viewports.push(viewport)
+        }
       }
     }
+
+    return viewports
   }
 
-  return viewports
-}
+  const stateItems: Item[] = []
 
-const productionLabels: [string, string] = ["production", "localhost"]
-const groups: Group[] = []
-
-const stateItems: Item[] = []
-
-for (const state of STATES) {
-  const key = `state-${state.app}-${state.name}`
-
-  const viewports = await pairUp(
-    (mode) => join(shots, mode, "states", `${state.app}-${state.name}`),
-    key,
-    () => ({
-      labels: productionLabels,
-      scale: 1,
-    }),
-  )
-
-  if (viewports.length) stateItems.push({ title: state.title, key, viewports })
-}
-
-if (stateItems.length) {
-  groups.push({
-    title: "Interactive states",
-    layout: "closeups",
-    labels: productionLabels,
-    items: stateItems,
-  })
-}
-
-const checkoutLabels: [string, string] = [host(CHECKOUT.prod), host(CHECKOUT.local)]
-const checkoutItems: Item[] = []
-
-for (const { name, title } of [...CHECKOUT_STEPS.email, ...CHECKOUT_STEPS.payment]) {
-  const key = `checkout-${name}`
-
-  const viewports = await pairUp(
-    (mode) => join(shots, mode, "checkout", name),
-    key,
-    (viewport) => ({
-      labels: checkoutLabels,
-      scale: viewport === "desktop" ? 0.8 : 1,
-      crop: viewport === "desktop" ? "checkout-card" : undefined,
-    }),
-  )
-
-  if (viewports.length) checkoutItems.push({ title, key, viewports })
-}
-
-if (checkoutItems.length) {
-  groups.push({
-    title: `Checkout: ${checkoutLabels[0]} vs ${checkoutLabels[1]}`,
-    layout: "closeups",
-    labels: checkoutLabels,
-    items: checkoutItems,
-  })
-}
-
-for (const [app, { title, pages, prod, local }] of Object.entries(APPS)) {
-  const items: Item[] = []
-
-  for (const path of pages) {
-    const key = `${app}-${pageSlug(path)}`
+  for (const state of STATES) {
+    const key = `state-${state.app}-${state.name}`
 
     const viewports = await pairUp(
-      (mode) => join(shots, mode, app, pageSlug(path)),
+      (mode) => join(shots, mode, "states", `${state.app}-${state.name}`),
       key,
-      (viewport) => ({
-        labels: productionLabels,
-        scale: viewport === "desktop" ? 0.5 : 1,
+      () => ({ labels: productionLabels, scale: 1 }),
+    )
+
+    if (viewports.length) stateItems.push({ title: state.title, key, viewports })
+  }
+
+  if (stateItems.length) {
+    groups.push({
+      title: "Interactive states",
+      layout: "closeups",
+      labels: productionLabels,
+      items: stateItems,
+    })
+  }
+
+  const checkoutLabels: [string, string] = [host(CHECKOUT.prod), host(CHECKOUT.local)]
+  const checkoutItems: Item[] = []
+
+  for (const { name, title } of [...CHECKOUT_STEPS.email, ...CHECKOUT_STEPS.payment]) {
+    const key = `checkout-${name}`
+
+    const viewports = await pairUp(
+      (mode) => join(shots, mode, "checkout", name),
+      key,
+      (viewport, prodPng) => ({
+        labels: checkoutLabels,
+        scale: viewport === "desktop" ? 0.8 : 1,
+
+        crop:
+          viewport === "desktop"
+            ? {
+                x: (pngWidth(prodPng) - CHECKOUT_CARD_WIDTH) / 2,
+                y: 0,
+                width: CHECKOUT_CARD_WIDTH,
+                height: 900,
+              }
+            : undefined,
       }),
     )
 
-    if (viewports.length) items.push({ title: path, subtitle: host(prod) + path, key, viewports })
+    if (viewports.length) checkoutItems.push({ title, key, viewports })
   }
 
-  if (items.length) {
+  if (checkoutItems.length) {
     groups.push({
-      title: `${title}: ${host(prod)} vs ${host(local)}`,
-      layout: "pages",
-      labels: productionLabels,
-      items,
+      title: `Checkout: ${checkoutLabels[0]} vs ${checkoutLabels[1]}`,
+      layout: "closeups",
+      labels: checkoutLabels,
+      items: checkoutItems,
     })
   }
+
+  for (const [app, { title, pages, prod, local }] of Object.entries(APPS)) {
+    const items: Item[] = []
+
+    for (const path of pages) {
+      const key = `${app}-${pageSlug(path)}`
+
+      const viewports = await pairUp(
+        (mode) => join(shots, mode, app, pageSlug(path)),
+        key,
+        (viewport) => ({ labels: productionLabels, scale: viewport === "desktop" ? 0.5 : 1 }),
+      )
+
+      if (viewports.length) items.push({ title: path, subtitle: host(prod) + path, key, viewports })
+    }
+
+    if (items.length) {
+      groups.push({
+        title: `${title}: ${host(prod)} vs ${host(local)}`,
+        layout: "pages",
+        labels: productionLabels,
+        items,
+      })
+    }
+  }
+
+  const data = { generated: new Date().toISOString().slice(0, 10), modes, groups, stats }
+  const indexFile = join(reportDir, "index.html")
+  const template = readFileSync(join(import.meta.dirname, "../report/template.html"), "utf8")
+
+  const previous = existsSync(indexFile)
+    ? readFileSync(indexFile, "utf8").match(FINDINGS)?.[0]
+    : undefined
+
+  let html = template.replace("/*__DATA__*/ null", () => JSON.stringify(data))
+  if (previous) html = html.replace(FINDINGS, () => previous)
+  writeFileSync(indexFile, html)
+  writeFileSync(join(reportDir, "files.json"), JSON.stringify(files, null, 2))
+
+  for (const [key, { visible, shade, sameSize }] of Object.entries(stats).sort(
+    ([, a], [, b]) => b.visible - a.visible,
+  )) {
+    console.log(
+      `${key.padEnd(52)} visible ${String(visible).padStart(5)}%  shade ${String(shade).padStart(5)}%${sameSize ? "" : "  (heights differ)"}`,
+    )
+  }
+
+  console.log(`\n${files.length} images → ${indexFile}`)
+}
+
+const writeZoom = async (out: string, pair: string, region: Clip, scale: number) => {
+  const base = resolve(out, "shots", pair)
+  const zoomDir = resolve(out, "zoom")
+  const { x, y, width, height } = region
+  const file = join(zoomDir, `${pair.replaceAll("/", "-")}-${x}-${y}-${width}x${height}.png`)
+  mkdirSync(zoomDir, { recursive: true })
+
+  const { image } = await composePair(
+    readFileSync(`${base}-prod.png`),
+    readFileSync(`${base}-local.png`),
+    { labels: productionLabels, scale, crop: region, format: "image/png" },
+  )
+
+  writeFileSync(file, image)
+  console.log(file)
+}
+
+const [x, y, width, height] = (values.region ?? "").split(",").map(Number)
+const region = { x, y, width, height }
+
+if (command === "report" && values.out) {
+  await writeReport(values.out)
+} else if (
+  command === "zoom" &&
+  values.out &&
+  values.pair &&
+  Object.values(region).every(Number.isFinite)
+) {
+  await writeZoom(values.out, values.pair, region, Number(values.scale))
+} else {
+  console.error("Usage: see the header of compose.ts")
+  process.exitCode = 2
 }
 
 await browser.close()
-
-const data = { generated: new Date().toISOString().slice(0, 10), modes, groups, stats }
-const indexFile = join(reportDir, "index.html")
-const template = readFileSync(join(import.meta.dirname, "../report/template.html"), "utf8")
-
-const previous = existsSync(indexFile)
-  ? readFileSync(indexFile, "utf8").match(FINDINGS)?.[0]
-  : undefined
-
-let html = template.replace("/*__DATA__*/ null", () => JSON.stringify(data))
-if (previous) html = html.replace(FINDINGS, () => previous)
-writeFileSync(indexFile, html)
-writeFileSync(join(reportDir, "files.json"), JSON.stringify(files, null, 2))
-
-for (const [key, { visible, shade, sameSize }] of Object.entries(stats).sort(
-  ([, a], [, b]) => b.visible - a.visible,
-)) {
-  console.log(
-    `${key.padEnd(52)} visible ${String(visible).padStart(5)}%  shade ${String(shade).padStart(5)}%${sameSize ? "" : "  (heights differ)"}`,
-  )
-}
-
-console.log(`\n${Object.keys(files).length} images → ${indexFile}`)
