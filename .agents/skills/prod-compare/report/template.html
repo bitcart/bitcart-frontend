@@ -1,0 +1,457 @@
+<title>Production Comparison</title>
+<meta name="claude:viewport-fit-sides" content="cover" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+/>
+<style>
+  :root {
+    --paper: #fefcfe;
+    --ink: #2f0e4f;
+    --ink-soft: #665a75;
+    --rule: #e8e0eb;
+    --violet: #8f0cf4;
+    --ok: #008236;
+    --warn: #bb4d00;
+    --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1f0938;
+      --ink: #fdf7fa;
+      --ink-soft: #beb1cf;
+      --rule: #3c2c53;
+      --violet: #b688fe;
+      --ok: #05df72;
+      --warn: #ffba00;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1f0938;
+    --ink: #fdf7fa;
+    --ink-soft: #beb1cf;
+    --rule: #3c2c53;
+    --violet: #b688fe;
+    --ok: #05df72;
+    --warn: #ffba00;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 40px 80px;
+    display: grid;
+    gap: 48px;
+  }
+
+  .prose {
+    max-width: 70ch;
+    display: grid;
+    gap: 12px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    line-height: 1.15;
+    margin: 0;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  h2 {
+    font-size: 24px;
+    font-weight: 650;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  p {
+    margin: 0;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+  }
+  a {
+    color: var(--violet);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .verdict {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 12px;
+    align-items: baseline;
+    padding-block: 14px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .verdict > div {
+    min-width: 0;
+    display: grid;
+    gap: 4px;
+  }
+
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    white-space: nowrap;
+  }
+
+  .chip.ok {
+    color: var(--ok);
+  }
+  .chip.warn {
+    color: var(--warn);
+  }
+  .chip.call {
+    color: var(--violet);
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+  }
+  table {
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 560px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  th,
+  td {
+    padding: 8px 16px 8px 0;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: middle;
+  }
+
+  th {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  td {
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+
+  .modebar {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 5;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    padding-block: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .seg {
+    display: inline-flex;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .seg button {
+    font: inherit;
+    font-size: 14px;
+    padding: 6px 14px;
+    background: transparent;
+    color: var(--ink);
+    border: 0;
+    cursor: pointer;
+  }
+
+  .seg button[aria-pressed="true"] {
+    background: var(--violet);
+    color: var(--paper);
+    font-weight: 600;
+  }
+  .seg button:focus-visible {
+    outline: 2px solid var(--violet);
+    outline-offset: -2px;
+  }
+
+  .stack {
+    display: grid;
+    gap: 24px;
+  }
+  .item {
+    display: grid;
+    gap: 12px;
+  }
+  .item header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-items: baseline;
+  }
+  .item header code {
+    color: var(--ink-soft);
+  }
+
+  figure {
+    margin: 0;
+    display: grid;
+    gap: 6px;
+  }
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+  figcaption {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  details summary {
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--violet);
+  }
+  details[open] summary {
+    margin-bottom: 8px;
+  }
+
+  .narrow {
+    width: min(100%, 820px);
+  }
+  .closeups {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  }
+  .group-title {
+    padding-top: 8px;
+    border-top: 2px solid var(--ink);
+  }
+</style>
+
+<div class="wrap">
+  <section class="prose">
+    <span class="eyebrow" id="eyebrow"></span>
+    <h1>Production vs local</h1>
+    <p id="intro"></p>
+  </section>
+
+  <section class="prose">
+    <h2>Where it landed</h2>
+    <!-- FINDINGS:START -->
+    <div class="verdict">
+      <span class="chip call">Pending</span>
+      <div>
+        <strong>Findings not written yet.</strong>
+        <p>Replace this block with one verdict per mode, app or gap.</p>
+      </div>
+    </div>
+    <!-- FINDINGS:END -->
+  </section>
+
+  <div class="modebar">
+    <h2>Measured</h2>
+    <div class="seg" role="group" aria-label="Colour mode of the screenshots"></div>
+  </div>
+
+  <section class="prose">
+    <p>
+      Most common colours per page. "Shade" counts pixels whose brightness moved by more than 4 of
+      255 levels; "visible" those that moved by more than 24, about 10%. Pages of different heights
+      are measured over their shared height.
+    </p>
+  </section>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Page</th>
+          <th>Production</th>
+          <th>Local</th>
+          <th>Shade, desktop</th>
+          <th>Visible, desktop</th>
+          <th>Visible, mobile</th>
+        </tr>
+      </thead>
+
+      <tbody id="stats"></tbody>
+    </table>
+  </div>
+
+  <div id="groups" class="stack"></div>
+</div>
+
+<script>
+  const DATA = /*__DATA__*/ null
+  const WIDTHS = { desktop: "1440px", mobile: "390px" }
+  const MODE_KEY = "prod-compare-mode"
+  const shots = []
+
+  const element = (tag, props = {}, ...children) => {
+    const node = Object.assign(document.createElement(tag), props)
+    node.append(...children)
+    return node
+  }
+
+  const figure = (src, caption, alt) => {
+    const img = element("img", { loading: "lazy", alt })
+    img.dataset.src = src
+    shots.push(img)
+    return element("figure", {}, img, element("figcaption", { textContent: caption }))
+  }
+
+  const shot = (group, item, viewport) => {
+    const labels = `Left: ${group.labels[0]}. Right: ${group.labels[1]}.`
+    return figure(
+      `img/{mode}-${item.key}-${viewport}.webp`,
+      `${WIDTHS[viewport]}. ${labels}`,
+      `${item.title} at ${viewport} width, ${group.labels[0]} beside ${group.labels[1]}`,
+    )
+  }
+
+  const groupsRoot = document.getElementById("groups")
+
+  for (const group of DATA.groups) {
+    const section = element(
+      "section",
+      { className: "stack" },
+      element("h2", { className: "group-title", textContent: group.title }),
+    )
+
+    for (const item of group.items) {
+      const header = element("header", {}, element("h3", { textContent: item.title }))
+      if (item.subtitle) header.append(element("code", { textContent: item.subtitle }))
+      const block = element("section", { className: "item" }, header)
+
+      if (group.layout === "pages") {
+        if (item.viewports.includes("desktop")) block.append(shot(group, item, "desktop"))
+
+        if (item.viewports.includes("mobile")) {
+          const mobile = shot(group, item, "mobile")
+          mobile.classList.add("narrow")
+          block.append(
+            element("details", {}, element("summary", { textContent: "Mobile, 390px" }), mobile),
+          )
+        }
+      } else
+        block.append(
+          element(
+            "div",
+            { className: "closeups" },
+            ...item.viewports.map((viewport) => shot(group, item, viewport)),
+          ),
+        )
+
+      section.append(block)
+    }
+
+    groupsRoot.append(section)
+  }
+
+  const pageGroups = DATA.groups.filter(({ layout }) => layout === "pages")
+  const hosts = DATA.groups.map(({ title }) => title.split(": ")[1]).filter(Boolean)
+  document.getElementById("eyebrow").textContent = `bitcart-frontend · ${DATA.generated}`
+
+  document.getElementById("intro").textContent =
+    `Production on the left, the local preview builds on the right (${hosts.join("; ")}), in ${DATA.modes.join(" and ")} mode at 1440×900 and 390×844.` +
+    (DATA.modes.length > 1 ? " Use the switch to flip modes." : "")
+
+  const statsBody = document.getElementById("stats")
+  const percent = (stats) => (stats ? `${stats.visible}%` : "–")
+
+  const renderStats = (mode) => {
+    statsBody.replaceChildren()
+
+    for (const group of pageGroups) {
+      for (const item of group.items) {
+        const desktop = DATA.stats[`${mode}/${item.key}-desktop`]
+        const mobile = DATA.stats[`${mode}/${item.key}-mobile`]
+        const cells = [
+          item.subtitle ?? item.title,
+          desktop?.prod ?? "–",
+          desktop?.local ?? "–",
+          desktop ? `${desktop.shade}%` : "–",
+          percent(desktop),
+          percent(mobile),
+        ]
+        statsBody.append(
+          element("tr", {}, ...cells.map((value) => element("td", { textContent: value }))),
+        )
+      }
+    }
+  }
+
+  const seg = document.querySelector(".seg")
+  const buttons = DATA.modes.map((mode) =>
+    element("button", {
+      type: "button",
+      textContent: mode[0].toUpperCase() + mode.slice(1),
+    }),
+  )
+  seg.append(...buttons)
+  if (DATA.modes.length < 2) seg.hidden = true
+
+  const setMode = (mode) => {
+    buttons.forEach((button, index) =>
+      button.setAttribute("aria-pressed", String(DATA.modes[index] === mode)),
+    )
+    for (const img of shots) img.src = img.dataset.src.replace("{mode}", mode)
+    renderStats(mode)
+
+    try {
+      localStorage.setItem(MODE_KEY, mode)
+    } catch {}
+  }
+
+  buttons.forEach((button, index) =>
+    button.addEventListener("click", () => setMode(DATA.modes[index])),
+  )
+  let initialMode = DATA.modes[0]
+
+  try {
+    const saved = localStorage.getItem(MODE_KEY)
+    if (DATA.modes.includes(saved)) initialMode = saved
+  } catch {}
+
+  setMode(initialMode)
+</script>

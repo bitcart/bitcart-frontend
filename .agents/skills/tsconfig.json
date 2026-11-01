@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@bitcart/configs/by-target-platform/nodejs-ts",
+
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "lib": ["esnext", "dom"],
+    "noEmit": true
+  },
+
+  "include": ["*/scripts"]
+}
