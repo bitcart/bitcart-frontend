@@ -2,9 +2,9 @@
 //* Pairs production screenshots with their local twins and measures how far they differ. Usage:
 //*   node compose.ts report --out <dir>
 //*   node compose.ts zoom --out <dir> --pair <mode>/<group>/<name>-<viewport> --region <x>,<y>,<width>,<height> [--scale 2]
-//* `report` reads <dir>/shots and writes <dir>/report: index.html, img/*.webp, and files.json listing
-//* the image paths to publish beside index.html. Re-running keeps the findings already written
-//* between the FINDINGS markers of an existing index.html.
+//* `report` reads <dir>/shots and writes <dir>/report: index.html, img/*.webp, and files.json, the
+//* Artifact tool's `files` list for publishing the images beside index.html. Re-running keeps the
+//* findings already written between the FINDINGS markers of an existing index.html.
 //* `zoom` crops the same region out of one pair's full-size shots into <dir>/zoom/, for details the
 //* report's scaled-down images blur. <group> is an app, `states` or `checkout`, as laid out in
 //* <dir>/shots, e.g. `dark/directory/index-mobile`.
@@ -32,7 +32,8 @@ const FINDINGS = /<!-- FINDINGS:START -->[\s\S]*?<!-- FINDINGS:END -->/
 const CHECKOUT_CARD_WIDTH = 700
 
 //! Pixels count as visibly different past 24 of 255 luminance levels (about 10%), and as shifted
-//! in shade past 4. Canvas limits keep a composite under 16,000px tall.
+//! in shade past 4. A pair is identical only when no pixel differs at all and the sizes match.
+//! Canvas limits keep a composite under 16,000px tall.
 const VISIBLE_THRESHOLD = 24
 const SHADE_THRESHOLD = 4
 const MAX_HEIGHT = 16_000
@@ -48,6 +49,7 @@ type PairStats = {
   visible: number
   shade: number
   sameSize: boolean
+  identical: boolean
   prod: string
   local: string
 }
@@ -127,6 +129,7 @@ const composePair = async (prodPng: Buffer, localPng: Buffer, options: PairOptio
       const height = Math.min(a.height, b.height)
       let visible = 0
       let shade = 0
+      let changed = 0
 
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
@@ -140,6 +143,7 @@ const composePair = async (prodPng: Buffer, localPng: Buffer, options: PairOptio
 
           if (delta > limits.visible) visible++
           if (delta > limits.shade) shade++
+          if (delta > 0) changed++
         }
       }
 
@@ -206,13 +210,16 @@ const composePair = async (prodPng: Buffer, localPng: Buffer, options: PairOptio
         binary += String.fromCharCode(...bytes.subarray(offset, offset + 0x8000))
       }
 
+      const sameSize = a.width === b.width && a.height === b.height
+
       return {
         encoded: btoa(binary),
 
         stats: {
           visible: percent(visible),
           shade: percent(shade),
-          sameSize: a.width === b.width && a.height === b.height,
+          sameSize,
+          identical: sameSize && changed === 0,
           prod: dominantColors(a),
           local: dominantColors(b),
         },
@@ -233,6 +240,14 @@ const composePair = async (prodPng: Buffer, localPng: Buffer, options: PairOptio
   return { image: Buffer.from(encoded, "base64"), stats: stats as PairStats }
 }
 
+const describePair = ({ identical, sameSize }: PairStats) => {
+  if (identical) {
+    return "  identical"
+  } else if (!sameSize) {
+    return "  (heights differ)"
+  } else return ""
+}
+
 const writeReport = async (out: string) => {
   const shots = resolve(out, "shots")
   const reportDir = resolve(out, "report")
@@ -240,7 +255,7 @@ const writeReport = async (out: string) => {
 
   const modes = (["light", "dark"] as Mode[]).filter((mode) => existsSync(join(shots, mode)))
   const stats: Record<string, PairStats> = {}
-  const files: string[] = []
+  const files: { path: string }[] = []
   const groups: Group[] = []
 
   //* Adds every viewport whose production and local shots both exist, in any captured mode.
@@ -268,7 +283,7 @@ const writeReport = async (out: string) => {
 
           const published = `img/${mode}-${key}-${viewport}.webp`
           writeFileSync(join(reportDir, published), image)
-          files.push(published)
+          files.push({ path: published })
           stats[`${mode}/${key}-${viewport}`] = pairStats
           if (!viewports.includes(viewport)) viewports.push(viewport)
         }
@@ -376,11 +391,13 @@ const writeReport = async (out: string) => {
   writeFileSync(indexFile, html)
   writeFileSync(join(reportDir, "files.json"), JSON.stringify(files, null, 2))
 
-  for (const [key, { visible, shade, sameSize }] of Object.entries(stats).sort(
+  for (const [key, pairStats] of Object.entries(stats).sort(
     ([, a], [, b]) => b.visible - a.visible,
   )) {
+    const { visible, shade } = pairStats
+
     console.log(
-      `${key.padEnd(52)} visible ${String(visible).padStart(5)}%  shade ${String(shade).padStart(5)}%${sameSize ? "" : "  (heights differ)"}`,
+      `${key.padEnd(52)} visible ${String(visible).padStart(5)}%  shade ${String(shade).padStart(5)}%${describePair(pairStats)}`,
     )
   }
 

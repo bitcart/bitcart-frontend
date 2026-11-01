@@ -54,7 +54,8 @@ node .agents/skills/prod-compare/scripts/compose.ts report --out <dir>
 It writes `<dir>/report/` (an `index.html`, an `img/` folder of side-by-side WebP images and a
 `files.json` for publishing) and prints every pair sorted by **visible** difference: the share of pixels
 whose luminance moved by more than 24 of 255 levels. **Shade** counts moves past 4, so a palette change
-shows up as near-100% shade with low visible difference. When page heights differ, both measures cover
+shows up as near-100% shade with low visible difference. Only a pair marked **identical** has no changed
+pixel: 0% on both measures can still hide a faint tint. When page heights differ, both measures cover
 only the shared height, so a taller section can inflate the numbers for everything below it.
 
 ## 5. Write the findings
@@ -75,7 +76,8 @@ Two helpers sharpen the look:
   ones that changed. Quote these rather than colors sampled from the images.
 - `compose.ts zoom --out <dir> --pair <mode>/<group>/<name>-<viewport> --region <x>,<y>,<width>,<height>`
   crops the same region from both full-size shots into `<dir>/zoom/`, for details like badges and focus
-  rings that the composites shrink.
+  rings that the composites shrink. Page composites run up to 16,000px tall, too tall to read whole:
+  read long pages in slices instead (`--region 0,0,390,900 --scale 1`, then `0,900,390,900`, and so on).
 
 A state that looks wrong on one side only (a popover caught closed, a hover missed) is a capture miss
 until a re-take with `capture.ts apps --out <dir> --only states` shows it again.
@@ -89,5 +91,5 @@ End with a gaps block naming what wasn't captured (and why), plus the invoice id
 ## 6. Publish
 
 Publish `<dir>/report/index.html` with the Artifact tool, with `root` set to `<dir>/report` and `files`
-listing every path in `files.json`, so each image ships beside the page. To update the same report
+set to the contents of `files.json`, so each image ships beside the page. To update the same report
 later, publish from the same path again.
