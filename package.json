@@ -20,6 +20,7 @@
     "form-kit": "pnpm -C packages/form-kit",
     "hooks": "pnpm -C packages/hooks",
     "qa": "pnpm -C packages/qa",
+    "tanstack-start-kit": "pnpm -C packages/tanstack-start-kit",
     "ui-kit": "pnpm -C packages/ui-kit",
     "unocss-kit": "pnpm -C packages/unocss-kit",
     "vike-kit": "pnpm -C packages/vike-kit",

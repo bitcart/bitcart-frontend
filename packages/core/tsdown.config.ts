@@ -8,6 +8,7 @@ export default defineConfig({
     "i18n/index": "src/i18n/index.ts",
     "metadata/index": "src/metadata/index.ts",
     "navigation/index": "src/navigation/index.ts",
+    "telemetry/index": "src/telemetry/index.ts",
     types: "src/common/types.ts",
     "utils/index": "src/common/utils/index.ts",
     "validation/index": "src/validation/index.ts",

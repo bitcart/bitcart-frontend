@@ -1,3 +1,8 @@
+import {
+  nitroFumadocsResolveAliases,
+  nitroSsrExternalCjsPackages,
+  serveLinguiCatalogsOverLan,
+} from "@bitcart/configs/supplementary/tanstack-start-vite"
 import story from "@fumadocs/story/vite"
 import { lingui } from "@lingui/vite-plugin"
 import tailwindcss from "@tailwindcss/vite"
@@ -54,24 +59,7 @@ export default defineConfig({
     //! Compiler hoists JSX out of `<Trans>`, or the message ids stop matching the catalogs.
     lingui({ macroTransform: true }),
     react({ compiler: true }),
-
-    //* Nitro's dev middleware routes each request either to Vite or to SSR based on the
-    //* sec-fetch-dest header, falling back to an extension allowlist that doesn't know
-    //* `.po`. Browsers send sec-fetch-* only to trustworthy origins (https/localhost),
-    //* so when the devserver is accessed over LAN the compiled catalog module requests
-    //* get SSR'd into HTML and hydration fails with a MIME-type error. Mark them as
-    //* script fetches before nitro's middleware (registered by the plugin below) runs.
-    {
-      name: "bitcart:serve-po-catalogs-over-lan",
-
-      configureServer(server) {
-        server.middlewares.use((req, _res, next) => {
-          if (req.url?.includes(".po?import")) req.headers["sec-fetch-dest"] = "script"
-
-          next()
-        })
-      },
-    },
+    serveLinguiCatalogsOverLan(),
 
     //* See https://tanstack.com/start/latest/docs/framework/react/guide/hosting#nitro
     //* for guides on hosting
@@ -93,16 +81,7 @@ export default defineConfig({
     ssr: {
       build: {
         rolldownOptions: {
-          //* use-sync-external-store (pulled in by Base UI) is CJS-only. The SSR pass
-          //* keeps react itself external (nitro bundles it later), so rolldown can't
-          //* rewrite the CJS `require("react")` to an import and emits a runtime
-          //* `__require("react")` that loads a second React copy from node_modules
-          //* during prerender, crashing with a null-dispatcher TypeError. Externalize
-          //* the package here so it reaches nitro's own bundling pass as raw CJS —
-          //* there react IS bundled, so nitro rewires `require("react")` to the shared
-          //* instance. Requires use-sync-external-store as a direct dependency, or the
-          //* nitro pass can't resolve the externalized import under pnpm.
-          external: [/^use-sync-external-store(\/|$)/],
+          external: nitroSsrExternalCjsPackages,
         },
       },
     },
@@ -112,13 +91,8 @@ export default defineConfig({
     tsconfigPaths: true,
 
     alias: {
+      ...nitroFumadocsResolveAliases,
       tslib: "tslib/tslib.es6.js",
-
-      //* Nitro adds the `unwasm` resolve condition to the SSR environment, which makes
-      //* "shiki/wasm" (imported by fumadocs-core's unused wasm engine factory) resolve to
-      //* the raw onig.wasm binary that vite's wasm-fallback plugin refuses to bundle.
-      //* Pinning it to the JS wrapper the `default` condition would pick anyway.
-      "shiki/wasm": "shiki/dist/wasm.mjs",
     },
   },
 })

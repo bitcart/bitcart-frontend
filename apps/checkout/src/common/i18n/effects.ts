@@ -1,15 +1,10 @@
-import {
-  SOURCE_LOCALE_ID,
-  combineLocaleLoaders,
-  createLocaleLoader,
-  type LazyLocaleModuleCatalog,
-} from "@bitcart/core/i18n"
+import { createLocaleLoader, type LazyLocaleModuleCatalog } from "@bitcart/core/i18n"
 import { FORM_KIT_SOURCE_LOCALE_MESSAGES, loadFormKitMessages } from "@bitcart/form-kit/i18n"
+import { createLocaleActivation } from "@bitcart/tanstack-start-kit/i18n"
 import { UI_KIT_SOURCE_LOCALE_MESSAGES, loadUiKitMessages } from "@bitcart/ui-kit/i18n"
 import { i18n } from "@lingui/core"
 
 import { messages as APP_SOURCE_LOCALE_MESSAGES } from "./_generated/locales/en.po"
-import { createLocaleActivation } from "./activation"
 
 const AVAILABLE_LOCALE_MODULES = import.meta.glob([
   "./_generated/locales/*.po",
@@ -18,47 +13,17 @@ const AVAILABLE_LOCALE_MODULES = import.meta.glob([
   "!./_generated/locales/en.po",
 ]) as LazyLocaleModuleCatalog
 
-//* The app's own catalog comes last: its translations override the packages' ones.
-const SOURCE_LOCALE_MESSAGES = {
-  ...UI_KIT_SOURCE_LOCALE_MESSAGES,
-  ...FORM_KIT_SOURCE_LOCALE_MESSAGES,
-  ...APP_SOURCE_LOCALE_MESSAGES,
-}
-
-const loadLocale = combineLocaleLoaders(
-  loadUiKitMessages,
-  loadFormKitMessages,
-  createLocaleLoader(AVAILABLE_LOCALE_MODULES),
-)
-
-const localeActivation = createLocaleActivation({
+export const localeActivation = createLocaleActivation({
   i18n,
 
-  //* The source catalog ships in the main chunk and is never fetched as a lazy one.
-  loadAppCatalog: (localeId) =>
-    localeId === SOURCE_LOCALE_ID ? Promise.resolve(SOURCE_LOCALE_MESSAGES) : loadLocale(localeId),
+  //* The app's own catalog comes last: its translations override the packages' ones.
+  catalogs: [
+    { sourceMessages: UI_KIT_SOURCE_LOCALE_MESSAGES, loadMessages: loadUiKitMessages },
+    { sourceMessages: FORM_KIT_SOURCE_LOCALE_MESSAGES, loadMessages: loadFormKitMessages },
+
+    {
+      sourceMessages: APP_SOURCE_LOCALE_MESSAGES,
+      loadMessages: createLocaleLoader(AVAILABLE_LOCALE_MODULES),
+    },
+  ],
 })
-
-export const { registerCatalogLoader } = localeActivation
-
-//* FIXME: Decouple from deps and extract to a shared Tanstack Start kit package once it's created.
-/**
- * Activates the statically bundled source catalog on the global Lingui instance.
- * For client-only apps.
- *
- * **Must be called before the router is created.**
- */
-export const activateSourceLocale = (): void => {
-  i18n.load(SOURCE_LOCALE_ID, SOURCE_LOCALE_MESSAGES)
-  i18n.activate(SOURCE_LOCALE_ID)
-}
-
-//* FIXME: Decouple from deps and extract to a shared Tanstack Start kit package once it's created.
-/**
- * Loads a catalog on demand and activates it on the global Lingui instance.
- */
-export const activateLocale = async (localeId: string): Promise<void> => {
-  if (i18n.locale === localeId) return void null
-
-  await localeActivation.activateLocale(localeId)
-}

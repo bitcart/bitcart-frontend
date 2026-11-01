@@ -1,32 +1,45 @@
-// FIXME: Rewrite the i18n layer once a shared Tanstack Start kit package is available and stable.
-
 import {
   SOURCE_LOCALE_ID,
+  createLocaleLoader,
+  type LazyLocaleModuleCatalog,
   type LocaleId,
-  type LocaleModuleCatalog,
   type PseudoLocaleId,
 } from "@bitcart/core/i18n"
-import { loadUiKitMessages } from "@bitcart/ui-kit/i18n"
+import { createLocaleActivation } from "@bitcart/tanstack-start-kit/i18n"
+import { UI_KIT_SOURCE_LOCALE_MESSAGES, loadUiKitMessages } from "@bitcart/ui-kit/i18n"
 import { i18n } from "@lingui/core"
 
-const AVAILABLE_LOCALE_MODULES = import.meta.glob("./_generated/locales/*.po", {
-  eager: true,
-}) as LocaleModuleCatalog
+import { messages as APP_SOURCE_LOCALE_MESSAGES } from "./_generated/locales/en.po"
+
+const AVAILABLE_LOCALE_MODULES = import.meta.glob([
+  "./_generated/locales/*.po",
+
+  //* Already in the main chunk.
+  "!./_generated/locales/en.po",
+]) as LazyLocaleModuleCatalog
 
 const getLocaleId = (catalogModulePath: string) =>
   catalogModulePath.replace("./_generated/locales/", "").replace(".po", "") as
     | LocaleId
     | PseudoLocaleId
 
-export const AVAILABLE_LOCALE_IDS = Object.keys(AVAILABLE_LOCALE_MODULES).map(getLocaleId)
+export const AVAILABLE_LOCALE_IDS: (LocaleId | PseudoLocaleId)[] = [
+  SOURCE_LOCALE_ID,
+  ...Object.keys(AVAILABLE_LOCALE_MODULES).map(getLocaleId),
+]
 
-for (const [modulePath, { messages }] of Object.entries(AVAILABLE_LOCALE_MODULES)) {
-  const localeId = getLocaleId(modulePath)
+export const localeActivation = createLocaleActivation({
+  i18n,
 
   //* The app's own catalog comes last: its translations override the UI Kit's ones.
-  i18n.load(localeId, { ...(await loadUiKitMessages(localeId)), ...messages })
-}
+  catalogs: [
+    { sourceMessages: UI_KIT_SOURCE_LOCALE_MESSAGES, loadMessages: loadUiKitMessages },
 
-i18n.activate(SOURCE_LOCALE_ID)
+    {
+      sourceMessages: APP_SOURCE_LOCALE_MESSAGES,
+      loadMessages: createLocaleLoader(AVAILABLE_LOCALE_MODULES),
+    },
+  ],
+})
 
 export { i18n }

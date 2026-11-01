@@ -4,15 +4,17 @@ import {
   type SourceLocaleId,
 } from "@bitcart/core/i18n"
 import {
+  BITCART_ORGANIZATION_JSON_LD,
   getDocumentHeadManifest,
   type DocumentFavicon,
   type DocumentViewportParams,
 } from "@bitcart/core/metadata"
 import type { AccountHandle } from "@bitcart/core/types"
-import { useMemo } from "react"
 import { usePageContext } from "vike-react/usePageContext"
 
 import { renderDocumentHeadManifest } from "./utils"
+
+const ORGANIZATION_JSON_LD_INNER_HTML = { __html: JSON.stringify(BITCART_ORGANIZATION_JSON_LD) }
 
 export type HeadProps<TSupportedLocaleId extends BCP47LanguageSubtag> = {
   favicon?: DocumentFavicon
@@ -44,27 +46,6 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
       twitterHandles,
       viewportParams,
     })
-
-    const metadataJsonInnerHtml = useMemo(
-      () => ({
-        __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Bitcart",
-          url: "https://bitcart.ai",
-
-          sameAs: [
-            "https://twitter.com/BitcartCC",
-            "https://github.com/bitcart",
-            "https://reddit.com/r/Bitcart",
-            "https://linkedin.com/company/bitcart",
-            "https://instagram.com/bitcartcc",
-          ],
-        }),
-      }),
-
-      [],
-    )
 
     return (
       <>
@@ -111,7 +92,10 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
 
         {renderDocumentHeadManifest(manifest)}
 
-        <script type="application/ld+json" dangerouslySetInnerHTML={metadataJsonInnerHtml} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={ORGANIZATION_JSON_LD_INNER_HTML}
+        />
       </>
     )
   }

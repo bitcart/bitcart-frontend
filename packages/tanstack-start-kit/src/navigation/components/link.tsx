@@ -1,10 +1,18 @@
 import {
   getDestinationTypeAwareLinkProps,
   isInternalHref,
+  type A11yAwareLinkProps,
   type InternalHref,
 } from "@bitcart/core/navigation"
-import type { BasicLinkComponent } from "@bitcart/ui-kit/types"
 import { Link as RouterLink } from "@tanstack/react-router"
+
+export type LinkProps = A11yAwareLinkProps & {
+  title?: string
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>
+  className?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
+}
 
 /**
  * Splits an app-internal href into the `to` / `search` / `hash` triple.
@@ -25,7 +33,7 @@ const toRouterLinkOptions = (href: InternalHref) => {
  *
  * Internal destinations go through the router, external ones fall back to a plain anchor.
  */
-export const Link: BasicLinkComponent = ({ href, a11yHint, children, ...props }) => {
+export const Link = ({ href, a11yHint, children, ...props }: LinkProps): React.JSX.Element => {
   const hint = a11yHint && <span className="sr-only">{a11yHint}</span>
 
   if (isInternalHref(href)) {

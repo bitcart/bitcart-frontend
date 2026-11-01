@@ -1,29 +1,73 @@
 import { setupI18n } from "@lingui/core"
-import { describe, expect, test } from "vitest"
+import { describe, expect, test, vi } from "vitest"
 
 import { createLocaleActivation } from "./activation"
 
 const setup = () => {
-  const i18n = setupI18n({ locale: "en", messages: { en: {} } })
+  const i18n = setupI18n()
+
+  const loadAppMessages = vi.fn((locale: string) =>
+    Promise.resolve({ "app.title": `App (${locale})` }),
+  )
 
   const activation = createLocaleActivation({
     i18n,
-    loadAppCatalog: (locale) => Promise.resolve({ "app.title": `Checkout (${locale})` }),
+
+    catalogs: [
+      {
+        sourceMessages: { "kit.close": "Close", "app.title": "Package title" },
+        loadMessages: (locale) => Promise.resolve({ "kit.close": `Close (${locale})` }),
+      },
+
+      { sourceMessages: { "app.title": "App" }, loadMessages: loadAppMessages },
+    ],
   })
 
-  return { i18n, ...activation }
+  activation.activateSourceLocale()
+
+  return { i18n, loadAppMessages, ...activation }
 }
 
 describe("createLocaleActivation", () => {
-  test("activates a locale with the app's catalog, keeping catalogs merged into it earlier", async () => {
+  test("activates the source catalogs merged in order, later ones overriding earlier ones", () => {
+    const { i18n, loadAppMessages } = setup()
+
+    expect(i18n.locale).toBe("en")
+    expect(i18n._("kit.close")).toBe("Close")
+    expect(i18n._("app.title")).toBe("App")
+    expect(loadAppMessages).not.toHaveBeenCalled()
+  })
+
+  test("activates a locale with every catalog, keeping catalogs merged into it earlier", async () => {
     const { i18n, activateLocale } = setup()
 
     i18n.load("de", { "flow.pay": "Bezahlen" })
     await activateLocale("de")
 
     expect(i18n.locale).toBe("de")
-    expect(i18n._("app.title")).toBe("Checkout (de)")
+    expect(i18n._("kit.close")).toBe("Close (de)")
+    expect(i18n._("app.title")).toBe("App (de)")
     expect(i18n._("flow.pay")).toBe("Bezahlen")
+  })
+
+  test("switches back to the source locale without loading its catalogs", async () => {
+    const { i18n, activateLocale, loadAppMessages } = setup()
+
+    await activateLocale("de")
+    await activateLocale("en")
+
+    expect(i18n.locale).toBe("en")
+    expect(i18n._("app.title")).toBe("App")
+    expect(loadAppMessages).toHaveBeenCalledExactlyOnceWith("de")
+  })
+
+  test("does nothing for the active locale", async () => {
+    const { activateLocale, loadAppMessages } = setup()
+
+    await activateLocale("de")
+    await activateLocale("de")
+
+    expect(loadAppMessages).toHaveBeenCalledOnce()
   })
 
   test("switches only once every registered catalog for the locale has loaded", async () => {

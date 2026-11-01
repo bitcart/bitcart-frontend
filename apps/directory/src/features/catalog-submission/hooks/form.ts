@@ -1,6 +1,6 @@
+import { trackEvent } from "@bitcart/core/telemetry"
 import { useAppForm } from "@bitcart/form-kit/hooks"
 import { toast } from "@bitcart/ui-kit/utils"
-import { trackEvent } from "@bitcart/vike-kit/telemetry"
 import { t } from "@lingui/core/macro"
 import { useMemo } from "react"
 import { capitalize, isNonNull } from "remeda"

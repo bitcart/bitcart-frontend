@@ -22,6 +22,7 @@
     "./by-view-layer/react-vite": "./src/by-view-layer/react-vite.ts",
     "./supplementary/lingui-catalogs": "./src/supplementary/lingui-catalogs.ts",
     "./supplementary/lingui-macros": "./src/supplementary/lingui-macros.ts",
+    "./supplementary/tanstack-start-vite": "./src/supplementary/tanstack-start-vite.ts",
     "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts",
     "./supplementary/vike-vite": "./src/supplementary/vike-vite.ts"
   },
@@ -43,6 +44,7 @@
     "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
-    "unocss": "catalog:devDependencies"
+    "unocss": "catalog:devDependencies",
+    "vite": "catalog:devDependencies"
   }
 }

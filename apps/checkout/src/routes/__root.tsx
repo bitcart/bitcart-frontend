@@ -1,5 +1,7 @@
-import { getDocumentHeadManifest, getPageDocumentMetadata } from "@bitcart/core/metadata"
 import { useIsClient } from "@bitcart/hooks"
+import { useI18nInitialization } from "@bitcart/tanstack-start-kit/i18n"
+import { getDocumentHead } from "@bitcart/tanstack-start-kit/metadata"
+import { Link, useClientRoute } from "@bitcart/tanstack-start-kit/navigation"
 import { LayoutContainer, Toaster } from "@bitcart/ui-kit/components"
 import { LayoutContextProvider, ThemeProvider } from "@bitcart/ui-kit/providers"
 import { cn } from "@bitcart/ui-kit/utils"
@@ -16,12 +18,16 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import { useMemo } from "react"
 
-import { APP_POSIX_LOCALE_ID_MAP, getAppDocumentMetadata, SUPPORTED_LOCALE_IDS } from "#/app.config"
+import {
+  APP_LOCALE_IDS,
+  APP_POSIX_LOCALE_ID_MAP,
+  getAppDocumentMetadata,
+  SUPPORTED_LOCALE_IDS,
+} from "#/app.config"
 import { BRAND_X_HANDLE, PRODUCTION_BASE_URL, PROJECT_CANONICAL_NAME } from "#/common/constants"
-import { useI18nInitialization } from "#/common/i18n"
+import { localeActivation } from "#/common/i18n"
 import { isEmbeddedByLoader, useEmbedEscapeClose } from "#/common/integrations/embed"
 import { TanStackQueryDevtools } from "#/common/integrations/tanstack-query"
-import { Link, useClientRoute } from "#/common/navigation"
 
 import { getLayoutConfig } from "./-layout/config"
 
@@ -38,35 +44,21 @@ export const Route = createRootRouteWithContext<CheckoutRouterContext>()({
     //* Prevents permanently baking in the static `/i/_shell` at prerender time.
     const routePath = isServer ? "/" : (matches[matches.length - 1]?.pathname ?? match.pathname)
 
-    const metadata = getPageDocumentMetadata({
+    const { title, meta, links } = getDocumentHead({
       baseUrl: PRODUCTION_BASE_URL,
+      favicon: { href: "/checkout/favicon.ico", type: "image/x-icon" },
       localeId: globalI18n.locale,
+      ogSiteName: PROJECT_CANONICAL_NAME,
       posixLocaleIdMap: APP_POSIX_LOCALE_ID_MAP,
       routePath,
       staticParams: getAppDocumentMetadata(),
       supportedLocaleIds: SUPPORTED_LOCALE_IDS,
-    })
-
-    const manifest = getDocumentHeadManifest({
-      favicon: { href: "/checkout/favicon.ico", type: "image/x-icon" },
-      isCharsetSetElsewhere: false,
-      isOgTitleSetElsewhere: false,
-      isRoutingLocaleDependent: false,
-      metadata,
-      ogSiteName: PROJECT_CANONICAL_NAME,
-      posixLocaleIdMap: APP_POSIX_LOCALE_ID_MAP,
-      routePath,
       twitterHandles: { author: BRAND_X_HANDLE, site: BRAND_X_HANDLE },
     })
 
     return {
-      meta: [
-        { title: metadata.title },
-        { name: "robots", content: "noindex, nofollow" },
-        ...manifest.meta,
-      ],
-
-      links: [{ rel: "stylesheet", href: unoCss }, ...manifest.links],
+      meta: [{ title }, { name: "robots", content: "noindex, nofollow" }, ...meta],
+      links: [{ rel: "stylesheet", href: unoCss }, ...links],
       scripts: [{ src: "/checkout/config.js" }],
     }
   },
@@ -93,7 +85,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
   const layoutConfig = useMemo(() => getLayoutConfig(i18n), [i18n])
 
-  useI18nInitialization()
+  useI18nInitialization({ localeActivation, supportedLocaleIds: APP_LOCALE_IDS })
 
   return (
     <html lang={i18n.locale} suppressHydrationWarning>

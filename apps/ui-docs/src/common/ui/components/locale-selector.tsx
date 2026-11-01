@@ -3,7 +3,7 @@ import { LocaleSelector as LocaleSelectorComponent } from "@bitcart/ui-kit/compo
 import { useLingui } from "@lingui/react"
 import { useCallback } from "react"
 
-import { AVAILABLE_LOCALE_IDS } from "@/common/i18n"
+import { AVAILABLE_LOCALE_IDS, localeActivation } from "@/common/i18n"
 
 /**
  * UI Kit locale selector wired to the docs app's runtime-only locale switching:
@@ -14,11 +14,11 @@ export const LocaleSelector: React.FC = () => {
 
   const handleSelectLocale = useCallback(
     (localeId: LocaleId | PseudoLocaleId, callback?: VoidFunction) => {
-      i18n.activate(localeId)
+      void localeActivation.activateLocale(localeId)
       callback?.()
     },
 
-    [i18n],
+    [],
   )
 
   if (AVAILABLE_LOCALE_IDS.length < (AVAILABLE_LOCALE_IDS.includes(PSEUDO_LOCALE_ID) ? 1 : 2)) {

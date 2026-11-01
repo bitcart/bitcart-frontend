@@ -1,6 +1,6 @@
+import { trackEvent } from "@bitcart/core/telemetry"
 import { Button, LinkButton } from "@bitcart/ui-kit/components"
 import { cn } from "@bitcart/ui-kit/utils"
-import { trackEvent } from "@bitcart/vike-kit/telemetry"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { Heart, Loader } from "lucide-react"
 import { useCallback, useState } from "react"

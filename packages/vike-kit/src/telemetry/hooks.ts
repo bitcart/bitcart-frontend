@@ -1,7 +1,6 @@
+import { trackEvent } from "@bitcart/core/telemetry"
 import { useEffect } from "react"
 import { usePageContext } from "vike-react/usePageContext"
-
-import { trackEvent } from "./effects"
 
 export const useNotFoundTracking = (): void => {
   const { is404, urlPathname } = usePageContext()

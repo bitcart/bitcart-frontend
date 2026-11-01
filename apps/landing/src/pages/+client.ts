@@ -1,4 +1,4 @@
-import { configurePlausible } from "@bitcart/vike-kit/telemetry"
+import { configurePlausible } from "@bitcart/core/telemetry"
 
 import { IS_PLAUSIBLE_ENABLED, PRODUCTION_BASE_URL } from "@/common/constants"
 import { env } from "@/env"

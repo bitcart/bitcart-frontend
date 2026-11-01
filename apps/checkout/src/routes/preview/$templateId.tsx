@@ -9,6 +9,7 @@ import {
   CHECKOUT_PREVIEW_WALLETS,
   DEFAULT_CHECKOUT_PREVIEW_STATUS,
 } from "@bitcart/qa"
+import { useCatalogLoader } from "@bitcart/tanstack-start-kit/i18n"
 import { useCurrentBreakpoint } from "@bitcart/ui-kit/hooks"
 import { cn, toast } from "@bitcart/ui-kit/utils"
 import type { BreakpointKey } from "@bitcart/unocss-kit/types"
@@ -24,7 +25,7 @@ import { CHECKOUT_THEME_PRESET_IDS } from "#/checkout/theme/presets"
 import { checkoutThemeSchema } from "#/checkout/theme/schemas"
 import { checkoutTemplates } from "#/common/checkout-templates"
 import { ENV_TAG } from "#/common/constants"
-import { useCatalogLoader } from "#/common/i18n"
+import { localeActivation } from "#/common/i18n"
 import { EMBED_APP_CONFIG, getEmbedHost, isEmbeddedByLoader } from "#/common/integrations/embed"
 
 import { CHECKOUT_APP_CONFIG } from "../-components/app-controls"
@@ -131,6 +132,8 @@ function PreviewPage() {
   )
 
   useCatalogLoader(
+    localeActivation,
+
     useCallback(
       (locale: string) => checkoutTemplates.loadCatalog(templateId, locale),
       [templateId],

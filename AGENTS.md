@@ -12,13 +12,14 @@ Bitcart frontend monorepo containing web applications, shared packages and app t
 - **apps/ui-docs** — UI Kit documentation site built on Fumadocs (TanStack Start)
 - **packages/client-sdk** — TypeScript SDK for the Bitcart Merchants API. orval generates the raw client, Zod schemas and MSW mocks from a pinned OpenAPI schema into the three `generated/` directories; everything else is authored, including the per-tag `endpoints/` wrappers and hooks, `auth/`, `utils/` and the SDK configuration. Only the `generated/` trees are safe to overwrite
 - **packages/configs** — Shared configurations (TypeScript, oxlint, dependency-cruiser, etc.)
-- **packages/core** — Foundational utilities, types, Zod schemas, i18n utilities
+- **packages/core** — Foundational utilities, types, Zod schemas, i18n utilities, document metadata, Plausible telemetry
 - **packages/form-kit** — Form utilities using TanStack React Form
 - **packages/hooks** — Framework- and presentation-agnostic, SSR-safe React hooks
 - **packages/qa** — Shared Playwright E2E utilities, test templates, testid constants, and unit test mocks
+- **packages/tanstack-start-kit** — Shared TanStack Start head metadata, navigation, i18n activation, route error handling
 - **packages/ui-kit** — Reusable React component library (atomic design: atoms/molecules/organisms/templates) with shadcn/ui + UnoCSS
 - **packages/unocss-kit** — UnoCSS tooling, including the custom styling preset
-- **packages/vike-kit** — Shared Vike configuration, i18n, navigation, telemetry, metadata
+- **packages/vike-kit** — Shared Vike configuration, i18n, navigation, 404 tracking, metadata
 - **templates/vike-app** — Minimal Vike application boilerplate
 
 ## Commands

@@ -7,13 +7,13 @@ import { createRouter as createTanStackRouter } from "@tanstack/react-router"
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query"
 
 import { BITCART_API_URL } from "#/common/constants"
-import { activateSourceLocale } from "#/common/i18n"
+import { localeActivation } from "#/common/i18n"
 
 import { routeTree } from "./routeTree.gen"
 
 export function getRouter() {
   BitcartApiConfig.set({ baseUrl: BITCART_API_URL })
-  activateSourceLocale()
+  localeActivation.activateSourceLocale()
   applyZodL10n()
 
   const queryClient = new QueryClient()

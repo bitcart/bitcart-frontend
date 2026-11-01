@@ -29,6 +29,7 @@
     "@bitcart/core": "workspace:*",
     "@bitcart/form-kit": "workspace:*",
     "@bitcart/hooks": "workspace:*",
+    "@bitcart/tanstack-start-kit": "workspace:*",
     "@bitcart/ui-kit": "workspace:*",
     "@bitcart/unocss-kit": "workspace:*",
     "@fontsource-variable/geist-mono": "catalog:dependencies",

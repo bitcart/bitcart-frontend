@@ -27,6 +27,10 @@
       "import": "./dist/navigation/index.js",
       "types": "./dist/navigation/index.d.ts"
     },
+    "./telemetry": {
+      "import": "./dist/telemetry/index.js",
+      "types": "./dist/telemetry/index.d.ts"
+    },
     "./types": {
       "types": "./dist/types.d.ts"
     },
@@ -49,6 +53,7 @@
     "build": "tsdown"
   },
   "dependencies": {
+    "@plausible-analytics/tracker": "catalog:dependencies",
     "culori": "catalog:devDependencies",
     "remeda": "catalog:dependencies",
     "zod": "catalog:dependencies"

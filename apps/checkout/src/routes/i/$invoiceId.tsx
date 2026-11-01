@@ -1,3 +1,4 @@
+import { useCatalogLoader } from "@bitcart/tanstack-start-kit/i18n"
 import { i18n } from "@lingui/core"
 import { createFileRoute } from "@tanstack/react-router"
 import { useCallback } from "react"
@@ -6,7 +7,7 @@ import { preloadCheckoutSource, useCheckoutSource } from "#/checkout/runtime/sou
 import { CheckoutView } from "#/checkout/runtime/view"
 import { checkoutTemplates } from "#/common/checkout-templates"
 import { ENV_TAG } from "#/common/constants"
-import { useCatalogLoader } from "#/common/i18n"
+import { localeActivation } from "#/common/i18n"
 import { EMBED_APP_CONFIG, getEmbedHost, isEmbeddedByLoader } from "#/common/integrations/embed"
 
 import { CHECKOUT_APP_CONFIG } from "../-components/app-controls"
@@ -69,6 +70,8 @@ function InvoicePage() {
     : CHECKOUT_APP_CONFIG
 
   useCatalogLoader(
+    localeActivation,
+
     useCallback(
       (locale: string) => checkoutTemplates.loadCatalog(templateId, locale),
       [templateId],

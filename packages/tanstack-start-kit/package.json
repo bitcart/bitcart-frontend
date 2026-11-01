@@ -1,0 +1,60 @@
+{
+  "name": "@bitcart/tanstack-start-kit",
+  "version": "1.0.0",
+  "description": "Shared TanStack Start integration for Bitcart applications",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    "./errors": {
+      "types": "./dist/errors/index.d.ts",
+      "import": "./dist/errors/index.js"
+    },
+    "./i18n": {
+      "types": "./dist/i18n/index.d.ts",
+      "import": "./dist/i18n/index.js"
+    },
+    "./metadata": {
+      "types": "./dist/metadata/index.d.ts",
+      "import": "./dist/metadata/index.js"
+    },
+    "./navigation": {
+      "types": "./dist/navigation/index.d.ts",
+      "import": "./dist/navigation/index.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.lib.json",
+    "lint:check": "oxlint .",
+    "lint": "oxlint . --fix",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
+    "generate:dist-graphviz": "depcruise dist --output-type dot | dot -T svg -o dist-graphviz.svg",
+    "depcruise:deps": "depcruise dist --output-type err-long",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "@bitcart/core": "workspace:*",
+    "@bitcart/hooks": "workspace:*",
+    "@lingui/core": "catalog:dependencies",
+    "@lingui/react": "catalog:dependencies",
+    "react": "catalog:dependencies"
+  },
+  "devDependencies": {
+    "@bitcart/configs": "workspace:*",
+    "@stylistic/eslint-plugin": "catalog:devDependencies",
+    "@tanstack/react-router": "catalog:dependencies",
+    "@types/node": "catalog:devDependencies",
+    "@types/react": "catalog:devDependencies",
+    "dependency-cruiser": "catalog:devDependencies",
+    "eslint-plugin-react-hooks": "catalog:devDependencies",
+    "oxlint": "catalog:devDependencies",
+    "oxlint-tsgolint": "catalog:devDependencies",
+    "tsdown": "catalog:devDependencies",
+    "typescript": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies"
+  },
+  "peerDependencies": {
+    "@tanstack/react-router": "catalog:dependencies"
+  }
+}

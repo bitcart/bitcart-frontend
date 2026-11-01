@@ -1,13 +1,14 @@
 import { getNormalizedErrorMessage, isNotFoundError } from "@bitcart/client-sdk/utils"
+import { useRouteErrorRetry } from "@bitcart/tanstack-start-kit/errors"
 import { Button } from "@bitcart/ui-kit/components"
 import type { MessageDescriptor } from "@lingui/core"
 import { msg } from "@lingui/core/macro"
 import { useLingui } from "@lingui/react/macro"
 import { useQueryErrorResetBoundary } from "@tanstack/react-query"
-import { useParams, useRouter, useSearch, type ErrorComponentProps } from "@tanstack/react-router"
+import { useParams, useSearch, type ErrorComponentProps } from "@tanstack/react-router"
 import { AlertCircleIcon } from "lucide-react"
 import type React from "react"
-import { useCallback, useEffect } from "react"
+import { useEffect } from "react"
 
 import { CheckoutCard } from "#/checkout"
 import { CheckoutAppConfigContext } from "#/checkout/runtime/context"
@@ -35,7 +36,6 @@ const ERROR_MESSAGES: Record<
   },
 }
 
-// FIXME: Extract into a Tanstack Kit package, once it exists.
 export type ErrorFallbackProps = { subject: ErrorSubject; retry: () => void; error: unknown }
 
 export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ subject, retry, error }) => {
@@ -68,8 +68,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ subject, retry, er
   )
 }
 
-const useRouteErrorRetry = (reset: () => void) => {
-  const router = useRouter()
+const useQueryRouteErrorRetry = (reset: () => void) => {
   const { reset: resetQueryErrors } = useQueryErrorResetBoundary()
 
   //* Suspense queries rethrow their cached errors until the query cache is reset with the boundary.
@@ -77,14 +76,11 @@ const useRouteErrorRetry = (reset: () => void) => {
     resetQueryErrors()
   }, [resetQueryErrors])
 
-  return useCallback(() => {
-    reset()
-    void router.invalidate()
-  }, [reset, router])
+  return useRouteErrorRetry(reset)
 }
 
 export const InvoiceErrorFallback = ({ error, reset }: ErrorComponentProps) => {
-  const handleRetry = useRouteErrorRetry(reset)
+  const handleRetry = useQueryRouteErrorRetry(reset)
   const { invoiceId } = useParams({ strict: false })
   const isEmbeddedCheckout = isEmbeddedByLoader(useSearch({ strict: false }))
 
@@ -99,7 +95,7 @@ export const InvoiceErrorFallback = ({ error, reset }: ErrorComponentProps) => {
 }
 
 export const RefundErrorFallback = ({ error, reset }: ErrorComponentProps) => {
-  const handleRetry = useRouteErrorRetry(reset)
+  const handleRetry = useQueryRouteErrorRetry(reset)
 
   return <ErrorFallback subject="refund" error={error} retry={handleRetry} />
 }
