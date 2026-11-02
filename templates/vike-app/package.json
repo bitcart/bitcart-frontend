@@ -5,19 +5,19 @@
   "description": "Minimal Vike application boilerplate for Bitcart projects",
   "type": "module",
   "scripts": {
-    "i18n:extract-locales": "lingui extract --clean",
-    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
-    "lint:check": "oxlint .",
-    "lint": "oxlint . --fix",
-    "build:styles": "unocss",
     "build:main": "vike build",
-    "dev:styles": "unocss --watch",
+    "build:styles": "unocss",
     "dev:main": "vike dev --host",
-    "preview": "vike preview --host",
+    "dev:styles": "unocss --watch",
     "e2e": "playwright test",
+    "e2e:report": "playwright show-report e2e/playwright-report",
     "e2e:ui": "playwright test --ui",
-    "e2e:report": "playwright show-report e2e/playwright-report"
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
+    "i18n:extract-locales": "lingui extract --clean",
+    "lint": "oxlint . --fix",
+    "lint:check": "oxlint .",
+    "preview": "vike preview --host",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",

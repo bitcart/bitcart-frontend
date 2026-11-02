@@ -1,0 +1,50 @@
+---
+title: Figure
+---
+
+import {
+  GalleryFigureExample,
+  ImageFigureExample,
+  VideoEmbedFigureExample,
+  VideoFigureExample,
+} from "@/views/ui-kit/figure/examples"
+import galleryCode from "@/views/ui-kit/figure/examples/gallery.tsx?raw"
+import imageCode from "@/views/ui-kit/figure/examples/image.tsx?raw"
+import videoCode from "@/views/ui-kit/figure/examples/video.tsx?raw"
+import videoEmbedCode from "@/views/ui-kit/figure/examples/video-embed.tsx?raw"
+
+<LayoutContextCallout />
+
+<StoryLayoutContextProvider>
+  <ComponentShowcase
+    title="Image"
+    description="A framed image, never wider than its own size, with a caption that links to where it was first published. Click it to view it larger"
+    code={imageCode}
+  >
+    <ImageFigureExample />
+  </ComponentShowcase>
+
+<ComponentShowcase
+  title="Gallery"
+  description="Several images cropped to one frame, sharing a caption. Click one to browse them all larger"
+  code={galleryCode}
+>
+  <GalleryFigureExample />
+</ComponentShowcase>
+
+<ComponentShowcase
+  title="Video"
+  description="A video with a poster and native controls, in the same frame"
+  code={videoCode}
+>
+  <VideoFigureExample />
+</ComponentShowcase>
+
+  <ComponentShowcase
+    title="Video embed"
+    description="A third-party player behind a self-hosted poster: nothing from the player's host loads until the reader presses play"
+    code={videoEmbedCode}
+  >
+    <VideoEmbedFigureExample />
+  </ComponentShowcase>
+</StoryLayoutContextProvider>

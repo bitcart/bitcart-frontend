@@ -18,6 +18,22 @@ export const serveLinguiCatalogsOverLan = (): Plugin => ({
   },
 })
 
+//! TanStack Start's prerender never awaits its page tasks, so a page that fails to render
+//! surfaces as an unhandled rejection (https://github.com/TanStack/router/issues/8120). Nitro's
+//! runtime traps those and only logs them, so the build exits 0 without that page. Remove once a
+//! fix ships.
+export const failBuildOnPrerenderError = (): Plugin => ({
+  name: "bitcart:fail-build-on-prerender-error",
+  apply: "build",
+
+  config() {
+    process.on("unhandledRejection", (error) => {
+      console.error(error)
+      process.exitCode = 1
+    })
+  },
+})
+
 //* use-sync-external-store (pulled in by Base UI) is CJS-only. The SSR pass keeps react
 //* itself external (nitro bundles it later), so rolldown can't rewrite the CJS
 //* `require("react")` to an import and emits a runtime `__require("react")` that loads a

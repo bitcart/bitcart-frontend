@@ -1,31 +1,19 @@
 import { useIsClient } from "@bitcart/hooks"
 import { Button, ThemeToggle, ThemeToggleFallback } from "@bitcart/ui-kit/components"
 import { DocsLayout } from "@fumadocs/base-ui/layouts/docs"
-import {
-  DocsBody,
-  DocsDescription,
-  DocsPage,
-  DocsTitle,
-  MarkdownCopyButton,
-  ViewOptionsPopover,
-} from "@fumadocs/base-ui/layouts/docs/page"
 import { GithubLogoIcon } from "@phosphor-icons/react"
 import { createFileRoute, Link, notFound } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions"
-import browserCollections from "collections/browser"
 import { useFumadocsLoader } from "fumadocs-core/source/client"
 import { Suspense } from "react"
 
-import {
-  APP_SOURCE_PUBLIC_REPO_CONTENT_DIRECTORY,
-  APP_SOURCE_PUBLIC_REPO_DIRECTORY,
-} from "@/common/constants"
+import { APP_SOURCE_PUBLIC_REPO_DIRECTORY } from "@/common/constants"
 import { LocaleSelector } from "@/common/ui/components"
 import { slugsToMarkdownPath } from "@/common/utils"
 import { contentSource } from "@/content"
 import { getBaseLayoutProps } from "@/routes/-layout/config"
-import { getMDXComponents } from "@/routes/-layout/mdx"
+import { docPageLoader } from "@/routes/-layout/doc-page"
 
 export const Route = createFileRoute("/$")({
   component: Page,
@@ -34,7 +22,7 @@ export const Route = createFileRoute("/$")({
     const slugs = params._splat?.split("/") ?? []
     const data = await loader({ data: slugs })
 
-    await clientLoader.preload(data.path)
+    await docPageLoader.preload(data.path)
 
     return data
   },
@@ -56,41 +44,6 @@ const loader = createServerFn({
       }
     } else throw notFound() as Error
   })
-
-const clientLoader = browserCollections.docs.createClientLoader({
-  component(
-    { toc, frontmatter, default: MDX },
-
-    //* Props
-    {
-      markdownUrl,
-      path,
-    }: {
-      markdownUrl: string
-      path: string
-    },
-  ) {
-    return (
-      <DocsPage toc={toc}>
-        <DocsTitle>{frontmatter.title}</DocsTitle>
-        <DocsDescription>{frontmatter.description}</DocsDescription>
-
-        <div className="-mt-4 gap-2 pb-6 flex flex-row items-center border-b">
-          <MarkdownCopyButton markdownUrl={markdownUrl} />
-
-          <ViewOptionsPopover
-            markdownUrl={markdownUrl}
-            githubUrl={`${APP_SOURCE_PUBLIC_REPO_CONTENT_DIRECTORY}/${path}`}
-          />
-        </div>
-
-        <DocsBody>
-          <MDX components={getMDXComponents()} />
-        </DocsBody>
-      </DocsPage>
-    )
-  },
-})
 
 function Page() {
   const { pageTree, path, markdownUrl } = useFumadocsLoader(Route.useLoaderData())
@@ -135,7 +88,7 @@ function Page() {
       tree={pageTree}
     >
       <Link to={markdownUrl} hidden />
-      <Suspense>{clientLoader.useContent(path, { markdownUrl, path })}</Suspense>
+      <Suspense>{docPageLoader.useContent(path, { markdownUrl, path })}</Suspense>
     </DocsLayout>
   )
 }

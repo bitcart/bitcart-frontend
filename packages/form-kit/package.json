@@ -21,13 +21,13 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json",
-    "lint:check": "oxlint .",
-    "lint": "oxlint . --fix",
-    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
+    "build": "tsdown",
     "depcruise:deps": "depcruise dist --output-type err-long",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
     "i18n:extract-locales": "lingui extract --clean",
-    "build": "tsdown"
+    "lint": "oxlint . --fix",
+    "lint:check": "oxlint .",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",

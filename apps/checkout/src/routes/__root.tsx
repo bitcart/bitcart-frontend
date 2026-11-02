@@ -1,6 +1,6 @@
 import { useIsClient } from "@bitcart/hooks"
 import { useI18nInitialization } from "@bitcart/tanstack-start-kit/i18n"
-import { getDocumentHead } from "@bitcart/tanstack-start-kit/metadata"
+import { getDocumentHead, getFontPreloadLink } from "@bitcart/tanstack-start-kit/metadata"
 import { Link, useClientRoute } from "@bitcart/tanstack-start-kit/navigation"
 import { LayoutContainer, Toaster } from "@bitcart/ui-kit/components"
 import { LayoutContextProvider, ThemeProvider } from "@bitcart/ui-kit/providers"
@@ -16,6 +16,7 @@ import {
   useRouterState,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
+import interFont from "inter-ui/variable/InterVariable.woff2?url"
 import { useMemo } from "react"
 
 import {
@@ -58,7 +59,7 @@ export const Route = createRootRouteWithContext<CheckoutRouterContext>()({
 
     return {
       meta: [{ title }, { name: "robots", content: "noindex, nofollow" }, ...meta],
-      links: [{ rel: "stylesheet", href: unoCss }, ...links],
+      links: [{ rel: "stylesheet", href: unoCss }, getFontPreloadLink(interFont), ...links],
       scripts: [{ src: "/checkout/config.js" }],
     }
   },

@@ -1,0 +1,116 @@
+---
+title: BitcartCC Version 0.2.0.0 is out!
+description: New paid and confirmed invoice statuses with a transaction speed setting, underpaid invoices, custom logos, dark mode and multiple wallets per currency.
+date: 2021-01-22
+author: mrnaif2018
+category: releases
+image:
+  src: /media/logo-banner.png
+  alt: Bitcart logo
+---
+
+BitcartCC Version 0.2.0.0 released! Payment handling improvements, more customization, better security and UX!
+
+### Major update
+
+This update contains numerous changes, some of which are not backwards-compatible
+
+### New payment statuses
+
+This update completely changes our status system, by adding new statuses: `paid` and `confirmed`.
+
+`Pending` status was renamed to `pending`
+
+New store setting, `transaction_speed` added, which controls when should invoice be marked as complete
+
+New transaction flow:
+
+Invoice created -> pending
+
+Payment received -> paid
+
+Payment has >= 1 confirmation -> confirmed
+
+Payment number of confirmations is >= `transaction_speed` of the store OR it is a lightning invoice -> complete
+
+Payment expired -> expired
+
+If payment was detected within the invoice time frame, and the payment expired, it won't be set to expired but instead wait for confirmations.
+
+For more details read this:
+https://docs.bitcart.ai/guides/transaction-speed
+
+<Figure
+  src="/media/bitcartcc-version-0200-is-out/tg-3408.jpg"
+  alt="Server log of an invoice being created and its status changing from paid to confirmed to complete"
+  caption="Here are the logs you will be able to see in the process of invoice lifetime"
+  source="https://t.me/bitcart/3408"
+/>
+
+### A lot of new store checkout settings
+
+- Underpaid invoices support. For example, if customer sends from an exchange wallet, it might deduct the fees from amount sent. This way you can accept customer's invoice.
+
+  More details [here](https://docs.bitcart.ai/support-and-community/faq/stores-faq#what-is-underpaid-percentage)
+
+- Custom logo support. [Details](https://docs.bitcart.ai/support-and-community/faq/stores-faq#what-is-custom-logo-link)
+- Dark mode support. [Details](https://docs.bitcart.ai/support-and-community/faq/stores-faq#what-is-the-use-dark-mode-setting)
+- Recommended fee support. Recommended fee will be displayed in all onchain payments methods. [Details](https://docs.bitcart.ai/support-and-community/faq/stores-faq#recommended-fee)
+
+<Figure
+  src="/media/bitcartcc-version-0200-is-out/tg-3409.jpg"
+  alt="Edit store checkout settings dialog with invoice expiration, transaction speed, underpaid percentage, recommended fee, custom logo link, dark mode and HTML templates options"
+  caption="Store checkout settings"
+  source="https://t.me/bitcart/3409"
+/>
+
+### Multiple wallets of the same currency support
+
+Before, it was disallowed to create an invoice with multiple wallets of the same currency (only one was picked).
+
+Now it is allowed, and in the checkout, payment methods will be indexed.
+For example, if you have 2 btc and 2 ltc wallets connected with lightning enabled, here's how it would look:
+
+- BTC (1)
+- BTC (⚡) (1)
+- BTC (2)
+- BTC (⚡) (2)
+- LTC (1)
+- LTC (⚡) (1)
+- LTC (2)
+- LTC (⚡) (2)
+
+A new `name` attribute was added to PaymentMethod's structure, which contains pre-formatted payment method name ready for display
+
+<Figure
+  src="/media/bitcartcc-version-0200-is-out/tg-3410.jpg"
+  alt="Checkout payment method dropdown listing BTC (1), BTC lightning (1), BTC (2) and BTC lightning (2)"
+  caption="Multiple wallets of same currency support"
+  source="https://t.me/bitcart/3410"
+/>
+
+### Maintenance
+
+All dependencies of packages has been upgraded, and two maintenance releases were made: of SDK, to make new release with a new license,
+and of BitCCL, to fix it's use together with SDK 1.0
+
+### Quality of life improvements
+
+- By pressing enter in the edit dialog, it will be automatically saved (like in login page, enter to login)
+- Added new mark complete batch action, to be able to mark some invoices complete manually. All notifications, emails and scripts will be executed.
+- Added filters to admin panel, it is now possible to easily filter out paid or invalid invoices
+
+<Figure
+  src="/media/bitcartcc-version-0200-is-out/tg-3411.jpg"
+  alt="Invoices table in dark mode with the Filters menu open, offering Paid invoices, Invalid invoices and Unfiltered"
+  caption="Invoice page's filters"
+  source="https://t.me/bitcart/3411"
+/>
+
+### Misc changes
+
+- Fixed payment methods order being inconsistent sometimes
+- Fixed scrollbars in checkout page being shown on different screen resolutions
+- Tor extension logs are now DEBUG level instead of INFO (less log spam)
+- Fixed patch/put methods, it is now possible to completely disconnect notifications from store
+- Fixed stale expired invoices occuring in rare cases

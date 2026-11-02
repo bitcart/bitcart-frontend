@@ -50,6 +50,12 @@ export const DialogOverlay: React.FC<DialogOverlayProps> = ({ className, ...prop
   )
 }
 
+export type DialogPopupProps = DialogPrimitive.Popup.Props & {}
+
+export const DialogPopup: React.FC<DialogPopupProps> = ({ ...props }) => {
+  return <DialogPrimitive.Popup data-slot="dialog-popup" {...props} />
+}
+
 export type DialogHeaderProps = React.ComponentProps<"div"> & {}
 
 export const DialogHeader: React.FC<DialogHeaderProps> = ({ className, ...props }) => {

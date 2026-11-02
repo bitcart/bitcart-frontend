@@ -1,13 +1,14 @@
 import {
+  PSEUDO_LOCALE_ID,
   SOURCE_LOCALE_ID,
   createLocaleLoader,
   type LazyLocaleModuleCatalog,
-  type LocaleId,
-  type PseudoLocaleId,
 } from "@bitcart/core/i18n"
 import { createLocaleActivation } from "@bitcart/tanstack-start-kit/i18n"
 import { UI_KIT_SOURCE_LOCALE_MESSAGES, loadUiKitMessages } from "@bitcart/ui-kit/i18n"
 import { i18n } from "@lingui/core"
+
+import { env } from "@/env"
 
 import { messages as APP_SOURCE_LOCALE_MESSAGES } from "./_generated/locales/en.po"
 
@@ -18,15 +19,8 @@ const AVAILABLE_LOCALE_MODULES = import.meta.glob([
   "!./_generated/locales/en.po",
 ]) as LazyLocaleModuleCatalog
 
-const getLocaleId = (catalogModulePath: string) =>
-  catalogModulePath.replace("./_generated/locales/", "").replace(".po", "") as
-    | LocaleId
-    | PseudoLocaleId
-
-export const AVAILABLE_LOCALE_IDS: (LocaleId | PseudoLocaleId)[] = [
-  SOURCE_LOCALE_ID,
-  ...Object.keys(AVAILABLE_LOCALE_MODULES).map(getLocaleId),
-]
+export const APP_LOCALE_IDS =
+  env.BITCART_ENV === "production" ? [SOURCE_LOCALE_ID] : [SOURCE_LOCALE_ID, PSEUDO_LOCALE_ID]
 
 export const localeActivation = createLocaleActivation({
   i18n,

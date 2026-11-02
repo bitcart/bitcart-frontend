@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from "vitest"
 
-import { formatDateTime } from "./date-format"
+import { formatCalendarDate, formatDateTime } from "./date-format"
 
 afterEach(() => {
   vi.unstubAllEnvs()
@@ -21,5 +21,17 @@ describe("formatDateTime", () => {
     vi.stubEnv("TZ", "Asia/Tokyo")
 
     expect(formatDateTime("2026-09-24T10:06:00+00:00", "en-US")).toMatch(/^Sep 24, 2026, 7:06\sPM$/)
+  })
+})
+
+describe("formatCalendarDate", () => {
+  test("keeps the calendar day in every time zone", () => {
+    const date = new Date("2021-09-21T00:00:00Z")
+
+    vi.stubEnv("TZ", "America/Los_Angeles")
+    expect(formatCalendarDate(date, "en-US")).toBe("September 21, 2021")
+
+    vi.stubEnv("TZ", "Pacific/Kiritimati")
+    expect(formatCalendarDate(date, "en-US", "medium")).toBe("Sep 21, 2021")
   })
 })

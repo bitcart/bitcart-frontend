@@ -8,6 +8,12 @@ import { cn } from "@/utils"
 import { Button } from "../atoms/button"
 import { LinkButton } from "../atoms/link-button"
 
+//* Client errors that a later attempt can still get past: Request Timeout and Too Many Requests.
+const RETRYABLE_CLIENT_ERROR_STATUS_CODES = new Set([408, 429])
+
+const isRetryableStatusCode = (statusCode: number) =>
+  statusCode < 400 || statusCode >= 500 || RETRYABLE_CLIENT_ERROR_STATUS_CODES.has(statusCode)
+
 export type ErrorPageTemplateProps = Partial<ErrorDisplayAttributes> & {
   statusCode: number
   handleRetry?: VoidFunction
@@ -48,8 +54,8 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
       case 404: {
         return {
           title: t`Page Not Found`,
-          icon: <AlertCircle className="size-16 text-warning" />,
-          message: t`This page does not exist.`,
+          icon: props.icon ?? <AlertCircle className="size-16 text-warning" />,
+          message: props.message ?? t`This page does not exist.`,
         }
       }
 
@@ -91,7 +97,7 @@ export const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
             <span>{t`Go Home`}</span>
           </LinkButton>
 
-          {statusCode !== 500 && (
+          {handleRetry && isRetryableStatusCode(statusCode) && (
             <Button size="lg" variant="outline" onClick={handleRetry}>
               <RefreshCw className="size-5" />
               <span>{t`Try Again`}</span>

@@ -1,0 +1,128 @@
+---
+title: BitcartCC Version 0.6.1.0 is out!
+description: Field filters in the admin panel search, custom CSS themes for stores, a cart sidebar with more items per page, and the new universalasync library.
+date: 2021-12-31
+author: mrnaif2018
+category: releases
+image:
+  src: /media/bitcartcc-version-0610-is-out/cover.png
+  alt: BitcartCC store with the new cart sidebar open, listing two products and a Checkout button
+---
+
+BitcartCC Version 0.6.1.0 is out! Better search engine, theming support, better store UI and more!
+
+This release contains quite a few bugfixes and new changes, but almost doesn't contain any breaking changes
+
+See migration guide below if you have any issues
+
+During this release we started our efforts to localize and improve customization of BitcartCC parts.
+
+Our website was translated into Belarusian, French and Hindi languages in addition to already existing English and Russian.
+
+In 2022 many important changes are coming to make BitcartCC the easiest to use
+
+### Better search engine
+
+Search engine in admin panel is now way more advanced.
+
+It is now possible to search by exact fields, like:
+
+`store_id:someid some arbitrary text` will filter column `store_id` with value `someid`, and then search `some arbitrary text` like it did with previous
+search engine.
+
+You can also filter objects created in a certain time interval
+
+### Theming support in BitcartCC store
+
+You can now customize the UI of your store pages!
+In admin panel you can set a link to css file used for themeing your admin (not supported yet) or store.
+
+You can override different color variables to customize the look and feel of your store.
+
+Here's example css:
+
+```css
+:root {
+  --brand-color: #162d50;
+  --primary: var(--brand-color) !important;
+  --success: var(--brand-color) !important;
+  --link: var(--brand-color) !important;
+}
+```
+
+It should be possible to customize background color and more. If you want to help us in implementing this, see [bitcart-store#319](https://github.com/bitcart/bitcart-store/issues/319).
+
+<Figure
+  src="/media/bitcartcc-version-0610-is-out/tg-5276.jpg"
+  alt="BitcartCC store themed with a dark blue brand color set through custom CSS"
+  caption="The store with this CSS applied"
+  source="https://t.me/bitcart/5276"
+/>
+
+### Better store UI
+
+The cart page was removed, instead by clicking on cart button a wonderful sidebar will appear (with nice animations too)
+
+Also store can display more than 6 items per page now (6, 12, 18 or all items)
+
+There were some accessibility improvements to the store
+
+<VideoFigure
+  src="/media/bitcartcc-version-0610-is-out/tg-5306.mp4"
+  poster="/media/bitcartcc-version-0610-is-out/tg-5306.jpg"
+  caption="Coming soon, thanks to hacktoberfest contributors, to BitcartCC Store"
+  source="https://t.me/bitcart/5306"
+/>
+
+### Quality of life improvements
+
+- In case of API issues, admin panel and store now display a better page explaining how to resolve the issue together with detailed logs
+- In admin panel tooltips were added on hover to all icons
+- On store page there is a new button to quickly jump to view all invoices of a store (via new search engine)
+- Better lists UI
+- Added an easter egg!
+- Automatically upgrade faulty libseccomp2 on rpi to make setup flawless
+
+<Gallery
+  images={[
+    {
+      src: "/media/bitcartcc-version-0610-is-out/tg-5356-1.jpg",
+      alt: "Admin panel unconfigured page explaining that the Merchants API is unreachable, with quick steps to try",
+    },
+    {
+      src: "/media/bitcartcc-version-0610-is-out/tg-5356-2.jpg",
+      alt: "Expanded error details showing a connect ECONNREFUSED 127.0.0.1:8000 error",
+    },
+  ]}
+  caption="Admin panel now finally displays proper instructions when merchants API is unavailable! You will also be able to see error details"
+  source="https://t.me/bitcart/5356"
+/>
+
+### New library released: universalasync
+
+We have released a new library under bitcartcc organization: `universalasync`. It allows library maintainers to write only async versions of their code, and sync version will be achieved automatically. Depending on call context, wrapped functions will either work as sync or async ones.
+
+That's the same way our SDK has worked for quite a while, this functionality was extracted from SDK to a separate package.
+
+Also the implementation was greatly improved, we now test all use cases and fixed some bugs.
+
+### Other changes
+
+- Postgres database in docker no longer sets a password: it accepts connections without any password set. This is fine because database is not exposed to the outside internet
+- Added `py.typed` to SDK to allow type checkers to suggest better hints for user code
+- Dropped leftovers of gzro coin
+- We have rewritten many of our code to properly use event loop, therefore we can support python 3.7-3.10+ without issues
+- All our test suites now run on testnet
+- Our regtest tests now use fulcrum
+- Fixed email notification provider and others that required integer types, also fixed broken notifications when changing notification providers
+- Added `removelocaltx` command for bch-based coins and made bch daemon use official electron cash instead of our fork again
+- Upgraded all packages
+- Fixed backups
+- New `get_tx_hash` RPC method to get tx hash of a raw tx
+- Fixed worker start on Mac OS
+
+### Migration guide
+
+If `compose_backend_1` container fails with errors similar to `unable to login without password`, then apply the upgrade helper:
+
+`contrib/upgrades/upgrade-to-0610.sh`

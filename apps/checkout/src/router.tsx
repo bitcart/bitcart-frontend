@@ -3,7 +3,7 @@ import { applyZodL10n } from "@bitcart/form-kit/validation"
 import { i18n } from "@lingui/core"
 import { I18nProvider } from "@lingui/react"
 import { QueryClient } from "@tanstack/react-query"
-import { createRouter as createTanStackRouter } from "@tanstack/react-router"
+import { createRouter } from "@tanstack/react-router"
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query"
 
 import { BITCART_API_URL } from "#/common/constants"
@@ -18,7 +18,7 @@ export function getRouter() {
 
   const queryClient = new QueryClient()
 
-  const router = createTanStackRouter({
+  const router = createRouter({
     context: { queryClient },
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
@@ -30,10 +30,4 @@ export function getRouter() {
   setupRouterSsrQueryIntegration({ router, queryClient })
 
   return router
-}
-
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: ReturnType<typeof getRouter>
-  }
 }

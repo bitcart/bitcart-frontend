@@ -1,4 +1,5 @@
 import {
+  failBuildOnPrerenderError,
   nitroFumadocsResolveAliases,
   nitroSsrExternalCjsPackages,
   serveLinguiCatalogsOverLan,
@@ -15,7 +16,10 @@ import { defineConfig } from "vite"
 const DEV_ENV_PORT = 3100
 
 export default defineConfig({
+  envPrefix: "BITCART_",
+
   server: {
+    allowedHosts: [".internal", ".local"],
     port: DEV_ENV_PORT,
     strictPort: true,
   },
@@ -60,6 +64,7 @@ export default defineConfig({
     lingui({ macroTransform: true }),
     react({ compiler: true }),
     serveLinguiCatalogsOverLan(),
+    failBuildOnPrerenderError(),
 
     //* See https://tanstack.com/start/latest/docs/framework/react/guide/hosting#nitro
     //* for guides on hosting
@@ -89,10 +94,6 @@ export default defineConfig({
 
   resolve: {
     tsconfigPaths: true,
-
-    alias: {
-      ...nitroFumadocsResolveAliases,
-      tslib: "tslib/tslib.es6.js",
-    },
+    alias: nitroFumadocsResolveAliases,
   },
 })

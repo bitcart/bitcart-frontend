@@ -1,6 +1,8 @@
+import { getFontPreloadLink } from "@bitcart/tanstack-start-kit/metadata"
 import { RootProvider } from "@fumadocs/base-ui/provider/tanstack"
 import { I18nProvider } from "@lingui/react"
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router"
+import interFont from "inter-ui/variable/InterVariable.woff2?url"
 
 import { i18n } from "@/common/i18n"
 import { SearchDialog } from "@/common/ui/components"
@@ -40,6 +42,7 @@ export const Route = createRootRoute({
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
       { rel: "stylesheet", href: appCss },
       { rel: "stylesheet", href: unoCss },
+      getFontPreloadLink(interFont),
     ],
   }),
 

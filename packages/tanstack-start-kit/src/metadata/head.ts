@@ -2,6 +2,7 @@ import type { BCP47LanguageSubtag } from "@bitcart/core/i18n"
 import {
   getDocumentHeadManifest,
   getPageDocumentMetadata,
+  type DocumentHeadLinkTagAttributes,
   type DocumentHeadManifest,
   type DocumentHeadManifestParams,
   type PageDocumentMetadataParams,
@@ -11,7 +12,7 @@ export type DocumentHeadParams<TSupportedLocaleId extends BCP47LanguageSubtag> =
   PageDocumentMetadataParams<TSupportedLocaleId> &
     Pick<
       DocumentHeadManifestParams<TSupportedLocaleId>,
-      "favicon" | "ogSiteName" | "twitterHandles" | "viewportParams"
+      "favicon" | "jsonLd" | "ogSiteName" | "twitterHandles" | "viewportParams"
     > & {
       isRoutingLocaleDependent?: boolean
     }
@@ -23,6 +24,7 @@ export type DocumentHead = DocumentHeadManifest & {
 export const getDocumentHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
   favicon,
   isRoutingLocaleDependent = false,
+  jsonLd,
   ogSiteName,
   twitterHandles,
   viewportParams,
@@ -35,6 +37,7 @@ export const getDocumentHead = <TSupportedLocaleId extends BCP47LanguageSubtag>(
     isCharsetSetElsewhere: false,
     isOgTitleSetElsewhere: false,
     isRoutingLocaleDependent,
+    jsonLd,
     metadata,
     ogSiteName,
     posixLocaleIdMap: pageParams.posixLocaleIdMap,
@@ -45,3 +48,12 @@ export const getDocumentHead = <TSupportedLocaleId extends BCP47LanguageSubtag>(
 
   return { title: metadata.title, ...manifest }
 }
+
+//* Pass the URL the stylesheet references (a Vite `?url` import), or the font loads twice.
+export const getFontPreloadLink = (href: string): DocumentHeadLinkTagAttributes => ({
+  rel: "preload",
+  href,
+  as: "font",
+  type: "font/woff2",
+  crossOrigin: "anonymous",
+})

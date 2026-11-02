@@ -35,14 +35,14 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.lib.json",
-    "lint:check": "oxlint .",
-    "lint": "oxlint . --fix",
-    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
-    "generate:dist-graphviz": "depcruise dist --output-type dot | dot -T svg -o dist-graphviz.svg",
-    "depcruise:deps": "depcruise dist --output-type err-long",
     "build": "tsdown",
-    "check:classes": "node scripts/check-classes.ts"
+    "check:classes": "node scripts/check-classes.ts",
+    "depcruise:deps": "depcruise dist --output-type err-long",
+    "generate:dist-graphviz": "depcruise dist --output-type dot | dot -T svg -o dist-graphviz.svg",
+    "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
+    "lint": "oxlint . --fix",
+    "lint:check": "oxlint .",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.lib.json"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",

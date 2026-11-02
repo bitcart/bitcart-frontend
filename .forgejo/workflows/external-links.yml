@@ -1,0 +1,30 @@
+name: External Links
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow_ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --config lychee.toml 'apps/*/content/**/*.mdx'
+
+          #* For github.com rate limits: Forgejo's own token would be sent there and rejected.
+          token: ${{ secrets.LYCHEE_GITHUB_TOKEN }} # zizmor: ignore[secrets-outside-env]

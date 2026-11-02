@@ -29,8 +29,8 @@ export interface StaticDocumentMetadata {
     src: string
     alt: string
     type: DocumentImageMimeType
-    width: string
-    height: string
+    width?: string
+    height?: string
     secureUrl?: string
   }
 }
@@ -80,7 +80,32 @@ export type DocumentHeadLinkTagAttributes = {
   type?: string
 }
 
+export type DocumentHeadScript = {
+  type?: string
+  children: string
+}
+
 export type DocumentHeadManifest = {
   meta: DocumentHeadMetaTagAttributes[]
   links: DocumentHeadLinkTagAttributes[]
+  scripts: DocumentHeadScript[]
+}
+
+export type JsonLd = { "@context": "https://schema.org"; "@type": string } & Record<string, unknown>
+
+export type JsonLdPerson = {
+  name: string
+  url: string
+  image?: string
+}
+
+export type JsonLdOrganization = {
+  name: string
+  url: string
+  logo?: string
+}
+
+export type JsonLdBreadcrumb = {
+  name: string
+  url: string
 }

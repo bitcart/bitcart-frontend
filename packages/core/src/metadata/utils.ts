@@ -1,4 +1,5 @@
 import { entries, isDefined } from "remeda"
+import type { Blog, BlogPosting, BreadcrumbList, WithContext } from "schema-dts"
 
 import { definedEntries } from "@/common/utils"
 
@@ -16,8 +17,13 @@ import type {
   DocumentHeadLinkTagAttributes,
   DocumentHeadManifest,
   DocumentHeadMetaTagAttributes,
+  DocumentHeadScript,
   DocumentMetadata,
   DocumentViewportParams,
+  JsonLd,
+  JsonLdBreadcrumb,
+  JsonLdOrganization,
+  JsonLdPerson,
   StaticDocumentMetadata,
 } from "./types"
 
@@ -68,11 +74,18 @@ export const getPageDocumentMetadata = <TSupportedLocaleId extends BCP47Language
   }
 }
 
+//* `<` is escaped, so no string in the data can close the script element early.
+export const getJsonLdScript = (jsonLd: JsonLd): DocumentHeadScript => ({
+  type: "application/ld+json",
+  children: JSON.stringify(jsonLd).replaceAll("<", "\\u003c"),
+})
+
 export type DocumentHeadManifestParams<TSupportedLocaleId extends BCP47LanguageSubtag> = {
   favicon?: DocumentFavicon
   isCharsetSetElsewhere: boolean
   isOgTitleSetElsewhere: boolean
   isRoutingLocaleDependent: boolean
+  jsonLd?: readonly JsonLd[]
   metadata: DocumentMetadata
   ogSiteName: string
   posixLocaleIdMap: PosixLocaleIdMap<TSupportedLocaleId | SourceLocaleId>
@@ -86,6 +99,7 @@ export const getDocumentHeadManifest = <TSupportedLocaleId extends BCP47Language
   isCharsetSetElsewhere,
   isOgTitleSetElsewhere,
   isRoutingLocaleDependent,
+  jsonLd = [],
   metadata,
   ogSiteName,
   posixLocaleIdMap,
@@ -164,5 +178,75 @@ export const getDocumentHeadManifest = <TSupportedLocaleId extends BCP47Language
       { rel: "canonical", href: url },
       ...alternateLinks,
     ],
+
+    scripts: jsonLd.map(getJsonLdScript),
   }
 }
+
+export type BlogPostingJsonLdParams = {
+  url: string
+  headline: string
+  description: string
+  image: string
+  datePublished: string
+  dateModified?: string
+  author: JsonLdPerson
+  publisher: JsonLdOrganization
+  blogUrl: string
+}
+
+export const getBlogPostingJsonLd = ({
+  url,
+  headline,
+  description,
+  image,
+  datePublished,
+  dateModified,
+  author,
+  publisher,
+  blogUrl,
+}: BlogPostingJsonLdParams): JsonLd =>
+  ({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    mainEntityOfPage: url,
+    url,
+    headline,
+    description,
+    image,
+    datePublished,
+    ...(dateModified ? { dateModified } : {}),
+    author: { "@type": "Person", ...author },
+    publisher: { "@type": "Organization", ...publisher },
+    isPartOf: { "@type": "Blog", url: blogUrl },
+  }) satisfies WithContext<BlogPosting>
+
+export type BlogJsonLdParams = {
+  url: string
+  name: string
+  description: string
+  publisher: JsonLdOrganization
+}
+
+export const getBlogJsonLd = ({ url, name, description, publisher }: BlogJsonLdParams): JsonLd =>
+  ({
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    url,
+    name,
+    description,
+    publisher: { "@type": "Organization", ...publisher },
+  }) satisfies WithContext<Blog>
+
+export const getBreadcrumbListJsonLd = (breadcrumbs: readonly JsonLdBreadcrumb[]): JsonLd =>
+  ({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+
+    itemListElement: breadcrumbs.map(({ name, url }, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name,
+      item: url,
+    })),
+  }) satisfies WithContext<BreadcrumbList>

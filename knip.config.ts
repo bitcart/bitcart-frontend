@@ -1,8 +1,21 @@
-import { appKnipConfig, vikeAppKnipConfig } from "@bitcart/configs/by-package-type/app-knip"
+import {
+  APP_CONFIG_FILE_ENTRIES,
+  appKnipConfig,
+  vikeAppKnipConfig,
+} from "@bitcart/configs/by-package-type/app-knip"
 import type { KnipConfig } from "knip"
 
 //* Referenced only from `GEIST_MONO_PREFLIGHT`'s CSS, which Knip does not read.
 const GEIST_MONO = "@fontsource-variable/geist-mono"
+
+const TANSTACK_START_SERVER_DEPENDENCIES = [
+  //* TanStack Start's server runtime.
+  "srvx",
+
+  //* Base UI's transitive CJS dep. Declared directly and never imported to let nitro
+  //* resolve it after environments.ssr in vite.config.ts externalizes it.
+  "use-sync-external-store",
+]
 
 const config: KnipConfig = {
   //* dependency-cruiser resolves a `.ts` config, but Knip's plugin only looks for the `.js`,
@@ -30,6 +43,18 @@ const config: KnipConfig = {
       ignoreDependencies: ["@playwright/test", "tailwindcss"],
     },
 
+    "apps/blog": {
+      ...appKnipConfig,
+      entry: [...appKnipConfig.entry, "scripts/**/*.ts"],
+      project: [...appKnipConfig.project, "scripts/**/*.ts", "content/**/*.mdx"],
+
+      ignoreDependencies: [
+        ...(appKnipConfig.ignoreDependencies ?? []),
+        GEIST_MONO,
+        ...TANSTACK_START_SERVER_DEPENDENCIES,
+      ],
+    },
+
     "apps/checkout": {
       ...appKnipConfig,
       entry: [...appKnipConfig.entry, "src/embed/v1.ts", "src/embed/modal.ts"],
@@ -45,6 +70,8 @@ const config: KnipConfig = {
     },
 
     "apps/ui-docs": {
+      ...appKnipConfig,
+
       entry: [
         //* Bundled by @fumadocs/story and rendered in MDX docs.
         "src/views/**/stories.{ts,tsx}",
@@ -52,13 +79,10 @@ const config: KnipConfig = {
         //* Imported from content/docs MDX files, which Knip does not parse.
         "src/views/**/examples/*.{ts,tsx}",
 
-        "vite.config.ts",
-        "lingui.config.ts",
-        "env.config.ts",
-        "node-env.ts",
+        ...APP_CONFIG_FILE_ENTRIES,
       ],
 
-      vite: appKnipConfig.vite,
+      project: ["src/**/*.{ts,tsx,css}", "content/**/*.mdx"],
 
       ignoreDependencies: [
         ...(appKnipConfig.ignoreDependencies ?? []),
@@ -67,12 +91,7 @@ const config: KnipConfig = {
         //* Kept installed for easy opt-in router debugging.
         "@tanstack/react-router-devtools",
 
-        //* TanStack Start's server runtime.
-        "srvx",
-
-        //* Base UI's transitive CJS dep. Declared directly and never imported to let nitro
-        //* resolve it after environments.ssr in vite.config.ts externalizes it.
-        "use-sync-external-store",
+        ...TANSTACK_START_SERVER_DEPENDENCIES,
       ],
     },
 

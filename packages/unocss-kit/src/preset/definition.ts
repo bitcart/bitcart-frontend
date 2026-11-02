@@ -25,6 +25,47 @@ import { getTheme } from "./theme"
 import type { PresetBitcart, PresetBitcartOptions } from "./types"
 import { variants } from "./variants"
 
+const proseColor = (token: PaletteColorToken): [string, string] => {
+  const color = paletteColorVariableToOklchNotation(token)
+
+  return [color, color]
+}
+
+//* Theme tokens already switch between light and dark, so `prose` follows the theme without
+//* `prose-invert`.
+const PROSE_COLOR_SCHEME = {
+  body: proseColor("foreground"),
+  headings: proseColor("foreground"),
+  lead: proseColor("muted-foreground"),
+  links: proseColor("primary-text"),
+  bold: proseColor("foreground"),
+  counters: proseColor("muted-foreground"),
+  bullets: proseColor("muted-foreground"),
+  hr: proseColor("border"),
+  quotes: proseColor("foreground"),
+  "quote-borders": proseColor("border"),
+  captions: proseColor("muted-foreground"),
+  kbd: proseColor("foreground"),
+  code: proseColor("foreground"),
+  "pre-code": proseColor("foreground"),
+  "pre-bg": proseColor("muted"),
+  "th-borders": proseColor("border"),
+  "td-borders": proseColor("border"),
+}
+
+const PROSE_INLINE_CODE_CSS = {
+  code: {
+    "background-color": paletteColorVariableToOklchNotation("muted"),
+    "border-radius": "0.25rem",
+    padding: "0.125em 0.375em",
+    "font-size": "0.875em",
+    "font-weight": "500",
+  },
+
+  "code::before": { content: "none" },
+  "code::after": { content: "none" },
+}
+
 const isNestedColorToken = (token: PaletteColorToken): boolean =>
   NESTED_COLOR_TOKEN_SUFFIXES.some((suffix) => token.endsWith(`-${suffix}`))
 
@@ -48,7 +89,10 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
 
     presets: [
       presetWind4({ preflights: { reset: true, theme: true }, breakpoint: BREAKPOINTS, prefix }),
-      presetTypography<PresetWind4Theme>(),
+      presetTypography<PresetWind4Theme>({
+        colorScheme: PROSE_COLOR_SCHEME,
+        cssExtend: PROSE_INLINE_CODE_CSS,
+      }),
       presetAnimations(),
     ],
 

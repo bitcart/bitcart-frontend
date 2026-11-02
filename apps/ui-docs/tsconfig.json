@@ -10,7 +10,6 @@
   },
 
   "compilerOptions": {
-    "allowJs": true,
     "types": ["node", "vite/client"],
 
     "paths": {
@@ -19,6 +18,6 @@
     }
   },
 
-  "exclude": ["dist", ".output", "node_modules"],
-  "include": ["src", "content", "*.ts", ".*.ts", "**/*.mdx"]
+  "exclude": [".output", "node_modules"],
+  "include": ["src", "*.ts", ".*.ts", "**/*.mdx"]
 }

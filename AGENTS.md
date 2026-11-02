@@ -2,10 +2,11 @@
 
 ## Project Overview
 
-Bitcart frontend monorepo containing web applications, shared packages and app templates. Built with React 19, TypeScript and UnoCSS. Landing and Directory run on Vike, Checkout and UI Docs on TanStack Start; both are file-based routing frameworks.
+Bitcart frontend monorepo containing web applications, shared packages and app templates. Built with React 19, TypeScript and UnoCSS. Landing and Directory run on Vike, Blog, Checkout and UI Docs on TanStack Start; both are file-based routing frameworks.
 
 ## Monorepo Structure
 
+- **apps/blog** — Bitcart blog (TanStack Start, headless Fumadocs)
 - **apps/checkout** — Invoice checkout application (TanStack Start)
 - **apps/directory** — Merchants directory website (Vike)
 - **apps/landing** — Bitcart.ai landing website (Vike)
@@ -16,7 +17,7 @@ Bitcart frontend monorepo containing web applications, shared packages and app t
 - **packages/form-kit** — Form utilities using TanStack React Form
 - **packages/hooks** — Framework- and presentation-agnostic, SSR-safe React hooks
 - **packages/qa** — Shared Playwright E2E utilities, test templates, testid constants, and unit test mocks
-- **packages/tanstack-start-kit** — Shared TanStack Start head metadata, navigation, i18n activation, route error handling
+- **packages/tanstack-start-kit** — Shared TanStack Start head metadata, navigation, i18n activation, route error handling, 404 tracking, Fumadocs page preloading
 - **packages/ui-kit** — Reusable React component library (atomic design: atoms/molecules/organisms/templates) with shadcn/ui + UnoCSS
 - **packages/unocss-kit** — UnoCSS tooling, including the custom styling preset
 - **packages/vike-kit** — Shared Vike configuration, i18n, navigation, 404 tracking, metadata
@@ -39,6 +40,7 @@ just lint-check             # Verify linting without fixing
 just typecheck              # Type checking
 just depcheck               # Detect unused dependencies, files, and exports (knip)
 just depcruise              # Verify emitted dist code never references a devDependency
+just links-check            # Check external links in app content with lychee (CI runs it weekly)
 just unocss-check <classes> # Print the CSS UnoCSS generates per class, with Tailwind v4 differences
 just check                  # All checks: api-check, format-check, lint-check, typecheck, depcheck, depcruise
 just check unit             # check, then unit tests: the gate before calling work done; its exit code is the verdict
@@ -87,6 +89,10 @@ just add-dev <ws-member> <package>   # Add dev dependency to a workspace package
 UnoCSS with a custom preset from `@bitcart/unocss-kit/preset`. Every app declares its own stylesheet destination under `cli.entry.outFile` in `apps/<app>/uno.config.ts`: the Vike apps emit `src/pages/uno.generated.css`, the TanStack Start apps `src/routes/-layout/uno.generated.css` (auto-generated, do not edit). UI Docs also runs Tailwind through `@tailwindcss/vite`, which backs the Fumadocs stylesheets imported in `apps/ui-docs/src/routes/-layout/app.css`. The UI Kit uses shadcn/ui patterns with Base UI primitives and Class Variance Authority (CVA) for variants.
 
 Classes copied from shadcn/ui, coss or the Tailwind docs can compile differently under UnoCSS's `presetWind4`: run them through `just unocss-check "<classes>"` (adding `--app <name>` for colors and tokens only that app defines), read the CSS it prints, and act on its warnings.
+
+### Route Tree
+
+Blog, Checkout and UI Docs keep their routes in `src/routeTree.gen.ts`, which the TanStack Start plugin rewrites only while Vite runs. After adding, renaming or removing a route without `just dev` up, run `just build -p <app>` so typecheck sees the change.
 
 ### Data Fetching
 

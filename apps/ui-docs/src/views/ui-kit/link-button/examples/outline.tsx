@@ -2,19 +2,19 @@ import { LinkButton } from "@bitcart/ui-kit/components"
 
 export const OutlineLinkButtonExample: React.FC = () => (
   <div className="gap-4 flex flex-wrap items-center justify-center">
-    <LinkButton href="/docs" variant="outline" size="sm">
+    <LinkButton href="/ui-kit" variant="outline" size="sm">
       Outline sm
     </LinkButton>
 
-    <LinkButton href="/docs" variant="outline" size="default">
+    <LinkButton href="/ui-kit" variant="outline" size="default">
       Outline default
     </LinkButton>
 
-    <LinkButton href="/docs" variant="outline" size="lg">
+    <LinkButton href="/ui-kit" variant="outline" size="lg">
       Outline lg
     </LinkButton>
 
-    <LinkButton disabled href="/docs" variant="outline" size="lg">
+    <LinkButton disabled href="/ui-kit" variant="outline" size="lg">
       Outline lg disabled
     </LinkButton>
   </div>

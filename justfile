@@ -254,6 +254,14 @@ depcheck *args:
     @pnpm knip --no-progress --treat-config-hints-as-errors {{ args }}
 
 [doc("
+Check the external links in app content with lychee (https://lychee.cli.rs), which must be installed.
+CI runs it weekly.
+")]
+[group("Code quality")]
+links-check *args:
+    @lychee --config lychee.toml {{ args }} 'apps/*/content/**/*.mdx'
+
+[doc("
 Validate that emitted dist code never references a devDependency.
 Builds packages first via Nx.
 ")]

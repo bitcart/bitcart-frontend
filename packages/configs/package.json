@@ -27,9 +27,9 @@
     "./supplementary/vike-vite": "./src/supplementary/vike-vite.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
-    "lint": "oxlint . --fix"
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {
     "@lingui/cli": "catalog:devDependencies",

@@ -1,0 +1,17 @@
+#* External links in app content. Internal links and anchors are checked by each app's `typecheck`.
+
+no_progress = true
+max_concurrency = 8
+max_retries = 3
+retry_wait_time = 5
+timeout = 30
+
+#* 403 and 429 come from bot protection and rate limits, not from a missing page.
+accept = ["200..=299", "403", "429"]
+
+exclude = [
+  #* Telegram answers 200 even for a post that doesn't exist, so the status proves nothing.
+  '^https://t\.me/',
+
+  '^https?://localhost',
+]

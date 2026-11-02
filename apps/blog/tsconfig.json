@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "@bitcart/configs/by-package-type/app-ts",
+    "@bitcart/configs/by-view-layer/react-ts",
+    "@bitcart/configs/by-target-platform/browser-ts"
+  ],
+
+  "mdx": {
+    "checkMdx": true
+  },
+
+  "compilerOptions": {
+    "types": ["node", "vite/client"],
+
+    "paths": {
+      "#/*": ["./src/*"],
+      "collections/*": ["./.source/*"]
+    }
+  },
+
+  "exclude": [".output", "node_modules"],
+  "include": ["src", "e2e", "scripts", "*.ts", ".*.ts", "**/*.mdx"]
+}

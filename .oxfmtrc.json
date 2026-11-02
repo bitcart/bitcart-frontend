@@ -6,6 +6,10 @@
   "semi": false,
   "singleQuote": false,
 
+  "sortPackageJson": {
+    "sortScripts": true
+  },
+
   "sortImports": {
     "newlinesBetween": true,
     "order": "asc",

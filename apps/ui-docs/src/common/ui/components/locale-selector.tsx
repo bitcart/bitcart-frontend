@@ -1,9 +1,9 @@
-import { PSEUDO_LOCALE_ID, type LocaleId, type PseudoLocaleId } from "@bitcart/core/i18n"
+import type { LocaleId, PseudoLocaleId } from "@bitcart/core/i18n"
 import { LocaleSelector as LocaleSelectorComponent } from "@bitcart/ui-kit/components"
 import { useLingui } from "@lingui/react"
 import { useCallback } from "react"
 
-import { AVAILABLE_LOCALE_IDS, localeActivation } from "@/common/i18n"
+import { APP_LOCALE_IDS, localeActivation } from "@/common/i18n"
 
 /**
  * UI Kit locale selector wired to the docs app's runtime-only locale switching:
@@ -21,13 +21,13 @@ export const LocaleSelector: React.FC = () => {
     [],
   )
 
-  if (AVAILABLE_LOCALE_IDS.length < (AVAILABLE_LOCALE_IDS.includes(PSEUDO_LOCALE_ID) ? 1 : 2)) {
+  if (APP_LOCALE_IDS.length < 2) {
     return null
   } else {
     return (
       <LocaleSelectorComponent
         activeLocaleId={i18n.locale as LocaleId | PseudoLocaleId}
-        optionLocaleIds={AVAILABLE_LOCALE_IDS}
+        optionLocaleIds={APP_LOCALE_IDS}
         handleSelect={handleSelectLocale}
         triggerVariant="outline"
         classNames={{ trigger: "flex-1" }}

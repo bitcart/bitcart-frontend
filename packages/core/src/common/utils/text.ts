@@ -14,3 +14,11 @@ export const squashWhitespace = (value: string): string => value.replace(/\s+/g,
 
 export const normalizeSearchTerm = (value: string): string =>
   squashWhitespace(value).trim().toLocaleLowerCase()
+
+export const getInitials = (name: string): string => {
+  const [first = "", ...rest] = name.trim().split(/\s+/)
+  const last = rest.at(-1)
+  const second = last ? Array.from(last)[0] : first.slice(1).match(/\p{Lu}/u)?.[0]
+
+  return `${Array.from(first)[0] ?? ""}${second ?? ""}`.toLocaleUpperCase()
+}

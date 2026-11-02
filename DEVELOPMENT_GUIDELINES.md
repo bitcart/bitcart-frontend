@@ -88,6 +88,7 @@ Each app has its own `playwright.config.ts` and `e2e/` directory. Tests are `*.s
 - Landing: `apps/landing/e2e/` — port 4000
 - Directory: `apps/directory/e2e/` — port 4001
 - Checkout: `apps/checkout/e2e/` — port 4002
+- Blog: `apps/blog/e2e/` — port 4003
 
 E2E runs alongside `just dev` and never tests a dev server: the `webServer` config starts a preview of the app's build via `pnpm preview` on a dedicated E2E port. E2E rebuilds the same `dist` that `just preview` serves, and a running SSR preview keeps its build's asset names in memory, so its pages 404 their scripts until it restarts. Before running E2E, check with the user whether a `just preview` is up. `reuseExistingServer` is enabled, and a server already answering on the E2E port is reused. Within the workspace, only another E2E preview of the same app (e.g. one kept up by `just e2e-ui`) listens on that port. The preview binds its port strictly and fails to start when the port is taken. Desktop Chrome only. CI uploads HTML report as artifact on failure.
 
@@ -225,6 +226,8 @@ If you need a utility that isn't safelisted, either add it to the safelist or mo
 Build UI from `@bitcart/ui-kit`. The UI Kit is meant to provide nearly every component apps and packages render, and it exports a component only once something uses it, so a missing component, variant or export is the expected state rather than a gap to route around.
 
 When the UI Kit lacks what you need, flag it to the user first, naming what is missing and where you need it. Once agreed, add or export it in `packages/ui-kit`, with an example in `apps/ui-docs`. App code then stays free of one-off component copies, each of which the UI Kit would otherwise have to absorb later.
+
+Place each part of a component in the atomic-design tier the UI Kit README's [Component classification](packages/ui-kit/README.md#component-classification) defines, and check its tier again whenever a part gains a feature: composing other atoms into new behaviour moves it up a tier.
 
 UI Kit components are ported from [shadcn/ui](https://github.com/shadcn-ui/ui) or [coss ui](https://github.com/cosscom/ui), so consult both upstreams before building or fixing one:
 

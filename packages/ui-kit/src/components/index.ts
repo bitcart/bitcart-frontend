@@ -46,6 +46,17 @@ export {
   type AutocompleteValueProps,
 } from "./atoms/autocomplete"
 
+export {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  AvatarStaticImage,
+  type AvatarFallbackProps,
+  type AvatarImageProps,
+  type AvatarProps,
+  type AvatarStaticImageProps,
+} from "./atoms/avatar"
+
 export { Badge, type BadgeProps } from "./atoms/badge"
 export { Button, type ButtonProps } from "./atoms/button"
 export { CalendarDayButton, type CalendarDayButtonProps } from "./atoms/calendar-day-button"
@@ -241,6 +252,17 @@ export {
   type FieldTitleProps,
 } from "./atoms/field"
 
+export {
+  FigureCaption,
+  FigureGallery,
+  FigureSource,
+  FigureVideo,
+  type FigureCaptionProps,
+  type FigureGalleryProps,
+  type FigureSourceProps,
+  type FigureVideoProps,
+} from "./atoms/figure"
+
 export { FittedText, type FittedTextProps, type FittedTextStep } from "./atoms/fitted-text"
 
 export {
@@ -295,6 +317,14 @@ export {
 } from "./atoms/popover"
 
 export {
+  SegmentedControl,
+  SegmentedControlItem,
+  type SegmentedControlItemProps,
+  type SegmentedControlProps,
+  type SegmentedControlSize,
+} from "./atoms/segmented-control"
+
+export {
   Select,
   SelectGroup,
   SelectGroupLabel,
@@ -338,6 +368,22 @@ export {
 } from "./molecules/button-group"
 
 export { Calendar, type CalendarProps } from "./molecules/calendar"
+
+export {
+  CodeBlock,
+  CodeBlockActions,
+  CodeBlockContent,
+  CodeBlockCopyButton,
+  CodeBlockHeader,
+  CodeBlockTitle,
+  type CodeBlockActionsProps,
+  type CodeBlockContentProps,
+  type CodeBlockCopyButtonProps,
+  type CodeBlockHeaderProps,
+  type CodeBlockProps,
+  type CodeBlockTitleProps,
+} from "./molecules/code-block"
+
 export { CommandInput, type CommandInputProps } from "./molecules/command-input"
 export { CommandList, type CommandListProps } from "./molecules/command-list"
 export { CommandDialogPopup, type CommandDialogPopupProps } from "./molecules/command-dialog-popup"
@@ -364,6 +410,15 @@ export {
   type DropdownMenuSubContentProps,
   type DropdownMenuSubTriggerProps,
 } from "./molecules/dropdown-menu"
+
+export {
+  Figure,
+  FigureImage,
+  FigureVideoEmbed,
+  type FigureImageProps,
+  type FigureProps,
+  type FigureVideoEmbedProps,
+} from "./molecules/figure"
 
 export {
   NavigationMenu,

@@ -16,7 +16,7 @@ export function Page() {
     if (typeof abortReason === "object" && abortReason?.notAdmin) {
       return 403
     } else {
-      return abortStatusCode ?? (is404 ? 404 : 400)
+      return abortStatusCode ?? (is404 ? 404 : 500)
     }
   }, [abortReason, abortStatusCode, is404])
 

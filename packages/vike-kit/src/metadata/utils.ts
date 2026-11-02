@@ -1,7 +1,11 @@
 import type { DocumentHeadManifest } from "@bitcart/core/metadata"
 import { createElement, Fragment, type ReactNode } from "react"
 
-export const renderDocumentHeadManifest = ({ links, meta }: DocumentHeadManifest): ReactNode =>
+export const renderDocumentHeadManifest = ({
+  links,
+  meta,
+  scripts,
+}: DocumentHeadManifest): ReactNode =>
   createElement(Fragment, null, [
     ...meta.map((attributes, index) =>
       createElement("meta", {
@@ -14,6 +18,14 @@ export const renderDocumentHeadManifest = ({ links, meta }: DocumentHeadManifest
       createElement("link", {
         ...attributes,
         key: `link-${attributes.rel}-${attributes.hrefLang ?? index}`,
+      }),
+    ),
+
+    ...scripts.map(({ type, children }, index) =>
+      createElement("script", {
+        type,
+        key: `script-${index}`,
+        dangerouslySetInnerHTML: { __html: children },
       }),
     ),
   ])

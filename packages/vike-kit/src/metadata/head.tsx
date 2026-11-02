@@ -14,8 +14,6 @@ import { usePageContext } from "vike-react/usePageContext"
 
 import { renderDocumentHeadManifest } from "./utils"
 
-const ORGANIZATION_JSON_LD_INNER_HTML = { __html: JSON.stringify(BITCART_ORGANIZATION_JSON_LD) }
-
 export type HeadProps<TSupportedLocaleId extends BCP47LanguageSubtag> = {
   favicon?: DocumentFavicon
   ogSiteName: string
@@ -39,6 +37,7 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
       isCharsetSetElsewhere: true,
       isOgTitleSetElsewhere: true,
       isRoutingLocaleDependent: true,
+      jsonLd: [BITCART_ORGANIZATION_JSON_LD],
       metadata,
       ogSiteName,
       posixLocaleIdMap,
@@ -91,11 +90,6 @@ export const createHead = <TSupportedLocaleId extends BCP47LanguageSubtag>({
         />
 
         {renderDocumentHeadManifest(manifest)}
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={ORGANIZATION_JSON_LD_INNER_HTML}
-        />
       </>
     )
   }
