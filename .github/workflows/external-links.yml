@@ -24,4 +24,4 @@ jobs:
 
       - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
-          args: --config lychee.toml 'apps/*/content/**/*.mdx'
+          args: --config lychee.toml --root-dir "${{ github.workspace }}" 'apps/*/content/**/*.mdx'

@@ -6,6 +6,9 @@ max_retries = 3
 retry_wait_time = 5
 timeout = 30
 
+#* Root-relative links resolve to local files under `--root-dir`, which this skips.
+scheme = ["http", "https"]
+
 #* 403 and 429 come from bot protection and rate limits, not from a missing page.
 accept = ["200..=299", "403", "429"]
 

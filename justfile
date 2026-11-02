@@ -259,7 +259,7 @@ CI runs it weekly.
 ")]
 [group("Code quality")]
 links-check *args:
-    @lychee --config lychee.toml {{ args }} 'apps/*/content/**/*.mdx'
+    @lychee --config lychee.toml --root-dir "{{ justfile_directory() }}" {{ args }} 'apps/*/content/**/*.mdx'
 
 [doc("
 Validate that emitted dist code never references a devDependency.
