@@ -191,8 +191,8 @@ export const SegmentedControlItem: React.FC<SegmentedControlItemProps> = ({
   const defaultProps = {
     className: cn(
       `
-            rounded-md text-base font-medium text-muted-foreground/72
-            hover:text-muted-foreground focus-visible:outline-ring
+            rounded-md text-base font-medium text-muted-foreground
+            hover:text-foreground focus-visible:outline-ring
             sm:text-sm
             data-checked:bg-background
             data-checked:text-foreground

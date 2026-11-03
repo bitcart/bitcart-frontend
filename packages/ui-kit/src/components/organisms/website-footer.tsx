@@ -63,11 +63,7 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
         <div className="gap-15 lg:gap-8 lg:flex-row flex flex-col">
           <div className="max-w-md flex w-full flex-col">
             <Link href={navigation.rootRoutePathname} className="space-x-3 mb-4 flex items-center">
-              <img
-                alt={t`${project?.canonicalName ?? brand.name} logo`}
-                src={project?.logoImageSrc ?? brand.logoImageSrc}
-                className="size-8"
-              />
+              <img alt="" src={project?.logoImageSrc ?? brand.logoImageSrc} className="size-8" />
 
               <span className="text-xl font-bold">{project?.canonicalName ?? brand.name}</span>
             </Link>
@@ -84,9 +80,9 @@ export const WebsiteFooter: React.FC<WebsiteFooterProps> = ({ classNames }) => {
           <div className="gap-20 lg:gap-8 lg:justify-around flex w-full flex-wrap justify-start">
             {navDirectory.labeledLinks.map((group, idx) => (
               <div key={idx + group.groupTitle} className="gap-4 flex flex-col">
-                <h3 className="text-sm font-semibold tracking-wider uppercase">
+                <h2 className="text-sm font-semibold tracking-wider uppercase">
                   {group.groupTitle}
-                </h3>
+                </h2>
 
                 <ul className="gap-3 flex flex-col">
                   {sortBy(group.items, (link) =>

@@ -11,7 +11,7 @@ image:
 
 BitcartCC Version 0.5.0.0 is out! Refactors, bugfixes, quality of life improvements and better BitcartCC!
 
-### Major update
+## Major update
 
 This update contains many backwards-incompatible changes
 
@@ -31,7 +31,7 @@ If it has failed, please let us know.
 
 This changelog contains quite a bit of additional technical information than usual due to the nature of this update.
 
-### Major refactor of all our backend code
+## Major refactor of all our backend code
 
 We have re-organized all our code into their corresponding directories, so it is now less cluttered, even more readable and easier to add new features (i.e. `crud.py` into `crud` directory, `utils.py` into `utils` directory, utils are now split into files by their category)
 
@@ -52,7 +52,7 @@ As all database access is now done by those functions, in the future we may add 
 
 In the future those refactors will allow us to batch insert needed data, greatly improving performance for stores with many wallets connected, for example
 
-### Test suite rewriten from scratch, new regtest tests added
+## Test suite rewriten from scratch, new regtest tests added
 
 Our test suite was rewritten from scratch, now each test doesn't depend on each other, which means that our tests are fully correct and can't pass while some issue still exists.
 
@@ -78,7 +78,7 @@ Improved CI testing process, it is now possible to publicly view test reports by
 
 Our SDK is now tested in 3 python versions instead of one, with regtest tests running on the base BitcartCC version (currently python 3.7)
 
-### Breaking: Unique string ID
+## Breaking: Unique string ID
 
 Now all objects IDs are strings.
 
@@ -102,7 +102,7 @@ All upgrades should be performed automatically
 
 As unique id is now in place, existing deployments will be unaffected, but on new deployments, the first created store by server admin becomes the default store at the store POS. Before that, store POS displays no store.
 
-### Important security fixes
+## Important security fixes
 
 Before it was possible to create a store with wallets current user doesn't own from API. It didn't leak privacy, but that was allowed. This issue is now fixed.
 
@@ -120,7 +120,7 @@ As sometimes it's hard to find unpredictable behaviour in your own code.
 
 Tests were added to proove that no such issues will arise in the future.
 
-### Quality of life improvements
+## Quality of life improvements
 
 - Improved PATCH methods: to update objects from API no fields are required, there is no need to pass unnecessary fields (`user_id`, `wallets`) to just change store's name for example! Before it was impossible to update objects from API without additional API call to fetch those requires fields. Some fields required weren't required even on object creation. This shouldn't be an issue now.
 - Added IPN sending logs: on success it will say that sending IPN succeeded, otherwise it will log an error message to help diagnose issues
@@ -140,13 +140,13 @@ Tests were added to proove that no such issues will arise in the future.
   source="https://t.me/bitcart/4091"
 />
 
-### Breaking: removed PUT http method
+## Breaking: removed PUT http method
 
 We have Removed PUT http methods because they weren't used and not tested enough, therefore they could lead to unexpected issues if used.
 
 Also see the PATCH method improvements
 
-### Breaking: renamed endpoints
+## Breaking: renamed endpoints
 
 Due to our refactors and re-organization, here's a list of renamed endpoints:
 
@@ -168,7 +168,7 @@ Note: it is no longer possible to open `/wallets/history/0` to get wallet histor
 
 `/wallets/history/all`
 
-### Misc changes
+## Misc changes
 
 - Fixed search in admin panel in pages other than invoices page
 - Fixed objects template editing
@@ -183,7 +183,7 @@ Note: it is no longer possible to open `/wallets/history/0` to get wallet histor
 - Fixed an issue where /wallet_history returned wallet history of all wallets on a server, not of current user
 - Fixed bitcart-cli builds
 
-### Migration guide
+## Migration guide
 
 Even though the update contains many changes, all changes should be applies automatically.
 

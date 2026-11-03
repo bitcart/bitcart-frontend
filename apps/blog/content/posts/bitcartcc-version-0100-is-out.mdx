@@ -11,11 +11,11 @@ image:
 
 BitcartCC Version 0.1.0.0 released! Lightning network checkout, better currency formatting, improved checkout and more!
 
-### Major update
+## Major update
 
 This update contains numerous changes, some of which are not backwards-compatible
 
-### Lightning network checkout
+## Lightning network checkout
 
 <Figure
   src="/media/bitcartcc-version-0100-is-out/tg-3320.jpg"
@@ -98,7 +98,7 @@ Also, new endpoints were added:
 
 To support lightning network, the daemon now has a new method: `get_invoice`, to get invoice by it's `rhash`.
 
-### Improved checkout page
+## Improved checkout page
 
 [Watch the video on Telegram](https://t.me/bitcart/3017)
 
@@ -123,17 +123,17 @@ When on a lightning payment method, you will be able to switch between lightning
 
 The checkout page in the store was changed in a similar way.
 
-### Added help texts to some fields
+## Added help texts to some fields
 
 To help newcomers, some special fields now have a question mark icon near them, by clicking on which, user will be redirected to our docs.
 
 It should help to understand some basics without asking, right from your instance.
 
-### Added ID field everywhere
+## Added ID field everywhere
 
 As requested, ID field was added to each datatable. It was possible to copy id before by clicking on copy icon, but now it's also displayed as a field
 
-### Better money formatting
+## Better money formatting
 
 <Figure
   src="/media/bitcartcc-version-0100-is-out/tg-3048.jpg"
@@ -162,7 +162,7 @@ Also, every payment method now has a `rate` field, which will contain a computer
 
 Also every payment method now has a `rate_str` field, which is a human-readable pretty-formatted rate string, ready to be used in checkout
 
-### Major task system and logging refactor
+## Major task system and logging refactor
 
 Now all background tasks are running only in the worker
 process, and not in every worker ran by gunicorn
@@ -184,7 +184,7 @@ Logs in the admin panel are now sorted, and it is now possible to remove individ
 
 Tor extension is now refreshed every 15 minutes instead of every 2 minutes to reduce logs spam.
 
-### Added configuration samples and documented every setting
+## Added configuration samples and documented every setting
 
 Every setting supported by BitcartCC that is configured by an environment variable is supported.
 
@@ -193,7 +193,7 @@ Now, the conf directory of your cloned BitcartCC repo contains more samples:
 - .env.sample was cleaned up from unused settings, and now every setting is documented
 - .env.dev.sample was added, which contains the configuration we use when developing BitcartCC
 
-### Misc changes
+## Misc changes
 
 - Fixed worker start on Mac OS
 - Pending invoice processing will no longer stop processing on error in one of the invoices

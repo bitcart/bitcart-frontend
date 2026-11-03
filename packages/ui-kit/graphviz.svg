@@ -315,15 +315,15 @@
 <g id="node20" class="node">
 <title>src/coin&#45;icons/resolve.spec.ts</title>
 <g id="a_node20"><a xlink:href="src/coin-icons/resolve.spec.ts" xlink:title="resolve.spec.ts">
-<path fill="#ddfeff" stroke="black" d="M826.67,-3551C826.67,-3551 727.96,-3551 727.96,-3551 721.96,-3551 715.96,-3545 715.96,-3539 715.96,-3539 715.96,-3509 715.96,-3509 715.96,-3503 721.96,-3497 727.96,-3497 727.96,-3497 826.67,-3497 826.67,-3497 832.67,-3497 838.67,-3503 838.67,-3509 838.67,-3509 838.67,-3539 838.67,-3539 838.67,-3545 832.67,-3551 826.67,-3551"/>
-<text xml:space="preserve" text-anchor="start" x="723.96" y="-3517.6" font-family="Helvetica,sans-Serif" font-size="16.00">resolve.spec.ts</text>
+<path fill="#ddfeff" stroke="black" d="M826.67,-3545C826.67,-3545 727.96,-3545 727.96,-3545 721.96,-3545 715.96,-3539 715.96,-3533 715.96,-3533 715.96,-3503 715.96,-3503 715.96,-3497 721.96,-3491 727.96,-3491 727.96,-3491 826.67,-3491 826.67,-3491 832.67,-3491 838.67,-3497 838.67,-3503 838.67,-3503 838.67,-3533 838.67,-3533 838.67,-3539 832.67,-3545 826.67,-3545"/>
+<text xml:space="preserve" text-anchor="start" x="723.96" y="-3511.6" font-family="Helvetica,sans-Serif" font-size="16.00">resolve.spec.ts</text>
 </a>
 </g>
 </g>
 <!-- src/coin&#45;icons/resolve.spec.ts&#45;&gt;node_modules/vitest -->
 <g id="edge3" class="edge">
 <title>src/coin&#45;icons/resolve.spec.ts&#45;&gt;node_modules/vitest</title>
-<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M791.22,-3496.66C819.33,-3437.11 883.58,-3301 883.58,-3301 883.58,-3301 955.35,-1078 955.35,-1078 955.35,-1078 983.72,-1068.8 1010.49,-1060.11"/>
+<path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M791.65,-3490.52C819.97,-3432.13 883.58,-3301 883.58,-3301 883.58,-3301 955.35,-1078 955.35,-1078 955.35,-1078 983.72,-1068.8 1010.49,-1060.11"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="1029.44,-1053.96 1013.2,-1068.69 1021.09,-1056.67 1010.42,-1060.13 1010.42,-1060.13 1010.42,-1060.13 1021.09,-1056.67 1007.64,-1051.57 1029.44,-1053.96"/>
 </g>
 <!-- src/coin&#45;icons/resolve.ts -->
@@ -338,8 +338,8 @@
 <!-- src/coin&#45;icons/resolve.spec.ts&#45;&gt;src/coin&#45;icons/resolve.ts -->
 <g id="edge2" class="edge">
 <title>src/coin&#45;icons/resolve.spec.ts&#45;&gt;src/coin&#45;icons/resolve.ts</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M839.17,-3527.56C946.57,-3533.85 1168.71,-3546.86 1278.15,-3553.27"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1297.9,-3554.42 1277.41,-3562.24 1290.32,-3554.48 1277.9,-3553.75 1277.93,-3553.25 1277.96,-3552.75 1290.38,-3553.48 1278.46,-3544.27 1297.9,-3554.42"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M839.17,-3522.21C946.57,-3529.64 1168.71,-3545.01 1278.15,-3552.59"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1297.9,-3553.95 1277.33,-3561.55 1290.32,-3553.93 1277.91,-3553.07 1277.95,-3552.57 1277.98,-3552.07 1290.39,-3552.93 1278.57,-3543.59 1297.9,-3553.95"/>
 </g>
 <!-- src/coin&#45;icons/resolve.ts&#45;&gt;src/coin&#45;icons/generated -->
 <g id="edge4" class="edge">
@@ -414,7 +414,7 @@
 <polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1304.74,-8350.44 1283.04,-8353.63 1297.33,-8348.86 1285.36,-8345.46 1285.5,-8344.98 1285.64,-8344.5 1297.6,-8347.89 1287.96,-8336.32 1304.74,-8350.44"/>
 </g>
 <!-- src/utils/index.ts&#45;&gt;node_modules/sonner -->
-<g id="edge533" class="edge">
+<g id="edge532" class="edge">
 <title>src/utils/index.ts&#45;&gt;node_modules/sonner</title>
 <path fill="none" stroke="#6c8ebf" d="M1378.76,-8351.11C1410.7,-8342.03 1453.08,-8330 1453.08,-8330 1453.08,-8330 1525.08,-1013 1525.08,-1013 1525.08,-1013 1552.21,-1004.47 1578.9,-996.09"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" points="1599.93,-996.82 1578.75,-996.14 1595.73,-983.46 1599.93,-996.82"/>
@@ -429,7 +429,7 @@
 </g>
 </g>
 <!-- src/utils/index.ts&#45;&gt;src/utils/theme.ts -->
-<g id="edge532" class="edge">
+<g id="edge531" class="edge">
 <title>src/utils/index.ts&#45;&gt;src/utils/theme.ts</title>
 <path fill="none" stroke="#6c8ebf" stroke-width="2" d="M1378.73,-8368.91C1426.78,-8379.82 1514.07,-8399.65 1572.08,-8412.82"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" stroke-width="2" points="1589.84,-8424.03 1571.89,-8412.78 1592.94,-8410.38 1589.84,-8424.03"/>
@@ -444,7 +444,7 @@
 </g>
 </g>
 <!-- src/utils/index.ts&#45;&gt;src/utils/classnames.ts -->
-<g id="edge528" class="edge">
+<g id="edge527" class="edge">
 <title>src/utils/index.ts&#45;&gt;src/utils/classnames.ts</title>
 <path fill="none" stroke="#6c8ebf" stroke-width="2" d="M1365.41,-8388.05C1413.4,-8448.44 1525.08,-8589 1525.08,-8589 1525.08,-8589 1536.55,-8592.49 1551.91,-8597.17"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" stroke-width="2" points="1569.06,-8609.72 1551.97,-8597.19 1573.14,-8596.33 1569.06,-8609.72"/>
@@ -459,7 +459,7 @@
 </g>
 </g>
 <!-- src/utils/index.ts&#45;&gt;src/utils/i18n.ts -->
-<g id="edge529" class="edge">
+<g id="edge528" class="edge">
 <title>src/utils/index.ts&#45;&gt;src/utils/i18n.ts</title>
 <path fill="none" stroke="#6c8ebf" stroke-width="2" d="M1378.73,-8361C1428.57,-8361 1520.62,-8361 1578.42,-8361"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" stroke-width="2" points="1598.46,-8368 1578.46,-8361 1598.46,-8354 1598.46,-8368"/>
@@ -474,7 +474,7 @@
 </g>
 </g>
 <!-- src/utils/index.ts&#45;&gt;src/utils/layout&#45;config.ts -->
-<g id="edge530" class="edge">
+<g id="edge529" class="edge">
 <title>src/utils/index.ts&#45;&gt;src/utils/layout&#45;config.ts</title>
 <path fill="none" stroke="#6c8ebf" stroke-width="2" d="M1374.24,-8388.28C1425.81,-8434.68 1525.08,-8524 1525.08,-8524 1525.08,-8524 1535.14,-8527.07 1549.05,-8531.3"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" stroke-width="2" points="1566.01,-8543.79 1548.92,-8531.26 1570.09,-8530.4 1566.01,-8543.79"/>
@@ -489,7 +489,7 @@
 </g>
 </g>
 <!-- src/utils/index.ts&#45;&gt;src/utils/navigation.ts -->
-<g id="edge531" class="edge">
+<g id="edge530" class="edge">
 <title>src/utils/index.ts&#45;&gt;src/utils/navigation.ts</title>
 <path fill="none" stroke="#6c8ebf" stroke-width="2" d="M1378.85,-8379.9C1431.49,-8408.37 1525.08,-8459 1525.08,-8459 1525.08,-8459 1539.5,-8463.39 1557.66,-8468.93"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" stroke-width="2" points="1574.9,-8481.5 1557.81,-8468.97 1578.98,-8468.11 1574.9,-8481.5"/>
@@ -498,15 +498,15 @@
 <g id="node26" class="node">
 <title>src/components/atoms/alert&#45;variants.tsx</title>
 <g id="a_node26"><a xlink:href="src/components/atoms/alert-variants.tsx" xlink:title="alert&#45;variants.tsx">
-<ellipse fill="#e05c5c" stroke="black" cx="1631.1" cy="-3753" rx="77.19" ry="27"/>
-<text xml:space="preserve" text-anchor="start" x="1572.42" y="-3746.6" font-family="Helvetica,sans-Serif" font-size="16.00">alert&#45;variants.tsx</text>
+<ellipse fill="#e05c5c" stroke="black" cx="1631.1" cy="-3747" rx="77.19" ry="27"/>
+<text xml:space="preserve" text-anchor="start" x="1572.42" y="-3740.6" font-family="Helvetica,sans-Serif" font-size="16.00">alert&#45;variants.tsx</text>
 </a>
 </g>
 </g>
 <!-- src/components/atoms/alert&#45;variants.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority -->
 <g id="edge10" class="edge">
 <title>src/components/atoms/alert&#45;variants.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority</title>
-<path fill="none" stroke="#e05c5c" d="M1655.72,-3727.24C1690.95,-3688.82 1753.13,-3621 1753.13,-3621 1753.13,-3621 1803.38,-1397.46 1821.87,-1158.19"/>
+<path fill="none" stroke="#e05c5c" d="M1656.89,-3721.2C1692.29,-3684.34 1753.13,-3621 1753.13,-3621 1753.13,-3621 1803.38,-1397.46 1821.87,-1158.19"/>
 <polygon fill="#e05c5c" stroke="#e05c5c" points="1824.49,-1138.61 1830.76,-1159.63 1823.32,-1147.31 1821.84,-1158.43 1821.84,-1158.43 1821.84,-1158.43 1823.32,-1147.31 1812.91,-1157.24 1824.49,-1138.61"/>
 </g>
 <!-- src/components/atoms/alert.tsx -->
@@ -539,8 +539,8 @@
 <!-- src/components/atoms/alert.tsx&#45;&gt;src/components/atoms/alert&#45;variants.tsx -->
 <g id="edge11" class="edge">
 <title>src/components/atoms/alert.tsx&#45;&gt;src/components/atoms/alert&#45;variants.tsx</title>
-<path fill="none" stroke="#e05c5c" stroke-width="2" d="M1098.64,-3940.97C1198.56,-3923.22 1453.08,-3878 1453.08,-3878 1453.08,-3878 1525.22,-3827.06 1577.4,-3790.21"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1593.56,-3778.8 1582.41,-3797.69 1587.67,-3783.57 1577.51,-3790.75 1577.22,-3790.34 1576.93,-3789.93 1587.09,-3782.76 1572.03,-3782.99 1593.56,-3778.8"/>
+<path fill="none" stroke="#e05c5c" stroke-width="2" d="M1098.28,-3940.43C1197.94,-3921.21 1453.08,-3872 1453.08,-3872 1453.08,-3872 1525.22,-3821.06 1577.4,-3784.21"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1593.56,-3772.8 1582.41,-3791.69 1587.67,-3777.57 1577.51,-3784.75 1577.22,-3784.34 1576.93,-3783.93 1587.09,-3776.76 1572.03,-3776.99 1593.56,-3772.8"/>
 </g>
 <!-- src/components/atoms/autocomplete.tsx -->
 <g id="node28" class="node">
@@ -600,16 +600,16 @@
 <g id="node30" class="node">
 <title>src/components/atoms/badge&#45;variants.tsx</title>
 <g id="a_node30"><a xlink:href="src/components/atoms/badge-variants.tsx" xlink:title="badge&#45;variants.tsx">
-<ellipse fill="#e05c5c" stroke="black" cx="1631.1" cy="-3890" rx="84.93" ry="27"/>
-<text xml:space="preserve" text-anchor="start" x="1565.74" y="-3883.6" font-family="Helvetica,sans-Serif" font-size="16.00">badge&#45;variants.tsx</text>
+<ellipse fill="#e05c5c" stroke="black" cx="1631.1" cy="-3870" rx="84.93" ry="27"/>
+<text xml:space="preserve" text-anchor="start" x="1565.74" y="-3863.6" font-family="Helvetica,sans-Serif" font-size="16.00">badge&#45;variants.tsx</text>
 </a>
 </g>
 </g>
 <!-- src/components/atoms/badge&#45;variants.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority -->
 <g id="edge21" class="edge">
 <title>src/components/atoms/badge&#45;variants.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority</title>
-<path fill="none" stroke="#e05c5c" d="M1661.71,-3864.56C1697.54,-3833.77 1753.13,-3786 1753.13,-3786 1753.13,-3786 1803.53,-1407.06 1821.95,-1158.35"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.49,-1138.61 1830.87,-1159.59 1823.37,-1147.32 1821.94,-1158.45 1821.94,-1158.45 1821.94,-1158.45 1823.37,-1147.32 1813.01,-1157.3 1824.49,-1138.61"/>
+<path fill="none" stroke="#e05c5c" d="M1665.81,-3844.93C1701.63,-3818.3 1753.13,-3780 1753.13,-3780 1753.13,-3780 1803.53,-1406.46 1821.95,-1158.3"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.49,-1138.61 1830.86,-1159.6 1823.37,-1147.32 1821.94,-1158.45 1821.94,-1158.45 1821.94,-1158.45 1823.37,-1147.32 1813.01,-1157.3 1824.49,-1138.61"/>
 </g>
 <!-- src/components/atoms/badge.tsx -->
 <g id="node31" class="node">
@@ -641,8 +641,8 @@
 <!-- src/components/atoms/badge.tsx&#45;&gt;src/components/atoms/badge&#45;variants.tsx -->
 <g id="edge22" class="edge">
 <title>src/components/atoms/badge.tsx&#45;&gt;src/components/atoms/badge&#45;variants.tsx</title>
-<path fill="none" stroke="#e05c5c" stroke-width="2" d="M1105.81,-4005.53C1210.18,-3988.84 1453.08,-3950 1453.08,-3950 1453.08,-3950 1503.79,-3932.81 1550.93,-3916.84"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1569.83,-3910.43 1553.78,-3925.37 1562.83,-3913.33 1551.05,-3917.32 1550.89,-3916.85 1550.73,-3916.37 1562.51,-3912.38 1548,-3908.32 1569.83,-3910.43"/>
+<path fill="none" stroke="#e05c5c" stroke-width="2" d="M1107.37,-4009.2C1212.59,-4000.92 1453.08,-3982 1453.08,-3982 1453.08,-3982 1521.13,-3938.95 1572.84,-3906.23"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1589.63,-3895.61 1577.54,-3913.9 1583.51,-3900.07 1573,-3906.72 1572.73,-3906.3 1572.46,-3905.88 1582.97,-3899.23 1567.92,-3898.69 1589.63,-3895.61"/>
 </g>
 <!-- src/components/atoms/button&#45;variants.tsx -->
 <g id="node32" class="node">
@@ -776,7 +776,7 @@
 <!-- src/components/atoms/checkbox.tsx&#45;&gt;node_modules/react -->
 <g id="edge41" class="edge">
 <title>src/components/atoms/checkbox.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#e05c5c" d="M1062.22,-3660.78C1085.77,-3458.15 1232.77,-2193 1232.77,-2193 1232.77,-2193 1453.08,-2145 1453.08,-2145 1453.08,-2145 1525.08,-1986 1525.08,-1986 1525.08,-1986 1753.13,-1956 1753.13,-1956 1753.13,-1956 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#e05c5c" d="M1064.2,-3660.71C1085.89,-3545.65 1168.77,-3106 1168.77,-3106 1168.77,-3106 1232.77,-2193 1232.77,-2193 1232.77,-2193 1453.08,-2145 1453.08,-2145 1453.08,-2145 1525.08,-1986 1525.08,-1986 1525.08,-1986 1753.13,-1956 1753.13,-1956 1753.13,-1956 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#e05c5c" stroke="#e05c5c" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/atoms/checkbox.tsx&#45;&gt;src/utils/index.ts -->
@@ -981,7 +981,7 @@
 <polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1299.24,-8713.88 1277.54,-8717.07 1291.83,-8712.29 1279.87,-8708.9 1280,-8708.42 1280.14,-8707.93 1292.1,-8711.33 1282.46,-8699.76 1299.24,-8713.88"/>
 </g>
 <!-- src/contexts/drawer.ts&#45;&gt;node_modules/react -->
-<g id="edge467" class="edge">
+<g id="edge466" class="edge">
 <title>src/contexts/drawer.ts&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#4a90d9" d="M1384.26,-8714.54C1415.35,-8705.71 1453.08,-8695 1453.08,-8695 1453.08,-8695 1525.08,-3274 1525.08,-3274 1525.08,-3274 1753.13,-3059 1753.13,-3059 1753.13,-3059 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#4a90d9" stroke="#4a90d9" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
@@ -1044,16 +1044,16 @@
 <g id="node46" class="node">
 <title>src/components/atoms/field&#45;variants.tsx</title>
 <g id="a_node46"><a xlink:href="src/components/atoms/field-variants.tsx" xlink:title="field&#45;variants.tsx">
-<ellipse fill="#e05c5c" stroke="black" cx="1631.1" cy="-4218" rx="76.16" ry="27"/>
-<text xml:space="preserve" text-anchor="start" x="1573.31" y="-4211.6" font-family="Helvetica,sans-Serif" font-size="16.00">field&#45;variants.tsx</text>
+<ellipse fill="#e05c5c" stroke="black" cx="1631.1" cy="-4195" rx="76.16" ry="27"/>
+<text xml:space="preserve" text-anchor="start" x="1573.31" y="-4188.6" font-family="Helvetica,sans-Serif" font-size="16.00">field&#45;variants.tsx</text>
 </a>
 </g>
 </g>
 <!-- src/components/atoms/field&#45;variants.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority -->
 <g id="edge70" class="edge">
 <title>src/components/atoms/field&#45;variants.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority</title>
-<path fill="none" stroke="#e05c5c" d="M1643.16,-4191.04C1673.04,-4118.21 1753.13,-3923 1753.13,-3923 1753.13,-3923 1803.69,-1413.02 1822.04,-1158.2"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.49,-1138.61 1830.94,-1159.58 1823.4,-1147.32 1822.01,-1158.46 1822.01,-1158.46 1822.01,-1158.46 1823.4,-1147.32 1813.08,-1157.34 1824.49,-1138.61"/>
+<path fill="none" stroke="#e05c5c" d="M1643.27,-4168.05C1673.23,-4095.77 1753.13,-3903 1753.13,-3903 1753.13,-3903 1803.64,-1413.64 1822.01,-1158.45"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.5,-1138.61 1830.94,-1159.57 1823.4,-1147.32 1822.01,-1158.46 1822.01,-1158.46 1822.01,-1158.46 1823.4,-1147.32 1813.08,-1157.34 1824.5,-1138.61"/>
 </g>
 <!-- src/components/atoms/field.tsx -->
 <g id="node47" class="node">
@@ -1073,8 +1073,8 @@
 <!-- src/components/atoms/field.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority -->
 <g id="edge76" class="edge">
 <title>src/components/atoms/field.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority</title>
-<path fill="none" stroke="#e05c5c" d="M814.84,-4651.9C845.24,-4642.66 883.58,-4631 883.58,-4631 883.58,-4631 955.35,-2135 955.35,-2135 955.35,-2135 1232.77,-1848 1232.77,-1848 1232.77,-1848 1753.13,-1586 1753.13,-1586 1753.13,-1586 1796.39,-1243.79 1817.4,-1157.11"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.23,-1138.55 1825.77,-1160.42 1821.2,-1146.79 1817.32,-1157.32 1817.32,-1157.32 1817.32,-1157.32 1821.2,-1146.79 1808.88,-1154.21 1824.23,-1138.55"/>
+<path fill="none" stroke="#e05c5c" d="M814.84,-4651.9C845.24,-4642.66 883.58,-4631 883.58,-4631 883.58,-4631 955.35,-2135 955.35,-2135 955.35,-2135 1232.77,-1848 1232.77,-1848 1232.77,-1848 1753.13,-1578 1753.13,-1578 1753.13,-1578 1796.29,-1242.72 1817.33,-1157.08"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.22,-1138.54 1825.69,-1160.43 1821.16,-1146.77 1817.25,-1157.29 1817.25,-1157.29 1817.25,-1157.29 1821.16,-1146.77 1808.81,-1154.15 1824.22,-1138.54"/>
 </g>
 <!-- src/components/atoms/field.tsx&#45;&gt;node_modules/react -->
 <g id="edge77" class="edge">
@@ -1091,8 +1091,8 @@
 <!-- src/components/atoms/field.tsx&#45;&gt;src/components/atoms/field&#45;variants.tsx -->
 <g id="edge71" class="edge">
 <title>src/components/atoms/field.tsx&#45;&gt;src/components/atoms/field&#45;variants.tsx</title>
-<path fill="none" stroke="#e05c5c" stroke-width="2" d="M814.84,-4651.9C845.24,-4642.66 883.58,-4631 883.58,-4631 883.58,-4631 955.35,-4516 955.35,-4516 955.35,-4516 1168.77,-4501 1168.77,-4501 1168.77,-4501 1453.08,-4463 1453.08,-4463 1453.08,-4463 1525.08,-4257 1525.08,-4257 1525.08,-4257 1538.94,-4251.85 1556.59,-4245.3"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1575.3,-4238.35 1559.69,-4253.75 1568.39,-4241.45 1556.73,-4245.78 1556.56,-4245.31 1556.38,-4244.84 1568.04,-4240.51 1553.42,-4236.87 1575.3,-4238.35"/>
+<path fill="none" stroke="#e05c5c" stroke-width="2" d="M814.84,-4651.9C845.24,-4642.66 883.58,-4631 883.58,-4631 883.58,-4631 955.35,-4516 955.35,-4516 955.35,-4516 1168.77,-4501 1168.77,-4501 1168.77,-4501 1453.08,-4463 1453.08,-4463 1453.08,-4463 1525.08,-4234 1525.08,-4234 1525.08,-4234 1538.94,-4228.85 1556.59,-4222.3"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1575.3,-4215.35 1559.69,-4230.75 1568.39,-4218.45 1556.73,-4222.78 1556.56,-4222.31 1556.38,-4221.84 1568.04,-4217.51 1553.42,-4213.87 1575.3,-4215.35"/>
 </g>
 <!-- src/components/atoms/label.tsx -->
 <g id="node48" class="node">
@@ -1227,7 +1227,7 @@
 </g>
 </g>
 <!-- src/hooks/index.ts&#45;&gt;src/hooks/autocomplete.ts -->
-<g id="edge473" class="edge">
+<g id="edge472" class="edge">
 <title>src/hooks/index.ts&#45;&gt;src/hooks/autocomplete.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1094.03,-7697.08C1134.48,-7701.8 1202.51,-7709.74 1257.08,-7716.1"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1276.2,-7725.38 1257.15,-7716.11 1277.83,-7711.47 1276.2,-7725.38"/>
@@ -1242,7 +1242,7 @@
 </g>
 </g>
 <!-- src/hooks/index.ts&#45;&gt;src/hooks/breakpoints.ts -->
-<g id="edge474" class="edge">
+<g id="edge473" class="edge">
 <title>src/hooks/index.ts&#45;&gt;src/hooks/breakpoints.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1076.99,-7720.05C1121.38,-7786.99 1232.77,-7955 1232.77,-7955 1232.77,-7955 1453.08,-7955 1453.08,-7955 1453.08,-7955 1532.74,-7881.2 1585.19,-7832.61"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1604.5,-7824.26 1585.07,-7832.72 1594.98,-7813.99 1604.5,-7824.26"/>
@@ -1257,7 +1257,7 @@
 </g>
 </g>
 <!-- src/hooks/index.ts&#45;&gt;src/hooks/css&#45;runtime.ts -->
-<g id="edge475" class="edge">
+<g id="edge474" class="edge">
 <title>src/hooks/index.ts&#45;&gt;src/hooks/css&#45;runtime.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1094.03,-7689.04C1136.2,-7684.27 1208.36,-7676.11 1263.98,-7669.82"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1284.57,-7674.53 1263.91,-7669.83 1282.99,-7660.62 1284.57,-7674.53"/>
@@ -1272,7 +1272,7 @@
 </g>
 </g>
 <!-- src/hooks/index.ts&#45;&gt;src/hooks/keyboard.ts -->
-<g id="edge476" class="edge">
+<g id="edge475" class="edge">
 <title>src/hooks/index.ts&#45;&gt;src/hooks/keyboard.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1093.79,-7706.4C1144.49,-7725.95 1232.77,-7760 1232.77,-7760 1232.77,-7760 1251.28,-7765.26 1273.06,-7771.44"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1290.22,-7783.59 1272.89,-7771.39 1294.04,-7770.13 1290.22,-7783.59"/>
@@ -1287,7 +1287,7 @@
 </g>
 </g>
 <!-- src/hooks/index.ts&#45;&gt;src/hooks/layout&#45;context.ts -->
-<g id="edge477" class="edge">
+<g id="edge476" class="edge">
 <title>src/hooks/index.ts&#45;&gt;src/hooks/layout&#45;context.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1083.21,-7720.39C1130.94,-7774.52 1232.77,-7890 1232.77,-7890 1232.77,-7890 1242.38,-7892.73 1255.9,-7896.57"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1273.35,-7908.8 1256.02,-7896.6 1277.17,-7895.33 1273.35,-7908.8"/>
@@ -1302,7 +1302,7 @@
 </g>
 </g>
 <!-- src/hooks/index.ts&#45;&gt;src/hooks/scroll.ts -->
-<g id="edge478" class="edge">
+<g id="edge477" class="edge">
 <title>src/hooks/index.ts&#45;&gt;src/hooks/scroll.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1094.03,-7681.01C1142.5,-7664.39 1230.57,-7634.19 1287.63,-7614.62"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1308.8,-7614.76 1287.61,-7614.62 1304.26,-7601.52 1308.8,-7614.76"/>
@@ -1317,7 +1317,7 @@
 </g>
 </g>
 <!-- src/hooks/index.ts&#45;&gt;src/hooks/theme.ts -->
-<g id="edge479" class="edge">
+<g id="edge478" class="edge">
 <title>src/hooks/index.ts&#45;&gt;src/hooks/theme.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1093.79,-7719.39C1144.49,-7757.92 1232.77,-7825 1232.77,-7825 1232.77,-7825 1257.6,-7832.05 1283.58,-7839.43"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1300.87,-7851.62 1283.54,-7839.42 1304.69,-7838.15 1300.87,-7851.62"/>
@@ -1428,16 +1428,16 @@
 <g id="node57" class="node">
 <title>src/components/atoms/input&#45;group&#45;variants.tsx</title>
 <g id="a_node57"><a xlink:href="src/components/atoms/input-group-variants.tsx" xlink:title="input&#45;group&#45;variants.tsx">
-<ellipse fill="#e05c5c" stroke="black" cx="1631.1" cy="-4289" rx="106.03" ry="27"/>
-<text xml:space="preserve" text-anchor="start" x="1547.51" y="-4282.6" font-family="Helvetica,sans-Serif" font-size="16.00">input&#45;group&#45;variants.tsx</text>
+<ellipse fill="#e05c5c" stroke="black" cx="1631.1" cy="-4266" rx="106.03" ry="27"/>
+<text xml:space="preserve" text-anchor="start" x="1547.51" y="-4259.6" font-family="Helvetica,sans-Serif" font-size="16.00">input&#45;group&#45;variants.tsx</text>
 </a>
 </g>
 </g>
 <!-- src/components/atoms/input&#45;group&#45;variants.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority -->
 <g id="edge95" class="edge">
 <title>src/components/atoms/input&#45;group&#45;variants.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority</title>
-<path fill="none" stroke="#e05c5c" d="M1699.34,-4267.89C1727.2,-4259.14 1753.13,-4251 1753.13,-4251 1753.13,-4251 1803.95,-1430.44 1822.18,-1158.42"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.5,-1138.61 1831.11,-1159.53 1823.48,-1147.33 1822.17,-1158.48 1822.17,-1158.48 1822.17,-1158.48 1823.48,-1147.33 1813.23,-1157.43 1824.5,-1138.61"/>
+<path fill="none" stroke="#e05c5c" d="M1699.34,-4244.89C1727.2,-4236.14 1753.13,-4228 1753.13,-4228 1753.13,-4228 1803.95,-1428.31 1822.18,-1158.27"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.5,-1138.61 1831.09,-1159.53 1823.47,-1147.33 1822.15,-1158.47 1822.15,-1158.47 1822.15,-1158.47 1823.47,-1147.33 1813.22,-1157.42 1824.5,-1138.61"/>
 </g>
 <!-- src/components/atoms/input&#45;group.tsx -->
 <g id="node58" class="node">
@@ -1451,8 +1451,8 @@
 <!-- src/components/atoms/input&#45;group.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority -->
 <g id="edge101" class="edge">
 <title>src/components/atoms/input&#45;group.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority</title>
-<path fill="none" stroke="#e05c5c" d="M833.41,-5237.25C858.88,-5229.51 883.58,-5222 883.58,-5222 883.58,-5222 955.35,-2342 955.35,-2342 955.35,-2342 1168.77,-2162 1168.77,-2162 1168.77,-2162 1232.77,-1986 1232.77,-1986 1232.77,-1986 1453.08,-1892 1453.08,-1892 1453.08,-1892 1753.13,-1733 1753.13,-1733 1753.13,-1733 1797.84,-1261.92 1818.43,-1157.64"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.29,-1138.57 1827.02,-1160.33 1821.71,-1146.96 1818.42,-1157.69 1818.42,-1157.69 1818.42,-1157.69 1821.71,-1146.96 1809.81,-1155.04 1824.29,-1138.57"/>
+<path fill="none" stroke="#e05c5c" d="M833.41,-5237.25C858.88,-5229.51 883.58,-5222 883.58,-5222 883.58,-5222 955.35,-2342 955.35,-2342 955.35,-2342 1168.77,-2162 1168.77,-2162 1168.77,-2162 1232.77,-1986 1232.77,-1986 1232.77,-1986 1453.08,-1892 1453.08,-1892 1453.08,-1892 1753.13,-1729 1753.13,-1729 1753.13,-1729 1797.84,-1261.11 1818.43,-1157.51"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.29,-1138.57 1826.98,-1160.33 1821.69,-1146.96 1818.38,-1157.67 1818.38,-1157.67 1818.38,-1157.67 1821.69,-1146.96 1809.78,-1155.02 1824.29,-1138.57"/>
 </g>
 <!-- src/components/atoms/input&#45;group.tsx&#45;&gt;node_modules/react -->
 <g id="edge102" class="edge">
@@ -1475,8 +1475,8 @@
 <!-- src/components/atoms/input&#45;group.tsx&#45;&gt;src/components/atoms/input&#45;group&#45;variants.tsx -->
 <g id="edge98" class="edge">
 <title>src/components/atoms/input&#45;group.tsx&#45;&gt;src/components/atoms/input&#45;group&#45;variants.tsx</title>
-<path fill="none" stroke="#e05c5c" stroke-width="2" d="M833.41,-5237.25C858.88,-5229.51 883.58,-5222 883.58,-5222 883.58,-5222 955.35,-4540 955.35,-4540 955.35,-4540 1168.77,-4540 1168.77,-4540 1168.77,-4540 1232.77,-4541 1232.77,-4541 1232.77,-4541 1453.08,-4541 1453.08,-4541 1453.08,-4541 1547.4,-4406.73 1598.35,-4334.21"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1609.76,-4317.96 1605.62,-4339.5 1605.82,-4324.44 1598.67,-4334.62 1598.26,-4334.33 1597.85,-4334.04 1605,-4323.86 1590.9,-4329.15 1609.76,-4317.96"/>
+<path fill="none" stroke="#e05c5c" stroke-width="2" d="M833.41,-5237.25C858.88,-5229.51 883.58,-5222 883.58,-5222 883.58,-5222 955.35,-4540 955.35,-4540 955.35,-4540 1168.77,-4540 1168.77,-4540 1168.77,-4540 1232.77,-4541 1232.77,-4541 1232.77,-4541 1453.08,-4541 1453.08,-4541 1453.08,-4541 1550.55,-4389.58 1600.84,-4311.46"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1611.49,-4294.92 1608.23,-4316.61 1607.81,-4301.55 1601.08,-4312.01 1600.66,-4311.73 1600.24,-4311.46 1606.97,-4301.01 1593.09,-4306.86 1611.49,-4294.92"/>
 </g>
 <!-- src/components/atoms/input.tsx -->
 <g id="node59" class="node">
@@ -1610,8 +1610,8 @@
 <!-- src/components/atoms/link&#45;button.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority -->
 <g id="edge118" class="edge">
 <title>src/components/atoms/link&#45;button.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority</title>
-<path fill="none" stroke="#e05c5c" d="M831.26,-5172.91C857.47,-5164.94 883.58,-5157 883.58,-5157 883.58,-5157 955.35,-2273 955.35,-2273 955.35,-2273 1168.77,-2035 1168.77,-2035 1168.77,-2035 1232.77,-1894 1232.77,-1894 1232.77,-1894 1453.08,-1846 1453.08,-1846 1453.08,-1846 1753.13,-1651 1753.13,-1651 1753.13,-1651 1797.06,-1252.45 1817.89,-1157.49"/>
-<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.26,-1138.56 1826.41,-1160.38 1821.46,-1146.88 1817.88,-1157.51 1817.88,-1157.51 1817.88,-1157.51 1821.46,-1146.88 1809.35,-1154.64 1824.26,-1138.56"/>
+<path fill="none" stroke="#e05c5c" d="M831.26,-5172.91C857.47,-5164.94 883.58,-5157 883.58,-5157 883.58,-5157 955.35,-2273 955.35,-2273 955.35,-2273 1168.77,-2035 1168.77,-2035 1168.77,-2035 1232.77,-1894 1232.77,-1894 1232.77,-1894 1453.08,-1846 1453.08,-1846 1453.08,-1846 1753.13,-1645 1753.13,-1645 1753.13,-1645 1797.06,-1251.16 1817.89,-1157.27"/>
+<polygon fill="#e05c5c" stroke="#e05c5c" points="1824.25,-1138.56 1826.33,-1160.39 1821.43,-1146.87 1817.81,-1157.49 1817.81,-1157.49 1817.81,-1157.49 1821.43,-1146.87 1809.29,-1154.59 1824.25,-1138.56"/>
 </g>
 <!-- src/components/atoms/link&#45;button.tsx&#45;&gt;node_modules/react -->
 <g id="edge119" class="edge">
@@ -1898,7 +1898,7 @@
 <!-- src/components/atoms/wallet&#45;logo.spec.tsx&#45;&gt;node_modules/@web3icons/react -->
 <g id="edge155" class="edge">
 <title>src/components/atoms/wallet&#45;logo.spec.tsx&#45;&gt;node_modules/@web3icons/react</title>
-<path fill="none" stroke="#e05c5c" stroke-width="2" stroke-dasharray="5,2" d="M841.67,-4383.74C863.97,-4376.96 883.58,-4371 883.58,-4371 883.58,-4371 955.35,-2020 955.35,-2020 955.35,-2020 1232.77,-1710 1232.77,-1710 1232.77,-1710 1753.13,-1542 1753.13,-1542 1753.13,-1542 1797.06,-1126.98 1819.66,-1027.61"/>
+<path fill="none" stroke="#e05c5c" stroke-width="2" stroke-dasharray="5,2" d="M841.67,-4383.74C863.97,-4376.96 883.58,-4371 883.58,-4371 883.58,-4371 955.35,-2020 955.35,-2020 955.35,-2020 1232.77,-1664 1232.77,-1664 1232.77,-1664 1453.08,-1616 1453.08,-1616 1453.08,-1616 1753.13,-1542 1753.13,-1542 1753.13,-1542 1797.06,-1126.98 1819.66,-1027.61"/>
 <polygon fill="#e05c5c" stroke="#e05c5c" stroke-width="2" points="1826.38,-1008.78 1828.14,-1030.64 1824.31,-1016.07 1820.13,-1027.78 1819.66,-1027.61 1819.19,-1027.44 1823.37,-1015.73 1811.18,-1024.59 1826.38,-1008.78"/>
 </g>
 <!-- src/components/atoms/wallet&#45;logo.spec.tsx&#45;&gt;node_modules/@testing&#45;library/react -->
@@ -1970,43 +1970,43 @@
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/accordion.tsx -->
 <g id="edge162" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/accordion.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.36,-5512.7C86.29,-5317.54 182.26,-4142 182.26,-4142 182.26,-4142 663.28,-3930 663.28,-3930 663.28,-3930 870.47,-3871.07 984.27,-3838.7"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.36,-5512.72C86.29,-5317.7 182.26,-4143 182.26,-4143 182.26,-4143 663.28,-3930 663.28,-3930 663.28,-3930 870.47,-3871.07 984.27,-3838.7"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1005.31,-3840 984.16,-3838.73 1001.48,-3826.53 1005.31,-3840"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/alert.tsx -->
 <g id="edge163" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/alert.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.41,-5512.79C86.49,-5320.83 182.26,-4178 182.26,-4178 182.26,-4178 663.28,-4047 663.28,-4047 663.28,-4047 888.47,-3990.38 998.27,-3962.78"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.43,-5512.51C86.6,-5319.78 182.26,-4179 182.26,-4179 182.26,-4179 663.28,-4047 663.28,-4047 663.28,-4047 888.47,-3990.38 998.27,-3962.78"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1019.32,-3964.71 998.22,-3962.79 1015.91,-3951.13 1019.32,-3964.71"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/autocomplete.tsx -->
 <g id="edge164" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/autocomplete.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.73,-5512.73C87.72,-5334.4 182.26,-4342 182.26,-4342 182.26,-4342 377.4,-4181 377.4,-4181 377.4,-4181 663.28,-4166 663.28,-4166 663.28,-4166 883.58,-4166 883.58,-4166 883.58,-4166 955.35,-4241 955.35,-4241 955.35,-4241 965.14,-4244.08 978.64,-4248.33"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.75,-5512.65C87.82,-5334.89 182.26,-4351 182.26,-4351 182.26,-4351 377.4,-4181 377.4,-4181 377.4,-4181 663.28,-4166 663.28,-4166 663.28,-4166 883.58,-4166 883.58,-4166 883.58,-4166 955.35,-4241 955.35,-4241 955.35,-4241 965.14,-4244.08 978.64,-4248.33"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="995.73,-4261.04 978.75,-4248.36 999.93,-4247.69 995.73,-4261.04"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/avatar.tsx -->
 <g id="edge165" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/avatar.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.33,-5512.53C86.19,-5314.84 182.26,-4117 182.26,-4117 182.26,-4117 377.4,-4013 377.4,-4013 377.4,-4013 663.28,-3866 663.28,-3866 663.28,-3866 882.35,-3803.13 993.69,-3771.18"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.33,-5512.57C86.19,-5315.16 182.26,-4119 182.26,-4119 182.26,-4119 377.4,-4013 377.4,-4013 377.4,-4013 663.28,-3866 663.28,-3866 663.28,-3866 882.35,-3803.13 993.69,-3771.18"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1014.76,-3772.42 993.61,-3771.21 1010.9,-3758.96 1014.76,-3772.42"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/badge.tsx -->
 <g id="edge166" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/badge.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.43,-5512.75C86.6,-5321.72 182.26,-4191 182.26,-4191 182.26,-4191 786.43,-4068.07 990.58,-4026.53"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1011.67,-4029.38 990.68,-4026.51 1008.88,-4015.66 1011.67,-4029.38"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.43,-5512.79C86.6,-5322.04 182.26,-4193 182.26,-4193 182.26,-4193 786.43,-4068.68 990.58,-4026.68"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1011.69,-4029.48 990.69,-4026.66 1008.87,-4015.77 1011.69,-4029.48"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/button.tsx -->
 <g id="edge167" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/button.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M71.8,-5512.81C91.33,-5368 182.26,-4694 182.26,-4694 182.26,-4694 377.4,-4269 377.4,-4269 377.4,-4269 663.28,-4172 663.28,-4172 663.28,-4172 883.58,-4172 883.58,-4172 883.58,-4172 955.35,-5190 955.35,-5190 955.35,-5190 973.51,-5195.71 994.48,-5202.31"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M72.06,-5512.53C92.13,-5372.21 182.26,-4742 182.26,-4742 182.26,-4742 377.4,-4273 377.4,-4273 377.4,-4273 663.28,-4172 663.28,-4172 663.28,-4172 883.58,-4172 883.58,-4172 883.58,-4172 955.35,-5190 955.35,-5190 955.35,-5190 973.51,-5195.71 994.48,-5202.31"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1011.46,-5214.99 994.48,-5202.31 1015.66,-5201.64 1011.46,-5214.99"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/calendar&#45;day&#45;button.tsx -->
 <g id="edge168" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/calendar&#45;day&#45;button.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M83.28,-5512.78C114.33,-5457.01 182.26,-5335 182.26,-5335 182.26,-5335 663.28,-5157 663.28,-5157 663.28,-5157 672.7,-5154.25 686.1,-5150.34"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M83.76,-5512.61C115.02,-5457.84 182.26,-5340 182.26,-5340 182.26,-5340 599.28,-5253 599.28,-5253 599.28,-5253 663.28,-5157 663.28,-5157 663.28,-5157 672.7,-5154.25 686.1,-5150.34"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="707.34,-5151.43 686.18,-5150.32 703.42,-5137.99 707.34,-5151.43"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/card.tsx -->
@@ -2018,13 +2018,13 @@
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/checkbox.tsx -->
 <g id="edge170" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/checkbox.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.28,-5512.55C85.98,-5312.38 182.26,-4085 182.26,-4085 182.26,-4085 377.4,-3957 377.4,-3957 377.4,-3957 663.28,-3802 663.28,-3802 663.28,-3802 871.52,-3741.71 985.13,-3708.82"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.28,-5512.57C85.98,-5312.54 182.26,-4086 182.26,-4086 182.26,-4086 377.4,-3957 377.4,-3957 377.4,-3957 663.28,-3802 663.28,-3802 663.28,-3802 871.52,-3741.71 985.13,-3708.82"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1006.16,-3710.02 985,-3708.86 1002.27,-3696.57 1006.16,-3710.02"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/coin&#45;icon.tsx -->
 <g id="edge171" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/coin&#45;icon.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.59,-5512.7C87.21,-5328.54 182.26,-4275 182.26,-4275 182.26,-4275 377.4,-4172 377.4,-4172 377.4,-4172 663.28,-4164 663.28,-4164 663.28,-4164 883.58,-4164 883.58,-4164 883.58,-4164 936.62,-4177.45 984.04,-4189.48"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.62,-5512.58C87.31,-5328.75 182.26,-4283 182.26,-4283 182.26,-4283 377.4,-4172 377.4,-4172 377.4,-4172 663.28,-4164 663.28,-4164 663.28,-4164 883.58,-4164 883.58,-4164 883.58,-4164 936.62,-4177.45 984.04,-4189.48"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1001.85,-4201.22 984.18,-4189.52 1005.29,-4187.65 1001.85,-4201.22"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/collapsible.tsx -->
@@ -2036,67 +2036,67 @@
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/command.tsx -->
 <g id="edge173" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/command.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M80.56,-5512.55C110.14,-5447.24 182.26,-5288 182.26,-5288 182.26,-5288 599.28,-4741 599.28,-4741 599.28,-4741 663.28,-4631 663.28,-4631 663.28,-4631 681.62,-4625.65 703.53,-4619.25"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M81.9,-5512.62C112.25,-5452.24 182.26,-5313 182.26,-5313 182.26,-5313 599.28,-4872 599.28,-4872 599.28,-4872 663.28,-4631 663.28,-4631 663.28,-4631 681.62,-4625.65 703.53,-4619.25"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="724.77,-4620.34 703.61,-4619.23 720.85,-4606.9 724.77,-4620.34"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/dialog.tsx -->
 <g id="edge174" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/dialog.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M71.27,-5512.72C89.63,-5353.28 182.26,-4549 182.26,-4549 182.26,-4549 377.4,-4225 377.4,-4225 377.4,-4225 663.28,-4170 663.28,-4170 663.28,-4170 883.58,-4170 883.58,-4170 883.58,-4170 955.35,-5060 955.35,-5060 955.35,-5060 974.09,-5065.89 995.47,-5072.62"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M71.33,-5512.73C89.83,-5355.15 182.26,-4568 182.26,-4568 182.26,-4568 377.4,-4227 377.4,-4227 377.4,-4227 663.28,-4170 663.28,-4170 663.28,-4170 883.58,-4170 883.58,-4170 883.58,-4170 955.35,-5060 955.35,-5060 955.35,-5060 974.09,-5065.89 995.47,-5072.62"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1012.34,-5085.27 995.37,-5072.59 1016.54,-5071.91 1012.34,-5085.27"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/drawer.tsx -->
 <g id="edge175" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/drawer.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M72.33,-5512.82C92.92,-5379.5 182.26,-4801 182.26,-4801 182.26,-4801 377.4,-4405 377.4,-4405 377.4,-4405 663.28,-4174 663.28,-4174 663.28,-4174 883.58,-4174 883.58,-4174 883.58,-4174 955.35,-5255 955.35,-5255 955.35,-5255 972.7,-5260.46 993.06,-5266.86"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M72.6,-5512.72C93.7,-5384.04 182.26,-4844 182.26,-4844 182.26,-4844 377.4,-4411 377.4,-4411 377.4,-4411 663.28,-4174 663.28,-4174 663.28,-4174 883.58,-4174 883.58,-4174 883.58,-4174 955.35,-5255 955.35,-5255 955.35,-5255 972.7,-5260.46 993.06,-5266.86"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1009.99,-5279.53 993.01,-5266.85 1014.19,-5266.17 1009.99,-5279.53"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx -->
 <g id="edge176" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M72.89,-5512.56C94.49,-5388.03 182.26,-4882 182.26,-4882 182.26,-4882 377.4,-4587 377.4,-4587 377.4,-4587 663.28,-4176 663.28,-4176 663.28,-4176 883.58,-4176 883.58,-4176 883.58,-4176 955.35,-5385 955.35,-5385 955.35,-5385 963.22,-5387.48 974.58,-5391.05"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M73.71,-5512.81C96.62,-5401.18 182.26,-4984 182.26,-4984 182.26,-4984 377.4,-4604 377.4,-4604 377.4,-4604 663.28,-4176 663.28,-4176 663.28,-4176 883.58,-4176 883.58,-4176 883.58,-4176 955.35,-5385 955.35,-5385 955.35,-5385 963.22,-5387.48 974.58,-5391.05"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="991.62,-5403.75 974.64,-5391.07 995.82,-5390.39 991.62,-5403.75"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/empty.tsx -->
 <g id="edge177" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/empty.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.41,-5512.51C86.49,-5318.58 182.26,-4164 182.26,-4164 182.26,-4164 663.28,-3991 663.28,-3991 663.28,-3991 882.35,-3930.92 993.69,-3900.38"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.41,-5512.55C86.49,-5318.9 182.26,-4166 182.26,-4166 182.26,-4166 663.28,-3991 663.28,-3991 663.28,-3991 882.35,-3930.92 993.69,-3900.38"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1014.68,-3901.88 993.54,-3900.42 1010.98,-3888.38 1014.68,-3901.88"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/field.tsx -->
 <g id="edge178" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/field.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M82.35,-5512.71C112.95,-5454 182.26,-5321 182.26,-5321 182.26,-5321 599.28,-4893 599.28,-4893 599.28,-4893 694.54,-4769.25 745.3,-4703.29"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="762.97,-4691.81 745.23,-4703.39 751.88,-4683.27 762.97,-4691.81"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M83.28,-5512.64C114.33,-5456.61 182.26,-5334 182.26,-5334 182.26,-5334 599.28,-4925 599.28,-4925 599.28,-4925 698.13,-4778.71 748.1,-4704.76"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="764.9,-4692.4 747.9,-4705.05 753.3,-4684.56 764.9,-4692.4"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/label.tsx -->
 <g id="edge186" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/label.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.54,-5512.51C87,-5324.67 182.26,-4238 182.26,-4238 182.26,-4238 377.4,-4167 377.4,-4167 377.4,-4167 824.68,-4151.21 993.55,-4145.24"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.54,-5512.59C87,-5325.33 182.26,-4242 182.26,-4242 182.26,-4242 377.4,-4167 377.4,-4167 377.4,-4167 824.68,-4151.21 993.55,-4145.24"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1013.79,-4151.53 993.56,-4145.24 1013.3,-4137.54 1013.79,-4151.53"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/separator.tsx -->
 <g id="edge193" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/separator.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.92,-5512.67C88.42,-5341.37 182.26,-4423 182.26,-4423 182.26,-4423 377.4,-4192 377.4,-4192 377.4,-4192 663.28,-4168 663.28,-4168 663.28,-4168 883.58,-4168 883.58,-4168 883.58,-4168 955.35,-4306 955.35,-4306 955.35,-4306 969.03,-4310.3 986.35,-4315.75"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.98,-5512.63C88.63,-5343.16 182.26,-4444 182.26,-4444 182.26,-4444 377.4,-4193 377.4,-4193 377.4,-4193 663.28,-4168 663.28,-4168 663.28,-4168 883.58,-4168 883.58,-4168 883.58,-4168 955.35,-4306 955.35,-4306 955.35,-4306 969.03,-4310.3 986.35,-4315.75"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1003.45,-4328.47 986.47,-4315.79 1007.65,-4315.12 1003.45,-4328.47"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/figure.tsx -->
 <g id="edge179" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/figure.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M77.18,-5512.56C104.17,-5430.72 182.26,-5194 182.26,-5194 182.26,-5194 377.4,-4891 377.4,-4891 377.4,-4891 599.28,-4686 599.28,-4686 599.28,-4686 663.28,-4566 663.28,-4566 663.28,-4566 688.25,-4558.71 714.72,-4550.98"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M77.66,-5512.68C105.09,-5434.09 182.26,-5213 182.26,-5213 182.26,-5213 377.4,-4923 377.4,-4923 377.4,-4923 599.28,-4779 599.28,-4779 599.28,-4779 663.28,-4566 663.28,-4566 663.28,-4566 688.25,-4558.71 714.72,-4550.98"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="735.87,-4552.1 714.71,-4550.99 731.95,-4538.66 735.87,-4552.1"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/fitted&#45;text.tsx -->
 <g id="edge180" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/fitted&#45;text.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.46,-5512.79C86.7,-5323.28 182.26,-4208 182.26,-4208 182.26,-4208 377.4,-4164 377.4,-4164 377.4,-4164 797.78,-4110.81 977.32,-4088.09"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.49,-5512.55C86.8,-5322.58 182.26,-4211 182.26,-4211 182.26,-4211 377.4,-4164 377.4,-4164 377.4,-4164 797.78,-4110.81 977.32,-4088.09"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="998.12,-4092.51 977.39,-4088.08 996.36,-4078.62 998.12,-4092.51"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/floating&#45;action&#45;button.tsx -->
 <g id="edge181" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/floating&#45;action&#45;button.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.23,-5512.53C85.78,-5309.43 182.26,-4049 182.26,-4049 182.26,-4049 488.9,-3649 488.9,-3649 488.9,-3649 488.9,-3649 778.32,-3649 778.32,-3649 1168.77,-3656 1168.77,-3656 1168.77,-3656 1232.77,-3722 1232.77,-3722 1232.77,-3722 1239.44,-3723.89 1249.48,-3726.75"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M70.23,-5512.54C85.78,-5309.58 182.26,-4050 182.26,-4050 182.26,-4050 488.9,-3649 488.9,-3649 488.9,-3649 488.9,-3649 778.32,-3649 778.32,-3649 1168.77,-3656 1168.77,-3656 1168.77,-3656 1232.77,-3722 1232.77,-3722 1232.77,-3722 1239.44,-3723.89 1249.48,-3726.75"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1266.85,-3738.96 1249.52,-3726.76 1270.67,-3725.49 1266.85,-3738.96"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/heading&#45;anchor.tsx -->
@@ -2108,8 +2108,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/input&#45;group.tsx -->
 <g id="edge184" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/input&#45;group.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M84.97,-5512.7C116.72,-5461.24 182.26,-5355 182.26,-5355 182.26,-5355 599.28,-5293 599.28,-5293 599.28,-5293 648.31,-5282.2 694.76,-5271.97"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="715.92,-5274.47 694.88,-5271.94 712.91,-5260.8 715.92,-5274.47"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M84.97,-5512.7C116.72,-5461.24 182.26,-5355 182.26,-5355 182.26,-5355 599.28,-5309 599.28,-5309 599.28,-5309 663.28,-5287 663.28,-5287 663.28,-5287 679.76,-5282.19 700.14,-5276.24"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="721.46,-5277.31 700.3,-5276.19 717.54,-5263.87 721.46,-5277.31"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/input.tsx -->
 <g id="edge183" class="edge">
@@ -2132,14 +2132,14 @@
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/layout&#45;container.tsx -->
 <g id="edge187" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/layout&#45;container.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M75.71,-5512.58C101.2,-5420.34 182.26,-5127 182.26,-5127 182.26,-5127 377.4,-4739 377.4,-4739 377.4,-4739 599.28,-4589 599.28,-4589 599.28,-4589 663.28,-4371 663.28,-4371 663.28,-4371 675.4,-4367.46 691.7,-4362.7"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M76.89,-5512.5C103.62,-5428.67 182.26,-5182 182.26,-5182 182.26,-5182 377.4,-4870 377.4,-4870 377.4,-4870 599.28,-4606 599.28,-4606 599.28,-4606 663.28,-4371 663.28,-4371 663.28,-4371 675.4,-4367.46 691.7,-4362.7"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="712.88,-4363.81 691.72,-4362.7 708.95,-4350.37 712.88,-4363.81"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/link&#45;button.tsx -->
 <g id="edge188" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/link&#45;button.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M84.97,-5512.85C116.72,-5461.67 182.26,-5356 182.26,-5356 182.26,-5356 542.32,-5254.78 701.8,-5209.95"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="722.95,-5211.27 701.81,-5209.95 719.17,-5197.79 722.95,-5211.27"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M84.97,-5512.85C116.72,-5461.67 182.26,-5356 182.26,-5356 182.26,-5356 599.28,-5286 599.28,-5286 599.28,-5286 663.28,-5222 663.28,-5222 663.28,-5222 680.9,-5216.86 702.22,-5210.63"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="723.45,-5211.73 702.29,-5210.61 719.53,-5198.29 723.45,-5211.73"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/navigation&#45;menu.tsx -->
 <g id="edge189" class="edge">
@@ -2174,7 +2174,7 @@
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/spinner.tsx -->
 <g id="edge195" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/atoms/spinner.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M73.95,-5512.58C97.2,-5402.95 182.26,-5002 182.26,-5002 182.26,-5002 377.4,-4684 377.4,-4684 377.4,-4684 599.28,-4407 599.28,-4407 599.28,-4407 663.28,-4306 663.28,-4306 663.28,-4306 685.18,-4299.61 709.69,-4292.45"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M74.26,-5512.53C97.97,-5406.39 182.26,-5029 182.26,-5029 182.26,-5029 663.28,-4306 663.28,-4306 663.28,-4306 685.18,-4299.61 709.69,-4292.45"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="731.02,-4293.52 709.86,-4292.4 727.09,-4280.08 731.02,-4293.52"/>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/atoms/timer&#45;ring.tsx -->
@@ -2276,8 +2276,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/molecules/calendar.tsx -->
 <g id="edge204" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/molecules/calendar.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6004 182.26,-6004 182.26,-6004 327.41,-6030.51 417.98,-6047.05"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="436.37,-6057.52 417.95,-6047.04 438.88,-6043.75 436.37,-6057.52"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6003 182.26,-6003 182.26,-6003 327.41,-6029.98 417.98,-6046.82"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="436.34,-6057.35 417.96,-6046.81 438.9,-6043.59 436.34,-6057.35"/>
 </g>
 <!-- src/components/molecules/code&#45;block.tsx -->
 <g id="node82" class="node">
@@ -2336,8 +2336,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/molecules/command&#45;list.tsx -->
 <g id="edge208" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/molecules/command&#45;list.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6069 182.26,-6069 182.26,-6069 310.3,-6092.38 400.91,-6108.93"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="419.36,-6119.42 400.95,-6108.94 421.88,-6105.64 419.36,-6119.42"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6068 182.26,-6068 182.26,-6068 310.3,-6091.8 400.91,-6108.64"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="419.34,-6119.19 400.96,-6108.65 421.9,-6105.43 419.34,-6119.19"/>
 </g>
 <!-- src/components/molecules/connection&#45;status.tsx -->
 <g id="node86" class="node">
@@ -2366,8 +2366,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/molecules/cta&#45;button.tsx -->
 <g id="edge210" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/molecules/cta&#45;button.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-5875 182.26,-5875 182.26,-5875 322.12,-5900.09 412.93,-5916.37"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="431.5,-5926.82 413.05,-5916.4 433.97,-5913.04 431.5,-5926.82"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-5874 182.26,-5874 182.26,-5874 322.12,-5899.54 412.93,-5916.13"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="431.48,-5926.63 413.06,-5916.15 434,-5912.86 431.48,-5926.63"/>
 </g>
 <!-- src/components/molecules/dialog&#45;content.tsx -->
 <g id="node88" class="node">
@@ -2441,8 +2441,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/molecules/figure.tsx -->
 <g id="edge215" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/molecules/figure.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-5811 182.26,-5811 182.26,-5811 339.21,-5838.64 428.53,-5854.37"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="446.93,-5864.72 428.44,-5854.35 449.35,-5850.93 446.93,-5864.72"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-5810 182.26,-5810 182.26,-5810 339.21,-5838.15 428.53,-5854.17"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="446.9,-5864.58 428.45,-5854.16 449.38,-5850.8 446.9,-5864.58"/>
 </g>
 <!-- src/components/molecules/navigation&#45;menu.tsx -->
 <g id="node93" class="node">
@@ -2501,8 +2501,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/molecules/responsive&#45;dialog.tsx -->
 <g id="edge219" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/molecules/responsive&#45;dialog.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-5939 182.26,-5939 182.26,-5939 296.7,-5959.9 385.75,-5976.16"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="404.08,-5986.63 385.66,-5976.15 406.59,-5972.85 404.08,-5986.63"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-5938 182.26,-5938 182.26,-5938 296.7,-5959.27 385.75,-5975.83"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="404.06,-5986.35 385.67,-5975.81 406.62,-5972.59 404.06,-5986.35"/>
 </g>
 <!-- src/components/molecules/scroll&#45;area.tsx -->
 <g id="node97" class="node">
@@ -2598,16 +2598,16 @@
 <g id="node103" class="node">
 <title>src/components/organisms/cta&#45;section.tsx</title>
 <g id="a_node103"><a xlink:href="src/components/organisms/cta-section.tsx" xlink:title="cta&#45;section.tsx">
-<path fill="#5cb85c" stroke="black" d="M296.52,-7019C296.52,-7019 202.26,-7019 202.26,-7019 196.26,-7019 190.26,-7013 190.26,-7007 190.26,-7007 190.26,-6977 190.26,-6977 190.26,-6971 196.26,-6965 202.26,-6965 202.26,-6965 296.52,-6965 296.52,-6965 302.52,-6965 308.52,-6971 308.52,-6977 308.52,-6977 308.52,-7007 308.52,-7007 308.52,-7013 302.52,-7019 296.52,-7019"/>
-<text xml:space="preserve" text-anchor="start" x="198.26" y="-6985.6" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">cta&#45;section.tsx</text>
+<path fill="#5cb85c" stroke="black" d="M296.52,-7033C296.52,-7033 202.26,-7033 202.26,-7033 196.26,-7033 190.26,-7027 190.26,-7021 190.26,-7021 190.26,-6991 190.26,-6991 190.26,-6985 196.26,-6979 202.26,-6979 202.26,-6979 296.52,-6979 296.52,-6979 302.52,-6979 308.52,-6985 308.52,-6991 308.52,-6991 308.52,-7021 308.52,-7021 308.52,-7027 302.52,-7033 296.52,-7033"/>
+<text xml:space="preserve" text-anchor="start" x="198.26" y="-6999.6" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">cta&#45;section.tsx</text>
 </a>
 </g>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/organisms/cta&#45;section.tsx -->
 <g id="edge226" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/organisms/cta&#45;section.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 173.46,-6769.88 187.4,-6943.66"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="182.77,-6964.37 187.41,-6943.7 196.68,-6962.75 182.77,-6964.37"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 173.52,-6783.23 187.43,-6957.74"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="182.78,-6978.37 187.42,-6957.7 196.68,-6976.76 182.78,-6978.37"/>
 </g>
 <!-- src/components/organisms/feature&#45;gallery.tsx -->
 <g id="node104" class="node">
@@ -2636,38 +2636,38 @@
 <!-- src/components/index.ts&#45;&gt;src/components/organisms/locale&#45;selector.tsx -->
 <g id="edge228" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/organisms/locale&#45;selector.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6907 182.26,-6907 182.26,-6907 306.39,-6926.43 396.69,-6940.57"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="415.32,-6950.57 396.64,-6940.56 417.49,-6936.74 415.32,-6950.57"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6908 182.26,-6908 182.26,-6908 306.39,-6927.03 396.69,-6940.87"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="415.34,-6950.81 396.63,-6940.86 417.46,-6936.97 415.34,-6950.81"/>
 </g>
 <!-- src/components/organisms/website&#45;footer.tsx -->
 <g id="node106" class="node">
 <title>src/components/organisms/website&#45;footer.tsx</title>
 <g id="a_node106"><a xlink:href="src/components/organisms/website-footer.tsx" xlink:title="website&#45;footer.tsx">
-<path fill="#5cb85c" stroke="black" d="M836.01,-7046C836.01,-7046 718.63,-7046 718.63,-7046 712.63,-7046 706.63,-7040 706.63,-7034 706.63,-7034 706.63,-7004 706.63,-7004 706.63,-6998 712.63,-6992 718.63,-6992 718.63,-6992 836.01,-6992 836.01,-6992 842.01,-6992 848.01,-6998 848.01,-7004 848.01,-7004 848.01,-7034 848.01,-7034 848.01,-7040 842.01,-7046 836.01,-7046"/>
-<text xml:space="preserve" text-anchor="start" x="714.63" y="-7012.6" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">website&#45;footer.tsx</text>
+<path fill="#5cb85c" stroke="black" d="M836.01,-6925C836.01,-6925 718.63,-6925 718.63,-6925 712.63,-6925 706.63,-6919 706.63,-6913 706.63,-6913 706.63,-6883 706.63,-6883 706.63,-6877 712.63,-6871 718.63,-6871 718.63,-6871 836.01,-6871 836.01,-6871 842.01,-6871 848.01,-6877 848.01,-6883 848.01,-6883 848.01,-6913 848.01,-6913 848.01,-6919 842.01,-6925 836.01,-6925"/>
+<text xml:space="preserve" text-anchor="start" x="714.63" y="-6891.6" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">website&#45;footer.tsx</text>
 </a>
 </g>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/organisms/website&#45;footer.tsx -->
 <g id="edge229" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/organisms/website&#45;footer.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6781 182.26,-6781 182.26,-6781 599.28,-6858 599.28,-6858 599.28,-6858 663.28,-6987 663.28,-6987 663.28,-6987 672.7,-6989.67 686.1,-6993.46"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="703.47,-7005.65 686.13,-6993.47 707.28,-6992.18 703.47,-7005.65"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6781 182.26,-6781 182.26,-6781 599.28,-6858 599.28,-6858 599.28,-6858 642.19,-6867.7 685.77,-6877.54"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="703.83,-6888.8 685.86,-6877.56 706.91,-6875.14 703.83,-6888.8"/>
 </g>
 <!-- src/components/organisms/website&#45;header.tsx -->
 <g id="node107" class="node">
 <title>src/components/organisms/website&#45;header.tsx</title>
 <g id="a_node107"><a xlink:href="src/components/organisms/website-header.tsx" xlink:title="website&#45;header.tsx">
-<path fill="#5cb85c" stroke="black" d="M840.46,-6981C840.46,-6981 714.17,-6981 714.17,-6981 708.17,-6981 702.17,-6975 702.17,-6969 702.17,-6969 702.17,-6939 702.17,-6939 702.17,-6933 708.17,-6927 714.17,-6927 714.17,-6927 840.46,-6927 840.46,-6927 846.46,-6927 852.46,-6933 852.46,-6939 852.46,-6939 852.46,-6969 852.46,-6969 852.46,-6975 846.46,-6981 840.46,-6981"/>
-<text xml:space="preserve" text-anchor="start" x="710.17" y="-6947.6" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">website&#45;header.tsx</text>
+<path fill="#5cb85c" stroke="black" d="M840.46,-7047C840.46,-7047 714.17,-7047 714.17,-7047 708.17,-7047 702.17,-7041 702.17,-7035 702.17,-7035 702.17,-7005 702.17,-7005 702.17,-6999 708.17,-6993 714.17,-6993 714.17,-6993 840.46,-6993 840.46,-6993 846.46,-6993 852.46,-6999 852.46,-7005 852.46,-7005 852.46,-7035 852.46,-7035 852.46,-7041 846.46,-7047 840.46,-7047"/>
+<text xml:space="preserve" text-anchor="start" x="710.17" y="-7013.6" font-family="Helvetica,sans-Serif" font-size="16.00" fill="#ffffff">website&#45;header.tsx</text>
 </a>
 </g>
 </g>
 <!-- src/components/index.ts&#45;&gt;src/components/organisms/website&#45;header.tsx -->
 <g id="edge230" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/organisms/website&#45;header.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-7138 182.26,-7138 182.26,-7138 599.28,-7138 599.28,-7138 599.28,-7138 663.28,-6987 663.28,-6987 663.28,-6987 670.78,-6984.81 681.92,-6981.56"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="702.87,-6982.74 681.71,-6981.62 698.94,-6969.3 702.87,-6982.74"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-7112 182.26,-7112 182.26,-7112 599.28,-7112 599.28,-7112 599.28,-7112 655.81,-7082.62 704.98,-7057.07"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="726.02,-7054.03 705.05,-7057.04 719.56,-7041.6 726.02,-7054.03"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx -->
 <g id="node108" class="node">
@@ -2696,8 +2696,8 @@
 <!-- src/components/index.ts&#45;&gt;src/components/organisms/website&#45;navigation&#45;menu.tsx -->
 <g id="edge232" class="edge">
 <title>src/components/index.ts&#45;&gt;src/components/organisms/website&#45;navigation&#45;menu.tsx</title>
-<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6934 182.26,-6934 182.26,-6934 317.35,-6972.08 370.1,-6986.91"/>
-<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="387.34,-6999.03 369.97,-6986.88 391.12,-6985.55 387.34,-6999.03"/>
+<path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M102.95,-5561.53C111.5,-5566.82 118.26,-5571 118.26,-5571 118.26,-5571 182.26,-6948 182.26,-6948 182.26,-6948 276.04,-6970.02 359.88,-6989.71"/>
+<polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="377.78,-7001.1 359.91,-6989.71 380.98,-6987.47 377.78,-7001.1"/>
 </g>
 <!-- src/components/templates/error&#45;page.tsx -->
 <g id="node110" class="node">
@@ -2855,7 +2855,7 @@
 <!-- src/components/molecules/button&#45;group.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority -->
 <g id="edge258" class="edge">
 <title>src/components/molecules/button&#45;group.tsx&#45;&gt;node_modules/class&#45;variance&#45;authority</title>
-<path fill="none" stroke="#e8952e" d="M843.48,-6430.19C865.02,-6423.64 883.58,-6418 883.58,-6418 883.58,-6418 955.35,-2503 955.35,-2503 955.35,-2503 1168.77,-2335 1168.77,-2335 1168.77,-2335 1753.13,-1864 1753.13,-1864 1753.13,-1864 1798.82,-1275.67 1819.1,-1157.79"/>
+<path fill="none" stroke="#e8952e" d="M843.48,-6430.19C865.02,-6423.64 883.58,-6418 883.58,-6418 883.58,-6418 955.35,-2457 955.35,-2457 955.35,-2457 1168.77,-2335 1168.77,-2335 1168.77,-2335 1753.13,-1864 1753.13,-1864 1753.13,-1864 1798.82,-1275.67 1819.1,-1157.79"/>
 <polygon fill="#e8952e" stroke="#e8952e" points="1824.33,-1138.58 1827.76,-1160.24 1822.02,-1147.05 1819.07,-1157.88 1819.07,-1157.88 1819.07,-1157.88 1822.02,-1147.05 1810.39,-1155.51 1824.33,-1138.58"/>
 </g>
 <!-- src/components/molecules/button&#45;group.tsx&#45;&gt;node_modules/react -->
@@ -3104,7 +3104,7 @@
 <!-- src/components/molecules/dialog&#45;content.tsx&#45;&gt;node_modules/react -->
 <g id="edge297" class="edge">
 <title>src/components/molecules/dialog&#45;content.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#e8952e" d="M848.24,-6038.74C867.68,-6032.83 883.58,-6028 883.58,-6028 883.58,-6028 955.35,-2158 955.35,-2158 955.35,-2158 1168.77,-2070 1168.77,-2070 1168.77,-2070 1232.77,-1756 1232.77,-1756 1232.77,-1756 1525.08,-1618 1525.08,-1618 1525.08,-1618 1753.13,-1564 1753.13,-1564 1753.13,-1564 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#e8952e" d="M848.24,-6038.74C867.68,-6032.83 883.58,-6028 883.58,-6028 883.58,-6028 955.35,-2158 955.35,-2158 955.35,-2158 1168.77,-2070 1168.77,-2070 1168.77,-2070 1232.77,-1710 1232.77,-1710 1232.77,-1710 1753.13,-1564 1753.13,-1564 1753.13,-1564 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#e8952e" stroke="#e8952e" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/molecules/dialog&#45;content.tsx&#45;&gt;src/utils/index.ts -->
@@ -3170,7 +3170,7 @@
 <!-- src/components/molecules/drawer&#45;popup.tsx&#45;&gt;node_modules/react -->
 <g id="edge310" class="edge">
 <title>src/components/molecules/drawer&#45;popup.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#e8952e" d="M847.35,-6104.01C867.19,-6097.98 883.58,-6093 883.58,-6093 883.58,-6093 955.35,-2181 955.35,-2181 955.35,-2181 1168.77,-2122 1168.77,-2122 1168.77,-2122 1232.77,-1756 1232.77,-1756 1232.77,-1756 1525.08,-1664 1525.08,-1664 1525.08,-1664 1753.13,-1599 1753.13,-1599 1753.13,-1599 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#e8952e" d="M847.35,-6104.01C867.19,-6097.98 883.58,-6093 883.58,-6093 883.58,-6093 955.35,-2181 955.35,-2181 955.35,-2181 1168.77,-2122 1168.77,-2122 1168.77,-2122 1232.77,-1756 1232.77,-1756 1232.77,-1756 1453.08,-1708 1453.08,-1708 1453.08,-1708 1525.08,-1664 1525.08,-1664 1525.08,-1664 1753.13,-1604 1753.13,-1604 1753.13,-1604 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#e8952e" stroke="#e8952e" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/molecules/drawer&#45;popup.tsx&#45;&gt;src/utils/index.ts -->
@@ -3212,7 +3212,7 @@
 <!-- src/components/molecules/dropdown&#45;menu.tsx&#45;&gt;node_modules/react -->
 <g id="edge315" class="edge">
 <title>src/components/molecules/dropdown&#45;menu.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#e8952e" d="M855.92,-6166.41C871.7,-6161.61 883.58,-6158 883.58,-6158 883.58,-6158 955.35,-2227 955.35,-2227 955.35,-2227 1168.77,-2160 1168.77,-2160 1168.77,-2160 1232.77,-1802 1232.77,-1802 1232.77,-1802 1453.08,-1754 1453.08,-1754 1453.08,-1754 1525.08,-1687 1525.08,-1687 1525.08,-1687 1753.13,-1640 1753.13,-1640 1753.13,-1640 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#e8952e" d="M855.92,-6166.41C871.7,-6161.61 883.58,-6158 883.58,-6158 883.58,-6158 955.35,-2227 955.35,-2227 955.35,-2227 1168.77,-2160 1168.77,-2160 1168.77,-2160 1232.77,-1802 1232.77,-1802 1232.77,-1802 1453.08,-1754 1453.08,-1754 1453.08,-1754 1525.08,-1687 1525.08,-1687 1525.08,-1687 1753.13,-1642 1753.13,-1642 1753.13,-1642 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#e8952e" stroke="#e8952e" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/molecules/dropdown&#45;menu.tsx&#45;&gt;src/utils/index.ts -->
@@ -3344,7 +3344,7 @@
 <!-- src/components/molecules/popover.tsx&#45;&gt;node_modules/react -->
 <g id="edge342" class="edge">
 <title>src/components/molecules/popover.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#e8952e" d="M826.94,-6305.22C854.52,-6296.83 883.58,-6288 883.58,-6288 883.58,-6288 955.35,-2296 955.35,-2296 955.35,-2296 1168.77,-2234 1168.77,-2234 1168.77,-2234 1232.77,-1871 1232.77,-1871 1232.77,-1871 1453.08,-1823 1453.08,-1823 1453.08,-1823 1525.08,-1756 1525.08,-1756 1525.08,-1756 1753.13,-1699 1753.13,-1699 1753.13,-1699 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#e8952e" d="M826.94,-6305.22C854.52,-6296.83 883.58,-6288 883.58,-6288 883.58,-6288 955.35,-2296 955.35,-2296 955.35,-2296 1168.77,-2234 1168.77,-2234 1168.77,-2234 1232.77,-1871 1232.77,-1871 1232.77,-1871 1453.08,-1823 1453.08,-1823 1453.08,-1823 1525.08,-1756 1525.08,-1756 1525.08,-1756 1753.13,-1700 1753.13,-1700 1753.13,-1700 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#e8952e" stroke="#e8952e" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/molecules/popover.tsx&#45;&gt;src/utils/index.ts -->
@@ -3566,7 +3566,7 @@
 <!-- src/components/molecules/toaster.tsx&#45;&gt;node_modules/react -->
 <g id="edge379" class="edge">
 <title>src/components/molecules/toaster.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#e8952e" d="M822.65,-6241.52C851.42,-6232.78 883.58,-6223 883.58,-6223 883.58,-6223 955.35,-2250 955.35,-2250 955.35,-2250 1168.77,-2202 1168.77,-2202 1168.77,-2202 1232.77,-1871 1232.77,-1871 1232.77,-1871 1453.08,-1800 1453.08,-1800 1453.08,-1800 1525.08,-1710 1525.08,-1710 1525.08,-1710 1753.13,-1672 1753.13,-1672 1753.13,-1672 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#e8952e" d="M822.65,-6241.52C851.42,-6232.78 883.58,-6223 883.58,-6223 883.58,-6223 955.35,-2250 955.35,-2250 955.35,-2250 1168.77,-2202 1168.77,-2202 1168.77,-2202 1232.77,-1871 1232.77,-1871 1232.77,-1871 1453.08,-1800 1453.08,-1800 1453.08,-1800 1525.08,-1710 1525.08,-1710 1525.08,-1710 1753.13,-1673 1753.13,-1673 1753.13,-1673 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#e8952e" stroke="#e8952e" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/molecules/toaster.tsx&#45;&gt;node_modules/sonner -->
@@ -3602,7 +3602,7 @@
 <!-- src/components/molecules/toggle&#45;group.tsx&#45;&gt;node_modules/react -->
 <g id="edge387" class="edge">
 <title>src/components/molecules/toggle&#45;group.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#e8952e" d="M843.18,-6638.28C864.84,-6631.7 883.58,-6626 883.58,-6626 883.58,-6626 955.35,-2457 955.35,-2457 955.35,-2457 1168.77,-2415 1168.77,-2415 1168.77,-2415 1232.77,-2078 1232.77,-2078 1232.77,-2078 1453.08,-2030 1453.08,-2030 1453.08,-2030 1525.08,-1917 1525.08,-1917 1525.08,-1917 1753.13,-1882 1753.13,-1882 1753.13,-1882 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#e8952e" d="M843.18,-6638.28C864.84,-6631.7 883.58,-6626 883.58,-6626 883.58,-6626 955.35,-2733 955.35,-2733 955.35,-2733 1168.77,-2415 1168.77,-2415 1168.77,-2415 1232.77,-2078 1232.77,-2078 1232.77,-2078 1453.08,-2030 1453.08,-2030 1453.08,-2030 1525.08,-1917 1525.08,-1917 1525.08,-1917 1753.13,-1882 1753.13,-1882 1753.13,-1882 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#e8952e" stroke="#e8952e" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/molecules/toggle&#45;group.tsx&#45;&gt;src/utils/index.ts -->
@@ -3632,19 +3632,19 @@
 <!-- src/components/organisms/cta&#45;section.tsx&#45;&gt;node_modules/react -->
 <g id="edge390" class="edge">
 <title>src/components/organisms/cta&#45;section.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#5cb85c" d="M258.59,-7019.1C274.62,-7072.03 308.52,-7184 308.52,-7184 308.52,-7184 377.4,-9195 377.4,-9195 377.4,-9195 776.32,-9205 776.32,-9205 776.32,-9205 776.32,-9205 1343.92,-9205 1343.92,-9205 1453.08,-9195 1453.08,-9195 1453.08,-9195 1753.13,-8790 1753.13,-8790 1753.13,-8790 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#5cb85c" d="M259.34,-7033.42C275.65,-7083.35 308.52,-7184 308.52,-7184 308.52,-7184 377.4,-9195 377.4,-9195 377.4,-9195 776.32,-9205 776.32,-9205 776.32,-9205 776.32,-9205 1343.92,-9205 1343.92,-9205 1453.08,-9195 1453.08,-9195 1453.08,-9195 1753.13,-8790 1753.13,-8790 1753.13,-8790 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/organisms/cta&#45;section.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge389" class="edge">
 <title>src/components/organisms/cta&#45;section.tsx&#45;&gt;src/utils/index.ts</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M258.59,-7019.1C274.62,-7072.03 308.52,-7184 308.52,-7184 308.52,-7184 377.4,-8700 377.4,-8700 377.4,-8700 599.28,-8700 599.28,-8700 599.28,-8700 1168.77,-8544 1168.77,-8544 1168.77,-8544 1249.66,-8458.5 1300.87,-8404.39"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M259.34,-7033.42C275.65,-7083.35 308.52,-7184 308.52,-7184 308.52,-7184 377.4,-8700 377.4,-8700 377.4,-8700 599.28,-8700 599.28,-8700 599.28,-8700 1168.77,-8544 1168.77,-8544 1168.77,-8544 1249.66,-8458.5 1300.87,-8404.39"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1314.32,-8390.17 1307.11,-8410.88 1309.49,-8396 1300.94,-8405.04 1300.58,-8404.69 1300.21,-8404.35 1308.76,-8395.32 1294.04,-8398.51 1314.32,-8390.17"/>
 </g>
 <!-- src/components/organisms/cta&#45;section.tsx&#45;&gt;src/components/molecules/cta&#45;button.tsx -->
 <g id="edge388" class="edge">
 <title>src/components/organisms/cta&#45;section.tsx&#45;&gt;src/components/molecules/cta&#45;button.tsx</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M301.85,-6964.56C305.93,-6962.38 308.52,-6961 308.52,-6961 308.52,-6961 377.4,-6028 377.4,-6028 377.4,-6028 410.87,-5998.58 441.13,-5971.99"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M301.85,-6978.56C305.93,-6976.38 308.52,-6975 308.52,-6975 308.52,-6975 377.4,-6028 377.4,-6028 377.4,-6028 410.87,-5998.58 441.13,-5971.99"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="456.01,-5958.91 446.93,-5978.87 450.66,-5964.28 441.32,-5972.49 440.99,-5972.11 440.66,-5971.74 450,-5963.52 435.05,-5965.35 456.01,-5958.91"/>
 </g>
 <!-- src/components/organisms/feature&#45;gallery.tsx&#45;&gt;node_modules/react -->
@@ -3710,13 +3710,13 @@
 <!-- src/components/organisms/locale&#45;selector.tsx&#45;&gt;src/components/atoms/button.tsx -->
 <g id="edge395" class="edge">
 <title>src/components/organisms/locale&#45;selector.tsx&#45;&gt;src/components/atoms/button.tsx</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M562.29,-6934.58C582.58,-6928.78 599.28,-6924 599.28,-6924 599.28,-6924 663.28,-6866 663.28,-6866 663.28,-6866 883.58,-6757 883.58,-6757 883.58,-6757 955.35,-5255 955.35,-5255 955.35,-5255 973.08,-5249.25 993.73,-5242.55"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M562.29,-6934.58C582.58,-6928.78 599.28,-6924 599.28,-6924 599.28,-6924 663.28,-6817 663.28,-6817 663.28,-6817 883.58,-6757 883.58,-6757 883.58,-6757 955.35,-5255 955.35,-5255 955.35,-5255 973.08,-5249.25 993.73,-5242.55"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1012.49,-5236.46 996.25,-5251.19 1005.45,-5239.27 993.62,-5243.11 993.47,-5242.63 993.31,-5242.16 1005.14,-5238.32 990.69,-5234.07 1012.49,-5236.46"/>
 </g>
 <!-- src/components/organisms/locale&#45;selector.tsx&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx -->
 <g id="edge396" class="edge">
 <title>src/components/organisms/locale&#45;selector.tsx&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M562.01,-6936.35C675.17,-6906.67 883.58,-6852 883.58,-6852 883.58,-6852 955.35,-5450 955.35,-5450 955.35,-5450 963.06,-5447.5 974.23,-5443.88"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M562.29,-6934.58C582.58,-6928.78 599.28,-6924 599.28,-6924 599.28,-6924 663.28,-6856 663.28,-6856 663.28,-6856 883.58,-6810 883.58,-6810 883.58,-6810 955.35,-5450 955.35,-5450 955.35,-5450 963.06,-5447.5 974.23,-5443.88"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="993.23,-5437.71 976.99,-5452.44 986.19,-5440.52 974.36,-5444.36 974.21,-5443.88 974.05,-5443.41 985.88,-5439.57 971.43,-5435.32 993.23,-5437.71"/>
 </g>
 <!-- src/components/organisms/locale&#45;selector.tsx&#45;&gt;src/hooks/index.ts -->
@@ -3734,269 +3734,263 @@
 <!-- src/components/organisms/website&#45;footer.tsx&#45;&gt;node_modules/@lingui/react -->
 <g id="edge407" class="edge">
 <title>src/components/organisms/website&#45;footer.tsx&#45;&gt;node_modules/@lingui/react</title>
-<path fill="none" stroke="#5cb85c" d="M848.24,-6997.74C867.68,-6991.83 883.58,-6987 883.58,-6987 883.58,-6987 955.35,-1013 955.35,-1013 955.35,-1013 967.25,-1009.14 982.91,-1004.06"/>
+<path fill="none" stroke="#5cb85c" d="M795.94,-6870.72C825.9,-6824.32 883.58,-6735 883.58,-6735 883.58,-6735 955.35,-1013 955.35,-1013 955.35,-1013 967.25,-1009.14 982.91,-1004.06"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1001.77,-997.94 985.53,-1012.67 993.42,-1000.65 982.75,-1004.11 982.75,-1004.11 982.75,-1004.11 993.42,-1000.65 979.97,-995.55 1001.77,-997.94"/>
 </g>
 <!-- src/components/organisms/website&#45;footer.tsx&#45;&gt;node_modules/react -->
 <g id="edge408" class="edge">
 <title>src/components/organisms/website&#45;footer.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#5cb85c" d="M848.24,-6997.74C867.68,-6991.83 883.58,-6987 883.58,-6987 883.58,-6987 955.35,-3394 955.35,-3394 955.35,-3394 1168.77,-2470 1168.77,-2470 1168.77,-2470 1232.77,-2166 1232.77,-2166 1232.77,-2166 1453.08,-2122 1453.08,-2122 1453.08,-2122 1525.08,-1958 1525.08,-1958 1525.08,-1958 1753.13,-1932 1753.13,-1932 1753.13,-1932 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#5cb85c" d="M795.94,-6870.72C825.9,-6824.32 883.58,-6735 883.58,-6735 883.58,-6735 955.35,-3394 955.35,-3394 955.35,-3394 1168.77,-2478 1168.77,-2478 1168.77,-2478 1232.77,-2124 1232.77,-2124 1232.77,-2124 1453.08,-2076 1453.08,-2076 1453.08,-2076 1525.08,-1940 1525.08,-1940 1525.08,-1940 1753.13,-1908 1753.13,-1908 1753.13,-1908 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/organisms/website&#45;footer.tsx&#45;&gt;node_modules/remeda -->
 <g id="edge409" class="edge">
 <title>src/components/organisms/website&#45;footer.tsx&#45;&gt;node_modules/remeda</title>
-<path fill="none" stroke="#5cb85c" d="M848.24,-6997.74C867.68,-6991.83 883.58,-6987 883.58,-6987 883.58,-6987 955.35,-3651 955.35,-3651 955.35,-3651 1232.77,-3314 1232.77,-3314 1232.77,-3314 1453.08,-3065 1453.08,-3065 1453.08,-3065 1753.13,-2152 1753.13,-2152 1753.13,-2152 1809.13,-1208 1809.13,-1208 1809.13,-1208 1826.56,-1201.71 1846.2,-1194.63"/>
+<path fill="none" stroke="#5cb85c" d="M795.94,-6870.72C825.9,-6824.32 883.58,-6735 883.58,-6735 883.58,-6735 955.35,-3651 955.35,-3651 955.35,-3651 1232.77,-3314 1232.77,-3314 1232.77,-3314 1453.08,-3065 1453.08,-3065 1453.08,-3065 1753.13,-2152 1753.13,-2152 1753.13,-2152 1809.13,-1208 1809.13,-1208 1809.13,-1208 1826.56,-1201.71 1846.2,-1194.63"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1864.88,-1187.89 1849.12,-1203.14 1856.62,-1190.87 1846.06,-1194.68 1846.06,-1194.68 1846.06,-1194.68 1856.62,-1190.87 1843.01,-1186.21 1864.88,-1187.89"/>
 </g>
 <!-- src/components/organisms/website&#45;footer.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge406" class="edge">
 <title>src/components/organisms/website&#45;footer.tsx&#45;&gt;src/utils/index.ts</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M786.06,-7046.21C810.37,-7131.65 883.58,-7389 883.58,-7389 883.58,-7389 955.35,-8333 955.35,-8333 955.35,-8333 1168.77,-8348 1168.77,-8348 1168.77,-8348 1234.28,-8352.92 1284.72,-8356.71"/>
-<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1304.45,-8358.19 1283.83,-8365.66 1296.87,-8358.12 1284.47,-8357.19 1284.51,-8356.69 1284.54,-8356.19 1296.95,-8357.12 1285.18,-8347.71 1304.45,-8358.19"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M810.47,-6925.49C841.43,-6951.96 883.58,-6988 883.58,-6988 883.58,-6988 955.35,-8307 955.35,-8307 955.35,-8307 1168.77,-8335 1168.77,-8335 1168.77,-8335 1234.28,-8344.84 1284.72,-8352.41"/>
+<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1304.47,-8355.38 1283.36,-8361.31 1296.92,-8354.75 1284.62,-8352.9 1284.69,-8352.41 1284.77,-8351.91 1297.07,-8353.76 1286.03,-8343.51 1304.47,-8355.38"/>
 </g>
 <!-- src/components/organisms/website&#45;footer.tsx&#45;&gt;src/hooks/index.ts -->
 <g id="edge405" class="edge">
 <title>src/components/organisms/website&#45;footer.tsx&#45;&gt;src/hooks/index.ts</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M787.34,-7046.32C823.42,-7155.54 955.35,-7555 955.35,-7555 955.35,-7555 994.08,-7607.55 1023.75,-7647.8"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M810.47,-6925.49C841.43,-6951.96 883.58,-6988 883.58,-6988 883.58,-6988 955.35,-7555 955.35,-7555 955.35,-7555 994.08,-7607.55 1023.75,-7647.8"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1035.52,-7663.77 1016.41,-7653.01 1030.63,-7657.98 1023.25,-7647.97 1023.65,-7647.67 1024.06,-7647.38 1031.43,-7657.39 1030.9,-7642.33 1035.52,-7663.77"/>
 </g>
 <!-- src/components/organisms/website&#45;header.tsx&#45;&gt;@bitcart/hooks -->
 <g id="edge412" class="edge">
 <title>src/components/organisms/website&#45;header.tsx&#45;&gt;@bitcart/hooks</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M791.44,-6926.71C819.65,-6868 883.58,-6735 883.58,-6735 883.58,-6735 955.35,-771 955.35,-771 955.35,-771 1453.08,-654 1453.08,-654 1453.08,-654 1539.98,-553.85 1592.01,-493.89"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M810.76,-6992.57C841.69,-6966.42 883.58,-6931 883.58,-6931 883.58,-6931 955.35,-771 955.35,-771 955.35,-771 1453.08,-654 1453.08,-654 1453.08,-654 1539.98,-553.85 1592.01,-493.89"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1605,-478.93 1598.69,-499.93 1600.42,-484.97 1592.27,-494.36 1591.89,-494.04 1591.51,-493.71 1599.66,-484.31 1585.09,-488.14 1605,-478.93"/>
 </g>
-<!-- src/components/organisms/website&#45;header.tsx&#45;&gt;node_modules/@lingui/react -->
-<g id="edge413" class="edge">
-<title>src/components/organisms/website&#45;header.tsx&#45;&gt;node_modules/@lingui/react</title>
-<path fill="none" stroke="#5cb85c" d="M791.44,-6926.71C819.65,-6868 883.58,-6735 883.58,-6735 883.58,-6735 955.35,-1013 955.35,-1013 955.35,-1013 967.25,-1009.14 982.91,-1004.06"/>
-<polygon fill="#5cb85c" stroke="#5cb85c" points="1001.77,-997.94 985.53,-1012.67 993.42,-1000.65 982.75,-1004.11 982.75,-1004.11 982.75,-1004.11 993.42,-1000.65 979.97,-995.55 1001.77,-997.94"/>
-</g>
 <!-- src/components/organisms/website&#45;header.tsx&#45;&gt;node_modules/react -->
-<g id="edge414" class="edge">
+<g id="edge413" class="edge">
 <title>src/components/organisms/website&#45;header.tsx&#45;&gt;node_modules/react</title>
-<path fill="none" stroke="#5cb85c" d="M791.44,-6926.71C819.65,-6868 883.58,-6735 883.58,-6735 883.58,-6735 955.35,-2480 955.35,-2480 955.35,-2480 1168.77,-2444 1168.77,-2444 1168.77,-2444 1232.77,-2124 1232.77,-2124 1232.77,-2124 1453.08,-2076 1453.08,-2076 1453.08,-2076 1525.08,-1940 1525.08,-1940 1525.08,-1940 1753.13,-1908 1753.13,-1908 1753.13,-1908 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
+<path fill="none" stroke="#5cb85c" d="M810.76,-6992.57C841.69,-6966.42 883.58,-6931 883.58,-6931 883.58,-6931 955.35,-3651 955.35,-3651 955.35,-3651 1168.77,-2944 1168.77,-2944 1168.77,-2944 1232.77,-2166 1232.77,-2166 1232.77,-2166 1453.08,-2122 1453.08,-2122 1453.08,-2122 1525.08,-1958 1525.08,-1958 1525.08,-1958 1753.13,-1932 1753.13,-1932 1753.13,-1932 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/organisms/website&#45;header.tsx&#45;&gt;src/utils/index.ts -->
 <g id="edge411" class="edge">
 <title>src/components/organisms/website&#45;header.tsx&#45;&gt;src/utils/index.ts</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M852.85,-6977.37C870.13,-6982.78 883.58,-6987 883.58,-6987 883.58,-6987 955.35,-8307 955.35,-8307 955.35,-8307 1168.77,-8335 1168.77,-8335 1168.77,-8335 1234.28,-8344.84 1284.72,-8352.41"/>
-<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1304.47,-8355.38 1283.36,-8361.31 1296.92,-8354.75 1284.62,-8352.9 1284.69,-8352.41 1284.77,-8351.91 1297.07,-8353.76 1286.03,-8343.51 1304.47,-8355.38"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M786.14,-7047.43C810.54,-7132.95 883.58,-7389 883.58,-7389 883.58,-7389 955.35,-8333 955.35,-8333 955.35,-8333 1168.77,-8348 1168.77,-8348 1168.77,-8348 1234.28,-8352.92 1284.72,-8356.71"/>
+<polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1304.45,-8358.19 1283.83,-8365.66 1296.87,-8358.12 1284.47,-8357.19 1284.51,-8356.69 1284.54,-8356.19 1296.95,-8357.12 1285.18,-8347.71 1304.45,-8358.19"/>
 </g>
 <!-- src/components/organisms/website&#45;header.tsx&#45;&gt;src/hooks/index.ts -->
 <g id="edge410" class="edge">
 <title>src/components/organisms/website&#45;header.tsx&#45;&gt;src/hooks/index.ts</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M852.85,-6977.37C870.13,-6982.78 883.58,-6987 883.58,-6987 883.58,-6987 955.35,-7555 955.35,-7555 955.35,-7555 994.08,-7607.55 1023.75,-7647.8"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M787.34,-7047.27C823.42,-7156.29 955.35,-7555 955.35,-7555 955.35,-7555 994.08,-7607.55 1023.75,-7647.8"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1035.52,-7663.77 1016.41,-7653.01 1030.63,-7657.98 1023.25,-7647.97 1023.65,-7647.67 1024.06,-7647.38 1031.43,-7657.39 1030.9,-7642.33 1035.52,-7663.77"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;@bitcart/hooks -->
-<g id="edge423" class="edge">
+<g id="edge422" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;@bitcart/hooks</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-438 663.28,-438 663.28,-438 955.35,-288 955.35,-288 955.35,-288 1168.77,-288 1168.77,-288 1168.77,-288 1461.39,-390.75 1580.53,-432.59"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1599.29,-439.18 1577.44,-441.05 1591.99,-437.15 1580.26,-433.03 1580.42,-432.55 1580.59,-432.08 1592.32,-436.2 1583.4,-424.06 1599.29,-439.18"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;@bitcart/qa -->
-<g id="edge424" class="edge">
+<g id="edge423" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;@bitcart/qa</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-679 663.28,-679 663.28,-679 955.35,-353 955.35,-353 955.35,-353 982.89,-344.07 1009.3,-335.49"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1028.28,-329.34 1012.04,-344.07 1021.24,-332.15 1009.42,-335.98 1009.26,-335.51 1009.11,-335.03 1020.94,-331.19 1006.48,-326.95 1028.28,-329.34"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;node_modules/@lingui/react -->
-<g id="edge425" class="edge">
+<g id="edge424" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;node_modules/@lingui/react</title>
 <path fill="none" stroke="#5cb85c" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-2342 663.28,-2342 663.28,-2342 955.35,-1013 955.35,-1013 955.35,-1013 967.25,-1009.14 982.91,-1004.06"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1001.77,-997.94 985.53,-1012.67 993.42,-1000.65 982.75,-1004.11 982.75,-1004.11 982.75,-1004.11 993.42,-1000.65 979.97,-995.55 1001.77,-997.94"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;node_modules/lucide&#45;react -->
-<g id="edge426" class="edge">
+<g id="edge425" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;node_modules/lucide&#45;react</title>
 <path fill="none" stroke="#5cb85c" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-840 663.28,-840 663.28,-840 883.58,-815 883.58,-815 883.58,-815 955.35,-725 955.35,-725 955.35,-725 1168.77,-725 1168.77,-725 1168.77,-725 1232.77,-884 1232.77,-884 1232.77,-884 1251.09,-889.2 1272.72,-895.35"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1291.92,-900.8 1270.22,-903.99 1283.47,-898.4 1272.68,-895.34 1272.68,-895.34 1272.68,-895.34 1283.47,-898.4 1275.14,-886.68 1291.92,-900.8"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;node_modules/react -->
-<g id="edge427" class="edge">
+<g id="edge426" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#5cb85c" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-245 663.28,-245 663.28,-245 955.35,-199 955.35,-199 955.35,-199 1057.06,-184 1057.06,-184 1057.06,-184 1057.06,-184 1343.92,-184 1343.92,-184 1753.13,-199 1753.13,-199 1753.13,-199 1857.76,-706.97 1890.76,-867.19"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1894.76,-886.61 1881.91,-868.84 1892.99,-878.01 1890.72,-867.02 1890.72,-867.02 1890.72,-867.02 1892.99,-878.01 1899.54,-865.21 1894.76,-886.61"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;node_modules/remeda -->
-<g id="edge428" class="edge">
+<g id="edge427" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;node_modules/remeda</title>
 <path fill="none" stroke="#5cb85c" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-325 663.28,-325 663.28,-325 955.35,-283 955.35,-283 955.35,-283 1753.13,-283 1753.13,-283 1753.13,-283 1809.13,-1143 1809.13,-1143 1809.13,-1143 1826.56,-1149.1 1846.2,-1155.97"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1864.87,-1162.5 1843.02,-1164.39 1856.58,-1159.6 1845.99,-1155.9 1845.99,-1155.9 1845.99,-1155.9 1856.58,-1159.6 1848.97,-1147.4 1864.87,-1162.5"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/utils/index.ts -->
-<g id="edge422" class="edge">
+<g id="edge421" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/utils/index.ts</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M521.09,-6917.3C553.16,-6946.3 599.28,-6988 599.28,-6988 599.28,-6988 663.28,-8463 663.28,-8463 663.28,-8463 1168.77,-8463 1168.77,-8463 1168.77,-8463 1236.97,-8422.82 1287.77,-8392.9"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1304.78,-8382.88 1292.12,-8400.78 1298.52,-8387.15 1287.8,-8393.46 1287.55,-8393.03 1287.29,-8392.6 1298.01,-8386.29 1282.98,-8385.27 1304.78,-8382.88"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/atoms/button.tsx -->
-<g id="edge415" class="edge">
+<g id="edge414" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/atoms/button.tsx</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-6760 663.28,-6760 663.28,-6760 883.58,-6747 883.58,-6747 883.58,-6747 955.35,-5255 955.35,-5255 955.35,-5255 973.08,-5249.25 993.73,-5242.55"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1012.49,-5236.46 996.25,-5251.19 1005.45,-5239.27 993.62,-5243.11 993.47,-5242.63 993.31,-5242.16 1005.14,-5238.32 990.69,-5234.07 1012.49,-5236.46"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/atoms/drawer.tsx -->
-<g id="edge416" class="edge">
+<g id="edge415" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/atoms/drawer.tsx</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 883.58,-6758 883.58,-6758 883.58,-6758 955.35,-5320 955.35,-5320 955.35,-5320 972.11,-5314.56 992.02,-5308.1"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-6808 663.28,-6808 663.28,-6808 883.58,-6758 883.58,-6758 883.58,-6758 955.35,-5320 955.35,-5320 955.35,-5320 972.11,-5314.56 992.02,-5308.1"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1011.02,-5301.94 994.77,-5316.67 1003.98,-5304.75 992.15,-5308.59 991.99,-5308.11 991.84,-5307.64 1003.67,-5303.8 989.22,-5299.55 1011.02,-5301.94"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/hooks/index.ts -->
-<g id="edge421" class="edge">
+<g id="edge420" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/hooks/index.ts</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M521.09,-6917.3C553.16,-6946.3 599.28,-6988 599.28,-6988 599.28,-6988 663.28,-8242 663.28,-8242 663.28,-8242 883.58,-8242 883.58,-8242 883.58,-8242 999.4,-7875.48 1041.77,-7741.39"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1047.72,-7722.55 1050.28,-7744.33 1045.92,-7729.91 1042.17,-7741.77 1041.7,-7741.62 1041.22,-7741.47 1044.97,-7729.61 1033.11,-7738.91 1047.72,-7722.55"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/atoms/link&#45;button.tsx -->
-<g id="edge417" class="edge">
+<g id="edge416" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/atoms/link&#45;button.tsx</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-5222 663.28,-5222 663.28,-5222 680.19,-5217.06 700.92,-5211.01"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="720.11,-5205.41 703.43,-5219.65 712.99,-5208.01 701.05,-5211.49 700.91,-5211.01 700.77,-5210.53 712.71,-5207.05 698.39,-5202.38 720.11,-5205.41"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/molecules/drawer&#45;panel.tsx -->
-<g id="edge418" class="edge">
+<g id="edge417" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/molecules/drawer&#45;panel.tsx</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-6626 663.28,-6626 663.28,-6626 673.93,-6622.89 688.69,-6618.58"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="707.57,-6613.07 690.89,-6627.31 700.45,-6615.67 688.51,-6619.15 688.37,-6618.68 688.23,-6618.2 700.17,-6614.71 685.85,-6610.04 707.57,-6613.07"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/molecules/drawer&#45;popup.tsx -->
-<g id="edge419" class="edge">
+<g id="edge418" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/molecules/drawer&#45;popup.tsx</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-6158 663.28,-6158 663.28,-6158 672.75,-6155.24 686.2,-6151.31"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="704.97,-6145.83 688.29,-6160.07 697.85,-6148.43 685.91,-6151.91 685.77,-6151.43 685.63,-6150.95 697.57,-6147.47 683.25,-6142.8 704.97,-6145.83"/>
 </g>
 <!-- src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/molecules/theme&#45;toggle.tsx -->
-<g id="edge420" class="edge">
+<g id="edge419" class="edge">
 <title>src/components/organisms/website&#45;mobile&#45;menu.tsx&#45;&gt;src/components/molecules/theme&#45;toggle.tsx</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6862.56C594.46,-6860.38 599.28,-6859 599.28,-6859 599.28,-6859 663.28,-5833 663.28,-5833 663.28,-5833 673.93,-5829.89 688.69,-5825.58"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="707.57,-5820.07 690.89,-5834.31 700.45,-5822.67 688.51,-5826.15 688.37,-5825.68 688.23,-5825.2 700.17,-5821.71 685.85,-5817.04 707.57,-5820.07"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;@bitcart/qa -->
-<g id="edge437" class="edge">
+<g id="edge436" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;@bitcart/qa</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-863 663.28,-863 663.28,-863 883.58,-641 883.58,-641 883.58,-641 955.35,-353 955.35,-353 955.35,-353 982.89,-344.07 1009.3,-335.49"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1028.28,-329.34 1012.04,-344.07 1021.24,-332.15 1009.42,-335.98 1009.26,-335.51 1009.11,-335.03 1020.94,-331.19 1006.48,-326.95 1028.28,-329.34"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;node_modules/@lingui/react -->
-<g id="edge438" class="edge">
+<g id="edge437" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;node_modules/@lingui/react</title>
 <path fill="none" stroke="#5cb85c" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-3285 663.28,-3285 663.28,-3285 883.58,-2422 883.58,-2422 883.58,-2422 955.35,-1013 955.35,-1013 955.35,-1013 967.25,-1009.14 982.91,-1004.06"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1001.77,-997.94 985.53,-1012.67 993.42,-1000.65 982.75,-1004.11 982.75,-1004.11 982.75,-1004.11 993.42,-1000.65 979.97,-995.55 1001.77,-997.94"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;node_modules/lucide&#45;react -->
-<g id="edge439" class="edge">
+<g id="edge438" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;node_modules/lucide&#45;react</title>
 <path fill="none" stroke="#5cb85c" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-886 663.28,-886 663.28,-886 955.35,-863 955.35,-863 955.35,-863 1168.77,-863 1168.77,-863 1168.77,-863 1232.77,-884 1232.77,-884 1232.77,-884 1251.09,-889.2 1272.72,-895.35"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1291.92,-900.8 1270.22,-903.99 1283.47,-898.4 1272.68,-895.34 1272.68,-895.34 1272.68,-895.34 1283.47,-898.4 1275.14,-886.68 1291.92,-900.8"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;node_modules/react -->
-<g id="edge440" class="edge">
+<g id="edge439" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#5cb85c" d="M509.04,-7047.45C539.89,-7094.14 599.28,-7184 599.28,-7184 599.28,-7184 663.28,-9109 663.28,-9109 663.28,-9109 883.58,-9109 883.58,-9109 883.58,-9109 955.35,-9092 955.35,-9092 955.35,-9092 1453.08,-9067 1453.08,-9067 1453.08,-9067 1525.08,-3366 1525.08,-3366 1525.08,-3366 1753.13,-3325 1753.13,-3325 1753.13,-3325 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/utils/index.ts -->
-<g id="edge436" class="edge">
+<g id="edge435" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/utils/index.ts</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M509.04,-7047.45C539.89,-7094.14 599.28,-7184 599.28,-7184 599.28,-7184 663.28,-8489 663.28,-8489 663.28,-8489 1168.77,-8489 1168.77,-8489 1168.77,-8489 1238.19,-8437.68 1289.12,-8400.03"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1304.92,-8388.35 1294.19,-8407.48 1299.14,-8393.25 1289.14,-8400.64 1288.84,-8400.24 1288.54,-8399.84 1298.54,-8392.45 1283.49,-8393 1304.92,-8388.35"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/atoms/button.tsx -->
-<g id="edge429" class="edge">
+<g id="edge428" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/atoms/button.tsx</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-6874 663.28,-6874 663.28,-6874 883.58,-6815 883.58,-6815 883.58,-6815 955.35,-5255 955.35,-5255 955.35,-5255 973.08,-5249.25 993.73,-5242.55"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-6825 663.28,-6825 663.28,-6825 883.58,-6790 883.58,-6790 883.58,-6790 955.35,-5255 955.35,-5255 955.35,-5255 973.08,-5249.25 993.73,-5242.55"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1012.49,-5236.46 996.25,-5251.19 1005.45,-5239.27 993.62,-5243.11 993.47,-5242.63 993.31,-5242.16 1005.14,-5238.32 990.69,-5234.07 1012.49,-5236.46"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx -->
-<g id="edge430" class="edge">
+<g id="edge429" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/atoms/dropdown&#45;menu.tsx</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-6922 663.28,-6922 663.28,-6922 883.58,-6904 883.58,-6904 883.58,-6904 955.35,-5450 955.35,-5450 955.35,-5450 963.06,-5447.5 974.23,-5443.88"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-6866 663.28,-6866 663.28,-6866 883.58,-6849 883.58,-6849 883.58,-6849 955.35,-5450 955.35,-5450 955.35,-5450 963.06,-5447.5 974.23,-5443.88"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="993.23,-5437.71 976.99,-5452.44 986.19,-5440.52 974.36,-5444.36 974.21,-5443.88 974.05,-5443.41 985.88,-5439.57 971.43,-5435.32 993.23,-5437.71"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/hooks/index.ts -->
-<g id="edge435" class="edge">
+<g id="edge434" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/hooks/index.ts</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M509.04,-7047.45C539.89,-7094.14 599.28,-7184 599.28,-7184 599.28,-7184 663.28,-8307 663.28,-8307 663.28,-8307 883.58,-8307 883.58,-8307 883.58,-8307 1002.47,-7886.19 1043.41,-7741.32"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="1048.72,-7722.52 1051.94,-7744.21 1047.14,-7729.93 1043.76,-7741.9 1043.28,-7741.77 1042.8,-7741.63 1046.18,-7729.66 1034.62,-7739.32 1048.72,-7722.52"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/atoms/link&#45;button.tsx -->
-<g id="edge431" class="edge">
+<g id="edge430" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/atoms/link&#45;button.tsx</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-5222 663.28,-5222 663.28,-5222 680.19,-5217.06 700.92,-5211.01"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="720.11,-5205.41 703.43,-5219.65 712.99,-5208.01 701.05,-5211.49 700.91,-5211.01 700.77,-5210.53 712.71,-5207.05 698.39,-5202.38 720.11,-5205.41"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/atoms/navigation&#45;menu.tsx -->
-<g id="edge432" class="edge">
+<g id="edge431" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/atoms/navigation&#45;menu.tsx</title>
-<path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-6906 663.28,-6906 663.28,-6906 883.58,-6872 883.58,-6872 883.58,-6872 955.35,-5385 955.35,-5385 955.35,-5385 962.99,-5382.52 974.08,-5378.92"/>
+<path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-6851 663.28,-6851 663.28,-6851 883.58,-6823 883.58,-6823 883.58,-6823 955.35,-5385 955.35,-5385 955.35,-5385 962.99,-5382.52 974.08,-5378.92"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="992.94,-5372.8 976.69,-5387.54 985.9,-5375.61 974.07,-5379.45 973.92,-5378.98 973.76,-5378.5 985.59,-5374.66 971.14,-5370.42 992.94,-5372.8"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/molecules/dropdown&#45;menu.tsx -->
-<g id="edge433" class="edge">
+<g id="edge432" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/molecules/dropdown&#45;menu.tsx</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-6223 663.28,-6223 663.28,-6223 668.83,-6221.38 677.46,-6218.86"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="696.4,-6213.33 679.72,-6227.58 689.28,-6215.93 677.34,-6219.42 677.2,-6218.94 677.06,-6218.46 689,-6214.97 674.68,-6210.3 696.4,-6213.33"/>
 </g>
 <!-- src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/molecules/navigation&#45;menu.tsx -->
-<g id="edge434" class="edge">
+<g id="edge433" class="edge">
 <title>src/components/organisms/website&#45;navigation&#45;menu.tsx&#45;&gt;src/components/molecules/navigation&#45;menu.tsx</title>
 <path fill="none" stroke="#5cb85c" stroke-width="2" d="M586.85,-6992.56C594.46,-6990.38 599.28,-6989 599.28,-6989 599.28,-6989 663.28,-6418 663.28,-6418 663.28,-6418 668.32,-6416.53 676.27,-6414.21"/>
 <polygon fill="#5cb85c" stroke="#5cb85c" stroke-width="2" points="695.16,-6408.69 678.49,-6422.94 688.04,-6411.29 676.1,-6414.78 675.96,-6414.3 675.82,-6413.82 687.76,-6410.33 673.44,-6405.66 695.16,-6408.69"/>
 </g>
 <!-- src/components/templates/error&#45;page.tsx&#45;&gt;node_modules/@lingui/react -->
-<g id="edge444" class="edge">
+<g id="edge443" class="edge">
 <title>src/components/templates/error&#45;page.tsx&#45;&gt;node_modules/@lingui/react</title>
 <path fill="none" stroke="#8e6bbf" d="M547.95,-7204.68C574.06,-7197.21 599.28,-7190 599.28,-7190 599.28,-7190 663.28,-3455 663.28,-3455 663.28,-3455 883.58,-2862 883.58,-2862 883.58,-2862 955.35,-1013 955.35,-1013 955.35,-1013 967.25,-1009.14 982.91,-1004.06"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" points="1001.77,-997.94 985.53,-1012.67 993.42,-1000.65 982.75,-1004.11 982.75,-1004.11 982.75,-1004.11 993.42,-1000.65 979.97,-995.55 1001.77,-997.94"/>
 </g>
 <!-- src/components/templates/error&#45;page.tsx&#45;&gt;node_modules/lucide&#45;react -->
-<g id="edge445" class="edge">
+<g id="edge444" class="edge">
 <title>src/components/templates/error&#45;page.tsx&#45;&gt;node_modules/lucide&#45;react</title>
 <path fill="none" stroke="#8e6bbf" d="M547.95,-7204.68C574.06,-7197.21 599.28,-7190 599.28,-7190 599.28,-7190 663.28,-2860 663.28,-2860 663.28,-2860 955.35,-883 955.35,-883 955.35,-883 1168.77,-883 1168.77,-883 1168.77,-883 1224.35,-893.27 1272.53,-902.18"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" points="1292.03,-905.78 1270.73,-911 1283.39,-904.18 1272.36,-902.14 1272.36,-902.14 1272.36,-902.14 1283.39,-904.18 1274,-893.29 1292.03,-905.78"/>
 </g>
 <!-- src/components/templates/error&#45;page.tsx&#45;&gt;node_modules/react -->
-<g id="edge446" class="edge">
+<g id="edge445" class="edge">
 <title>src/components/templates/error&#45;page.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#8e6bbf" d="M493.37,-7248.17C514.44,-7479.97 663.28,-9117 663.28,-9117 663.28,-9117 883.58,-9117 883.58,-9117 883.58,-9117 1453.08,-9090 1453.08,-9090 1453.08,-9090 1525.08,-3389 1525.08,-3389 1525.08,-3389 1753.13,-3354 1753.13,-3354 1753.13,-3354 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/templates/error&#45;page.tsx&#45;&gt;src/utils/index.ts -->
-<g id="edge443" class="edge">
+<g id="edge442" class="edge">
 <title>src/components/templates/error&#45;page.tsx&#45;&gt;src/utils/index.ts</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M494.58,-7248.35C519.56,-7434 663.28,-8502 663.28,-8502 663.28,-8502 1168.77,-8502 1168.77,-8502 1168.77,-8502 1240.34,-8443.71 1291.46,-8402.09"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="1306.65,-8389.72 1296.82,-8409.33 1301.1,-8394.89 1291.45,-8402.74 1291.14,-8402.35 1290.82,-8401.97 1300.47,-8394.11 1285.45,-8395.37 1306.65,-8389.72"/>
 </g>
 <!-- src/components/templates/error&#45;page.tsx&#45;&gt;src/components/atoms/button.tsx -->
-<g id="edge441" class="edge">
+<g id="edge440" class="edge">
 <title>src/components/templates/error&#45;page.tsx&#45;&gt;src/components/atoms/button.tsx</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M547.95,-7204.68C574.06,-7197.21 599.28,-7190 599.28,-7190 599.28,-7190 883.58,-7084 883.58,-7084 883.58,-7084 955.35,-5255 955.35,-5255 955.35,-5255 973.08,-5249.25 993.73,-5242.55"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="1012.49,-5236.46 996.25,-5251.19 1005.45,-5239.27 993.62,-5243.11 993.47,-5242.63 993.31,-5242.16 1005.14,-5238.32 990.69,-5234.07 1012.49,-5236.46"/>
 </g>
 <!-- src/components/templates/error&#45;page.tsx&#45;&gt;src/components/atoms/link&#45;button.tsx -->
-<g id="edge442" class="edge">
+<g id="edge441" class="edge">
 <title>src/components/templates/error&#45;page.tsx&#45;&gt;src/components/atoms/link&#45;button.tsx</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M547.95,-7204.68C574.06,-7197.21 599.28,-7190 599.28,-7190 599.28,-7190 663.28,-5222 663.28,-5222 663.28,-5222 680.19,-5217.06 700.92,-5211.01"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="720.11,-5205.41 703.43,-5219.65 712.99,-5208.01 701.05,-5211.49 700.91,-5211.01 700.77,-5210.53 712.71,-5207.05 698.39,-5202.38 720.11,-5205.41"/>
 </g>
 <!-- src/components/templates/webapp.tsx&#45;&gt;node_modules/react -->
-<g id="edge450" class="edge">
+<g id="edge449" class="edge">
 <title>src/components/templates/webapp.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#8e6bbf" d="M493.47,-7313.42C514.91,-7542.19 663.28,-9125 663.28,-9125 663.28,-9125 883.58,-9125 883.58,-9125 883.58,-9125 1453.08,-9113 1453.08,-9113 1453.08,-9113 1525.08,-3407 1525.08,-3407 1525.08,-3407 1753.13,-3380 1753.13,-3380 1753.13,-3380 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/templates/webapp.tsx&#45;&gt;src/utils/index.ts -->
-<g id="edge449" class="edge">
+<g id="edge448" class="edge">
 <title>src/components/templates/webapp.tsx&#45;&gt;src/utils/index.ts</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M494.54,-7313.41C519.41,-7500.67 663.28,-8584 663.28,-8584 663.28,-8584 883.58,-8584 883.58,-8584 883.58,-8584 1168.77,-8515 1168.77,-8515 1168.77,-8515 1243.42,-8448.61 1294.69,-8403.01"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="1309.54,-8389.8 1300.58,-8409.81 1304.22,-8395.2 1294.93,-8403.46 1294.6,-8403.09 1294.27,-8402.71 1303.56,-8394.45 1288.62,-8396.36 1309.54,-8389.8"/>
 </g>
 <!-- src/components/templates/webapp.tsx&#45;&gt;src/components/molecules/toaster.tsx -->
-<g id="edge447" class="edge">
+<g id="edge446" class="edge">
 <title>src/components/templates/webapp.tsx&#45;&gt;src/components/molecules/toaster.tsx</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M538.75,-7272.31C567.79,-7264.01 599.28,-7255 599.28,-7255 599.28,-7255 663.28,-6288 663.28,-6288 663.28,-6288 685.65,-6281.47 710.49,-6274.22"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="729.63,-6268.63 712.95,-6282.88 722.51,-6271.23 710.57,-6274.72 710.43,-6274.24 710.29,-6273.76 722.23,-6270.27 707.91,-6265.6 729.63,-6268.63"/>
@@ -4011,103 +4005,103 @@
 </g>
 </g>
 <!-- src/components/templates/webapp.tsx&#45;&gt;src/providers/index.ts -->
-<g id="edge448" class="edge">
+<g id="edge447" class="edge">
 <title>src/components/templates/webapp.tsx&#45;&gt;src/providers/index.ts</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M518.21,-7313.41C566.82,-7362.19 663.28,-7459 663.28,-7459 663.28,-7459 691.85,-7467.09 720.26,-7475.13"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="739.14,-7480.47 717.44,-7483.69 731.72,-7478.89 719.76,-7475.51 719.89,-7475.03 720.03,-7474.55 731.99,-7477.93 722.34,-7466.37 739.14,-7480.47"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;@bitcart/hooks -->
-<g id="edge464" class="edge">
+<g id="edge463" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;@bitcart/hooks</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-1783 377.4,-1783 377.4,-1783 663.28,-606 663.28,-606 663.28,-606 955.35,-286 955.35,-286 955.35,-286 1168.77,-286 1168.77,-286 1168.77,-286 1453.08,-310 1453.08,-310 1453.08,-310 1531.52,-372.03 1583.97,-413.52"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="1599.35,-425.68 1578.08,-420.34 1593.11,-421.38 1583.36,-413.67 1583.67,-413.28 1583.98,-412.89 1593.73,-420.6 1589.25,-406.22 1599.35,-425.68"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;node_modules/@lingui/react -->
-<g id="edge465" class="edge">
+<g id="edge464" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;node_modules/@lingui/react</title>
 <path fill="none" stroke="#8e6bbf" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-5633 377.4,-5633 377.4,-5633 663.28,-608 663.28,-608 663.28,-608 883.58,-608 883.58,-608 883.58,-608 955.35,-948 955.35,-948 955.35,-948 967.25,-951.74 982.91,-956.67"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" points="1001.77,-962.6 979.99,-965.19 993.39,-959.97 982.69,-956.6 982.69,-956.6 982.69,-956.6 993.39,-959.97 985.39,-948.02 1001.77,-962.6"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;node_modules/react -->
-<g id="edge466" class="edge">
+<g id="edge465" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#8e6bbf" d="M252.13,-7248.47C267.39,-7488.33 377.4,-9218 377.4,-9218 377.4,-9218 776.32,-9228 776.32,-9228 776.32,-9228 776.32,-9228 1343.92,-9228 1343.92,-9228 1453.08,-9218 1453.08,-9218 1453.08,-9218 1753.13,-8952 1753.13,-8952 1753.13,-8952 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/utils/index.ts -->
-<g id="edge463" class="edge">
+<g id="edge462" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/utils/index.ts</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M252.73,-7248.49C270.03,-7451.73 377.4,-8713 377.4,-8713 377.4,-8713 599.28,-8713 599.28,-8713 599.28,-8713 1168.77,-8708 1168.77,-8708 1168.77,-8708 1270.97,-8503.18 1318.34,-8408.26"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="1327.25,-8390.41 1326.37,-8412.32 1324.32,-8397.4 1318.76,-8408.53 1318.32,-8408.3 1317.87,-8408.08 1323.42,-8396.95 1310.26,-8404.29 1327.25,-8390.41"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/hooks/index.ts -->
-<g id="edge461" class="edge">
+<g id="edge460" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/hooks/index.ts</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M252.75,-7248.33C270.14,-7449.02 377.4,-8687 377.4,-8687 377.4,-8687 599.28,-8687 599.28,-8687 599.28,-8687 883.58,-8685 883.58,-8685 883.58,-8685 1013.46,-7942.33 1048.46,-7742.18"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="1051.86,-7722.71 1057.28,-7743.96 1051.05,-7730.24 1048.91,-7742.49 1048.42,-7742.41 1047.93,-7742.32 1050.07,-7730.07 1039.55,-7740.86 1051.86,-7722.71"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/atoms/floating&#45;action&#45;button.tsx -->
-<g id="edge451" class="edge">
+<g id="edge450" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/atoms/floating&#45;action&#45;button.tsx</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.44,-7215.07C392.67,-7203.06 599.28,-7177 599.28,-7177 599.28,-7177 883.58,-7084 883.58,-7084 883.58,-7084 1168.77,-6735 1168.77,-6735 1168.77,-6735 1232.77,-4475 1232.77,-4475 1232.77,-4475 1309.81,-3965.39 1334.44,-3802.45"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="1337.41,-3782.83 1343.32,-3803.95 1336.77,-3790.38 1334.92,-3802.68 1334.42,-3802.61 1333.93,-3802.53 1335.79,-3790.23 1325.52,-3801.26 1337.41,-3782.83"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/atoms/layout&#45;container.tsx -->
-<g id="edge452" class="edge">
+<g id="edge451" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/atoms/layout&#45;container.tsx</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-7110 377.4,-7110 377.4,-7110 599.28,-7086 599.28,-7086 599.28,-7086 663.28,-4371 663.28,-4371 663.28,-4371 674.76,-4367.65 690.39,-4363.09"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-7123 377.4,-7123 377.4,-7123 599.28,-7086 599.28,-7086 599.28,-7086 663.28,-4371 663.28,-4371 663.28,-4371 674.76,-4367.65 690.39,-4363.09"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="709.54,-4357.5 692.86,-4371.74 702.42,-4360.1 690.48,-4363.58 690.34,-4363.1 690.2,-4362.62 702.14,-4359.14 687.81,-4354.46 709.54,-4357.5"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/atoms/link&#45;button.tsx -->
-<g id="edge453" class="edge">
+<g id="edge452" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/atoms/link&#45;button.tsx</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-7123 377.4,-7123 377.4,-7123 599.28,-7099 599.28,-7099 599.28,-7099 663.28,-5222 663.28,-5222 663.28,-5222 680.19,-5217.06 700.92,-5211.01"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="720.11,-5205.41 703.43,-5219.65 712.99,-5208.01 701.05,-5211.49 700.91,-5211.01 700.77,-5210.53 712.71,-5207.05 698.39,-5202.38 720.11,-5205.41"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/molecules/theme&#45;toggle.tsx -->
-<g id="edge454" class="edge">
+<g id="edge453" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/molecules/theme&#45;toggle.tsx</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-7149 377.4,-7149 377.4,-7149 599.28,-7112 599.28,-7112 599.28,-7112 663.28,-5833 663.28,-5833 663.28,-5833 673.93,-5829.89 688.69,-5825.58"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-7149 377.4,-7149 377.4,-7149 599.28,-7125 599.28,-7125 599.28,-7125 663.28,-5833 663.28,-5833 663.28,-5833 673.93,-5829.89 688.69,-5825.58"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="707.57,-5820.07 690.89,-5834.31 700.45,-5822.67 688.51,-5826.15 688.37,-5825.68 688.23,-5825.2 700.17,-5821.71 685.85,-5817.04 707.57,-5820.07"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/molecules/toaster.tsx -->
-<g id="edge455" class="edge">
+<g id="edge454" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/molecules/toaster.tsx</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-7149 377.4,-7149 377.4,-7149 599.28,-7125 599.28,-7125 599.28,-7125 663.28,-6288 663.28,-6288 663.28,-6288 685.65,-6281.47 710.49,-6274.22"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.32,-7199.2C333.5,-7182.39 377.4,-7162 377.4,-7162 377.4,-7162 599.28,-7138 599.28,-7138 599.28,-7138 663.28,-6288 663.28,-6288 663.28,-6288 685.65,-6281.47 710.49,-6274.22"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="729.63,-6268.63 712.95,-6282.88 722.51,-6271.23 710.57,-6274.72 710.43,-6274.24 710.29,-6273.76 722.23,-6270.27 707.91,-6265.6 729.63,-6268.63"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/organisms/locale&#45;selector.tsx -->
-<g id="edge456" class="edge">
+<g id="edge455" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/organisms/locale&#45;selector.tsx</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-7088 377.4,-7088 377.4,-7088 419.36,-7037.95 451.8,-6999.26"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="464.5,-6984.1 458.55,-7005.21 460.03,-6990.22 452.04,-6999.75 451.65,-6999.43 451.27,-6999.11 459.26,-6989.58 444.76,-6993.65 464.5,-6984.1"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;footer.tsx -->
-<g id="edge457" class="edge">
+<g id="edge456" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;footer.tsx</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.32,-7209.18C333.5,-7200.06 377.4,-7189 377.4,-7189 377.4,-7189 599.28,-7164 599.28,-7164 599.28,-7164 673.58,-7103.14 725.92,-7060.28"/>
-<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="741.13,-7047.82 731.36,-7067.45 735.6,-7053 725.98,-7060.88 725.66,-7060.49 725.34,-7060.1 734.96,-7052.22 719.96,-7053.53 741.13,-7047.82"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.32,-7205.48C333.5,-7193.52 377.4,-7179 377.4,-7179 377.4,-7179 599.28,-7151 599.28,-7151 599.28,-7151 663.28,-6988 663.28,-6988 663.28,-6988 694.62,-6963.05 724.29,-6939.42"/>
+<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="739.88,-6927.01 729.84,-6946.51 734.28,-6932.11 724.55,-6939.86 724.24,-6939.47 723.92,-6939.08 733.65,-6931.33 718.63,-6932.43 739.88,-6927.01"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;header.tsx -->
-<g id="edge458" class="edge">
+<g id="edge457" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;header.tsx</title>
-<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.32,-7205.48C333.5,-7193.52 377.4,-7179 377.4,-7179 377.4,-7179 599.28,-7151 599.28,-7151 599.28,-7151 663.28,-6987 663.28,-6987 663.28,-6987 670.09,-6985.01 680.36,-6982.01"/>
-<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="699.53,-6976.42 682.85,-6990.66 692.41,-6979.02 680.47,-6982.5 680.33,-6982.02 680.19,-6981.54 692.13,-6978.06 677.81,-6973.38 699.53,-6976.42"/>
+<path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.32,-7209.18C333.5,-7200.06 377.4,-7189 377.4,-7189 377.4,-7189 599.28,-7164 599.28,-7164 599.28,-7164 673.18,-7103.89 725.49,-7061.34"/>
+<polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="740.71,-7048.96 730.87,-7068.56 735.16,-7054.12 725.51,-7061.97 725.2,-7061.58 724.88,-7061.19 734.53,-7053.35 719.52,-7054.6 740.71,-7048.96"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;mobile&#45;menu.tsx -->
-<g id="edge459" class="edge">
+<g id="edge458" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;mobile&#45;menu.tsx</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-6988 377.4,-6988 377.4,-6988 410.87,-6958.58 441.13,-6931.99"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="456.01,-6918.91 446.93,-6938.87 450.66,-6924.28 441.32,-6932.49 440.99,-6932.11 440.66,-6931.74 450,-6923.52 435.05,-6925.35 456.01,-6918.91"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;navigation&#45;menu.tsx -->
-<g id="edge460" class="edge">
+<g id="edge459" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/components/organisms/website&#45;navigation&#45;menu.tsx</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M297.31,-7195.98C303.92,-7192.45 308.52,-7190 308.52,-7190 308.52,-7190 377.4,-7101 377.4,-7101 377.4,-7101 405.26,-7080.76 433.13,-7060.51"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="449.18,-7048.86 438.29,-7067.89 443.35,-7053.7 433.29,-7061.01 433,-7060.61 432.7,-7060.21 442.77,-7052.9 427.71,-7053.33 449.18,-7048.86"/>
 </g>
 <!-- src/components/templates/website.tsx&#45;&gt;src/providers/index.ts -->
-<g id="edge462" class="edge">
+<g id="edge461" class="edge">
 <title>src/components/templates/website.tsx&#45;&gt;src/providers/index.ts</title>
 <path fill="none" stroke="#8e6bbf" stroke-width="2" d="M269.4,-7248.25C304.84,-7299.02 377.4,-7403 377.4,-7403 377.4,-7403 609.22,-7454.14 719.42,-7478.45"/>
 <polygon fill="#8e6bbf" stroke="#8e6bbf" stroke-width="2" points="738.89,-7482.74 717.42,-7487.22 731.39,-7481.6 719.25,-7478.92 719.36,-7478.43 719.46,-7477.95 731.61,-7480.63 721.29,-7469.65 738.89,-7482.74"/>
@@ -4176,7 +4170,7 @@
 </g>
 </g>
 <!-- src/providers/index.ts&#45;&gt;src/providers/layout&#45;context.tsx -->
-<g id="edge502" class="edge">
+<g id="edge501" class="edge">
 <title>src/providers/index.ts&#45;&gt;src/providers/layout&#45;context.tsx</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M813.34,-7486.1C851.57,-7480.75 914.32,-7471.97 966.57,-7464.66"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="987.46,-7468.81 966.68,-7464.65 985.52,-7454.94 987.46,-7468.81"/>
@@ -4191,7 +4185,7 @@
 </g>
 </g>
 <!-- src/providers/index.ts&#45;&gt;src/providers/theme.tsx -->
-<g id="edge503" class="edge">
+<g id="edge502" class="edge">
 <title>src/providers/index.ts&#45;&gt;src/providers/theme.tsx</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M813.31,-7490.46C909.15,-7488.99 1168.77,-7485 1168.77,-7485 1168.77,-7485 1229.74,-7475.49 1279.32,-7467.76"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1300.1,-7471.61 1279.26,-7467.77 1297.94,-7457.77 1300.1,-7471.61"/>
@@ -4215,7 +4209,7 @@
 </g>
 </g>
 <!-- src/contexts/layout.ts&#45;&gt;node_modules/react -->
-<g id="edge468" class="edge">
+<g id="edge467" class="edge">
 <title>src/contexts/layout.ts&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#4a90d9" d="M1669.07,-8713.48C1704.66,-8701.42 1753.13,-8685 1753.13,-8685 1753.13,-8685 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#4a90d9" stroke="#4a90d9" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
@@ -4239,91 +4233,91 @@
 </g>
 </g>
 <!-- src/hooks/autocomplete.ts&#45;&gt;node_modules/@base&#45;ui/react -->
-<g id="edge469" class="edge">
+<g id="edge468" class="edge">
 <title>src/hooks/autocomplete.ts&#45;&gt;node_modules/@base&#45;ui/react</title>
 <path fill="none" stroke="#2abfbf" d="M1407.73,-7707.88C1431.62,-7701.09 1453.08,-7695 1453.08,-7695 1453.08,-7695 1525.08,-948 1525.08,-948 1525.08,-948 1534.75,-944.96 1548.22,-940.73"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" points="1567.24,-934.75 1550.86,-949.33 1558.86,-937.38 1548.16,-940.75 1548.16,-940.75 1548.16,-940.75 1558.86,-937.38 1545.46,-932.16 1567.24,-934.75"/>
 </g>
 <!-- src/hooks/breakpoints.ts&#45;&gt;node_modules/react -->
-<g id="edge470" class="edge">
+<g id="edge469" class="edge">
 <title>src/hooks/breakpoints.ts&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#2abfbf" d="M1633.57,-7763.83C1647.31,-7508.88 1753.13,-5546 1753.13,-5546 1753.13,-5546 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/hooks/css&#45;runtime.ts&#45;&gt;@bitcart/hooks -->
-<g id="edge471" class="edge">
+<g id="edge470" class="edge">
 <title>src/hooks/css&#45;runtime.ts&#45;&gt;@bitcart/hooks</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1401.06,-7644.77C1427.47,-7637.27 1453.08,-7630 1453.08,-7630 1453.08,-7630 1525.08,-878 1525.08,-878 1525.08,-878 1590.55,-611.19 1618.1,-498.89"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1622.79,-479.79 1626.77,-501.36 1621.48,-487.26 1618.51,-499.33 1618.03,-499.21 1617.54,-499.1 1620.5,-487.02 1609.28,-497.07 1622.79,-479.79"/>
 </g>
 <!-- src/hooks/css&#45;runtime.ts&#45;&gt;node_modules/react -->
-<g id="edge472" class="edge">
+<g id="edge471" class="edge">
 <title>src/hooks/css&#45;runtime.ts&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#2abfbf" d="M1401.06,-7644.77C1427.47,-7637.27 1453.08,-7630 1453.08,-7630 1453.08,-7630 1525.08,-2998 1525.08,-2998 1525.08,-2998 1753.13,-2943 1753.13,-2943 1753.13,-2943 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/hooks/keyboard.ts&#45;&gt;@bitcart/hooks -->
-<g id="edge481" class="edge">
+<g id="edge480" class="edge">
 <title>src/hooks/keyboard.ts&#45;&gt;@bitcart/hooks</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1392.75,-7777.13C1421.81,-7768.88 1453.08,-7760 1453.08,-7760 1453.08,-7760 1525.08,-878 1525.08,-878 1525.08,-878 1590.55,-611.19 1618.1,-498.89"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1622.79,-479.79 1626.77,-501.36 1621.48,-487.26 1618.51,-499.33 1618.03,-499.21 1617.54,-499.1 1620.5,-487.02 1609.28,-497.07 1622.79,-479.79"/>
 </g>
 <!-- src/hooks/keyboard.ts&#45;&gt;node_modules/react -->
-<g id="edge482" class="edge">
+<g id="edge481" class="edge">
 <title>src/hooks/keyboard.ts&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#2abfbf" d="M1392.75,-7777.13C1421.81,-7768.88 1453.08,-7760 1453.08,-7760 1453.08,-7760 1525.08,-3021 1525.08,-3021 1525.08,-3021 1753.13,-2979 1753.13,-2979 1753.13,-2979 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/hooks/keyboard.ts&#45;&gt;src/hooks/breakpoints.ts -->
-<g id="edge480" class="edge">
+<g id="edge479" class="edge">
 <title>src/hooks/keyboard.ts&#45;&gt;src/hooks/breakpoints.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1392.47,-7791C1435.75,-7791 1499.93,-7791 1550.68,-7791"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1570.5,-7791 1550.5,-7800 1562.93,-7791.5 1550.5,-7791.5 1550.5,-7791 1550.5,-7790.5 1562.93,-7790.5 1550.5,-7782 1570.5,-7791"/>
 </g>
 <!-- src/hooks/layout&#45;context.ts&#45;&gt;node_modules/react -->
-<g id="edge484" class="edge">
+<g id="edge483" class="edge">
 <title>src/hooks/layout&#45;context.ts&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#2abfbf" d="M1409.62,-7902.34C1432.74,-7895.78 1453.08,-7890 1453.08,-7890 1453.08,-7890 1525.08,-3067 1525.08,-3067 1525.08,-3067 1753.13,-3034 1753.13,-3034 1753.13,-3034 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/hooks/layout&#45;context.ts&#45;&gt;node_modules/remeda -->
-<g id="edge485" class="edge">
+<g id="edge484" class="edge">
 <title>src/hooks/layout&#45;context.ts&#45;&gt;node_modules/remeda</title>
 <path fill="none" stroke="#2abfbf" d="M1409.62,-7902.34C1432.74,-7895.78 1453.08,-7890 1453.08,-7890 1453.08,-7890 1525.08,-3435 1525.08,-3435 1525.08,-3435 1753.13,-3267 1753.13,-3267 1753.13,-3267 1809.13,-1208 1809.13,-1208 1809.13,-1208 1826.56,-1201.71 1846.2,-1194.63"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" points="1864.88,-1187.89 1849.12,-1203.14 1856.62,-1190.87 1846.06,-1194.68 1846.06,-1194.68 1846.06,-1194.68 1856.62,-1190.87 1843.01,-1186.21 1864.88,-1187.89"/>
 </g>
 <!-- src/hooks/layout&#45;context.ts&#45;&gt;src/contexts/layout.ts -->
-<g id="edge483" class="edge">
+<g id="edge482" class="edge">
 <title>src/hooks/layout&#45;context.ts&#45;&gt;src/contexts/layout.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1351.34,-7948.38C1375.91,-8039.09 1453.08,-8324 1453.08,-8324 1453.08,-8324 1525.08,-8685 1525.08,-8685 1525.08,-8685 1547.89,-8693.91 1572.26,-8703.42"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1590.8,-8710.66 1568.9,-8711.77 1583.58,-8708.37 1571.99,-8703.85 1572.17,-8703.39 1572.36,-8702.92 1583.94,-8707.44 1575.45,-8695 1590.8,-8710.66"/>
 </g>
 <!-- src/hooks/scroll.ts&#45;&gt;@bitcart/hooks -->
-<g id="edge486" class="edge">
+<g id="edge485" class="edge">
 <title>src/hooks/scroll.ts&#45;&gt;@bitcart/hooks</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1378.46,-7586.19C1410.44,-7577.11 1453.08,-7565 1453.08,-7565 1453.08,-7565 1525.08,-878 1525.08,-878 1525.08,-878 1590.55,-611.19 1618.1,-498.89"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1622.79,-479.79 1626.77,-501.36 1621.48,-487.26 1618.51,-499.33 1618.03,-499.21 1617.54,-499.1 1620.5,-487.02 1609.28,-497.07 1622.79,-479.79"/>
 </g>
 <!-- src/hooks/scroll.ts&#45;&gt;node_modules/react -->
-<g id="edge487" class="edge">
+<g id="edge486" class="edge">
 <title>src/hooks/scroll.ts&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#2abfbf" d="M1378.46,-7586.19C1410.44,-7577.11 1453.08,-7565 1453.08,-7565 1453.08,-7565 1525.08,-2952 1525.08,-2952 1525.08,-2952 1753.13,-2917 1753.13,-2917 1753.13,-2917 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/hooks/theme.ts&#45;&gt;node_modules/next&#45;themes -->
-<g id="edge489" class="edge">
+<g id="edge488" class="edge">
 <title>src/hooks/theme.ts&#45;&gt;node_modules/next&#45;themes</title>
 <path fill="none" stroke="#2abfbf" d="M1382.1,-7845.16C1413.58,-7836.22 1453.08,-7825 1453.08,-7825 1453.08,-7825 1525.08,-3021 1525.08,-3021 1525.08,-3021 1611.57,-1393.69 1627.57,-1092.61"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" points="1635.62,-1073.05 1627.57,-1092.65 1621.64,-1072.31 1635.62,-1073.05"/>
 </g>
 <!-- src/hooks/theme.ts&#45;&gt;node_modules/react -->
-<g id="edge490" class="edge">
+<g id="edge489" class="edge">
 <title>src/hooks/theme.ts&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#2abfbf" d="M1382.1,-7845.16C1413.58,-7836.22 1453.08,-7825 1453.08,-7825 1453.08,-7825 1525.08,-3044 1525.08,-3044 1525.08,-3044 1753.13,-3008 1753.13,-3008 1753.13,-3008 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/hooks/theme.ts&#45;&gt;src/constants.ts -->
-<g id="edge488" class="edge">
+<g id="edge487" class="edge">
 <title>src/hooks/theme.ts&#45;&gt;src/constants.ts</title>
 <path fill="none" stroke="#2abfbf" stroke-width="2" d="M1381.75,-7883.18C1477.73,-7952.15 1731.16,-8134.25 1844.47,-8215.67"/>
 <polygon fill="#2abfbf" stroke="#2abfbf" stroke-width="2" points="1860.38,-8227.1 1838.89,-8222.74 1853.95,-8223.09 1843.85,-8215.83 1844.14,-8215.43 1844.43,-8215.02 1854.53,-8222.28 1849.39,-8208.12 1860.38,-8227.1"/>
@@ -4350,13 +4344,13 @@
 </g>
 </g>
 <!-- src/i18n/index.ts&#45;&gt;@bitcart/core -->
-<g id="edge492" class="edge">
+<g id="edge491" class="edge">
 <title>src/i18n/index.ts&#45;&gt;@bitcart/core</title>
 <path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M813.37,-8736.36C843.99,-8713.96 883.58,-8685 883.58,-8685 883.58,-8685 955.35,-418 955.35,-418 955.35,-418 982.89,-409.07 1009.3,-400.49"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1028.28,-394.34 1012.04,-409.07 1021.24,-397.15 1009.42,-400.98 1009.26,-400.51 1009.11,-400.03 1020.94,-396.19 1006.48,-391.95 1028.28,-394.34"/>
 </g>
 <!-- src/i18n/index.ts&#45;&gt;src/i18n/_generated -->
-<g id="edge491" class="edge">
+<g id="edge490" class="edge">
 <title>src/i18n/index.ts&#45;&gt;src/i18n/_generated</title>
 <path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M813.34,-8762C856.71,-8762 931.63,-8762 986.99,-8762"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1006.93,-8762 986.93,-8771 999.36,-8762.5 986.93,-8762.5 986.93,-8762 986.93,-8761.5 999.36,-8761.5 986.93,-8753 1006.93,-8762"/>
@@ -4380,19 +4374,19 @@
 </g>
 </g>
 <!-- src/icons/bitcart&#45;wordmark.spec.tsx&#45;&gt;node_modules/@testing&#45;library/react -->
-<g id="edge494" class="edge">
+<g id="edge493" class="edge">
 <title>src/icons/bitcart&#45;wordmark.spec.tsx&#45;&gt;node_modules/@testing&#45;library/react</title>
 <path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M848.82,-8839.54C868,-8832.07 883.58,-8826 883.58,-8826 883.58,-8826 955.35,-3651 955.35,-3651 955.35,-3651 1041.08,-1509.15 1055.12,-1158.34"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="1055.92,-1138.46 1064.11,-1158.8 1055.57,-1147.23 1055.12,-1158.44 1055.12,-1158.44 1055.12,-1158.44 1055.57,-1147.23 1046.13,-1158.08 1055.92,-1138.46"/>
 </g>
 <!-- src/icons/bitcart&#45;wordmark.spec.tsx&#45;&gt;node_modules/react -->
-<g id="edge495" class="edge">
+<g id="edge494" class="edge">
 <title>src/icons/bitcart&#45;wordmark.spec.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M848.82,-8839.54C868,-8832.07 883.58,-8826 883.58,-8826 883.58,-8826 955.35,-883 955.35,-883 955.35,-883 1753.13,-883 1753.13,-883 1753.13,-883 1810.45,-895.44 1853.62,-904.81"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="1873.05,-909.02 1851.6,-913.57 1864.47,-907.16 1853.5,-904.78 1853.5,-904.78 1853.5,-904.78 1864.47,-907.16 1855.41,-895.98 1873.05,-909.02"/>
 </g>
 <!-- src/icons/bitcart&#45;wordmark.spec.tsx&#45;&gt;node_modules/vitest -->
-<g id="edge496" class="edge">
+<g id="edge495" class="edge">
 <title>src/icons/bitcart&#45;wordmark.spec.tsx&#45;&gt;node_modules/vitest</title>
 <path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M848.82,-8839.54C868,-8832.07 883.58,-8826 883.58,-8826 883.58,-8826 955.35,-1078 955.35,-1078 955.35,-1078 983.72,-1068.8 1010.49,-1060.11"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="1029.44,-1053.96 1013.2,-1068.69 1021.09,-1056.67 1010.42,-1060.13 1010.42,-1060.13 1010.42,-1060.13 1021.09,-1056.67 1007.64,-1051.57 1029.44,-1053.96"/>
@@ -4407,19 +4401,19 @@
 </g>
 </g>
 <!-- src/icons/bitcart&#45;wordmark.spec.tsx&#45;&gt;src/icons/bitcart&#45;wordmark.tsx -->
-<g id="edge493" class="edge">
+<g id="edge492" class="edge">
 <title>src/icons/bitcart&#45;wordmark.spec.tsx&#45;&gt;src/icons/bitcart&#45;wordmark.tsx</title>
 <path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M876.59,-8867C902.04,-8867 929.5,-8867 955.13,-8867"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="975.13,-8867 955.13,-8876 967.57,-8867.5 955.13,-8867.5 955.13,-8867 955.13,-8866.5 967.57,-8866.5 955.13,-8858 975.13,-8867"/>
 </g>
 <!-- src/icons/bitcart&#45;wordmark.tsx&#45;&gt;node_modules/react -->
-<g id="edge499" class="edge">
+<g id="edge498" class="edge">
 <title>src/icons/bitcart&#45;wordmark.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#666666" stroke-opacity="0.458824" d="M1132.54,-8839.54C1152.52,-8832.07 1168.77,-8826 1168.77,-8826 1168.77,-8826 1232.77,-3455 1232.77,-3455 1232.77,-3455 1453.08,-3410 1453.08,-3410 1453.08,-3410 1525.08,-2832 1525.08,-2832 1525.08,-2832 1753.13,-2803 1753.13,-2803 1753.13,-2803 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-opacity="0.458824" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/icons/bitcart&#45;wordmark.tsx&#45;&gt;src/utils/index.ts -->
-<g id="edge498" class="edge">
+<g id="edge497" class="edge">
 <title>src/icons/bitcart&#45;wordmark.tsx&#45;&gt;src/utils/index.ts</title>
 <path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1132.54,-8839.54C1152.52,-8832.07 1168.77,-8826 1168.77,-8826 1168.77,-8826 1279.61,-8528.33 1323.93,-8409.32"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1330.89,-8390.64 1332.34,-8412.52 1328.71,-8397.9 1324.37,-8409.55 1323.91,-8409.38 1323.44,-8409.2 1327.78,-8397.55 1315.47,-8406.24 1330.89,-8390.64"/>
@@ -4434,7 +4428,7 @@
 </g>
 </g>
 <!-- src/icons/bitcart&#45;wordmark.tsx&#45;&gt;src/icons/bitcart&#45;wordmark.svg -->
-<g id="edge497" class="edge">
+<g id="edge496" class="edge">
 <title>src/icons/bitcart&#45;wordmark.tsx&#45;&gt;src/icons/bitcart&#45;wordmark.svg</title>
 <path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M1138.23,-8867C1169.17,-8867 1205.08,-8867 1238.05,-8867"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="1257.87,-8867 1237.87,-8876 1250.31,-8867.5 1237.87,-8867.5 1237.87,-8867 1237.87,-8866.5 1250.31,-8866.5 1237.87,-8858 1257.87,-8867"/>
@@ -4449,49 +4443,49 @@
 </g>
 </g>
 <!-- src/icons/index.ts&#45;&gt;src/icons/bitcart&#45;logo.svg -->
-<g id="edge500" class="edge">
+<g id="edge499" class="edge">
 <title>src/icons/index.ts&#45;&gt;src/icons/bitcart&#45;logo.svg</title>
 <path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M813.34,-8932C853.17,-8932 919.6,-8932 973.05,-8932"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="992.99,-8932 972.99,-8941 985.43,-8932.5 972.99,-8932.5 972.99,-8932 972.99,-8931.5 985.43,-8931.5 972.99,-8923 992.99,-8932"/>
 </g>
 <!-- src/icons/index.ts&#45;&gt;src/icons/bitcart&#45;wordmark.tsx -->
-<g id="edge501" class="edge">
+<g id="edge500" class="edge">
 <title>src/icons/index.ts&#45;&gt;src/icons/bitcart&#45;wordmark.tsx</title>
 <path fill="none" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" d="M813.34,-8923.83C849.31,-8915.45 906.97,-8902 957.18,-8890.29"/>
 <polygon fill="#666666" fill-opacity="0.458824" stroke="#666666" stroke-width="2" stroke-opacity="0.458824" points="978.41,-8892.53 957.34,-8890.25 975.23,-8878.89 978.41,-8892.53"/>
 </g>
 <!-- src/providers/layout&#45;context.tsx&#45;&gt;node_modules/react -->
-<g id="edge514" class="edge">
+<g id="edge513" class="edge">
 <title>src/providers/layout&#45;context.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#c96cb5" d="M1063.23,-7424.77C1083.27,-7293.8 1168.77,-6735 1168.77,-6735 1168.77,-6735 1232.77,-3455 1232.77,-3455 1232.77,-3455 1453.08,-3387 1453.08,-3387 1453.08,-3387 1525.08,-2814 1525.08,-2814 1525.08,-2814 1753.13,-2776 1753.13,-2776 1753.13,-2776 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/providers/layout&#45;context.tsx&#45;&gt;src/utils/index.ts -->
-<g id="edge513" class="edge">
+<g id="edge512" class="edge">
 <title>src/providers/layout&#45;context.tsx&#45;&gt;src/utils/index.ts</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M1087.03,-7479.28C1119.53,-7510.98 1168.77,-7559 1168.77,-7559 1168.77,-7559 1232.77,-8330 1232.77,-8330 1232.77,-8330 1258.89,-8337.42 1285.57,-8345"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1304.74,-8350.44 1283.04,-8353.63 1297.33,-8348.86 1285.36,-8345.46 1285.5,-8344.98 1285.64,-8344.5 1297.6,-8347.89 1287.96,-8336.32 1304.74,-8350.44"/>
 </g>
 <!-- src/providers/layout&#45;context.tsx&#45;&gt;src/contexts/layout.ts -->
-<g id="edge512" class="edge">
+<g id="edge511" class="edge">
 <title>src/providers/layout&#45;context.tsx&#45;&gt;src/contexts/layout.ts</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M1087.03,-7479.28C1119.53,-7510.98 1168.77,-7559 1168.77,-7559 1168.77,-7559 1232.77,-8760 1232.77,-8760 1232.77,-8760 1453.08,-8760 1453.08,-8760 1453.08,-8760 1519.56,-8747.23 1571.04,-8737.34"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1590.6,-8733.59 1572.66,-8746.2 1583.27,-8735.5 1571.05,-8737.85 1570.96,-8737.36 1570.86,-8736.87 1583.08,-8734.52 1569.26,-8728.52 1590.6,-8733.59"/>
 </g>
 <!-- src/providers/theme.tsx&#45;&gt;node_modules/next&#45;themes -->
-<g id="edge516" class="edge">
+<g id="edge515" class="edge">
 <title>src/providers/theme.tsx&#45;&gt;node_modules/next&#45;themes</title>
 <path fill="none" stroke="#c96cb5" d="M1385.81,-7446.1C1416.59,-7437.36 1453.08,-7427 1453.08,-7427 1453.08,-7427 1525.08,-2906 1525.08,-2906 1525.08,-2906 1610.86,-1386.01 1627.37,-1093.4"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" points="1628.49,-1073.6 1636.35,-1094.08 1627.99,-1082.37 1627.36,-1093.57 1627.36,-1093.57 1627.36,-1093.57 1627.99,-1082.37 1618.38,-1093.06 1628.49,-1073.6"/>
 </g>
 <!-- src/providers/theme.tsx&#45;&gt;node_modules/react -->
-<g id="edge517" class="edge">
+<g id="edge516" class="edge">
 <title>src/providers/theme.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#c96cb5" d="M1385.81,-7446.1C1416.59,-7437.36 1453.08,-7427 1453.08,-7427 1453.08,-7427 1525.08,-2929 1525.08,-2929 1525.08,-2929 1753.13,-2888 1753.13,-2888 1753.13,-2888 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/providers/theme.tsx&#45;&gt;src/utils/theme.ts -->
-<g id="edge515" class="edge">
+<g id="edge514" class="edge">
 <title>src/providers/theme.tsx&#45;&gt;src/utils/theme.ts</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M1373.46,-7485.33C1405.79,-7515.24 1453.08,-7559 1453.08,-7559 1453.08,-7559 1525.08,-8394 1525.08,-8394 1525.08,-8394 1547,-8400.68 1570.82,-8407.94"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1589.85,-8413.74 1568.1,-8416.52 1582.47,-8412.01 1570.58,-8408.39 1570.72,-8407.91 1570.87,-8407.43 1582.77,-8411.05 1573.35,-8399.3 1589.85,-8413.74"/>
@@ -4506,61 +4500,61 @@
 </g>
 </g>
 <!-- src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/@lingui/core -->
-<g id="edge507" class="edge">
+<g id="edge506" class="edge">
 <title>src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/@lingui/core</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M786.75,-7398.59C811.73,-7317.44 883.58,-7084 883.58,-7084 883.58,-7084 955.35,-840 955.35,-840 955.35,-840 1168.77,-840 1168.77,-840 1168.77,-840 1753.13,-883 1753.13,-883 1753.13,-883 1809.13,-1013 1809.13,-1013 1809.13,-1013 1816.9,-1015.72 1827.92,-1019.57"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1846.42,-1026.04 1824.57,-1027.94 1839.12,-1024.02 1827.38,-1019.91 1827.54,-1019.44 1827.71,-1018.97 1839.45,-1023.08 1830.51,-1010.95 1846.42,-1026.04"/>
 </g>
 <!-- src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/@lingui/react -->
-<g id="edge508" class="edge">
+<g id="edge507" class="edge">
 <title>src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/@lingui/react</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M786.75,-7398.59C811.73,-7317.44 883.58,-7084 883.58,-7084 883.58,-7084 955.35,-1013 955.35,-1013 955.35,-1013 966.61,-1009.35 981.64,-1004.47"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1000.61,-998.31 984.37,-1013.05 993.57,-1001.12 981.74,-1004.96 981.59,-1004.49 981.43,-1004.01 993.26,-1000.17 978.81,-995.93 1000.61,-998.31"/>
 </g>
 <!-- src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/@testing&#45;library/react -->
-<g id="edge509" class="edge">
+<g id="edge508" class="edge">
 <title>src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/@testing&#45;library/react</title>
 <path fill="none" stroke="#c96cb5" d="M786.75,-7398.59C811.73,-7317.44 883.58,-7084 883.58,-7084 883.58,-7084 955.35,-3651 955.35,-3651 955.35,-3651 1041.08,-1509.15 1055.12,-1158.34"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" points="1055.92,-1138.46 1064.11,-1158.8 1055.57,-1147.23 1055.12,-1158.44 1055.12,-1158.44 1055.12,-1158.44 1055.57,-1147.23 1046.13,-1158.08 1055.92,-1138.46"/>
 </g>
 <!-- src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/react -->
-<g id="edge510" class="edge">
+<g id="edge509" class="edge">
 <title>src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#c96cb5" d="M865.72,-7453.4C876.37,-7456.74 883.58,-7459 883.58,-7459 883.58,-7459 955.35,-8996 955.35,-8996 955.35,-8996 1232.77,-8998 1232.77,-8998 1232.77,-8998 1453.08,-8998 1453.08,-8998 1453.08,-8998 1525.08,-3297 1525.08,-3297 1525.08,-3297 1753.13,-3175 1753.13,-3175 1753.13,-3175 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/vitest -->
-<g id="edge511" class="edge">
+<g id="edge510" class="edge">
 <title>src/providers/layout&#45;context.spec.tsx&#45;&gt;node_modules/vitest</title>
 <path fill="none" stroke="#c96cb5" d="M786.75,-7398.59C811.73,-7317.44 883.58,-7084 883.58,-7084 883.58,-7084 955.35,-1078 955.35,-1078 955.35,-1078 983.72,-1068.8 1010.49,-1060.11"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" points="1029.44,-1053.96 1013.2,-1068.69 1021.09,-1056.67 1010.42,-1060.13 1010.42,-1060.13 1010.42,-1060.13 1021.09,-1056.67 1007.64,-1051.57 1029.44,-1053.96"/>
 </g>
 <!-- src/providers/layout&#45;context.spec.tsx&#45;&gt;src/utils/index.ts -->
-<g id="edge506" class="edge">
+<g id="edge505" class="edge">
 <title>src/providers/layout&#45;context.spec.tsx&#45;&gt;src/utils/index.ts</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M865.72,-7453.4C876.37,-7456.74 883.58,-7459 883.58,-7459 883.58,-7459 955.35,-8346 955.35,-8346 955.35,-8346 1176.98,-8354.6 1284.61,-8358.78"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1304.5,-8359.55 1284.16,-8367.77 1296.92,-8359.75 1284.49,-8359.27 1284.51,-8358.77 1284.53,-8358.27 1296.96,-8358.75 1284.86,-8349.78 1304.5,-8359.55"/>
 </g>
 <!-- src/providers/layout&#45;context.spec.tsx&#45;&gt;src/hooks/index.ts -->
-<g id="edge505" class="edge">
+<g id="edge504" class="edge">
 <title>src/providers/layout&#45;context.spec.tsx&#45;&gt;src/hooks/index.ts</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M865.72,-7453.4C876.37,-7456.74 883.58,-7459 883.58,-7459 883.58,-7459 973.38,-7580.13 1023.76,-7648.09"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="1035.37,-7663.74 1016.23,-7653.04 1030.46,-7657.96 1023.06,-7647.97 1023.46,-7647.68 1023.86,-7647.38 1031.27,-7657.37 1030.69,-7642.32 1035.37,-7663.74"/>
 </g>
 <!-- src/providers/layout&#45;context.spec.tsx&#45;&gt;src/providers/layout&#45;context.tsx -->
-<g id="edge504" class="edge">
+<g id="edge503" class="edge">
 <title>src/providers/layout&#45;context.spec.tsx&#45;&gt;src/providers/layout&#45;context.tsx</title>
 <path fill="none" stroke="#c96cb5" stroke-width="2" d="M866.9,-7434.26C898.32,-7437.19 933.74,-7440.5 965.42,-7443.45"/>
 <polygon fill="#c96cb5" stroke="#c96cb5" stroke-width="2" points="985.29,-7445.31 964.54,-7452.41 977.71,-7445.1 965.33,-7443.95 965.38,-7443.45 965.42,-7442.95 977.81,-7444.11 966.21,-7434.49 985.29,-7445.31"/>
 </g>
 <!-- src/utils/theme.ts&#45;&gt;node_modules/remeda -->
-<g id="edge536" class="edge">
+<g id="edge535" class="edge">
 <title>src/utils/theme.ts&#45;&gt;node_modules/remeda</title>
 <path fill="none" stroke="#6c8ebf" d="M1670.06,-8415.96C1705.56,-8406.58 1753.13,-8394 1753.13,-8394 1753.13,-8394 1809.13,-1208 1809.13,-1208 1809.13,-1208 1826.56,-1201.71 1846.2,-1194.63"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" points="1864.88,-1187.89 1849.12,-1203.14 1856.62,-1190.87 1846.06,-1194.68 1846.06,-1194.68 1846.06,-1194.68 1856.62,-1190.87 1843.01,-1186.21 1864.88,-1187.89"/>
 </g>
 <!-- src/utils/theme.ts&#45;&gt;src/constants.ts -->
-<g id="edge535" class="edge">
+<g id="edge534" class="edge">
 <title>src/utils/theme.ts&#45;&gt;src/constants.ts</title>
 <path fill="none" stroke="#6c8ebf" stroke-width="2" d="M1670.06,-8415.96C1705.56,-8406.58 1753.13,-8394 1753.13,-8394 1753.13,-8394 1811.86,-8339.04 1855.2,-8298.49"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" stroke-width="2" points="1869.69,-8284.93 1861.24,-8305.17 1864.51,-8290.46 1855.43,-8298.96 1855.09,-8298.59 1854.74,-8298.23 1863.83,-8289.73 1848.94,-8292.02 1869.69,-8284.93"/>
@@ -4575,25 +4569,25 @@
 </g>
 </g>
 <!-- src/styles/global&#45;theme&#45;override.tsx&#45;&gt;@bitcart/qa -->
-<g id="edge518" class="edge">
+<g id="edge517" class="edge">
 <title>src/styles/global&#45;theme&#45;override.tsx&#45;&gt;@bitcart/qa</title>
 <path fill="none" stroke="#c8963c" stroke-width="2" d="M848.82,-9009.54C868,-9002.07 883.58,-8996 883.58,-8996 883.58,-8996 955.35,-353 955.35,-353 955.35,-353 982.89,-344.07 1009.3,-335.49"/>
 <polygon fill="#c8963c" stroke="#c8963c" stroke-width="2" points="1028.28,-329.34 1012.04,-344.07 1021.24,-332.15 1009.42,-335.98 1009.26,-335.51 1009.11,-335.03 1020.94,-331.19 1006.48,-326.95 1028.28,-329.34"/>
 </g>
 <!-- src/styles/global&#45;theme&#45;override.tsx&#45;&gt;@bitcart/unocss&#45;kit -->
-<g id="edge519" class="edge">
+<g id="edge518" class="edge">
 <title>src/styles/global&#45;theme&#45;override.tsx&#45;&gt;@bitcart/unocss&#45;kit</title>
 <path fill="none" stroke="#c8963c" stroke-width="2" d="M848.82,-9009.54C868,-9002.07 883.58,-8996 883.58,-8996 883.58,-8996 955.35,-878 955.35,-878 955.35,-878 1018.62,-611.75 1045.36,-499.24"/>
 <polygon fill="#c8963c" stroke="#c8963c" stroke-width="2" points="1049.98,-479.8 1054.11,-501.33 1048.72,-487.27 1045.84,-499.37 1045.35,-499.25 1044.87,-499.14 1047.74,-487.04 1036.6,-497.17 1049.98,-479.8"/>
 </g>
 <!-- src/styles/global&#45;theme&#45;override.tsx&#45;&gt;node_modules/react -->
-<g id="edge520" class="edge">
+<g id="edge519" class="edge">
 <title>src/styles/global&#45;theme&#45;override.tsx&#45;&gt;node_modules/react</title>
 <path fill="none" stroke="#c8963c" d="M876.07,-9034.68C1063.07,-9030.25 1453.08,-9021 1453.08,-9021 1453.08,-9021 1525.08,-3320 1525.08,-3320 1525.08,-3320 1753.13,-3244 1753.13,-3244 1753.13,-3244 1809.13,-948 1809.13,-948 1809.13,-948 1831.63,-939.88 1854.32,-931.7"/>
 <polygon fill="#c8963c" stroke="#c8963c" points="1873,-924.96 1857.24,-940.21 1864.74,-927.94 1854.19,-931.75 1854.19,-931.75 1854.19,-931.75 1864.74,-927.94 1851.13,-923.28 1873,-924.96"/>
 </g>
 <!-- src/styles/global&#45;theme&#45;override.tsx&#45;&gt;node_modules/remeda -->
-<g id="edge521" class="edge">
+<g id="edge520" class="edge">
 <title>src/styles/global&#45;theme&#45;override.tsx&#45;&gt;node_modules/remeda</title>
 <path fill="none" stroke="#c8963c" d="M875.81,-9058.24C1009.34,-9087.33 1232.77,-9136 1232.77,-9136 1232.77,-9136 1453.08,-9136 1453.08,-9136 1453.08,-9136 1525.08,-3455 1525.08,-3455 1525.08,-3455 1753.13,-3359 1753.13,-3359 1753.13,-3359 1809.13,-1208 1809.13,-1208 1809.13,-1208 1826.56,-1201.71 1846.2,-1194.63"/>
 <polygon fill="#c8963c" stroke="#c8963c" points="1864.88,-1187.89 1849.12,-1203.14 1856.62,-1190.87 1846.06,-1194.68 1846.06,-1194.68 1846.06,-1194.68 1856.62,-1190.87 1843.01,-1186.21 1864.88,-1187.89"/>
@@ -4608,7 +4602,7 @@
 </g>
 </g>
 <!-- src/styles/index.ts&#45;&gt;src/styles/global&#45;theme&#45;override.tsx -->
-<g id="edge522" class="edge">
+<g id="edge521" class="edge">
 <title>src/styles/index.ts&#45;&gt;src/styles/global&#45;theme&#45;override.tsx</title>
 <path fill="none" stroke="#c8963c" stroke-width="2" d="M525.9,-9037C558.82,-9037 610.04,-9037 657.6,-9037"/>
 <polygon fill="#c8963c" stroke="#c8963c" stroke-width="2" points="677.75,-9044 657.75,-9037 677.75,-9030 677.75,-9044"/>
@@ -4632,37 +4626,37 @@
 </g>
 </g>
 <!-- src/utils/classnames.spec.ts&#45;&gt;node_modules/vitest -->
-<g id="edge524" class="edge">
+<g id="edge523" class="edge">
 <title>src/utils/classnames.spec.ts&#45;&gt;node_modules/vitest</title>
 <path fill="none" stroke="#6c8ebf" d="M781.21,-8523.58C798.15,-8363.34 883.58,-7555 883.58,-7555 883.58,-7555 955.35,-1078 955.35,-1078 955.35,-1078 983.72,-1068.8 1010.49,-1060.11"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" points="1029.44,-1053.96 1013.2,-1068.69 1021.09,-1056.67 1010.42,-1060.13 1010.42,-1060.13 1010.42,-1060.13 1021.09,-1056.67 1007.64,-1051.57 1029.44,-1053.96"/>
 </g>
 <!-- src/utils/classnames.spec.ts&#45;&gt;src/utils/classnames.ts -->
-<g id="edge523" class="edge">
+<g id="edge522" class="edge">
 <title>src/utils/classnames.spec.ts&#45;&gt;src/utils/classnames.ts</title>
 <path fill="none" stroke="#6c8ebf" stroke-width="2" d="M855.41,-8557.34C1016.29,-8570.56 1386.37,-8600.97 1549.91,-8614.41"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" stroke-width="2" points="1569.6,-8616.03 1548.93,-8623.36 1562.02,-8615.91 1549.62,-8614.89 1549.66,-8614.39 1549.71,-8613.89 1562.1,-8614.91 1550.4,-8605.42 1569.6,-8616.03"/>
 </g>
 <!-- src/utils/classnames.ts&#45;&gt;node_modules/class&#45;variance&#45;authority -->
-<g id="edge525" class="edge">
+<g id="edge524" class="edge">
 <title>src/utils/classnames.ts&#45;&gt;node_modules/class&#45;variance&#45;authority</title>
 <path fill="none" stroke="#6c8ebf" d="M1690.13,-8605.66C1721.19,-8597.44 1753.13,-8589 1753.13,-8589 1753.13,-8589 1805.76,-1590.53 1823.12,-1158.28"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" points="1824.56,-1138.62 1832.07,-1159.22 1823.92,-1147.38 1823.09,-1158.56 1823.09,-1158.56 1823.09,-1158.56 1823.92,-1147.38 1814.12,-1157.91 1824.56,-1138.62"/>
 </g>
 <!-- src/utils/classnames.ts&#45;&gt;node_modules/tailwind&#45;merge -->
-<g id="edge526" class="edge">
+<g id="edge525" class="edge">
 <title>src/utils/classnames.ts&#45;&gt;node_modules/tailwind&#45;merge</title>
 <path fill="none" stroke="#6c8ebf" d="M1690.13,-8605.66C1721.19,-8597.44 1753.13,-8589 1753.13,-8589 1753.13,-8589 1809.13,-3447 1809.13,-3447 1809.13,-3447 1885.25,-1610.5 1898.61,-1288.04"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" points="1899.43,-1268.33 1907.6,-1288.68 1899.07,-1277.1 1898.6,-1288.31 1898.6,-1288.31 1898.6,-1288.31 1899.07,-1277.1 1889.61,-1287.94 1899.43,-1268.33"/>
 </g>
 <!-- src/utils/i18n.ts&#45;&gt;node_modules/@lingui/core -->
-<g id="edge527" class="edge">
+<g id="edge526" class="edge">
 <title>src/utils/i18n.ts&#45;&gt;node_modules/@lingui/core</title>
 <path fill="none" stroke="#6c8ebf" d="M1641.2,-8333.72C1669.35,-8249.3 1753.13,-7998 1753.13,-7998 1753.13,-7998 1809.13,-1078 1809.13,-1078 1809.13,-1078 1817.48,-1074.99 1829.14,-1070.78"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" points="1847.57,-1064.13 1831.81,-1079.38 1839.31,-1067.11 1828.76,-1070.92 1828.76,-1070.92 1828.76,-1070.92 1839.31,-1067.11 1825.71,-1062.45 1847.57,-1064.13"/>
 </g>
 <!-- src/utils/navigation.ts&#45;&gt;node_modules/remeda -->
-<g id="edge534" class="edge">
+<g id="edge533" class="edge">
 <title>src/utils/navigation.ts&#45;&gt;node_modules/remeda</title>
 <path fill="none" stroke="#6c8ebf" d="M1684.48,-8477.15C1717.19,-8468.5 1753.13,-8459 1753.13,-8459 1753.13,-8459 1809.13,-1208 1809.13,-1208 1809.13,-1208 1826.56,-1201.71 1846.2,-1194.63"/>
 <polygon fill="#6c8ebf" stroke="#6c8ebf" points="1864.88,-1187.89 1849.12,-1203.14 1856.62,-1190.87 1846.06,-1194.68 1846.06,-1194.68 1846.06,-1194.68 1856.62,-1190.87 1843.01,-1186.21 1864.88,-1187.89"/>

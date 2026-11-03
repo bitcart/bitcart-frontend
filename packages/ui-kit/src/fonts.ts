@@ -1,6 +1,20 @@
 import type { PresetBitcartPreflight } from "@bitcart/unocss-kit/preset"
 import type { WebFontsOptions } from "unocss/preset-web-fonts"
 
+//* Arial reshaped to InterVariable's metrics, so swapping fonts in barely shifts the layout.
+const INTER_FALLBACK_FONT_FACE = /* CSS */ `
+    @font-face {
+      font-family: "Inter Fallback";
+      font-weight: 100 900;
+      font-style: normal;
+      src: local("Arial");
+      ascent-override: 90%;
+      descent-override: 22.43%;
+      line-gap-override: 0%;
+      size-adjust: 107.4%;
+    }
+`
+
 export const FONTS_PREFLIGHT: PresetBitcartPreflight = {
   //! Keep the URL bare (do not swap for a `?url` interpolation).
   //* Letting Vite's CSS URL rewriter process it in-place is what registers the
@@ -19,17 +33,84 @@ export const FONTS_PREFLIGHT: PresetBitcartPreflight = {
       src: url("inter-ui/variable/InterVariable.woff2") format("woff2");
     }
 
+    ${INTER_FALLBACK_FONT_FACE}
+  `,
+}
+
+//* Inter from @fontsource-variable/inter, split by script like `GEIST_MONO_PREFLIGHT`: a page
+//* downloads the 73 KB Latin file, and the other scripts' files only for text that needs them.
+//* Same design, axes (`opsz`, `wght`) and metrics as `FONTS_PREFLIGHT`'s InterVariable, without
+//* its stylistic sets and character variants.
+//*
+//! Vike preloads every font file a preflight references, so this is for apps that preload the
+//! Latin file themselves.
+export const INTER_SUBSETS_PREFLIGHT: PresetBitcartPreflight = {
+  getCSS: () => /* CSS */ `
+
     @font-face {
-      font-family: "Inter Fallback";
+      font-family: "InterVariable";
       font-weight: 100 900;
       font-style: normal;
-      src: local("Arial");
-      ascent-override: 90%;
-      descent-override: 22.43%;
-      line-gap-override: 0%;
-      size-adjust: 107.4%;
+      font-display: swap;
+      src: url("@fontsource-variable/inter/files/inter-cyrillic-ext-opsz-normal.woff2") format("woff2");
+      unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
     }
 
+    @font-face {
+      font-family: "InterVariable";
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      src: url("@fontsource-variable/inter/files/inter-cyrillic-opsz-normal.woff2") format("woff2");
+      unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+    }
+
+    @font-face {
+      font-family: "InterVariable";
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      src: url("@fontsource-variable/inter/files/inter-greek-ext-opsz-normal.woff2") format("woff2");
+      unicode-range: U+1F00-1FFF;
+    }
+
+    @font-face {
+      font-family: "InterVariable";
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      src: url("@fontsource-variable/inter/files/inter-greek-opsz-normal.woff2") format("woff2");
+      unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+    }
+
+    @font-face {
+      font-family: "InterVariable";
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      src: url("@fontsource-variable/inter/files/inter-vietnamese-opsz-normal.woff2") format("woff2");
+      unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+    }
+
+    @font-face {
+      font-family: "InterVariable";
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      src: url("@fontsource-variable/inter/files/inter-latin-ext-opsz-normal.woff2") format("woff2");
+      unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+    }
+
+    @font-face {
+      font-family: "InterVariable";
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      src: url("@fontsource-variable/inter/files/inter-latin-opsz-normal.woff2") format("woff2");
+      unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+
+    ${INTER_FALLBACK_FONT_FACE}
   `,
 }
 

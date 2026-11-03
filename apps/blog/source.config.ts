@@ -29,6 +29,11 @@ export default defineConfig({
   mdxOptions: {
     rehypeCodeOptions: {
       ...rehypeCodeDefaultOptions,
+      themes: { light: "github-light-default", dark: "github-dark-default" },
+
+      //* Primer's newer muted gray: the theme's comment color falls short of 4.5:1 on code blocks.
+      colorReplacements: { "github-light-default": { "#6e7781": "#59636e" } },
+
       transformers: [
         ...(rehypeCodeDefaultOptions.transformers ?? []),
         languageAttributeTransformer,

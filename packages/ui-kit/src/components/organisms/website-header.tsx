@@ -1,5 +1,4 @@
 import { useIsClient } from "@bitcart/hooks"
-import { useLingui } from "@lingui/react/macro"
 import { useMemo } from "react"
 
 import { useCssRuntimeFeatureSupport, useLayoutContext, useWindowScrollThreshold } from "@/hooks"
@@ -11,8 +10,6 @@ export type WebsiteHeaderProps = WithChildren & {
 }
 
 export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, children }) => {
-  const { t } = useLingui()
-
   const {
     Link,
 
@@ -83,14 +80,9 @@ export const WebsiteHeader: React.FC<WebsiteHeaderProps> = ({ className, childre
               focus-visible:outline-3
               [#root:has(#main-content-link:focus)_&]:opacity-0
             `)}
-            aria-label={t`Go to homepage`}
           >
             <div className="size-10 flex items-center justify-center">
-              <img
-                alt={t`${project?.canonicalName ?? brand.name} logo`}
-                src={project?.logoImageSrc ?? brand.logoImageSrc}
-                className="size-10"
-              />
+              <img alt="" src={project?.logoImageSrc ?? brand.logoImageSrc} className="size-10" />
             </div>
 
             {logoLabel}

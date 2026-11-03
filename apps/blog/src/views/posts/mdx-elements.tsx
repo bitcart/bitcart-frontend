@@ -29,9 +29,10 @@ type FigureCaptionProps = {
   source?: HttpHref
 }
 
-//* The prose column is `max-w-3xl` (48rem) wide, and a gallery shows two images per row.
-const PROSE_IMAGE_SIZES = "(min-width: 48rem) 48rem, 100vw"
-const GALLERY_IMAGE_SIZES = "(min-width: 48rem) 24rem, 50vw"
+//* The prose column is `max-w-3xl` (48rem) wide, inset by 1rem gutters on phones, and a gallery
+//* shows two images per row, 0.75rem apart.
+const PROSE_IMAGE_SIZES = "(min-width: 48rem) 48rem, calc(100vw - 2rem)"
+const GALLERY_IMAGE_SIZES = "(min-width: 48rem) 24rem, calc((100vw - 2.75rem) / 2)"
 
 const Caption: React.FC<FigureCaptionProps> = ({ caption, source }) =>
   caption || source ? (

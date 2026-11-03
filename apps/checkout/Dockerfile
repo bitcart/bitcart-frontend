@@ -12,7 +12,7 @@ COPY . .
 RUN pnpm install --offline --frozen-lockfile && \
   BITCART_ENV=production PRODUCTION_BASE_URL=https://__BITCART_CHECKOUT_URL__ NODE_OPTIONS=--dns-result-order=ipv4first pnpm nx run @bitcart/checkout:build --skip-nx-cache
 
-FROM nginx:1.29-alpine
+FROM nginx:1.30-alpine
 
 COPY apps/checkout/nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build /src/apps/checkout/dist/client /usr/share/nginx/html

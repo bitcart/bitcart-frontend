@@ -19,7 +19,7 @@ test.describe("Blog: Links in posts", () => {
     await page.goto(IN_PAGE_LINK_POST_PATH)
     await waitUntilHydrated(page)
 
-    const link = page.locator('article a[href="#one-domain-support"]')
+    const link = page.getByRole("listitem").getByRole("link", { name: "One domain support" })
 
     await expect(link).not.toHaveAttribute("target")
     await expect(link).not.toHaveAttribute("aria-current")

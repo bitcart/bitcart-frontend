@@ -16,11 +16,11 @@ technical knowledge!
 
 This article is describing both updates, as they are both focused on improving deployment experience.
 
-### Major updates
+## Major updates
 
 These updates contain numerous changes, some of which are not backwards-compatible
 
-### Completely improved docker deployment
+## Completely improved docker deployment
 
 We now test if deployment works in our automated systems, so that it will always work
 
@@ -45,7 +45,7 @@ Added new settings to configure nginx reverse proxy:
 
 Overall generator refactor
 
-### One domain support
+## One domain support
 
 Existing deployments will be unaffected.
 
@@ -77,7 +77,7 @@ unset BITCART_STORE_URL
 ./setup.sh
 ```
 
-### Breaking change to improve readability
+## Breaking change to improve readability
 
 The following environment variables were renamed to reduce confusion:
 
@@ -88,7 +88,7 @@ The following environment variables were renamed to reduce confusion:
 
 Please set them in order for your deployment to work
 
-### BitcartCC Configurator
+## BitcartCC Configurator
 
 Those releases have introduced the BitcartCC Configurator.
 
@@ -131,7 +131,7 @@ Note: for that to work you should have working SSH support, see below.
 
 Note that even though configurator should fit most use cases, if you are not using one-domain mode, or if you have some completely custom and complex use-case, possibly involving multiple deployments on the same server, you should better use setup scripts from CLI.
 
-### Breaking: SSH support in setup scripts
+## Breaking: SSH support in setup scripts
 
 Old method of executing commands on the host (for maintenance purposes, like updating the server) is no longer used.
 
@@ -151,7 +151,7 @@ Note: SSH support requires an ssh server (`openssh-server`/`sshd`) to be running
 
 **IMPORTANT:** For existing deployments, after updating, for future updates to work, you will need to re-run `./setup.sh`
 
-### Other improvements
+## Other improvements
 
 - Fix cleanup command
 - Fix bugs in configurator
@@ -173,7 +173,7 @@ It is now possible to preview settings without installing, by running `./setup.s
   source="https://t.me/bitcart/3945"
 />
 
-### Migration guide
+## Migration guide
 
 Those 2 new updates have introduced lots of new features which make the installation easy for both newcomers and existing users.
 

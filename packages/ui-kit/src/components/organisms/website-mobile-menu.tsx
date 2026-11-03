@@ -115,11 +115,7 @@ export const WebsiteMobileMenu: React.FC<WebsiteMobileMenuProps> = ({
             `)}
           >
             <div className="size-10 flex items-center justify-center">
-              <img
-                alt={t`${project?.canonicalName ?? brand.name} logo`}
-                src={project?.logoImageSrc ?? brand.logoImageSrc}
-                className="size-10"
-              />
+              <img alt="" src={project?.logoImageSrc ?? brand.logoImageSrc} className="size-10" />
             </div>
 
             <span className="text-2xl font-bold">{project?.canonicalName ?? brand.name}</span>

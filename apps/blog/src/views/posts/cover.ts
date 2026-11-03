@@ -4,10 +4,11 @@ import { DEFAULT_SHARE_IMAGE } from "#/common/constants"
 import { getResponsiveImage } from "#/common/content/media"
 import type { PostSummary } from "#/common/content/posts"
 
-//* Displayed widths: the 3fr column of a featured post or post header, and a grid card.
+//* Displayed widths: the 3fr column of a featured post or post header, and a grid card; both span
+//* the page between its 1rem gutters on phones.
 export const COVER_SIZES = {
-  feature: "(min-width: 80rem) 44rem, (min-width: 48rem) 58vw, 100vw",
-  card: "(min-width: 80rem) 25rem, (min-width: 64rem) 31vw, (min-width: 40rem) 50vw, 100vw",
+  feature: "(min-width: 80rem) 44rem, (min-width: 48rem) 58vw, calc(100vw - 2rem)",
+  card: "(min-width: 80rem) 25rem, (min-width: 64rem) 31vw, (min-width: 40rem) 50vw, calc(100vw - 2rem)",
 }
 
 const PRELOAD_TIMEOUT_MS = 300

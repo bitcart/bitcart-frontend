@@ -9,12 +9,13 @@ import { getFontPreloadLink } from "@bitcart/tanstack-start-kit/metadata"
 import { Link, useClientRoute } from "@bitcart/tanstack-start-kit/navigation"
 import { LayoutContainer, WebsiteFooter } from "@bitcart/ui-kit/components"
 import { LayoutContextProvider, ThemeProvider } from "@bitcart/ui-kit/providers"
+import interLatinFont from "@fontsource-variable/inter/files/inter-latin-opsz-normal.woff2?url"
+import { t } from "@lingui/core/macro"
 import { I18nProvider, useLingui } from "@lingui/react"
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router"
-import interFont from "inter-ui/variable/InterVariable.woff2?url"
 import { useMemo } from "react"
 
-import { BLOG_NAME, RSS_FEED_PATH } from "#/common/constants"
+import { BLOG_NAME, BLOG_TAGLINE, RSS_FEED_PATH } from "#/common/constants"
 import { getCategoriesWithPosts, getPostSummaries, type PostSummary } from "#/common/content/posts"
 import { i18n } from "#/common/i18n"
 
@@ -32,12 +33,15 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: serializeViewportParams(DEFAULT_VIEWPORT_PARAMS) },
       { title: BLOG_NAME },
+
+      //* Routes replace it with their own; the error and not-found pages keep it.
+      { name: "description", content: t(BLOG_TAGLINE) },
     ],
 
     links: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       { rel: "stylesheet", href: unoCss },
-      getFontPreloadLink(interFont),
+      getFontPreloadLink(interLatinFont),
 
       { rel: "alternate", type: "application/rss+xml", title: BLOG_NAME, href: RSS_FEED_PATH },
     ],

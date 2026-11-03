@@ -20,7 +20,7 @@ export type ResponsiveImage = {
 const IMAGE_VARIANTS = import.meta.glob<ImageVariant | ImageVariant[]>(
   "/content/media/**/*.{png,jpg,jpeg,webp}",
   {
-    query: { w: "480;960;1440", format: "webp", as: "metadata:src;width;height" },
+    query: { w: "480;720;960;1440", format: "avif", as: "metadata:src;width;height" },
     import: "default",
     eager: true,
   },
