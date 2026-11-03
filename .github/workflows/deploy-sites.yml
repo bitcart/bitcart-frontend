@@ -21,7 +21,9 @@ jobs:
   pull-locales:
     name: pull-locales
     runs-on: ubuntu-latest
-    environment: transifex
+    environment:
+      name: transifex
+      deployment: false
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -53,7 +55,9 @@ jobs:
     name: build
     needs: pull-locales
     runs-on: ubuntu-latest
-    environment: sites-build
+    environment:
+      name: sites-build
+      deployment: false
 
     env:
       BITCART_ENV: production

@@ -21,7 +21,7 @@ export type DocumentViewportParams = {
 }
 
 export interface StaticDocumentMetadata {
-  author: string
+  author?: string
   title: string
   description: string
 

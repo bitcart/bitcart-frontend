@@ -63,7 +63,7 @@ export const getPageHead = ({
   routePath,
   title,
   description,
-  author = BITCART_ORGANIZATION_JSON_LD.name,
+  author,
   image,
   jsonLd,
 }: PageHeadParams) => {
