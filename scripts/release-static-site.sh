@@ -12,14 +12,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
 "$SCRIPT_DIR"/install-tx-client.sh
 
-for package in "$SCRIPT_DIR"/../packages/*/; do
-  if [ -d "$package.tx" ]; then
-    (cd "$package" && tx pull -af)
-  fi
-done
-
-cd "$SCRIPT_DIR/../apps/$APP_NAME"
-tx pull -af
+cd "$SCRIPT_DIR/.."
+just locales-pull
 
 BITCART_ENV="production" just build --outputStyle=stream -p "@bitcart/$APP_NAME"
 

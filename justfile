@@ -361,6 +361,22 @@ locales-extract-dev +scopes="apps packages":
     for scope in {{ scopes }}; do pnpm "$scope" i18n:extract-locales || exit 1; done
     echo "🌐 Locales extracted with pseudo locale included ✅"
 
+[doc("
+Pull the translations of every workspace application and package that has a Transifex config.
+Requires the Transifex CLI (`tx`) and a Transifex token.
+")]
+[group("Internationalization and localization")]
+locales-pull:
+    for member in apps/*/ packages/*/; do if [ -d "$member.tx" ]; then (cd "$member" && tx pull -af) || exit 1; fi; done
+
+[doc("
+Push the source catalogs of every workspace application and package that has a Transifex config.
+Run `just locales-extract` first. Requires the Transifex CLI (`tx`) and a Transifex token.
+")]
+[group("Internationalization and localization")]
+locales-push:
+    for member in apps/*/ packages/*/; do if [ -d "$member.tx" ]; then (cd "$member" && tx push -s) || exit 1; fi; done
+
 ## TESTING
 
 [doc("

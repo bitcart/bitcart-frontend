@@ -7,11 +7,15 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ui-docs-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow_ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: read
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   deploy:
@@ -37,22 +41,8 @@ jobs:
       - name: Set up Node.js
         uses: bitcart/bitcart-actions/actions/setup-node@master
 
-      - name: Restore Nx cache
-        id: nx-cache-restore
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: .nx
-          key: v1-nx-${{ github.ref_name }}-${{ hashFiles('nx.json') }}
-          restore-keys: |
-            v1-nx-${{ github.ref_name }}-
-
-      - name: Set up Python
-        uses: bitcart/bitcart-actions/actions/setup-python@master
-        with:
-          cache-dependency-glob: ""
-
-      - name: Install just
-        run: uv pip install rust-just
+      - name: Set up Just
+        uses: bitcart/bitcart-actions/actions/setup-just@master
 
       - name: Set up GitHub Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
@@ -74,10 +64,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
-
-      - name: Save Nx cache
-        if: always()
-        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: .nx
-          key: ${{ steps.nx-cache-restore.outputs.cache-primary-key }}

@@ -7,11 +7,15 @@ on:
   pull_request:
 
 concurrency:
-  group: ${{ github.workflow_ref }}-${{ github.event.pull_request.number || github.run_id }}
+  group: ${{ github.workflow_ref }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 permissions:
   contents: read
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   lint:
@@ -20,10 +24,8 @@ jobs:
     with:
       setup-node: true
       verbose: true
-      install-dependencies: |
-        uv pip install prek rust-just
-      cache-dependency-glob: ""
       nx-cache: true
+      setup-just: true
       extra-checks: |
         just unit
         just api-check
@@ -41,29 +43,20 @@ jobs:
       - name: Set up Node.js
         uses: bitcart/bitcart-actions/actions/setup-node@master
 
-      - name: Restore Nx cache
-        id: nx-cache-restore
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: .nx
-          key: v1-nx-${{ github.ref_name }}-${{ hashFiles('nx.json') }}
-          restore-keys: |
-            v1-nx-${{ github.ref_name }}-
+      - name: Cache Nx
+        uses: bitcart/bitcart-actions/actions/nx-cache@master
 
-      - name: Set up Python
-        uses: bitcart/bitcart-actions/actions/setup-python@master
-        with:
-          cache-dependency-glob: ""
-
-      - name: Install just
-        run: uv pip install rust-just
+      - name: Set up Just
+        uses: bitcart/bitcart-actions/actions/setup-just@master
 
       - name: Configure Fast APT Mirror
         uses: bitcart/bitcart-actions/actions/fast-apt-mirror@master
 
-      - run: just e2e-setup
+      - name: Install Playwright browsers
+        run: just e2e-setup
 
-      - run: just e2e
+      - name: Run E2E tests
+        run: just e2e
 
       - uses: actions/upload-artifact@c6a366c94c3e0affe28c06c8df20a878f24da3cf # v3.2.2
         if: ${{ !cancelled() }}
@@ -73,13 +66,6 @@ jobs:
             apps/*/e2e/playwright-report/
             apps/*/e2e/screenshots/
           retention-days: 1
-
-      - name: Save Nx cache
-        if: always()
-        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: .nx
-          key: ${{ steps.nx-cache-restore.outputs.cache-primary-key }}
 
   upload-e2e-artifacts:
     name: upload-${{ matrix.app }}-e2e-artifacts

@@ -1,0 +1,29 @@
+name: Install Transifex CLI
+
+description: "Install the Transifex CLI"
+
+runs:
+  using: composite
+  steps:
+    - name: Install Transifex CLI
+      env:
+        # renovate: datasource=github-releases depName=transifex/cli
+        TX_VERSION: "v1.6.17"
+        SHA256_AMD64: 002dec5b9e71248a7e6a0808118e9da940205828d5a33ce88e04bb57a967164d
+        SHA256_ARM64: c380ed9aece5d34316aa0fe2e5afa0633553656f98909f88cb72609e2fa13153
+      shell: bash
+      run: |
+        case "$(uname -m)" in
+          x86_64) arch=amd64 sha256=$SHA256_AMD64 ;;
+          aarch64) arch=arm64 sha256=$SHA256_ARM64 ;;
+          *)
+            echo "::error::Unsupported architecture: $(uname -m)"
+            exit 1
+            ;;
+        esac
+        archive="tx-linux-$arch.tar.gz"
+        cd "$RUNNER_TEMP"
+        curl -fsSLO "https://github.com/transifex/cli/releases/download/$TX_VERSION/$archive"
+        echo "$sha256  $archive" | sha256sum -c -
+        tar -xzf "$archive" tx
+        sudo install -m 0755 tx /usr/local/bin/tx

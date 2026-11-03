@@ -50,6 +50,8 @@ just test                   # Run all tests: unit + e2e
 just ci                     # Full CI pipeline: check + test
 just locales-extract        # Extract i18n catalogs for all apps
 just locales-extract-dev    # Extract i18n catalogs with pseudo locale (for dev)
+just locales-pull           # Pull translations from Transifex (needs tx and a token)
+just locales-push           # Push extracted source catalogs to Transifex
 just e2e                    # Run all Playwright E2E tests
 just e2e-app landing        # Run E2E tests for a specific app
 just e2e-ui landing         # Open Playwright interactive UI for a specific app
