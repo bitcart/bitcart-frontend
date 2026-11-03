@@ -8,8 +8,15 @@ import {
   type StaticDocumentMetadata,
 } from "@bitcart/core/metadata"
 import { getDocumentHead } from "@bitcart/tanstack-start-kit/metadata"
+import { t } from "@lingui/core/macro"
 
-import { BLOG_NAME, BRAND_X_HANDLE, DEFAULT_SHARE_IMAGE, PRODUCTION_BASE_URL } from "./constants"
+import {
+  BLOG_HOME_TITLE,
+  BLOG_NAME,
+  BRAND_X_HANDLE,
+  DEFAULT_SHARE_IMAGE,
+  PRODUCTION_BASE_URL,
+} from "./constants"
 import { getImageSize, getMediaUrl } from "./content/media"
 
 const POSIX_LOCALE_ID_MAP: PosixLocaleIdMap<SourceLocaleId> = { en: "en_US" }
@@ -79,7 +86,7 @@ export const getPageHead = ({
 
     staticParams: {
       author,
-      title: title ? `${title} · ${BLOG_NAME}` : BLOG_NAME,
+      title: title ? `${title} · ${BLOG_NAME}` : t(BLOG_HOME_TITLE),
       description,
       image: getShareImage(image),
     },
