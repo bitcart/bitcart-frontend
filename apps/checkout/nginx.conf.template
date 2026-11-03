@@ -3,6 +3,11 @@ map $host $embed_checkout_url {
     ~*\.onion$ "";
 }
 
+map $host $page_base_url {
+    default "${BITCART_CHECKOUT_URL}";
+    ~*\.onion$ "http://$host";
+}
+
 server {
     listen 80;
     root /usr/share/nginx/html;
@@ -30,6 +35,9 @@ server {
     }
 
     location / {
+        sub_filter "https://__BITCART_CHECKOUT_URL__" $page_base_url;
+        sub_filter_once off;
+        etag off;
         add_header Cache-Control "no-cache";
         try_files $uri /checkout$uri /_shell.html;
     }

@@ -45,8 +45,11 @@ export const Route = createRootRouteWithContext<CheckoutRouterContext>()({
     //* Prevents permanently baking in the static `/i/_shell` at prerender time.
     const routePath = isServer ? "/" : (matches[matches.length - 1]?.pathname ?? match.pathname)
 
+    //* The Docker image prerenders a placeholder here, which its nginx replaces with the deployment's URL.
+    const baseUrl = isServer ? PRODUCTION_BASE_URL : location.origin
+
     const { title, meta, links } = getDocumentHead({
-      baseUrl: PRODUCTION_BASE_URL,
+      baseUrl,
       favicon: { href: "/checkout/favicon.ico", type: "image/x-icon" },
       localeId: globalI18n.locale,
       ogSiteName: PROJECT_CANONICAL_NAME,

@@ -1,5 +1,5 @@
 ---
-name: npm-audit
+name: pnpm-audit
 description: Audits the bitcart-frontend pnpm workspace for vulnerable dependencies, fixes them with scoped overrides in pnpm-workspace.yaml, then sweeps existing overrides and minimumReleaseAgeExclude entries for ones upstream has made redundant. Use when asked to run a security or dependency audit, check dependencies for vulnerabilities, resolve `pnpm audit` findings, or review whether an override or exclude in pnpm-workspace.yaml is still needed.
 ---
 
@@ -55,7 +55,7 @@ pnpm i && pnpm audit                                 # apply, then confirm
 6. **On `ERR_PNPM_NO_MATURE_MATCHING_VERSION`**, add a dated exclude and move on. Never propose
    waiting for the maturity window to clear, or present waiting as an option
    ([REFERENCE.md](REFERENCE.md)).
-   - `npm view <package> time --json` for the exact publish timestamp.
+   - `pnpm view <package> time --json` for the exact publish timestamp.
    - Add `<package>@<exact-version>` under `minimumReleaseAgeExclude:`, with one line above it:
      `# TODO: Remove after <publish-date + 7 days>`.
    - Re-run `pnpm i`. Report the exclude and its expiry — a report, not a permission request.

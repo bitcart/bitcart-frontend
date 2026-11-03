@@ -10,7 +10,7 @@ RUN pnpm fetch
 
 COPY . .
 RUN pnpm install --offline --frozen-lockfile && \
-  BITCART_ENV=production NODE_OPTIONS=--dns-result-order=ipv4first pnpm nx run @bitcart/checkout:build --skip-nx-cache
+  BITCART_ENV=production PRODUCTION_BASE_URL=https://__BITCART_CHECKOUT_URL__ NODE_OPTIONS=--dns-result-order=ipv4first pnpm nx run @bitcart/checkout:build --skip-nx-cache
 
 FROM nginx:1.29-alpine
 
