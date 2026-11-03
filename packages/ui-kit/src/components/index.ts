@@ -270,6 +270,7 @@ export {
   type FloatingActionButtonProps,
 } from "./atoms/floating-action-button"
 
+export { HeadingAnchor, type HeadingAnchorProps } from "./atoms/heading-anchor"
 export { Input, type InputProps } from "./atoms/input"
 
 export {

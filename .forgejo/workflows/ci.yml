@@ -30,9 +30,13 @@ jobs:
         just unit
         just api-check
 
+  workflows:
+    name: workflows
+    uses: bitcart/bitcart-actions/.github/workflows/workflow-checks.yml@master
+
   e2e:
     name: e2e
-    needs: lint
+    needs: [lint, workflows]
     runs-on: ubuntu-latest
 
     steps:

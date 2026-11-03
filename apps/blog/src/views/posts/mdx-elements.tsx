@@ -13,6 +13,7 @@ import {
   FigureSource,
   FigureVideo,
   FigureVideoEmbed,
+  HeadingAnchor,
 } from "@bitcart/ui-kit/components"
 import { useLayoutContext } from "@bitcart/ui-kit/hooks"
 import { getTargetBlankA11yHint } from "@bitcart/ui-kit/utils"
@@ -113,6 +114,22 @@ export const YouTubeFigure: React.FC<{
       <FigureSource href={`https://www.youtube.com/watch?v=${videoId}`}>YouTube</FigureSource>
     </FigureCaption>
   </FigureFrame>
+)
+
+type ProseHeadingProps = React.ComponentProps<"h2"> & { as: "h2" | "h3" }
+
+const ProseHeading: React.FC<ProseHeadingProps> = ({ as: Heading, id, children, ...props }) => (
+  <Heading id={id} {...props}>
+    {id ? <HeadingAnchor href={`#${id}`}>{children}</HeadingAnchor> : children}
+  </Heading>
+)
+
+export const H2: React.FC<React.ComponentProps<"h2">> = (props) => (
+  <ProseHeading as="h2" {...props} />
+)
+
+export const H3: React.FC<React.ComponentProps<"h3">> = (props) => (
+  <ProseHeading as="h3" {...props} />
 )
 
 export const Pre: React.FC<React.ComponentProps<"pre"> & { "data-language"?: string }> = ({

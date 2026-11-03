@@ -51,8 +51,9 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  //* Anchor jumps stop below the fixed 4rem site header, with 1rem to spare.
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="scroll-pt-20" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

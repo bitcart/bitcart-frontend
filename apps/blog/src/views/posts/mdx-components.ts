@@ -1,6 +1,6 @@
 import type { MDXComponents } from "mdx/types"
 
-import { Figure, Gallery, Pre, ProseLink, VideoFigure, YouTubeFigure } from "./mdx-elements"
+import { Figure, Gallery, H2, H3, Pre, ProseLink, VideoFigure, YouTubeFigure } from "./mdx-elements"
 
 export const MDX_COMPONENTS = {
   Figure,
@@ -8,5 +8,7 @@ export const MDX_COMPONENTS = {
   VideoFigure,
   YouTubeFigure,
   a: ProseLink,
+  h2: H2,
+  h3: H3,
   pre: Pre,
 } satisfies MDXComponents
