@@ -28,3 +28,11 @@ jobs:
 
           #* For github.com rate limits: Forgejo's own token would be sent there and rejected.
           token: ${{ secrets.LYCHEE_GITHUB_TOKEN }} # zizmor: ignore[secrets-outside-env]
+
+          #! The runner collects a composite action's summary twice
+          #! (https://code.forgejo.org/forgejo/runner/issues/1778), so a top-level step writes it.
+          jobSummary: false
+
+      - name: Write job summary
+        if: ${{ !cancelled() }}
+        run: cat lychee/out.md >> "$FORGEJO_STEP_SUMMARY"
