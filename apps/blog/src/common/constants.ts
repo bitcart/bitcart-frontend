@@ -17,6 +17,6 @@ export const RSS_FEED_PATH = "/rss.xml"
 export const SEARCH_INDEX_PATH = "/search.json"
 
 export const DEFAULT_SHARE_IMAGE = {
-  src: "/media/logo-banner.png",
+  src: "/media/share-image.jpeg",
   alt: "Bitcart logo",
 } as const

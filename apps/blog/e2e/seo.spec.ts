@@ -28,7 +28,7 @@ const SEO_CASES = [
     name: "index",
     path: "/",
     canonical: PRODUCTION_BASE_URL,
-    ogImage: getBuiltAssetUrlPattern("logo-banner.png"),
+    ogImage: getBuiltAssetUrlPattern("share-image.jpeg"),
     jsonLdTypes: ["Organization", "Blog"],
   },
 
@@ -36,7 +36,7 @@ const SEO_CASES = [
     name: "category page",
     path: "/category/releases",
     canonical: `${PRODUCTION_BASE_URL}/category/releases`,
-    ogImage: getBuiltAssetUrlPattern("logo-banner.png"),
+    ogImage: getBuiltAssetUrlPattern("share-image.jpeg"),
     jsonLdTypes: ["Organization", "BreadcrumbList"],
   },
 

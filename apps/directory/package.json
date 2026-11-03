@@ -15,7 +15,6 @@
     "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
     "preview": "vike preview --host",
-    "release": "../../scripts/release-static-site.sh directory",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {

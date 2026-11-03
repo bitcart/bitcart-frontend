@@ -440,17 +440,6 @@ Example: `just e2e-report landing`
 e2e-report app:
     pnpm {{ app }} e2e:report
 
-## RELEASES
-
-[doc("
-Build and release a static site (Landing or Directory).
-
-Example: `just release-static-site landing`
-")]
-[group("Releases")]
-release-static-site app:
-    pnpm {{ app }} release
-
 ## INTERNAL RECIPES
 
 [private]

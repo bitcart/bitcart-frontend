@@ -15,7 +15,6 @@
     "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
     "preview": "vike preview --host",
-    "release": "../../scripts/release-static-site.sh landing",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "web3icons:recatalogize": "tsx ./scripts/web3icons.ts"
   },

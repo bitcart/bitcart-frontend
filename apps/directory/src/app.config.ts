@@ -34,11 +34,11 @@ export const getAppDocumentMetadata = (): StaticDocumentMetadata => ({
   description: t`Directory of apps, hosting providers, and merchants using Bitcart for cryptocurrency payments`,
 
   image: {
-    src: "/logo.png",
+    src: "/share-image.jpg",
     alt: `${BRAND_UMBRELLA_NAME} ${t`logo`}`,
-    type: "image/png",
-    width: "600",
-    height: "532",
+    type: "image/jpeg",
+    width: "1200",
+    height: "1200",
   },
 
   author: "MrNaif2018",

@@ -20,7 +20,6 @@
     "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
     "preview": "vite preview --host",
-    "release": "../../scripts/release-static-site.sh checkout",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
