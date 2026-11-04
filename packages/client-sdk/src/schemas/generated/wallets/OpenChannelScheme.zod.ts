@@ -4,9 +4,12 @@
  */
 import * as zod from "zod"
 
+export const openChannelSchemePublicDefault = false
+
 export const OpenChannelScheme = zod.object({
   node_id: zod.string(),
   amount: zod.union([zod.number(), zod.string()]),
+  public: zod.boolean().default(openChannelSchemePublicDefault),
 })
 
 export type OpenChannelScheme = zod.input<typeof OpenChannelScheme>

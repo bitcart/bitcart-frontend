@@ -29,6 +29,7 @@ export const makePayment = (
   name: "BTC",
   divisibility: 8,
   confirmations: 0,
+  required_confirmations: 0,
   discount: null,
   applied_discount: null,
   effective_price: "100",

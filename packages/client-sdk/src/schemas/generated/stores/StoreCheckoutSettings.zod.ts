@@ -6,6 +6,7 @@ import * as zod from "zod"
 
 export const storeCheckoutSettingsExpirationDefault = 15
 export const storeCheckoutSettingsTransactionSpeedDefault = 0
+export const storeCheckoutSettingsConfirmationTimeoutDefault = 1440
 export const storeCheckoutSettingsUnderpaidPercentageDefault = 0
 export const storeCheckoutSettingsCustomLogoLinkDefault = ``
 export const storeCheckoutSettingsRecommendedFeeTargetBlocksDefault = 1
@@ -26,6 +27,7 @@ export const storeCheckoutSettingsAutoRedirectDefault = true
 export const StoreCheckoutSettings = zod.object({
   expiration: zod.int().default(storeCheckoutSettingsExpirationDefault),
   transaction_speed: zod.int().default(storeCheckoutSettingsTransactionSpeedDefault),
+  confirmation_timeout: zod.int().default(storeCheckoutSettingsConfirmationTimeoutDefault),
   underpaid_percentage: zod.number().default(storeCheckoutSettingsUnderpaidPercentageDefault),
   custom_logo_link: zod.string().default(storeCheckoutSettingsCustomLogoLinkDefault),
   recommended_fee_target_blocks: zod

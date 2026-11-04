@@ -329,6 +329,7 @@ const buildPayment = (
     ...method.payment,
     rate: method.rate,
     confirmations,
+    required_confirmations: 2,
     label,
     amount: crypto(amount),
     subtotal: crypto(subtotal),
@@ -538,7 +539,6 @@ export const buildPreviewScenario = (requested: CheckoutPreviewAxes): CheckoutPr
   const store = {
     ...makeStore({
       show_recommended_fee: axes.recommendedFee,
-      transaction_speed: 2,
       support_email: "support@example.com",
       include_network_fee: axes.fee,
       ...(status === "details" ? { email_required: true, ask_address: true } : {}),

@@ -2,7 +2,7 @@ import type { DisplayInvoiceOutput, DisplayRefundOutput, PaymentDataOutput } fro
 
 /**
  * The API populates most payment fields at runtime: its schema types a payment as only `created`,
- * `recommended_fee` and `wallet`, with `additionalProperties: true`.
+ * `recommended_fee`, `wallet` and `required_confirmations`, with `additionalProperties: true`.
  */
 export type InvoicePayment = PaymentDataOutput & {
   id: string

@@ -680,9 +680,9 @@ describe("deriveCheckoutModel", () => {
             status,
             buyer_email: "",
             payment_id: "method-btc",
-            payments: [makePayment({ confirmations: 1 })],
+            payments: [makePayment({ confirmations: 1, required_confirmations: 3 })],
           }),
-          store: makeStore({ email_required: true, transaction_speed: 3 }),
+          store: makeStore({ email_required: true }),
         })
 
         expect(derive()).toMatchObject({
@@ -693,6 +693,22 @@ describe("deriveCheckoutModel", () => {
         expect(JSON.stringify(derive())).not.toContain("bc1qexampleaddress")
       },
     )
+
+    test("counts towards the paid method's requirement, not the store's transaction speed", () => {
+      const { derive } = setup({
+        invoice: makeInvoice({
+          status: "confirmed",
+          payment_id: "method-btc",
+          payments: [makePayment({ confirmations: 9, required_confirmations: 10 })],
+        }),
+        store: makeStore({ transaction_speed: 6 }),
+      })
+
+      expect(derive()).toMatchObject({
+        phase: "confirming",
+        confirmations: { received: 9, required: 10 },
+      })
+    })
   })
 
   describe("unavailable", () => {

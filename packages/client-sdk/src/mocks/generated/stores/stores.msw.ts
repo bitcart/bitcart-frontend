@@ -31,6 +31,7 @@ export const getStoresListItemsResponseMock = (
       checkout_settings: {
         expiration: faker.number.int(),
         transaction_speed: faker.number.int(),
+        confirmation_timeout: faker.number.int(),
         underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
         custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
         recommended_fee_target_blocks: faker.number.int(),
@@ -104,6 +105,7 @@ export const getStoresCreateItemResponseMock = (
   checkout_settings: {
     expiration: faker.number.int(),
     transaction_speed: faker.number.int(),
+    confirmation_timeout: faker.number.int(),
     underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
     custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
     recommended_fee_target_blocks: faker.number.int(),
@@ -170,6 +172,7 @@ export const getStoresUpdateItemResponseMock = (
   checkout_settings: {
     expiration: faker.number.int(),
     transaction_speed: faker.number.int(),
+    confirmation_timeout: faker.number.int(),
     underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
     custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
     recommended_fee_target_blocks: faker.number.int(),
@@ -234,6 +237,7 @@ export const getStoresDeleteItemResponseMock = (
   checkout_settings: {
     expiration: faker.number.int(),
     transaction_speed: faker.number.int(),
+    confirmation_timeout: faker.number.int(),
     underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
     custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
     recommended_fee_target_blocks: faker.number.int(),
@@ -303,6 +307,7 @@ export const getStoresGetItemResponseMock = (): DisplayStore | PublicStore =>
       checkout_settings: {
         expiration: faker.number.int(),
         transaction_speed: faker.number.int(),
+        confirmation_timeout: faker.number.int(),
         underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
         custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
         recommended_fee_target_blocks: faker.number.int(),
@@ -367,6 +372,7 @@ export const getStoresGetItemResponseMock = (): DisplayStore | PublicStore =>
       checkout_settings: {
         expiration: faker.number.int(),
         transaction_speed: faker.number.int(),
+        confirmation_timeout: faker.number.int(),
         underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
         custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
         recommended_fee_target_blocks: faker.number.int(),
@@ -407,6 +413,7 @@ export const getStoresSetStoreCheckoutSettingsResponseMock = (
   checkout_settings: {
     expiration: faker.number.int(),
     transaction_speed: faker.number.int(),
+    confirmation_timeout: faker.number.int(),
     underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
     custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
     recommended_fee_target_blocks: faker.number.int(),
@@ -471,6 +478,7 @@ export const getStoresSetStoreEmailSettingsResponseMock = (
   checkout_settings: {
     expiration: faker.number.int(),
     transaction_speed: faker.number.int(),
+    confirmation_timeout: faker.number.int(),
     underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
     custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
     recommended_fee_target_blocks: faker.number.int(),
@@ -535,6 +543,7 @@ export const getStoresSetStoreThemeSettingsResponseMock = (
   checkout_settings: {
     expiration: faker.number.int(),
     transaction_speed: faker.number.int(),
+    confirmation_timeout: faker.number.int(),
     underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
     custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
     recommended_fee_target_blocks: faker.number.int(),
@@ -599,6 +608,7 @@ export const getStoresSetStorePluginSettingsResponseMock = (
   checkout_settings: {
     expiration: faker.number.int(),
     transaction_speed: faker.number.int(),
+    confirmation_timeout: faker.number.int(),
     underpaid_percentage: faker.number.float({ fractionDigits: 2 }),
     custom_logo_link: faker.string.alpha({ length: { min: 10, max: 20 } }),
     recommended_fee_target_blocks: faker.number.int(),

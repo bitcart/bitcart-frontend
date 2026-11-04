@@ -11,6 +11,7 @@ export const PaymentData = zod.looseObject({
   created: zod.iso.datetime({ offset: true }),
   recommended_fee: DecimalAsString,
   wallet: zod.union([PaymentWallet, zod.null()]),
+  required_confirmations: zod.int(),
 })
 
 export type PaymentData = zod.input<typeof PaymentData>

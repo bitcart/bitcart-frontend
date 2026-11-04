@@ -4,7 +4,9 @@
     "title": "Bitcart",
     "summary": "Bitcart Merchants API",
     "description": "Read the docs at https://docs.bitcart.ai",
-    "version": "0.11.0.0"
+    "version": "0.11.0.1",
+    "x-bitcart-surface": "public",
+    "x-bitcart-plugins": []
   },
   "servers": [
     {
@@ -9736,6 +9738,7 @@
             "default": {
               "expiration": 15,
               "transaction_speed": 0,
+              "confirmation_timeout": 1440,
               "underpaid_percentage": 0.0,
               "custom_logo_link": "",
               "recommended_fee_target_blocks": 1,
@@ -10908,6 +10911,7 @@
             "default": {
               "expiration": 15,
               "transaction_speed": 0,
+              "confirmation_timeout": 1440,
               "underpaid_percentage": 0.0,
               "custom_logo_link": "",
               "recommended_fee_target_blocks": 1,
@@ -12346,6 +12350,11 @@
               }
             ],
             "title": "Amount"
+          },
+          "public": {
+            "type": "boolean",
+            "title": "Public",
+            "default": false
           }
         },
         "type": "object",
@@ -12644,6 +12653,7 @@
             "default": {
               "expiration": 15,
               "transaction_speed": 0,
+              "confirmation_timeout": 1440,
               "underpaid_percentage": 0.0,
               "custom_logo_link": "",
               "recommended_fee_target_blocks": 1,
@@ -12922,6 +12932,10 @@
                 "type": "null"
               }
             ]
+          },
+          "required_confirmations": {
+            "type": "integer",
+            "title": "Required Confirmations"
           }
         },
         "additionalProperties": true,
@@ -12929,7 +12943,8 @@
         "required": [
           "created",
           "recommended_fee",
-          "wallet"
+          "wallet",
+          "required_confirmations"
         ],
         "title": "PaymentData"
       },
@@ -13491,6 +13506,7 @@
             "default": {
               "expiration": 15,
               "transaction_speed": 0,
+              "confirmation_timeout": 1440,
               "underpaid_percentage": 0.0,
               "custom_logo_link": "",
               "recommended_fee_target_blocks": 1,
@@ -13748,6 +13764,11 @@
             "type": "integer",
             "title": "Transaction Speed",
             "default": 0
+          },
+          "confirmation_timeout": {
+            "type": "integer",
+            "title": "Confirmation Timeout",
+            "default": 1440
           },
           "underpaid_percentage": {
             "type": "number",

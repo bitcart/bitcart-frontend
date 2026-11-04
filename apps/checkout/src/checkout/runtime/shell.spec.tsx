@@ -182,12 +182,12 @@ describe("CheckoutShell", () => {
     const paidInvoice = makeInvoice({
       status: "paid",
       payment_id: "method-btc",
-      payments: [makePayment({ confirmations: 1 })],
+      payments: [makePayment({ confirmations: 1, required_confirmations: 3 })],
     })
 
     test("tells the customer the payment arrived and is confirming", () => {
       renderCheckout({
-        source: { invoice: paidInvoice, store: makeStore({ transaction_speed: 3 }) },
+        source: { invoice: paidInvoice, store: makeStore() },
         screens: { Payment: PaymentScreen },
       })
 

@@ -769,7 +769,7 @@ export const deriveCheckoutModel = (
       confirmations: paidMethod
         ? {
             received: paidMethod.confirmations,
-            required: source.store.checkout_settings.transaction_speed,
+            required: paidMethod.required_confirmations,
           }
         : null,
     }

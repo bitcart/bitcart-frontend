@@ -11,6 +11,7 @@ export const publicStoreDefaultCurrencyDefault = `USD`
 export const publicStoreCheckoutSettingsDefault = {
   expiration: 15,
   transaction_speed: 0,
+  confirmation_timeout: 1440,
   underpaid_percentage: 0,
   custom_logo_link: "",
   recommended_fee_target_blocks: 1,
