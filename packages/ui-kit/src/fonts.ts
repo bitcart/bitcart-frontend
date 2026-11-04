@@ -1,49 +1,12 @@
 import type { PresetBitcartPreflight } from "@bitcart/unocss-kit/preset"
 import type { WebFontsOptions } from "unocss/preset-web-fonts"
 
-//* Arial reshaped to InterVariable's metrics, so swapping fonts in barely shifts the layout.
-const INTER_FALLBACK_FONT_FACE = /* CSS */ `
-    @font-face {
-      font-family: "Inter Fallback";
-      font-weight: 100 900;
-      font-style: normal;
-      src: local("Arial");
-      ascent-override: 90%;
-      descent-override: 22.43%;
-      line-gap-override: 0%;
-      size-adjust: 107.4%;
-    }
-`
-
-export const FONTS_PREFLIGHT: PresetBitcartPreflight = {
-  //! Keep the URL bare (do not swap for a `?url` interpolation).
-  //* Letting Vite's CSS URL rewriter process it in-place is what registers the
-  //* asset in the chunk graph, which is in turn what triggers Vike's auto-preload.
-  //*
-  //* The full (non-subsetted) InterVariable.woff2 is required because
-  //* the project ships non-Latin locales.
-  //! Do NOT switch to Latin-only subsets.
-  getCSS: () => /* CSS */ `
-
-    @font-face {
-      font-family: "InterVariable";
-      font-weight: 100 900;
-      font-style: normal;
-      font-display: swap;
-      src: url("inter-ui/variable/InterVariable.woff2") format("woff2");
-    }
-
-    ${INTER_FALLBACK_FONT_FACE}
-  `,
-}
-
 //* Inter from @fontsource-variable/inter, split by script like `GEIST_MONO_PREFLIGHT`: a page
 //* downloads the 73 KB Latin file, and the other scripts' files only for text that needs them.
-//* Same design, axes (`opsz`, `wght`) and metrics as `FONTS_PREFLIGHT`'s InterVariable, without
-//* its stylistic sets and character variants.
+//* The `opsz` files carry the optical size axis too, which gives large text Inter's Display cut.
 //*
-//! Vike preloads every font file a preflight references, so this is for apps that preload the
-//! Latin file themselves.
+//! Each app must preload the Latin file alone: the Vike apps get that from `@bitcart/vike-kit`'s
+//! `onRenderHtml`, and the others from a preload link of their own.
 export const INTER_SUBSETS_PREFLIGHT: PresetBitcartPreflight = {
   getCSS: () => /* CSS */ `
 
@@ -110,16 +73,25 @@ export const INTER_SUBSETS_PREFLIGHT: PresetBitcartPreflight = {
       unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
     }
 
-    ${INTER_FALLBACK_FONT_FACE}
+    @font-face {
+      font-family: "Inter Fallback";
+      font-weight: 100 900;
+      font-style: normal;
+      src: local("Arial");
+      ascent-override: 90%;
+      descent-override: 22.43%;
+      line-gap-override: 0%;
+      size-adjust: 107.4%;
+    }
+
   `,
 }
 
 //* Geist Mono, mirroring @fontsource-variable/geist-mono/index.css and its subsets: a browser
 //* downloads only the subsets whose `unicode-range` the page's monospace text needs.
 //*
-//! Kept apart from `FONTS_PREFLIGHT`, for apps that show monospace text only: Vike preloads every
-//! font file a preflight references, and a preload downloads a subset whatever its range. Apps
-//! without it fall back to the system monospace in `font-mono`'s stack.
+//* Kept apart from `INTER_SUBSETS_PREFLIGHT`, for apps that show monospace text only. Apps without
+//* it fall back to the system monospace in `font-mono`'s stack.
 export const GEIST_MONO_PREFLIGHT: PresetBitcartPreflight = {
   getCSS: () => /* CSS */ `
 

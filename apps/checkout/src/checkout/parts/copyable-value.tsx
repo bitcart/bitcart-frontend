@@ -102,7 +102,6 @@ export const CopyableValue = ({
       >
         <button
           type="button"
-          aria-label={t`Copy ${label}`}
           onClick={() => copy.copy(target, value)}
           className={cn(
             "gap-2 rounded-md px-2 py-1 hover:bg-muted/50 min-w-0 flex cursor-pointer items-center",
@@ -111,6 +110,7 @@ export const CopyableValue = ({
             isStartAlignedFromSm && "sm:-mx-2 sm:w-[calc(100%+1rem)] sm:justify-between",
           )}
         >
+          <span className="sr-only">{t`Copy ${label}`}</span>{" "}
           <span
             ref={shrinkRef}
             data-testid={testId}
@@ -121,7 +121,6 @@ export const CopyableValue = ({
           >
             <MarkedValue value={display} isMarked={isMarked} />
           </span>
-
           <CopyStatusIcon outcome={outcome} />
         </button>
 

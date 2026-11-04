@@ -15,4 +15,10 @@ test.describe("Directory: Homepage", () => {
     await page.goto("/")
     await expect(page.getByText("Submit", { exact: false }).first()).toBeVisible()
   })
+
+  test("names a catalog link after its visible text and entry", async ({ page }) => {
+    await page.goto("/")
+
+    await expect(page.getByRole("link", { name: /^Visit Site \S/u }).first()).toBeVisible()
+  })
 })

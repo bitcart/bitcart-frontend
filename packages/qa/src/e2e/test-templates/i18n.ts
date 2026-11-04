@@ -46,7 +46,7 @@ export const createLocaleSwitchTest: GenericE2ETestTemplate<WithLocaleId> =
     await localeSelectorTrigger.click()
     await page.getByRole("menuitem", { name: targetLocaleDisplayName }).click()
     await page.waitForURL(`**/${localeId}*`, { waitUntil: "commit" })
-    await expect(localeSelectorTrigger).toHaveText(targetLocaleDisplayName)
+    await expect(localeSelectorTrigger).toContainText(targetLocaleDisplayName)
     expect(new URL(page.url()).pathname).toBe(`/${localeId}`)
   }
 
@@ -73,7 +73,7 @@ export const createLocalePersistenceTest: GenericE2ETestTemplate<WithLocaleId & 
     await page.waitForURL(`**/${localeId}${nextPagePath}*`, { waitUntil: "commit" })
     expect(page.url()).toContain(`/${localeId}${nextPagePath}`)
 
-    await expect(localeSelectorTrigger).toHaveText(targetLocaleDisplayName)
+    await expect(localeSelectorTrigger).toContainText(targetLocaleDisplayName)
   }
 
 /**

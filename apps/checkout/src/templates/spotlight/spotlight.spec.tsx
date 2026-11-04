@@ -88,7 +88,7 @@ describe("spotlight template", () => {
     press("ArrowDown")
     press("Enter")
 
-    expect(screen.getByRole("button", { name: "Copy Address" })).toHaveTextContent("0xeth")
+    expect(screen.getByRole("button", { name: /^Copy Address/u })).toHaveTextContent("0xeth")
   })
 
   test("keeps a single highlight shared by the keyboard and the pointer", () => {
@@ -111,7 +111,7 @@ describe("spotlight template", () => {
 
     fireEvent.click(screen.getByRole("option", { name: /LTC/u }))
 
-    expect(screen.getByRole("button", { name: "Copy Address" })).toHaveTextContent("ltc1qltc")
+    expect(screen.getByRole("button", { name: /^Copy Address/u })).toHaveTextContent("ltc1qltc")
   })
 
   test("returns to the search on Escape, and to the previous method on a second Escape", () => {
@@ -124,7 +124,7 @@ describe("spotlight template", () => {
 
     press("Escape")
 
-    expect(screen.getByRole("button", { name: "Copy Address" })).toHaveTextContent("ltc1qltc")
+    expect(screen.getByRole("button", { name: /^Copy Address/u })).toHaveTextContent("ltc1qltc")
   })
 
   test("offers to close the modal it's shown in, which the Escapes it handles leave open", () => {
@@ -227,7 +227,7 @@ describe("spotlight template", () => {
   test("offers no currency switch when there is only one", () => {
     renderSpotlight([btc])
 
-    expect(screen.getByRole("button", { name: "Copy Address" })).toHaveTextContent("bc1qbtc")
+    expect(screen.getByRole("button", { name: /^Copy Address/u })).toHaveTextContent("bc1qbtc")
 
     fireEvent.change(searchBox(), { target: { value: "switch" } })
 

@@ -45,11 +45,10 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocal
       <DropdownMenuTrigger
         render={<Button variant={triggerVariant} />}
         className={classNames?.trigger}
-        aria-label={t`Select language`}
         data-testid={LOCALE_SELECTOR_TRIGGER_TESTID}
       >
         <Globe />
-
+        <span className="sr-only">{t`Select language`}</span>{" "}
         <span
           className={cn("text-sm font-medium capitalize", {
             "max-sm:hidden": abbreviateOnSmallScreens,
@@ -57,7 +56,6 @@ export const LocaleSelector = <TSupportedLocaleId extends LocaleId | PseudoLocal
         >
           {getLocaleDisplayName(activeLocaleId)}
         </span>
-
         {abbreviateOnSmallScreens && (
           <span className="text-sm font-medium sm:hidden uppercase">{activeLocaleId}</span>
         )}

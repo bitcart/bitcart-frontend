@@ -58,7 +58,7 @@ export const PartialPaymentProgress = ({
                   className="text-2xl font-bold tracking-tight text-right whitespace-nowrap"
                   data-testid={CHECKOUT_AMOUNT_TESTID}
                 >
-                  <PaymentAmount unitClassName="ml-1.5 text-muted-foreground text-sm font-medium" />
+                  <PaymentAmount unitClassName="text-muted-foreground text-sm font-medium" />
                 </div>
               </FittedText>
             </div>

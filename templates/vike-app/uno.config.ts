@@ -1,4 +1,4 @@
-import { FONTS_PREFLIGHT, FONTS_PRESET_CONFIG } from "@bitcart/ui-kit/fonts"
+import { FONTS_PRESET_CONFIG, INTER_SUBSETS_PREFLIGHT } from "@bitcart/ui-kit/fonts"
 import { presetBitcart } from "@bitcart/unocss-kit/preset"
 import { defineConfig, presetWebFonts } from "unocss"
 
@@ -20,7 +20,7 @@ export default defineConfig({
         dark: {},
       },
 
-      preflights: [FONTS_PREFLIGHT],
+      preflights: [INTER_SUBSETS_PREFLIGHT],
     }),
 
     presetWebFonts(FONTS_PRESET_CONFIG),

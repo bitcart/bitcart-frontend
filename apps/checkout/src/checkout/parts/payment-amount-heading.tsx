@@ -49,7 +49,7 @@ export const PaymentAmountHeading = ({
         data-testid={CHECKOUT_AMOUNT_TESTID}
         className="text-3xl font-bold tracking-tight block whitespace-nowrap tabular-nums"
       >
-        <PaymentAmount unitClassName="ml-1.5 text-base font-semibold text-muted-foreground" />
+        <PaymentAmount unitClassName="text-base font-semibold text-muted-foreground" />
       </span>
     </FittedText>
   )

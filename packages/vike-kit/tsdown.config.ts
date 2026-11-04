@@ -9,6 +9,7 @@ export default defineConfig({
     "lifecycle/before-route": "src/lifecycle/before-route.ts",
     "lifecycle/page-transition-end": "src/lifecycle/page-transition-end.ts",
     "lifecycle/prerender-start": "src/lifecycle/prerender-start.ts",
+    "lifecycle/render-html": "src/lifecycle/render-html.ts",
     "metadata/index": "src/metadata/index.ts",
     "navigation/index": "src/navigation/index.ts",
     "telemetry/index": "src/telemetry/index.ts",

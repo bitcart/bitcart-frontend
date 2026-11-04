@@ -16,6 +16,7 @@ export const createVikeConfig = ({
   ({
     extends: extendsConfig,
     keepScrollPosition: true,
+    onRenderHtml: "import:@bitcart/vike-kit/lifecycle/render-html:onRenderHtml",
 
     passToClient: [
       "localeId",

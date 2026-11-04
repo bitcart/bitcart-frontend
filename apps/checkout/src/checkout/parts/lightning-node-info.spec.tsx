@@ -22,7 +22,7 @@ describe("LightningNodeInfo", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Node info" }))
 
-    expect(screen.getByRole("button", { name: "Copy Node ID" })).toHaveTextContent(NODE_ID)
+    expect(screen.getByRole("button", { name: /^Copy Node ID/u })).toHaveTextContent(NODE_ID)
   })
 
   test("shows nothing for a method without a node", () => {

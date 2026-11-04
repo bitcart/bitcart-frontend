@@ -11,8 +11,7 @@ export const PaymentAmount = ({ unitClassName }: { unitClassName?: string }) => 
   } else {
     return (
       <>
-        {payment.amount}
-        <span className={unitClassName}>{payment.symbol.toUpperCase()}</span>
+        {payment.amount} <span className={unitClassName}>{payment.symbol.toUpperCase()}</span>
       </>
     )
   }

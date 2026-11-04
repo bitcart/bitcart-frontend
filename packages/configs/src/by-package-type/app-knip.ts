@@ -27,7 +27,7 @@ export const vikeAppKnipConfig: AppKnipConfig = {
 
   //* Vike preloads the font from the stylesheet, which Knip does not read. TanStack Start apps
   //* import it themselves for their preload link.
-  ignoreDependencies: ["inter-ui"],
+  ignoreDependencies: ["@fontsource-variable/inter"],
 
   entry: [
     //* Knip does not discover Vike routes automatically.

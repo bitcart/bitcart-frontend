@@ -42,7 +42,7 @@ describe("flow template", () => {
     fireEvent.click(screen.getByRole("button", { name: /LTC/u }))
 
     expect(screen.getByText("Paying with")).toBeInTheDocument()
-    expect(screen.getByTestId(CHECKOUT_AMOUNT_TESTID)).toHaveTextContent("1.25000000LTC")
+    expect(screen.getByTestId(CHECKOUT_AMOUNT_TESTID)).toHaveTextContent("1.25000000 LTC")
 
     expect(screen.getByTestId(CHECKOUT_PAYMENT_ADDRESS_TESTID)).toHaveTextContent(
       "ltc1qltcaddress000000",
@@ -74,6 +74,18 @@ describe("flow template", () => {
 
     expect(screen.getByTestId(CHECKOUT_AMOUNT_TESTID)).toHaveTextContent("Send any amount")
     expect(screen.queryByRole("button", { name: /Copy amount/u })).not.toBeInTheDocument()
+  })
+
+  test("reads out the address and amount it offers to copy", () => {
+    renderFlow([btc])
+
+    expect(
+      screen.getByRole("button", { name: `Copy Address ${btc.payment_address}` }),
+    ).toBeInTheDocument()
+
+    expect(screen.getByRole("button", { name: "Copy amount 0.00150000 BTC" })).toHaveTextContent(
+      "0.00150000 BTC",
+    )
   })
 
   test("confirms a copied amount in place", async () => {

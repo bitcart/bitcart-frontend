@@ -5,6 +5,7 @@ import { Link, useClientRoute } from "@bitcart/tanstack-start-kit/navigation"
 import { LayoutContainer, Toaster } from "@bitcart/ui-kit/components"
 import { LayoutContextProvider, ThemeProvider } from "@bitcart/ui-kit/providers"
 import { cn } from "@bitcart/ui-kit/utils"
+import interLatinFont from "@fontsource-variable/inter/files/inter-latin-opsz-normal.woff2?url"
 import { i18n as globalI18n } from "@lingui/core"
 import { useLingui } from "@lingui/react"
 import { TanStackDevtools } from "@tanstack/react-devtools"
@@ -16,7 +17,6 @@ import {
   useRouterState,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
-import interFont from "inter-ui/variable/InterVariable.woff2?url"
 import { useMemo } from "react"
 
 import {
@@ -62,7 +62,7 @@ export const Route = createRootRouteWithContext<CheckoutRouterContext>()({
 
     return {
       meta: [{ title }, { name: "robots", content: "noindex, nofollow" }, ...meta],
-      links: [{ rel: "stylesheet", href: unoCss }, getFontPreloadLink(interFont), ...links],
+      links: [{ rel: "stylesheet", href: unoCss }, getFontPreloadLink(interLatinFont), ...links],
       scripts: [{ src: "/checkout/config.js" }],
     }
   },
@@ -114,18 +114,20 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             isHydrated={isClient}
             layoutConfig={layoutConfig}
           >
-            <LayoutContainer
-              className={cn(
-                `
-                  p-4
-                  print:p-0
-                  flex min-h-screen items-center justify-center
-                  print:items-start
-                `,
-                !isEmbeddedCheckout && "bg-muted/40",
-              )}
-            >
-              {children}
+            <LayoutContainer>
+              <main
+                className={cn(
+                  `
+                    p-4
+                    print:p-0
+                    flex min-h-screen items-center justify-center
+                    print:items-start
+                  `,
+                  !isEmbeddedCheckout && "bg-muted/40",
+                )}
+              >
+                {children}
+              </main>
             </LayoutContainer>
           </LayoutContextProvider>
 

@@ -93,9 +93,13 @@ export const CatalogEntryCard: React.FC<CatalogEntryCardProps> = ({
           </div>
         )}
 
-        <LinkButton href={entry.url} className="w-full" aria-label={t`Visit ${entry.name}`}>
+        <LinkButton href={entry.url} className="w-full">
           <ExternalLink aria-hidden="true" />
-          <span>{t`Visit Site`}</span>
+
+          <span>
+            {t`Visit Site`}
+            <span className="sr-only"> {entry.name}</span>
+          </span>
         </LinkButton>
       </CardFooter>
     </Card>
