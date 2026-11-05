@@ -4,11 +4,14 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
+  BatchAction,
+  CreateTemplate,
   DisplayTemplate,
   OffsetPaginationDisplayTemplate,
+  OptionalUpdateTemplate,
   TemplatesBatchAction200,
   TemplatesGetCount200,
 } from "../../../schemas/generated"
@@ -99,12 +102,12 @@ export const getTemplatesBatchActionResponseMock = (): TemplatesBatchAction200 =
 export const getTemplatesGetTemplateListMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/templates/list",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -119,13 +122,13 @@ export const getTemplatesListItemsMockHandler = (
   overrideResponse?:
     | OffsetPaginationDisplayTemplate
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<OffsetPaginationDisplayTemplate> | OffsetPaginationDisplayTemplate),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/templates",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -143,13 +146,13 @@ export const getTemplatesCreateItemMockHandler = (
   overrideResponse?:
     | DisplayTemplate
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, CreateTemplate>>[0],
       ) => Promise<DisplayTemplate> | DisplayTemplate),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, CreateTemplate>(
     "*/templates",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, CreateTemplate>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -167,13 +170,13 @@ export const getTemplatesGetCountMockHandler = (
   overrideResponse?:
     | TemplatesGetCount200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<TemplatesGetCount200> | TemplatesGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/templates/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -191,13 +194,13 @@ export const getTemplatesGetItemMockHandler = (
   overrideResponse?:
     | DisplayTemplate
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayTemplate> | DisplayTemplate),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ itemId: string }>(
     "*/templates/:itemId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -215,13 +218,15 @@ export const getTemplatesUpdateItemMockHandler = (
   overrideResponse?:
     | DisplayTemplate
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateTemplate>>[0],
       ) => Promise<DisplayTemplate> | DisplayTemplate),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ itemId: string }, OptionalUpdateTemplate>(
     "*/templates/:itemId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (
+      info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateTemplate>>[0],
+    ) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -239,13 +244,13 @@ export const getTemplatesDeleteItemMockHandler = (
   overrideResponse?:
     | DisplayTemplate
     | ((
-        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayTemplate> | DisplayTemplate),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ itemId: string }>(
     "*/templates/:itemId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -263,13 +268,13 @@ export const getTemplatesBatchActionMockHandler = (
   overrideResponse?:
     | TemplatesBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<TemplatesBatchAction200> | TemplatesBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/templates/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

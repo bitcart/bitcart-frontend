@@ -15,6 +15,7 @@ import {
   CHECKOUT_WALLET_SENT_TESTID,
 } from "@bitcart/qa"
 import { useEffect, useRef } from "react"
+import { funnel } from "remeda"
 
 import { useCheckout, useCheckoutAppConfig } from "../hooks"
 import type { CheckoutModel, CheckoutSelectionMode } from "../model"
@@ -161,8 +162,6 @@ export const RequiredContentGuard = ({
 
     if (!marker || !root) return void null
 
-    let timeout: ReturnType<typeof setTimeout> | undefined
-
     const check = () => {
       const missing = findMissingContent(root, model, selection, displayedAmount, isInModal).join(
         ", ",
@@ -177,19 +176,18 @@ export const RequiredContentGuard = ({
       marker.dataset.missing = missing
     }
 
-    const scheduleCheck = () => {
-      clearTimeout(timeout)
-      timeout = setTimeout(check, SETTLE_DELAY_MS)
-    }
+    const scheduledCheck = funnel(check, { minQuietPeriodMs: SETTLE_DELAY_MS })
 
-    const observer = new MutationObserver(scheduleCheck)
+    const observer = new MutationObserver(() => {
+      scheduledCheck.call()
+    })
 
     observer.observe(root, { childList: true, subtree: true, characterData: true })
-    scheduleCheck()
+    scheduledCheck.call()
 
     return () => {
       observer.disconnect()
-      clearTimeout(timeout)
+      scheduledCheck.cancel()
     }
   }, [displayedAmount, isInModal, model, selection, templateId])
 

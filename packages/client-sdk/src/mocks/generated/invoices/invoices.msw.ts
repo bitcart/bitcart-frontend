@@ -4,14 +4,21 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
+  BatchAction,
+  CreateInvoice,
+  CustomerUpdateData,
   DisplayInvoice,
   DisplayRefund,
   InvoicesBatchAction200,
   InvoicesGetCount200,
+  MethodUpdateData,
   OffsetPaginationDisplayInvoice,
+  OptionalUpdateInvoice,
+  RefundData,
+  SubmitRefundData,
 } from "../../../schemas/generated"
 
 export const getInvoicesListItemsResponseMock = (
@@ -1001,12 +1008,12 @@ export const getInvoicesSubmitRefundResponseMock = (
 export const getInvoicesExportInvoicesMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/invoices/export",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -1021,13 +1028,13 @@ export const getInvoicesListItemsMockHandler = (
   overrideResponse?:
     | OffsetPaginationDisplayInvoice
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<OffsetPaginationDisplayInvoice> | OffsetPaginationDisplayInvoice),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/invoices",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1045,13 +1052,13 @@ export const getInvoicesCreateItemMockHandler = (
   overrideResponse?:
     | DisplayInvoice
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, CreateInvoice>>[0],
       ) => Promise<DisplayInvoice> | DisplayInvoice),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, CreateInvoice>(
     "*/invoices",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, CreateInvoice>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1069,13 +1076,13 @@ export const getInvoicesGetCountMockHandler = (
   overrideResponse?:
     | InvoicesGetCount200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<InvoicesGetCount200> | InvoicesGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/invoices/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1093,13 +1100,13 @@ export const getInvoicesGetItemMockHandler = (
   overrideResponse?:
     | DisplayInvoice
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayInvoice> | DisplayInvoice),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ itemId: string }>(
     "*/invoices/:itemId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1117,13 +1124,15 @@ export const getInvoicesUpdateItemMockHandler = (
   overrideResponse?:
     | DisplayInvoice
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateInvoice>>[0],
       ) => Promise<DisplayInvoice> | DisplayInvoice),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ itemId: string }, OptionalUpdateInvoice>(
     "*/invoices/:itemId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (
+      info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateInvoice>>[0],
+    ) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1141,13 +1150,13 @@ export const getInvoicesDeleteItemMockHandler = (
   overrideResponse?:
     | DisplayInvoice
     | ((
-        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayInvoice> | DisplayInvoice),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ itemId: string }>(
     "*/invoices/:itemId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1165,13 +1174,13 @@ export const getInvoicesBatchActionMockHandler = (
   overrideResponse?:
     | InvoicesBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<InvoicesBatchAction200> | InvoicesBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/invoices/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1189,13 +1198,13 @@ export const getInvoicesGetOrCreateInvoiceByOrderIdMockHandler = (
   overrideResponse?:
     | DisplayInvoice
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ orderId: string }, CreateInvoice>>[0],
       ) => Promise<DisplayInvoice> | DisplayInvoice),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<{ orderId: string }, CreateInvoice>(
     "*/invoices/order_id/:orderId",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ orderId: string }, CreateInvoice>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1213,13 +1222,13 @@ export const getInvoicesUpdateInvoiceMockHandler = (
   overrideResponse?:
     | DisplayInvoice
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }, CustomerUpdateData>>[0],
       ) => Promise<DisplayInvoice> | DisplayInvoice),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ modelId: string }, CustomerUpdateData>(
     "*/invoices/:modelId/customer",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, CustomerUpdateData>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1236,12 +1245,14 @@ export const getInvoicesUpdateInvoiceMockHandler = (
 export const getInvoicesUpdatePaymentDetailsMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }, MethodUpdateData>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ modelId: string }, MethodUpdateData>(
     "*/invoices/:modelId/details",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, MethodUpdateData>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -1256,13 +1267,13 @@ export const getInvoicesRefundInvoiceMockHandler = (
   overrideResponse?:
     | DisplayRefund
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }, RefundData>>[0],
       ) => Promise<DisplayRefund> | DisplayRefund),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<{ modelId: string }, RefundData>(
     "*/invoices/:modelId/refunds",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, RefundData>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1280,13 +1291,13 @@ export const getInvoicesGetRefundMockHandler = (
   overrideResponse?:
     | DisplayRefund
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ refundId: string }>>[0],
       ) => Promise<DisplayRefund> | DisplayRefund),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ refundId: string }>(
     "*/invoices/refunds/:refundId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ refundId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -1304,13 +1315,13 @@ export const getInvoicesSubmitRefundMockHandler = (
   overrideResponse?:
     | DisplayRefund
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ refundId: string }, SubmitRefundData>>[0],
       ) => Promise<DisplayRefund> | DisplayRefund),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<{ refundId: string }, SubmitRefundData>(
     "*/invoices/refunds/:refundId/submit",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ refundId: string }, SubmitRefundData>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

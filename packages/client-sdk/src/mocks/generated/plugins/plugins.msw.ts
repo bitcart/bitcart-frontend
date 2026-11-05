@@ -3,9 +3,15 @@
  * Do not edit manually.
  */
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
-import type { PluginsGetPlugins200 } from "../../../schemas/generated"
+import type {
+  AddLicenseRequest,
+  BodyPluginsInstallPlugin,
+  PluginsGetPlugins200,
+  PluginsUpdatePluginSettingsBody,
+  UninstallPluginData,
+} from "../../../schemas/generated"
 
 export const getPluginsGetPluginsResponseMock = (): PluginsGetPlugins200 => ({})
 
@@ -13,13 +19,13 @@ export const getPluginsGetPluginsMockHandler = (
   overrideResponse?:
     | PluginsGetPlugins200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<PluginsGetPlugins200> | PluginsGetPlugins200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/plugins",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -36,12 +42,14 @@ export const getPluginsGetPluginsMockHandler = (
 export const getPluginsInstallPluginMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, BodyPluginsInstallPlugin>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BodyPluginsInstallPlugin>(
     "*/plugins/install",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BodyPluginsInstallPlugin>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -55,12 +63,14 @@ export const getPluginsInstallPluginMockHandler = (
 export const getPluginsUninstallPluginMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, UninstallPluginData>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, UninstallPluginData>(
     "*/plugins/uninstall",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, UninstallPluginData>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -74,12 +84,12 @@ export const getPluginsUninstallPluginMockHandler = (
 export const getPluginsGetPluginsListMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/plugins/settings/list",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -93,12 +103,14 @@ export const getPluginsGetPluginsListMockHandler = (
 export const getPluginsGetPluginSettingsMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ pluginName: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ pluginName: string }>(
     "*/plugins/settings/:pluginName",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ pluginName: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -112,12 +124,20 @@ export const getPluginsGetPluginSettingsMockHandler = (
 export const getPluginsUpdatePluginSettingsMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<
+          HttpResponseResolver<{ pluginName: string }, PluginsUpdatePluginSettingsBody>
+        >[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<{ pluginName: string }, PluginsUpdatePluginSettingsBody>(
     "*/plugins/settings/:pluginName",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (
+      info: Parameters<
+        HttpResponseResolver<{ pluginName: string }, PluginsUpdatePluginSettingsBody>
+      >[0],
+    ) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -131,12 +151,12 @@ export const getPluginsUpdatePluginSettingsMockHandler = (
 export const getPluginsGetLicensesMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/plugins/licenses",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -150,12 +170,14 @@ export const getPluginsGetLicensesMockHandler = (
 export const getPluginsAddLicenseMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, AddLicenseRequest>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, AddLicenseRequest>(
     "*/plugins/licenses",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, AddLicenseRequest>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -169,12 +191,14 @@ export const getPluginsAddLicenseMockHandler = (
 export const getPluginsDeleteLicenseMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ licenseKey: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ licenseKey: string }>(
     "*/plugins/licenses/:licenseKey",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ licenseKey: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }

@@ -4,9 +4,12 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
+  BatchAction,
+  BodyProductsCreateProductMultipart,
+  BodyProductsUpdateProductMultipart,
   DisplayProduct,
   Money,
   OffsetPaginationUnionPublicProductDisplayProduct,
@@ -249,12 +252,12 @@ export const getProductsGetProductResponseMock = (): PublicProduct | DisplayProd
 export const getProductsCategoriesMockHandler = (
   overrideResponse?:
     | string[]
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<string[]> | string[]),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<string[]> | string[]),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/products/categories",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -271,12 +274,12 @@ export const getProductsCategoriesMockHandler = (
 export const getProductsGetMaxProductPriceMockHandler = (
   overrideResponse?:
     | Money
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<Money> | Money),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<Money> | Money),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/products/maxprice",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -294,13 +297,13 @@ export const getProductsDeleteItemMockHandler = (
   overrideResponse?:
     | DisplayProduct
     | ((
-        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayProduct> | DisplayProduct),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ itemId: string }>(
     "*/products/:itemId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -318,13 +321,19 @@ export const getProductsUpdateProductMultipartMockHandler = (
   overrideResponse?:
     | DisplayProduct
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<
+          HttpResponseResolver<{ itemId: string }, BodyProductsUpdateProductMultipart>
+        >[0],
       ) => Promise<DisplayProduct> | DisplayProduct),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ itemId: string }, BodyProductsUpdateProductMultipart>(
     "*/products/:itemId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (
+      info: Parameters<
+        HttpResponseResolver<{ itemId: string }, BodyProductsUpdateProductMultipart>
+      >[0],
+    ) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -342,13 +351,13 @@ export const getProductsBatchActionMockHandler = (
   overrideResponse?:
     | ProductsBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<ProductsBatchAction200> | ProductsBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/products/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -366,13 +375,15 @@ export const getProductsCreateProductMultipartMockHandler = (
   overrideResponse?:
     | DisplayProduct
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BodyProductsCreateProductMultipart>>[0],
       ) => Promise<DisplayProduct> | DisplayProduct),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BodyProductsCreateProductMultipart>(
     "*/products",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (
+      info: Parameters<HttpResponseResolver<PathParams, BodyProductsCreateProductMultipart>>[0],
+    ) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -390,7 +401,7 @@ export const getProductsListItemsMockHandler = (
   overrideResponse?:
     | OffsetPaginationUnionPublicProductDisplayProduct
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) =>
         | Promise<OffsetPaginationUnionPublicProductDisplayProduct>
         | OffsetPaginationUnionPublicProductDisplayProduct),
@@ -398,7 +409,7 @@ export const getProductsListItemsMockHandler = (
 ) => {
   return http.get(
     "*/products",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -416,13 +427,13 @@ export const getProductsProductsCountMockHandler = (
   overrideResponse?:
     | ProductsProductsCount200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<ProductsProductsCount200> | ProductsProductsCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/products/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -441,13 +452,13 @@ export const getProductsGetProductMockHandler = (
     | PublicProduct
     | DisplayProduct
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
       ) => Promise<PublicProduct | DisplayProduct> | PublicProduct | DisplayProduct),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/products/:modelId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

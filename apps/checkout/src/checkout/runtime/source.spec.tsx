@@ -1,4 +1,5 @@
 import type { bitcartInvoices } from "@bitcart/client-sdk/endpoints"
+import { getInvoicesGetRefundMockHandler } from "@bitcart/client-sdk/mocks"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { act, renderHook, screen, waitFor } from "@testing-library/react"
 import { http, HttpResponse } from "msw"
@@ -332,10 +333,10 @@ describe("useRefundSource", () => {
     }
 
     server.use(
-      http.get("*/invoices/refunds/:refundId", () => {
+      getInvoicesGetRefundMockHandler(() => {
         api.refundRequests += 1
 
-        return HttpResponse.json(api.refund)
+        return api.refund
       }),
 
       http.post("*/invoices/refunds/:refundId/submit", async ({ request }) => {

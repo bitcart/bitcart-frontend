@@ -4,7 +4,7 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, RequestHandlerOptions } from "msw"
 
 import type { DecimalAsString } from "../../../schemas/generated"
 
@@ -14,12 +14,12 @@ export const getCryptosRateResponseMock = (): DecimalAsString =>
 export const getCryptosGetCryptosMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/cryptos",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -33,12 +33,12 @@ export const getCryptosGetCryptosMockHandler = (
 export const getCryptosGetSupportedCryptosMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/cryptos/supported",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -52,14 +52,12 @@ export const getCryptosGetSupportedCryptosMockHandler = (
 export const getCryptosRateMockHandler = (
   overrideResponse?:
     | DecimalAsString
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<DecimalAsString> | DecimalAsString),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<DecimalAsString> | DecimalAsString),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/cryptos/rate",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -76,12 +74,12 @@ export const getCryptosRateMockHandler = (
 export const getCryptosGetFiatlistMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/cryptos/fiatlist",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -95,12 +93,14 @@ export const getCryptosGetFiatlistMockHandler = (
 export const getCryptosGetTokensMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ currency: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ currency: string }>(
     "*/cryptos/tokens/:currency",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ currency: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -114,12 +114,14 @@ export const getCryptosGetTokensMockHandler = (
 export const getCryptosGetTokensAbiMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ currency: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ currency: string }>(
     "*/cryptos/tokens/:currency/abi",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ currency: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -133,12 +135,14 @@ export const getCryptosGetTokensAbiMockHandler = (
 export const getCryptosGetDefaultExplorerMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ currency: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ currency: string }>(
     "*/cryptos/explorer/:currency",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ currency: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -152,12 +156,14 @@ export const getCryptosGetDefaultExplorerMockHandler = (
 export const getCryptosGetDefaultRpcMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ currency: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ currency: string }>(
     "*/cryptos/rpc/:currency",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ currency: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }

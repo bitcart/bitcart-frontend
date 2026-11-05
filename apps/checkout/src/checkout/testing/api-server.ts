@@ -84,15 +84,15 @@ export const serveCheckoutApi = (initialInvoice: bitcartInvoices.Invoice) => {
     }),
 
     getStoresGetItemMockHandler(({ params }) => {
-      api.storeRequests.push(String(params.modelId))
+      api.storeRequests.push(params.modelId)
 
       return makeStore({ email_required: true })
     }),
 
     getInvoicesGetRefundMockHandler(({ params }) => {
-      api.refundRequests.push(String(params.refundId))
+      api.refundRequests.push(params.refundId)
 
-      return makeRefund({ id: String(params.refundId) })
+      return makeRefund({ id: params.refundId })
     }),
 
     getManageGetPoliciesMockHandler(() => {
@@ -102,7 +102,7 @@ export const serveCheckoutApi = (initialInvoice: bitcartInvoices.Invoice) => {
     }),
 
     getInvoicesUpdateInvoiceMockHandler(async ({ request }) => {
-      const update = (await request.json()) as Partial<bitcartInvoices.Invoice>
+      const update = await request.json()
 
       api.customerUpdates.push(update)
       api.invoice = { ...api.invoice, ...update }

@@ -3,7 +3,7 @@
  * Do not edit manually.
  */
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, RequestHandlerOptions } from "msw"
 
 import type { HealthLive200, HealthReady200 } from "../../../schemas/generated"
 
@@ -14,14 +14,12 @@ export const getHealthReadyResponseMock = (): HealthReady200 => ({})
 export const getHealthLiveMockHandler = (
   overrideResponse?:
     | HealthLive200
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<HealthLive200> | HealthLive200),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<HealthLive200> | HealthLive200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/health/live",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -38,14 +36,12 @@ export const getHealthLiveMockHandler = (
 export const getHealthReadyMockHandler = (
   overrideResponse?:
     | HealthReady200
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<HealthReady200> | HealthReady200),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<HealthReady200> | HealthReady200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/health/ready",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

@@ -4,15 +4,26 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
+  BatchAction,
+  ChangePassword,
+  CreateUser,
   DisplayUser,
   DisplayUserWithToken,
+  EmailVerifyFinalize,
   EmailVerifyResponse,
+  LoginFIDOData,
   OffsetPaginationDisplayUser,
+  OptionalUpdateUser,
+  ResetPasswordData,
+  ResetPasswordFinalize,
+  UserPreferences,
   UsersBatchAction200,
   UsersGetCount200,
+  VerifyEmailData,
+  VerifyTOTP,
 } from "../../../schemas/generated"
 
 export const getUsersMeResponseMock = (
@@ -213,12 +224,12 @@ export const getUsersBatchActionResponseMock = (): UsersBatchAction200 => faker.
 export const getUsersMeMockHandler = (
   overrideResponse?:
     | DisplayUser
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DisplayUser> | DisplayUser),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<DisplayUser> | DisplayUser),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/users/me",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -236,13 +247,13 @@ export const getUsersSetSettingsMockHandler = (
   overrideResponse?:
     | DisplayUser
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, UserPreferences>>[0],
       ) => Promise<DisplayUser> | DisplayUser),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, UserPreferences>(
     "*/users/me/settings",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, UserPreferences>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -259,12 +270,14 @@ export const getUsersSetSettingsMockHandler = (
 export const getUsersResetPasswordMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, ResetPasswordData>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, ResetPasswordData>(
     "*/users/reset_password",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, ResetPasswordData>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -278,12 +291,14 @@ export const getUsersResetPasswordMockHandler = (
 export const getUsersFinalizePasswordResetMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, ResetPasswordFinalize>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, ResetPasswordFinalize>(
     "*/users/reset_password/finalize",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, ResetPasswordFinalize>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -297,12 +312,14 @@ export const getUsersFinalizePasswordResetMockHandler = (
 export const getUsersSendVerificationEmailMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, VerifyEmailData>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, VerifyEmailData>(
     "*/users/verify",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, VerifyEmailData>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -317,13 +334,13 @@ export const getUsersFinalizeEmailVerificationMockHandler = (
   overrideResponse?:
     | EmailVerifyResponse
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, EmailVerifyFinalize>>[0],
       ) => Promise<EmailVerifyResponse> | EmailVerifyResponse),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, EmailVerifyFinalize>(
     "*/users/verify/finalize",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, EmailVerifyFinalize>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -340,12 +357,14 @@ export const getUsersFinalizeEmailVerificationMockHandler = (
 export const getUsersChangePasswordMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, ChangePassword>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, ChangePassword>(
     "*/users/password",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, ChangePassword>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -359,12 +378,14 @@ export const getUsersChangePasswordMockHandler = (
 export const getUsersVerifyTotpMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, VerifyTOTP>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, VerifyTOTP>(
     "*/users/2fa/totp/verify",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, VerifyTOTP>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -378,12 +399,12 @@ export const getUsersVerifyTotpMockHandler = (
 export const getUsersDisableTotpMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/users/2fa/disable",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -397,12 +418,14 @@ export const getUsersDisableTotpMockHandler = (
 export const getUsersRegisterFido2MockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, LoginFIDOData>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, LoginFIDOData>(
     "*/users/2fa/fido2/register/begin",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, LoginFIDOData>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -416,12 +439,12 @@ export const getUsersRegisterFido2MockHandler = (
 export const getUsersFido2CompleteRegistrationMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/users/2fa/fido2/register/complete",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -435,12 +458,14 @@ export const getUsersFido2CompleteRegistrationMockHandler = (
 export const getUsersFido2DeleteDeviceMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ deviceId: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ deviceId: string }>(
     "*/users/2fa/fido2/:deviceId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ deviceId: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -454,12 +479,12 @@ export const getUsersFido2DeleteDeviceMockHandler = (
 export const getUsersGetStatsMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/users/stats",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -474,13 +499,13 @@ export const getUsersListItemsMockHandler = (
   overrideResponse?:
     | OffsetPaginationDisplayUser
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<OffsetPaginationDisplayUser> | OffsetPaginationDisplayUser),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/users",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -498,13 +523,13 @@ export const getUsersCreateUserMockHandler = (
   overrideResponse?:
     | DisplayUserWithToken
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, CreateUser>>[0],
       ) => Promise<DisplayUserWithToken> | DisplayUserWithToken),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, CreateUser>(
     "*/users",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, CreateUser>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -521,14 +546,12 @@ export const getUsersCreateUserMockHandler = (
 export const getUsersGetCountMockHandler = (
   overrideResponse?:
     | UsersGetCount200
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<UsersGetCount200> | UsersGetCount200),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<UsersGetCount200> | UsersGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/users/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -545,12 +568,14 @@ export const getUsersGetCountMockHandler = (
 export const getUsersGetItemMockHandler = (
   overrideResponse?:
     | DisplayUser
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DisplayUser> | DisplayUser),
+    | ((
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
+      ) => Promise<DisplayUser> | DisplayUser),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ itemId: string }>(
     "*/users/:itemId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -568,13 +593,13 @@ export const getUsersUpdateItemMockHandler = (
   overrideResponse?:
     | DisplayUser
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateUser>>[0],
       ) => Promise<DisplayUser> | DisplayUser),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ itemId: string }, OptionalUpdateUser>(
     "*/users/:itemId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateUser>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -592,13 +617,13 @@ export const getUsersDeleteItemMockHandler = (
   overrideResponse?:
     | DisplayUser
     | ((
-        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayUser> | DisplayUser),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ itemId: string }>(
     "*/users/:itemId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -616,13 +641,13 @@ export const getUsersBatchActionMockHandler = (
   overrideResponse?:
     | UsersBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<UsersBatchAction200> | UsersBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/users/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

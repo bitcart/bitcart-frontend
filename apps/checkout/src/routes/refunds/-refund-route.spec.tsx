@@ -1,6 +1,6 @@
+import { getInvoicesGetRefundMockHandler } from "@bitcart/client-sdk/mocks"
 import { QueryClient } from "@tanstack/react-query"
 import { waitFor } from "@testing-library/react"
-import { http, HttpResponse } from "msw"
 import { describe, expect, test } from "vitest"
 
 import { makeInvoice, makeRefund } from "#/checkout/fixtures"
@@ -41,11 +41,7 @@ describe("refund route loader", () => {
     const api = serveCheckoutApi(makeInvoice())
     const queryClient = new QueryClient()
 
-    server.use(
-      http.get("*/invoices/refunds/:refundId", () =>
-        HttpResponse.json(makeRefund({ invoice_id: null })),
-      ),
-    )
+    server.use(getInvoicesGetRefundMockHandler(makeRefund({ invoice_id: null })))
 
     runLoader(queryClient)
 

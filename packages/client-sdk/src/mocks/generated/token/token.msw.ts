@@ -4,11 +4,17 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
   AuthResponse,
+  BatchAction,
+  BodyTokenCreateOauth2Token,
+  EditToken,
+  FIDO2Auth,
+  HTTPCreateLoginToken,
   OffsetPaginationToken,
+  TOTPAuth,
   Token,
   TokenBatchAction200,
   TokenGetTokenCount200,
@@ -122,13 +128,13 @@ export const getTokenCreateTokenMockHandler = (
   overrideResponse?:
     | AuthResponse
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, HTTPCreateLoginToken | null>>[0],
       ) => Promise<AuthResponse> | AuthResponse),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, HTTPCreateLoginToken | null>(
     "*/token",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, HTTPCreateLoginToken | null>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -146,13 +152,13 @@ export const getTokenGetTokensMockHandler = (
   overrideResponse?:
     | OffsetPaginationToken
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<OffsetPaginationToken> | OffsetPaginationToken),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/token",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -169,12 +175,14 @@ export const getTokenGetTokensMockHandler = (
 export const getTokenCreateOauth2TokenMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, BodyTokenCreateOauth2Token>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BodyTokenCreateOauth2Token>(
     "*/token/oauth2",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BodyTokenCreateOauth2Token>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -188,12 +196,14 @@ export const getTokenCreateOauth2TokenMockHandler = (
 export const getTokenCreateTokenTotpAuthMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, TOTPAuth>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, TOTPAuth>(
     "*/token/2fa/totp",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, TOTPAuth>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -207,12 +217,14 @@ export const getTokenCreateTokenTotpAuthMockHandler = (
 export const getTokenCreateTokenFido2BeginMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, FIDO2Auth>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, FIDO2Auth>(
     "*/token/2fa/fido2/begin",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, FIDO2Auth>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -226,12 +238,12 @@ export const getTokenCreateTokenFido2BeginMockHandler = (
 export const getTokenCreateTokenFido2CompleteMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/token/2fa/fido2/complete",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -245,12 +257,12 @@ export const getTokenCreateTokenFido2CompleteMockHandler = (
 export const getTokenDeleteTokenMockHandler = (
   overrideResponse?:
     | Token
-    | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<Token> | Token),
+    | ((info: Parameters<HttpResponseResolver<{ tokenId: string }>>[0]) => Promise<Token> | Token),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ tokenId: string }>(
     "*/token/:tokenId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ tokenId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -267,12 +279,12 @@ export const getTokenDeleteTokenMockHandler = (
 export const getTokenGetCurrentTokenMockHandler = (
   overrideResponse?:
     | Token
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<Token> | Token),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<Token> | Token),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/token/current",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -290,13 +302,13 @@ export const getTokenGetTokenCountMockHandler = (
   overrideResponse?:
     | TokenGetTokenCount200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<TokenGetTokenCount200> | TokenGetTokenCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/token/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -313,12 +325,14 @@ export const getTokenGetTokenCountMockHandler = (
 export const getTokenPatchTokenMockHandler = (
   overrideResponse?:
     | Token
-    | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<Token> | Token),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }, EditToken>>[0],
+      ) => Promise<Token> | Token),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ modelId: string }, EditToken>(
     "*/token/:modelId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, EditToken>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -336,13 +350,13 @@ export const getTokenBatchActionMockHandler = (
   overrideResponse?:
     | TokenBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<TokenBatchAction200> | TokenBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/token/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

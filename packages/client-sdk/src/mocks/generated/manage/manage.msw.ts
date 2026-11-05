@@ -4,10 +4,11 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
   BackupsPolicy,
+  BodyManageRestoreBackup,
   GlobalStorePolicy,
   HostAgentJobStatus,
   HostAgentOverview,
@@ -224,13 +225,13 @@ export const getManageGetPoliciesMockHandler = (
     | PolicyResponse
     | PublicPolicyResponse
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<PolicyResponse | PublicPolicyResponse> | PolicyResponse | PublicPolicyResponse),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/policies",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -247,12 +248,12 @@ export const getManageGetPoliciesMockHandler = (
 export const getManageSetPoliciesMockHandler = (
   overrideResponse?:
     | Policy
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<Policy> | Policy),
+    | ((info: Parameters<HttpResponseResolver<PathParams, Policy>>[0]) => Promise<Policy> | Policy),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, Policy>(
     "*/manage/policies",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, Policy>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -270,13 +271,13 @@ export const getManageGetStorePoliciesMockHandler = (
   overrideResponse?:
     | GlobalStorePolicy
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<GlobalStorePolicy> | GlobalStorePolicy),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/stores",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -294,13 +295,13 @@ export const getManageSetStorePoliciesMockHandler = (
   overrideResponse?:
     | GlobalStorePolicy
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, GlobalStorePolicy>>[0],
       ) => Promise<GlobalStorePolicy> | GlobalStorePolicy),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, GlobalStorePolicy>(
     "*/manage/stores",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, GlobalStorePolicy>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -317,12 +318,12 @@ export const getManageSetStorePoliciesMockHandler = (
 export const getManageRestartServerMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/manage/restart",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -336,12 +337,12 @@ export const getManageRestartServerMockHandler = (
 export const getManagePluginReloadMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/manage/plugin-reload",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -355,12 +356,12 @@ export const getManagePluginReloadMockHandler = (
 export const getManageUpdateServerMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/manage/update",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -374,12 +375,12 @@ export const getManageUpdateServerMockHandler = (
 export const getManageCleanupImagesMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/manage/cleanup/images",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -394,13 +395,13 @@ export const getManageGetHostAgentMockHandler = (
   overrideResponse?:
     | HostAgentOverview
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<HostAgentOverview> | HostAgentOverview),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/agent",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -418,13 +419,13 @@ export const getManageGetJobStatusMockHandler = (
   overrideResponse?:
     | HostAgentJobStatus
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ jobId: string }>>[0],
       ) => Promise<HostAgentJobStatus> | HostAgentJobStatus),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ jobId: string }>(
     "*/manage/jobs/:jobId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ jobId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -441,12 +442,12 @@ export const getManageGetJobStatusMockHandler = (
 export const getManageCleanupLogsMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/manage/cleanup/logs",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -460,12 +461,12 @@ export const getManageCleanupLogsMockHandler = (
 export const getManageCleanupServerMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/manage/cleanup",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -479,12 +480,12 @@ export const getManageCleanupServerMockHandler = (
 export const getManageGetLogsListMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/logs",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -498,12 +499,12 @@ export const getManageGetLogsListMockHandler = (
 export const getManageGetLogContentsMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver<{ log: string }>>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ log: string }>(
     "*/manage/logs/:log",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ log: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -517,12 +518,12 @@ export const getManageGetLogContentsMockHandler = (
 export const getManageDeleteLogMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver<{ log: string }>>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ log: string }>(
     "*/manage/logs/:log",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ log: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -536,12 +537,12 @@ export const getManageDeleteLogMockHandler = (
 export const getManageGetSyncinfoMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/syncinfo",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -555,14 +556,12 @@ export const getManageGetSyncinfoMockHandler = (
 export const getManageGetRatesinfoMockHandler = (
   overrideResponse?:
     | RateSourceInfo[]
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<RateSourceInfo[]> | RateSourceInfo[]),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<RateSourceInfo[]> | RateSourceInfo[]),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/ratesinfo",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -579,12 +578,12 @@ export const getManageGetRatesinfoMockHandler = (
 export const getManageTestEmailPingMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/testping",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -598,12 +597,12 @@ export const getManageTestEmailPingMockHandler = (
 export const getManageGetDaemonsMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/daemons",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -617,14 +616,12 @@ export const getManageGetDaemonsMockHandler = (
 export const getManageGetBackupPoliciesMockHandler = (
   overrideResponse?:
     | BackupsPolicy
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<BackupsPolicy> | BackupsPolicy),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<BackupsPolicy> | BackupsPolicy),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/backups",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -642,13 +639,13 @@ export const getManageSetBackupPoliciesMockHandler = (
   overrideResponse?:
     | BackupsPolicy
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BackupsPolicy>>[0],
       ) => Promise<BackupsPolicy> | BackupsPolicy),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BackupsPolicy>(
     "*/manage/backups",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BackupsPolicy>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -665,12 +662,12 @@ export const getManageSetBackupPoliciesMockHandler = (
 export const getManageGetBackupProvidersMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/backups/providers",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -684,12 +681,12 @@ export const getManageGetBackupProvidersMockHandler = (
 export const getManageGetBackupFrequenciesMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/manage/backups/frequencies",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -703,12 +700,12 @@ export const getManageGetBackupFrequenciesMockHandler = (
 export const getManagePerformBackupMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.post(
     "*/manage/backups/backup",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -722,12 +719,14 @@ export const getManagePerformBackupMockHandler = (
 export const getManageDownloadBackupMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ jobId: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ jobId: string }>(
     "*/manage/backups/download/:jobId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ jobId: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -741,12 +740,14 @@ export const getManageDownloadBackupMockHandler = (
 export const getManageRestoreBackupMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, BodyManageRestoreBackup>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BodyManageRestoreBackup>(
     "*/manage/backups/restore",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BodyManageRestoreBackup>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }

@@ -3,7 +3,7 @@
  * Do not edit manually.
  */
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, RequestHandlerOptions } from "msw"
 
 import type { UpdateCheckUpdates200 } from "../../../schemas/generated"
 
@@ -13,13 +13,13 @@ export const getUpdateCheckUpdatesMockHandler = (
   overrideResponse?:
     | UpdateCheckUpdates200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<UpdateCheckUpdates200> | UpdateCheckUpdates200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/update/check",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

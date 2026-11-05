@@ -4,13 +4,16 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
+  BatchAction,
+  CreateDiscount,
   DiscountsBatchAction200,
   DiscountsGetCount200,
   DisplayDiscount,
   OffsetPaginationDisplayDiscount,
+  OptionalUpdateDiscount,
 } from "../../../schemas/generated"
 
 export const getDiscountsListItemsResponseMock = (
@@ -120,13 +123,13 @@ export const getDiscountsListItemsMockHandler = (
   overrideResponse?:
     | OffsetPaginationDisplayDiscount
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<OffsetPaginationDisplayDiscount> | OffsetPaginationDisplayDiscount),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/discounts",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -144,13 +147,13 @@ export const getDiscountsCreateItemMockHandler = (
   overrideResponse?:
     | DisplayDiscount
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, CreateDiscount>>[0],
       ) => Promise<DisplayDiscount> | DisplayDiscount),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, CreateDiscount>(
     "*/discounts",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, CreateDiscount>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -168,13 +171,13 @@ export const getDiscountsGetCountMockHandler = (
   overrideResponse?:
     | DiscountsGetCount200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<DiscountsGetCount200> | DiscountsGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/discounts/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -192,13 +195,13 @@ export const getDiscountsGetItemMockHandler = (
   overrideResponse?:
     | DisplayDiscount
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayDiscount> | DisplayDiscount),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ itemId: string }>(
     "*/discounts/:itemId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -216,13 +219,15 @@ export const getDiscountsUpdateItemMockHandler = (
   overrideResponse?:
     | DisplayDiscount
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateDiscount>>[0],
       ) => Promise<DisplayDiscount> | DisplayDiscount),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ itemId: string }, OptionalUpdateDiscount>(
     "*/discounts/:itemId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (
+      info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateDiscount>>[0],
+    ) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -240,13 +245,13 @@ export const getDiscountsDeleteItemMockHandler = (
   overrideResponse?:
     | DisplayDiscount
     | ((
-        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayDiscount> | DisplayDiscount),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ itemId: string }>(
     "*/discounts/:itemId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -264,13 +269,13 @@ export const getDiscountsBatchActionMockHandler = (
   overrideResponse?:
     | DiscountsBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<DiscountsBatchAction200> | DiscountsBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/discounts/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

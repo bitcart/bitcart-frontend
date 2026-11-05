@@ -228,29 +228,6 @@ export const variants: Variant<PresetWind4Theme>[] = [
   },
 
   /**
-   * has-[...] variant with arbitrary selector — :has(...)
-   *
-   * Overrides the native wind4 handler to pass comma-separated selectors
-   * through as raw CSS. The native handler incorrectly treats commas as
-   * theme-value separators, producing :has(undefined) for OR-logic patterns like:
-   *   has-[+[data-slot=trigger],+[data-slot=clear]]:pe-7
-   *
-   * Supports one level of nested brackets (for attribute selectors).
-   */
-  (className) => {
-    const match = /^has-\[((?:[^[\]]|\[[^[\]]*\])*)\]:/.exec(className)
-
-    if (match !== null) {
-      const [, selector] = match
-
-      return {
-        matcher: className.slice(match[0].length),
-        selector: (s) => `${s}:has(${selector})`,
-      }
-    } else return className
-  },
-
-  /**
    * has-aria-{attr} shorthand variant — :has([aria-{attr}])
    *
    * Extends UnoCSS wind4's built-in has-{pseudo} shorthands to cover ARIA

@@ -27,13 +27,7 @@ const config: KnipConfig = {
 
   ignoreIssues: {
     "**/*.{ts,tsx}": ["exports", "types"],
-
-    // TODO: Remove before Checkout's release!
-    "pnpm-workspace.yaml": ["catalog", "catalogReferences"],
   },
-
-  // TODO: Remove before Checkout's release!
-  ignoreWorkspaces: ["apps/checkout"],
 
   workspaces: {
     ".": {

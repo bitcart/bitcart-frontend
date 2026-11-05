@@ -4,9 +4,12 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
+  BatchAction,
+  BodyFilesCreateFile,
+  BodyFilesPatchFile,
   DisplayFile,
   FilesBatchAction200,
   FilesGetCount200,
@@ -94,13 +97,13 @@ export const getFilesListItemsMockHandler = (
   overrideResponse?:
     | OffsetPaginationDisplayFile
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<OffsetPaginationDisplayFile> | OffsetPaginationDisplayFile),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/files",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -118,13 +121,13 @@ export const getFilesCreateFileMockHandler = (
   overrideResponse?:
     | DisplayFile
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BodyFilesCreateFile>>[0],
       ) => Promise<DisplayFile> | DisplayFile),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BodyFilesCreateFile>(
     "*/files",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BodyFilesCreateFile>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -141,14 +144,12 @@ export const getFilesCreateFileMockHandler = (
 export const getFilesGetCountMockHandler = (
   overrideResponse?:
     | FilesGetCount200
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<FilesGetCount200> | FilesGetCount200),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<FilesGetCount200> | FilesGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/files/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -165,12 +166,14 @@ export const getFilesGetCountMockHandler = (
 export const getFilesGetItemMockHandler = (
   overrideResponse?:
     | DisplayFile
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DisplayFile> | DisplayFile),
+    | ((
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
+      ) => Promise<DisplayFile> | DisplayFile),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ itemId: string }>(
     "*/files/:itemId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -188,13 +191,13 @@ export const getFilesDeleteItemMockHandler = (
   overrideResponse?:
     | DisplayFile
     | ((
-        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayFile> | DisplayFile),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ itemId: string }>(
     "*/files/:itemId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -212,13 +215,13 @@ export const getFilesBatchActionMockHandler = (
   overrideResponse?:
     | FilesBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<FilesBatchAction200> | FilesBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/files/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -236,13 +239,13 @@ export const getFilesPatchFileMockHandler = (
   overrideResponse?:
     | DisplayFile
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }, BodyFilesPatchFile>>[0],
       ) => Promise<DisplayFile> | DisplayFile),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ modelId: string }, BodyFilesPatchFile>(
     "*/files/:modelId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, BodyFilesPatchFile>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -259,12 +262,14 @@ export const getFilesPatchFileMockHandler = (
 export const getFilesHandleFileMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/files/handle/:modelId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }

@@ -4,11 +4,14 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
+  BatchAction,
+  CreatePayout,
   DisplayPayout,
   OffsetPaginationDisplayPayout,
+  OptionalUpdatePayout,
   PayoutsBatchAction200,
   PayoutsGetCount200,
 } from "../../../schemas/generated"
@@ -251,13 +254,13 @@ export const getPayoutsListItemsMockHandler = (
   overrideResponse?:
     | OffsetPaginationDisplayPayout
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<OffsetPaginationDisplayPayout> | OffsetPaginationDisplayPayout),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/payouts",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -275,13 +278,13 @@ export const getPayoutsCreateItemMockHandler = (
   overrideResponse?:
     | DisplayPayout
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, CreatePayout>>[0],
       ) => Promise<DisplayPayout> | DisplayPayout),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, CreatePayout>(
     "*/payouts",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, CreatePayout>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -299,13 +302,13 @@ export const getPayoutsGetCountMockHandler = (
   overrideResponse?:
     | PayoutsGetCount200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<PayoutsGetCount200> | PayoutsGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/payouts/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -323,13 +326,13 @@ export const getPayoutsGetItemMockHandler = (
   overrideResponse?:
     | DisplayPayout
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayPayout> | DisplayPayout),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ itemId: string }>(
     "*/payouts/:itemId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -347,13 +350,13 @@ export const getPayoutsUpdateItemMockHandler = (
   overrideResponse?:
     | DisplayPayout
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdatePayout>>[0],
       ) => Promise<DisplayPayout> | DisplayPayout),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ itemId: string }, OptionalUpdatePayout>(
     "*/payouts/:itemId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdatePayout>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -371,13 +374,13 @@ export const getPayoutsDeleteItemMockHandler = (
   overrideResponse?:
     | DisplayPayout
     | ((
-        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayPayout> | DisplayPayout),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ itemId: string }>(
     "*/payouts/:itemId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -395,13 +398,13 @@ export const getPayoutsBatchActionMockHandler = (
   overrideResponse?:
     | PayoutsBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<PayoutsBatchAction200> | PayoutsBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/payouts/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

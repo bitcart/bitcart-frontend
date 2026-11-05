@@ -154,13 +154,11 @@ export const presetBitcart: PresetBitcart = definePreset((options?: PresetBitcar
       "elevation-2": "shadow-md hover:shadow-lg active:shadow-md transition-shadow duration-200",
       "elevation-3": "shadow-lg hover:shadow-xl active:shadow-lg transition-shadow duration-200",
       "elevation-4": "shadow-xl hover:shadow-2xl active:shadow-xl transition-shadow duration-200",
-      "text-size-inherit": "font-size-inherit",
       glassy: "bg-background/50 backdrop-blur-12",
     },
 
     rules: [
       ["@container-inline-size", { "container-type": "inline-size" }],
-      ["@container-normal", { "container-type": "normal" }],
       ["@container-scroll-state", { "container-type": "scroll-state" }],
       ["@container-size", { "container-type": "size" }],
 

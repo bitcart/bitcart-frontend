@@ -4,13 +4,20 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
+  BatchAction,
+  CreateStore,
   DisplayStore,
+  EmailSettings,
   OffsetPaginationDisplayStore,
+  OptionalUpdateStore,
   PublicStore,
   RatesResponse,
+  StoreCheckoutSettings,
+  StorePluginSettings,
+  StoreThemeSettings,
   StoresBatchAction200,
   StoresGetCount200,
 } from "../../../schemas/generated"
@@ -676,13 +683,13 @@ export const getStoresListItemsMockHandler = (
   overrideResponse?:
     | OffsetPaginationDisplayStore
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<OffsetPaginationDisplayStore> | OffsetPaginationDisplayStore),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/stores",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -700,13 +707,13 @@ export const getStoresCreateItemMockHandler = (
   overrideResponse?:
     | DisplayStore
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, CreateStore>>[0],
       ) => Promise<DisplayStore> | DisplayStore),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, CreateStore>(
     "*/stores",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, CreateStore>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -724,13 +731,13 @@ export const getStoresGetCountMockHandler = (
   overrideResponse?:
     | StoresGetCount200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<StoresGetCount200> | StoresGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/stores/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -748,13 +755,13 @@ export const getStoresUpdateItemMockHandler = (
   overrideResponse?:
     | DisplayStore
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateStore>>[0],
       ) => Promise<DisplayStore> | DisplayStore),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ itemId: string }, OptionalUpdateStore>(
     "*/stores/:itemId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateStore>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -772,13 +779,13 @@ export const getStoresDeleteItemMockHandler = (
   overrideResponse?:
     | DisplayStore
     | ((
-        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayStore> | DisplayStore),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ itemId: string }>(
     "*/stores/:itemId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -796,13 +803,13 @@ export const getStoresBatchActionMockHandler = (
   overrideResponse?:
     | StoresBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<StoresBatchAction200> | StoresBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/stores/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -821,13 +828,13 @@ export const getStoresGetItemMockHandler = (
     | DisplayStore
     | PublicStore
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
       ) => Promise<DisplayStore | PublicStore> | DisplayStore | PublicStore),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/stores/:modelId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -844,12 +851,14 @@ export const getStoresGetItemMockHandler = (
 export const getStoresPingEmailMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/stores/:modelId/ping",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -864,13 +873,15 @@ export const getStoresSetStoreCheckoutSettingsMockHandler = (
   overrideResponse?:
     | DisplayStore
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }, StoreCheckoutSettings>>[0],
       ) => Promise<DisplayStore> | DisplayStore),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ modelId: string }, StoreCheckoutSettings>(
     "*/stores/:modelId/checkout_settings",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (
+      info: Parameters<HttpResponseResolver<{ modelId: string }, StoreCheckoutSettings>>[0],
+    ) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -888,13 +899,13 @@ export const getStoresSetStoreEmailSettingsMockHandler = (
   overrideResponse?:
     | DisplayStore
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }, EmailSettings>>[0],
       ) => Promise<DisplayStore> | DisplayStore),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ modelId: string }, EmailSettings>(
     "*/stores/:modelId/email_settings",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, EmailSettings>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -912,13 +923,13 @@ export const getStoresSetStoreThemeSettingsMockHandler = (
   overrideResponse?:
     | DisplayStore
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }, StoreThemeSettings>>[0],
       ) => Promise<DisplayStore> | DisplayStore),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ modelId: string }, StoreThemeSettings>(
     "*/stores/:modelId/theme_settings",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, StoreThemeSettings>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -936,13 +947,13 @@ export const getStoresSetStorePluginSettingsMockHandler = (
   overrideResponse?:
     | DisplayStore
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }, StorePluginSettings>>[0],
       ) => Promise<DisplayStore> | DisplayStore),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ modelId: string }, StorePluginSettings>(
     "*/stores/:modelId/plugin_settings",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, StorePluginSettings>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -959,12 +970,14 @@ export const getStoresSetStorePluginSettingsMockHandler = (
 export const getStoresSetStoreRateRulesMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }, string>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ modelId: string }, string>(
     "*/stores/:modelId/rate_rules",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, string>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -979,13 +992,13 @@ export const getStoresGetStoreRatesMockHandler = (
   overrideResponse?:
     | RatesResponse
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
       ) => Promise<RatesResponse> | RatesResponse),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/stores/:modelId/rates",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"

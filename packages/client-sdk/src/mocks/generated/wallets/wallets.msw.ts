@@ -4,13 +4,20 @@
  */
 import { faker } from "@faker-js/faker"
 import { HttpResponse, http } from "msw"
-import type { RequestHandlerOptions } from "msw"
+import type { HttpResponseResolver, PathParams, RequestHandlerOptions } from "msw"
 
 import type {
   BalanceResponse,
+  BatchAction,
+  CloseChannelScheme,
+  CreateWallet,
+  CreateWalletData,
   DecimalAsString,
   DisplayWallet,
+  LNPayScheme,
   OffsetPaginationDisplayWallet,
+  OpenChannelScheme,
+  OptionalUpdateWallet,
   WalletsBalance,
   WalletsBatchAction200,
   WalletsGetCount200,
@@ -179,14 +186,12 @@ export const getWalletsGetWalletBalanceResponseMock = (
 export const getWalletsGetBalancesMockHandler = (
   overrideResponse?:
     | WalletsBalance
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<WalletsBalance> | WalletsBalance),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<WalletsBalance> | WalletsBalance),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/wallets/balance",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -203,12 +208,12 @@ export const getWalletsGetBalancesMockHandler = (
 export const getWalletsGetWalletsSchemaMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((info: Parameters<HttpResponseResolver>[0]) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/wallets/schema",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -222,12 +227,14 @@ export const getWalletsGetWalletsSchemaMockHandler = (
 export const getWalletsCreateWalletMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<PathParams, CreateWalletData>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, CreateWalletData>(
     "*/wallets/create",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, CreateWalletData>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -242,13 +249,13 @@ export const getWalletsListItemsMockHandler = (
   overrideResponse?:
     | OffsetPaginationDisplayWallet
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<OffsetPaginationDisplayWallet> | OffsetPaginationDisplayWallet),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/wallets",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -266,13 +273,13 @@ export const getWalletsCreateItemMockHandler = (
   overrideResponse?:
     | DisplayWallet
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, CreateWallet>>[0],
       ) => Promise<DisplayWallet> | DisplayWallet),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, CreateWallet>(
     "*/wallets",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, CreateWallet>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -290,13 +297,13 @@ export const getWalletsGetCountMockHandler = (
   overrideResponse?:
     | WalletsGetCount200
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver>[0],
       ) => Promise<WalletsGetCount200> | WalletsGetCount200),
   options?: RequestHandlerOptions,
 ) => {
   return http.get(
     "*/wallets/count",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -314,13 +321,13 @@ export const getWalletsGetItemMockHandler = (
   overrideResponse?:
     | DisplayWallet
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayWallet> | DisplayWallet),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ itemId: string }>(
     "*/wallets/:itemId",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -338,13 +345,13 @@ export const getWalletsUpdateItemMockHandler = (
   overrideResponse?:
     | DisplayWallet
     | ((
-        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateWallet>>[0],
       ) => Promise<DisplayWallet> | DisplayWallet),
   options?: RequestHandlerOptions,
 ) => {
-  return http.patch(
+  return http.patch<{ itemId: string }, OptionalUpdateWallet>(
     "*/wallets/:itemId",
-    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }, OptionalUpdateWallet>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -362,13 +369,13 @@ export const getWalletsDeleteItemMockHandler = (
   overrideResponse?:
     | DisplayWallet
     | ((
-        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ itemId: string }>>[0],
       ) => Promise<DisplayWallet> | DisplayWallet),
   options?: RequestHandlerOptions,
 ) => {
-  return http.delete(
+  return http.delete<{ itemId: string }>(
     "*/wallets/:itemId",
-    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ itemId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -386,13 +393,13 @@ export const getWalletsBatchActionMockHandler = (
   overrideResponse?:
     | WalletsBatchAction200
     | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
+        info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0],
       ) => Promise<WalletsBatchAction200> | WalletsBatchAction200),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<PathParams, BatchAction>(
     "*/wallets/batch",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<PathParams, BatchAction>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -410,13 +417,13 @@ export const getWalletsGetWalletRateMockHandler = (
   overrideResponse?:
     | DecimalAsString
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
       ) => Promise<DecimalAsString> | DecimalAsString),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/wallets/:modelId/rate",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -434,13 +441,13 @@ export const getWalletsGetWalletBalanceMockHandler = (
   overrideResponse?:
     | BalanceResponse
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
       ) => Promise<BalanceResponse> | BalanceResponse),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/wallets/:modelId/balance",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       return HttpResponse.json(
         overrideResponse !== undefined
           ? typeof overrideResponse === "function"
@@ -457,12 +464,14 @@ export const getWalletsGetWalletBalanceMockHandler = (
 export const getWalletsGetWalletSymbolMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/wallets/:modelId/symbol",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -476,12 +485,14 @@ export const getWalletsGetWalletSymbolMockHandler = (
 export const getWalletsCheckWalletLightningMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/wallets/:modelId/checkln",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -495,12 +506,14 @@ export const getWalletsCheckWalletLightningMockHandler = (
 export const getWalletsGetWalletChannelsMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.get(
+  return http.get<{ modelId: string }>(
     "*/wallets/:modelId/channels",
-    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -514,12 +527,14 @@ export const getWalletsGetWalletChannelsMockHandler = (
 export const getWalletsOpenWalletChannelMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }, OpenChannelScheme>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<{ modelId: string }, OpenChannelScheme>(
     "*/wallets/:modelId/channels/open",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, OpenChannelScheme>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -533,12 +548,14 @@ export const getWalletsOpenWalletChannelMockHandler = (
 export const getWalletsCloseWalletChannelMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }, CloseChannelScheme>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<{ modelId: string }, CloseChannelScheme>(
     "*/wallets/:modelId/channels/close",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, CloseChannelScheme>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
@@ -552,12 +569,14 @@ export const getWalletsCloseWalletChannelMockHandler = (
 export const getWalletsWalletLnpayMockHandler = (
   overrideResponse?:
     | unknown
-    | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<unknown> | unknown),
+    | ((
+        info: Parameters<HttpResponseResolver<{ modelId: string }, LNPayScheme>>[0],
+      ) => Promise<unknown> | unknown),
   options?: RequestHandlerOptions,
 ) => {
-  return http.post(
+  return http.post<{ modelId: string }, LNPayScheme>(
     "*/wallets/:modelId/lnpay",
-    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+    async (info: Parameters<HttpResponseResolver<{ modelId: string }, LNPayScheme>>[0]) => {
       if (typeof overrideResponse === "function") {
         await overrideResponse(info)
       }
