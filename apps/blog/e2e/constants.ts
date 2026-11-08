@@ -23,4 +23,4 @@ export const SAMPLE_POST = {
   bodyOnlyTerm: "libseccomp2",
 }
 
-export const EMPTY_CATEGORY_PATHS = ["/category/features", "/category/guides", "/category/stories"]
+export const EMPTY_CATEGORY_PATHS = ["/category/guides", "/category/stories"]
