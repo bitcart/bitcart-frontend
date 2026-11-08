@@ -1,0 +1,105 @@
+---
+title: Bitcart version 0.11.0.0 is out!
+description: A new checkout app, consistent amounts in the API, server management through the new host agent and plugin version checks.
+date: 2026-10-27
+author: mrnaif2018
+category: releases
+image:
+  src: /media/bitcart-version-01100-is-out/cover.png
+  alt: Three steps of the new Bitcart checkout, an email form, the payment method list and an ETH payment page
+---
+
+Bitcart version 0.11.0.0 is out! It brings a brand new checkout, consistent amounts in the API, a safer way to manage your server from the admin panel, and much more.
+
+If you use the Merchants API directly, please read the [API changes](#important-consistent-amounts-in-the-api) before updating.
+
+## New checkout app
+
+Bitcart has a brand new checkout, built from scratch in our new frontend stack. It replaces the invoice and refund pages of the admin panel, and the payment modal.
+
+- Redesigned payment flow: choose a payment method, then see exactly what to pay, including the network fee and the amount still due on partial payments
+- Pay with browser wallets directly from the checkout: MetaMask and other injected wallets on ETH-based chains, TronLink on TRON. Links to open the payment in MetaMask, Trust Wallet and TronLink mobile apps are also provided
+- New receipt page after payment
+- New refund page, where customers enter their refund address and review it before submitting
+- New embed script `/embed/v1.js` with a `<bitcart-checkout>` element and events. The old `/modal/bitcart.js` script keeps working as before
+- Dark mode and internationalization support
+- Payment terminals support, including receipt printing
+- New store checkout settings: `auto_redirect` to return buyers to the redirect URL after payment (enabled by default), and `support_email` / `support_url` shown to buyers
+
+We wrote a [separate post about the new checkout](/new-bitcart-checkout) with screenshots of every step.
+
+The new checkout is opt-in for now. To enable it in docker deployments, add `checkout` to `BITCART_ADDITIONAL_COMPONENTS` and run `./setup.sh`:
+
+```bash
+export BITCART_ADDITIONAL_COMPONENTS="$BITCART_ADDITIONAL_COMPONENTS,checkout"
+./setup.sh
+```
+
+Invoice links and the modal script are then served by the checkout, no changes are required in your integrations.
+
+## IMPORTANT: Consistent amounts in the API
+
+If you use the Merchants API directly, check your integrations.
+
+All decimal values in API responses are now strings, some of them were floats before. Amounts are rounded and padded to currency decimals (e.g. `"25.00"`). Rates, like exchange rates and `recommended_fee`, are exact values with up to 18 decimal places. The formatted `rate_str` field was removed from payment methods, format values in your client instead.
+
+Amounts we ask customers to pay are now always rounded up, and received amounts are rounded down.
+
+New invoice fields: `sent_price`, `effective_price` (price after discounts) and `transactions`, with the amount of each transaction.
+New payment method fields: `subtotal`, `network_fee`, `due`, `due_price`, `effective_price` and `wallet` (network and links to wallet apps). The new checkout is built on them.
+
+`GET /wallets/balance` now returns an object with `balance`, `currency` and `missing_rates`.
+
+The "Mark as complete" dialog in the admin panel now allows setting the amount of each transaction.
+
+## Host agent
+
+Bitcart containers no longer get root SSH access to the host. Server management from the admin panel (updates, restarts, backups, configurator) now goes through the new host agent, `bitcart-agent`.
+
+The agent runs only a fixed set of operations, one job at a time, outside of the containers. So jobs keep running while containers restart or update.
+
+It is installed automatically on update: as a systemd service on Linux, a launchd one on macOS, and on Linux hosts without systemd that had SSH access enabled, as a restricted SSH key. The old SSH key is removed once the agent is reachable.
+
+To disable server management from the admin panel, export `BITCART_AGENT_TRANSPORT=none` before updating.
+
+## Plugin versions
+
+The admin panel now shows plugins that are incompatible with your Bitcart version, and allows to install a compatible version of them.
+
+`update.sh` and `install-master.sh` now update installed marketplace plugins to the newest versions compatible with the new Bitcart version. Set `BITCART_PLUGINS_AUTO_UPDATE=false` to disable that.
+
+<Figure
+  src="/media/bitcart-version-01100-is-out/plugin-versions.png"
+  alt="Installed plugins in the admin panel: ETH payments 1.0.7, and Lightning Network + 1.0.2 with a warning that it requires Bitcart >= 0.11.0.0, < 0.11.1.0"
+  caption="An installed plugin that doesn't support the running Bitcart version"
+/>
+
+## Better handling of exchange rate failures
+
+If an exchange rate source fails, superusers now see a warning in the admin panel with the source name, the age of the rates and the last error.
+The wallets balance excludes currencies with no exchange rate, and lists them.
+
+We also expanded the list of Kraken exchange rate pairs.
+
+<Figure
+  src="/media/bitcart-version-01100-is-out/rates-warning.png"
+  alt="Orange warning at the top of the admin panel: coingecko exchange rates are 12 min old, the last refresh failed: TimeoutError"
+  caption="Superusers see which rate source failed and why"
+/>
+
+## Other changes
+
+- Monero: network fee estimation support, fix mempool parsing on newer nodes
+- Fix memory leak in ETH-based daemons when reading contracts
+- Improvements in internal transactions parsing
+- Security improvements: stricter validation of file uploads and safer serving of uploaded files, the tokens list shows only tokens within your permissions, email deliverability check on registration, 2FA fixes
+- Emails are now sent asynchronously, with timeouts
+- Massively improved OpenTelemetry configuration, and our own Prometheus middleware
+- Properly close Redis connections when a websocket closes
+- New `tg_escape` filter for Telegram templates, improved sending of Apprise notifications
+- Fix search with special characters
+- OpenAPI schema improvements
+- Refund fixes in the admin panel
+- Docker: IPv6 support via the `opt-add-ipv6` component, and the nginx access log can be disabled with the `opt-no-access-log` component
+- Docker: upgrade cloudflared and tor
+- Dependency updates

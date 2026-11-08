@@ -43,6 +43,13 @@ const getPropertyMetaTagAttrsList = (
 ): DocumentHeadMetaTagAttributes[] =>
   definedEntries(contents).map(([property, content]) => ({ property, content }))
 
+const LARGE_TWITTER_CARD_MIN_ASPECT_RATIO = 1.5
+
+const getTwitterCardType = ({ width, height }: StaticDocumentMetadata["image"]) =>
+  Number(width) / Number(height) >= LARGE_TWITTER_CARD_MIN_ASPECT_RATIO
+    ? "summary_large_image"
+    : "summary"
+
 export type PageDocumentMetadataParams<TSupportedLocaleId extends BCP47LanguageSubtag> = {
   baseUrl: string
   localeId: string
@@ -146,7 +153,7 @@ export const getDocumentHeadManifest = <TSupportedLocaleId extends BCP47Language
         "twitter:title": title,
         "twitter:description": description,
         "twitter:url": url,
-        "twitter:card": image.secureUrl ? "summary" : undefined,
+        "twitter:card": image.secureUrl ? getTwitterCardType(image) : undefined,
         "twitter:image": image.secureUrl,
         "twitter:image:alt": image.secureUrl ? image.alt : undefined,
         "twitter:site": twitterHandles?.site,

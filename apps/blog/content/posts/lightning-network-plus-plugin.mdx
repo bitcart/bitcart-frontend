@@ -1,0 +1,89 @@
+---
+title: Connect your own Lightning node with Lightning Network +
+description: Lightning Network + 1.1.0 connects Bitcart to your own Core Lightning, LND or LNDHub node and its existing channels.
+date: 2026-11-08
+author: mrnaif2018
+category: plugins
+image:
+  src: /media/lightning-network-plus-plugin/cover.png
+  alt: Bitcart checkout paying $1.00 in BTC over Lightning, with a QR code of the Lightning invoice and a Node info toggle
+---
+
+Bitcart has supported Lightning for a long time, using Electrum's implementation built into our daemons. That way each Bitcart daemon is a standalone Lightning node, and you open channels for it from scratch. If you already run a Lightning node with its own channels and liquidity, it makes more sense to let Bitcart use it instead.
+
+That's what the Lightning Network + plugin does. Its new version, 1.1.0, supports:
+
+- Core Lightning, via its CLNRest API (available since Core Lightning v23.08)
+- LND, via its REST API
+- LNDHub, including LNbits with its LndHub extension
+
+Thanks to [g00g1](https://github.com/g00g1) for contributing the Core Lightning backend!
+
+Channels and liquidity stay managed on your node. Bitcart only creates invoices, checks whether they are paid, and reads your balance and node ID. The plugin requires Bitcart 0.11.1.0 or newer.
+
+## How it looks for customers
+
+A Lightning Network + wallet shows up in the checkout as BTC with a lightning badge, next to your regular on-chain BTC wallet if you have one.
+
+<Figure
+  src="/media/lightning-network-plus-plugin/payment-methods.png"
+  alt="Checkout payment method list with two BTC options, the first one marked with a lightning badge"
+  caption="Lightning and on-chain BTC side by side, in the checkout's preview mode"
+/>
+
+After picking it, the customer gets a Lightning invoice to scan or copy, and "Pay with wallet" opens it in a Lightning wallet. "Node info" shows your node's address, so customers who want to can open a channel with you.
+
+<Figure
+  src="/media/lightning-network-plus-plugin/payment-and-node-info.png"
+  alt="Two Lightning payment pages: on the left, paying $1.00 with BTC over Lightning, with a QR code of the Lightning invoice, a shortened invoice with a copy button, a collapsed Node info toggle and a Pay with wallet button. On the right, the same page with Node info expanded, showing a node public key with its host and port"
+  caption="A Lightning payment, and Node info expanded in the checkout's preview mode"
+/>
+
+With Core Lightning and LND, a payment is detected within a few seconds. LNDHub servers have rate limits, so there it takes up to about 20 seconds.
+
+## Setting it up
+
+1. Install the Lightning Network + plugin from the plugins page of your admin panel
+2. Open the wallets page and create a new wallet
+3. Choose the `lnplus` currency
+4. Paste your connection URL into the Node URL field
+
+<Figure
+  src="/media/lightning-network-plus-plugin/create-wallet.png"
+  alt="New Wallet form in the admin panel with the lnplus currency selected and the Node URL field"
+  caption="Creating a Lightning Network + wallet"
+/>
+
+The connection URL depends on your node:
+
+```text
+cln://<rune>@node.example.com
+lnd://<macaroon>@node.example.com
+lndhub://<login>:<password>@https://hub.example.com
+```
+
+For Core Lightning, create a rune limited to the methods Bitcart needs:
+
+```bash
+lightning-cli createrune -k restrictions='[["method=getinfo","method=listfunds","method=invoice","method=listinvoices"]]'
+```
+
+For LND, bake a macaroon the same way. It is printed in hex, which is the format Bitcart expects:
+
+```bash
+lncli bakemacaroon uri:/lnrpc.Lightning/GetInfo uri:/lnrpc.Lightning/ChannelBalance uri:/lnrpc.Lightning/AddInvoice uri:/lnrpc.Lightning/LookupInvoice
+```
+
+Please don't use an unrestricted rune or `admin.macaroon`: whoever gets them has full control of your node, including your funds.
+
+Both CLNRest and LND serve HTTPS with their own certificates by default, and Bitcart only accepts certificates from public CAs. So connect through a reverse proxy with a public certificate, or over a private network like WireGuard with plain HTTP. Don't use `http://` over the public internet. The [plugin guide](https://docs.bitcart.ai/guides/lightning-network-plus) has the exact settings for each node.
+
+## Good to know
+
+- Lightning invoices on Core Lightning and LND expire together with the Bitcart invoice. LNDHub servers don't let clients set the expiry, so an invoice there can still be paid after the Bitcart invoice expired, and Bitcart won't record that payment
+- For zero-price invoices, where customers pay any amount they want, Core Lightning, LND and Alby's LNDHub create an invoice without a fixed amount. BlueWallet's LndHub and LNbits don't support that, and no Lightning payment method is created for such invoices
+- With Core Lightning and LND, the balance shown is the local balance of open channels, channels still opening or closing are not counted
+- LND invoices don't include route hints for private channels, so customers generally can't pay a node that only has private channels
+- Starting with the next Bitcart update, the invoice description customers see in their wallet comes from the `lightning_description` template, like it does with the built-in Lightning
+
+The source code is in our [plugins repository](https://github.com/bitcart/bitcart-plugins/tree/master/lnplus). If your node or LNDHub server doesn't work with the plugin, please open an issue [there](https://github.com/bitcart/bitcart-plugins/issues).

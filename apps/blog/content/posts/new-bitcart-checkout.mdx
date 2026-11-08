@@ -1,0 +1,140 @@
+---
+title: Meet the new Bitcart checkout
+description: A checkout rebuilt from scratch in Bitcart 0.11, with a clearer payment flow, browser wallet payments, receipts and refunds.
+date: 2026-10-27
+author: mrnaif2018
+category: features
+image:
+  src: /media/new-bitcart-checkout/cover.png
+  alt: Three Bitcart checkout screens side by side, the payment method list, a BTC payment page, and the same BTC page in dark mode
+---
+
+Bitcart 0.11.0.0 comes with a brand new checkout. We built it from scratch in our new frontend stack, and it replaces the invoice and refund pages of the admin panel together with the payment modal. It is the page every customer sees when paying a Bitcart invoice.
+
+Most screenshots below are from a real invoice on our testnet instance. The ones showing "Example Store" come from the checkout's preview mode, which we use to render states that are hard to reach on a real invoice, like a partial payment.
+
+## Paying an invoice
+
+If the store needs some details from the customer, like an email, the checkout asks for them first. The header stays the same on every step: who you are paying, how much, when the invoice is due, and a ring counting down the time left.
+
+Then the customer chooses how to pay. Each payment method shows the exact amount and the exchange rate used, so it's easy to compare coins before picking one.
+
+<Figure
+  src="/media/new-bitcart-checkout/details-and-methods.png"
+  alt="Two checkout screens: on the left, a form asking for an email before payment, with the store name, a $1.00 price, the due date and a countdown ring showing 16 hours. On the right, the list of payment methods, BTC, BCH, ETH, TRX and XMR, each with its exchange rate and the amount to pay"
+  caption="The store asks for an email, then the customer chooses a payment method"
+/>
+
+After that, the checkout shows exactly what to send: the amount (with a copy button), a QR code and the address. The first and last characters of the address are highlighted, to make it easier to check against the address pasted in the wallet. For BTC the recommended fee rate is shown too, and the "Change" link goes back to the list of payment methods.
+
+<Figure
+  src="/media/new-bitcart-checkout/btc-payment.png"
+  alt="BTC payment page showing the amount to send, a QR code, a testnet address with highlighted first and last characters, the recommended fee and a Pay with wallet button"
+  caption="Paying with BTC on testnet"
+/>
+
+## Partial payments and network fees
+
+Sometimes customers send less than they should. In that case the header shows what's left to pay in fiat, and the payment page asks to send the rest in crypto.
+
+"Price breakdown" lists where the amount comes from: the order amount, the network fee if the store charges one, each payment already received, and what is still due.
+
+<Figure
+  src="/media/new-bitcart-checkout/partial-payment.png"
+  alt="Checkout after two partial BTC payments, with the price breakdown open: order amount, network cost, two payments and the amount still due, and $14.59 left to pay in the header"
+  caption="Two payments received, with the rest still due"
+/>
+
+The help button in the top right corner answers common questions, for example what to do after sending less than the full amount, or when the store hasn't credited a payment yet.
+
+## Paying with a wallet
+
+Customers can now pay straight from a browser wallet: MetaMask and other injected wallets on ETH-based chains, and TronLink on TRON. The checkout fills in the amount and the address, the customer only confirms the transaction in the wallet.
+
+Without a browser wallet, "Pay with wallet" offers mobile wallet apps to open the payment in, by scanning a QR code with the phone: MetaMask on ETH-based chains, Trust Wallet on Ethereum, BNB Smart Chain, Polygon and TRON, and TronLink on TRON. "Other wallet" opens whatever wallet app is set up on the computer.
+
+<Figure
+  src="/media/new-bitcart-checkout/wallet-picker.png"
+  alt="Pay with a wallet dialog on an ETH payment, listing MetaMask with a Scan with phone badge and an Other wallet option"
+  caption="Wallet options on a testnet ETH payment, in a browser without wallet extensions. Trust Wallet is listed on mainnets only"
+/>
+
+## After the payment
+
+Once the invoice is paid, the checkout shows a confirmation with a link to the new receipt page. The receipt has the invoice and order IDs, the products, the amount paid in fiat and crypto, the exchange rate and a link to the transaction, and it can be printed.
+
+<Figure
+  src="/media/new-bitcart-checkout/complete-and-receipt.png"
+  alt="Two checkout screens: on the left, Payment complete with the store name, invoice ID, amount and buttons to view the receipt or return to the store. On the right, the receipt with invoice and order IDs, issue and payment dates, the product, total, amount paid in USD and BTC, exchange rate, transaction ID, a support email and a Print receipt button"
+  caption="Payment complete screen and the receipt, in the checkout's preview mode"
+/>
+
+Two new store checkout settings control this part. `auto_redirect` sends buyers back to the invoice's redirect URL after payment, and is enabled by default. `support_email` and `support_url` are shown to buyers, so they know whom to contact about a payment.
+
+## Refunds
+
+Refund links now open a page in the checkout too. Customers enter the address to receive the refund, and review it before submitting.
+
+<Figure
+  src="/media/new-bitcart-checkout/refund.png"
+  alt="Refund page in the checkout for a $75.83 refund from Bitcart Store, showing the entered testnet BTC address with Edit address and Submit refund buttons"
+  caption="Reviewing the refund address before submitting"
+/>
+
+## Embedding the checkout
+
+There is a new embed script, `/embed/v1.js`. Add it to your page, create an invoice on your backend, and open the checkout with the invoice ID:
+
+```html
+<script src="https://checkout.your.bitcart.url/embed/v1.js"></script>
+```
+
+```js
+const checkout = window.Bitcart.open(invoiceId)
+
+checkout.addEventListener("bitcart:status", (event) => console.log(event.detail))
+checkout.addEventListener("bitcart:close", () => console.log("closed"))
+```
+
+The checkout opens in a `<bitcart-checkout>` element, which fires `bitcart:ready`, `bitcart:status`, `bitcart:expired`, `bitcart:complete`, `bitcart:close` and `bitcart:error` events. When the buyer returns to the store, `bitcart:complete` navigates your page to the invoice's redirect URL, call `event.preventDefault()` to stay on the page. Full example is in our [custom integration guide](https://docs.bitcart.ai/integrations/custom-integration).
+
+The old `/modal/bitcart.js` script keeps working as before, so existing integrations and plugins don't need any changes.
+
+<Figure
+  src="/media/new-bitcart-checkout/embed.png"
+  alt="Bitcart checkout opened as a modal on top of the bitcart.ai website, showing the payment method list with a search field"
+  caption="The checkout opened on top of a website with the embed script"
+/>
+
+## Dark mode and languages
+
+The checkout follows the system theme by default, and the button in the footer switches it. Next to it is the language menu. The checkout supports internationalization, prices and dates already follow the selected language.
+
+<Figure
+  src="/media/new-bitcart-checkout/light-and-dark.png"
+  alt="The same BTC payment page twice, in light mode on the left and in dark mode with a dark purple background on the right"
+  caption="The same invoice in light and dark mode"
+/>
+
+## Payment terminals
+
+The checkout can also run on payment terminals, and print receipts on the terminal's printer.
+
+<Figure
+  src="/media/new-bitcart-checkout/terminal.png"
+  alt="Three payment terminal screens running the checkout: the list of payment methods for a $1.00 invoice, the BTC payment page with a QR code and testnet address, and Payment complete with a Print receipt button"
+  caption="The checkout on a payment terminal: choosing a coin, paying, and printing the receipt"
+/>
+
+## How to enable it
+
+The new checkout is opt-in for now. In docker deployments, add `checkout` to `BITCART_ADDITIONAL_COMPONENTS` and run `./setup.sh`:
+
+```bash
+export BITCART_ADDITIONAL_COMPONENTS="$BITCART_ADDITIONAL_COMPONENTS,checkout"
+./setup.sh
+```
+
+Invoice links and the modal script are then served by the checkout, no changes are required in your integrations. It needs the `nginx` or `nginx-https` reverse proxy.
+
+Everything else that changed in this release is in the [0.11.0.0 release post](/bitcart-version-01100-is-out). If something looks wrong in the new checkout, please report it on [GitHub](https://github.com/bitcart/bitcart-frontend/issues) or in our [Telegram](https://t.me/bitcart).
