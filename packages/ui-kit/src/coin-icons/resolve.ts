@@ -16,15 +16,19 @@ const findIconSymbol = async ({
   contract,
   network,
 }: CoinIconQuery): Promise<string | null> => {
+  const shards = network === null ? undefined : addressShardLoadersByNetwork[network]
+
   if (contract === null) {
     return symbol.toUpperCase()
+  } else if (network === null) {
+    return null
+  } else if (shards === undefined) {
+    return symbol.toUpperCase()
   } else {
-    const address = network === null ? contract : normalizeTokenAddress(network, contract)
-    const shards = network === null ? undefined : addressShardLoadersByNetwork[network]
-    const loadShard = shards?.[getAddressShard(address)]
+    const address = normalizeTokenAddress(network, contract)
+    const shard = await shards[getAddressShard(address)]?.()
 
-    //! A token is matched by its contract only: a ticker alone could name any other token.
-    return loadShard === undefined ? null : ((await loadShard()).symbolsByAddress[address] ?? null)
+    return shard?.symbolsByAddress[address] ?? null
   }
 }
 
@@ -38,7 +42,8 @@ const loadIcon = async (iconSymbol: string): Promise<CoinIconComponent | null> =
 }
 
 /**
- * The icon of a coin, or of a token by its contract on its network, or null when none is known.
+ * The icon of a coin, or of a token by its contract on its network, or by its ticker on a network
+ * without indexed contracts, or null when none is known.
  * Each query resolves once; a failed load resolves to null, and a later query tries again.
  */
 export const resolveCoinIcon = (query: CoinIconQuery): Promise<CoinIconComponent | null> => {

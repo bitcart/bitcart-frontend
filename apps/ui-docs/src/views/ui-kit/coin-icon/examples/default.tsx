@@ -7,6 +7,12 @@ const COINS = [
   { symbol: "usdt", contract: "0xdAC17F958D2ee523a2206206994597C13D831ec7", network: "eip155:1" },
   { symbol: "usdc", contract: "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359", network: "eip155:137" },
   { symbol: "usdt", contract: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t", network: "tron:728126428" },
+  { symbol: "usdt", contract: "0x55d398326f99059fF775485246999027B3197955", network: "eip155:56" },
+  {
+    symbol: "usdc",
+    contract: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+    network: "eip155:11155111",
+  },
   { symbol: "usdt", contract: "0x0000000000000000000000000000000000000001", network: "eip155:1" },
   { symbol: "xrg" },
 ]

@@ -14,12 +14,25 @@
 
       "inputs": [
         "{projectRoot}/scripts/generate-coin-icons.ts",
+        "{projectRoot}/scripts/coin-icon-sources.ts",
+        "{projectRoot}/scripts/data/trust-wallet-tokens.gen.json",
         "{projectRoot}/src/coin-icons/shards.ts",
         { "externalDependencies": ["@web3icons/common", "@web3icons/react", "oxfmt", "tsx"] }
       ],
 
       "outputs": ["{projectRoot}/src/coin-icons/generated"],
       "cache": true
+    },
+
+    "sync:trust-wallet-tokens": {
+      "executor": "nx:run-commands",
+
+      "options": {
+        "command": "tsx ./scripts/sync-trust-wallet-tokens.ts {args.ref}",
+        "cwd": "packages/ui-kit"
+      },
+
+      "cache": false
     },
 
     "i18n:extract-locales": {

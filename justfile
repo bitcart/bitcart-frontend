@@ -183,21 +183,31 @@ api-check: api-generate
 ## UI KIT
 
 [doc("
-Regenerate the UI Kit's coin icon indexes from the installed web3icons package.
+Regenerate the UI Kit's coin icon indexes from the installed web3icons package and the pinned Trust Wallet token metadata.
 ")]
 [group("UI Kit")]
 coin-icons-generate:
     @pnpm nx run @bitcart/ui-kit:generate:coin-icons
 
 [doc("
-Verify the committed coin icon indexes still match the installed web3icons package.
+Pin Trust Wallet's token metadata at a commit or branch of its assets registry, then regenerate the coin icon indexes.
+
+Example: `just coin-icons-sync`
+")]
+[group("UI Kit")]
+coin-icons-sync ref="master":
+    @pnpm nx run @bitcart/ui-kit:sync:trust-wallet-tokens --ref='{{ ref }}' --output-style=static
+    @just coin-icons-generate
+
+[doc("
+Verify the committed coin icon indexes still match the installed web3icons package and the pinned Trust Wallet token metadata.
 ")]
 [group("UI Kit")]
 coin-icons-check: coin-icons-generate
     #!/usr/bin/env sh
     drift=$(git status --porcelain -- 'packages/ui-kit/src/coin-icons/generated')
     if [ -n "$drift" ]; then
-        echo "The coin icon indexes do not match the installed web3icons package." >&2
+        echo "The coin icon indexes do not match web3icons and trust-wallet-tokens.gen.json." >&2
         echo "Run 'just coin-icons-generate' and commit the result." >&2
         echo "$drift" >&2
         exit 1

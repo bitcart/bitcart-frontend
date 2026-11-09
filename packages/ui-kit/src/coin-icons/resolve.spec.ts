@@ -4,6 +4,7 @@ import { resolveCoinIcon } from "./resolve"
 
 const USDT_ON_ETHEREUM = "0xdAC17F958D2ee523a2206206994597C13D831ec7"
 const USDT_ON_TRON = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
+const USDT_ON_BSC = "0x55d398326f99059fF775485246999027B3197955"
 const TRON = "tron:728126428"
 
 describe("resolveCoinIcon", () => {
@@ -33,6 +34,12 @@ describe("resolveCoinIcon", () => {
     )
   })
 
+  test("finds a token's icon by a contract only Trust Wallet's metadata links to it", async () => {
+    expect(
+      await resolveCoinIcon({ symbol: "anything", contract: USDT_ON_BSC, network: "eip155:56" }),
+    ).toBe(await resolveCoinIcon({ symbol: "usdt", contract: null, network: null }))
+  })
+
   test("finds a TRC-20 token's icon by its base58 contract", async () => {
     expect(
       await resolveCoinIcon({ symbol: "anything", contract: USDT_ON_TRON, network: TRON }),
@@ -52,10 +59,22 @@ describe("resolveCoinIcon", () => {
       "an unknown contract",
       { contract: "0x0000000000000000000000000000000000000001", network: "eip155:1" },
     ],
-    ["a contract on an unindexed chain", { contract: USDT_ON_ETHEREUM, network: "eip155:10" }],
     ["a contract without a chain", { contract: USDT_ON_ETHEREUM, network: null }],
   ])("finds no icon for a token with %s, even with a known ticker", async (_, token) => {
     expect(await resolveCoinIcon({ symbol: "usdt", ...token })).toBeNull()
+  })
+
+  test.each([
+    ["a testnet", "eip155:11155111"],
+    ["a chain without indexed contracts", "eip155:10"],
+  ])("finds a token's icon by its ticker on %s", async (_, network) => {
+    expect(
+      await resolveCoinIcon({
+        symbol: "usdt",
+        contract: "0x0000000000000000000000000000000000000001",
+        network,
+      }),
+    ).toBe(await resolveCoinIcon({ symbol: "usdt", contract: null, network: null }))
   })
 
   test("finds no icon for a coin web3icons lacks", async () => {
