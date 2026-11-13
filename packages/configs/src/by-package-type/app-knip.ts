@@ -5,12 +5,7 @@ type AppKnipConfig = Omit<WorkspaceProjectConfig, "entry" | "project"> & {
   project: string[]
 }
 
-export const APP_CONFIG_FILE_ENTRIES: string[] = [
-  "vite.config.ts",
-  "lingui.config.ts",
-  "env.config.ts",
-  "node-env.ts",
-]
+export const APP_CONFIG_FILE_ENTRIES: string[] = ["*.config.ts", "node-env.ts"]
 
 export const appKnipConfig: AppKnipConfig = {
   entry: [...APP_CONFIG_FILE_ENTRIES, "e2e/**/*.spec.ts"],

@@ -93,8 +93,6 @@ const config: KnipConfig = {
       ignore: [
         // TODO: Remove once each endpoint gets at least one exported wrapper.
         "src/endpoints/_internal/generated/**",
-
-        "scripts/**/*.ts",
       ],
     },
 
@@ -103,10 +101,8 @@ const config: KnipConfig = {
       project: ["src/**/*.ts"],
     },
 
-    //* Read by the Lingui CLI and the package's tsdown config.
-    "packages/form-kit": { entry: ["lingui.config.ts"] },
     "packages/ui-kit": {
-      entry: ["lingui.config.ts", "scripts/**/*.ts"],
+      entry: ["scripts/**/*.ts"],
       project: ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
     },
 
