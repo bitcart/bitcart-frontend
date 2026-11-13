@@ -174,3 +174,8 @@ peerDependencyRules:
     #* already accepts msw 3, and only browser mode uses it.
     # TODO: Remove once a vitest release ships https://github.com/vitest-dev/vitest/pull/11482
     "@vitest/mocker>msw": "3"
+
+    #* @vitejs/plugin-react, up to 6.3.0, caps `oxc-transform-react` below 0.157, but 0.157 only
+    #* adds TypeScript options to the transform the React Compiler integration calls.
+    # TODO: Remove once upstream widens the peer range (https://github.com/vitejs/vite-plugin-react/issues/1437)
+    "@vitejs/plugin-react>oxc-transform-react": "0.157"

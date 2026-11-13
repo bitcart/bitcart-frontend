@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url"
 
 import { getDefaultSelectors } from "eslint-plugin-better-tailwindcss/api/defaults"
 import { MatcherType, SelectorKind } from "eslint-plugin-better-tailwindcss/api/types"
-import { defineConfig } from "oxlint"
+import { defineConfig, type OxlintConfig } from "oxlint"
 import { theme } from "unocss/preset-wind4"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -51,7 +51,7 @@ const PRIMARY_TEXT_RESTRICTION = {
     "`text-primary-text`. Keep `text-primary` for text on a `primary-foreground` fill only.",
 }
 
-export const unocssOxlintConfig = defineConfig({
+export const unocssOxlintConfig: OxlintConfig = defineConfig({
   jsPlugins: ["eslint-plugin-better-tailwindcss", resolve(__dirname, "./classname-hygiene.ts")],
 
   rules: {

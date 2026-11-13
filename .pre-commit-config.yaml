@@ -37,6 +37,13 @@ repos:
         require_serial: true
         pass_filenames: false
         files: '(package\.json$|^pnpm-workspace\.yaml$|^pnpm-lock\.yaml$)'
+      - id: peers-check
+        name: peers-check
+        language: system
+        entry: pnpm peers check --lockfile-only
+        require_serial: true
+        pass_filenames: false
+        files: '(package\.json$|^pnpm-workspace\.yaml$|^pnpm-lock\.yaml$)'
       - id: format
         name: format
         language: system
