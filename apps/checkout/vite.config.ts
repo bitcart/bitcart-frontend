@@ -4,6 +4,7 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite"
 import viteReact from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 
+import { NODE_ENV_VITE_CONFIG } from "./node-env.ts"
 import { embedScripts } from "./vite-embed-scripts.ts"
 
 const DEV_ENV_PORT = 3002
@@ -48,10 +49,7 @@ export default defineConfig({
     tsconfigPaths: true,
   },
 
-  define: {
-    "import.meta.env.PRODUCTION_BASE_URL": JSON.stringify(process.env.PRODUCTION_BASE_URL),
-    "import.meta.env.PROJECT_CANONICAL_NAME": JSON.stringify(process.env.PROJECT_CANONICAL_NAME),
-  },
+  define: NODE_ENV_VITE_CONFIG,
 
   build: {
     assetsDir: "checkout/assets",

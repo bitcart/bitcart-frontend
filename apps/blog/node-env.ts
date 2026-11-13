@@ -1,5 +1,6 @@
 import { existsSync } from "node:fs"
 
+import { toViteEnvConfig } from "@bitcart/core/env"
 import { createEnv } from "@t3-oss/env-core"
 
 import { envConfig } from "./env.config.ts"
@@ -13,3 +14,5 @@ export const nodeEnv = createEnv({
   shared: envConfig.sharedEnvSchemas,
   runtimeEnv: process.env,
 })
+
+export const NODE_ENV_VITE_CONFIG = toViteEnvConfig(envConfig, nodeEnv)

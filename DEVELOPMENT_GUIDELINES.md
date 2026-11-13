@@ -43,7 +43,7 @@ The environment is specified by setting the `BITCART_ENV` environment variable.
 
 Only apps may vary their build output by environment. Library packages (`packages/*`) build identical output in every environment and share one Nx cache entry across all of them (`packageBuildInputs` in `nx.json`). A test build never replaces the `dist` read by a running dev server. To make a package build depend on `BITCART_ENV`, add `sharedGlobals` back to its build inputs.
 
-Environment variables are validated with `@t3-oss/env-core` + Zod schemas. Client-side variables must be prefixed with `BITCART_`.
+Environment variables are validated with `@t3-oss/env-core` + Zod schemas in Node only: each app's `node-env.ts` validates them during the build, and `vite.config.ts` injects the results through `define`, so `src/env.ts` and the client bundles stay free of Zod. Client-side variables must be prefixed with `BITCART_`. Every variable in `env.config.ts` ends up in the bundle, so none may hold a secret.
 
 Values come from `.env` files. The workspace root's `.env` holds what every app and tool shares, and an app's own `apps/<app>/.env` overrides it for that app; a variable already set in the shell overrides both. Nx loads both files for its tasks (along with `.env.local` and target-specific files such as `.env.build`), and each app's `node-env.ts` loads them for commands run outside Nx. Being gitignored, the files are invisible to Nx's file hashing, so a build only notices changes to their `BITCART_` lines, through the `runtime` input of each app's `build:main` target.
 

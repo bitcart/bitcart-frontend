@@ -14,7 +14,7 @@ import { nitro } from "nitro/vite"
 import { defineConfig } from "vite"
 import { imagetools } from "vite-imagetools"
 
-import { nodeEnv } from "./node-env.ts"
+import { nodeEnv, NODE_ENV_VITE_CONFIG } from "./node-env.ts"
 import { getSitePages, readPostFiles } from "./src/common/content/files.ts"
 import { NOT_FOUND_PAGE_PRERENDER_HEADER } from "./src/common/prerender.ts"
 
@@ -98,7 +98,5 @@ export default defineConfig({
     alias: nitroFumadocsResolveAliases,
   },
 
-  define: {
-    "import.meta.env.PRODUCTION_BASE_URL": JSON.stringify(PRODUCTION_BASE_URL),
-  },
+  define: NODE_ENV_VITE_CONFIG,
 })

@@ -1,11 +1,15 @@
 import { trackEvent } from "@bitcart/core/telemetry"
 import { useAppForm } from "@bitcart/form-kit/hooks"
+import { applyZodL10n } from "@bitcart/form-kit/validation"
 import { toast } from "@bitcart/ui-kit/utils"
 import { t } from "@lingui/core/macro"
 import { useMemo } from "react"
 import { capitalize, isNonNull } from "remeda"
 
 import { getCatalogSubmissionSchema, type CatalogSubmissionInputs } from "../model/schemas"
+
+//* This form is the app's only Zod consumer, so its localized messages load along with it.
+applyZodL10n()
 
 export const useCatalogSubmissionForm = () => {
   const validationSchema = useMemo(() => getCatalogSubmissionSchema(), [])

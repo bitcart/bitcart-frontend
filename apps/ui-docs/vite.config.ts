@@ -13,6 +13,8 @@ import mdx from "fumadocs-mdx/vite"
 import { nitro } from "nitro/vite"
 import { defineConfig } from "vite"
 
+import { NODE_ENV_VITE_CONFIG } from "./node-env.ts"
+
 const DEV_ENV_PORT = 3100
 
 export default defineConfig({
@@ -96,4 +98,6 @@ export default defineConfig({
     tsconfigPaths: true,
     alias: nitroFumadocsResolveAliases,
   },
+
+  define: NODE_ENV_VITE_CONFIG,
 })

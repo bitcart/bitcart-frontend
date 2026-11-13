@@ -1,5 +1,3 @@
-import process from "process"
-
 import { reactViteCodeSplittingGroups } from "@bitcart/configs/by-view-layer/react-vite"
 import { vikeViteDedupedPackages } from "@bitcart/configs/supplementary/vike-vite"
 import { lingui } from "@lingui/vite-plugin"
@@ -10,7 +8,7 @@ import vike from "vike/plugin"
 import { defineConfig } from "vite"
 
 import linguiConfig from "./lingui.config.ts"
-import { nodeEnv } from "./node-env.ts"
+import { nodeEnv, NODE_ENV_VITE_CONFIG } from "./node-env.ts"
 
 const DEV_ENV_PORT = 3001
 const { PRODUCTION_BASE_URL } = nodeEnv
@@ -75,10 +73,7 @@ export default defineConfig({
     tsconfigPaths: true,
   },
 
-  define: {
-    "import.meta.env.PRODUCTION_BASE_URL": JSON.stringify(process.env.PRODUCTION_BASE_URL),
-    "import.meta.env.PROJECT_CANONICAL_NAME": JSON.stringify(process.env.PROJECT_CANONICAL_NAME),
-  },
+  define: NODE_ENV_VITE_CONFIG,
 
   build: {
     sourcemap: true,

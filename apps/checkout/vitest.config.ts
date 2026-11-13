@@ -1,8 +1,22 @@
+import { toViteEnvConfig } from "@bitcart/core/env"
 import { lingui } from "@lingui/vite-plugin"
+import { createEnv } from "@t3-oss/env-core"
 import viteReact from "@vitejs/plugin-react"
 import { defineConfig } from "vitest/config"
 
+import { envConfig } from "./env.config.ts"
+
+//* The schemas' defaults, not `node-env.ts`: a developer's `.env` files must not change the results.
+const DEFAULT_ENV = createEnv({
+  clientPrefix: "BITCART_",
+  client: envConfig.clientEnvSchemas,
+  shared: envConfig.sharedEnvSchemas,
+  runtimeEnv: {},
+})
+
 export default defineConfig({
+  define: toViteEnvConfig(envConfig, DEFAULT_ENV),
+
   resolve: {
     tsconfigPaths: true,
   },
