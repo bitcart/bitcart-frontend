@@ -1,0 +1,61 @@
+{
+  "preferred_line_length": 100,
+  "tab_size": 2,
+  "inlay_hints": { "enabled": false },
+
+  "git_hosting_providers": [
+    {
+      "provider": "forgejo",
+      "name": "Bitcart Forge",
+      "base_url": "https://git.bitcart.ai"
+    }
+  ],
+
+  "languages": {
+    "JavaScript": {
+      "formatter": { "language_server": { "name": "oxfmt" } },
+
+      "code_actions_on_format": {
+        "source.fixAll.oxc": true
+      },
+
+      "language_servers": ["cspell", "oxfmt", "oxlint", "vtsls", "!eslint"]
+    },
+
+    "TypeScript": {
+      "formatter": { "language_server": { "name": "oxfmt" } },
+
+      "code_actions_on_format": {
+        "source.fixAll.oxc": true
+      },
+
+      "language_servers": [
+        "cspell",
+        "oxfmt",
+        "oxlint",
+        "unocss-language-server",
+        "vtsls",
+        "!eslint",
+        "!tailwindcss-language-server"
+      ]
+    },
+
+    "TSX": {
+      "formatter": { "language_server": { "name": "oxfmt" } },
+
+      "code_actions_on_format": {
+        "source.fixAll.oxc": true
+      },
+
+      "language_servers": [
+        "cspell",
+        "oxfmt",
+        "oxlint",
+        "unocss-language-server",
+        "vtsls",
+        "!eslint",
+        "!tailwindcss-language-server"
+      ]
+    }
+  }
+}
