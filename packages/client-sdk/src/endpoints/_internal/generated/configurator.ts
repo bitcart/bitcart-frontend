@@ -147,9 +147,7 @@ export type ConfiguratorGenerateDeploymentMutationError = globalThis.Error & {
 }
 export type ConfiguratorGenerateDeploymentMutationVariables = { data: ConfiguratorDeploySettings }
 
-/**
- * @summary Generate Deployment
- */
+/** @summary Generate Deployment */
 export const useConfiguratorGenerateDeployment = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -239,6 +237,7 @@ export type ConfiguratorGetDeployResultQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Deploy Result */
 export function useConfiguratorGetDeployResult<
   TData = Awaited<ReturnType<typeof configuratorGetDeployResult>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -261,6 +260,7 @@ export function useConfiguratorGetDeployResult<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Deploy Result */
 export function useConfiguratorGetDeployResult<
   TData = Awaited<ReturnType<typeof configuratorGetDeployResult>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -283,6 +283,7 @@ export function useConfiguratorGetDeployResult<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Deploy Result */
 export function useConfiguratorGetDeployResult<
   TData = Awaited<ReturnType<typeof configuratorGetDeployResult>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -297,10 +298,7 @@ export function useConfiguratorGetDeployResult<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Deploy Result
- */
-
+/** @summary Get Deploy Result */
 export function useConfiguratorGetDeployResult<
   TData = Awaited<ReturnType<typeof configuratorGetDeployResult>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -370,6 +368,7 @@ export type ConfiguratorGetDeployResultSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Deploy Result */
 export function useConfiguratorGetDeployResultSuspense<
   TData = Awaited<ReturnType<typeof configuratorGetDeployResult>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -388,6 +387,7 @@ export function useConfiguratorGetDeployResultSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Deploy Result */
 export function useConfiguratorGetDeployResultSuspense<
   TData = Awaited<ReturnType<typeof configuratorGetDeployResult>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -406,6 +406,7 @@ export function useConfiguratorGetDeployResultSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Deploy Result */
 export function useConfiguratorGetDeployResultSuspense<
   TData = Awaited<ReturnType<typeof configuratorGetDeployResult>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -424,10 +425,7 @@ export function useConfiguratorGetDeployResultSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Deploy Result
- */
-
+/** @summary Get Deploy Result */
 export function useConfiguratorGetDeployResultSuspense<
   TData = Awaited<ReturnType<typeof configuratorGetDeployResult>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -556,9 +554,7 @@ export type ConfiguratorGetServerSettingsMutationVariables = {
   data?: ConfiguratorSSHSettings | null
 }
 
-/**
- * @summary Get Server Settings
- */
+/** @summary Get Server Settings */
 export const useConfiguratorGetServerSettings = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -660,6 +656,7 @@ export type ConfiguratorCheckDnsEntryQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Check Dns Entry */
 export function useConfiguratorCheckDnsEntry<
   TData = Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -682,6 +679,7 @@ export function useConfiguratorCheckDnsEntry<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Dns Entry */
 export function useConfiguratorCheckDnsEntry<
   TData = Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -704,6 +702,7 @@ export function useConfiguratorCheckDnsEntry<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Dns Entry */
 export function useConfiguratorCheckDnsEntry<
   TData = Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -718,10 +717,7 @@ export function useConfiguratorCheckDnsEntry<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Check Dns Entry
- */
-
+/** @summary Check Dns Entry */
 export function useConfiguratorCheckDnsEntry<
   TData = Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -787,6 +783,7 @@ export type ConfiguratorCheckDnsEntrySuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Check Dns Entry */
 export function useConfiguratorCheckDnsEntrySuspense<
   TData = Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -801,6 +798,7 @@ export function useConfiguratorCheckDnsEntrySuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Dns Entry */
 export function useConfiguratorCheckDnsEntrySuspense<
   TData = Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -815,6 +813,7 @@ export function useConfiguratorCheckDnsEntrySuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Dns Entry */
 export function useConfiguratorCheckDnsEntrySuspense<
   TData = Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -829,10 +828,7 @@ export function useConfiguratorCheckDnsEntrySuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Check Dns Entry
- */
-
+/** @summary Check Dns Entry */
 export function useConfiguratorCheckDnsEntrySuspense<
   TData = Awaited<ReturnType<typeof configuratorCheckDnsEntry>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },

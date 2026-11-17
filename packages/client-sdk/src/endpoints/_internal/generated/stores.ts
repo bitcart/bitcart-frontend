@@ -142,6 +142,7 @@ export type StoresListItemsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useStoresListItems<
   TData = Awaited<ReturnType<typeof storesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -162,6 +163,7 @@ export function useStoresListItems<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useStoresListItems<
   TData = Awaited<ReturnType<typeof storesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -182,6 +184,7 @@ export function useStoresListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useStoresListItems<
   TData = Awaited<ReturnType<typeof storesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -194,10 +197,7 @@ export function useStoresListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useStoresListItems<
   TData = Awaited<ReturnType<typeof storesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -258,6 +258,7 @@ export type StoresListItemsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useStoresListItemsSuspense<
   TData = Awaited<ReturnType<typeof storesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -272,6 +273,7 @@ export function useStoresListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useStoresListItemsSuspense<
   TData = Awaited<ReturnType<typeof storesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -286,6 +288,7 @@ export function useStoresListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useStoresListItemsSuspense<
   TData = Awaited<ReturnType<typeof storesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -300,10 +303,7 @@ export function useStoresListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useStoresListItemsSuspense<
   TData = Awaited<ReturnType<typeof storesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -427,9 +427,7 @@ export type StoresCreateItemMutationError = globalThis.Error & {
 }
 export type StoresCreateItemMutationVariables = { data: CreateStore }
 
-/**
- * @summary Create Item
- */
+/** @summary Create Item */
 export const useStoresCreateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -507,6 +505,7 @@ export const getStoresGetCountQueryOptions = <
 export type StoresGetCountQueryResult = NonNullable<Awaited<ReturnType<typeof storesGetCount>>>
 export type StoresGetCountQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useStoresGetCount<
   TData = Awaited<ReturnType<typeof storesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -526,6 +525,7 @@ export function useStoresGetCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useStoresGetCount<
   TData = Awaited<ReturnType<typeof storesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -545,6 +545,7 @@ export function useStoresGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useStoresGetCount<
   TData = Awaited<ReturnType<typeof storesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -556,10 +557,7 @@ export function useStoresGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useStoresGetCount<
   TData = Awaited<ReturnType<typeof storesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -616,6 +614,7 @@ export type StoresGetCountSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Count */
 export function useStoresGetCountSuspense<
   TData = Awaited<ReturnType<typeof storesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -629,6 +628,7 @@ export function useStoresGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useStoresGetCountSuspense<
   TData = Awaited<ReturnType<typeof storesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -642,6 +642,7 @@ export function useStoresGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useStoresGetCountSuspense<
   TData = Awaited<ReturnType<typeof storesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -655,10 +656,7 @@ export function useStoresGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useStoresGetCountSuspense<
   TData = Awaited<ReturnType<typeof storesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -782,9 +780,7 @@ export type StoresUpdateItemMutationError = globalThis.Error & {
 }
 export type StoresUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateStore }
 
-/**
- * @summary Update Item
- */
+/** @summary Update Item */
 export const useStoresUpdateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -886,9 +882,7 @@ export type StoresDeleteItemMutationError = globalThis.Error & {
 }
 export type StoresDeleteItemMutationVariables = { itemId: string }
 
-/**
- * @summary Delete Item
- */
+/** @summary Delete Item */
 export const useStoresDeleteItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1012,9 +1006,7 @@ export type StoresBatchActionMutationError = globalThis.Error & {
 }
 export type StoresBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const useStoresBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1099,6 +1091,7 @@ export type StoresGetItemQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useStoresGetItem<
   TData = Awaited<ReturnType<typeof storesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1119,6 +1112,7 @@ export function useStoresGetItem<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useStoresGetItem<
   TData = Awaited<ReturnType<typeof storesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1139,6 +1133,7 @@ export function useStoresGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useStoresGetItem<
   TData = Awaited<ReturnType<typeof storesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1151,10 +1146,7 @@ export function useStoresGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useStoresGetItem<
   TData = Awaited<ReturnType<typeof storesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1215,6 +1207,7 @@ export type StoresGetItemSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useStoresGetItemSuspense<
   TData = Awaited<ReturnType<typeof storesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1229,6 +1222,7 @@ export function useStoresGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useStoresGetItemSuspense<
   TData = Awaited<ReturnType<typeof storesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1243,6 +1237,7 @@ export function useStoresGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useStoresGetItemSuspense<
   TData = Awaited<ReturnType<typeof storesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1257,10 +1252,7 @@ export function useStoresGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useStoresGetItemSuspense<
   TData = Awaited<ReturnType<typeof storesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1346,6 +1338,7 @@ export type StoresPingEmailQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Ping Email */
 export function useStoresPingEmail<
   TData = Awaited<ReturnType<typeof storesPingEmail>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1366,6 +1359,7 @@ export function useStoresPingEmail<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Ping Email */
 export function useStoresPingEmail<
   TData = Awaited<ReturnType<typeof storesPingEmail>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1386,6 +1380,7 @@ export function useStoresPingEmail<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Ping Email */
 export function useStoresPingEmail<
   TData = Awaited<ReturnType<typeof storesPingEmail>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1398,10 +1393,7 @@ export function useStoresPingEmail<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Ping Email
- */
-
+/** @summary Ping Email */
 export function useStoresPingEmail<
   TData = Awaited<ReturnType<typeof storesPingEmail>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1462,6 +1454,7 @@ export type StoresPingEmailSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Ping Email */
 export function useStoresPingEmailSuspense<
   TData = Awaited<ReturnType<typeof storesPingEmail>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1476,6 +1469,7 @@ export function useStoresPingEmailSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Ping Email */
 export function useStoresPingEmailSuspense<
   TData = Awaited<ReturnType<typeof storesPingEmail>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1490,6 +1484,7 @@ export function useStoresPingEmailSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Ping Email */
 export function useStoresPingEmailSuspense<
   TData = Awaited<ReturnType<typeof storesPingEmail>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1504,10 +1499,7 @@ export function useStoresPingEmailSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Ping Email
- */
-
+/** @summary Ping Email */
 export function useStoresPingEmailSuspense<
   TData = Awaited<ReturnType<typeof storesPingEmail>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1636,9 +1628,7 @@ export type StoresSetStoreCheckoutSettingsMutationVariables = {
   data: StoreCheckoutSettings
 }
 
-/**
- * @summary Set Store Checkout Settings
- */
+/** @summary Set Store Checkout Settings */
 export const useStoresSetStoreCheckoutSettings = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1763,9 +1753,7 @@ export type StoresSetStoreEmailSettingsMutationError = globalThis.Error & {
 }
 export type StoresSetStoreEmailSettingsMutationVariables = { modelId: string; data: EmailSettings }
 
-/**
- * @summary Set Store Email Settings
- */
+/** @summary Set Store Email Settings */
 export const useStoresSetStoreEmailSettings = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1893,9 +1881,7 @@ export type StoresSetStoreThemeSettingsMutationVariables = {
   data: StoreThemeSettings
 }
 
-/**
- * @summary Set Store Theme Settings
- */
+/** @summary Set Store Theme Settings */
 export const useStoresSetStoreThemeSettings = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2023,9 +2009,7 @@ export type StoresSetStorePluginSettingsMutationVariables = {
   data: StorePluginSettings
 }
 
-/**
- * @summary Set Store Plugin Settings
- */
+/** @summary Set Store Plugin Settings */
 export const useStoresSetStorePluginSettings = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2147,9 +2131,7 @@ export type StoresSetStoreRateRulesMutationError = globalThis.Error & {
 }
 export type StoresSetStoreRateRulesMutationVariables = { modelId: string; data?: string }
 
-/**
- * @summary Set Store Rate Rules
- */
+/** @summary Set Store Rate Rules */
 export const useStoresSetStoreRateRules = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2258,6 +2240,7 @@ export type StoresGetStoreRatesQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Store Rates */
 export function useStoresGetStoreRates<
   TData = Awaited<ReturnType<typeof storesGetStoreRates>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2281,6 +2264,7 @@ export function useStoresGetStoreRates<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Store Rates */
 export function useStoresGetStoreRates<
   TData = Awaited<ReturnType<typeof storesGetStoreRates>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2304,6 +2288,7 @@ export function useStoresGetStoreRates<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Store Rates */
 export function useStoresGetStoreRates<
   TData = Awaited<ReturnType<typeof storesGetStoreRates>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2317,10 +2302,7 @@ export function useStoresGetStoreRates<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Store Rates
- */
-
+/** @summary Get Store Rates */
 export function useStoresGetStoreRates<
   TData = Awaited<ReturnType<typeof storesGetStoreRates>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2383,6 +2365,7 @@ export type StoresGetStoreRatesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Store Rates */
 export function useStoresGetStoreRatesSuspense<
   TData = Awaited<ReturnType<typeof storesGetStoreRates>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2398,6 +2381,7 @@ export function useStoresGetStoreRatesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Store Rates */
 export function useStoresGetStoreRatesSuspense<
   TData = Awaited<ReturnType<typeof storesGetStoreRates>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2413,6 +2397,7 @@ export function useStoresGetStoreRatesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Store Rates */
 export function useStoresGetStoreRatesSuspense<
   TData = Awaited<ReturnType<typeof storesGetStoreRates>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2428,10 +2413,7 @@ export function useStoresGetStoreRatesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Store Rates
- */
-
+/** @summary Get Store Rates */
 export function useStoresGetStoreRatesSuspense<
   TData = Awaited<ReturnType<typeof storesGetStoreRates>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },

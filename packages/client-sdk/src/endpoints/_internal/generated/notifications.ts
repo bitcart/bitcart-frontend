@@ -119,6 +119,7 @@ export type NotificationsGetNotificationsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Notifications */
 export function useNotificationsGetNotifications<
   TData = Awaited<ReturnType<typeof notificationsGetNotifications>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -140,6 +141,7 @@ export function useNotificationsGetNotifications<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Notifications */
 export function useNotificationsGetNotifications<
   TData = Awaited<ReturnType<typeof notificationsGetNotifications>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -161,6 +163,7 @@ export function useNotificationsGetNotifications<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Notifications */
 export function useNotificationsGetNotifications<
   TData = Awaited<ReturnType<typeof notificationsGetNotifications>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -174,10 +177,7 @@ export function useNotificationsGetNotifications<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Notifications
- */
-
+/** @summary Get Notifications */
 export function useNotificationsGetNotifications<
   TData = Awaited<ReturnType<typeof notificationsGetNotifications>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -243,6 +243,7 @@ export type NotificationsGetNotificationsSuspenseQueryError = globalThis.Error &
   status?: number
 }
 
+/** @summary Get Notifications */
 export function useNotificationsGetNotificationsSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetNotifications>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -260,6 +261,7 @@ export function useNotificationsGetNotificationsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Notifications */
 export function useNotificationsGetNotificationsSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetNotifications>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -277,6 +279,7 @@ export function useNotificationsGetNotificationsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Notifications */
 export function useNotificationsGetNotificationsSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetNotifications>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -294,10 +297,7 @@ export function useNotificationsGetNotificationsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Notifications
- */
-
+/** @summary Get Notifications */
 export function useNotificationsGetNotificationsSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetNotifications>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -384,6 +384,7 @@ export type NotificationsGetNotificationsSchemaQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Notifications Schema */
 export function useNotificationsGetNotificationsSchema<
   TData = Awaited<ReturnType<typeof notificationsGetNotificationsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -409,6 +410,7 @@ export function useNotificationsGetNotificationsSchema<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Notifications Schema */
 export function useNotificationsGetNotificationsSchema<
   TData = Awaited<ReturnType<typeof notificationsGetNotificationsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -434,6 +436,7 @@ export function useNotificationsGetNotificationsSchema<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Notifications Schema */
 export function useNotificationsGetNotificationsSchema<
   TData = Awaited<ReturnType<typeof notificationsGetNotificationsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -451,10 +454,7 @@ export function useNotificationsGetNotificationsSchema<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Notifications Schema
- */
-
+/** @summary Get Notifications Schema */
 export function useNotificationsGetNotificationsSchema<
   TData = Awaited<ReturnType<typeof notificationsGetNotificationsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -524,6 +524,7 @@ export type NotificationsGetNotificationsSchemaSuspenseQueryError = globalThis.E
   status?: number
 }
 
+/** @summary Get Notifications Schema */
 export function useNotificationsGetNotificationsSchemaSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetNotificationsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -541,6 +542,7 @@ export function useNotificationsGetNotificationsSchemaSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Notifications Schema */
 export function useNotificationsGetNotificationsSchemaSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetNotificationsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -558,6 +560,7 @@ export function useNotificationsGetNotificationsSchemaSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Notifications Schema */
 export function useNotificationsGetNotificationsSchemaSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetNotificationsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -575,10 +578,7 @@ export function useNotificationsGetNotificationsSchemaSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Notifications Schema
- */
-
+/** @summary Get Notifications Schema */
 export function useNotificationsGetNotificationsSchemaSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetNotificationsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -684,6 +684,7 @@ export type NotificationsListItemsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useNotificationsListItems<
   TData = Awaited<ReturnType<typeof notificationsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -706,6 +707,7 @@ export function useNotificationsListItems<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useNotificationsListItems<
   TData = Awaited<ReturnType<typeof notificationsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -728,6 +730,7 @@ export function useNotificationsListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useNotificationsListItems<
   TData = Awaited<ReturnType<typeof notificationsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -742,10 +745,7 @@ export function useNotificationsListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useNotificationsListItems<
   TData = Awaited<ReturnType<typeof notificationsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -810,6 +810,7 @@ export type NotificationsListItemsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useNotificationsListItemsSuspense<
   TData = Awaited<ReturnType<typeof notificationsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -824,6 +825,7 @@ export function useNotificationsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useNotificationsListItemsSuspense<
   TData = Awaited<ReturnType<typeof notificationsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -838,6 +840,7 @@ export function useNotificationsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useNotificationsListItemsSuspense<
   TData = Awaited<ReturnType<typeof notificationsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -852,10 +855,7 @@ export function useNotificationsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useNotificationsListItemsSuspense<
   TData = Awaited<ReturnType<typeof notificationsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -979,9 +979,7 @@ export type NotificationsCreateItemMutationError = globalThis.Error & {
 }
 export type NotificationsCreateItemMutationVariables = { data: CreateNotification }
 
-/**
- * @summary Create Item
- */
+/** @summary Create Item */
 export const useNotificationsCreateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1061,6 +1059,7 @@ export type NotificationsGetCountQueryResult = NonNullable<
 >
 export type NotificationsGetCountQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useNotificationsGetCount<
   TData = Awaited<ReturnType<typeof notificationsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1082,6 +1081,7 @@ export function useNotificationsGetCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useNotificationsGetCount<
   TData = Awaited<ReturnType<typeof notificationsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1103,6 +1103,7 @@ export function useNotificationsGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useNotificationsGetCount<
   TData = Awaited<ReturnType<typeof notificationsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1116,10 +1117,7 @@ export function useNotificationsGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useNotificationsGetCount<
   TData = Awaited<ReturnType<typeof notificationsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1180,6 +1178,7 @@ export type NotificationsGetCountSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Count */
 export function useNotificationsGetCountSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1193,6 +1192,7 @@ export function useNotificationsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useNotificationsGetCountSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1206,6 +1206,7 @@ export function useNotificationsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useNotificationsGetCountSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1219,10 +1220,7 @@ export function useNotificationsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useNotificationsGetCountSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1313,6 +1311,7 @@ export type NotificationsGetItemQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useNotificationsGetItem<
   TData = Awaited<ReturnType<typeof notificationsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1335,6 +1334,7 @@ export function useNotificationsGetItem<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useNotificationsGetItem<
   TData = Awaited<ReturnType<typeof notificationsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1357,6 +1357,7 @@ export function useNotificationsGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useNotificationsGetItem<
   TData = Awaited<ReturnType<typeof notificationsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1371,10 +1372,7 @@ export function useNotificationsGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useNotificationsGetItem<
   TData = Awaited<ReturnType<typeof notificationsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1437,6 +1435,7 @@ export type NotificationsGetItemSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useNotificationsGetItemSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1451,6 +1450,7 @@ export function useNotificationsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useNotificationsGetItemSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1465,6 +1465,7 @@ export function useNotificationsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useNotificationsGetItemSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1479,10 +1480,7 @@ export function useNotificationsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useNotificationsGetItemSuspense<
   TData = Awaited<ReturnType<typeof notificationsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1610,9 +1608,7 @@ export type NotificationsUpdateItemMutationVariables = {
   data: OptionalUpdateNotification
 }
 
-/**
- * @summary Update Item
- */
+/** @summary Update Item */
 export const useNotificationsUpdateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1714,9 +1710,7 @@ export type NotificationsDeleteItemMutationError = globalThis.Error & {
 }
 export type NotificationsDeleteItemMutationVariables = { itemId: string }
 
-/**
- * @summary Delete Item
- */
+/** @summary Delete Item */
 export const useNotificationsDeleteItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1842,9 +1836,7 @@ export type NotificationsBatchActionMutationError = globalThis.Error & {
 }
 export type NotificationsBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const useNotificationsBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,

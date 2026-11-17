@@ -96,6 +96,7 @@ export type UpdateCheckUpdatesQueryResult = NonNullable<
 >
 export type UpdateCheckUpdatesQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Check Updates */
 export function useUpdateCheckUpdates<
   TData = Awaited<ReturnType<typeof updateCheckUpdates>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -115,6 +116,7 @@ export function useUpdateCheckUpdates<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Updates */
 export function useUpdateCheckUpdates<
   TData = Awaited<ReturnType<typeof updateCheckUpdates>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -136,6 +138,7 @@ export function useUpdateCheckUpdates<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Updates */
 export function useUpdateCheckUpdates<
   TData = Awaited<ReturnType<typeof updateCheckUpdates>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -147,10 +150,7 @@ export function useUpdateCheckUpdates<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Check Updates
- */
-
+/** @summary Check Updates */
 export function useUpdateCheckUpdates<
   TData = Awaited<ReturnType<typeof updateCheckUpdates>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -207,6 +207,7 @@ export type UpdateCheckUpdatesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Check Updates */
 export function useUpdateCheckUpdatesSuspense<
   TData = Awaited<ReturnType<typeof updateCheckUpdates>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -220,6 +221,7 @@ export function useUpdateCheckUpdatesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Updates */
 export function useUpdateCheckUpdatesSuspense<
   TData = Awaited<ReturnType<typeof updateCheckUpdates>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -233,6 +235,7 @@ export function useUpdateCheckUpdatesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Updates */
 export function useUpdateCheckUpdatesSuspense<
   TData = Awaited<ReturnType<typeof updateCheckUpdates>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -246,10 +249,7 @@ export function useUpdateCheckUpdatesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Check Updates
- */
-
+/** @summary Check Updates */
 export function useUpdateCheckUpdatesSuspense<
   TData = Awaited<ReturnType<typeof updateCheckUpdates>>,
   TError = globalThis.Error & { info?: unknown; status?: number },

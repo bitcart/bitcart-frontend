@@ -165,9 +165,7 @@ export type TokenCreateTokenMutationError = globalThis.Error & {
 }
 export type TokenCreateTokenMutationVariables = { data?: HTTPCreateLoginToken | null }
 
-/**
- * @summary Create Token
- */
+/** @summary Create Token */
 export const useTokenCreateToken = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -272,6 +270,7 @@ export type TokenGetTokensQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Tokens */
 export function useTokenGetTokens<
   TData = Awaited<ReturnType<typeof tokenGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -292,6 +291,7 @@ export function useTokenGetTokens<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens */
 export function useTokenGetTokens<
   TData = Awaited<ReturnType<typeof tokenGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -312,6 +312,7 @@ export function useTokenGetTokens<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens */
 export function useTokenGetTokens<
   TData = Awaited<ReturnType<typeof tokenGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -324,10 +325,7 @@ export function useTokenGetTokens<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Tokens
- */
-
+/** @summary Get Tokens */
 export function useTokenGetTokens<
   TData = Awaited<ReturnType<typeof tokenGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -388,6 +386,7 @@ export type TokenGetTokensSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Tokens */
 export function useTokenGetTokensSuspense<
   TData = Awaited<ReturnType<typeof tokenGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -402,6 +401,7 @@ export function useTokenGetTokensSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens */
 export function useTokenGetTokensSuspense<
   TData = Awaited<ReturnType<typeof tokenGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -416,6 +416,7 @@ export function useTokenGetTokensSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens */
 export function useTokenGetTokensSuspense<
   TData = Awaited<ReturnType<typeof tokenGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -430,10 +431,7 @@ export function useTokenGetTokensSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Tokens
- */
-
+/** @summary Get Tokens */
 export function useTokenGetTokensSuspense<
   TData = Awaited<ReturnType<typeof tokenGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -583,9 +581,7 @@ export type TokenCreateOauth2TokenMutationError = globalThis.Error & {
 }
 export type TokenCreateOauth2TokenMutationVariables = { data: BodyTokenCreateOauth2Token }
 
-/**
- * @summary Create Oauth2 Token
- */
+/** @summary Create Oauth2 Token */
 export const useTokenCreateOauth2Token = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -706,9 +702,7 @@ export type TokenCreateTokenTotpAuthMutationError = globalThis.Error & {
 }
 export type TokenCreateTokenTotpAuthMutationVariables = { data: TOTPAuth }
 
-/**
- * @summary Create Token Totp Auth
- */
+/** @summary Create Token Totp Auth */
 export const useTokenCreateTokenTotpAuth = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -830,9 +824,7 @@ export type TokenCreateTokenFido2BeginMutationError = globalThis.Error & {
 }
 export type TokenCreateTokenFido2BeginMutationVariables = { data: FIDO2Auth }
 
-/**
- * @summary Create Token Fido2 Begin
- */
+/** @summary Create Token Fido2 Begin */
 export const useTokenCreateTokenFido2Begin = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -929,9 +921,7 @@ export type TokenCreateTokenFido2CompleteMutationError = globalThis.Error & {
   status?: number
 }
 
-/**
- * @summary Create Token Fido2 Complete
- */
+/** @summary Create Token Fido2 Complete */
 export const useTokenCreateTokenFido2Complete = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1033,9 +1023,7 @@ export type TokenDeleteTokenMutationError = globalThis.Error & {
 }
 export type TokenDeleteTokenMutationVariables = { tokenId: string }
 
-/**
- * @summary Delete Token
- */
+/** @summary Delete Token */
 export const useTokenDeleteToken = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1114,6 +1102,7 @@ export type TokenGetCurrentTokenQueryResult = NonNullable<
 >
 export type TokenGetCurrentTokenQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Current Token */
 export function useTokenGetCurrentToken<
   TData = Awaited<ReturnType<typeof tokenGetCurrentToken>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1135,6 +1124,7 @@ export function useTokenGetCurrentToken<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Current Token */
 export function useTokenGetCurrentToken<
   TData = Awaited<ReturnType<typeof tokenGetCurrentToken>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1156,6 +1146,7 @@ export function useTokenGetCurrentToken<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Current Token */
 export function useTokenGetCurrentToken<
   TData = Awaited<ReturnType<typeof tokenGetCurrentToken>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1169,10 +1160,7 @@ export function useTokenGetCurrentToken<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Current Token
- */
-
+/** @summary Get Current Token */
 export function useTokenGetCurrentToken<
   TData = Awaited<ReturnType<typeof tokenGetCurrentToken>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1231,6 +1219,7 @@ export type TokenGetCurrentTokenSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Current Token */
 export function useTokenGetCurrentTokenSuspense<
   TData = Awaited<ReturnType<typeof tokenGetCurrentToken>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1244,6 +1233,7 @@ export function useTokenGetCurrentTokenSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Current Token */
 export function useTokenGetCurrentTokenSuspense<
   TData = Awaited<ReturnType<typeof tokenGetCurrentToken>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1257,6 +1247,7 @@ export function useTokenGetCurrentTokenSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Current Token */
 export function useTokenGetCurrentTokenSuspense<
   TData = Awaited<ReturnType<typeof tokenGetCurrentToken>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1270,10 +1261,7 @@ export function useTokenGetCurrentTokenSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Current Token
- */
-
+/** @summary Get Current Token */
 export function useTokenGetCurrentTokenSuspense<
   TData = Awaited<ReturnType<typeof tokenGetCurrentToken>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1381,6 +1369,7 @@ export type TokenGetTokenCountQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Token Count */
 export function useTokenGetTokenCount<
   TData = Awaited<ReturnType<typeof tokenGetTokenCount>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1401,6 +1390,7 @@ export function useTokenGetTokenCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Token Count */
 export function useTokenGetTokenCount<
   TData = Awaited<ReturnType<typeof tokenGetTokenCount>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1423,6 +1413,7 @@ export function useTokenGetTokenCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Token Count */
 export function useTokenGetTokenCount<
   TData = Awaited<ReturnType<typeof tokenGetTokenCount>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1435,10 +1426,7 @@ export function useTokenGetTokenCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Token Count
- */
-
+/** @summary Get Token Count */
 export function useTokenGetTokenCount<
   TData = Awaited<ReturnType<typeof tokenGetTokenCount>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1499,6 +1487,7 @@ export type TokenGetTokenCountSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Token Count */
 export function useTokenGetTokenCountSuspense<
   TData = Awaited<ReturnType<typeof tokenGetTokenCount>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1513,6 +1502,7 @@ export function useTokenGetTokenCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Token Count */
 export function useTokenGetTokenCountSuspense<
   TData = Awaited<ReturnType<typeof tokenGetTokenCount>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1527,6 +1517,7 @@ export function useTokenGetTokenCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Token Count */
 export function useTokenGetTokenCountSuspense<
   TData = Awaited<ReturnType<typeof tokenGetTokenCount>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1541,10 +1532,7 @@ export function useTokenGetTokenCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Token Count
- */
-
+/** @summary Get Token Count */
 export function useTokenGetTokenCountSuspense<
   TData = Awaited<ReturnType<typeof tokenGetTokenCount>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1667,9 +1655,7 @@ export type TokenPatchTokenMutationError = globalThis.Error & {
 }
 export type TokenPatchTokenMutationVariables = { modelId: string; data: EditToken }
 
-/**
- * @summary Patch Token
- */
+/** @summary Patch Token */
 export const useTokenPatchToken = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1793,9 +1779,7 @@ export type TokenBatchActionMutationError = globalThis.Error & {
 }
 export type TokenBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const useTokenBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,

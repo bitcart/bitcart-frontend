@@ -94,6 +94,7 @@ export const getHealthLiveQueryOptions = <
 export type HealthLiveQueryResult = NonNullable<Awaited<ReturnType<typeof healthLive>>>
 export type HealthLiveQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Live */
 export function useHealthLive<
   TData = Awaited<ReturnType<typeof healthLive>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -113,6 +114,7 @@ export function useHealthLive<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Live */
 export function useHealthLive<
   TData = Awaited<ReturnType<typeof healthLive>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -132,6 +134,7 @@ export function useHealthLive<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Live */
 export function useHealthLive<
   TData = Awaited<ReturnType<typeof healthLive>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -143,10 +146,7 @@ export function useHealthLive<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Live
- */
-
+/** @summary Live */
 export function useHealthLive<
   TData = Awaited<ReturnType<typeof healthLive>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -196,6 +196,7 @@ export const getHealthLiveSuspenseQueryOptions = <
 export type HealthLiveSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof healthLive>>>
 export type HealthLiveSuspenseQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Live */
 export function useHealthLiveSuspense<
   TData = Awaited<ReturnType<typeof healthLive>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -207,6 +208,7 @@ export function useHealthLiveSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Live */
 export function useHealthLiveSuspense<
   TData = Awaited<ReturnType<typeof healthLive>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -218,6 +220,7 @@ export function useHealthLiveSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Live */
 export function useHealthLiveSuspense<
   TData = Awaited<ReturnType<typeof healthLive>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -229,10 +232,7 @@ export function useHealthLiveSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Live
- */
-
+/** @summary Live */
 export function useHealthLiveSuspense<
   TData = Awaited<ReturnType<typeof healthLive>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -307,6 +307,7 @@ export const getHealthReadyQueryOptions = <
 export type HealthReadyQueryResult = NonNullable<Awaited<ReturnType<typeof healthReady>>>
 export type HealthReadyQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Ready */
 export function useHealthReady<
   TData = Awaited<ReturnType<typeof healthReady>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -326,6 +327,7 @@ export function useHealthReady<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Ready */
 export function useHealthReady<
   TData = Awaited<ReturnType<typeof healthReady>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -345,6 +347,7 @@ export function useHealthReady<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Ready */
 export function useHealthReady<
   TData = Awaited<ReturnType<typeof healthReady>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -356,10 +359,7 @@ export function useHealthReady<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Ready
- */
-
+/** @summary Ready */
 export function useHealthReady<
   TData = Awaited<ReturnType<typeof healthReady>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -409,6 +409,7 @@ export const getHealthReadySuspenseQueryOptions = <
 export type HealthReadySuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof healthReady>>>
 export type HealthReadySuspenseQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Ready */
 export function useHealthReadySuspense<
   TData = Awaited<ReturnType<typeof healthReady>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -420,6 +421,7 @@ export function useHealthReadySuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Ready */
 export function useHealthReadySuspense<
   TData = Awaited<ReturnType<typeof healthReady>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -431,6 +433,7 @@ export function useHealthReadySuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Ready */
 export function useHealthReadySuspense<
   TData = Awaited<ReturnType<typeof healthReady>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -442,10 +445,7 @@ export function useHealthReadySuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Ready
- */
-
+/** @summary Ready */
 export function useHealthReadySuspense<
   TData = Awaited<ReturnType<typeof healthReady>>,
   TError = globalThis.Error & { info?: unknown; status?: number },

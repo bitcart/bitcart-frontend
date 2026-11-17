@@ -90,6 +90,7 @@ export const getTorGetServicesQueryOptions = <
 export type TorGetServicesQueryResult = NonNullable<Awaited<ReturnType<typeof torGetServices>>>
 export type TorGetServicesQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Services */
 export function useTorGetServices<
   TData = Awaited<ReturnType<typeof torGetServices>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -109,6 +110,7 @@ export function useTorGetServices<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Services */
 export function useTorGetServices<
   TData = Awaited<ReturnType<typeof torGetServices>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -128,6 +130,7 @@ export function useTorGetServices<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Services */
 export function useTorGetServices<
   TData = Awaited<ReturnType<typeof torGetServices>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -139,10 +142,7 @@ export function useTorGetServices<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Services
- */
-
+/** @summary Get Services */
 export function useTorGetServices<
   TData = Awaited<ReturnType<typeof torGetServices>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -199,6 +199,7 @@ export type TorGetServicesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Services */
 export function useTorGetServicesSuspense<
   TData = Awaited<ReturnType<typeof torGetServices>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -212,6 +213,7 @@ export function useTorGetServicesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Services */
 export function useTorGetServicesSuspense<
   TData = Awaited<ReturnType<typeof torGetServices>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -225,6 +227,7 @@ export function useTorGetServicesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Services */
 export function useTorGetServicesSuspense<
   TData = Awaited<ReturnType<typeof torGetServices>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -238,10 +241,7 @@ export function useTorGetServicesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Services
- */
-
+/** @summary Get Services */
 export function useTorGetServicesSuspense<
   TData = Awaited<ReturnType<typeof torGetServices>>,
   TError = globalThis.Error & { info?: unknown; status?: number },

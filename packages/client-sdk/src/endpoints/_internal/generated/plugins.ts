@@ -107,6 +107,7 @@ export type PluginsGetPluginsQueryResult = NonNullable<
 >
 export type PluginsGetPluginsQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Plugins */
 export function usePluginsGetPlugins<
   TData = Awaited<ReturnType<typeof pluginsGetPlugins>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -126,6 +127,7 @@ export function usePluginsGetPlugins<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugins */
 export function usePluginsGetPlugins<
   TData = Awaited<ReturnType<typeof pluginsGetPlugins>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -145,6 +147,7 @@ export function usePluginsGetPlugins<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugins */
 export function usePluginsGetPlugins<
   TData = Awaited<ReturnType<typeof pluginsGetPlugins>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -156,10 +159,7 @@ export function usePluginsGetPlugins<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Plugins
- */
-
+/** @summary Get Plugins */
 export function usePluginsGetPlugins<
   TData = Awaited<ReturnType<typeof pluginsGetPlugins>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -216,6 +216,7 @@ export type PluginsGetPluginsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Plugins */
 export function usePluginsGetPluginsSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPlugins>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -229,6 +230,7 @@ export function usePluginsGetPluginsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugins */
 export function usePluginsGetPluginsSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPlugins>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -242,6 +244,7 @@ export function usePluginsGetPluginsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugins */
 export function usePluginsGetPluginsSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPlugins>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -255,10 +258,7 @@ export function usePluginsGetPluginsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Plugins
- */
-
+/** @summary Get Plugins */
 export function usePluginsGetPluginsSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPlugins>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -362,9 +362,7 @@ export type PluginsInstallPluginMutationError = globalThis.Error & {
 }
 export type PluginsInstallPluginMutationVariables = { data: BodyPluginsInstallPlugin }
 
-/**
- * @summary Install Plugin
- */
+/** @summary Install Plugin */
 export const usePluginsInstallPlugin = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -485,9 +483,7 @@ export type PluginsUninstallPluginMutationError = globalThis.Error & {
 }
 export type PluginsUninstallPluginMutationVariables = { data: UninstallPluginData }
 
-/**
- * @summary Uninstall Plugin
- */
+/** @summary Uninstall Plugin */
 export const usePluginsUninstallPlugin = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -564,6 +560,7 @@ export type PluginsGetPluginsListQueryResult = NonNullable<
 >
 export type PluginsGetPluginsListQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Plugins List */
 export function usePluginsGetPluginsList<
   TData = Awaited<ReturnType<typeof pluginsGetPluginsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -585,6 +582,7 @@ export function usePluginsGetPluginsList<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugins List */
 export function usePluginsGetPluginsList<
   TData = Awaited<ReturnType<typeof pluginsGetPluginsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -606,6 +604,7 @@ export function usePluginsGetPluginsList<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugins List */
 export function usePluginsGetPluginsList<
   TData = Awaited<ReturnType<typeof pluginsGetPluginsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -619,10 +618,7 @@ export function usePluginsGetPluginsList<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Plugins List
- */
-
+/** @summary Get Plugins List */
 export function usePluginsGetPluginsList<
   TData = Awaited<ReturnType<typeof pluginsGetPluginsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -683,6 +679,7 @@ export type PluginsGetPluginsListSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Plugins List */
 export function usePluginsGetPluginsListSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPluginsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -696,6 +693,7 @@ export function usePluginsGetPluginsListSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugins List */
 export function usePluginsGetPluginsListSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPluginsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -709,6 +707,7 @@ export function usePluginsGetPluginsListSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugins List */
 export function usePluginsGetPluginsListSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPluginsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -722,10 +721,7 @@ export function usePluginsGetPluginsListSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Plugins List
- */
-
+/** @summary Get Plugins List */
 export function usePluginsGetPluginsListSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPluginsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -815,6 +811,7 @@ export type PluginsGetPluginSettingsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Plugin Settings */
 export function usePluginsGetPluginSettings<
   TData = Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -837,6 +834,7 @@ export function usePluginsGetPluginSettings<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugin Settings */
 export function usePluginsGetPluginSettings<
   TData = Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -859,6 +857,7 @@ export function usePluginsGetPluginSettings<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugin Settings */
 export function usePluginsGetPluginSettings<
   TData = Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -873,10 +872,7 @@ export function usePluginsGetPluginSettings<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Plugin Settings
- */
-
+/** @summary Get Plugin Settings */
 export function usePluginsGetPluginSettings<
   TData = Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -942,6 +938,7 @@ export type PluginsGetPluginSettingsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Plugin Settings */
 export function usePluginsGetPluginSettingsSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -956,6 +953,7 @@ export function usePluginsGetPluginSettingsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugin Settings */
 export function usePluginsGetPluginSettingsSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -970,6 +968,7 @@ export function usePluginsGetPluginSettingsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Plugin Settings */
 export function usePluginsGetPluginSettingsSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -984,10 +983,7 @@ export function usePluginsGetPluginSettingsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Plugin Settings
- */
-
+/** @summary Get Plugin Settings */
 export function usePluginsGetPluginSettingsSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetPluginSettings>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1114,9 +1110,7 @@ export type PluginsUpdatePluginSettingsMutationVariables = {
   data: PluginsUpdatePluginSettingsBody
 }
 
-/**
- * @summary Update Plugin Settings
- */
+/** @summary Update Plugin Settings */
 export const usePluginsUpdatePluginSettings = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1193,6 +1187,7 @@ export type PluginsGetLicensesQueryResult = NonNullable<
 >
 export type PluginsGetLicensesQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Licenses */
 export function usePluginsGetLicenses<
   TData = Awaited<ReturnType<typeof pluginsGetLicenses>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1212,6 +1207,7 @@ export function usePluginsGetLicenses<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Licenses */
 export function usePluginsGetLicenses<
   TData = Awaited<ReturnType<typeof pluginsGetLicenses>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1233,6 +1229,7 @@ export function usePluginsGetLicenses<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Licenses */
 export function usePluginsGetLicenses<
   TData = Awaited<ReturnType<typeof pluginsGetLicenses>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1244,10 +1241,7 @@ export function usePluginsGetLicenses<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Licenses
- */
-
+/** @summary Get Licenses */
 export function usePluginsGetLicenses<
   TData = Awaited<ReturnType<typeof pluginsGetLicenses>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1304,6 +1298,7 @@ export type PluginsGetLicensesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Licenses */
 export function usePluginsGetLicensesSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetLicenses>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1317,6 +1312,7 @@ export function usePluginsGetLicensesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Licenses */
 export function usePluginsGetLicensesSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetLicenses>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1330,6 +1326,7 @@ export function usePluginsGetLicensesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Licenses */
 export function usePluginsGetLicensesSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetLicenses>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1343,10 +1340,7 @@ export function usePluginsGetLicensesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Licenses
- */
-
+/** @summary Get Licenses */
 export function usePluginsGetLicensesSuspense<
   TData = Awaited<ReturnType<typeof pluginsGetLicenses>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1467,9 +1461,7 @@ export type PluginsAddLicenseMutationError = globalThis.Error & {
 }
 export type PluginsAddLicenseMutationVariables = { data: AddLicenseRequest }
 
-/**
- * @summary Add License
- */
+/** @summary Add License */
 export const usePluginsAddLicense = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1569,9 +1561,7 @@ export type PluginsDeleteLicenseMutationError = globalThis.Error & {
 }
 export type PluginsDeleteLicenseMutationVariables = { licenseKey: string }
 
-/**
- * @summary Delete License
- */
+/** @summary Delete License */
 export const usePluginsDeleteLicense = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,

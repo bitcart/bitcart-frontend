@@ -1,5 +1,5 @@
 import type { bitcartInvoices, bitcartManage, bitcartStores } from "@bitcart/client-sdk/endpoints"
-import { publicStoreCheckoutSettingsDefault } from "@bitcart/client-sdk/schemas"
+import { PublicStore } from "@bitcart/client-sdk/schemas"
 
 import {
   deriveCheckoutModel,
@@ -105,22 +105,24 @@ export const makeRefund = (
 
 export const makeStore = (
   checkoutSettings: Partial<bitcartStores.StoreCheckoutSettings> = {},
-): bitcartStores.Store => ({
-  created: "2026-09-24T10:00:00+00:00",
-  updated: null,
-  metadata: {},
-  name: "Example Store",
-  default_currency: "USD",
-  checkout_settings: {
-    ...publicStoreCheckoutSettingsDefault,
-    email_required: false,
-    ...checkoutSettings,
-  },
-  theme_settings: { store_theme_url: "", checkout_theme_url: "" },
-  id: "store-1",
-  user_id: "user-1",
-  currency_data: {},
-})
+): bitcartStores.Store =>
+  PublicStore.parse({
+    created: "2026-09-24T10:00:00+00:00",
+    updated: null,
+    metadata: {},
+    name: "Example Store",
+    default_currency: "USD",
+
+    checkout_settings: {
+      email_required: false,
+      ...checkoutSettings,
+    },
+
+    theme_settings: { store_theme_url: "", checkout_theme_url: "" },
+    id: "store-1",
+    user_id: "user-1",
+    currency_data: {},
+  })
 
 export const makePolicies = (
   overrides: Partial<bitcartManage.Policies> = {},

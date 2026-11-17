@@ -136,6 +136,7 @@ export type DiscountsListItemsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useDiscountsListItems<
   TData = Awaited<ReturnType<typeof discountsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -156,6 +157,7 @@ export function useDiscountsListItems<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useDiscountsListItems<
   TData = Awaited<ReturnType<typeof discountsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -178,6 +180,7 @@ export function useDiscountsListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useDiscountsListItems<
   TData = Awaited<ReturnType<typeof discountsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -190,10 +193,7 @@ export function useDiscountsListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useDiscountsListItems<
   TData = Awaited<ReturnType<typeof discountsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -254,6 +254,7 @@ export type DiscountsListItemsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useDiscountsListItemsSuspense<
   TData = Awaited<ReturnType<typeof discountsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -268,6 +269,7 @@ export function useDiscountsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useDiscountsListItemsSuspense<
   TData = Awaited<ReturnType<typeof discountsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -282,6 +284,7 @@ export function useDiscountsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useDiscountsListItemsSuspense<
   TData = Awaited<ReturnType<typeof discountsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -296,10 +299,7 @@ export function useDiscountsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useDiscountsListItemsSuspense<
   TData = Awaited<ReturnType<typeof discountsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -423,9 +423,7 @@ export type DiscountsCreateItemMutationError = globalThis.Error & {
 }
 export type DiscountsCreateItemMutationVariables = { data: CreateDiscount }
 
-/**
- * @summary Create Item
- */
+/** @summary Create Item */
 export const useDiscountsCreateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -505,6 +503,7 @@ export type DiscountsGetCountQueryResult = NonNullable<
 >
 export type DiscountsGetCountQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useDiscountsGetCount<
   TData = Awaited<ReturnType<typeof discountsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -524,6 +523,7 @@ export function useDiscountsGetCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useDiscountsGetCount<
   TData = Awaited<ReturnType<typeof discountsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -543,6 +543,7 @@ export function useDiscountsGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useDiscountsGetCount<
   TData = Awaited<ReturnType<typeof discountsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -554,10 +555,7 @@ export function useDiscountsGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useDiscountsGetCount<
   TData = Awaited<ReturnType<typeof discountsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -614,6 +612,7 @@ export type DiscountsGetCountSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Count */
 export function useDiscountsGetCountSuspense<
   TData = Awaited<ReturnType<typeof discountsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -627,6 +626,7 @@ export function useDiscountsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useDiscountsGetCountSuspense<
   TData = Awaited<ReturnType<typeof discountsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -640,6 +640,7 @@ export function useDiscountsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useDiscountsGetCountSuspense<
   TData = Awaited<ReturnType<typeof discountsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -653,10 +654,7 @@ export function useDiscountsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useDiscountsGetCountSuspense<
   TData = Awaited<ReturnType<typeof discountsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -743,6 +741,7 @@ export type DiscountsGetItemQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useDiscountsGetItem<
   TData = Awaited<ReturnType<typeof discountsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -763,6 +762,7 @@ export function useDiscountsGetItem<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useDiscountsGetItem<
   TData = Awaited<ReturnType<typeof discountsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -783,6 +783,7 @@ export function useDiscountsGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useDiscountsGetItem<
   TData = Awaited<ReturnType<typeof discountsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -795,10 +796,7 @@ export function useDiscountsGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useDiscountsGetItem<
   TData = Awaited<ReturnType<typeof discountsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -859,6 +857,7 @@ export type DiscountsGetItemSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useDiscountsGetItemSuspense<
   TData = Awaited<ReturnType<typeof discountsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -873,6 +872,7 @@ export function useDiscountsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useDiscountsGetItemSuspense<
   TData = Awaited<ReturnType<typeof discountsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -887,6 +887,7 @@ export function useDiscountsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useDiscountsGetItemSuspense<
   TData = Awaited<ReturnType<typeof discountsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -901,10 +902,7 @@ export function useDiscountsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useDiscountsGetItemSuspense<
   TData = Awaited<ReturnType<typeof discountsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1029,9 +1027,7 @@ export type DiscountsUpdateItemMutationError = globalThis.Error & {
 }
 export type DiscountsUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateDiscount }
 
-/**
- * @summary Update Item
- */
+/** @summary Update Item */
 export const useDiscountsUpdateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1133,9 +1129,7 @@ export type DiscountsDeleteItemMutationError = globalThis.Error & {
 }
 export type DiscountsDeleteItemMutationVariables = { itemId: string }
 
-/**
- * @summary Delete Item
- */
+/** @summary Delete Item */
 export const useDiscountsDeleteItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1259,9 +1253,7 @@ export type DiscountsBatchActionMutationError = globalThis.Error & {
 }
 export type DiscountsBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const useDiscountsBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,

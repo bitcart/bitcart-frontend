@@ -126,6 +126,7 @@ export type WalletsGetBalancesQueryResult = NonNullable<
 >
 export type WalletsGetBalancesQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Balances */
 export function useWalletsGetBalances<
   TData = Awaited<ReturnType<typeof walletsGetBalances>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -145,6 +146,7 @@ export function useWalletsGetBalances<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Balances */
 export function useWalletsGetBalances<
   TData = Awaited<ReturnType<typeof walletsGetBalances>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -166,6 +168,7 @@ export function useWalletsGetBalances<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Balances */
 export function useWalletsGetBalances<
   TData = Awaited<ReturnType<typeof walletsGetBalances>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -177,10 +180,7 @@ export function useWalletsGetBalances<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Balances
- */
-
+/** @summary Get Balances */
 export function useWalletsGetBalances<
   TData = Awaited<ReturnType<typeof walletsGetBalances>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -237,6 +237,7 @@ export type WalletsGetBalancesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Balances */
 export function useWalletsGetBalancesSuspense<
   TData = Awaited<ReturnType<typeof walletsGetBalances>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -250,6 +251,7 @@ export function useWalletsGetBalancesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Balances */
 export function useWalletsGetBalancesSuspense<
   TData = Awaited<ReturnType<typeof walletsGetBalances>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -263,6 +265,7 @@ export function useWalletsGetBalancesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Balances */
 export function useWalletsGetBalancesSuspense<
   TData = Awaited<ReturnType<typeof walletsGetBalances>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -276,10 +279,7 @@ export function useWalletsGetBalancesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Balances
- */
-
+/** @summary Get Balances */
 export function useWalletsGetBalancesSuspense<
   TData = Awaited<ReturnType<typeof walletsGetBalances>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -362,6 +362,7 @@ export type WalletsGetWalletsSchemaQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallets Schema */
 export function useWalletsGetWalletsSchema<
   TData = Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -383,6 +384,7 @@ export function useWalletsGetWalletsSchema<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallets Schema */
 export function useWalletsGetWalletsSchema<
   TData = Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -404,6 +406,7 @@ export function useWalletsGetWalletsSchema<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallets Schema */
 export function useWalletsGetWalletsSchema<
   TData = Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -417,10 +420,7 @@ export function useWalletsGetWalletsSchema<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallets Schema
- */
-
+/** @summary Get Wallets Schema */
 export function useWalletsGetWalletsSchema<
   TData = Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -482,6 +482,7 @@ export type WalletsGetWalletsSchemaSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallets Schema */
 export function useWalletsGetWalletsSchemaSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -495,6 +496,7 @@ export function useWalletsGetWalletsSchemaSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallets Schema */
 export function useWalletsGetWalletsSchemaSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -508,6 +510,7 @@ export function useWalletsGetWalletsSchemaSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallets Schema */
 export function useWalletsGetWalletsSchemaSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -521,10 +524,7 @@ export function useWalletsGetWalletsSchemaSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallets Schema
- */
-
+/** @summary Get Wallets Schema */
 export function useWalletsGetWalletsSchemaSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletsSchema>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -645,9 +645,7 @@ export type WalletsCreateWalletMutationError = globalThis.Error & {
 }
 export type WalletsCreateWalletMutationVariables = { data: CreateWalletData }
 
-/**
- * @summary Create Wallet
- */
+/** @summary Create Wallet */
 export const useWalletsCreateWallet = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -745,6 +743,7 @@ export type WalletsListItemsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useWalletsListItems<
   TData = Awaited<ReturnType<typeof walletsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -765,6 +764,7 @@ export function useWalletsListItems<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useWalletsListItems<
   TData = Awaited<ReturnType<typeof walletsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -785,6 +785,7 @@ export function useWalletsListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useWalletsListItems<
   TData = Awaited<ReturnType<typeof walletsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -797,10 +798,7 @@ export function useWalletsListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useWalletsListItems<
   TData = Awaited<ReturnType<typeof walletsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -861,6 +859,7 @@ export type WalletsListItemsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useWalletsListItemsSuspense<
   TData = Awaited<ReturnType<typeof walletsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -875,6 +874,7 @@ export function useWalletsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useWalletsListItemsSuspense<
   TData = Awaited<ReturnType<typeof walletsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -889,6 +889,7 @@ export function useWalletsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useWalletsListItemsSuspense<
   TData = Awaited<ReturnType<typeof walletsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -903,10 +904,7 @@ export function useWalletsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useWalletsListItemsSuspense<
   TData = Awaited<ReturnType<typeof walletsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1030,9 +1028,7 @@ export type WalletsCreateItemMutationError = globalThis.Error & {
 }
 export type WalletsCreateItemMutationVariables = { data: CreateWallet }
 
-/**
- * @summary Create Item
- */
+/** @summary Create Item */
 export const useWalletsCreateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1110,6 +1106,7 @@ export const getWalletsGetCountQueryOptions = <
 export type WalletsGetCountQueryResult = NonNullable<Awaited<ReturnType<typeof walletsGetCount>>>
 export type WalletsGetCountQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useWalletsGetCount<
   TData = Awaited<ReturnType<typeof walletsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1129,6 +1126,7 @@ export function useWalletsGetCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useWalletsGetCount<
   TData = Awaited<ReturnType<typeof walletsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1148,6 +1146,7 @@ export function useWalletsGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useWalletsGetCount<
   TData = Awaited<ReturnType<typeof walletsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1159,10 +1158,7 @@ export function useWalletsGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useWalletsGetCount<
   TData = Awaited<ReturnType<typeof walletsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1219,6 +1215,7 @@ export type WalletsGetCountSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Count */
 export function useWalletsGetCountSuspense<
   TData = Awaited<ReturnType<typeof walletsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1232,6 +1229,7 @@ export function useWalletsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useWalletsGetCountSuspense<
   TData = Awaited<ReturnType<typeof walletsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1245,6 +1243,7 @@ export function useWalletsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useWalletsGetCountSuspense<
   TData = Awaited<ReturnType<typeof walletsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1258,10 +1257,7 @@ export function useWalletsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useWalletsGetCountSuspense<
   TData = Awaited<ReturnType<typeof walletsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1348,6 +1344,7 @@ export type WalletsGetItemQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useWalletsGetItem<
   TData = Awaited<ReturnType<typeof walletsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1368,6 +1365,7 @@ export function useWalletsGetItem<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useWalletsGetItem<
   TData = Awaited<ReturnType<typeof walletsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1388,6 +1386,7 @@ export function useWalletsGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useWalletsGetItem<
   TData = Awaited<ReturnType<typeof walletsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1400,10 +1399,7 @@ export function useWalletsGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useWalletsGetItem<
   TData = Awaited<ReturnType<typeof walletsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1464,6 +1460,7 @@ export type WalletsGetItemSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useWalletsGetItemSuspense<
   TData = Awaited<ReturnType<typeof walletsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1478,6 +1475,7 @@ export function useWalletsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useWalletsGetItemSuspense<
   TData = Awaited<ReturnType<typeof walletsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1492,6 +1490,7 @@ export function useWalletsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useWalletsGetItemSuspense<
   TData = Awaited<ReturnType<typeof walletsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1506,10 +1505,7 @@ export function useWalletsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useWalletsGetItemSuspense<
   TData = Awaited<ReturnType<typeof walletsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1634,9 +1630,7 @@ export type WalletsUpdateItemMutationError = globalThis.Error & {
 }
 export type WalletsUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateWallet }
 
-/**
- * @summary Update Item
- */
+/** @summary Update Item */
 export const useWalletsUpdateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1738,9 +1732,7 @@ export type WalletsDeleteItemMutationError = globalThis.Error & {
 }
 export type WalletsDeleteItemMutationVariables = { itemId: string }
 
-/**
- * @summary Delete Item
- */
+/** @summary Delete Item */
 export const useWalletsDeleteItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1864,9 +1856,7 @@ export type WalletsBatchActionMutationError = globalThis.Error & {
 }
 export type WalletsBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const useWalletsBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1980,6 +1970,7 @@ export type WalletsGetWalletRateQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallet Rate */
 export function useWalletsGetWalletRate<
   TData = Awaited<ReturnType<typeof walletsGetWalletRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2003,6 +1994,7 @@ export function useWalletsGetWalletRate<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Rate */
 export function useWalletsGetWalletRate<
   TData = Awaited<ReturnType<typeof walletsGetWalletRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2026,6 +2018,7 @@ export function useWalletsGetWalletRate<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Rate */
 export function useWalletsGetWalletRate<
   TData = Awaited<ReturnType<typeof walletsGetWalletRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2041,10 +2034,7 @@ export function useWalletsGetWalletRate<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallet Rate
- */
-
+/** @summary Get Wallet Rate */
 export function useWalletsGetWalletRate<
   TData = Awaited<ReturnType<typeof walletsGetWalletRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2109,6 +2099,7 @@ export type WalletsGetWalletRateSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallet Rate */
 export function useWalletsGetWalletRateSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2124,6 +2115,7 @@ export function useWalletsGetWalletRateSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Rate */
 export function useWalletsGetWalletRateSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2139,6 +2131,7 @@ export function useWalletsGetWalletRateSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Rate */
 export function useWalletsGetWalletRateSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2154,10 +2147,7 @@ export function useWalletsGetWalletRateSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallet Rate
- */
-
+/** @summary Get Wallet Rate */
 export function useWalletsGetWalletRateSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2251,6 +2241,7 @@ export type WalletsGetWalletBalanceQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallet Balance */
 export function useWalletsGetWalletBalance<
   TData = Awaited<ReturnType<typeof walletsGetWalletBalance>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2273,6 +2264,7 @@ export function useWalletsGetWalletBalance<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Balance */
 export function useWalletsGetWalletBalance<
   TData = Awaited<ReturnType<typeof walletsGetWalletBalance>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2295,6 +2287,7 @@ export function useWalletsGetWalletBalance<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Balance */
 export function useWalletsGetWalletBalance<
   TData = Awaited<ReturnType<typeof walletsGetWalletBalance>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2309,10 +2302,7 @@ export function useWalletsGetWalletBalance<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallet Balance
- */
-
+/** @summary Get Wallet Balance */
 export function useWalletsGetWalletBalance<
   TData = Awaited<ReturnType<typeof walletsGetWalletBalance>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2378,6 +2368,7 @@ export type WalletsGetWalletBalanceSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallet Balance */
 export function useWalletsGetWalletBalanceSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletBalance>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2392,6 +2383,7 @@ export function useWalletsGetWalletBalanceSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Balance */
 export function useWalletsGetWalletBalanceSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletBalance>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2406,6 +2398,7 @@ export function useWalletsGetWalletBalanceSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Balance */
 export function useWalletsGetWalletBalanceSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletBalance>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2420,10 +2413,7 @@ export function useWalletsGetWalletBalanceSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallet Balance
- */
-
+/** @summary Get Wallet Balance */
 export function useWalletsGetWalletBalanceSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletBalance>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2513,6 +2503,7 @@ export type WalletsGetWalletSymbolQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallet Symbol */
 export function useWalletsGetWalletSymbol<
   TData = Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2535,6 +2526,7 @@ export function useWalletsGetWalletSymbol<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Symbol */
 export function useWalletsGetWalletSymbol<
   TData = Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2557,6 +2549,7 @@ export function useWalletsGetWalletSymbol<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Symbol */
 export function useWalletsGetWalletSymbol<
   TData = Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2571,10 +2564,7 @@ export function useWalletsGetWalletSymbol<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallet Symbol
- */
-
+/** @summary Get Wallet Symbol */
 export function useWalletsGetWalletSymbol<
   TData = Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2639,6 +2629,7 @@ export type WalletsGetWalletSymbolSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallet Symbol */
 export function useWalletsGetWalletSymbolSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2653,6 +2644,7 @@ export function useWalletsGetWalletSymbolSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Symbol */
 export function useWalletsGetWalletSymbolSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2667,6 +2659,7 @@ export function useWalletsGetWalletSymbolSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Symbol */
 export function useWalletsGetWalletSymbolSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2681,10 +2674,7 @@ export function useWalletsGetWalletSymbolSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallet Symbol
- */
-
+/** @summary Get Wallet Symbol */
 export function useWalletsGetWalletSymbolSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletSymbol>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2775,6 +2765,7 @@ export type WalletsCheckWalletLightningQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Check Wallet Lightning */
 export function useWalletsCheckWalletLightning<
   TData = Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2797,6 +2788,7 @@ export function useWalletsCheckWalletLightning<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Wallet Lightning */
 export function useWalletsCheckWalletLightning<
   TData = Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2819,6 +2811,7 @@ export function useWalletsCheckWalletLightning<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Wallet Lightning */
 export function useWalletsCheckWalletLightning<
   TData = Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2833,10 +2826,7 @@ export function useWalletsCheckWalletLightning<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Check Wallet Lightning
- */
-
+/** @summary Check Wallet Lightning */
 export function useWalletsCheckWalletLightning<
   TData = Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2906,6 +2896,7 @@ export type WalletsCheckWalletLightningSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Check Wallet Lightning */
 export function useWalletsCheckWalletLightningSuspense<
   TData = Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2924,6 +2915,7 @@ export function useWalletsCheckWalletLightningSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Wallet Lightning */
 export function useWalletsCheckWalletLightningSuspense<
   TData = Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2942,6 +2934,7 @@ export function useWalletsCheckWalletLightningSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Check Wallet Lightning */
 export function useWalletsCheckWalletLightningSuspense<
   TData = Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2960,10 +2953,7 @@ export function useWalletsCheckWalletLightningSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Check Wallet Lightning
- */
-
+/** @summary Check Wallet Lightning */
 export function useWalletsCheckWalletLightningSuspense<
   TData = Awaited<ReturnType<typeof walletsCheckWalletLightning>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -3058,6 +3048,7 @@ export type WalletsGetWalletChannelsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallet Channels */
 export function useWalletsGetWalletChannels<
   TData = Awaited<ReturnType<typeof walletsGetWalletChannels>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -3080,6 +3071,7 @@ export function useWalletsGetWalletChannels<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Channels */
 export function useWalletsGetWalletChannels<
   TData = Awaited<ReturnType<typeof walletsGetWalletChannels>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -3102,6 +3094,7 @@ export function useWalletsGetWalletChannels<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Channels */
 export function useWalletsGetWalletChannels<
   TData = Awaited<ReturnType<typeof walletsGetWalletChannels>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -3116,10 +3109,7 @@ export function useWalletsGetWalletChannels<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallet Channels
- */
-
+/** @summary Get Wallet Channels */
 export function useWalletsGetWalletChannels<
   TData = Awaited<ReturnType<typeof walletsGetWalletChannels>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -3185,6 +3175,7 @@ export type WalletsGetWalletChannelsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Wallet Channels */
 export function useWalletsGetWalletChannelsSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletChannels>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -3199,6 +3190,7 @@ export function useWalletsGetWalletChannelsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Channels */
 export function useWalletsGetWalletChannelsSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletChannels>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -3213,6 +3205,7 @@ export function useWalletsGetWalletChannelsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Wallet Channels */
 export function useWalletsGetWalletChannelsSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletChannels>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -3227,10 +3220,7 @@ export function useWalletsGetWalletChannelsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Wallet Channels
- */
-
+/** @summary Get Wallet Channels */
 export function useWalletsGetWalletChannelsSuspense<
   TData = Awaited<ReturnType<typeof walletsGetWalletChannels>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -3353,9 +3343,7 @@ export type WalletsOpenWalletChannelMutationError = globalThis.Error & {
 }
 export type WalletsOpenWalletChannelMutationVariables = { modelId: string; data: OpenChannelScheme }
 
-/**
- * @summary Open Wallet Channel
- */
+/** @summary Open Wallet Channel */
 export const useWalletsOpenWalletChannel = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -3480,9 +3468,7 @@ export type WalletsCloseWalletChannelMutationVariables = {
   data: CloseChannelScheme
 }
 
-/**
- * @summary Close Wallet Channel
- */
+/** @summary Close Wallet Channel */
 export const useWalletsCloseWalletChannel = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -3604,9 +3590,7 @@ export type WalletsWalletLnpayMutationError = globalThis.Error & {
 }
 export type WalletsWalletLnpayMutationVariables = { modelId: string; data: LNPayScheme }
 
-/**
- * @summary Wallet Lnpay
- */
+/** @summary Wallet Lnpay */
 export const useWalletsWalletLnpay = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,

@@ -134,6 +134,7 @@ export type PayoutsListItemsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function usePayoutsListItems<
   TData = Awaited<ReturnType<typeof payoutsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -154,6 +155,7 @@ export function usePayoutsListItems<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function usePayoutsListItems<
   TData = Awaited<ReturnType<typeof payoutsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -174,6 +176,7 @@ export function usePayoutsListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function usePayoutsListItems<
   TData = Awaited<ReturnType<typeof payoutsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -186,10 +189,7 @@ export function usePayoutsListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function usePayoutsListItems<
   TData = Awaited<ReturnType<typeof payoutsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -250,6 +250,7 @@ export type PayoutsListItemsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function usePayoutsListItemsSuspense<
   TData = Awaited<ReturnType<typeof payoutsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -264,6 +265,7 @@ export function usePayoutsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function usePayoutsListItemsSuspense<
   TData = Awaited<ReturnType<typeof payoutsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -278,6 +280,7 @@ export function usePayoutsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function usePayoutsListItemsSuspense<
   TData = Awaited<ReturnType<typeof payoutsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -292,10 +295,7 @@ export function usePayoutsListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function usePayoutsListItemsSuspense<
   TData = Awaited<ReturnType<typeof payoutsListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -419,9 +419,7 @@ export type PayoutsCreateItemMutationError = globalThis.Error & {
 }
 export type PayoutsCreateItemMutationVariables = { data: CreatePayout }
 
-/**
- * @summary Create Item
- */
+/** @summary Create Item */
 export const usePayoutsCreateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -499,6 +497,7 @@ export const getPayoutsGetCountQueryOptions = <
 export type PayoutsGetCountQueryResult = NonNullable<Awaited<ReturnType<typeof payoutsGetCount>>>
 export type PayoutsGetCountQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function usePayoutsGetCount<
   TData = Awaited<ReturnType<typeof payoutsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -518,6 +517,7 @@ export function usePayoutsGetCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function usePayoutsGetCount<
   TData = Awaited<ReturnType<typeof payoutsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -537,6 +537,7 @@ export function usePayoutsGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function usePayoutsGetCount<
   TData = Awaited<ReturnType<typeof payoutsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -548,10 +549,7 @@ export function usePayoutsGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function usePayoutsGetCount<
   TData = Awaited<ReturnType<typeof payoutsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -608,6 +606,7 @@ export type PayoutsGetCountSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Count */
 export function usePayoutsGetCountSuspense<
   TData = Awaited<ReturnType<typeof payoutsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -621,6 +620,7 @@ export function usePayoutsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function usePayoutsGetCountSuspense<
   TData = Awaited<ReturnType<typeof payoutsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -634,6 +634,7 @@ export function usePayoutsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function usePayoutsGetCountSuspense<
   TData = Awaited<ReturnType<typeof payoutsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -647,10 +648,7 @@ export function usePayoutsGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function usePayoutsGetCountSuspense<
   TData = Awaited<ReturnType<typeof payoutsGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -737,6 +735,7 @@ export type PayoutsGetItemQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function usePayoutsGetItem<
   TData = Awaited<ReturnType<typeof payoutsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -757,6 +756,7 @@ export function usePayoutsGetItem<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function usePayoutsGetItem<
   TData = Awaited<ReturnType<typeof payoutsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -777,6 +777,7 @@ export function usePayoutsGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function usePayoutsGetItem<
   TData = Awaited<ReturnType<typeof payoutsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -789,10 +790,7 @@ export function usePayoutsGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function usePayoutsGetItem<
   TData = Awaited<ReturnType<typeof payoutsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -853,6 +851,7 @@ export type PayoutsGetItemSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function usePayoutsGetItemSuspense<
   TData = Awaited<ReturnType<typeof payoutsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -867,6 +866,7 @@ export function usePayoutsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function usePayoutsGetItemSuspense<
   TData = Awaited<ReturnType<typeof payoutsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -881,6 +881,7 @@ export function usePayoutsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function usePayoutsGetItemSuspense<
   TData = Awaited<ReturnType<typeof payoutsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -895,10 +896,7 @@ export function usePayoutsGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function usePayoutsGetItemSuspense<
   TData = Awaited<ReturnType<typeof payoutsGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1023,9 +1021,7 @@ export type PayoutsUpdateItemMutationError = globalThis.Error & {
 }
 export type PayoutsUpdateItemMutationVariables = { itemId: string; data: OptionalUpdatePayout }
 
-/**
- * @summary Update Item
- */
+/** @summary Update Item */
 export const usePayoutsUpdateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1127,9 +1123,7 @@ export type PayoutsDeleteItemMutationError = globalThis.Error & {
 }
 export type PayoutsDeleteItemMutationVariables = { itemId: string }
 
-/**
- * @summary Delete Item
- */
+/** @summary Delete Item */
 export const usePayoutsDeleteItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1253,9 +1247,7 @@ export type PayoutsBatchActionMutationError = globalThis.Error & {
 }
 export type PayoutsBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const usePayoutsBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,

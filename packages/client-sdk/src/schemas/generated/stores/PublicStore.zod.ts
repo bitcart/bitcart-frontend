@@ -8,28 +8,6 @@ import { StoreCheckoutSettings } from "./StoreCheckoutSettings.zod"
 import { StoreThemeSettings } from "./StoreThemeSettings.zod"
 
 export const publicStoreDefaultCurrencyDefault = `USD`
-export const publicStoreCheckoutSettingsDefault = {
-  expiration: 15,
-  transaction_speed: 0,
-  confirmation_timeout: 1440,
-  underpaid_percentage: 0,
-  custom_logo_link: "",
-  recommended_fee_target_blocks: 1,
-  show_recommended_fee: true,
-  use_dark_mode: false,
-  use_html_templates: false,
-  email_required: true,
-  ask_address: false,
-  randomize_wallet_selection: false,
-  allow_anonymous_invoice_creation: true,
-  include_network_fee: false,
-  rate_rules: "",
-  pos_screen_enabled: true,
-  support_email: "",
-  support_url: "",
-  auto_redirect: true,
-}
-export const publicStoreThemeSettingsDefault = { store_theme_url: "", checkout_theme_url: "" }
 
 export const PublicStore = zod.object({
   created: zod.iso.datetime({ offset: true }).describe("Creation timestamp of the object."),
@@ -42,8 +20,32 @@ export const PublicStore = zod.object({
     .describe("Metadata associated with the object."),
   name: zod.string(),
   default_currency: zod.string().default(publicStoreDefaultCurrencyDefault),
-  checkout_settings: StoreCheckoutSettings.default(publicStoreCheckoutSettingsDefault),
-  theme_settings: StoreThemeSettings.default(publicStoreThemeSettingsDefault),
+  checkout_settings: StoreCheckoutSettings.default({
+    ...{
+      expiration: 15,
+      transaction_speed: 0,
+      confirmation_timeout: 1440,
+      underpaid_percentage: 0,
+      custom_logo_link: "",
+      recommended_fee_target_blocks: 1,
+      show_recommended_fee: true,
+      use_dark_mode: false,
+      use_html_templates: false,
+      email_required: true,
+      ask_address: false,
+      randomize_wallet_selection: false,
+      allow_anonymous_invoice_creation: true,
+      include_network_fee: false,
+      rate_rules: "",
+      pos_screen_enabled: true,
+      support_email: "",
+      support_url: "",
+      auto_redirect: true,
+    },
+  }),
+  theme_settings: StoreThemeSettings.default({
+    ...{ store_theme_url: "", checkout_theme_url: "" },
+  }),
   id: zod.string(),
   user_id: zod.string(),
   currency_data: zod.record(zod.string(), zod.int()),

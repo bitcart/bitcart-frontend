@@ -10,44 +10,8 @@ import { StorePluginSettings } from "./StorePluginSettings.zod"
 import { StoreThemeSettings } from "./StoreThemeSettings.zod"
 
 export const optionalUpdateStoreDefaultCurrencyDefault = `USD`
-export const optionalUpdateStoreCheckoutSettingsDefault = {
-  expiration: 15,
-  transaction_speed: 0,
-  confirmation_timeout: 1440,
-  underpaid_percentage: 0,
-  custom_logo_link: "",
-  recommended_fee_target_blocks: 1,
-  show_recommended_fee: true,
-  use_dark_mode: false,
-  use_html_templates: false,
-  email_required: true,
-  ask_address: false,
-  randomize_wallet_selection: false,
-  allow_anonymous_invoice_creation: true,
-  include_network_fee: false,
-  rate_rules: "",
-  pos_screen_enabled: true,
-  support_email: "",
-  support_url: "",
-  auto_redirect: true,
-}
-export const optionalUpdateStoreThemeSettingsDefault = {
-  store_theme_url: "",
-  checkout_theme_url: "",
-}
-export const optionalUpdateStoreEmailSettingsDefault = {
-  address: "",
-  host: "",
-  port: 25,
-  user: "",
-  password: "",
-  auth_mode: "starttls",
-}
 export const optionalUpdateStoreNotificationsDefault = []
 export const optionalUpdateStoreTemplatesDefault = {}
-export const optionalUpdateStorePluginSettingsDefault = {
-  shopify: { api_key: "", api_secret: "", shop_name: "" },
-}
 
 export const OptionalUpdateStore = zod.object({
   metadata: zod
@@ -56,13 +20,41 @@ export const OptionalUpdateStore = zod.object({
     .describe("Metadata associated with the object."),
   name: zod.union([zod.string(), zod.null()]).optional(),
   default_currency: zod.string().default(optionalUpdateStoreDefaultCurrencyDefault),
-  checkout_settings: StoreCheckoutSettings.default(optionalUpdateStoreCheckoutSettingsDefault),
-  theme_settings: StoreThemeSettings.default(optionalUpdateStoreThemeSettingsDefault),
+  checkout_settings: StoreCheckoutSettings.default({
+    ...{
+      expiration: 15,
+      transaction_speed: 0,
+      confirmation_timeout: 1440,
+      underpaid_percentage: 0,
+      custom_logo_link: "",
+      recommended_fee_target_blocks: 1,
+      show_recommended_fee: true,
+      use_dark_mode: false,
+      use_html_templates: false,
+      email_required: true,
+      ask_address: false,
+      randomize_wallet_selection: false,
+      allow_anonymous_invoice_creation: true,
+      include_network_fee: false,
+      rate_rules: "",
+      pos_screen_enabled: true,
+      support_email: "",
+      support_url: "",
+      auto_redirect: true,
+    },
+  }),
+  theme_settings: StoreThemeSettings.default({
+    ...{ store_theme_url: "", checkout_theme_url: "" },
+  }),
   wallets: zod.union([zod.array(zod.string()), zod.null()]).optional(),
-  email_settings: EmailSettings.default(optionalUpdateStoreEmailSettingsDefault),
+  email_settings: EmailSettings.default({
+    ...{ address: "", host: "", port: 25, user: "", password: "", auth_mode: "starttls" },
+  }),
   notifications: zod.array(zod.string()).default(optionalUpdateStoreNotificationsDefault),
   templates: zod.record(zod.string(), zod.string()).default(optionalUpdateStoreTemplatesDefault),
-  plugin_settings: StorePluginSettings.default(optionalUpdateStorePluginSettingsDefault),
+  plugin_settings: StorePluginSettings.default({
+    ...{ shopify: { api_key: "", api_secret: "", shop_name: "" } },
+  }),
 })
 
 export type OptionalUpdateStore = zod.input<typeof OptionalUpdateStore>

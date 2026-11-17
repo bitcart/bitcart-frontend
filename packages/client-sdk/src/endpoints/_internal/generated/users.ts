@@ -126,6 +126,7 @@ export const getUsersMeQueryOptions = <
 export type UsersMeQueryResult = NonNullable<Awaited<ReturnType<typeof usersMe>>>
 export type UsersMeQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Me */
 export function useUsersMe<
   TData = Awaited<ReturnType<typeof usersMe>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -145,6 +146,7 @@ export function useUsersMe<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Me */
 export function useUsersMe<
   TData = Awaited<ReturnType<typeof usersMe>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -164,6 +166,7 @@ export function useUsersMe<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Me */
 export function useUsersMe<
   TData = Awaited<ReturnType<typeof usersMe>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -175,10 +178,7 @@ export function useUsersMe<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Me
- */
-
+/** @summary Me */
 export function useUsersMe<
   TData = Awaited<ReturnType<typeof usersMe>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -228,6 +228,7 @@ export const getUsersMeSuspenseQueryOptions = <
 export type UsersMeSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof usersMe>>>
 export type UsersMeSuspenseQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Me */
 export function useUsersMeSuspense<
   TData = Awaited<ReturnType<typeof usersMe>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -239,6 +240,7 @@ export function useUsersMeSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Me */
 export function useUsersMeSuspense<
   TData = Awaited<ReturnType<typeof usersMe>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -250,6 +252,7 @@ export function useUsersMeSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Me */
 export function useUsersMeSuspense<
   TData = Awaited<ReturnType<typeof usersMe>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -261,10 +264,7 @@ export function useUsersMeSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Me
- */
-
+/** @summary Me */
 export function useUsersMeSuspense<
   TData = Awaited<ReturnType<typeof usersMe>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -385,9 +385,7 @@ export type UsersSetSettingsMutationError = globalThis.Error & {
 }
 export type UsersSetSettingsMutationVariables = { data: UserPreferences }
 
-/**
- * @summary Set Settings
- */
+/** @summary Set Settings */
 export const useUsersSetSettings = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -508,9 +506,7 @@ export type UsersResetPasswordMutationError = globalThis.Error & {
 }
 export type UsersResetPasswordMutationVariables = { data: ResetPasswordData }
 
-/**
- * @summary Reset Password
- */
+/** @summary Reset Password */
 export const useUsersResetPassword = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -632,9 +628,7 @@ export type UsersFinalizePasswordResetMutationError = globalThis.Error & {
 }
 export type UsersFinalizePasswordResetMutationVariables = { data: ResetPasswordFinalize }
 
-/**
- * @summary Finalize Password Reset
- */
+/** @summary Finalize Password Reset */
 export const useUsersFinalizePasswordReset = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -756,9 +750,7 @@ export type UsersSendVerificationEmailMutationError = globalThis.Error & {
 }
 export type UsersSendVerificationEmailMutationVariables = { data: VerifyEmailData }
 
-/**
- * @summary Send Verification Email
- */
+/** @summary Send Verification Email */
 export const useUsersSendVerificationEmail = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -900,9 +892,7 @@ export type UsersFinalizeEmailVerificationMutationVariables = {
   params?: UsersFinalizeEmailVerificationParams
 }
 
-/**
- * @summary Finalize Email Verification
- */
+/** @summary Finalize Email Verification */
 export const useUsersFinalizeEmailVerification = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1023,9 +1013,7 @@ export type UsersChangePasswordMutationError = globalThis.Error & {
 }
 export type UsersChangePasswordMutationVariables = { data: ChangePassword }
 
-/**
- * @summary Change Password
- */
+/** @summary Change Password */
 export const useUsersChangePassword = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1144,9 +1132,7 @@ export type UsersVerifyTotpMutationError = globalThis.Error & {
 }
 export type UsersVerifyTotpMutationVariables = { data: VerifyTOTP }
 
-/**
- * @summary Verify Totp
- */
+/** @summary Verify Totp */
 export const useUsersVerifyTotp = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1231,9 +1217,7 @@ export type UsersDisableTotpMutationResult = NonNullable<
 
 export type UsersDisableTotpMutationError = globalThis.Error & { info?: unknown; status?: number }
 
-/**
- * @summary Disable Totp
- */
+/** @summary Disable Totp */
 export const useUsersDisableTotp = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1349,9 +1333,7 @@ export type UsersRegisterFido2MutationError = globalThis.Error & {
 }
 export type UsersRegisterFido2MutationVariables = { data: LoginFIDOData }
 
-/**
- * @summary Register Fido2
- */
+/** @summary Register Fido2 */
 export const useUsersRegisterFido2 = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1448,9 +1430,7 @@ export type UsersFido2CompleteRegistrationMutationError = globalThis.Error & {
   status?: number
 }
 
-/**
- * @summary Fido2 Complete Registration
- */
+/** @summary Fido2 Complete Registration */
 export const useUsersFido2CompleteRegistration = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1550,9 +1530,7 @@ export type UsersFido2DeleteDeviceMutationError = globalThis.Error & {
 }
 export type UsersFido2DeleteDeviceMutationVariables = { deviceId: string }
 
-/**
- * @summary Fido2 Delete Device
- */
+/** @summary Fido2 Delete Device */
 export const useUsersFido2DeleteDevice = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1627,6 +1605,7 @@ export const getUsersGetStatsQueryOptions = <
 export type UsersGetStatsQueryResult = NonNullable<Awaited<ReturnType<typeof usersGetStats>>>
 export type UsersGetStatsQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Stats */
 export function useUsersGetStats<
   TData = Awaited<ReturnType<typeof usersGetStats>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1646,6 +1625,7 @@ export function useUsersGetStats<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Stats */
 export function useUsersGetStats<
   TData = Awaited<ReturnType<typeof usersGetStats>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1665,6 +1645,7 @@ export function useUsersGetStats<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Stats */
 export function useUsersGetStats<
   TData = Awaited<ReturnType<typeof usersGetStats>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1676,10 +1657,7 @@ export function useUsersGetStats<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Stats
- */
-
+/** @summary Get Stats */
 export function useUsersGetStats<
   TData = Awaited<ReturnType<typeof usersGetStats>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1731,6 +1709,7 @@ export type UsersGetStatsSuspenseQueryResult = NonNullable<
 >
 export type UsersGetStatsSuspenseQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Stats */
 export function useUsersGetStatsSuspense<
   TData = Awaited<ReturnType<typeof usersGetStats>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1744,6 +1723,7 @@ export function useUsersGetStatsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Stats */
 export function useUsersGetStatsSuspense<
   TData = Awaited<ReturnType<typeof usersGetStats>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1757,6 +1737,7 @@ export function useUsersGetStatsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Stats */
 export function useUsersGetStatsSuspense<
   TData = Awaited<ReturnType<typeof usersGetStats>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1770,10 +1751,7 @@ export function useUsersGetStatsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Stats
- */
-
+/** @summary Get Stats */
 export function useUsersGetStatsSuspense<
   TData = Awaited<ReturnType<typeof usersGetStats>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1871,6 +1849,7 @@ export type UsersListItemsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useUsersListItems<
   TData = Awaited<ReturnType<typeof usersListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1891,6 +1870,7 @@ export function useUsersListItems<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useUsersListItems<
   TData = Awaited<ReturnType<typeof usersListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1911,6 +1891,7 @@ export function useUsersListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useUsersListItems<
   TData = Awaited<ReturnType<typeof usersListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1923,10 +1904,7 @@ export function useUsersListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useUsersListItems<
   TData = Awaited<ReturnType<typeof usersListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1987,6 +1965,7 @@ export type UsersListItemsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useUsersListItemsSuspense<
   TData = Awaited<ReturnType<typeof usersListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2001,6 +1980,7 @@ export function useUsersListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useUsersListItemsSuspense<
   TData = Awaited<ReturnType<typeof usersListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2015,6 +1995,7 @@ export function useUsersListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useUsersListItemsSuspense<
   TData = Awaited<ReturnType<typeof usersListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2029,10 +2010,7 @@ export function useUsersListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useUsersListItemsSuspense<
   TData = Awaited<ReturnType<typeof usersListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2154,9 +2132,7 @@ export type UsersCreateUserMutationError = globalThis.Error & {
 }
 export type UsersCreateUserMutationVariables = { data: CreateUser }
 
-/**
- * @summary Create User
- */
+/** @summary Create User */
 export const useUsersCreateUser = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2234,6 +2210,7 @@ export const getUsersGetCountQueryOptions = <
 export type UsersGetCountQueryResult = NonNullable<Awaited<ReturnType<typeof usersGetCount>>>
 export type UsersGetCountQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useUsersGetCount<
   TData = Awaited<ReturnType<typeof usersGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2253,6 +2230,7 @@ export function useUsersGetCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useUsersGetCount<
   TData = Awaited<ReturnType<typeof usersGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2272,6 +2250,7 @@ export function useUsersGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useUsersGetCount<
   TData = Awaited<ReturnType<typeof usersGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2283,10 +2262,7 @@ export function useUsersGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useUsersGetCount<
   TData = Awaited<ReturnType<typeof usersGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2338,6 +2314,7 @@ export type UsersGetCountSuspenseQueryResult = NonNullable<
 >
 export type UsersGetCountSuspenseQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useUsersGetCountSuspense<
   TData = Awaited<ReturnType<typeof usersGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2351,6 +2328,7 @@ export function useUsersGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useUsersGetCountSuspense<
   TData = Awaited<ReturnType<typeof usersGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2364,6 +2342,7 @@ export function useUsersGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useUsersGetCountSuspense<
   TData = Awaited<ReturnType<typeof usersGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2377,10 +2356,7 @@ export function useUsersGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useUsersGetCountSuspense<
   TData = Awaited<ReturnType<typeof usersGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2467,6 +2443,7 @@ export type UsersGetItemQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useUsersGetItem<
   TData = Awaited<ReturnType<typeof usersGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2487,6 +2464,7 @@ export function useUsersGetItem<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useUsersGetItem<
   TData = Awaited<ReturnType<typeof usersGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2507,6 +2485,7 @@ export function useUsersGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useUsersGetItem<
   TData = Awaited<ReturnType<typeof usersGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2519,10 +2498,7 @@ export function useUsersGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useUsersGetItem<
   TData = Awaited<ReturnType<typeof usersGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2581,6 +2557,7 @@ export type UsersGetItemSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useUsersGetItemSuspense<
   TData = Awaited<ReturnType<typeof usersGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2593,6 +2570,7 @@ export function useUsersGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useUsersGetItemSuspense<
   TData = Awaited<ReturnType<typeof usersGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2607,6 +2585,7 @@ export function useUsersGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useUsersGetItemSuspense<
   TData = Awaited<ReturnType<typeof usersGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2621,10 +2600,7 @@ export function useUsersGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useUsersGetItemSuspense<
   TData = Awaited<ReturnType<typeof usersGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2747,9 +2723,7 @@ export type UsersUpdateItemMutationError = globalThis.Error & {
 }
 export type UsersUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateUser }
 
-/**
- * @summary Update Item
- */
+/** @summary Update Item */
 export const useUsersUpdateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2849,9 +2823,7 @@ export type UsersDeleteItemMutationError = globalThis.Error & {
 }
 export type UsersDeleteItemMutationVariables = { itemId: string }
 
-/**
- * @summary Delete Item
- */
+/** @summary Delete Item */
 export const useUsersDeleteItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2975,9 +2947,7 @@ export type UsersBatchActionMutationError = globalThis.Error & {
 }
 export type UsersBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const useUsersBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,

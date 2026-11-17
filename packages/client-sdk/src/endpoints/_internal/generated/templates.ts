@@ -136,6 +136,7 @@ export type TemplatesGetTemplateListQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Template List */
 export function useTemplatesGetTemplateList<
   TData = Awaited<ReturnType<typeof templatesGetTemplateList>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -158,6 +159,7 @@ export function useTemplatesGetTemplateList<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Template List */
 export function useTemplatesGetTemplateList<
   TData = Awaited<ReturnType<typeof templatesGetTemplateList>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -180,6 +182,7 @@ export function useTemplatesGetTemplateList<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Template List */
 export function useTemplatesGetTemplateList<
   TData = Awaited<ReturnType<typeof templatesGetTemplateList>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -194,10 +197,7 @@ export function useTemplatesGetTemplateList<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Template List
- */
-
+/** @summary Get Template List */
 export function useTemplatesGetTemplateList<
   TData = Awaited<ReturnType<typeof templatesGetTemplateList>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -263,6 +263,7 @@ export type TemplatesGetTemplateListSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Template List */
 export function useTemplatesGetTemplateListSuspense<
   TData = Awaited<ReturnType<typeof templatesGetTemplateList>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -277,6 +278,7 @@ export function useTemplatesGetTemplateListSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Template List */
 export function useTemplatesGetTemplateListSuspense<
   TData = Awaited<ReturnType<typeof templatesGetTemplateList>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -291,6 +293,7 @@ export function useTemplatesGetTemplateListSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Template List */
 export function useTemplatesGetTemplateListSuspense<
   TData = Awaited<ReturnType<typeof templatesGetTemplateList>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -305,10 +308,7 @@ export function useTemplatesGetTemplateListSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Template List
- */
-
+/** @summary Get Template List */
 export function useTemplatesGetTemplateListSuspense<
   TData = Awaited<ReturnType<typeof templatesGetTemplateList>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -409,6 +409,7 @@ export type TemplatesListItemsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useTemplatesListItems<
   TData = Awaited<ReturnType<typeof templatesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -429,6 +430,7 @@ export function useTemplatesListItems<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useTemplatesListItems<
   TData = Awaited<ReturnType<typeof templatesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -451,6 +453,7 @@ export function useTemplatesListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useTemplatesListItems<
   TData = Awaited<ReturnType<typeof templatesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -463,10 +466,7 @@ export function useTemplatesListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useTemplatesListItems<
   TData = Awaited<ReturnType<typeof templatesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -527,6 +527,7 @@ export type TemplatesListItemsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useTemplatesListItemsSuspense<
   TData = Awaited<ReturnType<typeof templatesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -541,6 +542,7 @@ export function useTemplatesListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useTemplatesListItemsSuspense<
   TData = Awaited<ReturnType<typeof templatesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -555,6 +557,7 @@ export function useTemplatesListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useTemplatesListItemsSuspense<
   TData = Awaited<ReturnType<typeof templatesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -569,10 +572,7 @@ export function useTemplatesListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useTemplatesListItemsSuspense<
   TData = Awaited<ReturnType<typeof templatesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -696,9 +696,7 @@ export type TemplatesCreateItemMutationError = globalThis.Error & {
 }
 export type TemplatesCreateItemMutationVariables = { data: CreateTemplate }
 
-/**
- * @summary Create Item
- */
+/** @summary Create Item */
 export const useTemplatesCreateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -778,6 +776,7 @@ export type TemplatesGetCountQueryResult = NonNullable<
 >
 export type TemplatesGetCountQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useTemplatesGetCount<
   TData = Awaited<ReturnType<typeof templatesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -797,6 +796,7 @@ export function useTemplatesGetCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useTemplatesGetCount<
   TData = Awaited<ReturnType<typeof templatesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -816,6 +816,7 @@ export function useTemplatesGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useTemplatesGetCount<
   TData = Awaited<ReturnType<typeof templatesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -827,10 +828,7 @@ export function useTemplatesGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useTemplatesGetCount<
   TData = Awaited<ReturnType<typeof templatesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -887,6 +885,7 @@ export type TemplatesGetCountSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Count */
 export function useTemplatesGetCountSuspense<
   TData = Awaited<ReturnType<typeof templatesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -900,6 +899,7 @@ export function useTemplatesGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useTemplatesGetCountSuspense<
   TData = Awaited<ReturnType<typeof templatesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -913,6 +913,7 @@ export function useTemplatesGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useTemplatesGetCountSuspense<
   TData = Awaited<ReturnType<typeof templatesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -926,10 +927,7 @@ export function useTemplatesGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useTemplatesGetCountSuspense<
   TData = Awaited<ReturnType<typeof templatesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1016,6 +1014,7 @@ export type TemplatesGetItemQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useTemplatesGetItem<
   TData = Awaited<ReturnType<typeof templatesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1036,6 +1035,7 @@ export function useTemplatesGetItem<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useTemplatesGetItem<
   TData = Awaited<ReturnType<typeof templatesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1056,6 +1056,7 @@ export function useTemplatesGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useTemplatesGetItem<
   TData = Awaited<ReturnType<typeof templatesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1068,10 +1069,7 @@ export function useTemplatesGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useTemplatesGetItem<
   TData = Awaited<ReturnType<typeof templatesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1132,6 +1130,7 @@ export type TemplatesGetItemSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useTemplatesGetItemSuspense<
   TData = Awaited<ReturnType<typeof templatesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1146,6 +1145,7 @@ export function useTemplatesGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useTemplatesGetItemSuspense<
   TData = Awaited<ReturnType<typeof templatesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1160,6 +1160,7 @@ export function useTemplatesGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useTemplatesGetItemSuspense<
   TData = Awaited<ReturnType<typeof templatesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1174,10 +1175,7 @@ export function useTemplatesGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useTemplatesGetItemSuspense<
   TData = Awaited<ReturnType<typeof templatesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1302,9 +1300,7 @@ export type TemplatesUpdateItemMutationError = globalThis.Error & {
 }
 export type TemplatesUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateTemplate }
 
-/**
- * @summary Update Item
- */
+/** @summary Update Item */
 export const useTemplatesUpdateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1406,9 +1402,7 @@ export type TemplatesDeleteItemMutationError = globalThis.Error & {
 }
 export type TemplatesDeleteItemMutationVariables = { itemId: string }
 
-/**
- * @summary Delete Item
- */
+/** @summary Delete Item */
 export const useTemplatesDeleteItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1532,9 +1526,7 @@ export type TemplatesBatchActionMutationError = globalThis.Error & {
 }
 export type TemplatesBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const useTemplatesBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,

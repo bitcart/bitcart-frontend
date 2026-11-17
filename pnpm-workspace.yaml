@@ -10,6 +10,8 @@ allowBuilds:
 
 auditConfig:
   ignoreGhsas:
+    # TODO: Remove once micromatch/picomatch publishes a fix for GHSA-fc5q-39xc-vjpf.
+    - GHSA-fc5q-39xc-vjpf
     # TODO: Remove once nx bumps its minimatch pin to 11.0.1 (https://github.com/nrwl/nx/issues/37727)
     - GHSA-g3hv-75wg-m249
 
@@ -19,28 +21,28 @@ catalogs:
   dependencies:
     "@base-ui/react": 1.9.0
     "@daypicker/react": 10.0.2
-    "@fumadocs/base-ui": 16.18.0
+    "@fumadocs/base-ui": 16.18.4
     "@lingui/core": 6.12.0
     "@lingui/react": 6.12.0
-    "@mantine/hooks": 9.7.5
+    "@mantine/hooks": 9.8.0
     "@phosphor-icons/react": 2.1.10
     "@t3-oss/env-core": 0.13.11
     "@tanstack/react-devtools": "0.10.14"
     "@tanstack/react-form": 1.33.5
-    "@tanstack/react-query": 5.106.1
-    "@tanstack/react-query-devtools": "5.106.1"
+    "@tanstack/react-query": 5.107.1
+    "@tanstack/react-query-devtools": "5.107.1"
     "@tanstack/react-router": "1.170.46"
-    "@tanstack/react-router-devtools": "1.167.2"
+    "@tanstack/react-router-devtools": "1.167.3"
     "@tanstack/react-router-ssr-query": "1.167.3"
-    "@tanstack/react-start": "1.169.4"
+    "@tanstack/react-start": "1.169.5"
     "@tanstack/react-store": "0.11.2"
     "@tanstack/store": "0.11.2"
     "@tanstack/start-static-server-functions": 1.167.44
     "@web3icons/react": 4.1.24
     class-variance-authority: 0.7.1
-    fumadocs-core: 16.18.0
-    fumadocs-mdx: 15.5.0
-    fumadocs-ui: 16.18.0
+    fumadocs-core: 16.18.4
+    fumadocs-mdx: 15.5.3
+    fumadocs-ui: 16.18.4
     lucide-react: 1.70.0
     next-themes: 0.4.6
     qrcode.react: 4.2.0
@@ -56,7 +58,7 @@ catalogs:
     zod: 4.6.7
     canvas-confetti: 1.9.4
     "@fontsource-variable/geist-mono": 5.3.0
-    viem: 2.57.16
+    viem: 2.57.17
     "@plausible-analytics/tracker": 0.4.7
     "@fontsource-variable/inter": 5.3.0
   devDependencies:
@@ -69,7 +71,7 @@ catalogs:
     "@playwright/test": 1.65.0
     "@qalisa/vike-plugin-sitemap": 1.7.0
     "@stylistic/eslint-plugin": 5.10.0
-    "@tailwindcss/vite": 4.3.4
+    "@tailwindcss/vite": 4.3.5
     "@tanstack/devtools-vite": "0.8.6"
     "@testing-library/dom": 10.4.2
     "@testing-library/jest-dom": 7.0.1
@@ -83,7 +85,7 @@ catalogs:
     "@types/react-dom": 19.3.0
     "@unocss/cli": 66.12.0
     "@unocss/config": 66.12.0
-    "@vitejs/plugin-react": 6.2.1
+    "@vitejs/plugin-react": 6.3.0
     "@viz-js/viz": 3.31.0
     "@web3icons/common": 0.11.53
     culori: 4.0.2
@@ -91,25 +93,25 @@ catalogs:
     eslint-plugin-better-tailwindcss: 4.10.0
     eslint-plugin-react-hooks: 7.1.1
     jsdom: 30.1.3
-    knip: 6.44.1
+    knip: 6.44.2
     msw: 3.0.4
     next-validate-link: 1.6.7
     nitro: 3.0.261029-rc
-    nx: 24.0.4
-    orval: 8.46.0
-    oxc-transform-react: 0.157.0
-    oxfmt: 0.78.0
-    oxlint: 1.93.0
+    nx: 24.0.5
+    orval: 8.47.0
+    oxc-transform-react: 0.158.0
+    oxfmt: 0.79.0
+    oxlint: 1.94.0
     oxlint-tsgolint: 7.0.2007
     schema-dts: 2.1.0
     srvx: 1.0.8
-    tailwindcss: 4.3.4
-    tsdown: 0.23.5
+    tailwindcss: 4.3.5
+    tsdown: 0.23.7
     tsx: 4.23.15
     typescript: 7.0.2
     unocss: 66.12.0
     unocss-preset-animations: 1.3.0
-    vite: 8.3.6
+    vite: 8.3.7
     vite-imagetools: 12.0.1
     vite-plugin-static-copy: 4.1.1
     vite-plugin-svgr: 5.2.0
@@ -130,19 +132,7 @@ minimumReleaseAgeExclude:
   - oxlint-tsgolint
   - "@base-ui/*"
 
-  # TODO: Remove after 2026-11-03
-  - minimatch@11.0.1
-
-  # TODO: Remove after 2026-11-05
-  - nitro@3.0.261029-rc
-
 overrides:
-  # TODO: Remove once nx bumps its undici pin to 7.30.1.
-  "nx>undici": ^7.30.1
-
-  # TODO: Remove once @scalar/json-magic bumps its undici pin to 7.30.1.
-  "@scalar/json-magic>undici": ^7.30.1
-
   # TODO: Remove once ajv bumps its fast-uri floor to 3.1.9.
   "ajv>fast-uri": ^3.1.9
 
@@ -175,7 +165,7 @@ peerDependencyRules:
     # TODO: Remove once a vitest release ships https://github.com/vitest-dev/vitest/pull/11482
     "@vitest/mocker>msw": "3"
 
-    #* @vitejs/plugin-react, up to 6.3.0, caps `oxc-transform-react` below 0.157, but 0.157 only
+    #* @vitejs/plugin-react, up to 6.3.0, caps `oxc-transform-react` below 0.157, but 0.157+ only
     #* adds TypeScript options to the transform the React Compiler integration calls.
     # TODO: Remove once upstream widens the peer range (https://github.com/vitejs/vite-plugin-react/issues/1437)
-    "@vitejs/plugin-react>oxc-transform-react": "0.157"
+    "@vitejs/plugin-react>oxc-transform-react": "0.158"

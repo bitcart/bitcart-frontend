@@ -99,6 +99,7 @@ export type CryptosGetCryptosQueryResult = NonNullable<
 >
 export type CryptosGetCryptosQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Cryptos */
 export function useCryptosGetCryptos<
   TData = Awaited<ReturnType<typeof cryptosGetCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -118,6 +119,7 @@ export function useCryptosGetCryptos<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Cryptos */
 export function useCryptosGetCryptos<
   TData = Awaited<ReturnType<typeof cryptosGetCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -137,6 +139,7 @@ export function useCryptosGetCryptos<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Cryptos */
 export function useCryptosGetCryptos<
   TData = Awaited<ReturnType<typeof cryptosGetCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -148,10 +151,7 @@ export function useCryptosGetCryptos<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Cryptos
- */
-
+/** @summary Get Cryptos */
 export function useCryptosGetCryptos<
   TData = Awaited<ReturnType<typeof cryptosGetCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -208,6 +208,7 @@ export type CryptosGetCryptosSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Cryptos */
 export function useCryptosGetCryptosSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -221,6 +222,7 @@ export function useCryptosGetCryptosSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Cryptos */
 export function useCryptosGetCryptosSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -234,6 +236,7 @@ export function useCryptosGetCryptosSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Cryptos */
 export function useCryptosGetCryptosSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -247,10 +250,7 @@ export function useCryptosGetCryptosSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Cryptos
- */
-
+/** @summary Get Cryptos */
 export function useCryptosGetCryptosSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -333,6 +333,7 @@ export type CryptosGetSupportedCryptosQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Supported Cryptos */
 export function useCryptosGetSupportedCryptos<
   TData = Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -354,6 +355,7 @@ export function useCryptosGetSupportedCryptos<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Supported Cryptos */
 export function useCryptosGetSupportedCryptos<
   TData = Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -375,6 +377,7 @@ export function useCryptosGetSupportedCryptos<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Supported Cryptos */
 export function useCryptosGetSupportedCryptos<
   TData = Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -388,10 +391,7 @@ export function useCryptosGetSupportedCryptos<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Supported Cryptos
- */
-
+/** @summary Get Supported Cryptos */
 export function useCryptosGetSupportedCryptos<
   TData = Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -453,6 +453,7 @@ export type CryptosGetSupportedCryptosSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Supported Cryptos */
 export function useCryptosGetSupportedCryptosSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -466,6 +467,7 @@ export function useCryptosGetSupportedCryptosSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Supported Cryptos */
 export function useCryptosGetSupportedCryptosSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -479,6 +481,7 @@ export function useCryptosGetSupportedCryptosSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Supported Cryptos */
 export function useCryptosGetSupportedCryptosSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -492,10 +495,7 @@ export function useCryptosGetSupportedCryptosSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Supported Cryptos
- */
-
+/** @summary Get Supported Cryptos */
 export function useCryptosGetSupportedCryptosSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetSupportedCryptos>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -591,6 +591,7 @@ export type CryptosRateQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Rate */
 export function useCryptosRate<
   TData = Awaited<ReturnType<typeof cryptosRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -611,6 +612,7 @@ export function useCryptosRate<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Rate */
 export function useCryptosRate<
   TData = Awaited<ReturnType<typeof cryptosRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -631,6 +633,7 @@ export function useCryptosRate<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Rate */
 export function useCryptosRate<
   TData = Awaited<ReturnType<typeof cryptosRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -643,10 +646,7 @@ export function useCryptosRate<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Rate
- */
-
+/** @summary Rate */
 export function useCryptosRate<
   TData = Awaited<ReturnType<typeof cryptosRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -703,6 +703,7 @@ export type CryptosRateSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Rate */
 export function useCryptosRateSuspense<
   TData = Awaited<ReturnType<typeof cryptosRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -715,6 +716,7 @@ export function useCryptosRateSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Rate */
 export function useCryptosRateSuspense<
   TData = Awaited<ReturnType<typeof cryptosRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -727,6 +729,7 @@ export function useCryptosRateSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Rate */
 export function useCryptosRateSuspense<
   TData = Awaited<ReturnType<typeof cryptosRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -739,10 +742,7 @@ export function useCryptosRateSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Rate
- */
-
+/** @summary Rate */
 export function useCryptosRateSuspense<
   TData = Awaited<ReturnType<typeof cryptosRate>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -837,6 +837,7 @@ export type CryptosGetFiatlistQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Fiatlist */
 export function useCryptosGetFiatlist<
   TData = Awaited<ReturnType<typeof cryptosGetFiatlist>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -857,6 +858,7 @@ export function useCryptosGetFiatlist<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Fiatlist */
 export function useCryptosGetFiatlist<
   TData = Awaited<ReturnType<typeof cryptosGetFiatlist>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -879,6 +881,7 @@ export function useCryptosGetFiatlist<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Fiatlist */
 export function useCryptosGetFiatlist<
   TData = Awaited<ReturnType<typeof cryptosGetFiatlist>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -891,10 +894,7 @@ export function useCryptosGetFiatlist<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Fiatlist
- */
-
+/** @summary Get Fiatlist */
 export function useCryptosGetFiatlist<
   TData = Awaited<ReturnType<typeof cryptosGetFiatlist>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -955,6 +955,7 @@ export type CryptosGetFiatlistSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Fiatlist */
 export function useCryptosGetFiatlistSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetFiatlist>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -969,6 +970,7 @@ export function useCryptosGetFiatlistSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Fiatlist */
 export function useCryptosGetFiatlistSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetFiatlist>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -983,6 +985,7 @@ export function useCryptosGetFiatlistSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Fiatlist */
 export function useCryptosGetFiatlistSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetFiatlist>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -997,10 +1000,7 @@ export function useCryptosGetFiatlistSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Fiatlist
- */
-
+/** @summary Get Fiatlist */
 export function useCryptosGetFiatlistSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetFiatlist>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1086,6 +1086,7 @@ export type CryptosGetTokensQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Tokens */
 export function useCryptosGetTokens<
   TData = Awaited<ReturnType<typeof cryptosGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1106,6 +1107,7 @@ export function useCryptosGetTokens<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens */
 export function useCryptosGetTokens<
   TData = Awaited<ReturnType<typeof cryptosGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1126,6 +1128,7 @@ export function useCryptosGetTokens<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens */
 export function useCryptosGetTokens<
   TData = Awaited<ReturnType<typeof cryptosGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1138,10 +1141,7 @@ export function useCryptosGetTokens<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Tokens
- */
-
+/** @summary Get Tokens */
 export function useCryptosGetTokens<
   TData = Awaited<ReturnType<typeof cryptosGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1202,6 +1202,7 @@ export type CryptosGetTokensSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Tokens */
 export function useCryptosGetTokensSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1216,6 +1217,7 @@ export function useCryptosGetTokensSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens */
 export function useCryptosGetTokensSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1230,6 +1232,7 @@ export function useCryptosGetTokensSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens */
 export function useCryptosGetTokensSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1244,10 +1247,7 @@ export function useCryptosGetTokensSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Tokens
- */
-
+/** @summary Get Tokens */
 export function useCryptosGetTokensSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetTokens>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1335,6 +1335,7 @@ export type CryptosGetTokensAbiQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Tokens Abi */
 export function useCryptosGetTokensAbi<
   TData = Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1357,6 +1358,7 @@ export function useCryptosGetTokensAbi<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens Abi */
 export function useCryptosGetTokensAbi<
   TData = Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1379,6 +1381,7 @@ export function useCryptosGetTokensAbi<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens Abi */
 export function useCryptosGetTokensAbi<
   TData = Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1391,10 +1394,7 @@ export function useCryptosGetTokensAbi<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Tokens Abi
- */
-
+/** @summary Get Tokens Abi */
 export function useCryptosGetTokensAbi<
   TData = Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1455,6 +1455,7 @@ export type CryptosGetTokensAbiSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Tokens Abi */
 export function useCryptosGetTokensAbiSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1469,6 +1470,7 @@ export function useCryptosGetTokensAbiSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens Abi */
 export function useCryptosGetTokensAbiSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1483,6 +1485,7 @@ export function useCryptosGetTokensAbiSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Tokens Abi */
 export function useCryptosGetTokensAbiSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1497,10 +1500,7 @@ export function useCryptosGetTokensAbiSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Tokens Abi
- */
-
+/** @summary Get Tokens Abi */
 export function useCryptosGetTokensAbiSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetTokensAbi>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1591,6 +1591,7 @@ export type CryptosGetDefaultExplorerQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Default Explorer */
 export function useCryptosGetDefaultExplorer<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1613,6 +1614,7 @@ export function useCryptosGetDefaultExplorer<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Default Explorer */
 export function useCryptosGetDefaultExplorer<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1635,6 +1637,7 @@ export function useCryptosGetDefaultExplorer<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Default Explorer */
 export function useCryptosGetDefaultExplorer<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1649,10 +1652,7 @@ export function useCryptosGetDefaultExplorer<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Default Explorer
- */
-
+/** @summary Get Default Explorer */
 export function useCryptosGetDefaultExplorer<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1718,6 +1718,7 @@ export type CryptosGetDefaultExplorerSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Default Explorer */
 export function useCryptosGetDefaultExplorerSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1732,6 +1733,7 @@ export function useCryptosGetDefaultExplorerSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Default Explorer */
 export function useCryptosGetDefaultExplorerSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1746,6 +1748,7 @@ export function useCryptosGetDefaultExplorerSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Default Explorer */
 export function useCryptosGetDefaultExplorerSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1760,10 +1763,7 @@ export function useCryptosGetDefaultExplorerSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Default Explorer
- */
-
+/** @summary Get Default Explorer */
 export function useCryptosGetDefaultExplorerSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultExplorer>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1853,6 +1853,7 @@ export type CryptosGetDefaultRpcQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Default Rpc */
 export function useCryptosGetDefaultRpc<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1875,6 +1876,7 @@ export function useCryptosGetDefaultRpc<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Default Rpc */
 export function useCryptosGetDefaultRpc<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1897,6 +1899,7 @@ export function useCryptosGetDefaultRpc<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Default Rpc */
 export function useCryptosGetDefaultRpc<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1911,10 +1914,7 @@ export function useCryptosGetDefaultRpc<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Default Rpc
- */
-
+/** @summary Get Default Rpc */
 export function useCryptosGetDefaultRpc<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1977,6 +1977,7 @@ export type CryptosGetDefaultRpcSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Default Rpc */
 export function useCryptosGetDefaultRpcSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1991,6 +1992,7 @@ export function useCryptosGetDefaultRpcSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Default Rpc */
 export function useCryptosGetDefaultRpcSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2005,6 +2007,7 @@ export function useCryptosGetDefaultRpcSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Default Rpc */
 export function useCryptosGetDefaultRpcSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2019,10 +2022,7 @@ export function useCryptosGetDefaultRpcSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Default Rpc
- */
-
+/** @summary Get Default Rpc */
 export function useCryptosGetDefaultRpcSuspense<
   TData = Awaited<ReturnType<typeof cryptosGetDefaultRpc>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },

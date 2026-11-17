@@ -9,36 +9,24 @@ import { ConfiguratorCoinDescription } from "./ConfiguratorCoinDescription.zod"
 import { ConfiguratorDomainSettings } from "./ConfiguratorDomainSettings.zod"
 import { ConfiguratorSSHSettings } from "./ConfiguratorSSHSettings.zod"
 
-export const configuratorDeploySettingsDomainSettingsDefault = { domain: "", https: true }
 export const configuratorDeploySettingsCoinsDefault = {}
 export const configuratorDeploySettingsAdditionalServicesDefault = []
-export const configuratorDeploySettingsAdvancedSettingsDefault = {
-  installation_pack: "all",
-  bitcart_docker_repository: "",
-  additional_components: [],
-}
-export const configuratorDeploySettingsSshSettingsDefault = {
-  host: "",
-  username: "",
-  password: "",
-  root_password: "",
-}
 
 export const ConfiguratorDeploySettings = zod.object({
-  domain_settings: ConfiguratorDomainSettings.default(
-    configuratorDeploySettingsDomainSettingsDefault,
-  ),
+  domain_settings: ConfiguratorDomainSettings.default({ ...{ domain: "", https: true } }),
   coins: zod
     .record(zod.string(), ConfiguratorCoinDescription)
     .default(configuratorDeploySettingsCoinsDefault),
   additional_services: zod
     .array(zod.string())
     .default(configuratorDeploySettingsAdditionalServicesDefault),
-  advanced_settings: ConfiguratorAdvancedSettings.default(
-    configuratorDeploySettingsAdvancedSettingsDefault,
-  ),
+  advanced_settings: ConfiguratorAdvancedSettings.default({
+    ...{ installation_pack: "all", bitcart_docker_repository: "", additional_components: [] },
+  }),
   mode: zod.string(),
-  ssh_settings: ConfiguratorSSHSettings.default(configuratorDeploySettingsSshSettingsDefault),
+  ssh_settings: ConfiguratorSSHSettings.default({
+    ...{ host: "", username: "", password: "", root_password: "" },
+  }),
 })
 
 export type ConfiguratorDeploySettings = zod.input<typeof ConfiguratorDeploySettings>

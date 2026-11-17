@@ -7,7 +7,6 @@ import * as zod from "zod"
 import { UserPreferences } from "./UserPreferences.zod"
 
 export const createUserIsSuperuserDefault = false
-export const createUserSettingsDefault = { balance_currency: "USD", fetch_balance: true }
 export const createUserCaptchaCodeDefault = ``
 
 export const CreateUser = zod.object({
@@ -17,7 +16,7 @@ export const CreateUser = zod.object({
     .describe("Metadata associated with the object."),
   email: zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }),
   is_superuser: zod.boolean().default(createUserIsSuperuserDefault),
-  settings: UserPreferences.default(createUserSettingsDefault),
+  settings: UserPreferences.default({ ...{ balance_currency: "USD", fetch_balance: true } }),
   password: zod.string(),
   captcha_code: zod.string().default(createUserCaptchaCodeDefault),
 })

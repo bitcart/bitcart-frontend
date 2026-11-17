@@ -6,10 +6,8 @@ import * as zod from "zod"
 
 import { StoreShopifySettings } from "./StoreShopifySettings.zod"
 
-export const storePluginSettingsShopifyDefault = { shop_name: "", api_key: "", api_secret: "" }
-
 export const StorePluginSettings = zod.object({
-  shopify: StoreShopifySettings.default(storePluginSettingsShopifyDefault),
+  shopify: StoreShopifySettings.default({ ...{ shop_name: "", api_key: "", api_secret: "" } }),
 })
 
 export type StorePluginSettings = zod.input<typeof StorePluginSettings>

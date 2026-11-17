@@ -7,7 +7,6 @@ import * as zod from "zod"
 import { UserPreferences } from "./UserPreferences.zod"
 
 export const displayUserIsSuperuserDefault = false
-export const displayUserSettingsDefault = { balance_currency: "USD", fetch_balance: true }
 
 export const DisplayUser = zod.object({
   created: zod.iso.datetime({ offset: true }).describe("Creation timestamp of the object."),
@@ -20,7 +19,7 @@ export const DisplayUser = zod.object({
     .describe("Metadata associated with the object."),
   email: zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }),
   is_superuser: zod.boolean().default(displayUserIsSuperuserDefault),
-  settings: UserPreferences.default(displayUserSettingsDefault),
+  settings: UserPreferences.default({ ...{ balance_currency: "USD", fetch_balance: true } }),
   id: zod.string(),
   is_verified: zod.boolean(),
   is_enabled: zod.boolean(),

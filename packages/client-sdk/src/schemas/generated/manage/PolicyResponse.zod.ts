@@ -25,14 +25,6 @@ export const policyResponseHealthCheckStoreIdDefault = ``
 export const policyResponseAllowEthPluginInfoDefault = true
 export const policyResponseLogRetentionDaysDefault = 90
 export const policyResponseCaptchaSecretkeyDefault = ``
-export const policyResponseEmailSettingsDefault = {
-  address: "",
-  host: "",
-  port: 25,
-  user: "",
-  password: "",
-  auth_mode: "starttls",
-}
 
 export const PolicyResponse = zod.looseObject({
   allow_powered_by_bitcart: zod.boolean().default(policyResponseAllowPoweredByBitcartDefault),
@@ -58,7 +50,9 @@ export const PolicyResponse = zod.looseObject({
   allow_eth_plugin_info: zod.boolean().default(policyResponseAllowEthPluginInfoDefault),
   log_retention_days: zod.int().default(policyResponseLogRetentionDaysDefault),
   captcha_secretkey: zod.string().default(policyResponseCaptchaSecretkeyDefault),
-  email_settings: EmailSettings.default(policyResponseEmailSettingsDefault),
+  email_settings: EmailSettings.default({
+    ...{ address: "", host: "", port: 25, user: "", password: "", auth_mode: "starttls" },
+  }),
   admin_url: zod.string(),
   checkout_url: zod.string(),
 })

@@ -118,6 +118,7 @@ export type ManageGetPoliciesQueryResult = NonNullable<
 >
 export type ManageGetPoliciesQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Policies */
 export function useManageGetPolicies<
   TData = Awaited<ReturnType<typeof manageGetPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -137,6 +138,7 @@ export function useManageGetPolicies<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Policies */
 export function useManageGetPolicies<
   TData = Awaited<ReturnType<typeof manageGetPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -156,6 +158,7 @@ export function useManageGetPolicies<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Policies */
 export function useManageGetPolicies<
   TData = Awaited<ReturnType<typeof manageGetPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -167,10 +170,7 @@ export function useManageGetPolicies<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Policies
- */
-
+/** @summary Get Policies */
 export function useManageGetPolicies<
   TData = Awaited<ReturnType<typeof manageGetPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -227,6 +227,7 @@ export type ManageGetPoliciesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Policies */
 export function useManageGetPoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -240,6 +241,7 @@ export function useManageGetPoliciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Policies */
 export function useManageGetPoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -253,6 +255,7 @@ export function useManageGetPoliciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Policies */
 export function useManageGetPoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -266,10 +269,7 @@ export function useManageGetPoliciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Policies
- */
-
+/** @summary Get Policies */
 export function useManageGetPoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -392,9 +392,7 @@ export type ManageSetPoliciesMutationError = globalThis.Error & {
 }
 export type ManageSetPoliciesMutationVariables = { data: Policy }
 
-/**
- * @summary Set Policies
- */
+/** @summary Set Policies */
 export const useManageSetPolicies = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -478,6 +476,7 @@ export type ManageGetStorePoliciesQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Store Policies */
 export function useManageGetStorePolicies<
   TData = Awaited<ReturnType<typeof manageGetStorePolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -499,6 +498,7 @@ export function useManageGetStorePolicies<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Store Policies */
 export function useManageGetStorePolicies<
   TData = Awaited<ReturnType<typeof manageGetStorePolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -520,6 +520,7 @@ export function useManageGetStorePolicies<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Store Policies */
 export function useManageGetStorePolicies<
   TData = Awaited<ReturnType<typeof manageGetStorePolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -533,10 +534,7 @@ export function useManageGetStorePolicies<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Store Policies
- */
-
+/** @summary Get Store Policies */
 export function useManageGetStorePolicies<
   TData = Awaited<ReturnType<typeof manageGetStorePolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -597,6 +595,7 @@ export type ManageGetStorePoliciesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Store Policies */
 export function useManageGetStorePoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetStorePolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -610,6 +609,7 @@ export function useManageGetStorePoliciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Store Policies */
 export function useManageGetStorePoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetStorePolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -623,6 +623,7 @@ export function useManageGetStorePoliciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Store Policies */
 export function useManageGetStorePoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetStorePolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -636,10 +637,7 @@ export function useManageGetStorePoliciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Store Policies
- */
-
+/** @summary Get Store Policies */
 export function useManageGetStorePoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetStorePolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -762,9 +760,7 @@ export type ManageSetStorePoliciesMutationError = globalThis.Error & {
 }
 export type ManageSetStorePoliciesMutationVariables = { data: GlobalStorePolicy }
 
-/**
- * @summary Set Store Policies
- */
+/** @summary Set Store Policies */
 export const useManageSetStorePolicies = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -855,9 +851,7 @@ export type ManageRestartServerMutationError = globalThis.Error & {
   status?: number
 }
 
-/**
- * @summary Restart Server
- */
+/** @summary Restart Server */
 export const useManageRestartServer = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -937,9 +931,7 @@ export type ManagePluginReloadMutationResult = NonNullable<
 
 export type ManagePluginReloadMutationError = globalThis.Error & { info?: unknown; status?: number }
 
-/**
- * @summary Plugin Reload
- */
+/** @summary Plugin Reload */
 export const useManagePluginReload = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1019,9 +1011,7 @@ export type ManageUpdateServerMutationResult = NonNullable<
 
 export type ManageUpdateServerMutationError = globalThis.Error & { info?: unknown; status?: number }
 
-/**
- * @summary Update Server
- */
+/** @summary Update Server */
 export const useManageUpdateServer = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1107,9 +1097,7 @@ export type ManageCleanupImagesMutationError = globalThis.Error & {
   status?: number
 }
 
-/**
- * @summary Cleanup Images
- */
+/** @summary Cleanup Images */
 export const useManageCleanupImages = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1183,6 +1171,7 @@ export type ManageGetHostAgentQueryResult = NonNullable<
 >
 export type ManageGetHostAgentQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Host Agent */
 export function useManageGetHostAgent<
   TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1202,6 +1191,7 @@ export function useManageGetHostAgent<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Host Agent */
 export function useManageGetHostAgent<
   TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1223,6 +1213,7 @@ export function useManageGetHostAgent<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Host Agent */
 export function useManageGetHostAgent<
   TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1234,10 +1225,7 @@ export function useManageGetHostAgent<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Host Agent
- */
-
+/** @summary Get Host Agent */
 export function useManageGetHostAgent<
   TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1294,6 +1282,7 @@ export type ManageGetHostAgentSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Host Agent */
 export function useManageGetHostAgentSuspense<
   TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1307,6 +1296,7 @@ export function useManageGetHostAgentSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Host Agent */
 export function useManageGetHostAgentSuspense<
   TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1320,6 +1310,7 @@ export function useManageGetHostAgentSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Host Agent */
 export function useManageGetHostAgentSuspense<
   TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1333,10 +1324,7 @@ export function useManageGetHostAgentSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Host Agent
- */
-
+/** @summary Get Host Agent */
 export function useManageGetHostAgentSuspense<
   TData = Awaited<ReturnType<typeof manageGetHostAgent>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1439,6 +1427,7 @@ export type ManageGetJobStatusQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Job Status */
 export function useManageGetJobStatus<
   TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1460,6 +1449,7 @@ export function useManageGetJobStatus<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Job Status */
 export function useManageGetJobStatus<
   TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1483,6 +1473,7 @@ export function useManageGetJobStatus<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Job Status */
 export function useManageGetJobStatus<
   TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1496,10 +1487,7 @@ export function useManageGetJobStatus<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Job Status
- */
-
+/** @summary Get Job Status */
 export function useManageGetJobStatus<
   TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1562,6 +1550,7 @@ export type ManageGetJobStatusSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Job Status */
 export function useManageGetJobStatusSuspense<
   TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1577,6 +1566,7 @@ export function useManageGetJobStatusSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Job Status */
 export function useManageGetJobStatusSuspense<
   TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1592,6 +1582,7 @@ export function useManageGetJobStatusSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Job Status */
 export function useManageGetJobStatusSuspense<
   TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1607,10 +1598,7 @@ export function useManageGetJobStatusSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Job Status
- */
-
+/** @summary Get Job Status */
 export function useManageGetJobStatusSuspense<
   TData = Awaited<ReturnType<typeof manageGetJobStatus>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1697,9 +1685,7 @@ export type ManageCleanupLogsMutationResult = NonNullable<
 
 export type ManageCleanupLogsMutationError = globalThis.Error & { info?: unknown; status?: number }
 
-/**
- * @summary Cleanup Logs
- */
+/** @summary Cleanup Logs */
 export const useManageCleanupLogs = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1785,9 +1771,7 @@ export type ManageCleanupServerMutationError = globalThis.Error & {
   status?: number
 }
 
-/**
- * @summary Cleanup Server
- */
+/** @summary Cleanup Server */
 export const useManageCleanupServer = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -1859,6 +1843,7 @@ export type ManageGetLogsListQueryResult = NonNullable<
 >
 export type ManageGetLogsListQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Logs List */
 export function useManageGetLogsList<
   TData = Awaited<ReturnType<typeof manageGetLogsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1878,6 +1863,7 @@ export function useManageGetLogsList<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Logs List */
 export function useManageGetLogsList<
   TData = Awaited<ReturnType<typeof manageGetLogsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1897,6 +1883,7 @@ export function useManageGetLogsList<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Logs List */
 export function useManageGetLogsList<
   TData = Awaited<ReturnType<typeof manageGetLogsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1908,10 +1895,7 @@ export function useManageGetLogsList<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Logs List
- */
-
+/** @summary Get Logs List */
 export function useManageGetLogsList<
   TData = Awaited<ReturnType<typeof manageGetLogsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1968,6 +1952,7 @@ export type ManageGetLogsListSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Logs List */
 export function useManageGetLogsListSuspense<
   TData = Awaited<ReturnType<typeof manageGetLogsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1981,6 +1966,7 @@ export function useManageGetLogsListSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Logs List */
 export function useManageGetLogsListSuspense<
   TData = Awaited<ReturnType<typeof manageGetLogsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1994,6 +1980,7 @@ export function useManageGetLogsListSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Logs List */
 export function useManageGetLogsListSuspense<
   TData = Awaited<ReturnType<typeof manageGetLogsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2007,10 +1994,7 @@ export function useManageGetLogsListSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Logs List
- */
-
+/** @summary Get Logs List */
 export function useManageGetLogsListSuspense<
   TData = Awaited<ReturnType<typeof manageGetLogsList>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2099,6 +2083,7 @@ export type ManageGetLogContentsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Log Contents */
 export function useManageGetLogContents<
   TData = Awaited<ReturnType<typeof manageGetLogContents>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2121,6 +2106,7 @@ export function useManageGetLogContents<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Log Contents */
 export function useManageGetLogContents<
   TData = Awaited<ReturnType<typeof manageGetLogContents>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2143,6 +2129,7 @@ export function useManageGetLogContents<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Log Contents */
 export function useManageGetLogContents<
   TData = Awaited<ReturnType<typeof manageGetLogContents>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2157,10 +2144,7 @@ export function useManageGetLogContents<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Log Contents
- */
-
+/** @summary Get Log Contents */
 export function useManageGetLogContents<
   TData = Awaited<ReturnType<typeof manageGetLogContents>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2223,6 +2207,7 @@ export type ManageGetLogContentsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Log Contents */
 export function useManageGetLogContentsSuspense<
   TData = Awaited<ReturnType<typeof manageGetLogContents>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2237,6 +2222,7 @@ export function useManageGetLogContentsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Log Contents */
 export function useManageGetLogContentsSuspense<
   TData = Awaited<ReturnType<typeof manageGetLogContents>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2251,6 +2237,7 @@ export function useManageGetLogContentsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Log Contents */
 export function useManageGetLogContentsSuspense<
   TData = Awaited<ReturnType<typeof manageGetLogContents>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2265,10 +2252,7 @@ export function useManageGetLogContentsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Log Contents
- */
-
+/** @summary Get Log Contents */
 export function useManageGetLogContentsSuspense<
   TData = Awaited<ReturnType<typeof manageGetLogContents>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2367,9 +2351,7 @@ export type ManageDeleteLogMutationError = globalThis.Error & {
 }
 export type ManageDeleteLogMutationVariables = { log: string }
 
-/**
- * @summary Delete Log
- */
+/** @summary Delete Log */
 export const useManageDeleteLog = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2446,6 +2428,7 @@ export type ManageGetSyncinfoQueryResult = NonNullable<
 >
 export type ManageGetSyncinfoQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Syncinfo */
 export function useManageGetSyncinfo<
   TData = Awaited<ReturnType<typeof manageGetSyncinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2465,6 +2448,7 @@ export function useManageGetSyncinfo<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Syncinfo */
 export function useManageGetSyncinfo<
   TData = Awaited<ReturnType<typeof manageGetSyncinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2484,6 +2468,7 @@ export function useManageGetSyncinfo<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Syncinfo */
 export function useManageGetSyncinfo<
   TData = Awaited<ReturnType<typeof manageGetSyncinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2495,10 +2480,7 @@ export function useManageGetSyncinfo<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Syncinfo
- */
-
+/** @summary Get Syncinfo */
 export function useManageGetSyncinfo<
   TData = Awaited<ReturnType<typeof manageGetSyncinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2555,6 +2537,7 @@ export type ManageGetSyncinfoSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Syncinfo */
 export function useManageGetSyncinfoSuspense<
   TData = Awaited<ReturnType<typeof manageGetSyncinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2568,6 +2551,7 @@ export function useManageGetSyncinfoSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Syncinfo */
 export function useManageGetSyncinfoSuspense<
   TData = Awaited<ReturnType<typeof manageGetSyncinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2581,6 +2565,7 @@ export function useManageGetSyncinfoSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Syncinfo */
 export function useManageGetSyncinfoSuspense<
   TData = Awaited<ReturnType<typeof manageGetSyncinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2594,10 +2579,7 @@ export function useManageGetSyncinfoSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Syncinfo
- */
-
+/** @summary Get Syncinfo */
 export function useManageGetSyncinfoSuspense<
   TData = Awaited<ReturnType<typeof manageGetSyncinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2678,6 +2660,7 @@ export type ManageGetRatesinfoQueryResult = NonNullable<
 >
 export type ManageGetRatesinfoQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Ratesinfo */
 export function useManageGetRatesinfo<
   TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2697,6 +2680,7 @@ export function useManageGetRatesinfo<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Ratesinfo */
 export function useManageGetRatesinfo<
   TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2718,6 +2702,7 @@ export function useManageGetRatesinfo<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Ratesinfo */
 export function useManageGetRatesinfo<
   TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2729,10 +2714,7 @@ export function useManageGetRatesinfo<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Ratesinfo
- */
-
+/** @summary Get Ratesinfo */
 export function useManageGetRatesinfo<
   TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2789,6 +2771,7 @@ export type ManageGetRatesinfoSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Ratesinfo */
 export function useManageGetRatesinfoSuspense<
   TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2802,6 +2785,7 @@ export function useManageGetRatesinfoSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Ratesinfo */
 export function useManageGetRatesinfoSuspense<
   TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2815,6 +2799,7 @@ export function useManageGetRatesinfoSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Ratesinfo */
 export function useManageGetRatesinfoSuspense<
   TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2828,10 +2813,7 @@ export function useManageGetRatesinfoSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Ratesinfo
- */
-
+/** @summary Get Ratesinfo */
 export function useManageGetRatesinfoSuspense<
   TData = Awaited<ReturnType<typeof manageGetRatesinfo>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2908,6 +2890,7 @@ export type ManageTestEmailPingQueryResult = NonNullable<
 >
 export type ManageTestEmailPingQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Test Email Ping */
 export function useManageTestEmailPing<
   TData = Awaited<ReturnType<typeof manageTestEmailPing>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2929,6 +2912,7 @@ export function useManageTestEmailPing<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Test Email Ping */
 export function useManageTestEmailPing<
   TData = Awaited<ReturnType<typeof manageTestEmailPing>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2950,6 +2934,7 @@ export function useManageTestEmailPing<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Test Email Ping */
 export function useManageTestEmailPing<
   TData = Awaited<ReturnType<typeof manageTestEmailPing>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -2961,10 +2946,7 @@ export function useManageTestEmailPing<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Test Email Ping
- */
-
+/** @summary Test Email Ping */
 export function useManageTestEmailPing<
   TData = Awaited<ReturnType<typeof manageTestEmailPing>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3021,6 +3003,7 @@ export type ManageTestEmailPingSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Test Email Ping */
 export function useManageTestEmailPingSuspense<
   TData = Awaited<ReturnType<typeof manageTestEmailPing>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3034,6 +3017,7 @@ export function useManageTestEmailPingSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Test Email Ping */
 export function useManageTestEmailPingSuspense<
   TData = Awaited<ReturnType<typeof manageTestEmailPing>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3047,6 +3031,7 @@ export function useManageTestEmailPingSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Test Email Ping */
 export function useManageTestEmailPingSuspense<
   TData = Awaited<ReturnType<typeof manageTestEmailPing>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3060,10 +3045,7 @@ export function useManageTestEmailPingSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Test Email Ping
- */
-
+/** @summary Test Email Ping */
 export function useManageTestEmailPingSuspense<
   TData = Awaited<ReturnType<typeof manageTestEmailPing>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3138,6 +3120,7 @@ export const getManageGetDaemonsQueryOptions = <
 export type ManageGetDaemonsQueryResult = NonNullable<Awaited<ReturnType<typeof manageGetDaemons>>>
 export type ManageGetDaemonsQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Daemons */
 export function useManageGetDaemons<
   TData = Awaited<ReturnType<typeof manageGetDaemons>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3157,6 +3140,7 @@ export function useManageGetDaemons<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Daemons */
 export function useManageGetDaemons<
   TData = Awaited<ReturnType<typeof manageGetDaemons>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3176,6 +3160,7 @@ export function useManageGetDaemons<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Daemons */
 export function useManageGetDaemons<
   TData = Awaited<ReturnType<typeof manageGetDaemons>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3187,10 +3172,7 @@ export function useManageGetDaemons<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Daemons
- */
-
+/** @summary Get Daemons */
 export function useManageGetDaemons<
   TData = Awaited<ReturnType<typeof manageGetDaemons>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3247,6 +3229,7 @@ export type ManageGetDaemonsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Daemons */
 export function useManageGetDaemonsSuspense<
   TData = Awaited<ReturnType<typeof manageGetDaemons>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3260,6 +3243,7 @@ export function useManageGetDaemonsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Daemons */
 export function useManageGetDaemonsSuspense<
   TData = Awaited<ReturnType<typeof manageGetDaemons>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3273,6 +3257,7 @@ export function useManageGetDaemonsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Daemons */
 export function useManageGetDaemonsSuspense<
   TData = Awaited<ReturnType<typeof manageGetDaemons>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3286,10 +3271,7 @@ export function useManageGetDaemonsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Daemons
- */
-
+/** @summary Get Daemons */
 export function useManageGetDaemonsSuspense<
   TData = Awaited<ReturnType<typeof manageGetDaemons>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3374,6 +3356,7 @@ export type ManageGetBackupPoliciesQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Backup Policies */
 export function useManageGetBackupPolicies<
   TData = Awaited<ReturnType<typeof manageGetBackupPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3395,6 +3378,7 @@ export function useManageGetBackupPolicies<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Policies */
 export function useManageGetBackupPolicies<
   TData = Awaited<ReturnType<typeof manageGetBackupPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3416,6 +3400,7 @@ export function useManageGetBackupPolicies<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Policies */
 export function useManageGetBackupPolicies<
   TData = Awaited<ReturnType<typeof manageGetBackupPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3429,10 +3414,7 @@ export function useManageGetBackupPolicies<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Backup Policies
- */
-
+/** @summary Get Backup Policies */
 export function useManageGetBackupPolicies<
   TData = Awaited<ReturnType<typeof manageGetBackupPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3494,6 +3476,7 @@ export type ManageGetBackupPoliciesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Backup Policies */
 export function useManageGetBackupPoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3507,6 +3490,7 @@ export function useManageGetBackupPoliciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Policies */
 export function useManageGetBackupPoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3520,6 +3504,7 @@ export function useManageGetBackupPoliciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Policies */
 export function useManageGetBackupPoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3533,10 +3518,7 @@ export function useManageGetBackupPoliciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Backup Policies
- */
-
+/** @summary Get Backup Policies */
 export function useManageGetBackupPoliciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupPolicies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3659,9 +3641,7 @@ export type ManageSetBackupPoliciesMutationError = globalThis.Error & {
 }
 export type ManageSetBackupPoliciesMutationVariables = { data: BackupsPolicy }
 
-/**
- * @summary Set Backup Policies
- */
+/** @summary Set Backup Policies */
 export const useManageSetBackupPolicies = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -3744,6 +3724,7 @@ export type ManageGetBackupProvidersQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Backup Providers */
 export function useManageGetBackupProviders<
   TData = Awaited<ReturnType<typeof manageGetBackupProviders>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3765,6 +3746,7 @@ export function useManageGetBackupProviders<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Providers */
 export function useManageGetBackupProviders<
   TData = Awaited<ReturnType<typeof manageGetBackupProviders>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3786,6 +3768,7 @@ export function useManageGetBackupProviders<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Providers */
 export function useManageGetBackupProviders<
   TData = Awaited<ReturnType<typeof manageGetBackupProviders>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3799,10 +3782,7 @@ export function useManageGetBackupProviders<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Backup Providers
- */
-
+/** @summary Get Backup Providers */
 export function useManageGetBackupProviders<
   TData = Awaited<ReturnType<typeof manageGetBackupProviders>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3864,6 +3844,7 @@ export type ManageGetBackupProvidersSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Backup Providers */
 export function useManageGetBackupProvidersSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupProviders>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3877,6 +3858,7 @@ export function useManageGetBackupProvidersSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Providers */
 export function useManageGetBackupProvidersSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupProviders>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3890,6 +3872,7 @@ export function useManageGetBackupProvidersSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Providers */
 export function useManageGetBackupProvidersSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupProviders>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3903,10 +3886,7 @@ export function useManageGetBackupProvidersSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Backup Providers
- */
-
+/** @summary Get Backup Providers */
 export function useManageGetBackupProvidersSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupProviders>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -3989,6 +3969,7 @@ export type ManageGetBackupFrequenciesQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Backup Frequencies */
 export function useManageGetBackupFrequencies<
   TData = Awaited<ReturnType<typeof manageGetBackupFrequencies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -4010,6 +3991,7 @@ export function useManageGetBackupFrequencies<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Frequencies */
 export function useManageGetBackupFrequencies<
   TData = Awaited<ReturnType<typeof manageGetBackupFrequencies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -4031,6 +4013,7 @@ export function useManageGetBackupFrequencies<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Frequencies */
 export function useManageGetBackupFrequencies<
   TData = Awaited<ReturnType<typeof manageGetBackupFrequencies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -4044,10 +4027,7 @@ export function useManageGetBackupFrequencies<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Backup Frequencies
- */
-
+/** @summary Get Backup Frequencies */
 export function useManageGetBackupFrequencies<
   TData = Awaited<ReturnType<typeof manageGetBackupFrequencies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -4109,6 +4089,7 @@ export type ManageGetBackupFrequenciesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Backup Frequencies */
 export function useManageGetBackupFrequenciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupFrequencies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -4122,6 +4103,7 @@ export function useManageGetBackupFrequenciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Frequencies */
 export function useManageGetBackupFrequenciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupFrequencies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -4135,6 +4117,7 @@ export function useManageGetBackupFrequenciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Backup Frequencies */
 export function useManageGetBackupFrequenciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupFrequencies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -4148,10 +4131,7 @@ export function useManageGetBackupFrequenciesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Backup Frequencies
- */
-
+/** @summary Get Backup Frequencies */
 export function useManageGetBackupFrequenciesSuspense<
   TData = Awaited<ReturnType<typeof manageGetBackupFrequencies>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -4242,9 +4222,7 @@ export type ManagePerformBackupMutationError = globalThis.Error & {
   status?: number
 }
 
-/**
- * @summary Perform Backup
- */
+/** @summary Perform Backup */
 export const useManagePerformBackup = <
   TError = globalThis.Error & { info?: unknown; status?: number },
   TContext = unknown,
@@ -4328,6 +4306,7 @@ export type ManageDownloadBackupQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Download Backup */
 export function useManageDownloadBackup<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -4350,6 +4329,7 @@ export function useManageDownloadBackup<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Download Backup */
 export function useManageDownloadBackup<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -4372,6 +4352,7 @@ export function useManageDownloadBackup<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Download Backup */
 export function useManageDownloadBackup<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -4386,10 +4367,7 @@ export function useManageDownloadBackup<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Download Backup
- */
-
+/** @summary Download Backup */
 export function useManageDownloadBackup<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -4452,6 +4430,7 @@ export type ManageDownloadBackupSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Download Backup */
 export function useManageDownloadBackupSuspense<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -4466,6 +4445,7 @@ export function useManageDownloadBackupSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Download Backup */
 export function useManageDownloadBackupSuspense<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -4480,6 +4460,7 @@ export function useManageDownloadBackupSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Download Backup */
 export function useManageDownloadBackupSuspense<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -4494,10 +4475,7 @@ export function useManageDownloadBackupSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Download Backup
- */
-
+/** @summary Download Backup */
 export function useManageDownloadBackupSuspense<
   TData = Awaited<ReturnType<typeof manageDownloadBackup>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -4602,9 +4580,7 @@ export type ManageRestoreBackupMutationError = globalThis.Error & {
 }
 export type ManageRestoreBackupMutationVariables = { data: BodyManageRestoreBackup }
 
-/**
- * @summary Restore Backup
- */
+/** @summary Restore Backup */
 export const useManageRestoreBackup = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,

@@ -25,14 +25,6 @@ export const policyHealthCheckStoreIdDefault = ``
 export const policyAllowEthPluginInfoDefault = true
 export const policyLogRetentionDaysDefault = 90
 export const policyCaptchaSecretkeyDefault = ``
-export const policyEmailSettingsDefault = {
-  address: "",
-  host: "",
-  port: 25,
-  user: "",
-  password: "",
-  auth_mode: "starttls",
-}
 
 export const Policy = zod.object({
   allow_powered_by_bitcart: zod.boolean().default(policyAllowPoweredByBitcartDefault),
@@ -56,7 +48,9 @@ export const Policy = zod.object({
   allow_eth_plugin_info: zod.boolean().default(policyAllowEthPluginInfoDefault),
   log_retention_days: zod.int().default(policyLogRetentionDaysDefault),
   captcha_secretkey: zod.string().default(policyCaptchaSecretkeyDefault),
-  email_settings: EmailSettings.default(policyEmailSettingsDefault),
+  email_settings: EmailSettings.default({
+    ...{ address: "", host: "", port: 25, user: "", password: "", auth_mode: "starttls" },
+  }),
 })
 
 export type Policy = zod.input<typeof Policy>

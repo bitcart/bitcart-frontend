@@ -134,6 +134,7 @@ export type FilesListItemsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useFilesListItems<
   TData = Awaited<ReturnType<typeof filesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -154,6 +155,7 @@ export function useFilesListItems<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useFilesListItems<
   TData = Awaited<ReturnType<typeof filesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -174,6 +176,7 @@ export function useFilesListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useFilesListItems<
   TData = Awaited<ReturnType<typeof filesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -186,10 +189,7 @@ export function useFilesListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useFilesListItems<
   TData = Awaited<ReturnType<typeof filesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -250,6 +250,7 @@ export type FilesListItemsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useFilesListItemsSuspense<
   TData = Awaited<ReturnType<typeof filesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -264,6 +265,7 @@ export function useFilesListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useFilesListItemsSuspense<
   TData = Awaited<ReturnType<typeof filesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -278,6 +280,7 @@ export function useFilesListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useFilesListItemsSuspense<
   TData = Awaited<ReturnType<typeof filesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -292,10 +295,7 @@ export function useFilesListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useFilesListItemsSuspense<
   TData = Awaited<ReturnType<typeof filesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -400,9 +400,7 @@ export type FilesCreateFileMutationError = globalThis.Error & {
 }
 export type FilesCreateFileMutationVariables = { data: BodyFilesCreateFile }
 
-/**
- * @summary Create File
- */
+/** @summary Create File */
 export const useFilesCreateFile = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -480,6 +478,7 @@ export const getFilesGetCountQueryOptions = <
 export type FilesGetCountQueryResult = NonNullable<Awaited<ReturnType<typeof filesGetCount>>>
 export type FilesGetCountQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useFilesGetCount<
   TData = Awaited<ReturnType<typeof filesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -499,6 +498,7 @@ export function useFilesGetCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useFilesGetCount<
   TData = Awaited<ReturnType<typeof filesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -518,6 +518,7 @@ export function useFilesGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useFilesGetCount<
   TData = Awaited<ReturnType<typeof filesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -529,10 +530,7 @@ export function useFilesGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useFilesGetCount<
   TData = Awaited<ReturnType<typeof filesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -584,6 +582,7 @@ export type FilesGetCountSuspenseQueryResult = NonNullable<
 >
 export type FilesGetCountSuspenseQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useFilesGetCountSuspense<
   TData = Awaited<ReturnType<typeof filesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -597,6 +596,7 @@ export function useFilesGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useFilesGetCountSuspense<
   TData = Awaited<ReturnType<typeof filesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -610,6 +610,7 @@ export function useFilesGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useFilesGetCountSuspense<
   TData = Awaited<ReturnType<typeof filesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -623,10 +624,7 @@ export function useFilesGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useFilesGetCountSuspense<
   TData = Awaited<ReturnType<typeof filesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -713,6 +711,7 @@ export type FilesGetItemQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useFilesGetItem<
   TData = Awaited<ReturnType<typeof filesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -733,6 +732,7 @@ export function useFilesGetItem<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useFilesGetItem<
   TData = Awaited<ReturnType<typeof filesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -753,6 +753,7 @@ export function useFilesGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useFilesGetItem<
   TData = Awaited<ReturnType<typeof filesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -765,10 +766,7 @@ export function useFilesGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useFilesGetItem<
   TData = Awaited<ReturnType<typeof filesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -827,6 +825,7 @@ export type FilesGetItemSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useFilesGetItemSuspense<
   TData = Awaited<ReturnType<typeof filesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -839,6 +838,7 @@ export function useFilesGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useFilesGetItemSuspense<
   TData = Awaited<ReturnType<typeof filesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -853,6 +853,7 @@ export function useFilesGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useFilesGetItemSuspense<
   TData = Awaited<ReturnType<typeof filesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -867,10 +868,7 @@ export function useFilesGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useFilesGetItemSuspense<
   TData = Awaited<ReturnType<typeof filesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -971,9 +969,7 @@ export type FilesDeleteItemMutationError = globalThis.Error & {
 }
 export type FilesDeleteItemMutationVariables = { itemId: string }
 
-/**
- * @summary Delete Item
- */
+/** @summary Delete Item */
 export const useFilesDeleteItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1097,9 +1093,7 @@ export type FilesBatchActionMutationError = globalThis.Error & {
 }
 export type FilesBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const useFilesBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1204,9 +1198,7 @@ export type FilesPatchFileMutationError = globalThis.Error & {
 }
 export type FilesPatchFileMutationVariables = { modelId: string; data: BodyFilesPatchFile }
 
-/**
- * @summary Patch File
- */
+/** @summary Patch File */
 export const useFilesPatchFile = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1291,6 +1283,7 @@ export type FilesHandleFileQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Handle File */
 export function useFilesHandleFile<
   TData = Awaited<ReturnType<typeof filesHandleFile>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1311,6 +1304,7 @@ export function useFilesHandleFile<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Handle File */
 export function useFilesHandleFile<
   TData = Awaited<ReturnType<typeof filesHandleFile>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1331,6 +1325,7 @@ export function useFilesHandleFile<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Handle File */
 export function useFilesHandleFile<
   TData = Awaited<ReturnType<typeof filesHandleFile>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1343,10 +1338,7 @@ export function useFilesHandleFile<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Handle File
- */
-
+/** @summary Handle File */
 export function useFilesHandleFile<
   TData = Awaited<ReturnType<typeof filesHandleFile>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1407,6 +1399,7 @@ export type FilesHandleFileSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Handle File */
 export function useFilesHandleFileSuspense<
   TData = Awaited<ReturnType<typeof filesHandleFile>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1421,6 +1414,7 @@ export function useFilesHandleFileSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Handle File */
 export function useFilesHandleFileSuspense<
   TData = Awaited<ReturnType<typeof filesHandleFile>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1435,6 +1429,7 @@ export function useFilesHandleFileSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Handle File */
 export function useFilesHandleFileSuspense<
   TData = Awaited<ReturnType<typeof filesHandleFile>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1449,10 +1444,7 @@ export function useFilesHandleFileSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Handle File
- */
-
+/** @summary Handle File */
 export function useFilesHandleFileSuspense<
   TData = Awaited<ReturnType<typeof filesHandleFile>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },

@@ -141,6 +141,7 @@ export type InvoicesExportInvoicesQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Export Invoices */
 export function useInvoicesExportInvoices<
   TData = Awaited<ReturnType<typeof invoicesExportInvoices>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -163,6 +164,7 @@ export function useInvoicesExportInvoices<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Export Invoices */
 export function useInvoicesExportInvoices<
   TData = Awaited<ReturnType<typeof invoicesExportInvoices>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -185,6 +187,7 @@ export function useInvoicesExportInvoices<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Export Invoices */
 export function useInvoicesExportInvoices<
   TData = Awaited<ReturnType<typeof invoicesExportInvoices>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -199,10 +202,7 @@ export function useInvoicesExportInvoices<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Export Invoices
- */
-
+/** @summary Export Invoices */
 export function useInvoicesExportInvoices<
   TData = Awaited<ReturnType<typeof invoicesExportInvoices>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -267,6 +267,7 @@ export type InvoicesExportInvoicesSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Export Invoices */
 export function useInvoicesExportInvoicesSuspense<
   TData = Awaited<ReturnType<typeof invoicesExportInvoices>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -281,6 +282,7 @@ export function useInvoicesExportInvoicesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Export Invoices */
 export function useInvoicesExportInvoicesSuspense<
   TData = Awaited<ReturnType<typeof invoicesExportInvoices>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -295,6 +297,7 @@ export function useInvoicesExportInvoicesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Export Invoices */
 export function useInvoicesExportInvoicesSuspense<
   TData = Awaited<ReturnType<typeof invoicesExportInvoices>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -309,10 +312,7 @@ export function useInvoicesExportInvoicesSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Export Invoices
- */
-
+/** @summary Export Invoices */
 export function useInvoicesExportInvoicesSuspense<
   TData = Awaited<ReturnType<typeof invoicesExportInvoices>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -413,6 +413,7 @@ export type InvoicesListItemsQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useInvoicesListItems<
   TData = Awaited<ReturnType<typeof invoicesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -433,6 +434,7 @@ export function useInvoicesListItems<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useInvoicesListItems<
   TData = Awaited<ReturnType<typeof invoicesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -453,6 +455,7 @@ export function useInvoicesListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useInvoicesListItems<
   TData = Awaited<ReturnType<typeof invoicesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -465,10 +468,7 @@ export function useInvoicesListItems<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useInvoicesListItems<
   TData = Awaited<ReturnType<typeof invoicesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -529,6 +529,7 @@ export type InvoicesListItemsSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary List Items */
 export function useInvoicesListItemsSuspense<
   TData = Awaited<ReturnType<typeof invoicesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -543,6 +544,7 @@ export function useInvoicesListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useInvoicesListItemsSuspense<
   TData = Awaited<ReturnType<typeof invoicesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -557,6 +559,7 @@ export function useInvoicesListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary List Items */
 export function useInvoicesListItemsSuspense<
   TData = Awaited<ReturnType<typeof invoicesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -571,10 +574,7 @@ export function useInvoicesListItemsSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary List Items
- */
-
+/** @summary List Items */
 export function useInvoicesListItemsSuspense<
   TData = Awaited<ReturnType<typeof invoicesListItems>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -698,9 +698,7 @@ export type InvoicesCreateItemMutationError = globalThis.Error & {
 }
 export type InvoicesCreateItemMutationVariables = { data: CreateInvoice }
 
-/**
- * @summary Create Item
- */
+/** @summary Create Item */
 export const useInvoicesCreateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -778,6 +776,7 @@ export const getInvoicesGetCountQueryOptions = <
 export type InvoicesGetCountQueryResult = NonNullable<Awaited<ReturnType<typeof invoicesGetCount>>>
 export type InvoicesGetCountQueryError = globalThis.Error & { info?: unknown; status?: number }
 
+/** @summary Get Count */
 export function useInvoicesGetCount<
   TData = Awaited<ReturnType<typeof invoicesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -797,6 +796,7 @@ export function useInvoicesGetCount<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useInvoicesGetCount<
   TData = Awaited<ReturnType<typeof invoicesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -816,6 +816,7 @@ export function useInvoicesGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useInvoicesGetCount<
   TData = Awaited<ReturnType<typeof invoicesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -827,10 +828,7 @@ export function useInvoicesGetCount<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useInvoicesGetCount<
   TData = Awaited<ReturnType<typeof invoicesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -887,6 +885,7 @@ export type InvoicesGetCountSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Count */
 export function useInvoicesGetCountSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -900,6 +899,7 @@ export function useInvoicesGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useInvoicesGetCountSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -913,6 +913,7 @@ export function useInvoicesGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Count */
 export function useInvoicesGetCountSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -926,10 +927,7 @@ export function useInvoicesGetCountSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Count
- */
-
+/** @summary Get Count */
 export function useInvoicesGetCountSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetCount>>,
   TError = globalThis.Error & { info?: unknown; status?: number },
@@ -1016,6 +1014,7 @@ export type InvoicesGetItemQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useInvoicesGetItem<
   TData = Awaited<ReturnType<typeof invoicesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1036,6 +1035,7 @@ export function useInvoicesGetItem<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useInvoicesGetItem<
   TData = Awaited<ReturnType<typeof invoicesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1056,6 +1056,7 @@ export function useInvoicesGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useInvoicesGetItem<
   TData = Awaited<ReturnType<typeof invoicesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1068,10 +1069,7 @@ export function useInvoicesGetItem<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useInvoicesGetItem<
   TData = Awaited<ReturnType<typeof invoicesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1132,6 +1130,7 @@ export type InvoicesGetItemSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Item */
 export function useInvoicesGetItemSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1146,6 +1145,7 @@ export function useInvoicesGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useInvoicesGetItemSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1160,6 +1160,7 @@ export function useInvoicesGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Item */
 export function useInvoicesGetItemSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1174,10 +1175,7 @@ export function useInvoicesGetItemSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Item
- */
-
+/** @summary Get Item */
 export function useInvoicesGetItemSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetItem>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -1302,9 +1300,7 @@ export type InvoicesUpdateItemMutationError = globalThis.Error & {
 }
 export type InvoicesUpdateItemMutationVariables = { itemId: string; data: OptionalUpdateInvoice }
 
-/**
- * @summary Update Item
- */
+/** @summary Update Item */
 export const useInvoicesUpdateItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1406,9 +1402,7 @@ export type InvoicesDeleteItemMutationError = globalThis.Error & {
 }
 export type InvoicesDeleteItemMutationVariables = { itemId: string }
 
-/**
- * @summary Delete Item
- */
+/** @summary Delete Item */
 export const useInvoicesDeleteItem = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1532,9 +1526,7 @@ export type InvoicesBatchActionMutationError = globalThis.Error & {
 }
 export type InvoicesBatchActionMutationVariables = { data: BatchAction }
 
-/**
- * @summary Batch Action
- */
+/** @summary Batch Action */
 export const useInvoicesBatchAction = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1662,9 +1654,7 @@ export type InvoicesGetOrCreateInvoiceByOrderIdMutationVariables = {
   data: CreateInvoice
 }
 
-/**
- * @summary Get Or Create Invoice By Order Id
- */
+/** @summary Get Or Create Invoice By Order Id */
 export const useInvoicesGetOrCreateInvoiceByOrderId = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1788,9 +1778,7 @@ export type InvoicesUpdateInvoiceMutationError = globalThis.Error & {
 }
 export type InvoicesUpdateInvoiceMutationVariables = { modelId: string; data: CustomerUpdateData }
 
-/**
- * @summary Update Invoice
- */
+/** @summary Update Invoice */
 export const useInvoicesUpdateInvoice = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -1916,9 +1904,7 @@ export type InvoicesUpdatePaymentDetailsMutationVariables = {
   data: MethodUpdateData
 }
 
-/**
- * @summary Update Payment Details
- */
+/** @summary Update Payment Details */
 export const useInvoicesUpdatePaymentDetails = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2042,9 +2028,7 @@ export type InvoicesRefundInvoiceMutationError = globalThis.Error & {
 }
 export type InvoicesRefundInvoiceMutationVariables = { modelId: string; data: RefundData }
 
-/**
- * @summary Refund Invoice
- */
+/** @summary Refund Invoice */
 export const useInvoicesRefundInvoice = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
@@ -2133,6 +2117,7 @@ export type InvoicesGetRefundQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Refund */
 export function useInvoicesGetRefund<
   TData = Awaited<ReturnType<typeof invoicesGetRefund>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2153,6 +2138,7 @@ export function useInvoicesGetRefund<
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Refund */
 export function useInvoicesGetRefund<
   TData = Awaited<ReturnType<typeof invoicesGetRefund>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2173,6 +2159,7 @@ export function useInvoicesGetRefund<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Refund */
 export function useInvoicesGetRefund<
   TData = Awaited<ReturnType<typeof invoicesGetRefund>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2185,10 +2172,7 @@ export function useInvoicesGetRefund<
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Refund
- */
-
+/** @summary Get Refund */
 export function useInvoicesGetRefund<
   TData = Awaited<ReturnType<typeof invoicesGetRefund>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2249,6 +2233,7 @@ export type InvoicesGetRefundSuspenseQueryError = globalThis.Error & {
   status?: number
 }
 
+/** @summary Get Refund */
 export function useInvoicesGetRefundSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetRefund>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2263,6 +2248,7 @@ export function useInvoicesGetRefundSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Refund */
 export function useInvoicesGetRefundSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetRefund>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2277,6 +2263,7 @@ export function useInvoicesGetRefundSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/** @summary Get Refund */
 export function useInvoicesGetRefundSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetRefund>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2291,10 +2278,7 @@ export function useInvoicesGetRefundSuspense<
   },
   queryClient?: QueryClient,
 ): UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Refund
- */
-
+/** @summary Get Refund */
 export function useInvoicesGetRefundSuspense<
   TData = Awaited<ReturnType<typeof invoicesGetRefund>>,
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
@@ -2419,9 +2403,7 @@ export type InvoicesSubmitRefundMutationError = globalThis.Error & {
 }
 export type InvoicesSubmitRefundMutationVariables = { refundId: string; data: SubmitRefundData }
 
-/**
- * @summary Submit Refund
- */
+/** @summary Submit Refund */
 export const useInvoicesSubmitRefund = <
   TError = globalThis.Error & { info?: HTTPValidationError; status?: number },
   TContext = unknown,
