@@ -1,5 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { beforeEach, describe, expect, test, vi } from "vitest"
+import { describe, expect, test, vi } from "vitest"
 
 import { makeInvoice, makePayment } from "../fixtures"
 import { CheckoutFooter } from "../parts/footer"
@@ -35,12 +35,6 @@ const slotTexts = () =>
   )
 
 describe("ExtensionSlot", () => {
-  beforeEach(() => {
-    //* The payment screen above leaves out the content a template must show, so the required
-    //* content guard warns about it on every render.
-    vi.spyOn(console, "warn").mockImplementation(() => undefined)
-  })
-
   test("renders a contribution in its position once it loads", async () => {
     renderCheckout({
       screens: { Payment: PaymentScreen },

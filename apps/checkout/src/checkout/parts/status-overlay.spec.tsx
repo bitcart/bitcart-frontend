@@ -31,7 +31,7 @@ describe("StatusOverlay", () => {
       appConfig,
     })
 
-  const contactLink = () => screen.queryByRole("link", { name: "Contact store" })
+  const contactLink = () => screen.queryByRole("link", { name: /^Contact store/ })
   const returnToStore = () => screen.getByRole("button", { name: "Return to Store" })
 
   test("explains a payment that failed to confirm", () => {

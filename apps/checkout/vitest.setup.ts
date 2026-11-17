@@ -7,6 +7,8 @@ import { cleanup } from "@testing-library/react"
 import { createElement } from "react"
 import { afterEach, vi } from "vitest"
 
+import { isRequiredContentWarning } from "#/checkout/runtime/required-content-warning"
+
 i18n.loadAndActivate({ locale: SOURCE_LOCALE_ID, messages: {} })
 
 //* The theme provider and the toast host query media features on mount.
@@ -36,6 +38,12 @@ console.error = (...args: Parameters<typeof console.error>) => {
   if (!(typeof args[0] === "string" && args[0].startsWith(NEXT_THEMES_SCRIPT_WARNING))) {
     consoleError(...args)
   }
+}
+
+const consoleWarn = console.warn.bind(console)
+
+console.warn = (...args: Parameters<typeof console.warn>) => {
+  if (!isRequiredContentWarning(args[0])) consoleWarn(...args)
 }
 
 afterEach(() => {

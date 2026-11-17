@@ -132,7 +132,6 @@ describe("RequiredContentGuard", () => {
       [],
     ],
   ])("asks for a close button in a modal, and finds it %s", async (_case, Payment, missing) => {
-    vi.spyOn(console, "warn").mockImplementation(() => undefined)
     renderCheckout({ screens: { Payment }, appConfig: { close: vi.fn() } })
 
     expect(await missingContent()).toStrictEqual(missing)
@@ -189,8 +188,6 @@ describe("RequiredContentGuard", () => {
     ],
     ["a network cost", { amount: "0.00151000", network_fee: "0.00001000" }],
   ])("asks for the amount breakdown with %s", async (_case, payment) => {
-    vi.spyOn(console, "warn").mockImplementation(() => undefined)
-
     renderCheckout({
       source: { invoice: makeInvoice({ payments: [makePayment(payment)] }) },
       screens: { Payment: CompletePayment },
@@ -221,8 +218,6 @@ describe("RequiredContentGuard", () => {
   })
 
   test("asks for an input per requested customer detail", async () => {
-    vi.spyOn(console, "warn").mockImplementation(() => undefined)
-
     renderCheckout({
       source: {
         invoice: makeInvoice({ buyer_email: "", shipping_address: "" }),
@@ -254,8 +249,6 @@ describe("RequiredContentGuard", () => {
     })
 
     test("asks for the address input and the address slot", async () => {
-      vi.spyOn(console, "warn").mockImplementation(() => undefined)
-
       renderCheckout({
         source: { invoice: makeInvoice({ payments: [eth] }) },
 
@@ -278,8 +271,6 @@ describe("RequiredContentGuard", () => {
     })
 
     test("asks a payment screen to show the address payments must come from", async () => {
-      vi.spyOn(console, "warn").mockImplementation(() => undefined)
-
       renderCheckout({
         source: {
           invoice: makeInvoice({ payments: [{ ...eth, user_address: "0xsender" }] }),
@@ -293,8 +284,6 @@ describe("RequiredContentGuard", () => {
   })
 
   test("asks for the status once the invoice is settled", async () => {
-    vi.spyOn(console, "warn").mockImplementation(() => undefined)
-
     renderCheckout({
       source: { invoice: makeInvoice({ status: "expired" }) },
       screens: { Payment: BarePayment, Status: () => <CheckoutFooter /> },

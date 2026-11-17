@@ -100,7 +100,7 @@ describe("sender address screen", () => {
       expect(screen.getByRole("heading", { name: "For server owners" })).toHaveFocus()
       expect(screen.queryByRole("textbox")).not.toBeInTheDocument()
 
-      expect(screen.getByRole("link", { name: "Buy plugin" })).toHaveAttribute(
+      expect(screen.getByRole("link", { name: /^Buy plugin/ })).toHaveAttribute(
         "href",
         "https://admin.example.com/plugins?plugin_id=ZIDVfTVxDWQLKyhYiqifyNkhcvfufUKm&action=buy",
       )

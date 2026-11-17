@@ -24,7 +24,12 @@ export const CheckoutTestProviders = ({ children }: { children: ReactNode }) => 
   <I18nProvider i18n={i18n}>
     <ThemeProvider>
       <LayoutContextProvider
-        LinkComponent={({ children: linkChildren, ...props }) => <a {...props}>{linkChildren}</a>}
+        LinkComponent={({ a11yHint, children: linkChildren, ...props }) => (
+          <a {...props}>
+            {linkChildren}
+            {a11yHint && <span className="sr-only">{a11yHint}</span>}
+          </a>
+        )}
         currentRoute={{ pathname: "/i/invoice-1", pathnameWithHash: "/i/invoice-1", hash: null }}
         layoutConfig={getTestLayoutConfig()}
       >

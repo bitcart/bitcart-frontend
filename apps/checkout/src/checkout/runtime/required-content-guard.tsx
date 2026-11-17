@@ -20,6 +20,7 @@ import { funnel } from "remeda"
 import { useCheckout, useCheckoutAppConfig } from "../hooks"
 import type { CheckoutModel, CheckoutSelectionMode } from "../model"
 import { SENDER_ADDRESS_FIELD } from "../sender-address-form"
+import { formatRequiredContentWarning } from "./required-content-warning"
 import type { ExtensionSlotName } from "./slot-contributions"
 
 const SETTLE_DELAY_MS = 100
@@ -168,9 +169,7 @@ export const RequiredContentGuard = ({
       )
 
       if (missing && missing !== marker.dataset.missing) {
-        console.warn(
-          `Checkout template "${templateId}" is missing required content in the "${model.phase}" phase: ${missing}`,
-        )
+        console.warn(formatRequiredContentWarning({ templateId, phase: model.phase, missing }))
       }
 
       marker.dataset.missing = missing
