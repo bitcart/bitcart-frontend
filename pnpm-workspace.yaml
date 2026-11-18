@@ -10,8 +10,6 @@ allowBuilds:
 
 auditConfig:
   ignoreGhsas:
-    # TODO: Remove once micromatch/picomatch publishes a fix for GHSA-fc5q-39xc-vjpf.
-    - GHSA-fc5q-39xc-vjpf
     # TODO: Remove once nx bumps its minimatch pin to 11.0.1 (https://github.com/nrwl/nx/issues/37727)
     - GHSA-g3hv-75wg-m249
 
