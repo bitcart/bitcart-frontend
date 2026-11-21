@@ -24,7 +24,8 @@
     "./supplementary/lingui-macros": "./src/supplementary/lingui-macros.ts",
     "./supplementary/tanstack-start-vite": "./src/supplementary/tanstack-start-vite.ts",
     "./supplementary/unocss-oxlint": "./src/supplementary/unocss-oxlint.ts",
-    "./supplementary/vike-vite": "./src/supplementary/vike-vite.ts"
+    "./supplementary/vike-vite": "./src/supplementary/vike-vite.ts",
+    "./supplementary/vitest-console": "./src/supplementary/vitest-console.ts"
   },
   "scripts": {
     "lint": "oxlint . --fix",
@@ -45,6 +46,7 @@
     "tsdown": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
-    "vite": "catalog:devDependencies"
+    "vite": "catalog:devDependencies",
+    "vitest": "catalog:devDependencies"
   }
 }

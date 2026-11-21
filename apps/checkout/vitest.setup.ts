@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom/vitest"
+import { failOnUnexpectedConsoleOutput } from "@bitcart/configs/supplementary/vitest-console"
 import { SOURCE_LOCALE_ID } from "@bitcart/core/i18n"
 import { mockLayoutApis, mockMatchMedia } from "@bitcart/qa/unit"
 import { toast } from "@bitcart/ui-kit/utils"
@@ -32,19 +33,10 @@ vi.mock("@bitcart/ui-kit/components", async (importOriginal) => ({
 //! render, which is how tests render it.
 // TODO: Remove once next-themes stops rendering it on the client (https://github.com/pacocoursey/next-themes/issues/385).
 const NEXT_THEMES_SCRIPT_WARNING = "Encountered a script tag while rendering React component."
-const consoleError = console.error.bind(console)
 
-console.error = (...args: Parameters<typeof console.error>) => {
-  if (!(typeof args[0] === "string" && args[0].startsWith(NEXT_THEMES_SCRIPT_WARNING))) {
-    consoleError(...args)
-  }
-}
-
-const consoleWarn = console.warn.bind(console)
-
-console.warn = (...args: Parameters<typeof console.warn>) => {
-  if (!isRequiredContentWarning(args[0])) consoleWarn(...args)
-}
+failOnUnexpectedConsoleOutput({
+  allowed: [(message) => message.startsWith(NEXT_THEMES_SCRIPT_WARNING), isRequiredContentWarning],
+})
 
 afterEach(() => {
   cleanup()

@@ -7,5 +7,6 @@ export default defineConfig({
 
   test: {
     restoreMocks: true,
+    setupFiles: "./vitest.setup.ts",
   },
 })
