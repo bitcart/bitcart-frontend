@@ -52,7 +52,7 @@ export const getManageGetPoliciesResponseMock = (): PolicyResponse | PublicPolic
         port: faker.number.int(),
         user: faker.string.alpha({ length: { min: 10, max: 20 } }),
         password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-        auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
       },
       admin_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
       checkout_url: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -121,7 +121,7 @@ export const getManageSetPoliciesResponseMock = (
     port: faker.number.int(),
     user: faker.string.alpha({ length: { min: 10, max: 20 } }),
     password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
   },
   ...overrideResponse,
 })

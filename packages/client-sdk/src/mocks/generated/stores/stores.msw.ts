@@ -69,7 +69,7 @@ export const getStoresListItemsResponseMock = (
         port: faker.number.int(),
         user: faker.string.alpha({ length: { min: 10, max: 20 } }),
         password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-        auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
       },
       notifications: Array.from(
         { length: faker.number.int({ min: 1, max: 10 }) },
@@ -143,7 +143,7 @@ export const getStoresCreateItemResponseMock = (
     port: faker.number.int(),
     user: faker.string.alpha({ length: { min: 10, max: 20 } }),
     password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
   },
   notifications: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -210,7 +210,7 @@ export const getStoresUpdateItemResponseMock = (
     port: faker.number.int(),
     user: faker.string.alpha({ length: { min: 10, max: 20 } }),
     password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
   },
   notifications: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -275,7 +275,7 @@ export const getStoresDeleteItemResponseMock = (
     port: faker.number.int(),
     user: faker.string.alpha({ length: { min: 10, max: 20 } }),
     password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
   },
   notifications: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -345,7 +345,7 @@ export const getStoresGetItemResponseMock = (): DisplayStore | PublicStore =>
         port: faker.number.int(),
         user: faker.string.alpha({ length: { min: 10, max: 20 } }),
         password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-        auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
       },
       notifications: Array.from(
         { length: faker.number.int({ min: 1, max: 10 }) },
@@ -451,7 +451,7 @@ export const getStoresSetStoreCheckoutSettingsResponseMock = (
     port: faker.number.int(),
     user: faker.string.alpha({ length: { min: 10, max: 20 } }),
     password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
   },
   notifications: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -516,7 +516,7 @@ export const getStoresSetStoreEmailSettingsResponseMock = (
     port: faker.number.int(),
     user: faker.string.alpha({ length: { min: 10, max: 20 } }),
     password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
   },
   notifications: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -581,7 +581,7 @@ export const getStoresSetStoreThemeSettingsResponseMock = (
     port: faker.number.int(),
     user: faker.string.alpha({ length: { min: 10, max: 20 } }),
     password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
   },
   notifications: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -646,7 +646,7 @@ export const getStoresSetStorePluginSettingsResponseMock = (
     port: faker.number.int(),
     user: faker.string.alpha({ length: { min: 10, max: 20 } }),
     password: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    auth_mode: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    auth_mode: faker.helpers.arrayElement(["none", "ssl/tls", "starttls"] as const),
   },
   notifications: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => faker.string.alpha({ length: { min: 10, max: 20 } }),

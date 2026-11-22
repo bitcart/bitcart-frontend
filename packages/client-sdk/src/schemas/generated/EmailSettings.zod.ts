@@ -17,7 +17,7 @@ export const EmailSettings = zod.object({
   port: zod.int().default(emailSettingsPortDefault),
   user: zod.string().default(emailSettingsUserDefault),
   password: zod.string().default(emailSettingsPasswordDefault),
-  auth_mode: zod.string().default(emailSettingsAuthModeDefault),
+  auth_mode: zod.enum(["none", "ssl/tls", "starttls"]).default(emailSettingsAuthModeDefault),
 })
 
 export type EmailSettings = zod.input<typeof EmailSettings>
