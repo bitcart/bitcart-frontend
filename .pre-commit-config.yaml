@@ -44,6 +44,13 @@ repos:
         require_serial: true
         pass_filenames: false
         files: '(package\.json$|^pnpm-workspace\.yaml$|^pnpm-lock\.yaml$)'
+      - id: justfile-format
+        name: justfile-format
+        language: system
+        entry: just --fmt --check
+        require_serial: true
+        pass_filenames: false
+        files: "^justfile$"
       - id: format
         name: format
         language: system

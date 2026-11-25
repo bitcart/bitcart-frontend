@@ -1,3 +1,4 @@
+set minimum-version := "1.59.0"
 set dotenv-load
 
 ## GENERAL

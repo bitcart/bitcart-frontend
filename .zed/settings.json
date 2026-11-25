@@ -1,7 +1,8 @@
 {
   "preferred_line_length": 100,
-  "tab_size": 2,
   "inlay_hints": { "enabled": false },
+  "format_on_save": "on",
+  "read_only_files": ["**/routeTree.gen.ts", "packages/client-sdk/openapi.json"],
 
   "git_hosting_providers": [
     {
@@ -19,7 +20,7 @@
         "source.fixAll.oxc": true
       },
 
-      "language_servers": ["cspell", "oxfmt", "oxlint", "vtsls", "!eslint"]
+      "language_servers": ["cspell", "oxfmt", "oxlint", "typescript-ls", "!eslint"]
     },
 
     "TypeScript": {
@@ -33,8 +34,8 @@
         "cspell",
         "oxfmt",
         "oxlint",
+        "typescript-ls",
         "unocss-language-server",
-        "vtsls",
         "!eslint",
         "!tailwindcss-language-server"
       ]
@@ -51,11 +52,17 @@
         "cspell",
         "oxfmt",
         "oxlint",
+        "typescript-ls",
         "unocss-language-server",
-        "vtsls",
         "!eslint",
         "!tailwindcss-language-server"
       ]
-    }
+    },
+
+    "JSON": { "formatter": { "language_server": { "name": "oxfmt" } } },
+    "JSONC": { "formatter": { "language_server": { "name": "oxfmt" } } },
+    "YAML": { "formatter": { "language_server": { "name": "oxfmt" } } },
+    "MDX": { "formatter": { "language_server": { "name": "oxfmt" } } },
+    "Markdown": { "formatter": { "language_server": { "name": "oxfmt" } } }
   }
 }
