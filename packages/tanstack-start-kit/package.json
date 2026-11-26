@@ -45,8 +45,7 @@
     "@bitcart/core": "workspace:*",
     "@bitcart/hooks": "workspace:*",
     "@lingui/core": "catalog:dependencies",
-    "@lingui/react": "catalog:dependencies",
-    "react": "catalog:dependencies"
+    "@lingui/react": "catalog:dependencies"
   },
   "devDependencies": {
     "@bitcart/configs": "workspace:*",
@@ -57,13 +56,15 @@
     "dependency-cruiser": "catalog:devDependencies",
     "fumadocs-core": "catalog:dependencies",
     "oxlint": "catalog:devDependencies",
+    "react": "catalog:dependencies",
     "tsdown": "catalog:devDependencies",
     "tsrs": "catalog:devDependencies",
     "vitest": "catalog:devDependencies"
   },
   "peerDependencies": {
     "@tanstack/react-router": "catalog:dependencies",
-    "fumadocs-core": "catalog:dependencies"
+    "fumadocs-core": "catalog:dependencies",
+    "react": "catalog:dependencies"
   },
   "peerDependenciesMeta": {
     "fumadocs-core": {

@@ -24,7 +24,6 @@
   "dependencies": {
     "@bitcart/core": "workspace:*",
     "@mantine/hooks": "catalog:dependencies",
-    "react": "catalog:dependencies",
     "remeda": "catalog:dependencies"
   },
   "devDependencies": {
@@ -41,9 +40,13 @@
     "jsdom": "catalog:devDependencies",
     "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "react": "catalog:dependencies",
     "react-dom": "catalog:dependencies",
     "tsdown": "catalog:devDependencies",
     "tsrs": "catalog:devDependencies",
     "vitest": "catalog:devDependencies"
+  },
+  "peerDependencies": {
+    "react": "catalog:dependencies"
   }
 }

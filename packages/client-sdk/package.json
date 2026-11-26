@@ -52,7 +52,6 @@
     "@bitcart/core": "workspace:*",
     "@bitcart/hooks": "workspace:*",
     "@tanstack/react-query": "catalog:dependencies",
-    "react": "catalog:dependencies",
     "remeda": "catalog:dependencies",
     "zod": "catalog:dependencies"
   },
@@ -68,6 +67,7 @@
     "orval": "catalog:devDependencies",
     "oxfmt": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "react": "catalog:dependencies",
     "tsdown": "catalog:devDependencies",
     "tsrs": "catalog:devDependencies",
     "tsx": "catalog:devDependencies",
@@ -76,7 +76,8 @@
   },
   "peerDependencies": {
     "@faker-js/faker": "catalog:devDependencies",
-    "msw": "catalog:devDependencies"
+    "msw": "catalog:devDependencies",
+    "react": "catalog:dependencies"
   },
   "peerDependenciesMeta": {
     "@faker-js/faker": {

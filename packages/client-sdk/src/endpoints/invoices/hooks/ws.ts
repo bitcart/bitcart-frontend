@@ -145,6 +145,9 @@ export const useInvoiceWebsocket = ({
   //* Reconnection halts while the client is offline, and regained connectivity resumes it.
   useEffect(() => {
     if (isClientOnline && isReconnectSuspended) {
+      //! Reconciles both states in either order: an `online` event that fires before the socket
+      //! closes is already past when reconnection is suspended, so an event handler would miss it.
+      // oxlint-disable-next-line react/set-state-in-effect -- see above
       reconnect()
     }
   }, [isClientOnline, isReconnectSuspended, reconnect])

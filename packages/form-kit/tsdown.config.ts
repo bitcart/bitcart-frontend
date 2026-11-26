@@ -1,4 +1,5 @@
 import { staleOutputRemovalHooks } from "@bitcart/configs/by-package-type/lib-tsdown"
+import { reactCompilerPlugin } from "@bitcart/configs/by-view-layer/react-tsdown"
 import { linguiCatalogsPlugin } from "@bitcart/configs/supplementary/lingui-catalogs"
 import { linguiMacrosPlugin } from "@bitcart/configs/supplementary/lingui-macros"
 import { getConfig } from "@lingui/conf"
@@ -23,6 +24,7 @@ export default defineConfig({
   //* The output keeps source messages: validation renders them while a catalog is missing.
   plugins: [
     linguiMacrosPlugin(linguiConfig, { descriptorFields: "message" }),
+    reactCompilerPlugin(),
     linguiCatalogsPlugin(linguiConfig),
   ],
 
