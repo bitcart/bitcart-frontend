@@ -3,7 +3,6 @@ import { linguiCatalogsPlugin } from "@bitcart/configs/supplementary/lingui-cata
 import { linguiMacrosPlugin } from "@bitcart/configs/supplementary/lingui-macros"
 import { getConfig } from "@lingui/conf"
 import { defineConfig } from "tsdown"
-import svgr from "vite-plugin-svgr"
 
 const linguiConfig = getConfig({ cwd: import.meta.dirname })
 
@@ -30,7 +29,6 @@ export default defineConfig({
 
   //* The output keeps source messages: components render them while a catalog is missing.
   plugins: [
-    svgr(),
     linguiMacrosPlugin(linguiConfig, { descriptorFields: "message" }),
     linguiCatalogsPlugin(linguiConfig),
   ],

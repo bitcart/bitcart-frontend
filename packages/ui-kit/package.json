@@ -89,7 +89,6 @@
     "@web3icons/common": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "eslint-plugin-better-tailwindcss": "catalog:devDependencies",
-    "eslint-plugin-react-hooks": "catalog:devDependencies",
     "jsdom": "catalog:devDependencies",
     "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
@@ -97,7 +96,6 @@
     "tsrs": "catalog:devDependencies",
     "tsx": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
-    "vite-plugin-svgr": "catalog:devDependencies",
     "vitest": "catalog:devDependencies"
   }
 }

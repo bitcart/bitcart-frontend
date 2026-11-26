@@ -58,7 +58,6 @@
     "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
-    "eslint-plugin-react-hooks": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
     "tsrs": "catalog:devDependencies",

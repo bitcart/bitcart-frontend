@@ -41,8 +41,6 @@ export const baseOxlintConfig = defineConfig({
       },
     ],
 
-    "stylistic-js/rest-spread-spacing": ["error"],
-
     "stylistic-js/padding-line-between-statements": [
       "error",
       { blankLine: "always", prev: "*", next: "multiline-const" },

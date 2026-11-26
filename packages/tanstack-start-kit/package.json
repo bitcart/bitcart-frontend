@@ -55,7 +55,6 @@
     "@types/node": "catalog:devDependencies",
     "@types/react": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
-    "eslint-plugin-react-hooks": "catalog:devDependencies",
     "fumadocs-core": "catalog:dependencies",
     "oxlint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",

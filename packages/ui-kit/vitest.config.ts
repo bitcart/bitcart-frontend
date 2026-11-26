@@ -1,7 +1,6 @@
 import { linguiMacrosPlugin } from "@bitcart/configs/supplementary/lingui-macros"
 import { getConfig } from "@lingui/conf"
 import react from "@vitejs/plugin-react"
-import svgr from "vite-plugin-svgr"
 import { defineConfig } from "vitest/config"
 
 export default defineConfig({
@@ -14,7 +13,6 @@ export default defineConfig({
   plugins: [
     { ...linguiMacrosPlugin(getConfig({ cwd: import.meta.dirname })), enforce: "pre" },
     react({ compiler: true }),
-    svgr(),
   ],
 
   test: {

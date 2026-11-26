@@ -49,7 +49,6 @@
     "@types/react": "catalog:devDependencies",
     "@vitejs/plugin-react": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
-    "eslint-plugin-react-hooks": "catalog:devDependencies",
     "jsdom": "catalog:devDependencies",
     "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",

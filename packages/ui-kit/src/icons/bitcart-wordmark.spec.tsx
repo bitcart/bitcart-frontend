@@ -19,4 +19,37 @@ describe("BitcartWordmarkIcon", () => {
 
     expect(screen.queryByRole("img")).toBeNull()
   })
+
+  test("carries no style element, which would restyle every SVG on the page", () => {
+    const { container } = render(<BitcartWordmarkIcon />)
+
+    expect(container.querySelector("style")).toBeNull()
+  })
+
+  test("gives each copy its own gradient ids and paints from them", () => {
+    const { container } = render(
+      <>
+        <BitcartWordmarkIcon />
+        <BitcartWordmarkIcon />
+      </>,
+    )
+
+    const ids = [...container.querySelectorAll("[id]")].map((element) => element.id)
+
+    expect(new Set(ids).size).toBe(ids.length)
+
+    for (const svg of container.querySelectorAll("svg")) {
+      const ownIds = new Set([...svg.querySelectorAll("[id]")].map((element) => element.id))
+
+      const references = [...svg.querySelectorAll("[fill^='url(#'], [href^='#']")].map((element) =>
+        (element.getAttribute("href") ?? element.getAttribute("fill") ?? "").replace(
+          /^url\(#(.*)\)$|^#/,
+          "$1",
+        ),
+      )
+
+      expect(references).toHaveLength(7)
+      expect(references.every((reference) => ownIds.has(reference))).toBe(true)
+    }
+  })
 })
