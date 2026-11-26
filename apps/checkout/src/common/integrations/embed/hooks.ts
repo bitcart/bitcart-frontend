@@ -15,7 +15,7 @@ export const EMBED_APP_CONFIG: Required<
 
 export const useEmbedEscapeClose = (isEmbedded: boolean): void => {
   useEffect(() => {
-    if (!isEmbedded) return void null
+    if (!isEmbedded) return void 0
 
     const host = getEmbedHost()
 

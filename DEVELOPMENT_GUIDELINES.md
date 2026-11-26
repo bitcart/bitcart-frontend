@@ -328,7 +328,7 @@ Only use a bare early return when it is a true guard clause at the very top of a
 ```ts
 // ✅ correct
 const handleMobileMenuKeyDown = useCallback((e: React.KeyboardEvent) => {
-  if (e.key !== "Tab") return void null
+  if (e.key !== "Tab") return void 0
 
   const focusable = Array.from(
     mobileMenuRef.current?.querySelectorAll<HTMLElement>("a, button") ?? [],

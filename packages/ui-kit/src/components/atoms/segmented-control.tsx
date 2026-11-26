@@ -74,7 +74,7 @@ const SegmentedControlIndicator: React.FC = () => {
   useLayoutEffect(() => {
     const root = ref.current?.parentElement
 
-    if (!root) return void null
+    if (!root) return void 0
 
     const update = () => {
       const item = root.querySelector<HTMLElement>(ACTIVE_ITEM_SELECTOR)

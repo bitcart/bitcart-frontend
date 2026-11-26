@@ -22,7 +22,7 @@
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
     "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsrs --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",
@@ -35,9 +35,8 @@
     "@types/node": "catalog:devDependencies",
     "dependency-cruiser": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
-    "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
+    "tsrs": "catalog:devDependencies",
     "vitest": "catalog:devDependencies"
   },
   "peerDependencies": {

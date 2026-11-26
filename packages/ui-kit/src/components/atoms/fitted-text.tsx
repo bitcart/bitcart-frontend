@@ -22,7 +22,7 @@ export const FittedText: React.FC<FittedTextProps> = ({ steps, className, childr
     const container = ref.current
     const text = container?.firstElementChild
 
-    if (!container || !(text instanceof HTMLElement)) return void null
+    if (!container || !(text instanceof HTMLElement)) return void 0
 
     const fit = () => {
       Object.assign(text.style, { whiteSpace: "nowrap", overflowWrap: "" })

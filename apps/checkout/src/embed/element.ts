@@ -149,7 +149,7 @@ export class BitcartCheckoutElement extends HTMLElement {
   }
 
   open(): void {
-    if (this.#current) return void null
+    if (this.#current) return void 0
 
     const invoiceId = this.getAttribute("invoice-id")
     const checkoutUrl = this.getAttribute("checkout-url") ?? defaultCheckoutUrl

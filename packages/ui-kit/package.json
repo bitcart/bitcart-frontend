@@ -54,7 +54,7 @@
     "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
     "shadcn-ui": "pnpm dlx shadcn@latest",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsrs --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@base-ui/react": "catalog:dependencies",
@@ -93,10 +93,9 @@
     "jsdom": "catalog:devDependencies",
     "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
-    "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
+    "tsrs": "catalog:devDependencies",
     "tsx": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
     "vite-plugin-svgr": "catalog:devDependencies",
     "vitest": "catalog:devDependencies"

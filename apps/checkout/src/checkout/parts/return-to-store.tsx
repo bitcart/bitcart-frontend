@@ -19,7 +19,7 @@ const CountdownFill = () => {
   const ref = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return void null
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return void 0
 
     const animation = ref.current?.animate([{ scale: "0 1" }, { scale: "1 1" }], {
       duration: REDIRECT_DELAY_SECONDS * 1000,

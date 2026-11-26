@@ -27,7 +27,7 @@
     "i18n:extract-locales": "lingui extract --clean",
     "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsrs --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",
@@ -53,9 +53,8 @@
     "jsdom": "catalog:devDependencies",
     "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
-    "oxlint-tsgolint": "catalog:devDependencies",
     "tsdown": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
+    "tsrs": "catalog:devDependencies",
     "vitest": "catalog:devDependencies",
     "zod": "catalog:dependencies"
   }

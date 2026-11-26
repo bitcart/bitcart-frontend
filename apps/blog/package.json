@@ -19,7 +19,7 @@
     "lint:check": "oxlint .",
     "postinstall": "fumadocs-mdx",
     "preview": "vite preview --host",
-    "typecheck": "fumadocs-mdx && ./scripts/check-content.ts && tsc --noEmit -p tsconfig.json"
+    "typecheck": "fumadocs-mdx && ./scripts/check-content.ts && tsrs --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",
@@ -67,7 +67,7 @@
     "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
     "srvx": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
+    "tsrs": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
     "vite": "catalog:devDependencies",
     "vite-imagetools": "catalog:devDependencies",

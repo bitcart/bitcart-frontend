@@ -23,7 +23,7 @@ const config: KnipConfig = {
   "dependency-cruiser": { config: [".dependency-cruiser.ts"] },
 
   ignoreBinaries: ["dot"],
-  ignoreDependencies: ["remeda"],
+  ignoreDependencies: ["remeda", "tsrs"],
 
   ignoreIssues: {
     "**/*.{ts,tsx}": ["exports", "types"],

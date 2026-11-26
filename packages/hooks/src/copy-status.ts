@@ -51,7 +51,7 @@ export const useCopyStatus = <TKey extends string>(): {
   const [status, setStatus] = useState<CopyStatus<TKey>>(null)
 
   useEffect(() => {
-    if (status === null) return void null
+    if (status === null) return void 0
 
     const timeout = setTimeout(() => setStatus(null), STATUS_DURATION_MS)
 

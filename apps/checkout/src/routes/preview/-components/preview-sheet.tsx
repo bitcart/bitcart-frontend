@@ -26,7 +26,7 @@ export const SheetFrameContent = ({ children }: { children: React.ReactNode }) =
   useEffect(() => {
     const content = ref.current
 
-    if (!content || window.parent === window) return void null
+    if (!content || window.parent === window) return void 0
 
     const observer = new ResizeObserver(() =>
       window.parent.postMessage(

@@ -139,7 +139,7 @@ export const StatusOverlay = ({
     status === "complete" || status === "refunded" ? t`Paid to ${storeName}` : storeName
 
   useEffect(() => {
-    if (!celebrates) return void null
+    if (!celebrates) return void 0
 
     const end = Date.now() + 2000
     let frameId = 0

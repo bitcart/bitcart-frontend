@@ -52,7 +52,7 @@ export const useInvoiceWebsocket = ({
   const handleConnect = useEffectEvent(() => onConnect?.())
 
   useEffect(() => {
-    if (isStatusTerminal) return void null
+    if (isStatusTerminal) return void 0
 
     let socketRef: WebSocket | null = null
     let reconnectDelay: number = INITIAL_WS_RECONNECT_DELAY_MS

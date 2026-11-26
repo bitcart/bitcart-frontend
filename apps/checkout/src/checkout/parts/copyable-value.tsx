@@ -34,7 +34,7 @@ const useShrinkToLines = <T extends HTMLElement>(text: string) => {
     const element = ref.current
     const container = element?.closest<HTMLElement>("[data-shrink-root]")
 
-    if (!element || !container) return void null
+    if (!element || !container) return void 0
 
     const fit = () => {
       element.style.width = ""

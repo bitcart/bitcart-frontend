@@ -19,7 +19,7 @@
     "generate:graphviz": "depcruise src --output-type dot | ../../scripts/generate-graphviz.ts graphviz.svg",
     "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
-    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.lib.json"
+    "typecheck": "tsrs --noEmit -p tsconfig.json && tsrs --noEmit -p tsconfig.lib.json"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",
@@ -42,10 +42,9 @@
     "jsdom": "catalog:devDependencies",
     "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
-    "oxlint-tsgolint": "catalog:devDependencies",
     "react-dom": "catalog:dependencies",
     "tsdown": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
+    "tsrs": "catalog:devDependencies",
     "vitest": "catalog:devDependencies"
   }
 }

@@ -17,7 +17,7 @@ export default defineConfig({
 
   //* The `oxc` generator and `isolatedDeclarations` are not applicable
   //* due to the presence of types derived from Zod schemas in the package.
-  dts: true,
+  dts: { generator: "tsrs" },
 
   format: ["esm"],
   hooks: staleOutputRemovalHooks,

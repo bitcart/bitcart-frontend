@@ -62,7 +62,7 @@ export const createLocaleActivation = ({
     },
 
     activateLocale: async (localeId) => {
-      if (i18n.locale === localeId) return void null
+      if (i18n.locale === localeId) return void 0
 
       const [messages] = await Promise.all([
         localeId === SOURCE_LOCALE_ID ? sourceMessages : loadMessages(localeId),

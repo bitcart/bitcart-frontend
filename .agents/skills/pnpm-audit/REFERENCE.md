@@ -52,8 +52,8 @@ construction: one exact version, carrying its own removal date, swept up by step
 
 `minimumReleaseAgeExclude:` holds two unrelated kinds of entry.
 
-Permanent, undated entries (`@base-ui/*`, `oxfmt`, `oxlint`, `oxlint-tsgolint`, `@oxc-project/*`,
-and the binding globs) are standing policy for fast-moving pre-1.0 and tooling packages that ship
+Permanent, undated entries (`@base-ui/*`, `oxfmt`, `oxlint`, `tsrs`, `@oxc-project/*`, and the
+binding globs) are standing policy for fast-moving pre-1.0 and tooling packages that ship
 faster than the maturity window allows. They have nothing to do with any vulnerability fix and are
 out of scope for this skill.
 

@@ -30,7 +30,7 @@ export const useCountdown = (
   const readSecondsLeft = useEffectEvent(() => secondsLeft)
 
   useEffect(() => {
-    if (!isActive) return void null
+    if (!isActive) return void 0
 
     const startedAt = Date.now()
     const startSecondsLeft = readSecondsLeft()

@@ -3,7 +3,7 @@ import { createFormHook } from "@tanstack/react-form"
 import { SelectField, SubmitButton, TextareaField, TextField } from "../components"
 import { fieldContext, formContext } from "../contexts/form"
 
-export const { useAppForm } = createFormHook({
+const formHook = createFormHook({
   fieldContext,
   formContext,
 
@@ -28,3 +28,5 @@ export const { useAppForm } = createFormHook({
     SubmitButton,
   },
 })
+
+export const useAppForm = formHook.useAppForm

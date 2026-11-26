@@ -15,7 +15,7 @@
     "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
     "preview": "vike preview --host",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "tsrs --noEmit -p tsconfig.json",
     "web3icons:recatalogize": "tsx ./scripts/web3icons.ts"
   },
   "dependencies": {
@@ -60,8 +60,8 @@
     "eslint-plugin-react-hooks": "catalog:devDependencies",
     "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
+    "tsrs": "catalog:devDependencies",
     "tsx": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
     "vite": "catalog:devDependencies",
     "vite-plugin-static-copy": "catalog:devDependencies"

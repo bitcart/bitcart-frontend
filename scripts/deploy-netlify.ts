@@ -130,7 +130,7 @@ async function uploadFile(deployId: string, { path, body }: DeployFile): Promise
         body,
       })
 
-      return void null
+      return void 0
     } catch (error) {
       const isRetryable =
         !(error instanceof NetlifyApiError) || (error.status > 400 && error.status !== 422)

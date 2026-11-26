@@ -45,8 +45,8 @@
     "nx": "catalog:devDependencies",
     "oxfmt": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
-    "oxlint-tsgolint": "catalog:devDependencies",
     "tailwindcss": "catalog:devDependencies",
+    "tsrs": "catalog:devDependencies",
     "typescript": "catalog:devDependencies",
     "vitest": "catalog:devDependencies"
   },
@@ -221,7 +221,6 @@
       "Tipbot",
       "Transifex",
       "tsdown",
-      "tsgolint",
       "Turborepo",
       "Türkçe",
       "unawaited",

@@ -10,7 +10,7 @@ export default defineConfig({
 
   clean: false,
   deps: { neverBundle: true },
-  dts: true,
+  dts: { generator: "tsrs" },
   format: ["esm"],
   hooks: staleOutputRemovalHooks,
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),

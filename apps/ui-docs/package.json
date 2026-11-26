@@ -13,7 +13,7 @@
     "lint:check": "oxlint .",
     "postinstall": "fumadocs-mdx",
     "preview": "vite preview --host",
-    "typecheck": "fumadocs-mdx && tsc --noEmit -p tsconfig.json"
+    "typecheck": "fumadocs-mdx && tsrs --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@bitcart/core": "workspace:*",
@@ -65,7 +65,7 @@
     "oxlint": "catalog:devDependencies",
     "srvx": "catalog:devDependencies",
     "tailwindcss": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
+    "tsrs": "catalog:devDependencies",
     "unocss": "catalog:devDependencies"
   }
 }

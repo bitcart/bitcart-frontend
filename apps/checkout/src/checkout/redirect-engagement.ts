@@ -17,7 +17,7 @@ export const useRedirectEngagement = (stop: (() => void) | undefined) => {
   const isActive = stop !== undefined
 
   useEffect(() => {
-    if (!isActive) return void null
+    if (!isActive) return void 0
 
     const listener = (event: KeyboardEvent) => onEscape(event)
 

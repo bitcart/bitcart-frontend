@@ -161,7 +161,7 @@ export const RequiredContentGuard = ({
     const marker = markerRef.current
     const root = marker?.closest("[data-checkout-template]")
 
-    if (!marker || !root) return void null
+    if (!marker || !root) return void 0
 
     const check = () => {
       const missing = findMissingContent(root, model, selection, displayedAmount, isInModal).join(

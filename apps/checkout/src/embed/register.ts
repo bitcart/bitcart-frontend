@@ -6,7 +6,7 @@ export type BitcartApi = {
   open: (invoiceId: string, options?: OpenOptions) => BitcartCheckoutElement
 }
 
-const openCheckout: BitcartApi["open"] = (invoiceId, { checkoutUrl } = {}) => {
+const openCheckout: BitcartApi["open"] = (invoiceId, { checkoutUrl }: OpenOptions = {}) => {
   const checkout = document.createElement(CHECKOUT_ELEMENT_TAG)
 
   checkout.setAttribute("invoice-id", invoiceId)

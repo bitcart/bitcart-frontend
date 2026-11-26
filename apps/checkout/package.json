@@ -20,7 +20,7 @@
     "lint": "oxlint . --fix",
     "lint:check": "oxlint .",
     "preview": "vite preview --host",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsrs --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@bitcart/client-sdk": "workspace:*",
@@ -80,7 +80,7 @@
     "msw": "catalog:devDependencies",
     "oxc-transform-react": "catalog:devDependencies",
     "oxlint": "catalog:devDependencies",
-    "typescript": "catalog:devDependencies",
+    "tsrs": "catalog:devDependencies",
     "unocss": "catalog:devDependencies",
     "vite": "catalog:devDependencies",
     "vitest": "catalog:devDependencies"
