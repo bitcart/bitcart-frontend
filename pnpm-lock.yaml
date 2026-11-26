@@ -1274,6 +1274,12 @@ importers:
       '@stylistic/eslint-plugin':
         specifier: catalog:devDependencies
         version: 5.10.0(eslint@10.15.0(jiti@2.7.0)(supports-color@7.2.0))
+      '@testing-library/dom':
+        specifier: catalog:devDependencies
+        version: 10.4.2
+      '@testing-library/react':
+        specifier: catalog:devDependencies
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@types/node':
         specifier: catalog:devDependencies
         version: 26.6.6
@@ -1301,6 +1307,9 @@ importers:
       react:
         specifier: catalog:dependencies
         version: 19.3.1
+      react-dom:
+        specifier: catalog:dependencies
+        version: 19.3.1(react@19.3.1)
       tsdown:
         specifier: catalog:devDependencies
         version: 0.23.7(oxc-resolver@11.24.2)(tsrs@7.1.0-beta.tsrs5)(tsx@4.23.15)(typescript@7.0.2)
