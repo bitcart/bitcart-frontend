@@ -24,8 +24,8 @@ export default defineConfig({
   //* The output keeps source messages: validation renders them while a catalog is missing.
   plugins: [
     linguiMacrosPlugin(linguiConfig, { descriptorFields: "message" }),
-    reactCompilerPlugin(),
     linguiCatalogsPlugin(linguiConfig),
+    reactCompilerPlugin(),
   ],
 
   sourcemap: true,

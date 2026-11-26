@@ -31,8 +31,8 @@ export default defineConfig({
   //* The output keeps source messages: components render them while a catalog is missing.
   plugins: [
     linguiMacrosPlugin(linguiConfig, { descriptorFields: "message" }),
-    reactCompilerPlugin(),
     linguiCatalogsPlugin(linguiConfig),
+    reactCompilerPlugin(),
   ],
 
   sourcemap: true,

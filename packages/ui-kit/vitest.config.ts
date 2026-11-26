@@ -8,8 +8,8 @@ export default defineConfig({
     tsconfigPaths: true,
   },
 
-  //* Compiled as the apps compile this package. Lingui macros must expand first: React Compiler also
-  //* runs in Vite's "pre" stage and would otherwise hoist JSX out of `<Trans>`.
+  //* Compiled as this package's build compiles it. Lingui macros must expand first: React
+  //* Compiler also runs in Vite's "pre" stage and would otherwise hoist JSX out of `<Trans>`.
   plugins: [
     { ...linguiMacrosPlugin(getConfig({ cwd: import.meta.dirname })), enforce: "pre" },
     react({ compiler: true }),
@@ -17,6 +17,7 @@ export default defineConfig({
 
   test: {
     environment: "jsdom",
+    restoreMocks: true,
     setupFiles: "./vitest.setup.ts",
   },
 })

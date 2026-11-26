@@ -6,7 +6,7 @@ export default defineConfig({
     tsconfigPaths: true,
   },
 
-  //* Compiled as the apps compile this package.
+  //* Compiled as this package's build compiles it.
   plugins: [react({ compiler: true })],
 
   test: {

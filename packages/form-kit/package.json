@@ -8,16 +8,16 @@
   "type": "module",
   "exports": {
     "./hooks": {
-      "import": "./dist/hooks/index.js",
-      "types": "./dist/hooks/index.d.ts"
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js"
     },
     "./i18n": {
-      "import": "./dist/i18n/index.js",
-      "types": "./dist/i18n/index.d.ts"
+      "types": "./dist/i18n/index.d.ts",
+      "import": "./dist/i18n/index.js"
     },
     "./validation": {
-      "import": "./dist/validation/index.js",
-      "types": "./dist/validation/index.d.ts"
+      "types": "./dist/validation/index.d.ts",
+      "import": "./dist/validation/index.js"
     }
   },
   "scripts": {

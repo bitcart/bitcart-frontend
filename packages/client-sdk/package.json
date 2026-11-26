@@ -12,31 +12,31 @@
   },
   "exports": {
     "./auth": {
-      "import": "./dist/auth.js",
-      "types": "./dist/auth.d.ts"
+      "types": "./dist/auth.d.ts",
+      "import": "./dist/auth.js"
     },
     "./config": {
-      "import": "./dist/config.js",
-      "types": "./dist/config.d.ts"
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js"
     },
     "./endpoints": {
-      "import": "./dist/endpoints.js",
-      "types": "./dist/endpoints.d.ts"
+      "types": "./dist/endpoints.d.ts",
+      "import": "./dist/endpoints.js"
     },
     "./mocks": {
-      "import": "./dist/mocks.js",
-      "types": "./dist/mocks.d.ts"
+      "types": "./dist/mocks.d.ts",
+      "import": "./dist/mocks.js"
     },
     "./schemas": {
-      "import": "./dist/schemas.js",
-      "types": "./dist/schemas.d.ts"
+      "types": "./dist/schemas.d.ts",
+      "import": "./dist/schemas.js"
     },
     "./types": {
       "types": "./dist/types.d.ts"
     },
     "./utils": {
-      "import": "./dist/utils.js",
-      "types": "./dist/utils.d.ts"
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.js"
     }
   },
   "scripts": {

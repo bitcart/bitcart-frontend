@@ -11,27 +11,27 @@
   },
   "exports": {
     "./constants": {
-      "import": "./dist/constants.js",
-      "types": "./dist/constants.d.ts"
+      "types": "./dist/constants.d.ts",
+      "import": "./dist/constants.js"
     },
     "./preset": {
-      "import": "./dist/preset/index.js",
-      "types": "./dist/preset/index.d.ts"
+      "types": "./dist/preset/index.d.ts",
+      "import": "./dist/preset/index.js"
     },
     "./schemas": {
-      "import": "./dist/schemas.js",
-      "types": "./dist/schemas.d.ts"
+      "types": "./dist/schemas.d.ts",
+      "import": "./dist/schemas.js"
     },
     "./test-templates": {
-      "import": "./dist/test-templates/index.js",
-      "types": "./dist/test-templates/index.d.ts"
+      "types": "./dist/test-templates/index.d.ts",
+      "import": "./dist/test-templates/index.js"
     },
     "./types": {
       "types": "./dist/types.d.ts"
     },
     "./utils": {
-      "import": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
     }
   },
   "scripts": {

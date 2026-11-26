@@ -8,39 +8,39 @@
   "type": "module",
   "exports": {
     "./colors": {
-      "import": "./dist/colors/index.js",
-      "types": "./dist/colors/index.d.ts"
+      "types": "./dist/colors/index.d.ts",
+      "import": "./dist/colors/index.js"
     },
     "./env": {
-      "import": "./dist/env/index.js",
-      "types": "./dist/env/index.d.ts"
+      "types": "./dist/env/index.d.ts",
+      "import": "./dist/env/index.js"
     },
     "./i18n": {
-      "import": "./dist/i18n/index.js",
-      "types": "./dist/i18n/index.d.ts"
+      "types": "./dist/i18n/index.d.ts",
+      "import": "./dist/i18n/index.js"
     },
     "./metadata": {
-      "import": "./dist/metadata/index.js",
-      "types": "./dist/metadata/index.d.ts"
+      "types": "./dist/metadata/index.d.ts",
+      "import": "./dist/metadata/index.js"
     },
     "./navigation": {
-      "import": "./dist/navigation/index.js",
-      "types": "./dist/navigation/index.d.ts"
+      "types": "./dist/navigation/index.d.ts",
+      "import": "./dist/navigation/index.js"
     },
     "./telemetry": {
-      "import": "./dist/telemetry/index.js",
-      "types": "./dist/telemetry/index.d.ts"
+      "types": "./dist/telemetry/index.d.ts",
+      "import": "./dist/telemetry/index.js"
     },
     "./types": {
       "types": "./dist/types.d.ts"
     },
     "./utils": {
-      "import": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
     },
     "./validation": {
-      "import": "./dist/validation/index.js",
-      "types": "./dist/validation/index.d.ts"
+      "types": "./dist/validation/index.d.ts",
+      "import": "./dist/validation/index.js"
     }
   },
   "scripts": {
