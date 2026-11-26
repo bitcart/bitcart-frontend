@@ -52,6 +52,7 @@ export const symbolsByAddress: Record<string, string> = {
   "0xcb84d72e61e383767c4dfeb2d8ff7f4fb89abc6e": "VEGA",
   "0xcb86c6a22cb56b6cf40cafedb06ba0df188a416e": "SURE",
   "0xcb8fb2438a805664cd8c3e640b85ac473da5be87": "CTI",
+  "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf": "CBBTC",
   "0xcbfef8fdd706cde6f208460f2bf39aa9c785f05d": "KINE",
   "0xcc4304a31d09258b0029ea7fe63d032f52e44efe": "SWAP",
   "0xcc80062086c8fb8d4837c56fcdb25a67cd9c7d58": "A",

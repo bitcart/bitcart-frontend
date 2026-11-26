@@ -64,6 +64,13 @@ export default defineConfig({
           useRuntimeFetcher: true,
         },
 
+        formatType: {
+          email: {
+            type: "string",
+            zod: { codec: "Email", codecImport: { name: "Email", importPath: "#/schemas/email" } },
+          },
+        },
+
         //* `useQuery`/`useMutation` are deliberately left unset: setting either explicitly
         //* applies it to every verb, and mutations win for GET, which would route reads
         //* through mutation hooks and suppress suspense entirely.

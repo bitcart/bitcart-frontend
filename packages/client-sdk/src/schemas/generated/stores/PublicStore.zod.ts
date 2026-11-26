@@ -20,7 +20,7 @@ export const PublicStore = zod.object({
     .describe("Metadata associated with the object."),
   name: zod.string(),
   default_currency: zod.string().default(publicStoreDefaultCurrencyDefault),
-  checkout_settings: StoreCheckoutSettings.default({
+  checkout_settings: StoreCheckoutSettings.prefault({
     ...{
       expiration: 15,
       transaction_speed: 0,

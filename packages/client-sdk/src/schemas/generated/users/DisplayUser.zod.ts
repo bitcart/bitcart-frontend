@@ -4,6 +4,8 @@
  */
 import * as zod from "zod"
 
+import { Email } from "#/schemas/email"
+
 import { UserPreferences } from "./UserPreferences.zod"
 
 export const displayUserIsSuperuserDefault = false
@@ -17,7 +19,7 @@ export const DisplayUser = zod.object({
     .record(zod.string(), zod.unknown())
     .optional()
     .describe("Metadata associated with the object."),
-  email: zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }),
+  email: Email,
   is_superuser: zod.boolean().default(displayUserIsSuperuserDefault),
   settings: UserPreferences.default({ ...{ balance_currency: "USD", fetch_balance: true } }),
   id: zod.string(),

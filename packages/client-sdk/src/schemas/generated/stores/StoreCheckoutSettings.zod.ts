@@ -4,6 +4,8 @@
  */
 import * as zod from "zod"
 
+import { Email } from "#/schemas/email"
+
 export const storeCheckoutSettingsExpirationDefault = 15
 export const storeCheckoutSettingsTransactionSpeedDefault = 0
 export const storeCheckoutSettingsConfirmationTimeoutDefault = 1440
@@ -48,8 +50,8 @@ export const StoreCheckoutSettings = zod.object({
   rate_rules: zod.string().default(storeCheckoutSettingsRateRulesDefault),
   pos_screen_enabled: zod.boolean().default(storeCheckoutSettingsPosScreenEnabledDefault),
   support_email: zod
-    .union([zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }), zod.literal("")])
-    .default(storeCheckoutSettingsSupportEmailDefault),
+    .union([Email, zod.literal("")])
+    .prefault(storeCheckoutSettingsSupportEmailDefault),
   support_url: zod.string().default(storeCheckoutSettingsSupportUrlDefault),
   auto_redirect: zod.boolean().default(storeCheckoutSettingsAutoRedirectDefault),
 })

@@ -20,7 +20,7 @@ export const OptionalUpdateStore = zod.object({
     .describe("Metadata associated with the object."),
   name: zod.union([zod.string(), zod.null()]).optional(),
   default_currency: zod.string().default(optionalUpdateStoreDefaultCurrencyDefault),
-  checkout_settings: StoreCheckoutSettings.default({
+  checkout_settings: StoreCheckoutSettings.prefault({
     ...{
       expiration: 15,
       transaction_speed: 0,

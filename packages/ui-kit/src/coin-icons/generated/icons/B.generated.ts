@@ -38,6 +38,7 @@ export const iconLoadersBySymbol: Record<string, () => Promise<CoinIconModule>> 
   BLAST: () => import("@web3icons/react/icons/tokens/TokenBLAST"),
   BLD: () => import("@web3icons/react/icons/tokens/TokenBLD"),
   BLID: () => import("@web3icons/react/icons/tokens/TokenBLID"),
+  BLND: () => import("@web3icons/react/icons/tokens/TokenBLND"),
   BLOCK: () => import("@web3icons/react/icons/tokens/TokenBLOCK"),
   BLOX: () => import("@web3icons/react/icons/tokens/TokenBLOX"),
   BLP: () => import("@web3icons/react/icons/tokens/TokenBLP"),

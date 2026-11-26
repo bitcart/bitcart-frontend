@@ -8,8 +8,6 @@ import type { SchemaEnumOverrides } from "./types"
  */
 export const ENUM_FALLBACK = "unknown"
 
-export const EMAIL_PATTERN = /^[^\s@"]+@[^\s@]+$/u
-
 // FIXME: Remove once the API schema expresses a enum for this instead of a string.
 const INVOICE_STATUSES = [
   "complete",

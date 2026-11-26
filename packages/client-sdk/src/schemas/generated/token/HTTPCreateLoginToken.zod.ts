@@ -4,6 +4,8 @@
  */
 import * as zod from "zod"
 
+import { Email } from "#/schemas/email"
+
 export const hTTPCreateLoginTokenAppIdDefault = ``
 export const hTTPCreateLoginTokenRedirectUrlDefault = ``
 export const hTTPCreateLoginTokenPermissionsDefault = []
@@ -16,7 +18,7 @@ export const HTTPCreateLoginToken = zod.object({
   app_id: zod.string().default(hTTPCreateLoginTokenAppIdDefault),
   redirect_url: zod.string().default(hTTPCreateLoginTokenRedirectUrlDefault),
   permissions: zod.array(zod.string()).default(hTTPCreateLoginTokenPermissionsDefault),
-  email: zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }).default(hTTPCreateLoginTokenEmailDefault),
+  email: Email.prefault(hTTPCreateLoginTokenEmailDefault),
   password: zod.string().default(hTTPCreateLoginTokenPasswordDefault),
   captcha_code: zod.string().default(hTTPCreateLoginTokenCaptchaCodeDefault),
   strict: zod.boolean().default(hTTPCreateLoginTokenStrictDefault),

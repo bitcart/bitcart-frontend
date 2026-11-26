@@ -8,13 +8,11 @@ import { readdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname, join, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
-import { EMAIL_PATTERN, ENUM_FALLBACK, SCHEMA_ENUM_OVERRIDES } from "./constants"
-import type { OpenApiSpec } from "./types"
+import { ENUM_FALLBACK, SCHEMA_ENUM_OVERRIDES } from "./constants"
 
 type Flow = () => { pending: Map<string, string>; succeeded: boolean }
 
 const PACKAGE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..")
-const SPEC_PATH = join(PACKAGE_ROOT, "openapi.json")
 const SCHEMAS_ROOT = join(PACKAGE_ROOT, "src/schemas/generated")
 const ENDPOINTS_ROOT = join(PACKAGE_ROOT, "src/endpoints/_internal/generated")
 
@@ -44,34 +42,18 @@ const report = (flow: string, failures: string[], summary: string): boolean => {
 
 //* Repairs Orval's generated Zod schemas.
 //*
-//* 1. Enums overridden by `transform-spec.ts`. A closed list makes every value outside it a parse
-//*    failure, and `runtimeValidation` propagates that failure to each page rendering the payload.
-//*    `.catch()` resolves such a value to the fallback member.
-//* 2. `format: "email"`. Orval emits a bare `zod.email()`, whose default pattern rejects addresses
-//*    accepted by the API, such as `a&b@example.com`. `EMAIL_PATTERN` accepts all of them.
+//* Enums overridden by `transform-spec.ts`: a closed list makes every value outside it a parse
+//* failure, and `runtimeValidation` propagates that failure to each page rendering the payload.
+//* `.catch()` resolves such a value to the fallback member.
 //*
-//! Every rewrite is a regex over Orval's output shape, which an upgrade can reshape silently.
-//! Each one asserts that it matched something; the flow fails otherwise.
+//! The rewrite is a regex over Orval's output shape, which an upgrade can reshape silently.
+//! The flow asserts that it matched something.
 const postprocessSchemas: Flow = () => {
   const ENUM_DECLARATION = /zod\.enum\(\[[^\]]*\]\)/g
-  const EMAIL_DECLARATION = /zod\.email\(\)/g
-
-  const spec = JSON.parse(readFileSync(SPEC_PATH, "utf8")) as OpenApiSpec
 
   const fallbackEnums = Object.values(SCHEMA_ENUM_OVERRIDES).flatMap((properties) =>
     Object.values(properties).filter((members) => members.includes(ENUM_FALLBACK)),
   )
-
-  const countEmailFormats = (node: unknown): number => {
-    if (typeof node === "object" && node !== null) {
-      return Object.values(node).reduce<number>(
-        (count, child) => count + countEmailFormats(child),
-        "format" in node && node.format === "email" ? 1 : 0,
-      )
-    } else return 0
-  }
-
-  const emailFormats = countEmailFormats(spec.components?.schemas)
 
   const applyEnumFallback = (source: string) => {
     let rewrites = 0
@@ -87,33 +69,18 @@ const postprocessSchemas: Flow = () => {
     return { rewrites, source: updated }
   }
 
-  const applyEmailPattern = (source: string) => {
-    let rewrites = 0
-
-    const updated = source.replace(EMAIL_DECLARATION, () => {
-      rewrites += 1
-
-      return `zod.email({ pattern: ${String(EMAIL_PATTERN)} })`
-    })
-
-    return { rewrites, source: updated }
-  }
-
   const failures: string[] = []
   const pending = new Map<string, string>()
   let caught = 0
-  let widened = 0
 
   for (const file of walk(SCHEMAS_ROOT, ".zod.ts")) {
     const original = readFileSync(file, "utf8")
     const withEnumFallbacks = applyEnumFallback(original)
-    const withEmailPatterns = applyEmailPattern(withEnumFallbacks.source)
 
     caught += withEnumFallbacks.rewrites
-    widened += withEmailPatterns.rewrites
 
-    if (withEmailPatterns.source !== original) {
-      pending.set(file, withEmailPatterns.source)
+    if (withEnumFallbacks.source !== original) {
+      pending.set(file, withEnumFallbacks.source)
     }
   }
 
@@ -125,20 +92,9 @@ const postprocessSchemas: Flow = () => {
     )
   }
 
-  if (widened !== emailFormats) {
-    failures.push(
-      `${widened} of the ${emailFormats} \`format: "email"\` fields were declared as \`zod.email()\``,
-    )
-  }
-
   return {
     pending,
-
-    succeeded: report(
-      "schemas",
-      failures,
-      `${caught} enum fallback(s), ${widened} email pattern(s)`,
-    ),
+    succeeded: report("schemas", failures, `${caught} enum fallback(s)`),
   }
 }
 

@@ -4,6 +4,8 @@
  */
 import * as zod from "zod"
 
+import { Email } from "#/schemas/email"
+
 export const optionalUpdateInvoiceOrderIdDefault = ``
 export const optionalUpdateInvoiceNotificationUrlDefault = ``
 export const optionalUpdateInvoiceRedirectUrlDefault = ``
@@ -24,8 +26,8 @@ export const OptionalUpdateInvoice = zod.object({
     .union([zod.string(), zod.null()])
     .default(optionalUpdateInvoiceRedirectUrlDefault),
   buyer_email: zod
-    .union([zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }), zod.literal(""), zod.null()])
-    .default(optionalUpdateInvoiceBuyerEmailDefault),
+    .union([Email, zod.literal(""), zod.null()])
+    .prefault(optionalUpdateInvoiceBuyerEmailDefault),
   shipping_address: zod.string().default(optionalUpdateInvoiceShippingAddressDefault),
   notes: zod.string().default(optionalUpdateInvoiceNotesDefault),
 })

@@ -19,6 +19,7 @@ export const iconLoadersBySymbol: Record<string, () => Promise<CoinIconModule>> 
   CATGIRL: () => import("@web3icons/react/icons/tokens/TokenCATGIRL"),
   CATHEON: () => import("@web3icons/react/icons/tokens/TokenCATHEON"),
   CAW: () => import("@web3icons/react/icons/tokens/TokenCAW"),
+  CBBTC: () => import("@web3icons/react/icons/tokens/TokenCBBTC"),
   CBETH: () => import("@web3icons/react/icons/tokens/TokenCBETH"),
   CBTC: () => import("@web3icons/react/icons/tokens/TokenCBTC"),
   CBX: () => import("@web3icons/react/icons/tokens/TokenCBX"),

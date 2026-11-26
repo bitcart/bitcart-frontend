@@ -4,14 +4,14 @@
  */
 import * as zod from "zod"
 
+import { Email } from "#/schemas/email"
+
 export const customerUpdateDataBuyerEmailDefault = ``
 export const customerUpdateDataShippingAddressDefault = ``
 export const customerUpdateDataNotesDefault = ``
 
 export const CustomerUpdateData = zod.object({
-  buyer_email: zod
-    .union([zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }), zod.literal("")])
-    .default(customerUpdateDataBuyerEmailDefault),
+  buyer_email: zod.union([Email, zod.literal("")]).prefault(customerUpdateDataBuyerEmailDefault),
   shipping_address: zod.string().default(customerUpdateDataShippingAddressDefault),
   notes: zod.string().default(customerUpdateDataNotesDefault),
 })

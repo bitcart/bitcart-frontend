@@ -4,9 +4,11 @@
  */
 import * as zod from "zod"
 
+import { Email } from "#/schemas/email"
+
 export const PublicUser = zod.object({
   id: zod.string(),
-  email: zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }),
+  email: Email,
 })
 
 export type PublicUser = zod.input<typeof PublicUser>

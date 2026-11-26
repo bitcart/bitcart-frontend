@@ -4,10 +4,12 @@
  */
 import * as zod from "zod"
 
+import { Email } from "#/schemas/email"
+
 export const verifyEmailDataCaptchaCodeDefault = ``
 
 export const VerifyEmailData = zod.object({
-  email: zod.email({ pattern: /^[^\s@"]+@[^\s@]+$/u }),
+  email: Email,
   captcha_code: zod.string().default(verifyEmailDataCaptchaCodeDefault),
 })
 
