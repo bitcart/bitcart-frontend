@@ -1,5 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>bitcart/renovate-config"],
-  "reviewers": ["MrNaif2018", "akaia-shadowfox"]
+  "reviewers": ["MrNaif2018", "akaia-shadowfox"],
+
+  "packageRules": [
+    {
+      "description": "oxfmt 0.80.0 crashes with SIGILL on x86-64 CPUs without BMI2 (oxc-project/oxc#30164), which breaks Docker builds on such servers",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["oxfmt"],
+      "allowedVersions": "<0.80.0"
+    },
+    {
+      "description": "oxlint 1.95.0 crashes with SIGILL on x86-64 CPUs without BMI2 (oxc-project/oxc#30164)",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["oxlint"],
+      "allowedVersions": "<1.95.0"
+    }
+  ]
 }

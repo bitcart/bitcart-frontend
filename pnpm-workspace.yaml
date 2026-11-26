@@ -98,8 +98,9 @@ catalogs:
     nx: 24.0.6
     orval: 8.48.0
     oxc-transform-react: 0.158.0
-    oxfmt: 0.80.0
-    oxlint: 1.95.0
+    # TODO: Bump both, and drop their hold in .github/renovate.json, once oxc's Linux x64 bindings run without BMI2 again (oxc-project/oxc#30164).
+    oxfmt: 0.79.0
+    oxlint: 1.94.0
     oxlint-tsgolint: 7.0.2008
     schema-dts: 2.1.0
     srvx: 1.0.8
